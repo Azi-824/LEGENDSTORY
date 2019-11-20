@@ -12,6 +12,7 @@
 //########## グローバルオブジェクト ##########
 FPS *fps = new FPS(GAME_FPS_SPEED);							//FPSクラスのオブジェクトを生成
 KEYDOWN *keydown = new KEYDOWN();							//KEYDOWNクラスのオブジェクトを生成
+IMAGE *title;
 
 
 //########## プログラムで最初に実行される関数 ##########
@@ -28,7 +29,9 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 
 	SetDrawScreen(DX_SCREEN_BACK);								//Draw系関数は裏画面に描画
 
-	IMAGE *title = new IMAGE(MY_IMG_DIR_TITLE, MY_ING_NAME_TITLE);	//タイトル画像を生成
+
+
+	title = new IMAGE(MY_IMG_DIR_TITLE, MY_ING_NAME_TITLE);			//タイトル画像を生成
 	if (title->GetIsLoad() == false) { return -1; }					//読み込み失敗時
 
 
@@ -46,9 +49,33 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 
 		//▼▼▼▼▼ゲームのシーンここから▼▼▼▼▼
 
+		switch (GameSceneNow)
+		{
+		case (int)GAME_SCENE_TITLE:		//タイトル画面だったら
+			
+			Title();					//タイトル画面の処理
+
+			break;
+
+		case (int)GAME_SCENE_PLAY:		//プレイ画面だったら
+
+			Play();						//プレイ画面の処理
+
+			break;
+
+		case (int)GAME_SCENE_END:		//エンド画面だったら
+
+			End();						//エンド画面の処理
+
+			break;
+
+		default:
+			break;
+
+		}
+
 		keydown->IsKeyDown(KEY_INPUT_UP);
 
-		title->Draw(0, GAME_HEIGHT / 2 - title->GetHeight() / 2);		//画面中央にタイトル描画
 
 		//▲▲▲▲▲ゲームのシーンここまで▲▲▲▲▲
 
@@ -66,4 +93,25 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 	DxLib_End();			//ＤＸライブラリ使用の終了処理
 
 	return 0;
+}
+
+//タイトル画面の処理
+void Title()
+{
+
+	title->Draw(0, GAME_HEIGHT / 2 - title->GetHeight() / 2);		//画面中央にタイトル描画
+
+	return;
+}
+
+//プレイ画面の処理
+void Play()
+{
+	return;
+}
+
+//エンド画面の処理
+void End()
+{
+	return;
 }

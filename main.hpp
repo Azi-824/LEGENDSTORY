@@ -24,5 +24,20 @@
 
 #define GAME_FPS_SPEED					   60
 
+//############### 列挙型 ###############
+enum GAME_SCENE {
+	GAME_SCENE_TITLE,	//タイトル画面
+	GAME_SCENE_PLAY,	//プレイ画面
+	GAME_SCENE_END		//エンド画面
+};
+
+//############## グローバル変数 ##############
+int GameSceneNow = (int)GAME_SCENE_TITLE;	//現在のゲームシーン
+
+//############## プロトタイプ宣言 #############
+
+void Title();				//タイトル画面の処理
+void Play();				//プレイ画面の処理
+void End();					//エンド画面の処理
 
 //########## クラスの定義 ##########
