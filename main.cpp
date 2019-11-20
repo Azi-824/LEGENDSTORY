@@ -101,6 +101,15 @@ void Title()
 
 	title->Draw(0, GAME_HEIGHT / 2 - title->GetHeight() / 2);		//画面中央にタイトル描画
 
+	
+
+	//▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼ 画面遷移の処理 ▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼
+	if (keydown->IsKeyDown(KEY_INPUT_RETURN))
+	{
+		GameSceneNow = (int)GAME_SCENE_PLAY;	//プレイ画面へ
+	}
+	//▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲ 画面遷移の処理 ▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲
+
 	return;
 }
 
