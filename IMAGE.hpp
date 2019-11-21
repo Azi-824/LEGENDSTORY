@@ -9,7 +9,7 @@
 #include <string>
 
 //########## マクロ定義：画像のファイルパスと名前 ##########
-#define MY_IMG_DIR_TITLE	R"(.\MY_IMG\TITLE)"	//タイトルの画像のファイルの場所
+#define MY_IMG_DIR_TITLE	R"(.\MY_IMG\TITLE)"				//タイトルの画像のファイルの場所
 
 #define MY_ING_NAME_TITLE	R"(\Title_Logo.png)"			//タイトル画像の名前
 

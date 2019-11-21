@@ -8,11 +8,13 @@
 #include "KEYDOWN.hpp"
 #include "IMAGE.hpp"
 #include "ANIMATION.hpp"
+#include "FONT.hpp"
 
 //########## グローバルオブジェクト ##########
 FPS *fps = new FPS(GAME_FPS_SPEED);							//FPSクラスのオブジェクトを生成
 KEYDOWN *keydown = new KEYDOWN();							//KEYDOWNクラスのオブジェクトを生成
 IMAGE *title;
+FONT *font;
 
 
 //########## プログラムで最初に実行される関数 ##########
@@ -29,11 +31,15 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 
 	SetDrawScreen(DX_SCREEN_BACK);								//Draw系関数は裏画面に描画
 
-
+	//▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼ 読み込み処理 ▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼
 
 	title = new IMAGE(MY_IMG_DIR_TITLE, MY_ING_NAME_TITLE);			//タイトル画像を生成
 	if (title->GetIsLoad() == false) { return -1; }					//読み込み失敗時
 
+	font = new FONT(MY_FONT_DIR, MY_FONT_NAME);						//フォントを生成
+	if (font->GetIsLoad() == false) { return -1; }					//読み込み失敗時
+
+	//▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲ 読み込み処理 ▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲
 
 	while (TRUE)	//無限ループ
 	{
