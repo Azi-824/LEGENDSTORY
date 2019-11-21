@@ -24,6 +24,26 @@ FONT::FONT(const char *dir,const char *name)
 	LoadFilePath += dir;
 	LoadFilePath += name;
 
+	int a = 0;
+
+	//a = AddFontResourceEx("MY_FONT\\GD-DOTFONT-DQ-OTF.otf", FR_PRIVATE, NULL);
+
+	//if (a <= 0)
+	//{
+	//	std::string ErroeMsg(FONT_ERROR_MSG);	//エラーメッセージ作成
+	//	ErroeMsg += TEXT('\n');					//改行
+	//	ErroeMsg += LoadFilePath;				//フォントのパス
+
+	//	MessageBox(
+	//		NULL,
+	//		ErroeMsg.c_str(),	//char * を返す
+	//		TEXT(FONT_ERROR_TITLE),
+	//		MB_OK);
+
+	//	return;
+
+	//}
+	
 	if (AddFontResourceEx(LoadFilePath.c_str(), FR_PRIVATE, NULL) < 0)		//読み込み失敗
 	{
 		std::string ErroeMsg(FONT_ERROR_MSG);	//エラーメッセージ作成
@@ -40,7 +60,8 @@ FONT::FONT(const char *dir,const char *name)
 
 	}
 
-	ChangeFont("GD-DOTFONT-DQ-OTF", DX_CHARSET_DEFAULT);			//指定されたフォントに変更
+
+	ChangeFont(FONT_NAME, DX_CHARSET_DEFAULT);						//指定されたフォントに変更
 	this->SetSize(32);												//フォントサイズ32を初期値で設定
 
 	this->FilePath = LoadFilePath;
@@ -57,9 +78,9 @@ FONT::~FONT()
 {
 	std::string LoadfilePath;
 
-	LoadfilePath += this->FilePath;
+	LoadfilePath = this->FilePath;
 
-	if (RemoveFontResourceEx(LoadfilePath.c_str(), FR_PRIVATE, NULL) == 0)	//失敗時
+	if (RemoveFontResourceEx(LoadfilePath.c_str(), FR_PRIVATE, NULL))	//失敗時
 	{
 
 		MessageBox(NULL, "remove failure", "", MB_OK);				//エラーメッセージ

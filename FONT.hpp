@@ -9,9 +9,10 @@
 
 
 //################ マクロ定義 ファイルパスと名前 ###############
-#define MY_FONT_DIR		R"(.\MY_FONT)"						//フォントファイルの場所
+#define MY_FONT_DIR		R"(.\MY_FONT)"					//フォントファイルの場所
 
 #define MY_FONT_NAME	R"(\GD-DOTFONT-DQ-OTF)"			//フォントの名前
+#define FONT_NAME		("GD-DOTFONT-DQ-OTF")			//フォントの正式名称
 
 
 

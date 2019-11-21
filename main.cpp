@@ -95,6 +95,7 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 	delete title;			//titleを破棄
 	delete fps;				//FPSを破棄
 	delete keydown;			//keydownを破棄
+	delete font;			//fontを破棄
 
 	DxLib_End();			//ＤＸライブラリ使用の終了処理
 
@@ -125,11 +126,28 @@ void Title()
 //プレイ画面の処理
 void Play()
 {
+
+	//▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼ 画面遷移の処理 ▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼
+	if (keydown->IsKeyDown(KEY_INPUT_SPACE))
+	{
+		GameSceneNow = (int)GAME_SCENE_END;	//エンド画面へ
+	}
+	//▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲ 画面遷移の処理 ▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲
+
+
 	return;
 }
 
 //エンド画面の処理
 void End()
 {
+
+	//▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼ 画面遷移の処理 ▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼
+	if (keydown->IsKeyDown(KEY_INPUT_BACK))
+	{
+		GameSceneNow = (int)GAME_SCENE_TITLE;	//タイトル画面へ
+	}
+	//▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲ 画面遷移の処理 ▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲
+
 	return;
 }
