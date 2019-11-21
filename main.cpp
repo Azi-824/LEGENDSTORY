@@ -36,7 +36,7 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 	title = new IMAGE(MY_IMG_DIR_TITLE, MY_ING_NAME_TITLE);			//ƒ^ƒCƒgƒ‹‰æ‘œ‚ð¶¬
 	if (title->GetIsLoad() == false) { return -1; }					//“Ç‚Ýž‚ÝŽ¸”sŽž
 
-	font = new FONT(MY_FONT_DIR, MY_FONT_NAME);						//ƒtƒHƒ“ƒg‚ð¶¬
+	font = new FONT(MY_FONT_DIR, MY_FONT_NAME, FONT_NAME);			//ƒtƒHƒ“ƒg‚ð¶¬
 	if (font->GetIsLoad() == false) { return -1; }					//“Ç‚Ýž‚ÝŽ¸”sŽž
 
 	//£££££££££££££££££££ “Ç‚Ýž‚Ýˆ— £££££££££££££££££££££££££
@@ -127,6 +127,11 @@ void Title()
 void Play()
 {
 
+	int width = font->GetWidth("PUSH SPACE");						//‰¡•Žæ“¾
+
+	font->Draw(GAME_WIDTH / 2 - width / 2, 500, "PUSH SPACE");			//•¶Žš—ñ•`‰æ
+
+
 	//¥¥¥¥¥¥¥¥¥¥¥¥¥¥¥ ‰æ–Ê‘JˆÚ‚Ìˆ— ¥¥¥¥¥¥¥¥¥¥¥¥¥¥¥¥¥¥¥
 	if (keydown->IsKeyDown(KEY_INPUT_SPACE))
 	{
@@ -141,6 +146,11 @@ void Play()
 //ƒGƒ“ƒh‰æ–Ê‚Ìˆ—
 void End()
 {
+
+	int width = font->GetWidth("PUSH BACK");						//‰¡•Žæ“¾
+
+	font->Draw(GAME_WIDTH / 2 - width / 2, 500, "PUSH BACK");			//•¶Žš—ñ•`‰æ
+
 
 	//¥¥¥¥¥¥¥¥¥¥¥¥¥¥¥ ‰æ–Ê‘JˆÚ‚Ìˆ— ¥¥¥¥¥¥¥¥¥¥¥¥¥¥¥¥¥¥¥
 	if (keydown->IsKeyDown(KEY_INPUT_BACK))

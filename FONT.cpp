@@ -7,9 +7,10 @@
 //############### クラスの定義 #####################
 
 //コンストラクタ
-//引　数：const char *：画像のディレクトリ
-//引　数：const char *：画像の名前
-FONT::FONT(const char *dir,const char *name)
+//引　数：const char *：フォントのディレクトリ
+//引　数：const char *：フォントの名前
+//引　数：const char *：フォントの正式名称
+FONT::FONT(const char *dir,const char *filename,const char *name)
 {
 	//メンバー変数初期化
 
@@ -22,29 +23,9 @@ FONT::FONT(const char *dir,const char *name)
 	std::string LoadFilePath;		//フォントのパスを作成
 
 	LoadFilePath += dir;
-	LoadFilePath += name;
-
-	int a = 0;
-
-	//a = AddFontResourceEx("MY_FONT\\GD-DOTFONT-DQ-OTF.otf", FR_PRIVATE, NULL);
-
-	//if (a <= 0)
-	//{
-	//	std::string ErroeMsg(FONT_ERROR_MSG);	//エラーメッセージ作成
-	//	ErroeMsg += TEXT('\n');					//改行
-	//	ErroeMsg += LoadFilePath;				//フォントのパス
-
-	//	MessageBox(
-	//		NULL,
-	//		ErroeMsg.c_str(),	//char * を返す
-	//		TEXT(FONT_ERROR_TITLE),
-	//		MB_OK);
-
-	//	return;
-
-	//}
+	LoadFilePath += filename;
 	
-	if (AddFontResourceEx(LoadFilePath.c_str(), FR_PRIVATE, NULL) < 0)		//読み込み失敗
+	if (AddFontResourceEx(LoadFilePath.c_str(), FR_PRIVATE, NULL) <= 0)		//読み込み失敗
 	{
 		std::string ErroeMsg(FONT_ERROR_MSG);	//エラーメッセージ作成
 		ErroeMsg += TEXT('\n');					//改行
@@ -61,11 +42,11 @@ FONT::FONT(const char *dir,const char *name)
 	}
 
 
-	ChangeFont(FONT_NAME, DX_CHARSET_DEFAULT);						//指定されたフォントに変更
-	this->SetSize(32);												//フォントサイズ32を初期値で設定
+	ChangeFont(name, DX_CHARSET_DEFAULT);							//指定されたフォントに変更
+	this->SetSize(DEFAULT_FONTSIZE);								//フォントサイズをデフォルトの数字に設定
 
 	this->FilePath = LoadFilePath;
-	this->FileName = name;
+	this->FileName = filename;
 
 	this->Isload = true;		//読み込めた
 
@@ -76,11 +57,8 @@ FONT::FONT(const char *dir,const char *name)
 //デストラクタ	
 FONT::~FONT()
 {
-	std::string LoadfilePath;
 
-	LoadfilePath = this->FilePath;
-
-	if (RemoveFontResourceEx(LoadfilePath.c_str(), FR_PRIVATE, NULL))	//失敗時
+	if (RemoveFontResourceEx(this->FilePath.c_str(), FR_PRIVATE, NULL))	//失敗時
 	{
 
 		MessageBox(NULL, "remove failure", "", MB_OK);				//エラーメッセージ

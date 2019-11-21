@@ -9,10 +9,13 @@
 
 
 //################ マクロ定義 ファイルパスと名前 ###############
-#define MY_FONT_DIR		R"(.\MY_FONT)"					//フォントファイルの場所
+#define MY_FONT_DIR		R"(.\MY_FONT)"						//フォントファイルの場所
 
-#define MY_FONT_NAME	R"(\GD-DOTFONT-DQ-OTF)"			//フォントの名前
-#define FONT_NAME		("GD-DOTFONT-DQ-OTF")			//フォントの正式名称
+#define MY_FONT_NAME	R"(\GD-DOTFONT-DQ-OTF.otf)"			//フォントの名前
+
+//############### マクロ定義 ##################
+#define FONT_NAME		("GD-DOTFONT-DQ-OTF")				//フォントの正式名称
+#define DEFAULT_FONTSIZE	32								//デフォルトのフォントサイズ
 
 
 
@@ -34,7 +37,7 @@ private:
 
 public:
 
-	FONT(const char *,const char *);		//コンストラクタ
+	FONT(const char *,const char *,const char *);		//コンストラクタ
 	 
 	~FONT();								//デストラクタ
 
