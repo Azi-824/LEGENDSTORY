@@ -107,6 +107,9 @@ void Title()
 
 	title->Draw(0, GAME_HEIGHT / 2 - title->GetHeight() / 2);		//ЙцЦ╩ТЖЙЫВ╔Г^ГCГgГЛХ`Йц
 
+	int width = font->GetWidth("PUSH ENTER");						//ЙбХЭОцУ╛
+
+	font->Draw(GAME_WIDTH/2 - width/2, 500, "PUSH ENTER");			//Х╢ОЪЧёХ`Йц
 	
 
 	//БеБеБеБеБеБеБеБеБеБеБеБеБеБеБе ЙцЦ╩СJИ┌В╠ПИЧЭ БеБеБеБеБеБеБеБеБеБеБеБеБеБеБеБеБеБеБе

@@ -27,6 +27,7 @@ private:
 	std::string FileName;	//名前
 
 	int Handle;				//ハンドル
+	int Width;				//文字列の横幅
 
 	bool Isload;			//読み込めた
 
@@ -40,5 +41,8 @@ public:
 
 	void SetSize(int);						//フォントサイズ設定
 
+	void Draw(int ,int ,const char *);		//文字描画
+
+	int GetWidth(const char *);				//文字列の横幅を取得する
 
 };

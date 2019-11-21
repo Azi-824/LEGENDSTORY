@@ -40,6 +40,9 @@ FONT::FONT(const char *dir,const char *name)
 
 	}
 
+	ChangeFont("GD-DOTFONT-DQ-OTF", DX_CHARSET_DEFAULT);			//指定されたフォントに変更
+	this->SetSize(32);												//フォントサイズ32を初期値で設定
+
 	this->FilePath = LoadFilePath;
 	this->FileName = name;
 
@@ -77,5 +80,32 @@ void FONT::SetSize(int size)
 	SetFontSize(size);
 
 	return;
+}
+
+//文字描画
+//引数1:描画するX位置
+//引数2:描画するY位置
+//引数3:描画する文字列
+void FONT::Draw(int x,int y,const char *str)
+{
+
+	DrawString(x, y, str, GetColor(255, 255, 255));		//文字描画
+
+	return;
+}
+
+//文字列の横幅を取得
+//引数1:横幅を取得したい文字列
+int FONT::GetWidth(const char *str)
+{
+	int Strlen = 0;		//文字列の長さ取得用
+	
+	//文字列の長さを取得
+	Strlen = strlen(str);
+
+	this->Width = GetDrawStringWidth(str, Strlen);		//横幅取得
+
+	return this->Width;	//横幅を返す
+
 }
 
