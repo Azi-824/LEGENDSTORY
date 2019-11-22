@@ -31,8 +31,6 @@ enum GAME_SCENE {
 	GAME_SCENE_END		//エンド画面
 };
 
-//############## グローバル変数 ##############
-int GameSceneNow = (int)GAME_SCENE_TITLE;	//現在のゲームシーン
 
 //############## プロトタイプ宣言 #############
 

@@ -11,14 +11,16 @@
 //###################### クラス定義 #######################
 class COLLISION{
 private:
+
+	bool IsDraw;							//当たり判定の範囲を描画するか？
+
+public:
 	int Left;		//X位置
 	int Top;		//Y位置
 	int Width;		//幅
 	int Height;		//高さ
 	int Right;		//X位置＋幅
 	int Bottom;		//Y位置＋高さ
-
-	bool IsDraw;							//当たり判定の範囲を描画するか？
 
 public:
 	COLLISION();							//コンストラクタ

@@ -152,6 +152,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="ANIMATION.cpp" />
+    <ClCompile Include="CHARACTOR.cpp" />
     <ClCompile Include="COLLISION.cpp" />
     <ClCompile Include="FONT.cpp" />
     <ClCompile Include="FPS.cpp" />
@@ -161,6 +162,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="ANIMATION.hpp" />
+    <ClInclude Include="CHARACTOR.hpp" />
     <ClInclude Include="COLLISION.hpp" />
     <ClInclude Include="FONT.hpp" />
     <ClInclude Include="FPS.hpp" />

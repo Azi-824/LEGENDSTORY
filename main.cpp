@@ -9,12 +9,19 @@
 #include "IMAGE.hpp"
 #include "ANIMATION.hpp"
 #include "FONT.hpp"
+#include "CHARACTOR.hpp"
+#include "COLLISION.hpp"
+
 
 //########## グローバルオブジェクト ##########
 FPS *fps = new FPS(GAME_FPS_SPEED);							//FPSクラスのオブジェクトを生成
 KEYDOWN *keydown = new KEYDOWN();							//KEYDOWNクラスのオブジェクトを生成
 IMAGE *title;
 FONT *font;
+CHARACTOR *player;
+
+//############## グローバル変数 ##############
+int GameSceneNow = (int)GAME_SCENE_TITLE;	//現在のゲームシーン
 
 
 //########## プログラムで最初に実行される関数 ##########
@@ -38,6 +45,9 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 
 	font = new FONT(MY_FONT_DIR, MY_FONT_NAME, FONT_NAME);			//フォントを生成
 	if (font->GetIsLoad() == false) { return -1; }					//読み込み失敗時
+
+	player = new CHARACTOR();
+	player->SetInit();
 
 	//▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲ 読み込み処理 ▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲
 
@@ -130,6 +140,10 @@ void Play()
 	int width = font->GetWidth("PUSH SPACE");						//横幅取得
 
 	font->Draw(GAME_WIDTH / 2 - width / 2, 500, "PUSH SPACE");			//文字列描画
+
+	player->SetSpeed(5);
+	player->Operation(keydown);
+	player->Draw();//キャラ描画
 
 
 	//▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼ 画面遷移の処理 ▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼
