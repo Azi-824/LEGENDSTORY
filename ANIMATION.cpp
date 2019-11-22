@@ -127,11 +127,12 @@ void ANIMATION::Draw(int X, int Y,int Dist,bool animetion)
 {
 	if (animetion)	//アニメーションで描画する場合
 	{
-		if (this->ChangeCnt < this->ChangeMaxCnt)	//最後の画像じゃないとき
+		if (this->ChangeCnt < this->ChangeMaxCnt-1)	//最後の画像じゃないとき
 		{
 			DrawGraph(X, Y, *this->Handle_itr, TRUE);	//描画
 			this->ChangeCnt++; //カウントアップ
 			this->Handle_itr++;//次の画像
+			
 		}
 		else
 		{

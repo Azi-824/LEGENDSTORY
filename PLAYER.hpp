@@ -67,7 +67,7 @@ public:
 
 
 
-	void DrawAnime(int ,int);	//•`‰æ
+	void DrawAnime();			//•`‰æ
 
 	void Operation(KEYDOWN *);	//‘€ì
 

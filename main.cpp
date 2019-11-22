@@ -147,7 +147,7 @@ void Play()
 
 
 	player->Operation(keydown);
-	player->DrawAnime(0,0);	//アニメーション描画
+	player->DrawAnime();	//アニメーション描画
 
 	//▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼ 画面遷移の処理 ▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼
 	if (keydown->IsKeyDown(KEY_INPUT_SPACE))

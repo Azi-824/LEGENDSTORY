@@ -224,18 +224,16 @@ void PLAYER::Operation(KEYDOWN *keydown)
 
 
 //描画
-void PLAYER::DrawAnime(int x, int y)
+void PLAYER::DrawAnime()
 {
 	if (this->IsKeyDown)		//キーボードが押されているとき
 	{
-		this->Anime->Draw(this->Collision->Left, this->Collision->Top, this->Dist, true);
-		//this->Anime->Draw(this->Collision->Left, this->Collision->Top, this->Dist, false);
-
+		this->Anime->Draw(this->Collision->Left, this->Collision->Top, this->Dist, true);	//アニメーションで描画
 
 	}
 	else						//キーボードが押されていないとき
 	{
-		this->Anime->Draw(this->Collision->Left, this->Collision->Top, this->Dist, false);
+		this->Anime->Draw(this->Collision->Left, this->Collision->Top, this->Dist, false);	//通常描画
 	}
 }
 

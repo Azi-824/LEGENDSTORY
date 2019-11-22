@@ -22,7 +22,7 @@
 #define PLAYER_TATE_CNT	4
 #define PLAYER_ALL_CNT	PLAYER_YOKO_CNT * PLAYER_TATE_CNT
 
-#define PLAYER_ANI_SPEED 0.1
+#define PLAYER_ANI_SPEED 1.0
 
 //########## マクロ定義：エラーメッセージ##########
 #define ANIMATION_ERROR_TTILE	"ANIMATION_ERROR"						//エラータイトル
