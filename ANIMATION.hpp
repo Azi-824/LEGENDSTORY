@@ -12,21 +12,29 @@
 #include "FPS.hpp"
 
 //########## マクロ定義：画像のファイルパスと名前 ##########
-#define MY_ANIME_DIR_BAKU		R"(.\MY_ANIME\bakuhatsu\)"		//爆発の画像ファイルの場所
+#define MY_ANIME_DIR_PLAYER		R"(.\MY_ANIME\walk\)"			//プレイヤーの画像ファイルの場所
 
-#define MY_ANIME_NAME_BAKU_1	R"(bakuhatsu_01.png)"			//爆発の画像の名前
-#define BAKU_1_WIDTH	64	//分割する幅の大きさ
-#define BAKU_1_HEIGHT	64	//分割する高さの大きさ
+#define MY_ANIME_NAME_PLAYER	R"(player_walk.png)"			//プレイヤーの画像の名前
+#define PLAYER_WIDTH	45	//分割する幅の大きさ
+#define PLAYER_HEIGHT	45	//分割する高さの大きさ
 
-#define BAKU_1_YOKO_CNT	15
-#define BAKU_1_TATE_CNT	1
-#define BAKU_1_ALL_CNT	BAKU_1_YOKO_CNT * BAKU_1_TATE_CNT
+#define PLAYER_YOKO_CNT	3
+#define PLAYER_TATE_CNT	4
+#define PLAYER_ALL_CNT	PLAYER_YOKO_CNT * PLAYER_TATE_CNT
 
-#define BAKU_1_ANI_SPEED 0.1
+#define PLAYER_ANI_SPEED 0.1
 
 //########## マクロ定義：エラーメッセージ##########
 #define ANIMATION_ERROR_TTILE	"ANIMATION_ERROR"						//エラータイトル
 #define ANIMATION_ERROR_MSG		"アニメーションが読み込めませんでした"	//エラーメッセージ
+
+//########## 列挙型 ############
+enum DIST {
+	FLONT=0,	//前向き
+	LEFT=3,		//左向き
+	RIGHT=6,	//右向き
+	BACK=9		//後ろ向き
+};
 
 //########## クラスの定義 ##########
 class ANIMATION
@@ -63,6 +71,6 @@ public:
 
 	bool GetIsAnimeStop(void);		//アニメーションはストップしたかを取得
 
-	void Draw(int,int);				//画像を描画
+	void Draw(int,int,int,bool);	//画像を描画
 };
 

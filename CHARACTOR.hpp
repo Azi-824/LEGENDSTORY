@@ -4,7 +4,7 @@
 #pragma once
 
 //###################### ヘッダファイル読み込み ###################
-#include <DxLib.h>
+#include "DxLib.h"
 #include "main.hpp"
 #include "IMAGE.hpp"
 #include "KEYDOWN.hpp"
@@ -40,6 +40,7 @@ public:
 	void SetIsDraw(bool);		//描画してよいかを設定
 	void SetSpeed(int);			//移動速度を設定
 	void SetKeyOperation(bool); //キーボードで操作できるか設定
+	bool SetImage(const char*, const char*);//画像設定
 
 	bool GetIsArive();			//生きているか取得
 	bool GetIsDraw();			//描画できるか取得

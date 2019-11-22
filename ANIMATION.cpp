@@ -27,7 +27,7 @@ ANIMATION::ANIMATION(const char *dir, const char *name, int SplitNumALL, int Spr
 	this->Handle.resize(SplitNumALL);			//resize：vectorの要素数を変更する
 	this->Handle_itr = this->Handle.begin();	//先頭のポインタを入れる
 
-	this->ChangeMaxCnt = (int)(changeSpeed * fps->Getvalue());	//アニメーションするフレームの最大値
+	this->ChangeMaxCnt = PLAYER_YOKO_CNT;						//アニメーションするフレームの最大値
 	this->ChangeCnt = 0;										//アニメーションするフレームのカウント
 
 	this->IsAnimeLoop = IsLoop;		//アニメーションはループする？
@@ -123,38 +123,59 @@ bool  ANIMATION::GetIsAnimeStop(void)
 }
 
 //画像を描画
-void ANIMATION::Draw(int X, int Y)
+void ANIMATION::Draw(int X, int Y,int Dist,bool animetion)
 {
-	if (this->IsAnimeStop == false)	//アニメーションをストップさせないなら
+	if (animetion)	//アニメーションで描画する場合
 	{
-		DrawGraph(X, Y, *this->Handle_itr, TRUE);	//イテレータ(ポインタ)を使用して描画
-	}
-
-	if (this->ChangeCnt == this->ChangeMaxCnt)	//次の画像を表示する時がきたら
-	{
-		//this->Handle.end()は、最後の要素の１個次のイテレータを返すので、-1している。
-		if (this->Handle_itr == this->Handle.end() - 1)	//イテレータ(ポインタ)が最後の要素のときは
+		if (this->ChangeCnt < this->ChangeMaxCnt)	//最後の画像じゃないとき
 		{
-			//アニメーションをループしないなら
-			if (this->IsAnimeLoop == false)
-			{
-				this->IsAnimeStop = true;	//アニメーションを止める
-			}
-
-			//次回の描画に備えて、先頭の画像に戻しておく
-			this->Handle_itr = this->Handle.begin();	//イテレータ(ポインタ)を要素の最初に戻す
+			DrawGraph(X, Y, *this->Handle_itr, TRUE);	//描画
+			this->ChangeCnt++; //カウントアップ
+			this->Handle_itr++;//次の画像
 		}
 		else
 		{
-			this->Handle_itr++;	//次のイテレータ(ポインタ)(次の画像)に移動する
+			this->Handle_itr = this->Handle.begin()+Dist;
+			this->ChangeCnt = 0;	//カウントリセット
 		}
 
-		this->ChangeCnt = 0;	//カウント初期化
 	}
-	else
+	else	//アニメーション描画じゃないとき
 	{
-		this->ChangeCnt++;	//カウントアップ
+		DrawGraph(X, Y, *this->Handle_itr, TRUE);	//描画
 	}
+	
+	//if (this->IsAnimeStop == false)	//アニメーションをストップさせないなら
+	//{
+	//	DrawGraph(X, Y, *this->Handle_itr, TRUE);	//イテレータ(ポインタ)を使用して描画
+	//}
+
+
+	//if (this->ChangeCnt == this->ChangeMaxCnt)	//次の画像を表示する時がきたら
+	//{
+	//	//this->Handle.end()は、最後の要素の１個次のイテレータを返すので、-1している。
+	//	if (this->Handle_itr == this->Handle.end() - 1)	//イテレータ(ポインタ)が最後の要素のときは
+	//	{
+	//		//アニメーションをループしないなら
+	//		if (this->IsAnimeLoop == false)
+	//		{
+	//			this->IsAnimeStop = true;	//アニメーションを止める
+	//		}
+
+	//		//次回の描画に備えて、先頭の画像に戻しておく
+	//		this->Handle_itr = this->Handle.begin();	//イテレータ(ポインタ)を要素の最初に戻す
+	//	}
+	//	else
+	//	{
+	//		this->Handle_itr++;	//次のイテレータ(ポインタ)(次の画像)に移動する
+	//	}
+
+	//	this->ChangeCnt = 0;	//カウント初期化
+	//}
+	//else
+	//{
+	//	this->ChangeCnt++;	//カウントアップ
+	//}
 
 	return;
 }

@@ -89,6 +89,16 @@ void CHARACTOR::SetKeyOperation(bool Iskeyoperation)
 	return;
 }
 
+//‰æ‘œ‚ğİ’è
+bool CHARACTOR::SetImage(const char *dir, const char *name)
+{
+	this->image = new IMAGE(dir, name);
+	if (this->image->GetIsLoad() == false) { return false; }	//“Ç‚İ‚İ¸”s
+
+	return true;
+
+}
+
 //¶‚«‚Ä‚¢‚é‚©æ“¾
 bool CHARACTOR::GetIsArive()
 {
@@ -154,9 +164,6 @@ void CHARACTOR::Operation(KEYDOWN *keydown)
 //‰Šú‰»İ’è
 bool CHARACTOR::SetInit()
 {
-	this->image = new IMAGE(MY_IMG_DIR_CHARCTOR, MY_IMG_NAME_PLAYER);
-	if (this->image->GetIsLoad() == false) { return false; }	//“Ç‚İ‚İ¸”s
-
 	this->collision = new COLLISION();		//“–‚½‚è”»’è‚Ì—Ìˆæ‚ğì¬
 	this->collision->SetValue(GAME_LEFT, GAME_TOP, this->image->GetWidth(), this->image->GetHeight());	//“–‚½‚è”»’è‚Ì—Ìˆæ‚ğİ’è
 

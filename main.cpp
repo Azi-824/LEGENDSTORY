@@ -11,6 +11,7 @@
 #include "FONT.hpp"
 #include "CHARACTOR.hpp"
 #include "COLLISION.hpp"
+#include "PLAYER.hpp"
 
 
 //########## グローバルオブジェクト ##########
@@ -18,7 +19,7 @@ FPS *fps = new FPS(GAME_FPS_SPEED);							//FPSクラスのオブジェクトを生成
 KEYDOWN *keydown = new KEYDOWN();							//KEYDOWNクラスのオブジェクトを生成
 IMAGE *title;
 FONT *font;
-CHARACTOR *player;
+PLAYER *player;
 
 //############## グローバル変数 ##############
 int GameSceneNow = (int)GAME_SCENE_TITLE;	//現在のゲームシーン
@@ -46,8 +47,10 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 	font = new FONT(MY_FONT_DIR, MY_FONT_NAME, FONT_NAME);			//フォントを生成
 	if (font->GetIsLoad() == false) { return -1; }					//読み込み失敗時
 
-	player = new CHARACTOR();
-	player->SetInit();
+	player = new PLAYER();
+	if (player->SetImage(MY_IMG_DIR_CHARCTOR, MY_IMG_NAME_PLAYER) == false) { return -1; }	//読み込み失敗
+	if (player->SetAnime(MY_ANIME_DIR_PLAYER, MY_ANIME_NAME_PLAYER, PLAYER_ALL_CNT, PLAYER_YOKO_CNT, PLAYER_TATE_CNT, PLAYER_WIDTH, PLAYER_HEIGHT, PLAYER_ANI_SPEED, true) == false) { return -1; } //読み込み失敗
+	player->SetInit();	//初期設定
 
 	//▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲ 読み込み処理 ▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲
 
@@ -106,6 +109,7 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 	delete fps;				//FPSを破棄
 	delete keydown;			//keydownを破棄
 	delete font;			//fontを破棄
+	delete player;			//playerを破棄S
 
 	DxLib_End();			//ＤＸライブラリ使用の終了処理
 
@@ -141,10 +145,9 @@ void Play()
 
 	font->Draw(GAME_WIDTH / 2 - width / 2, 500, "PUSH SPACE");			//文字列描画
 
-	player->SetSpeed(5);
-	player->Operation(keydown);
-	player->Draw();//キャラ描画
 
+	player->Operation(keydown);
+	player->DrawAnime(0,0);	//アニメーション描画
 
 	//▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼ 画面遷移の処理 ▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼
 	if (keydown->IsKeyDown(KEY_INPUT_SPACE))
