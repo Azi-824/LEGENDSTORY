@@ -58,7 +58,7 @@ FONT::FONT(const char *dir,const char *filename,const char *name)
 FONT::~FONT()
 {
 
-	if (RemoveFontResourceEx(this->FilePath.c_str(), FR_PRIVATE, NULL))	//失敗時
+	if (RemoveFontResourceEx(this->FilePath.c_str(), FR_PRIVATE, NULL) == 0)	//失敗時
 	{
 
 		MessageBox(NULL, "remove failure", "", MB_OK);				//エラーメッセージ
