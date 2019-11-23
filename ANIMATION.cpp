@@ -29,6 +29,8 @@ ANIMATION::ANIMATION(const char *dir, const char *name, int SplitNumALL, int Spr
 
 	this->ChangeMaxCnt = PLAYER_YOKO_CNT;						//アニメーションするフレームの最大値
 	this->ChangeCnt = 0;										//アニメーションするフレームのカウント
+	this->ChangeCntMax = 5;
+	this->ChangeCntNow = 0;
 
 	this->IsAnimeLoop = IsLoop;		//アニメーションはループする？
 	this->IsAnimeStop = false;		//アニメーションを動かす
@@ -127,17 +129,36 @@ void ANIMATION::Draw(int X, int Y,int Dist,bool animetion)
 {
 	if (animetion)	//アニメーションで描画する場合
 	{
-		if (this->ChangeCnt < this->ChangeMaxCnt-1)	//最後の画像じゃないとき
+		if (*this->Handle_itr == this->Handle[Dist+ChangeCnt])
 		{
-			DrawGraph(X, Y, *this->Handle_itr, TRUE);	//描画
-			this->ChangeCnt++; //カウントアップ
-			this->Handle_itr++;//次の画像
-			
+			if (this->ChangeCntNow < this->ChangeCntMax)
+			{
+				this->ChangeCntNow++;
+				DrawGraph(X, Y, *this->Handle_itr, TRUE);	//描画
+			}
+			else
+			{
+				if (this->ChangeCnt < this->ChangeMaxCnt - 1)	//最後の画像じゃないとき
+				{
+					DrawGraph(X, Y, *this->Handle_itr, TRUE);	//描画
+					this->ChangeCnt++; //カウントアップ
+					this->Handle_itr++;//次の画像
+
+				}
+				else
+				{
+					DrawGraph(X, Y, *this->Handle_itr, TRUE);	//描画
+					this->ChangeCnt = 0;	//カウントリセット
+				}
+				this->ChangeCntNow = 0;		//カウントリセット
+
+			}
+
 		}
 		else
 		{
-			this->Handle_itr = this->Handle.begin()+Dist;
-			this->ChangeCnt = 0;	//カウントリセット
+			DrawGraph(X, Y, *this->Handle_itr, TRUE);	//描画
+			this->Handle_itr = this->Handle.begin() + Dist + ChangeCnt;
 		}
 
 	}

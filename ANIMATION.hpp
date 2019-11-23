@@ -52,6 +52,8 @@ private:
 	double NextChangeSpeed;		//アニメーションを変更する速さ(秒)
 	int ChangeMaxCnt;			//アニメーションするフレームの最大値
 	int ChangeCnt;				//アニメーションするフレームのカウント
+	int ChangeCntNow;			//チェンジカウント
+	int ChangeCntMax;			//チェンジカウント最大値
 
 	bool IsAnimeLoop;			//アニメーションはループする？
 	bool IsAnimeStop;			//アニメーションはストップしたか？

@@ -226,6 +226,7 @@ void PLAYER::Operation(KEYDOWN *keydown)
 //描画
 void PLAYER::DrawAnime()
 {
+
 	if (this->IsKeyDown)		//キーボードが押されているとき
 	{
 		this->Anime->Draw(this->Collision->Left, this->Collision->Top, this->Dist, true);	//アニメーションで描画
