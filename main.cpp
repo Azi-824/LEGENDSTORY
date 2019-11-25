@@ -13,6 +13,7 @@
 #include "COLLISION.hpp"
 #include "PLAYER.hpp"
 #include "MAP.hpp"
+#include "MAPIMAGE.hpp"
 
 
 //########## グローバルオブジェクト ##########
@@ -22,11 +23,11 @@ IMAGE *title;
 IMAGE *back;		//背景画像
 FONT *font;
 PLAYER *player;
-MAP *mapImage;		//マップデータ
+MAPIMAGE *mapimage;					//マップチップのデータ
+MAP *mapdata[MAP_LAYER_KIND];		//マップデータ
 
 //############## グローバル変数 ##############
 int GameSceneNow = (int)GAME_SCENE_TITLE;	//現在のゲームシーン
-
 
 //########## プログラムで最初に実行される関数 ##########
 int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine, int nCmdShow)
@@ -58,8 +59,15 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 	if (player->SetAnime(MY_ANIME_DIR_PLAYER, MY_ANIME_NAME_PLAYER, PLAYER_ALL_CNT, PLAYER_YOKO_CNT, PLAYER_TATE_CNT, PLAYER_WIDTH, PLAYER_HEIGHT, PLAYER_ANI_SPEED, true) == false) { return -1; } //読み込み失敗
 	player->SetInit();	//初期設定
 
-	mapImage = new MAP();
-	if (mapImage->LoadCsv(MY_MAP_DIR, MY_MAP_1) == false) { return -1; }		//読み込み失敗
+	mapimage = new MAPIMAGE();	//マップチップ生成
+	if (mapimage->GetIsLoad() == false) { return -1; }	//読み込み失敗
+
+	mapdata[FIRST_LAYER] = new MAP();	//一層目のマップデータ生成
+	if (mapdata[FIRST_LAYER]->LoadCsv(MY_MAP_DIR, MY_MAP_1) == false) { return -1; }		//読み込み失敗
+
+	mapdata[SECOND_LAYER] = new MAP();	//二層目のマップデータ生成
+	if (mapdata[SECOND_LAYER]->LoadCsv(MY_MAP_DIR, MY_MAP_2) == false) { return -1; }		//読み込み失敗
+
 
 	//▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲ 読み込み処理 ▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲
 
@@ -120,6 +128,12 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 	delete font;			//fontを破棄
 	delete player;			//playerを破棄
 	delete back;			//backを破棄
+	delete mapimage;		//mapimageを破棄
+
+	for (int cnt = 0; cnt < MAP_LAYER_KIND; cnt++)
+	{
+		delete mapdata[cnt];	//mapdataを破棄
+	}
 
 	DxLib_End();			//ＤＸライブラリ使用の終了処理
 
@@ -152,12 +166,15 @@ void Title()
 //プレイ画面の処理
 void Play()
 {
-
-	mapImage->Draw();	//マップ描画
+	//マップ描画処理
+	for (int cnt = 0; cnt < MAP_LAYER_KIND; cnt++)
+	{
+		mapdata[cnt]->Draw(mapimage->GetHandle((int)FILED));		//マップ描画
+	}
 
 	int width = font->GetWidth("PUSH SPACE");						//横幅取得
 
-	font->Draw(GAME_WIDTH / 2 - width / 2, 500, "PUSH SPACE");			//文字列描画
+	font->Draw(GAME_WIDTH / 2 - width / 2, 500, "PUSH SPACE");		//文字列描画
 
 
 	player->Operation(keydown);	//プレイヤーキー操作

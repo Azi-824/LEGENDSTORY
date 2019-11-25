@@ -8,69 +8,12 @@
 //コンストラクタ
 MAP::MAP()
 {
-	//メンバ変数初期化
-	this->FilePath = "";		//ファイルパス
-	this->FileName = "";		//ファイル名
-
-	for (int i = 0; i < MAP_BUN_TATE * MAP_BUN_YOKO; i++)
-	{
-		this->Handle[i] = 0;	//ハンドル
-		this->X[i] = 0;			//X位置
-		this->Y[i] = 0;			//Y位置
-		this->Width[i] = 0;		//幅
-		this->Height[i] = 0;	//高さ
-	}
-
-	for (int tate = 0; tate < MAP_TATE; tate++)
-	{
-		for (int yoko = 0; yoko < MAP_YOKO; yoko++)
-		{
-			MapData[tate][yoko] = 0;	//マップデータ
-		}
-	}
-
-	//マップ画像を読み込み
-	std::string LoadfilePath;		//画像のファイルパスを作成
-	LoadfilePath += MY_MAP_IMG_DIR;
-	LoadfilePath += MY_MAP_IMAGE;
-
-	//画像を分割して読み込み
-	LoadDivGraph(LoadfilePath.c_str(), MAP_BUN_TATE * MAP_BUN_YOKO, MAP_BUN_YOKO, MAP_BUN_TATE, MAP_YOKO_SIZE, MAP_TATE_SIZE, &this->Handle[0]);
-
-	if (this->Handle[0] == -1)	//画像が読み込めなかったとき
-	{
-		std::string ErrorMsg(MAP_ERROR_MSG);	//エラーメッセージ作成
-		ErrorMsg += TEXT('\n');						//改行
-		ErrorMsg += LoadfilePath;					//画像のパス
-
-		MessageBox(
-			NULL,
-			ErrorMsg.c_str(),	//char * を返す
-			TEXT(MAP_ERROR_TTILE),
-			MB_OK);
-
-		return;
-	}
-
-	for (int i = 0; i < MAP_BUN_TATE * MAP_BUN_YOKO; i++)
-	{
-		GetGraphSize(
-			this->Handle[0],	//このハンドルの画像の大きさを取得
-			&this->Width[0],		//Widthのアドレスを渡す
-			&this->Height[0]		//Heightのアドレスを渡す
-		);
-
-	}
 	return;
 }
 
 //デストラクタ
 MAP::~MAP()
 {
-	for (int i = 0; i < MAP_BUN_TATE * MAP_BUN_YOKO; i++)
-	{
-		DeleteGraph(this->Handle[i]);	//ハンドル削除
-	}
 	return;
 }
 
@@ -112,13 +55,13 @@ bool MAP::LoadCsv(const char *dir, const char *name)
 }
 
 //描画
-void MAP::Draw()
+void MAP::Draw(int *handle)
 {
 	for (int tate = 0; tate < MAP_TATE; tate++)
 	{
 		for (int yoko = 0; yoko < MAP_YOKO; yoko++)
 		{
-			DrawGraph(yoko*MAP_YOKO_SIZE, tate*MAP_TATE_SIZE, this->Handle[this->MapData[tate][yoko]], TRUE);	//マップ描画
+			DrawGraph(yoko*MAP_YOKO_SIZE, tate*MAP_TATE_SIZE, handle[this->MapData[tate][yoko]], TRUE);	//マップ描画
 		}
 	}
 
