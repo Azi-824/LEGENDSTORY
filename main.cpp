@@ -12,14 +12,17 @@
 #include "CHARACTOR.hpp"
 #include "COLLISION.hpp"
 #include "PLAYER.hpp"
+#include "MAP.hpp"
 
 
 //########## グローバルオブジェクト ##########
 FPS *fps = new FPS(GAME_FPS_SPEED);							//FPSクラスのオブジェクトを生成
 KEYDOWN *keydown = new KEYDOWN();							//KEYDOWNクラスのオブジェクトを生成
 IMAGE *title;
+IMAGE *back;		//背景画像
 FONT *font;
 PLAYER *player;
+MAP *mapImage;		//マップデータ
 
 //############## グローバル変数 ##############
 int GameSceneNow = (int)GAME_SCENE_TITLE;	//現在のゲームシーン
@@ -44,6 +47,9 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 	title = new IMAGE(MY_IMG_DIR_TITLE, MY_ING_NAME_TITLE);			//タイトル画像を生成
 	if (title->GetIsLoad() == false) { return -1; }					//読み込み失敗時
 
+	back = new IMAGE(MY_IMG_DIR_BACK, MY_IMG_NAME_BACK);			//背景画像を生成
+	if (back->GetIsLoad() == false) { return -1; }					//読み込み失敗時
+
 	font = new FONT(MY_FONT_DIR, MY_FONT_NAME, FONT_NAME);			//フォントを生成
 	if (font->GetIsLoad() == false) { return -1; }					//読み込み失敗時
 
@@ -51,6 +57,9 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 	if (player->SetImage(MY_IMG_DIR_CHARCTOR, MY_IMG_NAME_PLAYER) == false) { return -1; }	//読み込み失敗
 	if (player->SetAnime(MY_ANIME_DIR_PLAYER, MY_ANIME_NAME_PLAYER, PLAYER_ALL_CNT, PLAYER_YOKO_CNT, PLAYER_TATE_CNT, PLAYER_WIDTH, PLAYER_HEIGHT, PLAYER_ANI_SPEED, true) == false) { return -1; } //読み込み失敗
 	player->SetInit();	//初期設定
+
+	mapImage = new MAP();
+	if (mapImage->LoadCsv(MY_MAP_DIR, MY_MAP_1) == false) { return -1; }		//読み込み失敗
 
 	//▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲ 読み込み処理 ▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲
 
@@ -109,7 +118,8 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 	delete fps;				//FPSを破棄
 	delete keydown;			//keydownを破棄
 	delete font;			//fontを破棄
-	delete player;			//playerを破棄S
+	delete player;			//playerを破棄
+	delete back;			//backを破棄
 
 	DxLib_End();			//ＤＸライブラリ使用の終了処理
 
@@ -119,6 +129,8 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 //タイトル画面の処理
 void Title()
 {
+
+	back->Draw(0, 0);	//背景画像描画
 
 	title->Draw(0, GAME_HEIGHT / 2 - title->GetHeight() / 2);		//画面中央にタイトル描画
 
@@ -141,13 +153,15 @@ void Title()
 void Play()
 {
 
+	mapImage->Draw();	//マップ描画
+
 	int width = font->GetWidth("PUSH SPACE");						//横幅取得
 
 	font->Draw(GAME_WIDTH / 2 - width / 2, 500, "PUSH SPACE");			//文字列描画
 
 
-	player->Operation(keydown);
-	player->DrawAnime();	//アニメーション描画
+	player->Operation(keydown);	//プレイヤーキー操作
+	player->DrawAnime();		//アニメーション描画
 
 	//▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼ 画面遷移の処理 ▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼
 	if (keydown->IsKeyDown(KEY_INPUT_SPACE))

@@ -10,10 +10,6 @@
 #include "COLLISION.hpp"
 
 //################# マクロ定義: ファイルパス、名前 #######################
-//#define ANIME_DIR_PLAYER R"(.\MY_ANIME\walk\)"		//プレイヤーの画像フォルダの名前
-//
-//#define ANIME_NAME_PLAYER R"(player_walk.png)"		//プレイヤーの画像の名前
-//
 
 //################# クラス定義 ##################
 class PLAYER
