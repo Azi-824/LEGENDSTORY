@@ -162,6 +162,7 @@
     <ClCompile Include="MAP.cpp" />
     <ClCompile Include="MAPIMAGE.cpp" />
     <ClCompile Include="PLAYER.cpp" />
+    <ClCompile Include="TEXTSTR.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="ANIMATION.hpp" />
@@ -175,6 +176,7 @@
     <ClInclude Include="MAP.hpp" />
     <ClInclude Include="MAPIMAGE.hpp" />
     <ClInclude Include="PLAYER.hpp" />
+    <ClInclude Include="TEXTSTR.hpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

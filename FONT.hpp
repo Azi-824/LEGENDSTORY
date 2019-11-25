@@ -38,6 +38,8 @@ private:
 public:
 
 	FONT(const char *,const char *,const char *);		//コンストラクタ
+
+	FONT();									//デフォルトコンストラクタ
 	 
 	~FONT();								//デストラクタ
 

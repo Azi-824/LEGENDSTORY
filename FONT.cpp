@@ -54,6 +54,11 @@ FONT::FONT(const char *dir,const char *filename,const char *name)
 
 }
 
+FONT::FONT()
+{
+	return;
+}
+
 //デストラクタ	
 FONT::~FONT()
 {
@@ -108,3 +113,5 @@ int FONT::GetWidth(const char *str)
 
 }
 
+//############ 外部オブジェクト ##############
+extern FONT *font;

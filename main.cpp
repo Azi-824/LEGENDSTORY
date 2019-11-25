@@ -14,6 +14,7 @@
 #include "PLAYER.hpp"
 #include "MAP.hpp"
 #include "MAPIMAGE.hpp"
+#include "TEXTSTR.hpp"
 
 
 //########## グローバルオブジェクト ##########
@@ -21,7 +22,7 @@ FPS *fps = new FPS(GAME_FPS_SPEED);							//FPSクラスのオブジェクトを生成
 KEYDOWN *keydown = new KEYDOWN();							//KEYDOWNクラスのオブジェクトを生成
 IMAGE *title;
 IMAGE *back;		//背景画像
-FONT *font;
+//FONT *font;
 PLAYER *player;
 MAPIMAGE *mapimage;					//マップチップのデータ
 MAP *mapdata[MAP_LAYER_KIND];		//マップデータ
@@ -51,8 +52,8 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 	back = new IMAGE(MY_IMG_DIR_BACK, MY_IMG_NAME_BACK);			//背景画像を生成
 	if (back->GetIsLoad() == false) { return -1; }					//読み込み失敗時
 
-	font = new FONT(MY_FONT_DIR, MY_FONT_NAME, FONT_NAME);			//フォントを生成
-	if (font->GetIsLoad() == false) { return -1; }					//読み込み失敗時
+	//font = new FONT(MY_FONT_DIR, MY_FONT_NAME, FONT_NAME);			//フォントを生成
+	//if (font->GetIsLoad() == false) { return -1; }					//読み込み失敗時
 
 	player = new PLAYER();
 	if (player->SetImage(MY_IMG_DIR_CHARCTOR, MY_IMG_NAME_PLAYER) == false) { return -1; }	//読み込み失敗
@@ -125,7 +126,7 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 	delete title;			//titleを破棄
 	delete fps;				//FPSを破棄
 	delete keydown;			//keydownを破棄
-	delete font;			//fontを破棄
+	//delete font;			//fontを破棄
 	delete player;			//playerを破棄
 	delete back;			//backを破棄
 	delete mapimage;		//mapimageを破棄
@@ -148,9 +149,11 @@ void Title()
 
 	title->Draw(0, GAME_HEIGHT / 2 - title->GetHeight() / 2);		//画面中央にタイトル描画
 
-	int width = font->GetWidth("PUSH ENTER");						//横幅取得
+	//char text[2][128] = { "START","END" };
 
-	font->Draw(GAME_WIDTH/2 - width/2, 500, "PUSH ENTER");			//文字列描画
+	//int width = font->GetWidth("PUSH ENTER");						//横幅取得
+
+	//font->Draw(GAME_WIDTH/2 - width/2, 500, "PUSH ENTER");			//文字列描画
 	
 
 	//▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼ 画面遷移の処理 ▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼
@@ -172,9 +175,9 @@ void Play()
 		mapdata[cnt]->Draw(mapimage->GetHandle((int)FILED));		//マップ描画
 	}
 
-	int width = font->GetWidth("PUSH SPACE");						//横幅取得
+	//int width = font->GetWidth("PUSH SPACE");						//横幅取得
 
-	font->Draw(GAME_WIDTH / 2 - width / 2, 500, "PUSH SPACE");		//文字列描画
+	//font->Draw(GAME_WIDTH / 2 - width / 2, 500, "PUSH SPACE");		//文字列描画
 
 
 	player->Operation(keydown);	//プレイヤーキー操作
@@ -195,9 +198,9 @@ void Play()
 void End()
 {
 
-	int width = font->GetWidth("PUSH BACK");						//横幅取得
-
-	font->Draw(GAME_WIDTH / 2 - width / 2, 500, "PUSH BACK");			//文字列描画
+	//int width = font->GetWidth("PUSH BACK");						//横幅取得
+	
+	//font->Draw(GAME_WIDTH / 2 - width / 2, 500, "PUSH BACK");			//文字列描画
 
 
 	//▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼ 画面遷移の処理 ▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼
