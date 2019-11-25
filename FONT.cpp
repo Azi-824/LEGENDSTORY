@@ -85,33 +85,3 @@ void FONT::SetSize(int size)
 
 	return;
 }
-
-//文字描画
-//引数1:描画するX位置
-//引数2:描画するY位置
-//引数3:描画する文字列
-void FONT::Draw(int x,int y,const char *str)
-{
-
-	DrawString(x, y, str, GetColor(255, 255, 255));		//文字描画
-
-	return;
-}
-
-//文字列の横幅を取得
-//引数1:横幅を取得したい文字列
-int FONT::GetWidth(const char *str)
-{
-	int Strlen = 0;		//文字列の長さ取得用
-	
-	//文字列の長さを取得
-	Strlen = strlen(str);
-
-	this->Width = GetDrawStringWidth(str, Strlen);		//横幅取得
-
-	return this->Width;	//横幅を返す
-
-}
-
-//############ 外部オブジェクト ##############
-extern FONT *font;
