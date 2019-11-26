@@ -157,7 +157,7 @@ void Title()
 
 	text->SetText(str);		//描画文字セット
 
-	text->Draw(GAME_WIDTH / 2 - text->GetWidth() / 2, 500, 0,str.size());	//描画
+	text->Draw(GAME_WIDTH / 2 - text->GetWidth() / 2, 500,str.size());	//描画
 
 	//▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼ 画面遷移の処理 ▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼
 	if (keydown->IsKeyDown(KEY_INPUT_RETURN))
@@ -182,7 +182,7 @@ void Play()
 	
 	text->SetText(str);		//文字列セット
 	
-	text->Draw(GAME_WIDTH / 2 - text->GetWidth() / 2, 500,0, str.size());	//文字列描画
+	text->Draw(GAME_WIDTH / 2 - text->GetWidth() / 2, 500,str.size());	//文字列描画
 
 	player->Operation(keydown);	//プレイヤーキー操作
 	player->DrawAnime();		//アニメーション描画
@@ -206,7 +206,7 @@ void End()
 
 	text->SetText(str);		//文字列セット
 
-	text->Draw(GAME_WIDTH / 10 - text->GetWidth() / 2, 500, 0, str.size());	//文字列描画
+	text->Draw(GAME_WIDTH / 2 - text->GetWidth() / 2, 500,str.size(),GetColor(255,255,255));	//文字列描画（色指定）
 
 
 	//▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼ 画面遷移の処理 ▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼

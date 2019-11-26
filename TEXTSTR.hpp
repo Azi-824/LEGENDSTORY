@@ -19,7 +19,7 @@ private:
 
 	int Width;							//文字列の横幅
 	
-	std::vector	<std::string> Str_2;	//文字列を管理する
+	std::vector	<std::string> Str;	//文字列を管理する
 
 	bool IsFontLoad;					//フォントは読み込めたか
 
@@ -33,6 +33,8 @@ public:
 	
 	int GetWidth();									//文字列の横幅を取得
 
-	void Draw(int, int,int,int);					//描画
+	void Draw(int, int, int);					//描画
+
+	void Draw(int, int, int ,unsigned int);			//色を指定して描画
 
 };
