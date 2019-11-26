@@ -19,9 +19,7 @@ private:
 
 	int Width;							//•¶š—ñ‚Ì‰¡•
 	
-	std::vector	<std::string> Str;	//•¶š—ñ‚ğŠÇ—‚·‚é
-
-	bool IsFontLoad;					//ƒtƒHƒ“ƒg‚Í“Ç‚İ‚ß‚½‚©
+	std::vector	<std::string> Str;		//•¶š—ñ‚ğŠÇ—‚·‚é
 
 public:
 
