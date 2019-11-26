@@ -20,9 +20,6 @@ TEXTSTR::~TEXTSTR()
 	std::vector<std::string> v;			//空のvectorを作成する
 	this->Str.swap(v);				//空と中身を入れ替える
 
-	std::vector<bool> v2;
-	this->Pos.swap(v2);
-
 	return;
 }
 
@@ -52,8 +49,7 @@ void TEXTSTR::SetText(std::vector<std::string> str)
 	this->Str.resize(str.size());		//要素数を変更
 	this->Str.swap(str);				//文字列をセット
 
-	this->Pos.resize(str.size());		//要素数を変更
-	this->Pos[0] = true;				//最初は一番最初の要素を選択状態にする
+	this->Pos = this->Str.begin();	//最初は一番最初の要素を選択状態にする	
 
 	return;
 }
@@ -67,7 +63,7 @@ void TEXTSTR::Draw(int x, int y,int num)
 
 	for (int cnt = 0; cnt < num; cnt++)
 	{
-		if (this->Pos[cnt])	//選択状態だったら
+		if (*this->Pos==this->Str[cnt])	//選択状態だったら
 		{
 			DrawString(x + cnt * 100, y - 50, this->Str[cnt].c_str(), GetColor(0, 0, 0));	//上にずらして描画
 		}
@@ -76,6 +72,7 @@ void TEXTSTR::Draw(int x, int y,int num)
 			DrawString(x + cnt * 100, y, this->Str[cnt].c_str(), GetColor(0, 0, 0));	//描画
 
 		}
+
 	}
 	return;
 }
@@ -89,13 +86,13 @@ void TEXTSTR::Draw(int x, int y, int num ,unsigned int color)
 {
 	for (int cnt = 0; cnt < num; cnt++)
 	{
-		if (this->Pos[cnt])	//選択状態だったら
+		if (*this->Pos == this->Str[cnt])	//選択状態だったら
 		{
-			DrawString(x + cnt * 100, y + 100, this->Str[cnt].c_str(), GetColor(0, 0, 0));	//下にずらして描画
+			DrawString(x + cnt * 100, y - 50, this->Str[cnt].c_str(), color);	//上にずらして描画
 		}
-		else				//非選択状態だったら
+		else								//非選択状態だったら
 		{
-			DrawString(x + cnt * 100, y, this->Str[cnt].c_str(), GetColor(0, 0, 0));	//描画
+			DrawString(x + cnt * 100, y, this->Str[cnt].c_str(), color);		//描画
 
 		}
 	}
@@ -103,8 +100,22 @@ void TEXTSTR::Draw(int x, int y, int num ,unsigned int color)
 	return;
 }
 
-//指定された文字列が選択されているか
-bool TEXTSTR::GetPos(int num)
+//選択している文字列を次の要素に変更する
+void TEXTSTR::Next()
 {
-	return this->Pos[num];
+	if (this->Pos != this->Str.end()-1)	//最後の要素でなければ
+	{
+		this->Pos++;	//次の要素へ
+	}
+		return;
+}
+
+//選択している文字列を次の要素に変更する
+void TEXTSTR::Back()
+{
+	if (this->Pos != this->Str.begin())	//最初の要素でなければ
+	{
+		this->Pos--;	//前の要素へ
+	}
+	return;
 }

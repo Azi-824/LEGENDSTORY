@@ -30,6 +30,7 @@ MAP *mapdata[MAP_LAYER_KIND];		//マップデータ
 
 //############## グローバル変数 ##############
 int GameSceneNow = (int)GAME_SCENE_TITLE;	//現在のゲームシーン
+bool StrSet_Flg = false;					//文字列設定フラグ
 
 //########## プログラムで最初に実行される関数 ##########
 int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine, int nCmdShow)
@@ -114,8 +115,6 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 
 		}
 
-		keydown->IsKeyDown(KEY_INPUT_UP);
-
 
 		//▲▲▲▲▲ゲームのシーンここまで▲▲▲▲▲
 
@@ -155,9 +154,23 @@ void Title()
 
 	std::vector<std::string> str = { "START","END" };
 
-	text->SetText(str);		//描画文字セット
+	if (StrSet_Flg == false)
+	{
+		text->SetText(str);		//描画文字セット
+
+		StrSet_Flg = true;
+	}
 
 	text->Draw(GAME_WIDTH / 2 - text->GetWidth() / 2, 500,str.size());	//描画
+
+	if (keydown->IsKeyDown(KEY_INPUT_D))	//Dキーを押されたら
+	{
+		text->Next();	//選択を一つ次へ
+	}
+	else if (keydown->IsKeyDown(KEY_INPUT_A))	//Aキーを押されたら
+	{
+		text->Back();	//選択を一つ前へ
+	}
 
 	//▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼ 画面遷移の処理 ▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼
 	if (keydown->IsKeyDown(KEY_INPUT_RETURN))
