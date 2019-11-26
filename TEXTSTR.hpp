@@ -10,18 +10,18 @@
 
 
 //###################### マクロ定義 #########################
+#define STR_SPACE	100		//文字列間の空白
 
 //###################### クラス定義 #########################
 class TEXTSTR
 {
 private:
 
-	int Width;						//文字列の横幅
+	int Width;							//文字列の横幅
 	
 	std::vector	<std::string> Str_2;	//文字列を管理する
-	std::string Str;
 
-	bool IsFontLoad;				//フォントは読み込めたか
+	bool IsFontLoad;					//フォントは読み込めたか
 
 public:
 
@@ -29,10 +29,10 @@ public:
 
 	~TEXTSTR();		//デストラクタ	
 
-	void SetText(std::vector<std::string> , int);	//文字列をセットする
+	void SetText(std::vector<std::string>);	//文字列をセットする
 	
-	int GetWidth();				//文字列の横幅を取得
+	int GetWidth();									//文字列の横幅を取得
 
-	void Draw(int, int,int);		//描画
+	void Draw(int, int,int,int);					//描画
 
 };

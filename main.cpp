@@ -153,15 +153,11 @@ void Title()
 
 	title->Draw(0, GAME_HEIGHT / 2 - title->GetHeight() / 2);		//画面中央にタイトル描画
 
-	std::vector<std::string> st1 = { "START","END" };
+	std::vector<std::string> str = { "START","END" };
 
-	text->SetText(st1, 0);
+	text->SetText(str);		//描画文字セット
 
-	text->Draw(GAME_WIDTH / 2 - text->GetWidth() / 2, 500, st1.size());
-
-	//text->SetText("PUSH ENTER", 1);		//描画文字設定
-
-	//text->Draw(GAME_WIDTH / 2 - text->GetWidth() / 2, 500,1);		//文字列描画
+	text->Draw(GAME_WIDTH / 2 - text->GetWidth() / 2, 500, 0,str.size());	//描画
 
 	//▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼ 画面遷移の処理 ▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼
 	if (keydown->IsKeyDown(KEY_INPUT_RETURN))
@@ -182,12 +178,11 @@ void Play()
 		mapdata[cnt]->Draw(mapimage->GetHandle((int)FILED));		//マップ描画
 	}
 
-	//text->SetText("PUSH SPACE", 1);		//描画文字設定
-
-
-
-
-	text->Draw(GAME_WIDTH / 2 - text->GetWidth() / 2, 500,2);		//文字列描画
+	std::vector<std::string> str = { "PUSH SPACE" };
+	
+	text->SetText(str);		//文字列セット
+	
+	text->Draw(GAME_WIDTH / 2 - text->GetWidth() / 2, 500,0, str.size());	//文字列描画
 
 	player->Operation(keydown);	//プレイヤーキー操作
 	player->DrawAnime();		//アニメーション描画
@@ -207,9 +202,11 @@ void Play()
 void End()
 {
 
-	//text->SetText("PUSH BACK", 1);		//描画文字設定
+	std::vector<std::string> str = { "PUSH BACK" };
 
-	text->Draw(GAME_WIDTH / 2 - text->GetWidth() / 2, 500,2);		//文字列描画
+	text->SetText(str);		//文字列セット
+
+	text->Draw(GAME_WIDTH / 10 - text->GetWidth() / 2, 500, 0, str.size());	//文字列描画
 
 
 	//▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼ 画面遷移の処理 ▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼

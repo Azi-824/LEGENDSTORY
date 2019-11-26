@@ -15,6 +15,11 @@ TEXTSTR::TEXTSTR()
 //デストラクタ
 TEXTSTR::~TEXTSTR()
 {
+
+	//vectorのメモリ解放を行う
+	std::vector<std::string> v;			//空のvectorを作成する
+	this->Str_2.swap(v);				//空と中身を入れ替える
+
 	return;
 }
 
@@ -23,35 +28,40 @@ int TEXTSTR::GetWidth()
 {
 
 	int Strlen = 0;		//文字列の長さ取得用
+	std::string TotalStr;
+	for (unsigned int i = 0; i < this->Str_2.size(); i++)
+	{
+		TotalStr += this->Str_2[i].c_str();		//文字列をくっつける
+	}
 
 	//文字列の長さを取得
-	Strlen = strlen(this->Str_2.begin()->c_str());
+	Strlen = strlen(TotalStr.c_str());
 
-	this->Width = GetDrawStringWidth(this->Str_2.begin()->c_str(), Strlen);		//横幅取得
+	this->Width = GetDrawStringWidth(TotalStr.c_str(), Strlen);		//横幅取得
 
 	return this->Width;
 }
 
 //文字列をセットする
-//引数：const char *：セットする文字列
-//引数：int			：行
-void TEXTSTR::SetText(std::vector<std::string> str, int row)
+//引数：vector<string>：セットする文字列
+void TEXTSTR::SetText(std::vector<std::string> str)
 {
-	//this->Str_2.push_back(str.front().c_str());
-	//this->Str_2.assign(str.front().c_str(), str.back().c_str());
 	this->Str_2.swap(str);
+
 	return;
 }
 
 //描画
 //引数：int：X位置
 //引数：int：Y位置
-void TEXTSTR::Draw(int x, int y,int row)
+//引数：int：行数
+//引数：int：要素数
+void TEXTSTR::Draw(int x, int y,int row,int num)
 {
 
-	for (int cnt = 0; cnt < row; cnt++)
+	for (int cnt = 0; cnt < num; cnt++)
 	{
-		DrawString(x+cnt*100, y, this->Str_2[cnt].c_str(), GetColor(255, 255, 255));
+		DrawString(x + cnt * 100, y, this->Str_2[cnt].c_str(), GetColor(0, 0, 0));	//描画
 	}
 	return;
 }
