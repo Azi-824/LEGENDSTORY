@@ -21,6 +21,8 @@ private:
 	
 	std::vector	<std::string> Str;		//文字列を管理する
 
+	std::vector <bool> Pos;				//選択されているか
+
 public:
 
 	TEXTSTR();		//コンストラクタ
@@ -31,8 +33,10 @@ public:
 	
 	int GetWidth();									//文字列の横幅を取得
 
-	void Draw(int, int, int);					//描画
+	void Draw(int, int, int);						//描画
 
 	void Draw(int, int, int ,unsigned int);			//色を指定して描画
+
+	bool GetPos(int);								//指定された文字列が選択されているか
 
 };
