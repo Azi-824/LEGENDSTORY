@@ -8,6 +8,7 @@
 #include <string>
 #include <vector>
 
+
 //###################### マクロ定義 #########################
 
 //###################### クラス定義 #########################
@@ -17,7 +18,7 @@ private:
 
 	int Width;						//文字列の横幅
 	
-	//std::vector	<std::string> Str_2;	//文字列を管理する
+	std::vector	<std::string> Str_2;	//文字列を管理する
 	std::string Str;
 
 	bool IsFontLoad;				//フォントは読み込めたか
@@ -28,7 +29,7 @@ public:
 
 	~TEXTSTR();		//デストラクタ	
 
-	void SetText(const char*, int);	//文字列をセットする
+	void SetText(std::vector<std::string> , int);	//文字列をセットする
 	
 	int GetWidth();				//文字列の横幅を取得
 

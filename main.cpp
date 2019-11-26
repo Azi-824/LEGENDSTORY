@@ -153,9 +153,15 @@ void Title()
 
 	title->Draw(0, GAME_HEIGHT / 2 - title->GetHeight() / 2);		//ЙцЦ╩ТЖЙЫВ╔Г^ГCГgГЛХ`Йц
 
-	text->SetText("PUSH ENTER", 1);		//Х`ЙцХ╢ОЪР▌Тш
+	std::vector<std::string> st1 = { "START","END" };
 
-	text->Draw(GAME_WIDTH / 2 - text->GetWidth() / 2, 500,2);		//Х╢ОЪЧёХ`Йц
+	text->SetText(st1, 0);
+
+	text->Draw(GAME_WIDTH / 2 - text->GetWidth() / 2, 500, st1.size());
+
+	//text->SetText("PUSH ENTER", 1);		//Х`ЙцХ╢ОЪР▌Тш
+
+	//text->Draw(GAME_WIDTH / 2 - text->GetWidth() / 2, 500,1);		//Х╢ОЪЧёХ`Йц
 
 	//БеБеБеБеБеБеБеБеБеБеБеБеБеБеБе ЙцЦ╩СJИ┌В╠ПИЧЭ БеБеБеБеБеБеБеБеБеБеБеБеБеБеБеБеБеБеБе
 	if (keydown->IsKeyDown(KEY_INPUT_RETURN))
@@ -176,7 +182,10 @@ void Play()
 		mapdata[cnt]->Draw(mapimage->GetHandle((int)FILED));		//Г}ГbГvХ`Йц
 	}
 
-	text->SetText("PUSH SPACE", 1);		//Х`ЙцХ╢ОЪР▌Тш
+	//text->SetText("PUSH SPACE", 1);		//Х`ЙцХ╢ОЪР▌Тш
+
+
+
 
 	text->Draw(GAME_WIDTH / 2 - text->GetWidth() / 2, 500,2);		//Х╢ОЪЧёХ`Йц
 
@@ -198,7 +207,7 @@ void Play()
 void End()
 {
 
-	text->SetText("PUSH BACK", 1);		//Х`ЙцХ╢ОЪР▌Тш
+	//text->SetText("PUSH BACK", 1);		//Х`ЙцХ╢ОЪР▌Тш
 
 	text->Draw(GAME_WIDTH / 2 - text->GetWidth() / 2, 500,2);		//Х╢ОЪЧёХ`Йц
 
