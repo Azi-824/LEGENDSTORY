@@ -16,6 +16,7 @@
 //############### マクロ定義 ##################
 #define FONT_NAME		("GD-DOTFONT-DQ-OTF")				//フォントの正式名称
 #define DEFAULT_FONTSIZE	32								//デフォルトのフォントサイズ
+#define BIG_FONTSIZE		64								//フォントサイズ大
 
 
 

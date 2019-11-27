@@ -30,7 +30,9 @@ MAP *mapdata[MAP_LAYER_KIND];		//マップデータ
 
 //############## グローバル変数 ##############
 int GameSceneNow = (int)GAME_SCENE_TITLE;	//現在のゲームシーン
+
 bool StrSet_Flg = false;					//文字列設定フラグ
+bool GameEnd_Flg = false;					//ゲーム終了フラグ
 
 //########## プログラムで最初に実行される関数 ##########
 int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine, int nCmdShow)
@@ -87,6 +89,11 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 		fps->Update();				//FPSの処理[更新]
 
 		keydown->IsKeyDown(KEY_INPUT_LEFT);
+
+		if (GameEnd_Flg)		//ゲーム終了フラグが立っていたら
+		{
+			break;				//ループを抜け、ゲーム終了
+		}
 
 		//▼▼▼▼▼ゲームのシーンここから▼▼▼▼▼
 
@@ -158,24 +165,34 @@ void Title()
 	{
 		text->SetText(str);		//描画文字セット
 
-		StrSet_Flg = true;
+		StrSet_Flg = true;		//文字列設定
+
+		font->SetSize(BIG_FONTSIZE);		//フォントサイズ変更
 	}
 
-	text->Draw(GAME_WIDTH / 2 - text->GetWidth() / 2, 500,str.size());	//描画
+	text->Draw(GAME_WIDTH / 2 - text->GetWidth() / 2, DEFAULT_TEXT_Y,str.size(),true);	//描画（矢印付き）
 
-	if (keydown->IsKeyDown(KEY_INPUT_D))	//Dキーを押されたら
+	if (keydown->IsKeyDown(KEY_INPUT_S))	//Sキーを押されたら
 	{
 		text->Next();	//選択を一つ次へ
 	}
-	else if (keydown->IsKeyDown(KEY_INPUT_A))	//Aキーを押されたら
+	else if (keydown->IsKeyDown(KEY_INPUT_W))	//Wキーを押されたら
 	{
 		text->Back();	//選択を一つ前へ
 	}
 
 	//▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼ 画面遷移の処理 ▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼
-	if (keydown->IsKeyDown(KEY_INPUT_RETURN))
+	if (keydown->IsKeyDown(KEY_INPUT_RETURN))				//エンターキーを押されたら
 	{
-		GameSceneNow = (int)GAME_SCENE_PLAY;	//プレイ画面へ
+		if (*text->GetPos() == str.begin()->c_str())		//選択している文字列が"START"だったら
+		{
+			StrSet_Flg = false;						//文字列未設定
+			GameSceneNow = (int)GAME_SCENE_PLAY;	//プレイ画面へ
+		}
+		else
+		{
+			GameEnd_Flg = true;	//ゲーム終了
+		}
 	}
 	//▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲ 画面遷移の処理 ▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲
 
@@ -195,7 +212,7 @@ void Play()
 	
 	text->SetText(str);		//文字列セット
 	
-	text->Draw(GAME_WIDTH / 2 - text->GetWidth() / 2, 500,str.size());	//文字列描画
+	text->Draw(GAME_WIDTH / 2 - text->GetWidth() / 2, DEFAULT_TEXT_Y,str.size(),false);	//文字列描画（矢印なし）
 
 	player->Operation(keydown);	//プレイヤーキー操作
 	player->DrawAnime();		//アニメーション描画
@@ -219,7 +236,7 @@ void End()
 
 	text->SetText(str);		//文字列セット
 
-	text->Draw(GAME_WIDTH / 2 - text->GetWidth() / 2, 500,str.size(),GetColor(255,255,255));	//文字列描画（色指定）
+	text->Draw(GAME_WIDTH / 2 - text->GetWidth() / 2, DEFAULT_TEXT_Y,str.size(),false,GetColor(255,255,255));	//文字列描画（色指定）（矢印なし）
 
 
 	//▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼ 画面遷移の処理 ▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼
