@@ -50,8 +50,29 @@ bool MAP::LoadCsv(const char *dir, const char *name)
 	this->FilePath = LoadFilePath;
 	this->FileName = name;
 
+	//this->MapNow = MAP_1;		//1マップ目を現在のマップに指定
+
 	return true;
 
+}
+
+////現在のマップを取得
+//int MAP::GetMapNow()
+//{
+//	this->MapNow;
+//}
+
+//マップを切り替える
+void MAP::ChengeMap(PLAYER *player,int *mapnow)
+{
+	COLLISION *player_collision = player->GetCollision();	//プレイヤーの当たり判定を取得
+
+	if (player_collision->Bottom >= GAME_HEIGHT)	//画面の下に来たら
+	{
+		*mapnow =MAP_2 ;	//次のマップへ
+		player->SetPosition(0, -player_collision->Top);	//位置を修正
+	}
+	return;
 }
 
 //描画

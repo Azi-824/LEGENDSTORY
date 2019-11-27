@@ -127,6 +127,23 @@ void PLAYER::SetIsDraw(bool Isdraw)
 	return;
 }
 
+//位置を設定
+//引数：int：X位置を相対的に指定
+//引数：int：Y位置を相対的に指定
+void PLAYER::SetPosition(int x, int y)
+{
+	this->Collision->Left += x;	//X位置を設定
+	this->Collision->Top += y;	//Y位置を設定
+
+	//領域再設定
+	this->Collision->SetValue(
+		this->Collision->Left,
+		this->Collision->Top,
+		this->Collision->Width,
+		this->Collision->Height);
+
+	return;
+}
 
 //体力取得
 int PLAYER::GetHP(void)

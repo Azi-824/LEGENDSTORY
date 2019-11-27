@@ -33,13 +33,16 @@ TEXTSTR *text;						//文字列
 PLAYER *player;						//主人公
 
 MAPIMAGE *mapimage;					//マップチップのデータ
-MAP *mapdata[MAP_LAYER_KIND];		//マップデータ
+MAP *mapdata[MAP_DATA_KIND][MAP_LAYER_KIND];		//マップデータ
 
 //############## グローバル変数 ##############
 int GameSceneNow = (int)GAME_SCENE_TITLE;	//現在のゲームシーン
 
+int MapNow = MAP_1;
+
 bool StrSet_Flg = false;					//文字列設定フラグ
 bool GameEnd_Flg = false;					//ゲーム終了フラグ
+
 
 //########## プログラムで最初に実行される関数 ##########
 int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine, int nCmdShow)
@@ -79,11 +82,21 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 	mapimage = new MAPIMAGE();	//マップチップ生成
 	if (mapimage->GetIsLoad() == false) { return -1; }	//読み込み失敗
 
-	mapdata[FIRST_LAYER] = new MAP();	//一層目のマップデータ生成
-	if (mapdata[FIRST_LAYER]->LoadCsv(MY_MAP_DIR, MY_MAP_1) == false) { return -1; }		//読み込み失敗
+	//▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼ マップデータ読み込み開始 ▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼
+	mapdata[MAP_1][FIRST_LAYER] = new MAP();	//一層目のマップデータ生成
+	if (mapdata[MAP_1][FIRST_LAYER]->LoadCsv(MY_MAP_DIR, MY_MAP_1_1) == false) { return -1; }		//読み込み失敗
 
-	mapdata[SECOND_LAYER] = new MAP();	//二層目のマップデータ生成
-	if (mapdata[SECOND_LAYER]->LoadCsv(MY_MAP_DIR, MY_MAP_2) == false) { return -1; }		//読み込み失敗
+	mapdata[MAP_1][SECOND_LAYER] = new MAP();	//二層目のマップデータ生成
+	if (mapdata[MAP_1][SECOND_LAYER]->LoadCsv(MY_MAP_DIR, MY_MAP_1_2) == false) { return -1; }	//読み込み失敗
+
+	mapdata[MAP_2][FIRST_LAYER] = new MAP();	//一層目のマップデータ生成
+	if (mapdata[MAP_2][FIRST_LAYER]->LoadCsv(MY_MAP_DIR, MY_MAP_2_1) == false) { return -1; }		//読み込み失敗
+
+	mapdata[MAP_2][SECOND_LAYER] = new MAP();	//二層目のマップデータ生成
+	if (mapdata[MAP_2][SECOND_LAYER]->LoadCsv(MY_MAP_DIR, MY_MAP_2_2) == false) { return -1; }	//読み込み失敗
+
+
+	//▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲ マップデータ読み込みここまで ▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲
 
 
 	//▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲ 読み込み処理 ▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲
@@ -154,7 +167,7 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 
 	for (int cnt = 0; cnt < MAP_LAYER_KIND; cnt++)
 	{
-		delete mapdata[cnt];	//mapdataを破棄
+		delete mapdata[cnt][cnt];	//mapdataを破棄
 	}
 
 	DxLib_End();			//ＤＸライブラリ使用の終了処理
@@ -224,7 +237,8 @@ void Play()
 	//マップ描画処理
 	for (int cnt = 0; cnt < MAP_LAYER_KIND; cnt++)
 	{
-		mapdata[cnt]->Draw(mapimage->GetHandle((int)FILED));		//マップ描画
+		mapdata[MapNow][cnt]->Draw(mapimage->GetHandle((int)FILED));		//マップ描画
+		mapdata[MapNow][cnt]->ChengeMap(player,&MapNow);
 	}
 
 	std::vector<std::string> str = { "PUSH SPACE" };

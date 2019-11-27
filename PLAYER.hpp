@@ -48,6 +48,7 @@ public:
 	void SetIsArive(bool);	//生きているかを設定
 	void SetIsDraw(bool);	//描画してよいかを設定
 	void SetKeyOperation(bool); //キーボードで操作できるか設定
+	void SetPosition(int, int);	//位置を設定
 
 
 
