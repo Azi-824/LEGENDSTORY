@@ -15,16 +15,23 @@
 #include "MAP.hpp"
 #include "MAPIMAGE.hpp"
 #include "TEXTSTR.hpp"
+#include "MUSIC.hpp"
 
 
 //########## グローバルオブジェクト ##########
 FPS *fps = new FPS(GAME_FPS_SPEED);							//FPSクラスのオブジェクトを生成
 KEYDOWN *keydown = new KEYDOWN();							//KEYDOWNクラスのオブジェクトを生成
+
 IMAGE *title;						//タイトル画像
 IMAGE *back;						//背景画像
+
+MUSIC *bgm;							//BGM
+
 FONT *font;							//フォント
 TEXTSTR *text;						//文字列
+
 PLAYER *player;						//主人公
+
 MAPIMAGE *mapimage;					//マップチップのデータ
 MAP *mapdata[MAP_LAYER_KIND];		//マップデータ
 
@@ -55,6 +62,9 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 
 	back = new IMAGE(MY_IMG_DIR_BACK, MY_IMG_NAME_BACK);			//背景画像を生成
 	if (back->GetIsLoad() == false) { return -1; }					//読み込み失敗時
+
+	bgm = new MUSIC(MY_MUSIC_DIR_BGM, MY_MUSIC_NAME_BGM);			//BGMを生成
+	if (bgm->GetIsLoad() == false) { return -1; }					//読み込み失敗時
 
 	font = new FONT(MY_FONT_DIR, MY_FONT_NAME, FONT_NAME);			//フォントを生成
 	if (font->GetIsLoad() == false) { return -1; }					//読み込み失敗時
@@ -137,6 +147,7 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 	delete keydown;			//keydownを破棄
 	delete font;			//fontを破棄
 	delete text;			//textを破棄
+	delete bgm;				//bgmを破棄
 	delete player;			//playerを破棄
 	delete back;			//backを破棄
 	delete mapimage;		//mapimageを破棄
@@ -154,6 +165,11 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 //タイトル画面の処理
 void Title()
 {
+	if (bgm->GetIsPlay() == false)	//再生中じゃないとき
+	{
+		bgm->ChengeVolume(255 * 50 / 100);	//BGMの音量を50%に変更
+		bgm->Play();				//BGMを再生
+	}
 
 	back->Draw(0, 0);	//背景画像描画
 
