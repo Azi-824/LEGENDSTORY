@@ -165,11 +165,14 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 //タイトル画面の処理
 void Title()
 {
+	//▼▼▼▼▼▼▼▼▼▼▼▼▼▼ 音の再生処理ここから ▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼
 	if (bgm->GetIsPlay() == false)	//再生中じゃないとき
 	{
 		bgm->ChengeVolume(255 * 50 / 100);	//BGMの音量を50%に変更
 		bgm->Play();				//BGMを再生
 	}
+	//▲▲▲▲▲▲▲▲▲▲▲▲▲▲ 音の再生処理ここまで ▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲
+
 
 	back->Draw(0, 0);	//背景画像描画
 
