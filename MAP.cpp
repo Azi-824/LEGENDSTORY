@@ -50,19 +50,13 @@ bool MAP::LoadCsv(const char *dir, const char *name)
 	this->FilePath = LoadFilePath;
 	this->FileName = name;
 
-	//this->MapNow = MAP_1;		//1マップ目を現在のマップに指定
-
 	return true;
 
 }
 
-////現在のマップを取得
-//int MAP::GetMapNow()
-//{
-//	this->MapNow;
-//}
-
 //マップを切り替える
+//引数：PLAYER：主人公の情報
+//引数：int	　：現在のマップのX座標とY座標の情報
 void MAP::ChengeMap(PLAYER *player,int *mapnowpos)
 {
 	COLLISION *player_collision = player->GetCollision();	//プレイヤーの当たり判定を取得

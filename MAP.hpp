@@ -78,8 +78,6 @@ public :
 
 	void ChengeMap(PLAYER *,int *);				//マップを切り替える
 
-	//int GetMapNow();						//現在のマップを取得
-
 	void Draw(int *);		//描画
 
 };
