@@ -18,6 +18,8 @@ MENU::MENU()
 	this->Width = 100;	//‰Šú•‚ğ100‚Åİ’è
 	this->Height = 180;	//‰Šú‚‚³‚ğ180‚Åİ’è
 
+	this->StrHeight = GetFontSize();	//‚‚³‚ğæ“¾
+
 	return;
 
 }
@@ -44,12 +46,43 @@ void MENU::Draw()
 
 	int cnt = 0;	//•`‰æˆÊ’u—p
 	
+	auto w_itr = this->Menu_itr;	//‘Ş”ğ—p
+
 	for (this->Menu_itr=this->Menu.begin();this->Menu_itr!=this->Menu.end();++this->Menu_itr)
 	{
-		DrawFormatString(this->X, this->Y + cnt * MENU_SPACE, GetColor(255, 255, 255), "%s\n", this->Menu_itr->c_str());	//•¶š•`‰æ
+		if (w_itr == this->Menu_itr)			//‘I‘ğ’†‚Ì—v‘f‚¾‚Á‚½‚ç
+		{
+			DrawFormatString(this->X + 10, this->Y + cnt * MENU_SPACE, GetColor(255, 255, 255), "%s\n", this->Menu_itr->c_str());	//‰E‚É‚¸‚ç‚µ‚Ä•`‰æ
+		}
+		else
+		{
+			DrawFormatString(this->X, this->Y + cnt * MENU_SPACE, GetColor(255, 255, 255), "%s\n", this->Menu_itr->c_str());	//•¶š•`‰æ
+		}
 		cnt++;
 	}
 
+	this->Menu_itr = w_itr;		//‘I‘ğ—v‘f‚ğŒ³‚É–ß‚·
+
 	return;
 
+}
+
+//‘I‘ğ—v‘f‚ğŸ‚ÖˆÚ“®
+void MENU::Next()
+{
+	if (this->Menu_itr != this->Menu.end() - 1)	//ÅŒã‚Ì—v‘f‚Å–³‚¯‚ê‚Î
+	{
+		this->Menu_itr++;	//Ÿ‚Ì—v‘f‚Ö
+	}
+	return;
+}
+
+//‘I‘ğ—v‘f‚ğ‘O‚ÖˆÚ“®
+void MENU::Back()
+{
+	if (this->Menu_itr != this->Menu.begin())	//Å‰‚Ì—v‘f‚Å‚È‚¯‚ê‚Î
+	{
+		this->Menu_itr--;	//‘O‚Ì—v‘f‚Ö
+	}
+	return;
 }

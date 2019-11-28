@@ -25,6 +25,8 @@ private :
 	int Width;		//メニューウィンドウの枠の横幅
 	int Height;		//メニューウィンドウの枠の高さ
 
+	int StrHeight;	//文字列の高さ
+
 public:
 
 	MENU();			//コンストラクタ
@@ -32,5 +34,11 @@ public:
 	~MENU();		//デストラクタ
 
 	void Draw();	//描画
+
+	void Next();	//選択要素を次へ移動
+
+	void Back();	//選択要素を前へ移動
+
+
 
 };

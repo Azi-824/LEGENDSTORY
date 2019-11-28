@@ -209,35 +209,35 @@ void PLAYER::Operation(KEYDOWN *keydown)
 
 	if (this->IsMenu ==false && keydown->IsKeyDown(KEY_INPUT_W))		//メニュー描画中でなく、Wキーを押しているとき
 	{
-		this->IsKeyDown = true;
-		this->Dist = BACK;	//移動方向を上にする
-		this->MoveUp();							//上へ移動
+		this->IsKeyDown = true;		//キー入力あり
+		this->Dist = BACK;			//移動方向を上にする
+		this->MoveUp();				//上へ移動
 	}
 	else if (this->IsMenu == false && keydown->IsKeyDown(KEY_INPUT_S))	//メニュー描画中でなく、Sキーを押しているとき
 	{
-		this->IsKeyDown = true;
-		this->Dist = FLONT;	//移動方向下
-		this->MoveDown();						//下へ移動
+		this->IsKeyDown = true;		//キー入力あり
+		this->Dist = FLONT;			//移動方向下
+		this->MoveDown();			//下へ移動
 	}
 	else if (this->IsMenu == false && keydown->IsKeyDown(KEY_INPUT_A))	//メニュー描画中でなく、Aキーを押しているとき
 	{
-		this->IsKeyDown = true;
-		this->Dist = LEFT;	//移動方向左
-		this->MoveLeft();						//左へ移動
+		this->IsKeyDown = true;		//キー入力あり
+		this->Dist = LEFT;			//移動方向左
+		this->MoveLeft();			//左へ移動
 	}
 	else if (this->IsMenu == false && keydown->IsKeyDown(KEY_INPUT_D))	//メニュー描画中でなく、Dキーを押しているとき
 	{
-		this->IsKeyDown = true;
-		this->Dist = RIGHT;	//移動方向右
-		this->MoveRight();						//右へ移動
+		this->IsKeyDown = true;		//キー入力あり
+		this->Dist = RIGHT;			//移動方向右
+		this->MoveRight();			//右へ移動
 	}
 	else if (keydown->IsKeyDown(KEY_INPUT_Q))	//Qキーを押しているとき
 	{
-		this->IsMenu = true;	//メニュー描画開始
+		this->IsMenu = true;		//メニュー描画開始
 	}
 	else
 	{
-		this->IsKeyDown = false;
+		this->IsKeyDown = false;	//キー入力なし
 	}
 
 	if (this->IsMenu)	//メニュー描画中
@@ -245,6 +245,14 @@ void PLAYER::Operation(KEYDOWN *keydown)
 		if (keydown->IsKeyDown(KEY_INPUT_ESCAPE))	//エスケープキーを押されたら
 		{
 			this->IsMenu = false;	//メニュー描画終了
+		}
+		else if (keydown->IsKeyDownOne(KEY_INPUT_W))	//Wキーを押された瞬間
+		{
+			this->menuwindow->Back();	//前の要素へ
+		}
+		else if (keydown->IsKeyDownOne(KEY_INPUT_S))	//Sキーを押された瞬間
+		{
+			this->menuwindow->Next();	//次の要素へ
 		}
 		this->DrawMenu();	//メニューウィンドウ描画
 	}

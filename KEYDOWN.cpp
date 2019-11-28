@@ -41,6 +41,15 @@ BOOL KEYDOWN::IsKeyDown(int keycode)
 		return FALSE;
 }
 
+//キーを押した瞬間だけtrueを返す
+bool KEYDOWN::IsKeyDownOne(int keycode)
+{
+	if (this->AllKeyState[keycode] == 1)
+		return true;
+	else
+		return false;
+}
+
 //コンストラクタ
 KEYDOWN::KEYDOWN()
 {

@@ -22,6 +22,8 @@ public:
 	//引　数：キーコード
 	BOOL IsKeyDown(int);
 
+	bool IsKeyDownOne(int);	//キーを押した瞬間だけtrueを返す
+
 public:
 	KEYDOWN();			//コンストラクタ
 	virtual ~KEYDOWN();	//デストラクタ
