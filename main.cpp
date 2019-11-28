@@ -264,12 +264,6 @@ void Play()
 		mapdata[MapKind[MAPPOS_Y][MAPPOS_X]][cnt]->ChengeMap(player,MapNowPos);					//マップの切り替え処理
 	}
 
-	//std::vector<std::string> str = { "PUSH SPACE" };
-	//
-	//text->SetText(str);		//文字列セット
-	//
-	//text->Draw(GAME_WIDTH / 2 - text->GetWidth() / 2, DEFAULT_TEXT_Y,str.size(),false);	//文字列描画（矢印なし）
-
 	player->Operation(keydown);	//プレイヤーキー操作
 	player->DrawAnime();		//アニメーション描画
 

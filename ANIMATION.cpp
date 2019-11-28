@@ -125,6 +125,10 @@ bool  ANIMATION::GetIsAnimeStop(void)
 }
 
 //画像を描画
+//引数：int ：X座標
+//引数：int ：Y座標
+//引数：int ：移動方向
+//引数：bool：アニメーションするか
 void ANIMATION::Draw(int X, int Y,int Dist,bool animetion)
 {
 	if (animetion)	//アニメーションで描画する場合

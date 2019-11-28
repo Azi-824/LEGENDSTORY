@@ -22,18 +22,6 @@
 #define MY_MAP_4_1		R"(map_4_1.csv)"			//マップcsvの名前
 #define MY_MAP_4_2		R"(map_4_2.csv)"			//マップcsvの名前
 
-
-
-#define MAP_LAYER_KIND	2							//マップデータのレイヤー数
-#define MAP_DATA_KIND	4							//マップデータの種類数
-#define MAP_DATA_YOKO_KIND	2						//マップデータの横方向の種類数
-#define MAP_DATA_TATE_KIND	2						//マップデータの縦方の種類数
-
-#define MAPPOS_X	MapNowPos[0]						//マップのX位置
-#define MAPPOS_Y	MapNowPos[1]						//マップのY位置
-
-#define POS_X	0									//X座標
-#define POS_Y	1									//Y座標
 //##################### マクロ定義：エラーメッセージ ####################
 
 //##################### 列挙型 #########################
@@ -55,7 +43,16 @@ enum MAP_KIND
 #define MAP_YOKO		20			//マップの数（横）
 #define MAP_TATE		15			//マップの数（縦）
 
+#define MAP_LAYER_KIND	2										//マップデータのレイヤー数
+#define MAP_DATA_KIND	MAP_DATA_YOKO_KIND * MAP_DATA_TATE_KIND	//マップデータの種類数
+#define MAP_DATA_YOKO_KIND	2									//マップデータの横方向の種類数
+#define MAP_DATA_TATE_KIND	2									//マップデータの縦方の種類数
 
+#define MAPPOS_X	MapNowPos[0]						//マップのX位置
+#define MAPPOS_Y	MapNowPos[1]						//マップのY位置
+
+#define POS_X	0									//X座標
+#define POS_Y	1									//Y座標
 
 //##################### クラス定義 ###################
 class MAP

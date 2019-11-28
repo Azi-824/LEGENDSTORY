@@ -206,21 +206,25 @@ void PLAYER::Operation(KEYDOWN *keydown)
 	if (keydown->IsKeyDown(KEY_INPUT_W))		//Wキーを押しているとき
 	{
 		this->IsKeyDown = true;
+		this->Dist = BACK;	//移動方向を上にする
 		this->MoveUp();							//上へ移動
 	}
 	else if (keydown->IsKeyDown(KEY_INPUT_S))	//Sキーを押しているとき
 	{
 		this->IsKeyDown = true;
+		this->Dist = FLONT;	//移動方向下
 		this->MoveDown();						//下へ移動
 	}
 	else if (keydown->IsKeyDown(KEY_INPUT_A))	//Aキーを押しているとき
 	{
 		this->IsKeyDown = true;
+		this->Dist = LEFT;	//移動方向左
 		this->MoveLeft();						//左へ移動
 	}
 	else if (keydown->IsKeyDown(KEY_INPUT_D))	//Dキーを押しているとき
 	{
 		this->IsKeyDown = true;
+		this->Dist = RIGHT;	//移動方向右
 		this->MoveRight();						//右へ移動
 	}
 	else
@@ -261,7 +265,6 @@ void PLAYER::MoveUp()
 	if (this->Collision->Top - this->MoveSpeed >= GAME_TOP)
 	{
 		this->Collision->Top -= this->MoveSpeed;	//当たり判定と、描画位置を上へ移動
-		this->Dist = BACK;	//移動方向を上にする
 	}
 
 	return;
@@ -273,7 +276,6 @@ void PLAYER::MoveDown()
 	if (this->Collision->Bottom + this->MoveSpeed <= GAME_HEIGHT)
 	{
 		this->Collision->Top += this->MoveSpeed;	//下へ移動
-		this->Dist = FLONT;	//移動方向下
 	}
 	return;
 }
@@ -284,7 +286,6 @@ void PLAYER::MoveLeft()
 	if (this->Collision->Left - this->MoveSpeed >= GAME_LEFT)
 	{
 		this->Collision->Left -= this->MoveSpeed;	//左へ移動
-		this->Dist = LEFT;	//移動方向左
 	}
 	return;
 }
@@ -295,7 +296,6 @@ void PLAYER::MoveRight()
 	if (this->Collision->Right + this->MoveSpeed <= GAME_WIDTH)
 	{
 		this->Collision->Left += this->MoveSpeed;	//右へ移動
-		this->Dist = RIGHT;	//移動方向右
 	}
 	return;
 }
