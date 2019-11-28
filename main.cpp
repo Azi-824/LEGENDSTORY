@@ -134,8 +134,6 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 
 		fps->Update();				//FPSの処理[更新]
 
-		keydown->IsKeyDown(KEY_INPUT_LEFT);
-
 		if (GameEnd_Flg)		//ゲーム終了フラグが立っていたら
 		{
 			break;				//ループを抜け、ゲーム終了
@@ -188,9 +186,13 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 	delete back;			//backを破棄
 	delete mapimage;		//mapimageを破棄
 
-	for (int cnt = 0; cnt < MAP_LAYER_KIND; cnt++)
+	for (int i = 0; i < MAP_DATA_KIND; i++)
 	{
-		delete mapdata[cnt][cnt];	//mapdataを破棄
+		for (int cnt = 0; cnt < MAP_LAYER_KIND; cnt++)
+		{
+			delete mapdata[i][cnt];	//mapdataを破棄
+		}
+
 	}
 
 	DxLib_End();			//ＤＸライブラリ使用の終了処理
@@ -282,17 +284,40 @@ void Play()
 void End()
 {
 
-	std::vector<std::string> str = { "PUSH BACK" };
+	std::vector<std::string> str = { "TITLE","END" };
 
-	text->SetText(str);		//文字列セット
+	if (StrSet_Flg == false)
+	{
+		text->SetText(str);		//描画文字セット
 
-	text->Draw(GAME_WIDTH / 2 - text->GetWidth() / 2, DEFAULT_TEXT_Y,str.size(),false,GetColor(255,255,255));	//文字列描画（色指定）（矢印なし）
+		StrSet_Flg = true;		//文字列設定
+	}
+
+	text->Draw(GAME_WIDTH / 2 - text->GetWidth() / 2, DEFAULT_TEXT_Y,str.size(),true,GetColor(255,255,255));	//文字列描画（色指定）（矢印あり）
+
+	if (keydown->IsKeyDown(KEY_INPUT_S))	//Sキーを押されたら
+	{
+		text->Next();	//選択を一つ次へ
+	}
+	else if (keydown->IsKeyDown(KEY_INPUT_W))	//Wキーを押されたら
+	{
+		text->Back();	//選択を一つ前へ
+	}
 
 
 	//▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼ 画面遷移の処理 ▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼
 	if (keydown->IsKeyDown(KEY_INPUT_BACK))
 	{
-		GameSceneNow = (int)GAME_SCENE_TITLE;	//タイトル画面へ
+		if (*text->GetPos() == str.begin()->c_str())		//選択している文字列が"TITLE"だったら
+		{
+			StrSet_Flg = false;						//文字列未設定
+			GameSceneNow = (int)GAME_SCENE_TITLE;	//タイトル画面へ
+		}
+		else
+		{
+			GameEnd_Flg = true;	//ゲーム終了
+		}
+
 	}
 	//▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲ 画面遷移の処理 ▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲
 
