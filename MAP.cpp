@@ -69,34 +69,34 @@ void MAP::ChengeMap(PLAYER *player,int *mapnowpos)
 
 	if (player_collision->Bottom >= GAME_HEIGHT)	//画面の下に来たら
 	{
-		if ((mapnowpos[1]) < MAP_DATA_TATE_KIND - 1)	//下のマップがある場合は
+		if ((mapnowpos[POS_Y]) < MAP_DATA_TATE_KIND - 1)	//下のマップがある場合は
 		{
-			(mapnowpos[1])++;	//下のマップへ
+			mapnowpos[POS_Y]++;	//下のマップへ
 			player->SetPosition(0, -(player_collision->Top - 5));	//位置を修正
 		}
 	}
 	else if (player_collision->Top <= GAME_TOP)		//画面の上に来たら
 	{
-		if ((mapnowpos[1]) > 0)	//上のマップがある場合は
+		if ((mapnowpos[POS_Y]) > 0)	//上のマップがある場合は
 		{
-			(mapnowpos[1])--;	//上のマップへ
+			mapnowpos[POS_Y]--;	//上のマップへ
 			player->SetPosition(0, GAME_HEIGHT- (player_collision->Height + 5));	//位置を修正
 		}
 
 	}
 	else if (player_collision->Right >= GAME_WIDTH)	//画面の右に来たら
 	{
-		if ((mapnowpos[0]) + MAP_DATA_TATE_KIND <= MAP_DATA_KIND - 1)	//横にマップがある場合は
+		if ((mapnowpos[POS_X]) + MAP_DATA_TATE_KIND <= MAP_DATA_TATE_KIND)	//横にマップがある場合は
 		{
-			(mapnowpos[0]) += MAP_DATA_TATE_KIND;	//右のマップへ
+			(mapnowpos[POS_X]) += (MAP_DATA_TATE_KIND - 1);	//右のマップへ
 			player->SetPosition(-(player_collision->Left - 5), 0);	//位置を修正
 		}
 	}
 	else if (player_collision->Left <= GAME_LEFT)		//画面の左に来たら
 	{
-		if ((mapnowpos[0]) - MAP_DATA_TATE_KIND >= 0)			//左のマップがある場合は
+		if ((mapnowpos[POS_X]) - (MAP_DATA_TATE_KIND - 1) >= 0)			//左のマップがある場合は
 		{
-			(mapnowpos[0]) -= MAP_DATA_TATE_KIND;	//左のマップへ
+			(mapnowpos[POS_X]) -= (MAP_DATA_TATE_KIND - 1);	//左のマップへ
 			player->SetPosition(GAME_WIDTH - (player_collision->Width + 5), 0);	//位置を修正
 		}
 	}

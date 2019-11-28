@@ -108,12 +108,13 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 	mapdata[MAP_4][SECOND_LAYER] = new MAP();	//二層目のマップデータ生成
 	if (mapdata[MAP_4][SECOND_LAYER]->LoadCsv(MY_MAP_DIR, MY_MAP_4_2) == false) { return -1; }	//読み込み失敗
 
-	for (int tate = 0; tate < MAP_DATA_TATE_KIND; tate++)
+	//マップの種類を二次元配列で管理
+	for (int yoko = 0; yoko < MAP_DATA_YOKO_KIND; yoko++)
 	{
 		static int cnt = 0;
-		for (int yoko = 0; yoko < MAP_DATA_YOKO_KIND; yoko++)
+		for (int tate = 0; tate < MAP_DATA_TATE_KIND; tate++)
 		{
-			MapKind[yoko][tate] = cnt;
+			MapKind[tate][yoko] = cnt;
 			cnt++;
 		}
 	}
@@ -259,8 +260,8 @@ void Play()
 	//マップ描画処理
 	for (int cnt = 0; cnt < MAP_LAYER_KIND; cnt++)
 	{
-		mapdata[MapKind[MAPPOS_X][MAPPOS_Y]][cnt]->Draw(mapimage->GetHandle((int)FILED));		//マップ描画
-		mapdata[MapKind[MAPPOS_X][MAPPOS_Y]][cnt]->ChengeMap(player,MapNowPos);
+		mapdata[MapKind[MAPPOS_Y][MAPPOS_X]][cnt]->Draw(mapimage->GetHandle((int)FILED));		//マップ描画
+		mapdata[MapKind[MAPPOS_Y][MAPPOS_X]][cnt]->ChengeMap(player,MapNowPos);
 	}
 
 	std::vector<std::string> str = { "PUSH SPACE" };
