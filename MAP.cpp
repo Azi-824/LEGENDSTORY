@@ -69,8 +69,36 @@ void MAP::ChengeMap(PLAYER *player,int *mapnow)
 
 	if (player_collision->Bottom >= GAME_HEIGHT)	//画面の下に来たら
 	{
-		*mapnow =MAP_2 ;	//次のマップへ
-		player->SetPosition(0, -player_collision->Top);	//位置を修正
+		if ((*mapnow) < MAP_DATA_TATE_KIND - 1)	//下のマップがある場合は
+		{
+			(*mapnow)++;	//下のマップへ
+			player->SetPosition(0, -(player_collision->Top - 5));	//位置を修正
+		}
+	}
+	else if (player_collision->Top <= GAME_TOP)		//画面の上に来たら
+	{
+		if ((*mapnow) > 0)	//上のマップがある場合は
+		{
+			(*mapnow)--;	//上のマップへ
+			player->SetPosition(0, GAME_HEIGHT- (player_collision->Height + 5));	//位置を修正
+		}
+
+	}
+	else if (player_collision->Right >= GAME_WIDTH)	//画面の右に来たら
+	{
+		if ((*mapnow) + MAP_DATA_TATE_KIND <= MAP_DATA_KIND - 1)	//横にマップがある場合は
+		{
+			(*mapnow) += MAP_DATA_TATE_KIND;	//右のマップへ
+			player->SetPosition(-(player_collision->Left - 5), 0);	//位置を修正
+		}
+	}
+	else if (player_collision->Left <= GAME_LEFT)		//画面の左に来たら
+	{
+		if ((*mapnow) - MAP_DATA_TATE_KIND >= 0)			//左のマップがある場合は
+		{
+			(*mapnow) -= MAP_DATA_TATE_KIND;	//左のマップへ
+			player->SetPosition(GAME_WIDTH - (player_collision->Width + 5), 0);	//位置を修正
+		}
 	}
 	return;
 }

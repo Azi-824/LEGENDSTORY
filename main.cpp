@@ -38,7 +38,8 @@ MAP *mapdata[MAP_DATA_KIND][MAP_LAYER_KIND];		//マップデータ
 //############## グローバル変数 ##############
 int GameSceneNow = (int)GAME_SCENE_TITLE;	//現在のゲームシーン
 
-int MapNow = MAP_1;
+//int MapKind[MAP_DATA_TATE_KIND][MAP_DATA_YOKO_KIND];	//マップの種類
+int MapNow = MAP_1;							//現在のマップ
 
 bool StrSet_Flg = false;					//文字列設定フラグ
 bool GameEnd_Flg = false;					//ゲーム終了フラグ
@@ -94,6 +95,18 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 
 	mapdata[MAP_2][SECOND_LAYER] = new MAP();	//二層目のマップデータ生成
 	if (mapdata[MAP_2][SECOND_LAYER]->LoadCsv(MY_MAP_DIR, MY_MAP_2_2) == false) { return -1; }	//読み込み失敗
+
+	mapdata[MAP_3][FIRST_LAYER] = new MAP();	//一層目のマップデータ生成
+	if (mapdata[MAP_3][FIRST_LAYER]->LoadCsv(MY_MAP_DIR, MY_MAP_3_1) == false) { return -1; }		//読み込み失敗
+
+	mapdata[MAP_3][SECOND_LAYER] = new MAP();	//二層目のマップデータ生成
+	if (mapdata[MAP_3][SECOND_LAYER]->LoadCsv(MY_MAP_DIR, MY_MAP_3_2) == false) { return -1; }	//読み込み失敗
+
+	mapdata[MAP_4][FIRST_LAYER] = new MAP();	//一層目のマップデータ生成
+	if (mapdata[MAP_4][FIRST_LAYER]->LoadCsv(MY_MAP_DIR, MY_MAP_4_1) == false) { return -1; }		//読み込み失敗
+
+	mapdata[MAP_4][SECOND_LAYER] = new MAP();	//二層目のマップデータ生成
+	if (mapdata[MAP_4][SECOND_LAYER]->LoadCsv(MY_MAP_DIR, MY_MAP_4_2) == false) { return -1; }	//読み込み失敗
 
 
 	//▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲ マップデータ読み込みここまで ▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲

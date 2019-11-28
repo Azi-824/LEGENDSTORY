@@ -17,10 +17,17 @@
 #define MY_MAP_1_2		R"(map_1_2.csv)"			//マップcsvの名前
 #define MY_MAP_2_1		R"(map_2_1.csv)"			//マップcsvの名前
 #define MY_MAP_2_2		R"(map_2_2.csv)"			//マップcsvの名前
+#define MY_MAP_3_1		R"(map_3_1.csv)"			//マップcsvの名前
+#define MY_MAP_3_2		R"(map_3_2.csv)"			//マップcsvの名前
+#define MY_MAP_4_1		R"(map_4_1.csv)"			//マップcsvの名前
+#define MY_MAP_4_2		R"(map_4_2.csv)"			//マップcsvの名前
+
 
 
 #define MAP_LAYER_KIND	2							//マップデータのレイヤー数
-#define MAP_DATA_KIND	2							//マップデータの種類数
+#define MAP_DATA_KIND	4							//マップデータの種類数
+#define MAP_DATA_YOKO_KIND	2						//マップデータの横方向の種類数
+#define MAP_DATA_TATE_KIND	2						//マップデータの縦方の種類数
 //##################### マクロ定義：エラーメッセージ ####################
 
 //##################### 列挙型 #########################
@@ -33,7 +40,9 @@ enum MAP_LAYER
 enum MAP_KIND
 {
 	MAP_1,				//一マップ目
-	MAP_2				//ニマップ目
+	MAP_2,				//ニマップ目
+	MAP_3,				//三マップ目
+	MAP_4				//四マップ目
 };
 
 //##################### マクロ定義 ########################
