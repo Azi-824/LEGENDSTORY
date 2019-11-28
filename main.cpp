@@ -16,6 +16,7 @@
 #include "MAPIMAGE.hpp"
 #include "TEXTSTR.hpp"
 #include "MUSIC.hpp"
+#include "MENU.hpp"
 
 
 //########## グローバルオブジェクト ##########
@@ -73,7 +74,7 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 	font = new FONT(MY_FONT_DIR, MY_FONT_NAME, FONT_NAME);			//フォントを生成
 	if (font->GetIsLoad() == false) { return -1; }					//読み込み失敗時
 
-	text = new TEXTSTR();
+	text = new TEXTSTR();	//テキスト作成
 
 	player = new PLAYER();
 	if (player->SetImage(MY_IMG_DIR_CHARCTOR, MY_IMG_NAME_PLAYER) == false) { return -1; }	//読み込み失敗
@@ -224,7 +225,7 @@ void Title()
 
 		StrSet_Flg = true;		//文字列設定
 
-		font->SetSize(BIG_FONTSIZE);		//フォントサイズ変更
+		font->SetSize(BIG_FONTSIZE);		//フォントサイズを大きくする
 	}
 
 	text->Draw(GAME_WIDTH / 2 - text->GetWidth() / 2, DEFAULT_TEXT_Y,str.size(),true);	//描画（矢印付き）
@@ -259,6 +260,8 @@ void Title()
 //プレイ画面の処理
 void Play()
 {
+	font->SetSize(DEFAULT_FONTSIZE);	//フォントサイズを標準に戻す
+
 	//マップ描画処理
 	for (int cnt = 0; cnt < MAP_LAYER_KIND; cnt++)
 	{

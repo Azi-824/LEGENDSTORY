@@ -15,9 +15,10 @@ PLAYER::PLAYER()
 //デストラクタ
 PLAYER::~PLAYER()
 {
-	delete Anime;
-	delete Collision;
-	delete Ilast;
+	delete this->Anime;
+	delete this->Collision;
+	delete this->Ilast;
+	delete this->menuwindow;
 	return;
 }
 
@@ -33,9 +34,12 @@ bool PLAYER::SetInit()
 
 	this->Ilast->SetInit();	//画像初期設定
 	this->IsKeyDown = false;//キーボード押されていない
+	this->IsMenu = false;	//メニューウィンドウ描画されていないS
 
 	this->Collision = new COLLISION();		//当たり判定の領域を作成
 	this->Collision->SetValue(GAME_LEFT, GAME_TOP, this->Anime->GetWidth(),this->Anime->GetHeight());	//当たり判定の領域を設定
+
+	this->menuwindow = new MENU();			//メニューウィンドウ作成
 
 
 	return true;
@@ -203,34 +207,48 @@ COLLISION * PLAYER::GetCollision()
 void PLAYER::Operation(KEYDOWN *keydown)
 {
 
-	if (keydown->IsKeyDown(KEY_INPUT_W))		//Wキーを押しているとき
+	if (this->IsMenu ==false && keydown->IsKeyDown(KEY_INPUT_W))		//メニュー描画中でなく、Wキーを押しているとき
 	{
 		this->IsKeyDown = true;
 		this->Dist = BACK;	//移動方向を上にする
 		this->MoveUp();							//上へ移動
 	}
-	else if (keydown->IsKeyDown(KEY_INPUT_S))	//Sキーを押しているとき
+	else if (this->IsMenu == false && keydown->IsKeyDown(KEY_INPUT_S))	//メニュー描画中でなく、Sキーを押しているとき
 	{
 		this->IsKeyDown = true;
 		this->Dist = FLONT;	//移動方向下
 		this->MoveDown();						//下へ移動
 	}
-	else if (keydown->IsKeyDown(KEY_INPUT_A))	//Aキーを押しているとき
+	else if (this->IsMenu == false && keydown->IsKeyDown(KEY_INPUT_A))	//メニュー描画中でなく、Aキーを押しているとき
 	{
 		this->IsKeyDown = true;
 		this->Dist = LEFT;	//移動方向左
 		this->MoveLeft();						//左へ移動
 	}
-	else if (keydown->IsKeyDown(KEY_INPUT_D))	//Dキーを押しているとき
+	else if (this->IsMenu == false && keydown->IsKeyDown(KEY_INPUT_D))	//メニュー描画中でなく、Dキーを押しているとき
 	{
 		this->IsKeyDown = true;
 		this->Dist = RIGHT;	//移動方向右
 		this->MoveRight();						//右へ移動
 	}
+	else if (keydown->IsKeyDown(KEY_INPUT_Q))	//Qキーを押しているとき
+	{
+		this->IsMenu = true;	//メニュー描画開始
+	}
 	else
 	{
 		this->IsKeyDown = false;
 	}
+
+	if (this->IsMenu)	//メニュー描画中
+	{
+		if (keydown->IsKeyDown(KEY_INPUT_ESCAPE))	//エスケープキーを押されたら
+		{
+			this->IsMenu = false;	//メニュー描画終了
+		}
+		this->DrawMenu();	//メニューウィンドウ描画
+	}
+
 
 	//領域再設定
 	this->Collision->SetValue(
@@ -257,6 +275,13 @@ void PLAYER::DrawAnime()
 	{
 		this->Anime->Draw(this->Collision->Left, this->Collision->Top, this->Dist, false);	//通常描画
 	}
+}
+
+//メニューウィンドウ描画
+void PLAYER::DrawMenu()
+{
+	this->menuwindow->Draw();	//メニュー描画
+	return;
 }
 
 //上へ移動

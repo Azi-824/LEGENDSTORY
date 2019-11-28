@@ -8,6 +8,7 @@
 #include "ANIMATION.hpp"
 #include "CHARACTOR.hpp"
 #include "COLLISION.hpp"
+#include "MENU.hpp"
 
 //################# マクロ定義: ファイルパス、名前 #######################
 
@@ -18,6 +19,8 @@ private:
 	ANIMATION *Anime;		//歩行画像
 	COLLISION *Collision;	//当たり判定
 	CHARACTOR *Ilast;		//立ち絵
+	MENU *menuwindow;		//メニューウィンドウ
+
 
 	int HP;					//HP
 	int ATK;				//攻撃力
@@ -31,6 +34,7 @@ private:
 	bool IsDraw;			//描画してよいか
 	bool IsKeyOperation;	//キーボードで操作できるか
 	bool IsKeyDown;			//キーボードが押されているか
+	bool IsMenu;			//メニューウィンドウが描画されているか
 
 public:
 	PLAYER();				//コンストラクタ
@@ -65,6 +69,7 @@ public:
 
 
 	void DrawAnime();			//描画
+	void DrawMenu();			//メニューウィンドウ描画
 
 	void Operation(KEYDOWN *);	//操作
 
