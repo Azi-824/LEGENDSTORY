@@ -28,6 +28,9 @@
 #define MAP_DATA_KIND	4							//マップデータの種類数
 #define MAP_DATA_YOKO_KIND	2						//マップデータの横方向の種類数
 #define MAP_DATA_TATE_KIND	2						//マップデータの縦方の種類数
+
+#define MAPPOS_X	MapNowPos[0]						//マップのX位置
+#define MAPPOS_Y	MapNowPos[1]						//マップのY位置
 //##################### マクロ定義：エラーメッセージ ####################
 
 //##################### 列挙型 #########################
@@ -59,8 +62,6 @@ private:
 	std::string FileName;				//名前
 
 	int MapData[MAP_TATE][MAP_YOKO];		//マップデータ
-
-	//int MapNow;							//現在のマップ
 
 	FILE *fp_map_csv;						//マップファイルのポインタ
 

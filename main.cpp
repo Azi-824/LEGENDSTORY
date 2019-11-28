@@ -38,8 +38,8 @@ MAP *mapdata[MAP_DATA_KIND][MAP_LAYER_KIND];		//マップデータ
 //############## グローバル変数 ##############
 int GameSceneNow = (int)GAME_SCENE_TITLE;	//現在のゲームシーン
 
-//int MapKind[MAP_DATA_TATE_KIND][MAP_DATA_YOKO_KIND];	//マップの種類
-int MapNow = MAP_1;							//現在のマップ
+int MapKind[MAP_DATA_TATE_KIND][MAP_DATA_YOKO_KIND];			//マップの種類
+int MapNowPos[2] = {0};								//現在のマップのX位置とY位置を格納
 
 bool StrSet_Flg = false;					//文字列設定フラグ
 bool GameEnd_Flg = false;					//ゲーム終了フラグ
@@ -108,6 +108,15 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 	mapdata[MAP_4][SECOND_LAYER] = new MAP();	//二層目のマップデータ生成
 	if (mapdata[MAP_4][SECOND_LAYER]->LoadCsv(MY_MAP_DIR, MY_MAP_4_2) == false) { return -1; }	//読み込み失敗
 
+	for (int tate = 0; tate < MAP_DATA_TATE_KIND; tate++)
+	{
+		static int cnt = 0;
+		for (int yoko = 0; yoko < MAP_DATA_YOKO_KIND; yoko++)
+		{
+			MapKind[yoko][tate] = cnt;
+			cnt++;
+		}
+	}
 
 	//▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲ マップデータ読み込みここまで ▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲
 
@@ -250,8 +259,8 @@ void Play()
 	//マップ描画処理
 	for (int cnt = 0; cnt < MAP_LAYER_KIND; cnt++)
 	{
-		mapdata[MapNow][cnt]->Draw(mapimage->GetHandle((int)FILED));		//マップ描画
-		mapdata[MapNow][cnt]->ChengeMap(player,&MapNow);
+		mapdata[MapKind[MAPPOS_X][MAPPOS_Y]][cnt]->Draw(mapimage->GetHandle((int)FILED));		//マップ描画
+		mapdata[MapKind[MAPPOS_X][MAPPOS_Y]][cnt]->ChengeMap(player,MapNowPos);
 	}
 
 	std::vector<std::string> str = { "PUSH SPACE" };
