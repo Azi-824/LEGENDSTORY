@@ -82,6 +82,12 @@ IMAGE::~IMAGE()
 	std::vector<int> v;			//‹ó‚Ìvector‚ğì¬‚·‚é
 	this->Handle.swap(v);		//‹ó‚Æ’†g‚ğ“ü‚ê‘Ö‚¦‚é
 
+	std::vector<int>v2;
+	this->Width.swap(v2);
+
+	std::vector<int>v3;
+	this->Height.swap(v3);
+
 	return;
 }
 
