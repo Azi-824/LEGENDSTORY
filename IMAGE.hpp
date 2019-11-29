@@ -7,6 +7,7 @@
 //########## ヘッダーファイル読み込み ##########
 #include "DxLib.h"
 #include <string>
+#include <vector>
 
 //########## マクロ定義：画像のファイルパスと名前 ##########
 #define MY_IMG_DIR_TITLE	R"(.\MY_IMG\TITLE)"				//タイトルの画像のファイルの場所
@@ -29,10 +30,14 @@ private:
 	std::string FilePath;	//パス
 	std::string FileName;	//名前
 
-	int Handle;				//ハンドル
+	std::vector<int> Handle;				//ハンドル
 
-	int Width;				//幅
-	int Height;				//高さ
+	std::vector<int> Width;					//幅
+	std::vector<int> Height;				//高さ
+
+	std::vector<int>::iterator Handle_itr;	//ハンドルのイテレータ
+	std::vector<int>::iterator Width_itr;	//幅のイテレータ
+	std::vector<int>::iterator Height_itr;	//高さのイテレータ
 
 	bool IsLoad;			//読み込めたか？
 
@@ -42,11 +47,11 @@ public:
 
 	std::string GetFileName(void);	//名前を取得
 
-	int GetWidth(void);				//幅を取得
-	int GetHeight(void);			//高さを取得
+	int GetWidth(int);				//幅を取得
+	int GetHeight(int);			//高さを取得
 
 	bool GetIsLoad(void);			//読み込めた？
 
-	void Draw(int,int);				//画像を描画
+	void Draw(int,int,int);				//画像を描画
 };
 

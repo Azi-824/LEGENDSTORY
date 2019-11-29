@@ -165,7 +165,7 @@ void CHARACTOR::Operation(KEYDOWN *keydown)
 bool CHARACTOR::SetInit()
 {
 	this->collision = new COLLISION();		//“–‚½‚è”»’è‚Ì—Ìˆæ‚ðì¬
-	this->collision->SetValue(GAME_LEFT, GAME_TOP, this->image->GetWidth(), this->image->GetHeight());	//“–‚½‚è”»’è‚Ì—Ìˆæ‚ðÝ’è
+	this->collision->SetValue(GAME_LEFT, GAME_TOP, this->image->GetWidth(0), this->image->GetHeight(0));	//“–‚½‚è”»’è‚Ì—Ìˆæ‚ðÝ’è
 
 	this->IsArive = true;	//¶‚«‚Ä‚¢‚é
 	this->IsDraw = true;	//•`‰æ‚µ‚Ä‚æ‚¢
@@ -182,7 +182,7 @@ void CHARACTOR::Draw()
 	{
 		if (this->IsDraw)	//•`‰æ‚Å‚«‚ê‚Î
 		{
-			this->image->Draw(this->collision->Left, this->collision->Top);	//‰æ‘œ•`‰æ
+			this->image->Draw(this->collision->Left, this->collision->Top,0);	//‰æ‘œ•`‰æ
 		}
 	}
 }

@@ -219,9 +219,9 @@ void Title()
 	//££££££££££££££ ‰¹‚ÌÄ¶ˆ—‚±‚±‚Ü‚Å £££££££££££££££££££
 
 
-	back->Draw(0, 0);	//”wŒi‰æ‘œ•`‰æ
+	back->Draw(0, 0,0);	//”wŒi‰æ‘œ•`‰æ
 
-	title->Draw(0, GAME_HEIGHT / 2 - title->GetHeight() / 2);		//‰æ–Ê’†‰›‚Éƒ^ƒCƒgƒ‹•`‰æ
+	title->Draw(0, GAME_HEIGHT / 2 - title->GetHeight(0) / 2,0);		//‰æ–Ê’†‰›‚Éƒ^ƒCƒgƒ‹•`‰æ
 
 	std::vector<std::string> str = { "START","END" };
 

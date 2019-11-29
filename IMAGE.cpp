@@ -15,8 +15,15 @@ IMAGE::IMAGE(const char *dir,const char *name)
 	//メンバ変数を初期化
 	this->FilePath = "";	//パス
 	this->FileName = "";	//名前
+	
+	//*this->Handle_itr= -1;	//ハンドル
 
-	this->Handle = -1;		//ハンドル
+	this->Handle.push_back(-1);		//ハンドル
+
+	this->Width.push_back(0);		//幅を初期化
+	this->Height.push_back(0);		//高さを初期化
+
+	this->Handle_itr = this->Handle.begin();	//ハンドルの先頭アドレス
 
 	this->IsLoad = false;	//読み込めたか？
 
@@ -25,9 +32,9 @@ IMAGE::IMAGE(const char *dir,const char *name)
 	LoadfilePath += dir;
 	LoadfilePath += name;
 
-	this->Handle = LoadGraph(LoadfilePath.c_str());	//画像を読み込み
+	*this->Handle_itr = LoadGraph(LoadfilePath.c_str());	//画像を読み込み
 	
-	if (this->Handle == -1)	//画像が読み込めなかったとき
+	if (*this->Handle_itr == -1)	//画像が読み込めなかったとき
 	{
 		std::string ErroeMsg(IMAGE_ERROR_MSG);	//エラーメッセージ作成
 		ErroeMsg += TEXT('\n');					//改行
@@ -46,10 +53,13 @@ IMAGE::IMAGE(const char *dir,const char *name)
 	this->FileName = name;				//画像の名前を設定
 
 	GetGraphSize(
-		this->Handle,	//このハンドルの画像の大きさを取得
-		&this->Width,	//Widthのアドレスを渡す
-		&this->Height	//Heightのアドレスを渡す
+		*this->Handle_itr,	//このハンドルの画像の大きさを取得
+		this->Width.data(),		//Widthのアドレスを渡す
+		this->Height.data()		//Heightのアドレスを渡す
 	);
+
+	this->Width_itr = this->Width.begin();		//横幅の先頭アドレス
+	this->Height_itr = this->Height.begin();	//高さの先頭アドレス
 
 	this->IsLoad = true;		//読み込めた
 
@@ -59,7 +69,15 @@ IMAGE::IMAGE(const char *dir,const char *name)
 //デストラクタ
 IMAGE::~IMAGE()
 {
-	DeleteGraph(this->Handle);		//読み込んだ画像を削除
+	for (int handle : this->Handle)
+	{
+		DeleteGraph(handle);		//読み込んだ画像を削除
+	}
+
+	//vectorのメモリ解放を行う
+	std::vector<int> v;			//空のvectorを作成する
+	this->Handle.swap(v);		//空と中身を入れ替える
+
 	return;
 }
 
@@ -70,15 +88,15 @@ std::string IMAGE::GetFileName(void)
 }
 
 //幅を取得
-int IMAGE::GetWidth(void)
+int IMAGE::GetWidth(int kind)
 {
-	return this->Width;
+	return this->Width[kind];
 }
 
 //高さを取得
-int IMAGE::GetHeight(void)
+int IMAGE::GetHeight(int kind)
 {
-	return this->Height;
+	return this->Height[kind];
 }
 
 //読み込めた？
@@ -88,9 +106,9 @@ bool IMAGE::GetIsLoad(void)
 }
 
 //画像を描画
-void IMAGE::Draw(int X,int Y)
+void IMAGE::Draw(int X,int Y,int kind)
 {
-	DrawGraph(X, Y, this->Handle, TRUE);
+	DrawGraph(X, Y, this->Handle[kind], TRUE);
 
 
 	return;
