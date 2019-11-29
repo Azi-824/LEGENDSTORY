@@ -197,6 +197,7 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 	delete bgm;				//bgm‚ğ”jŠü
 	delete player;			//player‚ğ”jŠü
 	delete back;			//back‚ğ”jŠü
+	delete back_battle;		//back_battle‚ğ”jŠü
 	delete mapimage;		//mapimage‚ğ”jŠü
 
 	for (int i = 0; i < MAP_DATA_KIND; i++)
