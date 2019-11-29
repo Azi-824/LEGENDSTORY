@@ -303,7 +303,7 @@ void Battle()
 
 	if (keydown->IsKeyDown(KEY_INPUT_RETURN))		//エンターキー押されたら
 	{
-		back_battle->ChengeImage(1);		//背景画像を変更
+		back_battle->ChengeImage(NIGHT);			//背景画像を（夜）に変更
 	}
 
 	return;

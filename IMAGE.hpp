@@ -25,6 +25,19 @@
 #define IMAGE_ERROR_TITLE "IMAGE_ERROR"					//エラータイトル
 #define IMAGE_ERROR_MSG	"画像が読み込めませんでした"	//エラーメッセージ
 
+//########## 列挙型 ################
+enum BACK_IMAGE
+{
+	TITLE_BACK,		//タイトル画面の背景画像
+	END_BACK		//エンド画面の背景画像
+};
+
+enum BATTLE_BACK
+{
+	NORMAL,			//戦闘画面の背景画像（通常）
+	NIGHT,			//戦闘画面の背景画像（夜）
+};
+
 //########## クラスの定義 ##########
 
 class IMAGE
