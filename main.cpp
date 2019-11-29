@@ -17,6 +17,7 @@
 #include "TEXTSTR.hpp"
 #include "MUSIC.hpp"
 #include "MENU.hpp"
+#include "ENEMY.hpp"
 
 
 //########## グローバルオブジェクト ##########
@@ -33,6 +34,8 @@ FONT *font;							//フォント
 TEXTSTR *text;						//文字列
 
 PLAYER *player;						//主人公
+
+ENEMY *slime;						//スライム
 
 MAPIMAGE *mapimage;					//マップチップのデータ
 MAP *mapdata[MAP_DATA_KIND][MAP_LAYER_KIND];		//マップデータ
@@ -86,6 +89,9 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 	if (player->SetImage(MY_IMG_DIR_CHARCTOR, MY_IMG_NAME_PLAYER) == false) { return -1; }	//読み込み失敗
 	if (player->SetAnime(MY_ANIME_DIR_PLAYER, MY_ANIME_NAME_PLAYER, PLAYER_ALL_CNT, PLAYER_YOKO_CNT, PLAYER_TATE_CNT, PLAYER_WIDTH, PLAYER_HEIGHT, PLAYER_ANI_SPEED, true) == false) { return -1; } //読み込み失敗
 	player->SetInit();	//初期設定
+
+	slime = new ENEMY(ENEMY_DIR, ENEMY_NAME_SLIME);	//スライム作成
+	if (slime->GetIsLoad() == false) { return -1; }	//読み込み失敗
 
 	mapimage = new MAPIMAGE();	//マップチップ生成
 	if (mapimage->GetIsLoad() == false) { return -1; }	//読み込み失敗
@@ -301,6 +307,10 @@ void Battle()
 {
 
 	back_battle->Draw(0, 0);	//背景画像を描画
+
+	slime->SetImagePos(GAME_WIDTH / 2 - slime->GetWidth() / 2, GAME_HEIGHT / 2 - slime->GetHeight() / 2);	//スライムの位置調整(画面中央)
+
+	slime->Draw();	//スライム描画
 
 	if (keydown->IsKeyDown(KEY_INPUT_RETURN))		//エンターキー押されたら
 	{

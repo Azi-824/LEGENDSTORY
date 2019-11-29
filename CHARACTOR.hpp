@@ -42,6 +42,10 @@ public:
 	void SetKeyOperation(bool); //キーボードで操作できるか設定
 	bool SetImage(const char*, const char*);//画像設定
 
+	void SetImagePos(int, int);		//画像の位置を設定する
+
+	int  GetWidth();			//横幅取得
+	int GetHeight();			//高さ取得
 	bool GetIsArive();			//生きているか取得
 	bool GetIsDraw();			//描画できるか取得
 	int GetSpeed();				//移動速度を取得

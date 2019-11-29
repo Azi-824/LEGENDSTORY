@@ -99,6 +99,33 @@ bool CHARACTOR::SetImage(const char *dir, const char *name)
 
 }
 
+//‰¡•‚ğæ“¾
+int CHARACTOR::GetWidth()
+{
+	return this->image->GetWidth();
+}
+
+//‚‚³‚ğæ“¾
+int CHARACTOR::GetHeight()
+{
+	return this->image->GetHeight();
+}
+
+//‰æ‘œ‚ÌˆÊ’u‚ğİ’è‚·‚é
+void CHARACTOR::SetImagePos(int x, int y)
+{
+	this->collision->Left = x;	//XÀ•W
+	this->collision->Top = y;	//YÀ•W
+
+	//—ÌˆæÄİ’è
+	this->collision->SetValue(
+		this->collision->Left,
+		this->collision->Top,
+		this->collision->Width,
+		this->collision->Height
+	);
+}
+
 //¶‚«‚Ä‚¢‚é‚©æ“¾
 bool CHARACTOR::GetIsArive()
 {

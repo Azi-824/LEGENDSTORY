@@ -109,6 +109,19 @@ int IMAGE::GetHeight(int kind)
 	return this->Height[kind];
 }
 
+//幅を取得（引数なし）
+int IMAGE::GetWidth()
+{
+	return this->Width.front();
+}
+
+//高さを取得（引数なし）
+int IMAGE::GetHeight()
+{
+	return this->Height.front();
+}
+
+
 //読み込めた？
 bool IMAGE::GetIsLoad(void)
 {

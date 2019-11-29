@@ -66,7 +66,10 @@ public:
 	std::string GetFileName(void);	//名前を取得
 
 	int GetWidth(int);				//幅を取得
-	int GetHeight(int);			//高さを取得
+	int GetHeight(int);				//高さを取得
+
+	int GetWidth();					//幅を取得（引数なし）
+	int GetHeight();				//高さを取得（引数なし）
 
 	bool GetIsLoad(void);			//読み込めた？
 
