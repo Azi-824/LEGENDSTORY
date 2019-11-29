@@ -156,6 +156,12 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 
 			break;
 
+		case (int)GAME_SCENE_BATTLE:	//戦闘画面だったら
+
+			Battle();					//戦闘画面の処理
+
+			break;
+
 		case (int)GAME_SCENE_END:		//エンド画面だったら
 
 			End();						//エンド画面の処理
@@ -280,6 +286,12 @@ void Play()
 	//▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲ 画面遷移の処理 ▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲
 
 
+	return;
+}
+
+//戦闘画面の処理
+void Battle()
+{
 	return;
 }
 
