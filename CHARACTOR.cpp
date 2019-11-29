@@ -182,7 +182,7 @@ void CHARACTOR::Draw()
 	{
 		if (this->IsDraw)	//•`‰æ‚Å‚«‚ê‚Î
 		{
-			this->image->Draw(this->collision->Left, this->collision->Top,0);	//‰æ‘œ•`‰æ
+			this->image->Draw(this->collision->Left, this->collision->Top);	//‰æ‘œ•`‰æ
 		}
 	}
 }

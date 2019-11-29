@@ -25,6 +25,8 @@ IMAGE::IMAGE(const char *dir,const char *name)
 
 	this->Handle_itr = this->Handle.begin();	//ハンドルの先頭アドレス
 
+	this->ImageKind = 0;	//読み込んだ画像の種類
+
 	this->IsLoad = false;	//読み込めたか？
 
 	//画像を読み込み
@@ -62,6 +64,8 @@ IMAGE::IMAGE(const char *dir,const char *name)
 	this->Height_itr = this->Height.begin();	//高さの先頭アドレス
 
 	this->IsLoad = true;		//読み込めた
+
+	this->ImageKind = this->Handle.size();	//読み込んだ数を取得
 
 	return;
 }
@@ -106,11 +110,74 @@ bool IMAGE::GetIsLoad(void)
 }
 
 //画像を描画
-void IMAGE::Draw(int X,int Y,int kind)
+void IMAGE::Draw(int X,int Y)
 {
-	DrawGraph(X, Y, this->Handle[kind], TRUE);
-
+	DrawGraph(X, Y, *this->Handle_itr, TRUE);	//描画
 
 	return;
 }
 
+//画像を追加
+//引　数：const char *：画像のディレクトリ
+//引　数：const char *：画像の名前
+void IMAGE::AddImage(const char *dir, const char *name)
+{
+
+	this->IsLoad = false;	//読み込めていない
+
+	//画像を読み込み
+	std::string LoadfilePath;	//画像のファイルパスを作成
+	LoadfilePath += dir;
+	LoadfilePath += name;
+
+	//新しい画像を入れる場所を初期化
+	this->Handle.push_back(-1);	
+	this->Width.push_back(0);
+	this->Height.push_back(0);
+
+	this->Handle_itr = this->Handle.end() -1;	//最後の要素
+
+	*this->Handle_itr= LoadGraph(LoadfilePath.c_str());	//画像を読み込み
+
+	if (*this->Handle_itr == -1)	//画像が読み込めなかったとき
+	{
+		std::string ErroeMsg(IMAGE_ERROR_MSG);	//エラーメッセージ作成
+		ErroeMsg += TEXT('\n');					//改行
+		ErroeMsg += LoadfilePath;				//画像のパス
+
+		MessageBox(
+			NULL,
+			ErroeMsg.c_str(),	//char * を返す
+			TEXT(IMAGE_ERROR_TITLE),
+			MB_OK);
+
+		return;
+	}
+
+	GetGraphSize(
+		*this->Handle_itr,	//このハンドルの画像の大きさを取得
+		this->Width.data(),		//Widthのアドレスを渡す
+		this->Height.data()		//Heightのアドレスを渡す
+	);
+
+
+	this->IsLoad = true;		//読み込めた
+
+	this->ImageKind = this->Handle.size();	//読み込んだ数を取得
+
+	this->Handle_itr = this->Handle.begin();	//ハンドルを最初に戻す
+	this->Width_itr = this->Width.begin();		//横幅の先頭アドレス
+	this->Height_itr = this->Height.begin();	//高さの先頭アドレス
+
+	return;
+
+}
+
+//描画する画像を変更する
+void IMAGE::ChengeImage(int kind)
+{
+	this->Handle_itr = this->Handle.begin() + kind;	//指定された画像に変更
+	this->Width_itr = this->Width.begin() + kind;	//指定された画像に変更
+	this->Height_itr = this->Height.begin() + kind;//指定された画像に変更
+	return;
+}

@@ -25,6 +25,7 @@ KEYDOWN *keydown = new KEYDOWN();							//KEYDOWNƒNƒ‰ƒX‚ÌƒIƒuƒWƒFƒNƒg‚ğ¶¬
 
 IMAGE *title;						//ƒ^ƒCƒgƒ‹‰æ‘œ
 IMAGE *back;						//”wŒi‰æ‘œ
+IMAGE *back_battle;					//í“¬‰æ–Ê‚Ì”wŒi‰æ‘œ
 
 MUSIC *bgm;							//BGM
 
@@ -67,6 +68,11 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 
 	back = new IMAGE(MY_IMG_DIR_BACK, MY_IMG_NAME_BACK);			//”wŒi‰æ‘œ‚ğ¶¬
 	if (back->GetIsLoad() == false) { return -1; }					//“Ç‚İ‚İ¸”s
+
+	back_battle = new IMAGE(MY_IMG_DIR_BATTLE, MY_IMG_NAME_BATTLE_NORMAL);	//í“¬‰æ–Ê‚Ì”wŒi‰æ‘œ“Ç‚İ‚İ
+	if (back_battle->GetIsLoad() == false) { return -1; }					//“Ç‚İ‚İ¸”s
+	back_battle->AddImage(MY_IMG_DIR_BATTLE, MY_IMG_NAME_BATTLE_NIGHT);		//í“¬‰æ–Êi–éj‚Ì”wŒi‰æ‘œ‚Ì“Ç‚İ‚İ
+	if (back_battle->GetIsLoad() == false) { return -1; }					//“Ç‚İ‚İ¸”s
 
 	bgm = new MUSIC(MY_MUSIC_DIR_BGM, MY_MUSIC_NAME_BGM);			//BGM‚ğ¶¬
 	if (bgm->GetIsLoad() == false) { return -1; }					//“Ç‚İ‚İ¸”s
@@ -219,9 +225,9 @@ void Title()
 	//££££££££££££££ ‰¹‚ÌÄ¶ˆ—‚±‚±‚Ü‚Å £££££££££££££££££££
 
 
-	back->Draw(0, 0,0);	//”wŒi‰æ‘œ•`‰æ
+	back->Draw(0, 0);	//”wŒi‰æ‘œ•`‰æ
 
-	title->Draw(0, GAME_HEIGHT / 2 - title->GetHeight(0) / 2,0);		//‰æ–Ê’†‰›‚Éƒ^ƒCƒgƒ‹•`‰æ
+	title->Draw(0, GAME_HEIGHT / 2 - title->GetHeight(0) / 2);		//‰æ–Ê’†‰›‚Éƒ^ƒCƒgƒ‹•`‰æ
 
 	std::vector<std::string> str = { "START","END" };
 
@@ -281,7 +287,7 @@ void Play()
 	//¥¥¥¥¥¥¥¥¥¥¥¥¥¥¥ ‰æ–Ê‘JˆÚ‚Ìˆ— ¥¥¥¥¥¥¥¥¥¥¥¥¥¥¥¥¥¥¥
 	if (keydown->IsKeyDown(KEY_INPUT_SPACE))
 	{
-		GameSceneNow = (int)GAME_SCENE_END;	//ƒGƒ“ƒh‰æ–Ê‚Ö
+		GameSceneNow = (int)GAME_SCENE_BATTLE;	//ƒGƒ“ƒh‰æ–Ê‚Ö
 	}
 	//£££££££££££££££ ‰æ–Ê‘JˆÚ‚Ìˆ— £££££££££££££££££££
 
@@ -292,6 +298,14 @@ void Play()
 //í“¬‰æ–Ê‚Ìˆ—
 void Battle()
 {
+
+	back_battle->Draw(0, 0);	//”wŒi‰æ‘œ‚ğ•`‰æ
+
+	if (keydown->IsKeyDown(KEY_INPUT_RETURN))		//ƒGƒ“ƒ^[ƒL[‰Ÿ‚³‚ê‚½‚ç
+	{
+		back_battle->ChengeImage(1);		//”wŒi‰æ‘œ‚ğ•ÏX
+	}
+
 	return;
 }
 
