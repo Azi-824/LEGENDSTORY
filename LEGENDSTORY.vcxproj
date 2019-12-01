@@ -154,6 +154,7 @@
     <ClCompile Include="ANIMATION.cpp" />
     <ClCompile Include="CHARACTOR.cpp" />
     <ClCompile Include="COLLISION.cpp" />
+    <ClCompile Include="COMMAND.cpp" />
     <ClCompile Include="ENEMY.cpp" />
     <ClCompile Include="FONT.cpp" />
     <ClCompile Include="FPS.cpp" />
@@ -171,6 +172,7 @@
     <ClInclude Include="ANIMATION.hpp" />
     <ClInclude Include="CHARACTOR.hpp" />
     <ClInclude Include="COLLISION.hpp" />
+    <ClInclude Include="COMMAND.hpp" />
     <ClInclude Include="ENEMY.hpp" />
     <ClInclude Include="FONT.hpp" />
     <ClInclude Include="FPS.hpp" />

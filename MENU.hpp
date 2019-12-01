@@ -20,7 +20,7 @@ private :
 	std::vector<std::string>::iterator Menu_itr;	//文字列のハンドル
 
 	int X;			//メニューウィンドウの枠のX座標
-	int Y;			//メニューウィンドウの枠のY座標:
+	int Y;			//メニューウィンドウの枠のY座標
 
 	int Width;		//メニューウィンドウの枠の横幅
 	int Height;		//メニューウィンドウの枠の高さ
