@@ -16,7 +16,6 @@
 #include "MAPIMAGE.hpp"
 #include "TEXTSTR.hpp"
 #include "MUSIC.hpp"
-#include "MENU.hpp"
 #include "ENEMY.hpp"
 
 
@@ -311,6 +310,10 @@ void Battle()
 	slime->SetImagePos(GAME_WIDTH / 2 - slime->GetWidth() / 2, GAME_HEIGHT / 2 - slime->GetHeight() / 2);	//スライムの位置調整(画面中央)
 
 	slime->Draw();	//スライム描画
+
+	player->BattleOperation(keydown);		//戦闘画面のキー操作
+
+	player->DrawCommand();	//バトルコマンド描画
 
 	if (keydown->IsKeyDown(KEY_INPUT_RETURN))		//エンターキー押されたら
 	{

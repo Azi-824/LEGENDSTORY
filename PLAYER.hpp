@@ -9,6 +9,7 @@
 #include "CHARACTOR.hpp"
 #include "COLLISION.hpp"
 #include "MENU.hpp"
+#include "COMMAND.hpp"
 
 //################# マクロ定義: ファイルパス、名前 #######################
 
@@ -20,6 +21,7 @@ private:
 	COLLISION *Collision;	//当たり判定
 	CHARACTOR *Ilast;		//立ち絵
 	MENU *menuwindow;		//メニューウィンドウ
+	COMMAND *BattleCommand;	//バトルコマンド
 
 
 	int HP;					//HP
@@ -70,8 +72,10 @@ public:
 
 	void DrawAnime();			//描画
 	void DrawMenu();			//メニューウィンドウ描画
+	void DrawCommand();			//バトルコマンド描画
 
 	void Operation(KEYDOWN *);	//操作
+	void BattleOperation(KEYDOWN *);	//戦闘画面の操作
 
 	void MoveUp();				//上へ移動
 	void MoveDown();			//下へ移動

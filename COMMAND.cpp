@@ -12,11 +12,11 @@ COMMAND::COMMAND()
 	this->Command = { "こうげき","ぼうぎょ","まほう","アイテム","にげる" };	//バトルウィンドウの文字列を設定
 	this->Command_itr = this->Command.begin();								//先頭のアドレスを入れる
 
-	this->X = 400;		//初期位置を設定
-	this->Y = 0;		//初期位置を設定
+	this->X = 0;		//初期位置を設定
+	this->Y = 400;		//初期位置を設定
 
 	this->Width = 800;	//初期幅を設定
-	this->Height = 200;	//初期高さを設定
+	this->Height = 100;	//初期高さを設定
 
 	this->StrHeight = GetFontSize();	//高さを取得
 
@@ -53,11 +53,11 @@ void COMMAND::Draw()
 	{
 		if (w_itr == this->Command_itr)			//選択中の要素だったら
 		{
-			DrawFormatString(this->X + 10, this->Y + cnt * COMMAND_SPACE, GetColor(255, 255, 255), "%s\n", this->Command_itr->c_str());	//右にずらして描画
+			DrawFormatString(this->X + cnt * COMMAND_SPACE, this->Y + 10, GetColor(255, 255, 255), "%s\n", this->Command_itr->c_str());	//右にずらして描画
 		}
 		else
 		{
-			DrawFormatString(this->X, this->Y + cnt * COMMAND_SPACE, GetColor(255, 255, 255), "%s\n", this->Command_itr->c_str());	//文字描画
+			DrawFormatString(this->X + cnt * COMMAND_SPACE, this->Y, GetColor(255, 255, 255), "%s\n", this->Command_itr->c_str());	//文字描画
 		}
 		cnt++;
 	}

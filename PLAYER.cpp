@@ -19,6 +19,7 @@ PLAYER::~PLAYER()
 	delete this->Collision;
 	delete this->Ilast;
 	delete this->menuwindow;
+	delete this->BattleCommand;
 	return;
 }
 
@@ -40,6 +41,8 @@ bool PLAYER::SetInit()
 	this->Collision->SetValue(GAME_LEFT, GAME_TOP, this->Anime->GetWidth(),this->Anime->GetHeight());	//当たり判定の領域を設定
 
 	this->menuwindow = new MENU();			//メニューウィンドウ作成
+
+	this->BattleCommand = new COMMAND();	//バトルコマンド作成
 
 
 	return true;
@@ -269,6 +272,20 @@ void PLAYER::Operation(KEYDOWN *keydown)
 
 }
 
+//戦闘画面の操作
+void PLAYER::BattleOperation(KEYDOWN *keydown)
+{
+	if (keydown->IsKeyDownOne(KEY_INPUT_D))			//Dキーを押された瞬間
+	{
+		this->BattleCommand->Next();	//次の要素へ
+	}
+	else if (keydown->IsKeyDownOne(KEY_INPUT_A))	//Aキーを押された瞬間
+	{
+		this->BattleCommand->Back();	//前の要素へ
+	}
+	return;
+}
+
 
 //描画
 void PLAYER::DrawAnime()
@@ -289,6 +306,13 @@ void PLAYER::DrawAnime()
 void PLAYER::DrawMenu()
 {
 	this->menuwindow->Draw();	//メニュー描画
+	return;
+}
+
+//バトルコマンド描画
+void PLAYER::DrawCommand()
+{
+	this->BattleCommand->Draw();	//描画
 	return;
 }
 
