@@ -446,3 +446,8 @@ void PLAYER::MoveRight()
 	return;
 }
 
+//ダメージ計算
+void PLAYER::DamegeCalc()
+{
+
+}

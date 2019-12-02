@@ -93,4 +93,6 @@ public:
 	void MoveLeft();			//左へ移動
 	void MoveRight();			//右へ移動
 
+	void DamegeCalc();			//ダメージ計算
+
 };
