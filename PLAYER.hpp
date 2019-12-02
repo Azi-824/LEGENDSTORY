@@ -29,6 +29,7 @@ class PLAYER
 {
 private:
 	ANIMATION *Anime;		//歩行画像
+	ANIMATION *AtkEffect;	//攻撃エフェクト
 	COLLISION *Collision;	//当たり判定
 	CHARACTOR *Ilast;		//立ち絵
 	MENU *menuwindow;		//メニューウィンドウ
@@ -58,6 +59,7 @@ public:
 
 	bool SetInit();			//初期設定
 	bool SetAnime(const char *, const char *, int, int, int, int, int, double, bool);	//アニメーション画像の設定
+	bool AddEffect(const char *, const char *, int, int, int, int, int, double, bool);	//エフェクト画像の設定
 	bool SetImage(const char *, const char *);		//画像の設定
 	void BattleCommandReset();		//バトルコマンドの選択をリセットする
 	
@@ -89,6 +91,7 @@ public:
 	void DrawAnime();			//描画
 	void DrawMenu();			//メニューウィンドウ描画
 	void DrawCommand();			//バトルコマンド描画
+	void DrawAtk(int, int);		//攻撃エフェクト描画
 
 	void Operation(KEYDOWN *);	//操作
 	void BattleOperation(KEYDOWN *);	//戦闘画面の操作

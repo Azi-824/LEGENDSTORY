@@ -72,7 +72,7 @@ void ENEMY::SetSPD(int spd)
 //敵ステータス初期設定
 void ENEMY::StateSetInit()
 {
-	this->HP = 10;	
+	this->HP = 100;	
 	this->ATK = 5;
 	this->DEF = 5;
 	this->SPD = 5;

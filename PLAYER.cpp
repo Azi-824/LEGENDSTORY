@@ -16,6 +16,7 @@ PLAYER::PLAYER()
 PLAYER::~PLAYER()
 {
 	delete this->Anime;
+	delete this->AtkEffect;
 	delete this->Collision;
 	delete this->Ilast;
 	delete this->menuwindow;
@@ -68,6 +69,27 @@ bool PLAYER::SetAnime(const char *dir, const char *name, int SplitNumALL, int Sp
 	return true;
 
 }
+
+//エフェクト画像設定
+//引　数：const char *：画像のディレクトリ
+//引　数：const char *：画像の名前
+//引　数：int：画像の総分割数
+//引　数：int：画像の横向きの分割数
+//引　数：int：画像の縦向きの分割数
+//引　数：int：画像の分割された横の大きさ
+//引　数：int：画像の分割された縦の大きさ
+//引　数：double：次の画像に変更する速さ
+//引　数：bool：アニメーションをループするかどうか
+
+bool PLAYER::AddEffect(const char *dir, const char *name, int SplitNumALL, int SpritNumX, int SplitNumY, int SplitWidth, int SplitHeight, double changeSpeed, bool IsLoop)
+{
+	this->AtkEffect = new ANIMATION(dir, name, SplitNumALL, SpritNumX, SplitNumY, SplitWidth, SplitHeight, changeSpeed, IsLoop);
+	if (this->Anime->GetIsLoad() == false) { return false; }		//読み込み失敗
+
+	return true;
+
+}
+
 
 //画像設定
 bool PLAYER::SetImage(const char *dir, const char *name)
@@ -345,15 +367,20 @@ void PLAYER::BattleOperation(KEYDOWN *keydown)
 //描画
 void PLAYER::DrawAnime()
 {
-
-	if (this->IsKeyDown)		//キーボードが押されているとき
+	if (this->IsDraw)		//描画してよい時
 	{
-		this->Anime->Draw(this->Collision->Left, this->Collision->Top, this->Dist, true);	//アニメーションで描画
+		if (this->IsArive)	//生きているとき
+		{
+			if (this->IsKeyDown)		//キーボードが押されているとき
+			{
+				this->Anime->Draw(this->Collision->Left, this->Collision->Top, this->Dist, true);	//アニメーションで描画
 
-	}
-	else						//キーボードが押されていないとき
-	{
-		this->Anime->Draw(this->Collision->Left, this->Collision->Top, this->Dist, false);	//通常描画
+			}
+			else						//キーボードが押されていないとき
+			{
+				this->Anime->Draw(this->Collision->Left, this->Collision->Top, this->Dist, false);	//通常描画
+			}
+		}
 	}
 }
 
@@ -368,6 +395,13 @@ void PLAYER::DrawMenu()
 void PLAYER::DrawCommand()
 {
 	this->BattleCommand->Draw();	//描画
+	return;
+}
+
+//攻撃エフェクト描画
+void PLAYER::DrawAtk(int x, int y)
+{
+	this->AtkEffect->DrawEffect(x, y);
 	return;
 }
 
@@ -415,18 +449,30 @@ void PLAYER::MoveRight()
 //ダメージ計算
 void PLAYER::DamegeCalc(ENEMY *enemy)
 {
+
 	//▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼ 味方の攻撃処理ここから ▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼
-	if (this->ATK > enemy->GetDEF())	//自分の攻撃力が相手の防御力より上だったら
+	if (this->ATK > enemy->GetDEF())	//自分の攻撃力が敵の防御力より上だったら
 	{
-		enemy->SetHP(this->ATK - enemy->GetDEF());	//自分攻撃力 - 相手防御力のダメージを与える
-		if (enemy->GetHP() <= 0)				//相手のHPが0になったら
+		enemy->SetHP(this->ATK - enemy->GetDEF());	//自分攻撃力 - 敵防御力のダメージを与える
+		if (enemy->GetHP() <= 0)				//敵のHPが0になったら
 		{
-			enemy->SetIsArive(false);		//相手死亡
+			enemy->SetIsArive(false);		//敵死亡
 		}
 	}
-	//▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲ 味方の攻撃処理ここまで ▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲
+	//▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲ 味方の攻撃処理ここまで ▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲
 
-	//this->BattleCommandReset();	//バトルコマンドリセット
-	
+
+
+	//▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼ 敵の攻撃処理ここから ▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼
+	if (enemy->GetATK() > this->DEF)		//敵の攻撃力が自分の防御力より上だったら
+	{
+		this->HP -= enemy->GetATK() - this->DEF;	//敵攻撃力 - 自分防御力のダメージを与える
+		if (this->HP <= 0)			//自分のHPが0になったら
+		{
+			this->IsArive = false;		//自分死亡
+		}
+	}
+	//▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲ 敵の攻撃処理ここまで ▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲
+
 	return;
 }
