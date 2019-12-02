@@ -401,7 +401,10 @@ void PLAYER::DrawCommand()
 //攻撃エフェクト描画
 void PLAYER::DrawAtk(int x, int y)
 {
-	this->AtkEffect->DrawEffect(x, y);
+	if (this->AtkEffect->GetIsAnimeStop() == false)
+	{
+		this->AtkEffect->DrawEffect(x, y);
+	}
 	return;
 }
 

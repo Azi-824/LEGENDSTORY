@@ -385,7 +385,7 @@ void End()
 		text->Back();	//‘I‘ð‚ðˆê‚Â‘O‚Ö
 	}
 
-	player->DrawAtk(10, 10);
+	player->DrawAtk(100, 100);
 
 	//¥¥¥¥¥¥¥¥¥¥¥¥¥¥¥ ‰æ–Ê‘JˆÚ‚Ìˆ— ¥¥¥¥¥¥¥¥¥¥¥¥¥¥¥¥¥¥¥
 	if (keydown->IsKeyDown(KEY_INPUT_BACK))

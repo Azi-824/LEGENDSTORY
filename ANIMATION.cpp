@@ -38,6 +38,9 @@ ANIMATION::ANIMATION(const char *dir, const char *name, int SplitNumALL, int Spr
 	this->IsAnimeLoop = IsLoop;		//アニメーションはループする？
 	this->IsAnimeStop = false;		//アニメーションを動かす
 
+	this->Width = 0;	
+	this->Height = 0;
+
 	this->IsLoad = false;			//読み込めたか？
 
 	//画像を読み込み
@@ -183,10 +186,10 @@ void ANIMATION::Draw(int X, int Y,int Dist,bool animetion)
 //エフェクトを描画
 void ANIMATION::DrawEffect(int x, int y)
 {
-		if (this->IsAnimeStop == false)	//アニメーションをストップさせないなら
-		{
-			DrawGraph(x, y, *this->Handle_itr, TRUE);	//イテレータ(ポインタ)を使用して描画
-		}
+	if (this->IsAnimeStop == false)	//アニメーションをストップさせないなら
+	{
+		DrawGraph(x, y, *this->Handle_itr, TRUE);	//イテレータ(ポインタ)を使用して描画
+	}
 
 	if (this->EffectChangeCnt == this->EffectChangeMaxCnt)	//次の画像を表示する時がきたら
 	{
