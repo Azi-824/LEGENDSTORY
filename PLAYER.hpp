@@ -38,6 +38,13 @@ private:
 	bool IsKeyDown;			//キーボードが押されているか
 	bool IsMenu;			//メニューウィンドウが描画されているか
 
+	bool AtkFlg;	//攻撃フラグ
+	bool DefFlg;	//防御フラグ
+	bool MagicFlg;	//魔法フラグ
+	bool ItemFlg;	//アイテムフラグ
+	bool EscFlg;	//逃げるフラグ
+
+
 public:
 	PLAYER();				//コンストラクタ
 	~PLAYER();				//デストラクタ
@@ -55,6 +62,8 @@ public:
 	void SetIsDraw(bool);	//描画してよいかを設定
 	void SetKeyOperation(bool); //キーボードで操作できるか設定
 	void SetPosition(int, int);	//位置を設定
+	void SetBattleFlg(std::vector<std::string>::iterator);	//戦闘画面で選んだコマンドのフラグを設定する
+	void BattleFlgInit();		//バトル用フラグ初期化
 
 
 
@@ -73,6 +82,8 @@ public:
 	void DrawAnime();			//描画
 	void DrawMenu();			//メニューウィンドウ描画
 	void DrawCommand();			//バトルコマンド描画
+	void DrawAtk();				//攻撃を選んだ時の描画
+	void DrawDef();				//防御を選んだ時の描画
 
 	void Operation(KEYDOWN *);	//操作
 	void BattleOperation(KEYDOWN *);	//戦闘画面の操作

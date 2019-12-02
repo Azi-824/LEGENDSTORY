@@ -315,9 +315,13 @@ void Battle()
 
 	player->DrawCommand();	//バトルコマンド描画
 
-	if (keydown->IsKeyDown(KEY_INPUT_RETURN))		//エンターキー押されたら
+	if (keydown->IsKeyDown(KEY_INPUT_R))		//エンターキー押されたら
 	{
 		back_battle->ChengeImage(NIGHT);			//背景画像を（夜）に変更
+	}
+	else if (keydown->IsKeyDown(KEY_INPUT_T))
+	{
+		GameSceneNow = (int)GAME_SCENE_END;	//エンド画面へ
 	}
 
 	return;

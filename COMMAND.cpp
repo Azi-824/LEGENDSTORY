@@ -18,7 +18,9 @@ COMMAND::COMMAND()
 	this->Width = 800;	//初期幅を設定
 	this->Height = 100;	//初期高さを設定
 
+
 	this->StrHeight = GetFontSize();	//高さを取得
+	this->GetWidth();					//先頭文字列の横幅を取得
 
 	return;
 
@@ -49,6 +51,8 @@ void COMMAND::Draw()
 
 	auto w_itr = this->Command_itr;	//退避用
 
+	SetFontSize(this->StrHeight * 2);	//フォントサイズを二倍にする
+
 	for (this->Command_itr = this->Command.begin(); this->Command_itr != this->Command.end(); ++this->Command_itr)
 	{
 		if (w_itr == this->Command_itr)			//選択中の要素だったら
@@ -64,8 +68,29 @@ void COMMAND::Draw()
 
 	this->Command_itr = w_itr;		//選択要素を元に戻す
 
+	SetFontSize(this->StrHeight);	//フォントサイズを元に戻す
+
 	return;
 
+}
+
+//横幅取得
+int COMMAND::GetWidth()
+{
+	int Strlen = 0;		//文字列の長さ取得用
+
+	Strlen = strlen(this->Command_itr->c_str());
+
+	this->StrWidth = GetDrawStringWidth(this->Command_itr->c_str(), Strlen);	//横幅取得
+
+	return this->StrWidth;
+
+}
+
+//選択しているコマンドを取得
+std::vector <std::string>::iterator COMMAND:: GetCommand()
+{
+	return this->Command_itr;
 }
 
 //選択要素を次へ移動

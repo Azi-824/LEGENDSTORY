@@ -33,6 +33,8 @@ bool PLAYER::SetInit()
 	this->Dist = FLONT;	//初期向き設定
 	this->MoveSpeed = 5;//初期移動速度設定
 
+	this->BattleFlgInit();	//バトル用フラグ初期化
+
 	this->Ilast->SetInit();	//画像初期設定
 	this->IsKeyDown = false;//キーボード押されていない
 	this->IsMenu = false;	//メニューウィンドウ描画されていないS
@@ -149,6 +151,49 @@ void PLAYER::SetPosition(int x, int y)
 		this->Collision->Width,
 		this->Collision->Height);
 
+	return;
+}
+
+//戦闘画面で選んだコマンドを設定する
+void PLAYER::SetBattleFlg(std::vector<std::string>::iterator choise_itr)
+{
+	this->BattleFlgInit();	//バトル用フラグ初期化
+	if (*choise_itr == "こうげき")			//攻撃を選んだ場合
+	{
+		this->AtkFlg = true;	//攻撃フラグセット
+		return;
+	}
+	else if (*choise_itr == "ぼうぎょ")		//防御を選んだ場合
+	{
+		this->DefFlg = true;	//防御フラグセット
+		return;
+	}
+	else if (*choise_itr == "まほう")			//魔法を選んだ場合
+	{
+		this->MagicFlg = true;	//魔法フラグセット
+		return;	
+	}
+	else if (*choise_itr == "アイテム")		//アイテムを選んだ場合
+	{
+		this->ItemFlg = true;	//アイテムフラグセット
+		return;
+	}
+	else if (*choise_itr == "にげる")			//逃げるを選んだ場合
+	{
+		this->EscFlg = true;	//逃げるフラグセット
+		return;
+	}
+	return;
+}
+
+//バトル用フラグ初期化
+void PLAYER::BattleFlgInit()
+{
+	this->AtkFlg = false;	//攻撃フラグ
+	this->DefFlg = false;	//防御フラグ
+	this->MagicFlg = false;	//魔法フラグ
+	this->ItemFlg = false;	//アイテムフラグ
+	this->EscFlg = false;	//逃げるフラグ
 	return;
 }
 
@@ -275,6 +320,7 @@ void PLAYER::Operation(KEYDOWN *keydown)
 //戦闘画面の操作
 void PLAYER::BattleOperation(KEYDOWN *keydown)
 {
+	//コマンド選択処理
 	if (keydown->IsKeyDownOne(KEY_INPUT_D))			//Dキーを押された瞬間
 	{
 		this->BattleCommand->Next();	//次の要素へ
@@ -283,6 +329,36 @@ void PLAYER::BattleOperation(KEYDOWN *keydown)
 	{
 		this->BattleCommand->Back();	//前の要素へ
 	}
+
+	//コマンド決定処理
+	if (keydown->IsKeyDownOne(KEY_INPUT_RETURN))		//エンターキーが押された瞬間
+	{
+		auto itr = this->BattleCommand->GetCommand();	//選択しているコマンドを取得
+		this->SetBattleFlg(itr);	//バトルフラグ設定
+	}
+
+	//コマンド決定後処理
+	if (this->AtkFlg)	//攻撃を選んだ場合
+	{
+		this->DrawAtk();
+	}
+	else if (this->DefFlg)	//防御を選んだ場合
+	{
+		this->DrawDef();
+	}
+	else if (this->MagicFlg)	//魔法を選んだ場合
+	{
+
+	}
+	else if (this->ItemFlg)		//アイテムを選んだ場合
+	{
+
+	}
+	else if (this->EscFlg)		//逃げるを選んだ場合
+	{
+
+	}
+
 	return;
 }
 
@@ -314,6 +390,19 @@ void PLAYER::DrawCommand()
 {
 	this->BattleCommand->Draw();	//描画
 	return;
+}
+
+//攻撃を選んだ時の描画
+void PLAYER::DrawAtk()
+{
+	DrawBox(100, 100, 300, 300, GetColor(255, 0, 0), TRUE);	
+	return;
+}
+
+//防御を選んだ時の描画
+void PLAYER::DrawDef()
+{
+	DrawBox(100, 100, 300, 300, GetColor(0, 255, 0), TRUE);
 }
 
 //上へ移動

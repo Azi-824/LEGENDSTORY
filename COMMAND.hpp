@@ -9,7 +9,8 @@
 #include <string>
 
 //#################### マクロ定義 ########################
-#define COMMAND_SPACE		80		//コマンド間の間隔
+#define COMMAND_SPACE		170		//コマンド間の間隔
+#define COMMAND_KIND		5		//コマンドの種類
 
 //#################### クラス定義 ########################
 class COMMAND
@@ -26,6 +27,8 @@ private:
 	int Height;		//コマンドウィンドウの枠の高さ
 
 	int StrHeight;	//文字列の高さ
+	int StrWidth;	//文字列の幅
+
 
 public:
 
@@ -34,6 +37,9 @@ public:
 	~COMMAND();			//デストラクタ
 
 	void Draw();		//描画
+
+	int GetWidth();		//横幅取得
+	std::vector < std::string>::iterator GetCommand();	//選択しているコマンドを取得
 
 	void Next();		//次の要素へ
 
