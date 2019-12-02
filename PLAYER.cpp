@@ -84,7 +84,7 @@ bool PLAYER::SetAnime(const char *dir, const char *name, int SplitNumALL, int Sp
 bool PLAYER::AddEffect(const char *dir, const char *name, int SplitNumALL, int SpritNumX, int SplitNumY, int SplitWidth, int SplitHeight, double changeSpeed, bool IsLoop)
 {
 	this->AtkEffect = new ANIMATION(dir, name, SplitNumALL, SpritNumX, SplitNumY, SplitWidth, SplitHeight, changeSpeed, IsLoop);
-	if (this->Anime->GetIsLoad() == false) { return false; }		//“Ç‚İ‚İ¸”s
+	if (this->AtkEffect->GetIsLoad() == false) { return false; }		//“Ç‚İ‚İ¸”s
 
 	return true;
 
