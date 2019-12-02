@@ -20,6 +20,7 @@ PLAYER::~PLAYER()
 	delete this->Ilast;
 	delete this->menuwindow;
 	delete this->BattleCommand;
+
 	return;
 }
 
@@ -33,8 +34,6 @@ bool PLAYER::SetInit()
 	this->Dist = FLONT;	//初期向き設定
 	this->MoveSpeed = 5;//初期移動速度設定
 
-	this->BattleFlgInit();	//バトル用フラグ初期化
-
 	this->Ilast->SetInit();	//画像初期設定
 	this->IsKeyDown = false;//キーボード押されていない
 	this->IsMenu = false;	//メニューウィンドウ描画されていないS
@@ -46,6 +45,7 @@ bool PLAYER::SetInit()
 
 	this->BattleCommand = new COMMAND();	//バトルコマンド作成
 
+	this->BattleCommadType = -1;			//選択したバトルコマンドの種類を初期化
 
 	return true;
 }
@@ -79,10 +79,17 @@ bool PLAYER::SetImage(const char *dir, const char *name)
 
 }
 
+//バトルコマンドの選択をリセットする
+void PLAYER::BattleCommandReset()
+{
+	this->BattleCommadType = -1;	//リセット
+	return;
+}
+
 //HP設定
 void PLAYER::SetHP(int hp)
 {
-	this->HP = hp;
+	this->HP -= hp;
 	return;
 }
 
@@ -157,43 +164,31 @@ void PLAYER::SetPosition(int x, int y)
 //戦闘画面で選んだコマンドを設定する
 void PLAYER::SetBattleFlg(std::vector<std::string>::iterator choise_itr)
 {
-	this->BattleFlgInit();	//バトル用フラグ初期化
 	if (*choise_itr == "こうげき")			//攻撃を選んだ場合
 	{
-		this->AtkFlg = true;	//攻撃フラグセット
+		this->BattleCommadType = ATACK;	//攻撃
 		return;
 	}
 	else if (*choise_itr == "ぼうぎょ")		//防御を選んだ場合
 	{
-		this->DefFlg = true;	//防御フラグセット
+		this->BattleCommadType = DEFENSE;	//防御
 		return;
 	}
 	else if (*choise_itr == "まほう")			//魔法を選んだ場合
 	{
-		this->MagicFlg = true;	//魔法フラグセット
+		this->BattleCommadType = MAGIC;	//魔法
 		return;	
 	}
 	else if (*choise_itr == "アイテム")		//アイテムを選んだ場合
 	{
-		this->ItemFlg = true;	//アイテムフラグセット
+		this->BattleCommadType = ITEM;	//アイテム
 		return;
 	}
 	else if (*choise_itr == "にげる")			//逃げるを選んだ場合
 	{
-		this->EscFlg = true;	//逃げるフラグセット
+		this->BattleCommadType = ESCAPE;	//逃げる
 		return;
 	}
-	return;
-}
-
-//バトル用フラグ初期化
-void PLAYER::BattleFlgInit()
-{
-	this->AtkFlg = false;	//攻撃フラグ
-	this->DefFlg = false;	//防御フラグ
-	this->MagicFlg = false;	//魔法フラグ
-	this->ItemFlg = false;	//アイテムフラグ
-	this->EscFlg = false;	//逃げるフラグ
 	return;
 }
 
@@ -249,6 +244,12 @@ bool PLAYER::GetKeyOperation()
 COLLISION * PLAYER::GetCollision()
 {
 	return this->Collision;
+}
+
+//選択したコマンドの種類を取得
+int PLAYER::GetChoiseCommamd()
+{
+	return this->BattleCommadType;
 }
 
 //操作
@@ -337,28 +338,6 @@ void PLAYER::BattleOperation(KEYDOWN *keydown)
 		this->SetBattleFlg(itr);	//バトルフラグ設定
 	}
 
-	//コマンド決定後処理
-	if (this->AtkFlg)	//攻撃を選んだ場合
-	{
-		this->DrawAtk();
-	}
-	else if (this->DefFlg)	//防御を選んだ場合
-	{
-		this->DrawDef();
-	}
-	else if (this->MagicFlg)	//魔法を選んだ場合
-	{
-
-	}
-	else if (this->ItemFlg)		//アイテムを選んだ場合
-	{
-
-	}
-	else if (this->EscFlg)		//逃げるを選んだ場合
-	{
-
-	}
-
 	return;
 }
 
@@ -390,19 +369,6 @@ void PLAYER::DrawCommand()
 {
 	this->BattleCommand->Draw();	//描画
 	return;
-}
-
-//攻撃を選んだ時の描画
-void PLAYER::DrawAtk()
-{
-	DrawBox(100, 100, 300, 300, GetColor(255, 0, 0), TRUE);	
-	return;
-}
-
-//防御を選んだ時の描画
-void PLAYER::DrawDef()
-{
-	DrawBox(100, 100, 300, 300, GetColor(0, 255, 0), TRUE);
 }
 
 //上へ移動
@@ -447,7 +413,20 @@ void PLAYER::MoveRight()
 }
 
 //ダメージ計算
-void PLAYER::DamegeCalc()
+void PLAYER::DamegeCalc(ENEMY *enemy)
 {
+	//▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼ 味方の攻撃処理ここから ▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼
+	if (this->ATK > enemy->GetDEF())	//自分の攻撃力が相手の防御力より上だったら
+	{
+		enemy->SetHP(this->ATK - enemy->GetDEF());	//自分攻撃力 - 相手防御力のダメージを与える
+		if (enemy->GetHP() <= 0)				//相手のHPが0になったら
+		{
+			enemy->SetIsArive(false);		//相手死亡
+		}
+	}
+	//▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲ 味方の攻撃処理ここまで ▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲
 
+	//this->BattleCommandReset();	//バトルコマンドリセット
+	
+	return;
 }

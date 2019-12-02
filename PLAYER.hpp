@@ -10,8 +10,19 @@
 #include "COLLISION.hpp"
 #include "MENU.hpp"
 #include "COMMAND.hpp"
+#include "ENEMY.hpp"
 
 //################# マクロ定義: ファイルパス、名前 #######################
+
+//################# 列挙型 ######################
+enum COMMANDTYPE
+{
+	ATACK,		//攻撃
+	DEFENSE,	//防御
+	MAGIC,		//魔法
+	ITEM,		//アイテム
+	ESCAPE,		//逃げる
+};	//選択したコマンドの種類
 
 //################# クラス定義 ##################
 class PLAYER
@@ -38,11 +49,7 @@ private:
 	bool IsKeyDown;			//キーボードが押されているか
 	bool IsMenu;			//メニューウィンドウが描画されているか
 
-	bool AtkFlg;	//攻撃フラグ
-	bool DefFlg;	//防御フラグ
-	bool MagicFlg;	//魔法フラグ
-	bool ItemFlg;	//アイテムフラグ
-	bool EscFlg;	//逃げるフラグ
+	int BattleCommadType;	//選択したバトルコマンドの種類
 
 
 public:
@@ -52,6 +59,7 @@ public:
 	bool SetInit();			//初期設定
 	bool SetAnime(const char *, const char *, int, int, int, int, int, double, bool);	//アニメーション画像の設定
 	bool SetImage(const char *, const char *);		//画像の設定
+	void BattleCommandReset();		//バトルコマンドの選択をリセットする
 	
 	void SetHP(int);		//体力設定
 	void SetATK(int);		//攻撃力設定
@@ -63,8 +71,6 @@ public:
 	void SetKeyOperation(bool); //キーボードで操作できるか設定
 	void SetPosition(int, int);	//位置を設定
 	void SetBattleFlg(std::vector<std::string>::iterator);	//戦闘画面で選んだコマンドのフラグを設定する
-	void BattleFlgInit();		//バトル用フラグ初期化
-
 
 
 	int GetHP();			//体力取得
@@ -76,14 +82,13 @@ public:
 	bool GetIsDraw();		//描画できるか取得
 	bool GetKeyOperation();		//キーボードで操作できるか取得
 	COLLISION * GetCollision();	//当たり判定を取得
+	int GetChoiseCommamd();		//選択したコマンドの種類を取得
 
 
 
 	void DrawAnime();			//描画
 	void DrawMenu();			//メニューウィンドウ描画
 	void DrawCommand();			//バトルコマンド描画
-	void DrawAtk();				//攻撃を選んだ時の描画
-	void DrawDef();				//防御を選んだ時の描画
 
 	void Operation(KEYDOWN *);	//操作
 	void BattleOperation(KEYDOWN *);	//戦闘画面の操作
@@ -93,6 +98,6 @@ public:
 	void MoveLeft();			//左へ移動
 	void MoveRight();			//右へ移動
 
-	void DamegeCalc();			//ダメージ計算
+	void DamegeCalc(ENEMY *);			//ダメージ計算
 
 };

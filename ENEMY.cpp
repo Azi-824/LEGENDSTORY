@@ -44,7 +44,7 @@ ENEMY::~ENEMY()
 //HP設定
 void ENEMY::SetHP(int hp)
 {
-	this->HP = hp;
+	this->HP -= hp;
 	return;
 }
 
@@ -72,10 +72,10 @@ void ENEMY::SetSPD(int spd)
 //敵ステータス初期設定
 void ENEMY::StateSetInit()
 {
-	this->HP = 100;	
-	this->ATK = 10;
-	this->DEF = 10;
-	this->SPD = 10;
+	this->HP = 10;	
+	this->ATK = 5;
+	this->DEF = 5;
+	this->SPD = 5;
 
 	return;
 }

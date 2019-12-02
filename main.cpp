@@ -313,17 +313,47 @@ void Battle()
 
 	player->BattleOperation(keydown);		//戦闘画面のキー操作
 
-	player->DrawCommand();	//バトルコマンド描画
+	player->DrawCommand();					//バトルコマンド描画
 
-	if (keydown->IsKeyDown(KEY_INPUT_R))		//エンターキー押されたら
+	//▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼ バトルコマンド毎の処理ここから ▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼
+
+	if (player->GetChoiseCommamd() == ATACK)		//攻撃を選んだ場合
 	{
-		back_battle->ChengeImage(NIGHT);			//背景画像を（夜）に変更
+		player->DamegeCalc(slime);		//ダメージ計算
+		player->BattleCommandReset();	//バトルコマンドリセット
 	}
-	else if (keydown->IsKeyDown(KEY_INPUT_T))
+	else if (player->GetChoiseCommamd() == DEFENSE)	//防御を選んだ場合
+	{
+		player->BattleCommandReset();	//バトルコマンドリセット
+
+	}
+	else if (player->GetChoiseCommamd() == MAGIC)		//魔法を選んだ場合
+	{
+		player->BattleCommandReset();	//バトルコマンドリセット
+
+	}
+	else if (player->GetChoiseCommamd() == ITEM)			//アイテムを選んだ場合
+	{
+		player->BattleCommandReset();	//バトルコマンドリセット
+
+	}
+	else if (player->GetChoiseCommamd() == ESCAPE)			//逃げるを選んだ場合
+	{
+		player->BattleCommandReset();	//バトルコマンドリセット
+		GameSceneNow = (int)GAME_SCENE_PLAY;	//プレイ画面へ
+	}
+
+	//▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲ バトルコマンド毎の処理ここまで ▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲
+
+	if (slime->GetIsArive() == false)	//敵が死んだら
 	{
 		GameSceneNow = (int)GAME_SCENE_END;	//エンド画面へ
 	}
 
+	if (keydown->IsKeyDown(KEY_INPUT_R))		//Rキー押されたら
+	{
+		back_battle->ChengeImage(NIGHT);			//背景画像を（夜）に変更
+	}
 	return;
 }
 
