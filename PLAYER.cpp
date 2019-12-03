@@ -224,7 +224,7 @@ void PLAYER::SetBattleFlg(std::vector<std::string>::iterator choise_itr)
 //ステータスウィンドウの設定をする
 void PLAYER::SetStateWindow()
 {
-	this->StateWindow->SetText("HP:");	//描画する文字を設定
+	this->StateWindow->SetText("HP:100");	//描画する文字を設定
 	return;
 }
 
