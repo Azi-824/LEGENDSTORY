@@ -10,8 +10,10 @@
 WINDOW::WINDOW()
 {
 	//メンバ変数初期化
-	this->Window = { "" };	//文字列を初期化
-	this->Window_itr = this->Window.begin();	//先頭アドレス
+	this->Str = { "" };	//文字列を初期化
+	this->Str_itr = this->Str.begin();	//先頭アドレス
+	this->Num = { 0 };
+	this->Num_itr = this->Num.begin();	//先頭アドレス
 
 	this->Width = 200;		//幅を初期化
 	this->Height = 120;		//高さを初期化
@@ -28,7 +30,10 @@ WINDOW::~WINDOW()
 {
 	//vectorのメモリ解放を行う
 	std::vector<std::string> v;			//空のvectorを作成する
-	this->Window.swap(v);				//空と中身を入れ替える
+	this->Str.swap(v);				//空と中身を入れ替える
+
+	std::vector<int> v2;			//空のvectorを作成する
+	this->Num.swap(v2);				//空と中身を入れ替える
 
 	return;
 
@@ -91,9 +96,9 @@ int WINDOW::GetStrWidth(void)
 {
 	int Strlen = 0;		//文字列の長さ取得用
 
-	Strlen = strlen(this->Window_itr->c_str());
+	Strlen = strlen(this->Str_itr->c_str());
 
-	this->StrWidth = GetDrawStringWidth(this->Window_itr->c_str(), Strlen);	//横幅取得
+	this->StrWidth = GetDrawStringWidth(this->Str_itr->c_str(), Strlen);	//横幅取得
 
 	return this->StrWidth;
 
@@ -107,11 +112,23 @@ int WINDOW::GetStrHeight(void)
 	return this->StrHeight;
 }
 
+//文字列（数字）アドレスの取得
+std::vector<int>::iterator WINDOW::GetNumPos()
+{
+	return this->GetNumPos;
+}
+
 //ウィンドウ内に描画する文字をセットする
 void WINDOW::SetText(const char *text)
 {
-	//this->Window_itr->push_back(*text);	//文字列を追加
-	*this->Window_itr = text;
+	*this->Str_itr = text;
+	return;
+}
+
+//ウィンドウ内に描画する文字（数字）をセットする
+void WINDOW::SetText(int num)
+{
+	*this->Num_itr = num;
 	return;
 }
 
@@ -124,7 +141,7 @@ void WINDOW::Draw()
 
 	SetDrawBlendMode(DX_BLENDMODE_NOBLEND, 0);				//描画モードを通常に戻す
 
-	DrawFormatString(this->X, this->Y, GetColor(255, 255, 255), "%s", this->Window_itr->c_str());	//文字描画
+	DrawFormatString(this->X, this->Y, GetColor(255, 255, 255), "%s", this->Str_itr->c_str());	//文字描画
 
 	return;
 

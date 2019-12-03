@@ -21,5 +21,12 @@ STATEWINDOW::~STATEWINDOW()
 //•`‰æ
 void STATEWINDOW::Draw()
 {
+	SetDrawBlendMode(DX_BLENDMODE_ALPHA, 255 * 80 / 100);	//•`‰æƒ‚[ƒh‚ð“§‰ß‚ ‚è‚É•ÏXA“§‰ß—¦80“‚ÉÝ’è
+
+	DrawBox(this->GetX(), this->GetY(), this->GetX() + this->GetWidth(), this->GetY() + this->GetHeight(), GetColor(255, 0, 0), TRUE);	//“h‚è‚Â‚Ô‚µ‚ ‚è‚ÅŽlŠpŒ`‚ð•`‰æ
+
+	SetDrawBlendMode(DX_BLENDMODE_NOBLEND, 0);				//•`‰æƒ‚[ƒh‚ð’Êí‚É–ß‚·
+
+	DrawFormatString(this->GetX(),this->GetY(),GetColor(255,255,255),"HP:%d",)
 
 }
