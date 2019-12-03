@@ -11,6 +11,7 @@
 #include "MENU.hpp"
 #include "COMMAND.hpp"
 #include "ENEMY.hpp"
+#include "WINDOW.hpp"
 
 //################# マクロ定義: ファイルパス、名前 #######################
 
@@ -30,9 +31,13 @@ class PLAYER
 private:
 	ANIMATION *Anime;		//歩行画像
 	ANIMATION *AtkEffect;	//攻撃エフェクト
+	
 	COLLISION *Collision;	//当たり判定
 	CHARACTOR *Ilast;		//立ち絵
+	
 	MENU *menuwindow;		//メニューウィンドウ
+	WINDOW *StateWindow;	//ステータスウィンドウ
+
 	COMMAND *BattleCommand;	//バトルコマンド
 
 

@@ -18,7 +18,6 @@
 #include "MUSIC.hpp"
 #include "ENEMY.hpp"
 
-
 //########## グローバルオブジェクト ##########
 FPS *fps = new FPS(GAME_FPS_SPEED);							//FPSクラスのオブジェクトを生成
 KEYDOWN *keydown = new KEYDOWN();							//KEYDOWNクラスのオブジェクトを生成
@@ -321,6 +320,7 @@ void Battle()
 	if (player->GetChoiseCommamd() == ATACK)		//攻撃を選んだ場合
 	{
 		player->DrawAtk(350, 250);		//攻撃エフェクト描画
+
 		if (player->GetEffectEnd())		//エフェクト描画が終了したら
 		{
 			player->DamegeCalc(slime);		//ダメージ計算

@@ -20,6 +20,7 @@ PLAYER::~PLAYER()
 	delete this->Collision;
 	delete this->Ilast;
 	delete this->menuwindow;
+	delete this->StateWindow;
 	delete this->BattleCommand;
 
 	return;
