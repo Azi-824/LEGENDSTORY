@@ -49,6 +49,7 @@ private:
 	bool IsKeyOperation;	//キーボードで操作できるか
 	bool IsKeyDown;			//キーボードが押されているか
 	bool IsMenu;			//メニューウィンドウが描画されているか
+	bool EffectEnd;			//エフェクト描画処理が終了したか
 
 	int BattleCommadType;	//選択したバトルコマンドの種類
 
@@ -85,7 +86,7 @@ public:
 	bool GetKeyOperation();		//キーボードで操作できるか取得
 	COLLISION * GetCollision();	//当たり判定を取得
 	int GetChoiseCommamd();		//選択したコマンドの種類を取得
-
+	bool GetEffectEnd();		//エフェクトの描画処理が終了したか取得
 
 
 	void DrawAnime();			//描画

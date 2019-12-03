@@ -13,7 +13,7 @@
 
 //########## マクロ定義：画像のファイルパスと名前 ##########
 #define MY_ANIME_DIR_PLAYER		R"(.\MY_ANIME\walk\)"			//プレイヤーの画像ファイルの場所
-#define MY_ANIME_DIR_ATKEFECT	R"(.MY_ANIME\atack\)"			//攻撃エフェクトの画像ファイルの場所
+#define MY_ANIME_DIR_ATKEFECT	R"(.\MY_ANIME\atack\)"			//攻撃エフェクトの画像ファイルの場所
 
 #define MY_ANIME_NAME_PLAYER	R"(player_walk.png)"			//プレイヤーの画像の名前
 #define MY_ANIME_NAME_ATKEFECT	R"(atack.png)"					//攻撃エフェクトの画像の名前
@@ -86,6 +86,8 @@ public:
 	bool GetIsLoad(void);			//読み込めた？
 
 	bool GetIsAnimeStop(void);		//アニメーションはストップしたかを取得
+
+	void ResetIsAnime(void);		//アニメーションがストップしたかをリセット
 
 	void Draw(int,int,int,bool);	//画像を描画
 

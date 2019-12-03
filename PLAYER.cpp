@@ -37,7 +37,8 @@ bool PLAYER::SetInit()
 
 	this->Ilast->SetInit();	//画像初期設定
 	this->IsKeyDown = false;//キーボード押されていない
-	this->IsMenu = false;	//メニューウィンドウ描画されていないS
+	this->IsMenu = false;	//メニューウィンドウ描画されていない
+	this->EffectEnd = false;	//エフェクト描画処理終了していない
 
 	this->Collision = new COLLISION();		//当たり判定の領域を作成
 	this->Collision->SetValue(GAME_LEFT, GAME_TOP, this->Anime->GetWidth(),this->Anime->GetHeight());	//当たり判定の領域を設定
@@ -105,6 +106,8 @@ bool PLAYER::SetImage(const char *dir, const char *name)
 void PLAYER::BattleCommandReset()
 {
 	this->BattleCommadType = -1;	//リセット
+	this->EffectEnd = false;		//エフェクト描画終了していない
+	this->AtkEffect->ResetIsAnime();	//アニメーション処理リセット
 	return;
 }
 
@@ -274,6 +277,12 @@ int PLAYER::GetChoiseCommamd()
 	return this->BattleCommadType;
 }
 
+//エフェクト描画処理が終了したか取得
+bool PLAYER::GetEffectEnd()
+{
+	return this->EffectEnd;
+}
+
 //操作
 void PLAYER::Operation(KEYDOWN *keydown)
 {
@@ -401,10 +410,14 @@ void PLAYER::DrawCommand()
 //攻撃エフェクト描画
 void PLAYER::DrawAtk(int x, int y)
 {
-	if (this->AtkEffect->GetIsAnimeStop() == false)
-	{
-		this->AtkEffect->DrawEffect(x, y);
-	}
+		if (this->AtkEffect->GetIsAnimeStop() == false)	//アニメーション描画が終わっていない場合
+		{
+			this->AtkEffect->DrawEffect(x, y);		//アニメーション描画
+		}
+		else			//アニメーション描画が終わったら
+		{
+			this->EffectEnd = true;	//エフェクト描画処理終了
+		}
 	return;
 }
 

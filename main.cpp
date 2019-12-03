@@ -87,7 +87,7 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 	player = new PLAYER();
 	if (player->SetImage(MY_IMG_DIR_CHARCTOR, MY_IMG_NAME_PLAYER) == false) { return -1; }	//読み込み失敗
 	if (player->SetAnime(MY_ANIME_DIR_PLAYER, MY_ANIME_NAME_PLAYER, PLAYER_ALL_CNT, PLAYER_YOKO_CNT, PLAYER_TATE_CNT, PLAYER_WIDTH, PLAYER_HEIGHT, PLAYER_ANI_SPEED, true) == false) { return -1; } //読み込み失敗
-	if (player->AddEffect(MY_ANIME_DIR_ATKEFECT, MY_ANIME_NAME_ATKEFECT, ATK_ALL_CNT, ATK_YOKO_CNT, ATK_TATE_CNT, ATK_WIDTH, ATK_HEIGHT, ATK_SPEED, true) == false) { return -1; }
+	if (player->AddEffect(MY_ANIME_DIR_ATKEFECT, MY_ANIME_NAME_ATKEFECT, ATK_ALL_CNT, ATK_YOKO_CNT, ATK_TATE_CNT, ATK_WIDTH, ATK_HEIGHT, ATK_SPEED, false) == false) { return -1; }
 	player->SetInit();	//初期設定
 
 	slime = new ENEMY(ENEMY_DIR, ENEMY_NAME_SLIME);	//スライム作成
@@ -316,15 +316,16 @@ void Battle()
 
 	player->DrawCommand();					//バトルコマンド描画
 
-	//player->DrawAtk(400, 300);
-
 	//▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼ バトルコマンド毎の処理ここから ▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼
 
 	if (player->GetChoiseCommamd() == ATACK)		//攻撃を選んだ場合
 	{
-		//player->DrawAtk(400, 300);		//攻撃エフェクト描画
-		player->DamegeCalc(slime);		//ダメージ計算
-		player->BattleCommandReset();	//バトルコマンドリセット
+		player->DrawAtk(350, 250);		//攻撃エフェクト描画
+		if (player->GetEffectEnd())		//エフェクト描画が終了したら
+		{
+			player->DamegeCalc(slime);		//ダメージ計算
+			player->BattleCommandReset();	//バトルコマンドリセット
+		}
 	}
 	else if (player->GetChoiseCommamd() == DEFENSE)	//防御を選んだ場合
 	{
@@ -384,8 +385,6 @@ void End()
 	{
 		text->Back();	//選択を一つ前へ
 	}
-
-	player->DrawAtk(100, 100);
 
 	//▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼ 画面遷移の処理 ▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼
 	if (keydown->IsKeyDown(KEY_INPUT_BACK))

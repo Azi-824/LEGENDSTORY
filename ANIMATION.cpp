@@ -132,6 +132,13 @@ bool  ANIMATION::GetIsAnimeStop(void)
 	return this->IsAnimeStop;
 }
 
+//アニメーションがストップしたかをリセット
+void ANIMATION::ResetIsAnime()
+{
+	this->IsAnimeStop = false;
+	return;
+}
+
 //画像を描画
 //引数：int ：X座標
 //引数：int ：Y座標
