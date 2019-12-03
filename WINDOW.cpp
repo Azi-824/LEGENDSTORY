@@ -13,11 +13,11 @@ WINDOW::WINDOW()
 	this->Window = { "" };	//文字列を初期化
 	this->Window_itr = this->Window.begin();	//先頭アドレス
 
-	this->Width = 100;		//幅を初期化
-	this->Height = 100;		//高さを初期化
+	this->Width = 200;		//幅を初期化
+	this->Height = 120;		//高さを初期化
 
-	this->X = 100;			//X位置を初期化
-	this->Y = 100;			//Y位置を初期化
+	this->X = 0;			//X位置を初期化
+	this->Y = 480;			//Y位置を初期化
 
 	this->StrHeight = GetFontSize();	//高さを取得
 
@@ -34,6 +34,79 @@ WINDOW::~WINDOW()
 
 }
 
+//X位置設定
+void WINDOW::SetX(int x)
+{
+	this->X = x;
+	return;
+}
+
+//Y位置設定
+void WINDOW::SetY(int y)
+{
+	this->Y = y;
+	return;
+}
+
+//横幅設定
+void WINDOW::SetWidth(int width)
+{
+	this->Width = width;
+	return;
+}
+
+//高さ設定
+void WINDOW::SetHeight(int height)
+{
+	this->Height = height;
+	return;
+}
+
+//X位置取得
+int WINDOW::GetX(void)
+{
+	return this->X;
+}
+
+//Y位置取得
+int WINDOW::GetY(void)
+{
+	return this->Y;
+}
+
+//横幅取得
+int WINDOW::GetWidth(void)
+{
+	return this->Width;
+}
+
+//高さ取得
+int WINDOW::GetHeight(void)
+{
+	return this->Height;
+}
+
+//文字列横幅取得
+int WINDOW::GetStrWidth(void)
+{
+	int Strlen = 0;		//文字列の長さ取得用
+
+	Strlen = strlen(this->Window_itr->c_str());
+
+	this->StrWidth = GetDrawStringWidth(this->Window_itr->c_str(), Strlen);	//横幅取得
+
+	return this->StrWidth;
+
+}
+
+//文字列高さ取得
+int WINDOW::GetStrHeight(void)
+{
+	this->StrHeight = GetFontSize();	//高さ取得
+
+	return this->StrHeight;
+}
+
 //ウィンドウ内に描画する文字をセットする
 void WINDOW::SetText(const char *text)
 {
@@ -47,7 +120,7 @@ void WINDOW::Draw()
 {
 	SetDrawBlendMode(DX_BLENDMODE_ALPHA, 255 * 80 / 100);	//描画モードを透過ありに変更、透過率80％に設定
 
-	DrawBox(this->X, this->Y, this->X + this->Width, this->Y + this->Height, GetColor(0, 0, 0), TRUE);	//塗りつぶしありで四角形を描画
+	DrawBox(this->X, this->Y, this->X + this->Width, this->Y + this->Height, GetColor(255, 0, 0), TRUE);	//塗りつぶしありで四角形を描画
 
 	SetDrawBlendMode(DX_BLENDMODE_NOBLEND, 0);				//描画モードを通常に戻す
 

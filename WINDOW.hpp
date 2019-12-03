@@ -33,8 +33,21 @@ public:
 
 	~WINDOW();				//デストラクタ
 
+	void SetX(int);			//X位置設定
+	void SetY(int);			//Y位置設定
+	void SetWidth(int);		//横幅設定
+	void SetHeight(int);	//高さ設定
+
+	int GetX(void);			//X位置取得
+	int GetY(void);			//Y位置取得
+	int GetWidth(void);		//横幅取得
+	int GetHeight(void);	//高さ取得
+
+	int GetStrWidth(void);	//文字列の横幅取得
+	int GetStrHeight(void);	//文字列の高さ取得
+
 	void SetText(const char*);			//ウィンドウ内に描画する文字をセットする
 
-	void Draw();			//描画
+	virtual void Draw();			//描画
 
 };

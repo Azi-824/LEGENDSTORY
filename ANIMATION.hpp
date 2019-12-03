@@ -32,7 +32,7 @@
 #define ATK_ALL_CNT	ATK_YOKO_CNT * ATK_TATE_CNT
 
 #define PLAYER_ANI_SPEED 1.0
-#define ATK_SPEED		 0.1
+#define ATK_SPEED		 0.02
 
 //########## マクロ定義：エラーメッセージ##########
 #define ANIMATION_ERROR_TTILE	"ANIMATION_ERROR"						//エラータイトル

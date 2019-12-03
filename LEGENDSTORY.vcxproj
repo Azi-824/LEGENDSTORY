@@ -166,6 +166,7 @@
     <ClCompile Include="MENU.cpp" />
     <ClCompile Include="MUSIC.cpp" />
     <ClCompile Include="PLAYER.cpp" />
+    <ClCompile Include="STATEWINDOW.cpp" />
     <ClCompile Include="TEXTSTR.cpp" />
     <ClCompile Include="WINDOW.cpp" />
   </ItemGroup>
@@ -185,6 +186,7 @@
     <ClInclude Include="MENU.hpp" />
     <ClInclude Include="MUSIC.hpp" />
     <ClInclude Include="PLAYER.hpp" />
+    <ClInclude Include="STATEWINDOW.hpp" />
     <ClInclude Include="TEXTSTR.hpp" />
     <ClInclude Include="WINDOW.hpp" />
   </ItemGroup>
