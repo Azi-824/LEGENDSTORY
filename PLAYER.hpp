@@ -67,7 +67,7 @@ public:
 	bool SetAnime(const char *, const char *, int, int, int, int, int, double, bool);	//アニメーション画像の設定
 	bool AddEffect(const char *, const char *, int, int, int, int, int, double, bool);	//エフェクト画像の設定
 	bool SetImage(const char *, const char *);		//画像の設定
-	void BattleCommandReset();		//バトルコマンドの選択をリセットする
+	void ResetBattleMember();		//戦闘画面で使用する変数などをリセットする
 	
 	void SetHP(int);		//体力設定
 	void SetATK(int);		//攻撃力設定
@@ -79,6 +79,7 @@ public:
 	void SetKeyOperation(bool); //キーボードで操作できるか設定
 	void SetPosition(int, int);	//位置を設定
 	void SetBattleFlg(std::vector<std::string>::iterator);	//戦闘画面で選んだコマンドのフラグを設定する
+	void SetStateWindow();		//ステータスウィンドウの設定をする
 
 
 	int GetHP();			//体力取得
@@ -98,6 +99,7 @@ public:
 	void DrawMenu();			//メニューウィンドウ描画
 	void DrawCommand();			//バトルコマンド描画
 	void DrawAtk(int, int);		//攻撃エフェクト描画
+	void DrawStateWindow();		//ステータスウィンドウ描画
 
 	void Operation(KEYDOWN *);	//操作
 	void BattleOperation(KEYDOWN *);	//戦闘画面の操作

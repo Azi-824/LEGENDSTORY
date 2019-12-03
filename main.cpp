@@ -315,6 +315,8 @@ void Battle()
 
 	player->DrawCommand();					//バトルコマンド描画
 
+	player->DrawStateWindow();				//ステータスウィンドウの描画
+
 	//▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼ バトルコマンド毎の処理ここから ▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼
 
 	if (player->GetChoiseCommamd() == ATACK)		//攻撃を選んだ場合
@@ -324,27 +326,27 @@ void Battle()
 		if (player->GetEffectEnd())		//エフェクト描画が終了したら
 		{
 			player->DamegeCalc(slime);		//ダメージ計算
-			player->BattleCommandReset();	//バトルコマンドリセット
+			player->ResetBattleMember();	//バトルコマンドリセット
 		}
 	}
 	else if (player->GetChoiseCommamd() == DEFENSE)	//防御を選んだ場合
 	{
-		player->BattleCommandReset();	//バトルコマンドリセット
+		player->ResetBattleMember();	//バトルコマンドリセット
 
 	}
 	else if (player->GetChoiseCommamd() == MAGIC)		//魔法を選んだ場合
 	{
-		player->BattleCommandReset();	//バトルコマンドリセット
+		player->ResetBattleMember();	//バトルコマンドリセット
 
 	}
 	else if (player->GetChoiseCommamd() == ITEM)			//アイテムを選んだ場合
 	{
-		player->BattleCommandReset();	//バトルコマンドリセット
+		player->ResetBattleMember();	//バトルコマンドリセット
 
 	}
 	else if (player->GetChoiseCommamd() == ESCAPE)			//逃げるを選んだ場合
 	{
-		player->BattleCommandReset();	//バトルコマンドリセット
+		player->ResetBattleMember();	//バトルコマンドリセット
 		GameSceneNow = (int)GAME_SCENE_PLAY;	//プレイ画面へ
 	}
 

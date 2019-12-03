@@ -48,6 +48,9 @@ bool PLAYER::SetInit()
 
 	this->BattleCommand = new COMMAND();	//バトルコマンド作成
 
+	this->StateWindow = new WINDOW();		//ステータスウィンドウ作成
+	this->SetStateWindow();					//ステータスウィンドウの設定
+
 	this->BattleCommadType = -1;			//選択したバトルコマンドの種類を初期化
 
 	return true;
@@ -103,8 +106,8 @@ bool PLAYER::SetImage(const char *dir, const char *name)
 
 }
 
-//バトルコマンドの選択をリセットする
-void PLAYER::BattleCommandReset()
+//戦闘画面で使用する変数などをリセットする
+void PLAYER::ResetBattleMember()
 {
 	this->BattleCommadType = -1;	//リセット
 	this->EffectEnd = false;		//エフェクト描画終了していない
@@ -215,6 +218,13 @@ void PLAYER::SetBattleFlg(std::vector<std::string>::iterator choise_itr)
 		this->BattleCommadType = ESCAPE;	//逃げる
 		return;
 	}
+	return;
+}
+
+//ステータスウィンドウの設定をする
+void PLAYER::SetStateWindow()
+{
+	this->StateWindow->SetText("HP:");	//描画する文字を設定
 	return;
 }
 
@@ -420,6 +430,12 @@ void PLAYER::DrawAtk(int x, int y)
 			this->EffectEnd = true;	//エフェクト描画処理終了
 		}
 	return;
+}
+
+//ステータスウィンドウ描画
+void PLAYER::DrawStateWindow()
+{
+	this->StateWindow->Draw();	//ステータスウィンドウ描画
 }
 
 //上へ移動
