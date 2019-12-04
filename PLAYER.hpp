@@ -36,7 +36,6 @@ private:
 	CHARACTOR *Ilast;		//立ち絵
 	
 	MENU *menuwindow;		//メニューウィンドウ
-	STATEWINDOW *StateWindow;	//ステータスウィンドウ
 
 	COMMAND *BattleCommand;	//バトルコマンド
 
@@ -79,7 +78,6 @@ public:
 	void SetKeyOperation(bool); //キーボードで操作できるか設定
 	void SetPosition(int, int);	//位置を設定
 	void SetBattleFlg(std::vector<std::string>::iterator);	//戦闘画面で選んだコマンドのフラグを設定する
-	void SetStateWindow();		//ステータスウィンドウの設定をする
 
 
 	int GetHP();			//体力取得
@@ -99,7 +97,6 @@ public:
 	void DrawMenu();			//メニューウィンドウ描画
 	void DrawCommand();			//バトルコマンド描画
 	void DrawAtk(int, int);		//攻撃エフェクト描画
-	void DrawStateWindow();		//ステータスウィンドウ描画
 
 	void Operation(KEYDOWN *);	//操作
 	void BattleOperation(KEYDOWN *);	//戦闘画面の操作

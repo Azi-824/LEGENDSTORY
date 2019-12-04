@@ -17,6 +17,7 @@
 #include "TEXTSTR.hpp"
 #include "MUSIC.hpp"
 #include "ENEMY.hpp"
+#include "UI.hpp"
 
 //########## グローバルオブジェクト ##########
 FPS *fps = new FPS(GAME_FPS_SPEED);							//FPSクラスのオブジェクトを生成
@@ -30,6 +31,7 @@ MUSIC *bgm;							//BGM
 
 FONT *font;							//フォント
 TEXTSTR *text;						//文字列
+UI *ui;								//UI
 
 PLAYER *player;						//主人公
 
@@ -83,11 +85,15 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 
 	text = new TEXTSTR();	//テキスト作成
 
+
 	player = new PLAYER();
 	if (player->SetImage(MY_IMG_DIR_CHARCTOR, MY_IMG_NAME_PLAYER) == false) { return -1; }	//読み込み失敗
 	if (player->SetAnime(MY_ANIME_DIR_PLAYER, MY_ANIME_NAME_PLAYER, PLAYER_ALL_CNT, PLAYER_YOKO_CNT, PLAYER_TATE_CNT, PLAYER_WIDTH, PLAYER_HEIGHT, PLAYER_ANI_SPEED, true) == false) { return -1; } //読み込み失敗
 	if (player->AddEffect(MY_ANIME_DIR_ATKEFECT, MY_ANIME_NAME_ATKEFECT, ATK_ALL_CNT, ATK_YOKO_CNT, ATK_TATE_CNT, ATK_WIDTH, ATK_HEIGHT, ATK_SPEED, false) == false) { return -1; }
 	player->SetInit();	//初期設定
+
+	ui = new UI();		//UI作成
+	ui->SetStateWindow(player);	//HP設定
 
 	slime = new ENEMY(ENEMY_DIR, ENEMY_NAME_SLIME);	//スライム作成
 	if (slime->GetIsLoad() == false) { return -1; }	//読み込み失敗
@@ -315,7 +321,8 @@ void Battle()
 
 	player->DrawCommand();					//バトルコマンド描画
 
-	player->DrawStateWindow();				//ステータスウィンドウの描画
+	//player->DrawStateWindow();				//ステータスウィンドウの描画
+	ui->DrawStateWindow();
 
 	//▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼ バトルコマンド毎の処理ここから ▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼
 
@@ -326,7 +333,7 @@ void Battle()
 		if (player->GetEffectEnd())		//エフェクト描画が終了したら
 		{
 			player->DamegeCalc(slime);		//ダメージ計算
-			player->SetStateWindow();
+			ui->SetStateWindow(player);		//HP再設定
 			player->ResetBattleMember();	//バトルコマンドリセット
 		}
 	}
