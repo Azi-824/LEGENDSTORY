@@ -48,7 +48,7 @@ bool PLAYER::SetInit()
 
 	this->BattleCommand = new COMMAND();	//バトルコマンド作成
 
-	this->StateWindow = new WINDOW();		//ステータスウィンドウ作成
+	this->StateWindow = new STATEWINDOW();		//ステータスウィンドウ作成
 	this->SetStateWindow();					//ステータスウィンドウの設定
 
 	this->BattleCommadType = -1;			//選択したバトルコマンドの種類を初期化
@@ -224,7 +224,7 @@ void PLAYER::SetBattleFlg(std::vector<std::string>::iterator choise_itr)
 //ステータスウィンドウの設定をする
 void PLAYER::SetStateWindow()
 {
-	this->StateWindow->SetText("HP:100");	//描画する文字を設定
+	this->StateWindow->SetText(this->HP);	//描画する文字を設定
 	return;
 }
 

@@ -27,6 +27,6 @@ void STATEWINDOW::Draw()
 
 	SetDrawBlendMode(DX_BLENDMODE_NOBLEND, 0);				//•`‰æƒ‚[ƒh‚ð’Êí‚É–ß‚·
 
-	DrawFormatString(this->GetX(),this->GetY(),GetColor(255,255,255),"HP:%d",)
+	DrawFormatString(this->GetX(), this->GetY(), GetColor(255, 255, 255), "HP:%d", *this->GetNumPos());	//•`‰æ
 
 }

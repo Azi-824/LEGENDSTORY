@@ -73,7 +73,7 @@ void ENEMY::SetSPD(int spd)
 void ENEMY::StateSetInit()
 {
 	this->HP = 10;	
-	this->ATK = 5;
+	this->ATK = 50;
 	this->DEF = 5;
 	this->SPD = 5;
 

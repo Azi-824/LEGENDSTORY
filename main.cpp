@@ -326,6 +326,7 @@ void Battle()
 		if (player->GetEffectEnd())		//エフェクト描画が終了したら
 		{
 			player->DamegeCalc(slime);		//ダメージ計算
+			player->SetStateWindow();
 			player->ResetBattleMember();	//バトルコマンドリセット
 		}
 	}

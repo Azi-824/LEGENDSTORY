@@ -11,7 +11,7 @@
 #include "MENU.hpp"
 #include "COMMAND.hpp"
 #include "ENEMY.hpp"
-#include "WINDOW.hpp"
+#include "STATEWINDOW.hpp"
 
 //################# マクロ定義: ファイルパス、名前 #######################
 
@@ -36,7 +36,7 @@ private:
 	CHARACTOR *Ilast;		//立ち絵
 	
 	MENU *menuwindow;		//メニューウィンドウ
-	WINDOW *StateWindow;	//ステータスウィンドウ
+	STATEWINDOW *StateWindow;	//ステータスウィンドウ
 
 	COMMAND *BattleCommand;	//バトルコマンド
 

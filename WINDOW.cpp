@@ -115,7 +115,7 @@ int WINDOW::GetStrHeight(void)
 //文字列（数字）アドレスの取得
 std::vector<int>::iterator WINDOW::GetNumPos()
 {
-	return this->GetNumPos;
+	return this->Num_itr;
 }
 
 //ウィンドウ内に描画する文字をセットする
