@@ -37,8 +37,6 @@ private:
 	
 	MENU *menuwindow;		//メニューウィンドウ
 
-	COMMAND *BattleCommand;	//バトルコマンド
-
 
 	int HP;					//HP
 	int ATK;				//攻撃力
@@ -55,8 +53,6 @@ private:
 	bool IsMenu;			//メニューウィンドウが描画されているか
 	bool EffectEnd;			//エフェクト描画処理が終了したか
 
-	int BattleCommadType;	//選択したバトルコマンドの種類
-
 
 public:
 	PLAYER();				//コンストラクタ
@@ -66,7 +62,7 @@ public:
 	bool SetAnime(const char *, const char *, int, int, int, int, int, double, bool);	//アニメーション画像の設定
 	bool AddEffect(const char *, const char *, int, int, int, int, int, double, bool);	//エフェクト画像の設定
 	bool SetImage(const char *, const char *);		//画像の設定
-	void ResetBattleMember();		//戦闘画面で使用する変数などをリセットする
+	void EffectReset();		//エフェクト関連のリセット
 	
 	void SetHP(int);		//体力設定
 	void SetATK(int);		//攻撃力設定
@@ -77,7 +73,6 @@ public:
 	void SetIsDraw(bool);	//描画してよいかを設定
 	void SetKeyOperation(bool); //キーボードで操作できるか設定
 	void SetPosition(int, int);	//位置を設定
-	void SetBattleFlg(std::vector<std::string>::iterator);	//戦闘画面で選んだコマンドのフラグを設定する
 
 
 	int GetHP();			//体力取得
@@ -89,17 +84,14 @@ public:
 	bool GetIsDraw();		//描画できるか取得
 	bool GetKeyOperation();		//キーボードで操作できるか取得
 	COLLISION * GetCollision();	//当たり判定を取得
-	int GetChoiseCommamd();		//選択したコマンドの種類を取得
 	bool GetEffectEnd();		//エフェクトの描画処理が終了したか取得
 
 
 	void DrawAnime();			//描画
 	void DrawMenu();			//メニューウィンドウ描画
-	void DrawCommand();			//バトルコマンド描画
 	void DrawAtk(int, int);		//攻撃エフェクト描画
 
 	void Operation(KEYDOWN *);	//操作
-	void BattleOperation(KEYDOWN *);	//戦闘画面の操作
 
 	void MoveUp();				//上へ移動
 	void MoveDown();			//下へ移動

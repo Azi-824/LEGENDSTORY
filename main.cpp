@@ -93,7 +93,7 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 	player->SetInit();	//初期設定
 
 	ui = new UI();		//UI作成
-	ui->SetStateWindow(player);	//HP設定
+	ui->SetStateWindow(player);	//描画HP設定
 
 	slime = new ENEMY(ENEMY_DIR, ENEMY_NAME_SLIME);	//スライム作成
 	if (slime->GetIsLoad() == false) { return -1; }	//読み込み失敗
@@ -317,16 +317,15 @@ void Battle()
 
 	slime->Draw();	//スライム描画
 
-	player->BattleOperation(keydown);		//戦闘画面のキー操作
+	ui->BattleOperation(keydown);			//戦闘画面のキー操作
 
-	player->DrawCommand();					//バトルコマンド描画
+	ui->DrawCommand();						//バトルコマンド描画
 
-	//player->DrawStateWindow();				//ステータスウィンドウの描画
-	ui->DrawStateWindow();
+	ui->DrawStateWindow();					//ステータスウィンドウ描画
 
 	//▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼ バトルコマンド毎の処理ここから ▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼
 
-	if (player->GetChoiseCommamd() == ATACK)		//攻撃を選んだ場合
+	if (ui->GetChoiseCommamd() == ATACK)		//攻撃を選んだ場合
 	{
 		player->DrawAtk(350, 250);		//攻撃エフェクト描画
 
@@ -334,27 +333,28 @@ void Battle()
 		{
 			player->DamegeCalc(slime);		//ダメージ計算
 			ui->SetStateWindow(player);		//HP再設定
-			player->ResetBattleMember();	//バトルコマンドリセット
+			ui->ResetBattleMember();		//バトルコマンドリセット
+			player->EffectReset();			//エフェクト関連リセット
 		}
 	}
-	else if (player->GetChoiseCommamd() == DEFENSE)	//防御を選んだ場合
+	else if (ui->GetChoiseCommamd() == DEFENSE)	//防御を選んだ場合
 	{
-		player->ResetBattleMember();	//バトルコマンドリセット
+		ui->ResetBattleMember();	//バトルコマンドリセット
 
 	}
-	else if (player->GetChoiseCommamd() == MAGIC)		//魔法を選んだ場合
+	else if (ui->GetChoiseCommamd() == MAGIC)		//魔法を選んだ場合
 	{
-		player->ResetBattleMember();	//バトルコマンドリセット
+		ui->ResetBattleMember();	//バトルコマンドリセット
 
 	}
-	else if (player->GetChoiseCommamd() == ITEM)			//アイテムを選んだ場合
+	else if (ui->GetChoiseCommamd() == ITEM)			//アイテムを選んだ場合
 	{
-		player->ResetBattleMember();	//バトルコマンドリセット
+		ui->ResetBattleMember();	//バトルコマンドリセット
 
 	}
-	else if (player->GetChoiseCommamd() == ESCAPE)			//逃げるを選んだ場合
+	else if (ui->GetChoiseCommamd() == ESCAPE)			//逃げるを選んだ場合
 	{
-		player->ResetBattleMember();	//バトルコマンドリセット
+		ui->ResetBattleMember();	//バトルコマンドリセット
 		GameSceneNow = (int)GAME_SCENE_PLAY;	//プレイ画面へ
 	}
 
