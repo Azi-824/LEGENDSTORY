@@ -347,7 +347,6 @@ void PLAYER::DrawMenu()
 	return;
 }
 
-//
 //攻撃エフェクト描画
 void PLAYER::DrawAtk(int x, int y)
 {
