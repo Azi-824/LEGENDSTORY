@@ -16,11 +16,13 @@ class UI
 {
 private:
 
+	MENU *menuwindow;				//メニューウィンドウ
+
 	COMMAND *BattleCommand;			//バトルコマンド
 
 	STATEWINDOW *StateWindow;		//ステータスウィンドウ
 
-	int BattleCommadType;	//選択したバトルコマンドの種類
+	int BattleCommadType;			//選択したバトルコマンドの種類
 
 
 public:
@@ -28,6 +30,10 @@ public:
 	UI();					//コンストラクタ
 
 	~UI();					//デストラクタ
+
+	//メニューウィンドウ関連
+	void MenuOperation(KEYDOWN *,bool);	//メニューウィンドウのキーボード操作
+	void DrawMenu();				//メニューウィンドウ描画
 
 	//バトルコマンド関連
 	void SetBattleFlg(std::vector<std::string>::iterator);	//戦闘画面で選んだコマンドのフラグを設定する
@@ -38,7 +44,6 @@ public:
 
 	//ステータスウィンドウ関連
 	void SetStateWindow(PLAYER *);	//ステータスウィンドウの設定をする
-
 	void DrawStateWindow();			//ステータスウィンドウ描画
 
 };

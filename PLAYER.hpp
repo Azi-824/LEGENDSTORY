@@ -35,7 +35,7 @@ private:
 	COLLISION *Collision;	//当たり判定
 	CHARACTOR *Ilast;		//立ち絵
 	
-	MENU *menuwindow;		//メニューウィンドウ
+	//MENU *menuwindow;		//メニューウィンドウ
 
 
 	int HP;					//HP
@@ -93,7 +93,7 @@ public:
 
 
 	void DrawAnime();			//描画
-	void DrawMenu();			//メニューウィンドウ描画
+	//void DrawMenu();			//メニューウィンドウ描画
 	void DrawAtk(int, int);		//攻撃エフェクト描画
 
 	void Operation(KEYDOWN *);	//操作

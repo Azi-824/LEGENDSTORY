@@ -295,6 +295,13 @@ void Play()
 
 	player->Operation(keydown);	//プレイヤーキー操作
 	player->DrawAnime();		//アニメーション描画
+	ui->MenuOperation(keydown, player->GetIsMenu());	//メニュー画面操作
+
+
+	if (keydown->IsKeyDownOne(KEY_INPUT_Q))		//Qキーを押された瞬間
+	{
+		player->SetIsMenu(true);
+	}
 
 
 	//▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼ 画面遷移の処理 ▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼

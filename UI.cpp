@@ -9,6 +9,8 @@
 //コンストラクタ
 UI::UI()
 {
+	this->menuwindow = new MENU();			//メニューウィンドウ作成
+
 	this->StateWindow = new STATEWINDOW();	//ステータスウィンドウ作成
 
 	this->BattleCommand = new COMMAND();	//バトルコマンド作成
@@ -21,11 +23,42 @@ UI::UI()
 //デストラクタ
 UI::~UI()
 {
+	delete this->menuwindow;	//menuwindow破棄
 	delete this->BattleCommand;	//BattleCommand破棄
 	delete this->StateWindow;	//StateWindow破棄
 
 	return;
 }
+
+//メニューウィンドウのキーボード操作
+void UI::MenuOperation(KEYDOWN *keydown,bool ismenu)
+{
+	if (ismenu)	//メニュー描画中
+	{
+		if (keydown->IsKeyDown(KEY_INPUT_ESCAPE))	//エスケープキーを押されたら
+		{
+			ismenu = false;	//メニュー描画終了
+		}
+		else if (keydown->IsKeyDownOne(KEY_INPUT_W))	//Wキーを押された瞬間
+		{
+			this->menuwindow->Back();	//前の要素へ
+		}
+		else if (keydown->IsKeyDownOne(KEY_INPUT_S))	//Sキーを押された瞬間
+		{
+			this->menuwindow->Next();	//次の要素へ
+		}
+		this->DrawMenu();	//メニューウィンドウ描画
+	}
+	return;
+}
+
+//メニューウィンドウ描画
+void UI::DrawMenu()
+{
+	this->menuwindow->Draw();	//メニュー描画
+	return;
+}
+
 
 //戦闘画面で使用する変数などをリセットする
 void UI::ResetBattleMember()
