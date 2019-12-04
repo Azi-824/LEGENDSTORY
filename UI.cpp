@@ -35,11 +35,7 @@ void UI::MenuOperation(KEYDOWN *keydown,bool ismenu)
 {
 	if (ismenu)	//メニュー描画中
 	{
-		if (keydown->IsKeyDown(KEY_INPUT_ESCAPE))	//エスケープキーを押されたら
-		{
-			ismenu = false;	//メニュー描画終了
-		}
-		else if (keydown->IsKeyDownOne(KEY_INPUT_W))	//Wキーを押された瞬間
+		if (keydown->IsKeyDownOne(KEY_INPUT_W))	//Wキーを押された瞬間
 		{
 			this->menuwindow->Back();	//前の要素へ
 		}

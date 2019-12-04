@@ -19,9 +19,6 @@ PLAYER::~PLAYER()
 	delete this->AtkEffect;
 	delete this->Collision;
 	delete this->Ilast;
-	//delete this->menuwindow;
-	//delete this->BattleCommand;
-
 	return;
 }
 
@@ -43,8 +40,6 @@ bool PLAYER::SetInit()
 
 	this->Collision = new COLLISION();		//当たり判定の領域を作成
 	this->Collision->SetValue(GAME_LEFT, GAME_TOP, this->Anime->GetWidth(),this->Anime->GetHeight());	//当たり判定の領域を設定
-
-	//this->menuwindow = new MENU();			//メニューウィンドウ作成
 
 	return true;
 }
@@ -295,31 +290,11 @@ void PLAYER::Operation(KEYDOWN *keydown)
 		this->Dist = RIGHT;			//移動方向右
 		this->MoveRight();			//右へ移動
 	}
-	else if (keydown->IsKeyDown(KEY_INPUT_Q))	//Qキーを押しているとき
-	{
-		this->IsMenu = true;		//メニュー描画開始
-	}
 	else
 	{
 		this->IsKeyDown = false;	//キー入力なし
 	}
 
-	//if (this->IsMenu)	//メニュー描画中
-	//{
-	//	if (keydown->IsKeyDown(KEY_INPUT_ESCAPE))	//エスケープキーを押されたら
-	//	{
-	//		this->IsMenu = false;	//メニュー描画終了
-	//	}
-	//	else if (keydown->IsKeyDownOne(KEY_INPUT_W))	//Wキーを押された瞬間
-	//	{
-	//		this->menuwindow->Back();	//前の要素へ
-	//	}
-	//	else if (keydown->IsKeyDownOne(KEY_INPUT_S))	//Sキーを押された瞬間
-	//	{
-	//		this->menuwindow->Next();	//次の要素へ
-	//	}
-	//	this->DrawMenu();	//メニューウィンドウ描画
-	//}
 
 
 	//領域再設定
@@ -352,13 +327,6 @@ void PLAYER::DrawAnime()
 		}
 	}
 }
-
-////メニューウィンドウ描画
-//void PLAYER::DrawMenu()
-//{
-//	this->menuwindow->Draw();	//メニュー描画
-//	return;
-//}
 
 //攻撃エフェクト描画
 void PLAYER::DrawAtk(int x, int y)

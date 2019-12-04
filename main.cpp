@@ -300,7 +300,11 @@ void Play()
 
 	if (keydown->IsKeyDownOne(KEY_INPUT_Q))		//Qキーを押された瞬間
 	{
-		player->SetIsMenu(true);
+		player->SetIsMenu(true);		//メニュー描画開始
+	}
+	else if (keydown->IsKeyDownOne(KEY_INPUT_ESCAPE))	//Escキーを押された瞬間
+	{
+		player->SetIsMenu(false);		//メニュー描画終了
 	}
 
 
