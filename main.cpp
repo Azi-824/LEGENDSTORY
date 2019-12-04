@@ -296,6 +296,7 @@ void Play()
 	player->Operation(keydown);	//プレイヤーキー操作
 	player->DrawAnime();		//アニメーション描画
 
+
 	//▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼ 画面遷移の処理 ▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼
 	if (keydown->IsKeyDown(KEY_INPUT_SPACE))
 	{
@@ -323,6 +324,7 @@ void Battle()
 
 	ui->DrawStateWindow();					//ステータスウィンドウ描画
 
+
 	//▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼ バトルコマンド毎の処理ここから ▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼
 
 	if (ui->GetChoiseCommamd() == ATACK)		//攻撃を選んだ場合
@@ -332,7 +334,7 @@ void Battle()
 		if (player->GetEffectEnd())		//エフェクト描画が終了したら
 		{
 			player->DamegeCalc(slime);		//ダメージ計算
-			ui->SetStateWindow(player);		//HP再設定
+			ui->SetStateWindow(player);		//描画ステータス更新
 			ui->ResetBattleMember();		//バトルコマンドリセット
 			player->EffectReset();			//エフェクト関連リセット
 		}

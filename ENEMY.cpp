@@ -44,7 +44,7 @@ ENEMY::~ENEMY()
 //HPİ’è
 void ENEMY::SetHP(int hp)
 {
-	this->HP -= hp;
+	this->HP = hp;
 	return;
 }
 

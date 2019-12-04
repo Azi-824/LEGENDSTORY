@@ -110,7 +110,7 @@ void PLAYER::EffectReset()
 //HPÝ’è
 void PLAYER::SetHP(int hp)
 {
-	this->HP -= hp;
+	this->HP += hp;
 	return;
 }
 
@@ -406,11 +406,12 @@ void PLAYER::MoveRight()
 //ƒ_ƒ[ƒWŒvŽZ
 void PLAYER::DamegeCalc(ENEMY *enemy)
 {
-
+	int damege = 0;	//ƒ_ƒ[ƒW
 	//¥¥¥¥¥¥¥¥¥¥¥¥¥¥¥¥¥¥¥ –¡•û‚ÌUŒ‚ˆ—‚±‚±‚©‚ç ¥¥¥¥¥¥¥¥¥¥¥¥¥¥¥¥¥¥¥¥¥¥
 	if (this->ATK > enemy->GetDEF())	//Ž©•ª‚ÌUŒ‚—Í‚ª“G‚Ì–hŒä—Í‚æ‚èã‚¾‚Á‚½‚ç
 	{
-		enemy->SetHP(this->ATK - enemy->GetDEF());	//Ž©•ªUŒ‚—Í - “G–hŒä—Í‚Ìƒ_ƒ[ƒW‚ð—^‚¦‚é
+		damege = this->ATK - enemy->GetDEF();		//ƒ_ƒ[ƒW—Ê‚ðŒvŽZ Ž©•ªUŒ‚—Í - “G–hŒä—Í‚Ìƒ_ƒ[ƒW‚ð—^‚¦‚é
+		enemy->SetHP((enemy->GetHP() - damege));	//ƒ_ƒ[ƒW‚ð—^‚¦‚é Œ»Ý‚ÌHP - Žó‚¯‚½ƒ_ƒ[ƒW ‚ðHP‚ÉÄÝ’è
 		if (enemy->GetHP() <= 0)				//“G‚ÌHP‚ª0‚É‚È‚Á‚½‚ç
 		{
 			enemy->SetIsArive(false);		//“GŽ€–S
