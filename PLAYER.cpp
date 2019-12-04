@@ -188,6 +188,13 @@ void PLAYER::SetPosition(int x, int y)
 	return;
 }
 
+//メニュー描画中か設定
+void PLAYER::SetIsMenu(bool ismenu)
+{
+	this->IsMenu = ismenu;
+	return;
+}
+
 //体力取得
 int PLAYER::GetHP(void)
 {
@@ -252,6 +259,12 @@ COLLISION * PLAYER::GetCollision()
 bool PLAYER::GetEffectEnd()
 {
 	return this->EffectEnd;
+}
+
+//メニュー描画中か取得
+bool PLAYER::GetIsMenu()
+{
+	return this->IsMenu;
 }
 
 //操作

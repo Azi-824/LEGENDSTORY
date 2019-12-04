@@ -75,6 +75,7 @@ public:
 	void SetIsDraw(bool);	//描画してよいかを設定
 	void SetKeyOperation(bool); //キーボードで操作できるか設定
 	void SetPosition(int, int);	//位置を設定
+	void SetIsMenu(bool);		//メニュー描画中か設定
 
 
 	int GetHP();			//体力取得
@@ -88,6 +89,7 @@ public:
 	bool GetKeyOperation();		//キーボードで操作できるか取得
 	COLLISION * GetCollision();	//当たり判定を取得
 	bool GetEffectEnd();		//エフェクトの描画処理が終了したか取得
+	bool GetIsMenu();			//メニュー描画中か取得
 
 
 	void DrawAnime();			//描画
