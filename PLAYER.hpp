@@ -39,6 +39,7 @@ private:
 
 
 	int HP;					//HP
+	int MP;					//MP
 	int ATK;				//攻撃力
 	int DEF;				//防御力
 	int SPD;				//速度
@@ -65,6 +66,7 @@ public:
 	void EffectReset();		//エフェクト関連のリセット
 	
 	void SetHP(int);		//体力設定
+	void SetMP(int);		//MP設定
 	void SetATK(int);		//攻撃力設定
 	void SetDEF(int);		//防御力設定
 	void SetSPD(int);		//速度設定
@@ -76,6 +78,7 @@ public:
 
 
 	int GetHP();			//体力取得
+	int GetMP();			//MP取得
 	int GetATK();			//攻撃力取得
 	int GetDEF();			//防御力取得
 	int GetSPD();			//速度取得

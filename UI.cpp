@@ -105,7 +105,10 @@ void UI::DrawCommand()
 //ステータスウィンドウの設定
 void UI::SetStateWindow(PLAYER *player)
 {
-	this->StateWindow->SetText(player->GetHP());	//HPを設定
+	std::vector<int> set;
+	set.push_back(player->GetHP());//HP取得
+	set.push_back(player->GetMP());//MP取得
+	this->StateWindow->SetText(set);	//HP.MPを設定
 	return;
 }
 

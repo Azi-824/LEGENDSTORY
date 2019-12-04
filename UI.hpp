@@ -29,12 +29,14 @@ public:
 
 	~UI();					//デストラクタ
 
+	//バトルコマンド関連
 	void SetBattleFlg(std::vector<std::string>::iterator);	//戦闘画面で選んだコマンドのフラグを設定する
-	int GetChoiseCommamd();		//選択したコマンドの種類を取得
-	void DrawCommand();			//バトルコマンド描画
-	void BattleOperation(KEYDOWN *);	//戦闘画面の操作
-	void ResetBattleMember();		//戦闘画面で使用する変数などをリセットする
+	int GetChoiseCommamd();									//選択したコマンドの種類を取得
+	void DrawCommand();										//バトルコマンド描画
+	void BattleOperation(KEYDOWN *);						//戦闘画面の操作
+	void ResetBattleMember();								//戦闘画面で使用する変数などをリセットする
 
+	//ステータスウィンドウ関連
 	void SetStateWindow(PLAYER *);	//ステータスウィンドウの設定をする
 
 	void DrawStateWindow();			//ステータスウィンドウ描画

@@ -12,7 +12,7 @@ WINDOW::WINDOW()
 	//メンバ変数初期化
 	this->Str = { "" };	//文字列を初期化
 	this->Str_itr = this->Str.begin();	//先頭アドレス
-	this->Num = { 0 };
+	this->Num = { -1 };	//－1で初期化
 	this->Num_itr = this->Num.begin();	//先頭アドレス
 
 	this->Width = 200;		//幅を初期化
@@ -126,10 +126,17 @@ void WINDOW::SetText(const char *text)
 }
 
 //ウィンドウ内に描画する文字（数字）をセットする
-void WINDOW::SetText(int num)
+void WINDOW::SetText(std::vector<int> num)
 {
-	*this->Num_itr = num;
+	this->Num = num;	//数字セット
+	this->Num_itr = this->Num.begin();	//ハンドル再設定
 	return;
+}
+
+//数字の格納数取得
+int WINDOW::GetNumSize()
+{
+	return this->Num.size();
 }
 
 //描画

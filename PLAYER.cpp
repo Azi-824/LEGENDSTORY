@@ -29,6 +29,7 @@ PLAYER::~PLAYER()
 bool PLAYER::SetInit()
 {
 	this->HP = 100;		//初期HP設定
+	this->MP = 100;		//初期MP設定
 	this->ATK = 10;		//初期攻撃力設定
 	this->DEF = 10;		//初期防御力設定
 	this->SPD = 10;		//初期速度設定
@@ -44,10 +45,6 @@ bool PLAYER::SetInit()
 	this->Collision->SetValue(GAME_LEFT, GAME_TOP, this->Anime->GetWidth(),this->Anime->GetHeight());	//当たり判定の領域を設定
 
 	this->menuwindow = new MENU();			//メニューウィンドウ作成
-
-	//this->BattleCommand = new COMMAND();	//バトルコマンド作成
-
-	//this->BattleCommadType = -1;			//選択したバトルコマンドの種類を初期化
 
 	return true;
 }
@@ -115,6 +112,12 @@ void PLAYER::SetHP(int hp)
 {
 	this->HP -= hp;
 	return;
+}
+
+//MP設定
+void PLAYER::SetMP(int mp)
+{
+	this->MP += mp;
 }
 
 //攻撃力設定
@@ -189,6 +192,12 @@ void PLAYER::SetPosition(int x, int y)
 int PLAYER::GetHP(void)
 {
 	return this->HP;
+}
+
+//MP取得
+int PLAYER::GetMP(void)
+{
+	return this->MP;
 }
 
 //攻撃力取得

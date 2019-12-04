@@ -18,7 +18,7 @@ private:
 	std::vector<std::string> Str;					//ウィンドウ内に描画する文字列
 	std::vector<std::string>::iterator Str_itr;		//文字列のハンドル
 
-	std::vector<int>Num;	//ウィンドウ内に表示する文字列（数字）
+	std::vector<int>Num;					//ウィンドウ内に表示する文字列（数字）
 	std::vector<int>::iterator Num_itr;		//文字列（数字）のハンドル
 
 	int X;			//ウィンドウの枠のX座標
@@ -51,8 +51,10 @@ public:
 
 	std::vector<int>::iterator GetNumPos(void);	//文字列のアドレス取得
 
+	int GetNumSize();		//数字の格納数取得
+
 	void SetText(const char*);			//ウィンドウ内に描画する文字をセットする
-	void SetText(int);					//ウィンドウ内に描画する数字をセットする
+	void SetText(std::vector<int>);					//ウィンドウ内に描画する数字をセットする
 
 	virtual void Draw();			//描画
 
