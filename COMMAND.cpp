@@ -113,3 +113,9 @@ void COMMAND::Back()
 	return;
 }
 
+//‰Šú‰»‚·‚é
+void COMMAND::Init()
+{
+	this->Command_itr = this->Command.begin();	//‘I‘ğ—v‘f‚ğÅ‰‚Ì—v‘f‚É‚·‚é
+}
+

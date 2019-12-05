@@ -77,6 +77,8 @@ void ENEMY::StateSetInit()
 	this->DEF = 5;
 	this->SPD = 5;
 
+	this->SetIsArive(true);	//¶‚«‚Ä‚¢‚é
+
 	return;
 }
 

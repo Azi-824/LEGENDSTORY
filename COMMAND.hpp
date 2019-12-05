@@ -45,4 +45,6 @@ public:
 
 	void Back();		//‘O‚Ì—v‘f‚Ö
 
+	void Init();		//‰Šú‰»‚·‚é
+
 };

@@ -55,12 +55,11 @@ void UI::DrawMenu()
 	return;
 }
 
-
-//戦闘画面で使用する変数などをリセットする
-void UI::ResetBattleMember()
+//バトルコマンドで使用する要素を初期化する
+void UI::BattleInit()
 {
-	this->BattleCommadType = -1;	//リセット
-	return;
+	this->BattleCommand->Init();	//選択要素の初期化
+	this->BattleCommadType = -1;	//選択したコマンド内容リセット
 }
 
 //戦闘画面で選んだコマンドを設定する

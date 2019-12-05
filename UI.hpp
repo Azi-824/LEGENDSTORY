@@ -40,7 +40,7 @@ public:
 	int GetChoiseCommamd();									//選択したコマンドの種類を取得
 	void DrawCommand();										//バトルコマンド描画
 	void BattleOperation(KEYDOWN *);						//戦闘画面の操作
-	void ResetBattleMember();								//戦闘画面で使用する変数などをリセットする
+	void BattleInit();										//バトルコマンドで使用する要素を初期化する
 
 	//ステータスウィンドウ関連
 	void SetStateWindow(PLAYER *);	//ステータスウィンドウの設定をする

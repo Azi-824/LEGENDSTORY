@@ -238,6 +238,8 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 //タイトル画面の処理
 void Title()
 {
+	Init();		//初期化
+
 	//▼▼▼▼▼▼▼▼▼▼▼▼▼▼ 音の再生処理ここから ▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼
 	if (bgm->GetIsPlay() == false)	//再生中じゃないとき
 	{
@@ -299,7 +301,7 @@ void Play()
 {
 	font->SetSize(DEFAULT_FONTSIZE);	//フォントサイズを標準に戻す
 
-	Init();
+	Init();		//初期化
 
 	//マップ描画処理
 	for (int cnt = 0; cnt < MAP_LAYER_KIND; cnt++)
@@ -340,6 +342,7 @@ void Play()
 //戦闘画面の処理
 void Battle()
 {
+	
 	back_battle->Draw(0, 0);	//背景画像を描画
 
 	slime->SetImagePos(GAME_WIDTH / 2 - slime->GetWidth() / 2, GAME_HEIGHT / 2 - slime->GetHeight() / 2);	//スライムの位置調整(画面中央)
@@ -363,31 +366,32 @@ void Battle()
 		{
 			player->DamegeCalc(slime);		//ダメージ計算
 			ui->SetStateWindow(player);		//描画ステータス更新
-			ui->ResetBattleMember();		//バトルコマンドリセット
+			ui->BattleInit();				//バトルコマンドリセット
 			player->EffectReset();			//エフェクト関連リセット
 		}
 	}
 	else if (ui->GetChoiseCommamd() == DEFENSE)	//防御を選んだ場合
 	{
-		ui->ResetBattleMember();	//バトルコマンドリセット
+		ui->BattleInit();	//バトルコマンドリセット
 
 	}
 	else if (ui->GetChoiseCommamd() == MAGIC)		//魔法を選んだ場合
 	{
-		ui->ResetBattleMember();	//バトルコマンドリセット
+		ui->BattleInit();	//バトルコマンドリセット
 
 	}
 	else if (ui->GetChoiseCommamd() == ITEM)			//アイテムを選んだ場合
 	{
-		ui->ResetBattleMember();	//バトルコマンドリセット
+		ui->BattleInit();	//バトルコマンドリセット
 
 	}
 	else if (ui->GetChoiseCommamd() == ESCAPE)			//逃げるを選んだ場合
 	{
-		ui->ResetBattleMember();	//バトルコマンドリセット
+		ui->BattleInit();	//バトルコマンドリセット
 		GameSceneBefor = GameSceneNow;			//現在のゲームシーンを前のゲームシーンとして保存
 		GameSceneNow = (int)GAME_SCENE_CHENGE;	//遷移画面へ
 		GameSceneNext = (int)GAME_SCENE_PLAY;	//次の画面はプレイ画面
+		Init();									//初期化
 	}
 
 	//▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲ バトルコマンド毎の処理ここまで ▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲
@@ -397,6 +401,7 @@ void Battle()
 		GameSceneBefor = GameSceneNow;			//現在のゲームシーンを前のゲームシーンとして保存
 		GameSceneNow = (int)GAME_SCENE_CHENGE;	//遷移画面へ
 		GameSceneNext = (int)GAME_SCENE_PLAY;	//次の画面はプレイ画面
+		Init();									//初期化
 
 	}
 	else if (player->GetIsArive() == false)	//自分が死んだら
@@ -404,11 +409,12 @@ void Battle()
 		GameSceneBefor = GameSceneNow;			//現在のゲームシーンを前のゲームシーンとして保存
 		GameSceneNow = (int)GAME_SCENE_CHENGE;	//遷移画面へ
 		GameSceneNext = (int)GAME_SCENE_END;	//次の画面はエンド画面
+		Init();									//初期化
 	}
 
 	if (keydown->IsKeyDown(KEY_INPUT_R))		//Rキー押されたら
 	{
-		back_battle->ChengeImage(NIGHT);			//背景画像を（夜）に変更
+		back_battle->ChengeImage(NIGHT);		//背景画像を（夜）に変更
 	}
 	return;
 }
@@ -416,6 +422,8 @@ void Battle()
 //エンド画面の処理
 void End()
 {
+	Init();	//初期化
+
 	std::vector<std::string> str = { "TITLE","END" };
 
 	if (StrSet_Flg == false)
@@ -525,8 +533,10 @@ void Chenge()
 //初期化処理
 void Init()
 {
-	ChengeDrawCount = 0;	//フェードイン用初期化
+	ChengeDrawCount = 0;		//フェードイン用初期化
 
-	//slime->StateSetInit();		//敵初期化
+	slime->StateSetInit();		//敵初期化
+
+	ui->BattleInit();			//バトルコマンド初期化
 
 }
