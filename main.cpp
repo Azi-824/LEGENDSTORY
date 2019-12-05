@@ -265,7 +265,6 @@ void Title()
 	{
 		if (*text->GetPos() == "START")		//選択している文字列が"START"だったら
 		{
-			StrSet_Flg = false;						//文字列未設定
 			SceneChenge(GameSceneNow, (int)GAME_SCENE_PLAY);	//次の画面はプレイ画面
 		}
 		else
@@ -393,7 +392,6 @@ void End()
 	{
 		if (*text->GetPos() == "TITLE")		//選択している文字列が"TITLE"だったら
 		{
-			StrSet_Flg = false;						//文字列未設定
 			SceneChenge(GameSceneNow, (int)GAME_SCENE_TITLE);	//次の画面はタイトル画面
 		}
 		else
