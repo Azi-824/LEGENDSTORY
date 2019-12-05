@@ -29,7 +29,8 @@ enum GAME_SCENE {
 	GAME_SCENE_TITLE,	//タイトル画面
 	GAME_SCENE_PLAY,	//プレイ画面
 	GAME_SCENE_BATTLE,	//戦闘画面
-	GAME_SCENE_END		//エンド画面
+	GAME_SCENE_END,		//エンド画面
+	GAME_SCENE_CHENGE	//シーン遷移画面
 };
 
 //############## プロトタイプ宣言 #############
@@ -38,5 +39,6 @@ void Title();				//タイトル画面の処理
 void Play();				//プレイ画面の処理
 void Battle();				//戦闘画面の処理
 void End();					//エンド画面の処理
+void Chenge();				//シーン遷移画面の処理
 
 //########## クラスの定義 ##########

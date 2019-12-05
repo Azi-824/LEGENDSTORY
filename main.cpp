@@ -42,9 +42,13 @@ MAP *mapdata[MAP_DATA_KIND][MAP_LAYER_KIND];		//マップデータ
 
 //############## グローバル変数 ##############
 int GameSceneNow = (int)GAME_SCENE_TITLE;	//現在のゲームシーン
+int GameSceneBefor;							//前のゲームシーン
+int GameSceneNext;							//次のゲームシーン
 
 int MapKind[MAP_DATA_TATE_KIND][MAP_DATA_YOKO_KIND];			//マップの種類
 int MapNowPos[2] = {0};								//現在のマップのX位置とY位置を格納
+
+int ChengeDrawCount = 0;	//フェードイン処理に使用
 
 bool StrSet_Flg = false;					//文字列設定フラグ
 bool GameEnd_Flg = false;					//ゲーム終了フラグ
@@ -185,6 +189,12 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 
 			break;
 
+		case (int)GAME_SCENE_CHENGE:	//シーン遷移画面だったら
+
+			Chenge();					//シーン遷移画面の処理
+
+			break;
+
 		default:
 			break;
 
@@ -228,6 +238,8 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 //タイトル画面の処理
 void Title()
 {
+	ChengeDrawCount = 0;
+
 	//▼▼▼▼▼▼▼▼▼▼▼▼▼▼ 音の再生処理ここから ▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼
 	if (bgm->GetIsPlay() == false)	//再生中じゃないとき
 	{
@@ -269,7 +281,10 @@ void Title()
 		if (*text->GetPos() == str.begin()->c_str())		//選択している文字列が"START"だったら
 		{
 			StrSet_Flg = false;						//文字列未設定
-			GameSceneNow = (int)GAME_SCENE_PLAY;	//プレイ画面へ
+			GameSceneBefor = GameSceneNow;			//現在のゲームシーンを前のゲームシーンとして保存
+			GameSceneNow = (int)GAME_SCENE_CHENGE;	//遷移画面へ
+			GameSceneNext = (int)GAME_SCENE_PLAY;	//次の画面はプレイ画面
+
 		}
 		else
 		{
@@ -284,6 +299,8 @@ void Title()
 //プレイ画面の処理
 void Play()
 {
+	ChengeDrawCount = 0;
+
 	font->SetSize(DEFAULT_FONTSIZE);	//フォントサイズを標準に戻す
 
 	//マップ描画処理
@@ -311,7 +328,10 @@ void Play()
 	//▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼ 画面遷移の処理 ▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼
 	if (keydown->IsKeyDown(KEY_INPUT_SPACE))
 	{
-		GameSceneNow = (int)GAME_SCENE_BATTLE;	//エンド画面へ
+		GameSceneBefor = GameSceneNow;			//現在のゲームシーンを前のゲームシーンとして保存
+		GameSceneNow = (int)GAME_SCENE_CHENGE;	//遷移画面へ
+		GameSceneNext = (int)GAME_SCENE_BATTLE;	//次の画面は戦闘画面
+
 	}
 	//▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲ 画面遷移の処理 ▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲
 
@@ -322,6 +342,7 @@ void Play()
 //戦闘画面の処理
 void Battle()
 {
+	ChengeDrawCount = 0;
 
 	back_battle->Draw(0, 0);	//背景画像を描画
 
@@ -368,14 +389,19 @@ void Battle()
 	else if (ui->GetChoiseCommamd() == ESCAPE)			//逃げるを選んだ場合
 	{
 		ui->ResetBattleMember();	//バトルコマンドリセット
-		GameSceneNow = (int)GAME_SCENE_PLAY;	//プレイ画面へ
+		GameSceneBefor = GameSceneNow;			//現在のゲームシーンを前のゲームシーンとして保存
+		GameSceneNow = (int)GAME_SCENE_CHENGE;	//遷移画面へ
+		GameSceneNext = (int)GAME_SCENE_PLAY;	//次の画面はプレイ画面
 	}
 
 	//▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲ バトルコマンド毎の処理ここまで ▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲
 
 	if (slime->GetIsArive() == false)	//敵が死んだら
 	{
-		GameSceneNow = (int)GAME_SCENE_END;	//エンド画面へ
+		GameSceneBefor = GameSceneNow;			//現在のゲームシーンを前のゲームシーンとして保存
+		GameSceneNow = (int)GAME_SCENE_CHENGE;	//遷移画面へ
+		GameSceneNext = (int)GAME_SCENE_PLAY;	//次の画面はプレイ画面
+
 	}
 
 	if (keydown->IsKeyDown(KEY_INPUT_R))		//Rキー押されたら
@@ -388,6 +414,7 @@ void Battle()
 //エンド画面の処理
 void End()
 {
+	ChengeDrawCount = 0;
 
 	std::vector<std::string> str = { "TITLE","END" };
 
@@ -415,7 +442,9 @@ void End()
 		if (*text->GetPos() == str.begin()->c_str())		//選択している文字列が"TITLE"だったら
 		{
 			StrSet_Flg = false;						//文字列未設定
-			GameSceneNow = (int)GAME_SCENE_TITLE;	//タイトル画面へ
+			GameSceneBefor = GameSceneNow;			//現在のゲームシーンを前のゲームシーンとして保存
+			GameSceneNow = (int)GAME_SCENE_CHENGE;	//遷移画面へ
+			GameSceneNext = (int)GAME_SCENE_TITLE;	//次の画面はプレイ画面
 		}
 		else
 		{
@@ -426,4 +455,69 @@ void End()
 	//▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲ 画面遷移の処理 ▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲
 
 	return;
+}
+
+//現在のシーンから指定されたシーンへ切り替える処理
+void Chenge()
+{
+	int ChengeDrawCountMax = 60;	//フェードイン処理に使用
+
+	switch (GameSceneBefor)		//どの画面からの遷移かで処理を分ける
+	{
+	case (int)GAME_SCENE_TITLE:	//タイトル画面からの遷移だったら
+
+		back->Draw(0, 0);	//背景描画
+		title->Draw(0, GAME_HEIGHT / 2 - title->GetHeight(0) / 2);		//画面中央にタイトル描画
+		break;
+
+	case (int)GAME_SCENE_PLAY:	//プレイ画面からの遷移だったら
+
+		//マップ描画処理
+		for (int cnt = 0; cnt < MAP_LAYER_KIND; cnt++)
+		{
+			mapdata[MapKind[MAPPOS_Y][MAPPOS_X]][cnt]->Draw(mapimage->GetHandle((int)FILED));		//マップ描画
+			mapdata[MapKind[MAPPOS_Y][MAPPOS_X]][cnt]->ChengeMap(player, MapNowPos);				//マップの切り替え処理
+		}
+		player->DrawAnime();		//アニメーション描画
+
+		break;
+
+	case (int)GAME_SCENE_BATTLE://戦闘画面からの遷移だったら
+
+		back_battle->Draw(0, 0);	//背景画像を描画
+
+		slime->Draw();	//スライム描画
+
+		ui->DrawCommand();						//バトルコマンド描画
+
+		ui->DrawStateWindow();					//ステータスウィンドウ描画
+
+		break;
+
+	case (int)GAME_SCENE_END:	//エンド画面からの遷移だったら
+
+		break;
+
+	default:
+		break;
+	}
+
+	//60フレーム分、待つ
+	if (ChengeDrawCount < ChengeDrawCountMax)
+	{
+		ChengeDrawCount++;
+	}
+	else
+	{
+		GameSceneNow = GameSceneNext;	//次の画面にする
+	}
+
+	//フェードアウトの処理
+	double ToukaPercent = ChengeDrawCount / (double)ChengeDrawCountMax;//透過％を求める
+	SetDrawBlendMode(DX_BLENDMODE_ALPHA, ToukaPercent * 255);	//透過させる
+	DrawBox(0, 0, GAME_WIDTH, GAME_HEIGHT, GetColor(0, 0, 0), TRUE);	//真っ暗な画面にする
+	SetDrawBlendMode(DX_BLENDMODE_NOBLEND, 0);	//透過をやめる
+
+	return;
+
 }
