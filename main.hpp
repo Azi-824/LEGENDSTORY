@@ -44,4 +44,9 @@ void Chenge();				//シーン遷移画面の処理
 void Init();				//初期化処理
 void SceneChenge(int, int);	//シーンを変更する処理
 
+void Title_Draw();			//タイトル画面の描画処理
+void Play_Draw();			//プレイ画面の描画処理
+void Battle_Draw();			//戦闘画面の描画処理
+void End_Draw();			//エンド画面の描画処理
+
 //########## クラスの定義 ##########

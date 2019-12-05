@@ -249,22 +249,7 @@ void Title()
 	//▲▲▲▲▲▲▲▲▲▲▲▲▲▲ 音の再生処理ここまで ▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲
 
 
-	back->Draw(0, 0);	//背景画像描画
-
-	title->Draw(0, GAME_HEIGHT / 2 - title->GetHeight(0) / 2);		//画面中央にタイトル描画
-
-	std::vector<std::string> str = { "START","END" };
-
-	if (StrSet_Flg == false)
-	{
-		text->SetText(str);		//描画文字セット
-
-		StrSet_Flg = true;		//文字列設定
-
-		font->SetSize(BIG_FONTSIZE);		//フォントサイズを大きくする
-	}
-
-	text->Draw(GAME_WIDTH / 2 - text->GetWidth() / 2, DEFAULT_TEXT_Y,str.size(),true);	//描画（矢印付き）
+	Title_Draw();		//タイトル画面の描画処理
 
 	if (keydown->IsKeyDown(KEY_INPUT_S))	//Sキーを押されたら
 	{
@@ -278,7 +263,7 @@ void Title()
 	//▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼ 画面遷移の処理 ▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼
 	if (keydown->IsKeyDown(KEY_INPUT_RETURN))				//エンターキーを押されたら
 	{
-		if (*text->GetPos() == str.begin()->c_str())		//選択している文字列が"START"だったら
+		if (*text->GetPos() == "START")		//選択している文字列が"START"だったら
 		{
 			StrSet_Flg = false;						//文字列未設定
 			SceneChenge(GameSceneNow, (int)GAME_SCENE_PLAY);	//次の画面はプレイ画面
@@ -296,21 +281,10 @@ void Title()
 //プレイ画面の処理
 void Play()
 {
-	font->SetSize(DEFAULT_FONTSIZE);	//フォントサイズを標準に戻す
-
 	Init();		//初期化
 
-	//マップ描画処理
-	for (int cnt = 0; cnt < MAP_LAYER_KIND; cnt++)
-	{
-		mapdata[MapKind[MAPPOS_Y][MAPPOS_X]][cnt]->Draw(mapimage->GetHandle((int)FILED));		//マップ描画
-		mapdata[MapKind[MAPPOS_Y][MAPPOS_X]][cnt]->ChengeMap(player,MapNowPos);					//マップの切り替え処理
-	}
-
 	player->Operation(keydown);	//プレイヤーキー操作
-	player->DrawAnime();		//アニメーション描画
-	ui->MenuOperation(keydown, player->GetIsMenu());	//メニュー画面操作
-
+	Play_Draw();		//描画処理
 
 	if (keydown->IsKeyDownOne(KEY_INPUT_Q))		//Qキーを押された瞬間
 	{
@@ -336,18 +310,9 @@ void Play()
 //戦闘画面の処理
 void Battle()
 {
-	
-	back_battle->Draw(0, 0);	//背景画像を描画
-
-	slime->SetImagePos(GAME_WIDTH / 2 - slime->GetWidth() / 2, GAME_HEIGHT / 2 - slime->GetHeight() / 2);	//スライムの位置調整(画面中央)
-
-	slime->Draw();	//スライム描画
-
 	ui->BattleOperation(keydown);			//戦闘画面のキー操作
 
-	ui->DrawCommand();						//バトルコマンド描画
-
-	ui->DrawStateWindow();					//ステータスウィンドウ描画
+	Battle_Draw();			//描画処理
 
 
 	//▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼ バトルコマンド毎の処理ここから ▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼
@@ -412,16 +377,18 @@ void End()
 {
 	Init();	//初期化
 
-	std::vector<std::string> str = { "TITLE","END" };
+	//std::vector<std::string> str = { "TITLE","END" };
 
-	if (StrSet_Flg == false)
-	{
-		text->SetText(str);		//描画文字セット
+	//if (StrSet_Flg == false)
+	//{
+	//	text->SetText(str);		//描画文字セット
 
-		StrSet_Flg = true;		//文字列設定
-	}
+	//	StrSet_Flg = true;		//文字列設定
+	//}
 
-	text->Draw(GAME_WIDTH / 2 - text->GetWidth() / 2, DEFAULT_TEXT_Y,str.size(),true,GetColor(255,255,255));	//文字列描画（色指定）（矢印あり）
+	//text->Draw(GAME_WIDTH / 2 - text->GetWidth() / 2, DEFAULT_TEXT_Y,str.size(),true,GetColor(255,255,255));	//文字列描画（色指定）（矢印あり）
+
+	End_Draw();
 
 	if (keydown->IsKeyDown(KEY_INPUT_S))	//Sキーを押されたら
 	{
@@ -435,7 +402,7 @@ void End()
 	//▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼ 画面遷移の処理 ▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼
 	if (keydown->IsKeyDown(KEY_INPUT_BACK))
 	{
-		if (*text->GetPos() == str.begin()->c_str())		//選択している文字列が"TITLE"だったら
+		if (*text->GetPos() == "TITLE")		//選択している文字列が"TITLE"だったら
 		{
 			StrSet_Flg = false;						//文字列未設定
 			SceneChenge(GameSceneNow, (int)GAME_SCENE_TITLE);	//次の画面はタイトル画面
@@ -460,8 +427,8 @@ void Chenge()
 	{
 	case (int)GAME_SCENE_TITLE:	//タイトル画面からの遷移だったら
 
-		back->Draw(0, 0);	//背景描画
-		title->Draw(0, GAME_HEIGHT / 2 - title->GetHeight(0) / 2);		//画面中央にタイトル描画
+		Title_Draw();		//タイトル画面の描画処理
+
 		break;
 
 	case (int)GAME_SCENE_PLAY:	//プレイ画面からの遷移だったら
@@ -535,4 +502,82 @@ void SceneChenge(int beforscene, int nextscene)
 	GameSceneNow = (int)GAME_SCENE_CHENGE;		//遷移画面に変更
 	GameSceneNext = nextscene;					//次のシーンを指定
 	return;
+}
+
+//タイトル画面の描画処理
+void Title_Draw()
+{
+	back->Draw(0, 0);	//背景画像描画
+
+	title->Draw(0, GAME_HEIGHT / 2 - title->GetHeight(0) / 2);		//画面中央にタイトル描画
+
+	std::vector<std::string> str = { "START","END" };
+
+	if (StrSet_Flg == false)
+	{
+		text->SetText(str);		//描画文字セット
+
+		StrSet_Flg = true;		//文字列設定
+
+		font->SetSize(BIG_FONTSIZE);		//フォントサイズを大きくする
+	}
+
+	text->Draw(GAME_WIDTH / 2 - text->GetWidth() / 2, DEFAULT_TEXT_Y, str.size(), true);	//描画（矢印付き）
+	
+	return;
+
+}
+
+//プレイ画面の描画処理
+void Play_Draw()
+{
+	font->SetSize(DEFAULT_FONTSIZE);	//フォントサイズを標準に戻す
+
+	//マップ描画処理
+	for (int cnt = 0; cnt < MAP_LAYER_KIND; cnt++)
+	{
+		mapdata[MapKind[MAPPOS_Y][MAPPOS_X]][cnt]->Draw(mapimage->GetHandle((int)FILED));		//マップ描画
+		mapdata[MapKind[MAPPOS_Y][MAPPOS_X]][cnt]->ChengeMap(player, MapNowPos);					//マップの切り替え処理
+	}
+
+	player->DrawAnime();		//アニメーション描画
+	ui->MenuOperation(keydown, player->GetIsMenu());	//メニュー画面操作
+
+	return;
+
+}
+
+//戦闘画面の描画処理
+void Battle_Draw()
+{
+	back_battle->Draw(0, 0);	//背景画像を描画
+
+	slime->SetImagePos(GAME_WIDTH / 2 - slime->GetWidth() / 2, GAME_HEIGHT / 2 - slime->GetHeight() / 2);	//スライムの位置調整(画面中央)
+
+	slime->Draw();	//スライム描画
+
+	ui->DrawCommand();						//バトルコマンド描画
+
+	ui->DrawStateWindow();					//ステータスウィンドウ描画
+
+	return;
+
+}
+
+//エンド画面の描画処理
+void End_Draw()
+{
+	std::vector<std::string> str = { "TITLE","END" };
+
+	if (StrSet_Flg == false)
+	{
+		text->SetText(str);		//描画文字セット
+
+		StrSet_Flg = true;		//文字列設定
+	}
+
+	text->Draw(GAME_WIDTH / 2 - text->GetWidth() / 2, DEFAULT_TEXT_Y, str.size(), true, GetColor(255, 255, 255));	//文字列描画（色指定）（矢印あり）
+
+	return;
+
 }
