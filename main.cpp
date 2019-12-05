@@ -410,7 +410,7 @@ void End()
 //画面遷移の演出をする処理
 void Chenge()
 {
-	int ChengeDrawCountMax = 60;	//フェードイン処理に使用
+	static const int ChengeDrawCountMax = 60;	//フェードイン処理に使用
 
 	switch (GameSceneBefor)		//どの画面からの遷移かで処理を分ける
 	{
