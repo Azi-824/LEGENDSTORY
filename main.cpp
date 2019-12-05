@@ -238,8 +238,6 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 //タイトル画面の処理
 void Title()
 {
-	ChengeDrawCount = 0;
-
 	//▼▼▼▼▼▼▼▼▼▼▼▼▼▼ 音の再生処理ここから ▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼
 	if (bgm->GetIsPlay() == false)	//再生中じゃないとき
 	{
@@ -299,9 +297,9 @@ void Title()
 //プレイ画面の処理
 void Play()
 {
-	ChengeDrawCount = 0;
-
 	font->SetSize(DEFAULT_FONTSIZE);	//フォントサイズを標準に戻す
+
+	Init();
 
 	//マップ描画処理
 	for (int cnt = 0; cnt < MAP_LAYER_KIND; cnt++)
@@ -342,8 +340,6 @@ void Play()
 //戦闘画面の処理
 void Battle()
 {
-	ChengeDrawCount = 0;
-
 	back_battle->Draw(0, 0);	//背景画像を描画
 
 	slime->SetImagePos(GAME_WIDTH / 2 - slime->GetWidth() / 2, GAME_HEIGHT / 2 - slime->GetHeight() / 2);	//スライムの位置調整(画面中央)
@@ -403,6 +399,12 @@ void Battle()
 		GameSceneNext = (int)GAME_SCENE_PLAY;	//次の画面はプレイ画面
 
 	}
+	else if (player->GetIsArive() == false)	//自分が死んだら
+	{
+		GameSceneBefor = GameSceneNow;			//現在のゲームシーンを前のゲームシーンとして保存
+		GameSceneNow = (int)GAME_SCENE_CHENGE;	//遷移画面へ
+		GameSceneNext = (int)GAME_SCENE_END;	//次の画面はエンド画面
+	}
 
 	if (keydown->IsKeyDown(KEY_INPUT_R))		//Rキー押されたら
 	{
@@ -414,8 +416,6 @@ void Battle()
 //エンド画面の処理
 void End()
 {
-	ChengeDrawCount = 0;
-
 	std::vector<std::string> str = { "TITLE","END" };
 
 	if (StrSet_Flg == false)
@@ -457,7 +457,7 @@ void End()
 	return;
 }
 
-//現在のシーンから指定されたシーンへ切り替える処理
+//画面遷移の演出をする処理
 void Chenge()
 {
 	int ChengeDrawCountMax = 60;	//フェードイン処理に使用
@@ -519,5 +519,14 @@ void Chenge()
 	SetDrawBlendMode(DX_BLENDMODE_NOBLEND, 0);	//透過をやめる
 
 	return;
+
+}
+
+//初期化処理
+void Init()
+{
+	ChengeDrawCount = 0;	//フェードイン用初期化
+
+	//slime->StateSetInit();		//敵初期化
 
 }
