@@ -40,6 +40,8 @@ void Play();				//プレイ画面の処理
 void Battle();				//戦闘画面の処理
 void End();					//エンド画面の処理
 void Chenge();				//シーン遷移画面の処理
+
 void Init();				//初期化処理
+void SceneChenge(int, int);	//シーンを変更する処理
 
 //########## クラスの定義 ##########

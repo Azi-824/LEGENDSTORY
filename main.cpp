@@ -281,10 +281,7 @@ void Title()
 		if (*text->GetPos() == str.begin()->c_str())		//選択している文字列が"START"だったら
 		{
 			StrSet_Flg = false;						//文字列未設定
-			GameSceneBefor = GameSceneNow;			//現在のゲームシーンを前のゲームシーンとして保存
-			GameSceneNow = (int)GAME_SCENE_CHENGE;	//遷移画面へ
-			GameSceneNext = (int)GAME_SCENE_PLAY;	//次の画面はプレイ画面
-
+			SceneChenge(GameSceneNow, (int)GAME_SCENE_PLAY);	//次の画面はプレイ画面
 		}
 		else
 		{
@@ -328,10 +325,7 @@ void Play()
 	//▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼ 画面遷移の処理 ▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼
 	if (keydown->IsKeyDown(KEY_INPUT_SPACE))
 	{
-		GameSceneBefor = GameSceneNow;			//現在のゲームシーンを前のゲームシーンとして保存
-		GameSceneNow = (int)GAME_SCENE_CHENGE;	//遷移画面へ
-		GameSceneNext = (int)GAME_SCENE_BATTLE;	//次の画面は戦闘画面
-
+		SceneChenge(GameSceneNow, (int)GAME_SCENE_BATTLE);	//次の画面は戦闘画面
 	}
 	//▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲ 画面遷移の処理 ▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲
 
@@ -388,9 +382,7 @@ void Battle()
 	else if (ui->GetChoiseCommamd() == ESCAPE)			//逃げるを選んだ場合
 	{
 		ui->BattleInit();	//バトルコマンドリセット
-		GameSceneBefor = GameSceneNow;			//現在のゲームシーンを前のゲームシーンとして保存
-		GameSceneNow = (int)GAME_SCENE_CHENGE;	//遷移画面へ
-		GameSceneNext = (int)GAME_SCENE_PLAY;	//次の画面はプレイ画面
+		SceneChenge(GameSceneNow, (int)GAME_SCENE_PLAY);	//次の画面はプレイ画面
 		Init();									//初期化
 	}
 
@@ -398,17 +390,13 @@ void Battle()
 
 	if (slime->GetIsArive() == false)	//敵が死んだら
 	{
-		GameSceneBefor = GameSceneNow;			//現在のゲームシーンを前のゲームシーンとして保存
-		GameSceneNow = (int)GAME_SCENE_CHENGE;	//遷移画面へ
-		GameSceneNext = (int)GAME_SCENE_PLAY;	//次の画面はプレイ画面
+		SceneChenge(GameSceneNow, (int)GAME_SCENE_PLAY);	//次の画面はプレイ画面
 		Init();									//初期化
 
 	}
 	else if (player->GetIsArive() == false)	//自分が死んだら
 	{
-		GameSceneBefor = GameSceneNow;			//現在のゲームシーンを前のゲームシーンとして保存
-		GameSceneNow = (int)GAME_SCENE_CHENGE;	//遷移画面へ
-		GameSceneNext = (int)GAME_SCENE_END;	//次の画面はエンド画面
+		SceneChenge(GameSceneNow, (int)GAME_SCENE_END);	//次の画面はエンド画面
 		Init();									//初期化
 	}
 
@@ -450,9 +438,7 @@ void End()
 		if (*text->GetPos() == str.begin()->c_str())		//選択している文字列が"TITLE"だったら
 		{
 			StrSet_Flg = false;						//文字列未設定
-			GameSceneBefor = GameSceneNow;			//現在のゲームシーンを前のゲームシーンとして保存
-			GameSceneNow = (int)GAME_SCENE_CHENGE;	//遷移画面へ
-			GameSceneNext = (int)GAME_SCENE_TITLE;	//次の画面はプレイ画面
+			SceneChenge(GameSceneNow, (int)GAME_SCENE_TITLE);	//次の画面はタイトル画面
 		}
 		else
 		{
@@ -533,10 +519,20 @@ void Chenge()
 //初期化処理
 void Init()
 {
-	ChengeDrawCount = 0;		//フェードイン用初期化
+	ChengeDrawCount = 0;		
+//フェードイン用初期化
 
 	slime->StateSetInit();		//敵初期化
 
 	ui->BattleInit();			//バトルコマンド初期化
 
+}
+
+//シーンを変更する処理
+void SceneChenge(int beforscene, int nextscene)
+{
+	GameSceneBefor = beforscene;				//現在のゲームシーンを前のゲームシーンとして保存
+	GameSceneNow = (int)GAME_SCENE_CHENGE;		//遷移画面に変更
+	GameSceneNext = nextscene;					//次のシーンを指定
+	return;
 }
