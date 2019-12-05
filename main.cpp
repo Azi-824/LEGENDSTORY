@@ -377,18 +377,7 @@ void End()
 {
 	Init();	//初期化
 
-	//std::vector<std::string> str = { "TITLE","END" };
-
-	//if (StrSet_Flg == false)
-	//{
-	//	text->SetText(str);		//描画文字セット
-
-	//	StrSet_Flg = true;		//文字列設定
-	//}
-
-	//text->Draw(GAME_WIDTH / 2 - text->GetWidth() / 2, DEFAULT_TEXT_Y,str.size(),true,GetColor(255,255,255));	//文字列描画（色指定）（矢印あり）
-
-	End_Draw();
+	End_Draw();	//描画処理
 
 	if (keydown->IsKeyDown(KEY_INPUT_S))	//Sキーを押されたら
 	{
@@ -433,29 +422,19 @@ void Chenge()
 
 	case (int)GAME_SCENE_PLAY:	//プレイ画面からの遷移だったら
 
-		//マップ描画処理
-		for (int cnt = 0; cnt < MAP_LAYER_KIND; cnt++)
-		{
-			mapdata[MapKind[MAPPOS_Y][MAPPOS_X]][cnt]->Draw(mapimage->GetHandle((int)FILED));		//マップ描画
-			mapdata[MapKind[MAPPOS_Y][MAPPOS_X]][cnt]->ChengeMap(player, MapNowPos);				//マップの切り替え処理
-		}
-		player->DrawAnime();		//アニメーション描画
+		Play_Draw();		//プレイ画面の描画処理
 
 		break;
 
 	case (int)GAME_SCENE_BATTLE://戦闘画面からの遷移だったら
 
-		back_battle->Draw(0, 0);	//背景画像を描画
-
-		slime->Draw();	//スライム描画
-
-		ui->DrawCommand();						//バトルコマンド描画
-
-		ui->DrawStateWindow();					//ステータスウィンドウ描画
+		Battle_Draw();		//戦闘画面の描画処理
 
 		break;
 
 	case (int)GAME_SCENE_END:	//エンド画面からの遷移だったら
+
+		End_Draw();			//エンド画面の描画処理
 
 		break;
 
@@ -471,6 +450,7 @@ void Chenge()
 	else
 	{
 		GameSceneNow = GameSceneNext;	//次の画面にする
+		StrSet_Flg = false;				//文字列未設定
 	}
 
 	//フェードアウトの処理
@@ -486,8 +466,7 @@ void Chenge()
 //初期化処理
 void Init()
 {
-	ChengeDrawCount = 0;		
-//フェードイン用初期化
+	ChengeDrawCount = 0;		//フェードイン用初期化
 
 	slime->StateSetInit();		//敵初期化
 
