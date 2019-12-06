@@ -412,11 +412,11 @@ void PLAYER::DamegeCalc(ENEMY *enemy)
 	if (this->ATK > enemy->GetDEF())	//自分の攻撃力が敵の防御力より上だったら
 	{
 		this->SendDamege = this->ATK - enemy->GetDEF();		//ダメージ量を計算 自分攻撃力 - 敵防御力のダメージを与える
-		enemy->SetHP((enemy->GetHP() - this->SendDamege));	//ダメージを与える 現在のHP - 受けたダメージ をHPに再設定
-		if (enemy->GetHP() <= 0)				//敵のHPが0になったら
-		{
-			enemy->SetIsArive(false);		//敵死亡
-		}
+		//enemy->SetHP((enemy->GetHP() - this->SendDamege));	//ダメージを与える 現在のHP - 受けたダメージ をHPに再設定
+		//if (enemy->GetHP() <= 0)				//敵のHPが0になったら
+		//{
+		//	enemy->SetIsArive(false);		//敵死亡
+		//}
 	}
 	//▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲ 味方の攻撃処理ここまで ▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲
 

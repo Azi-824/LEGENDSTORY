@@ -18,7 +18,6 @@
 #include "MUSIC.hpp"
 #include "ENEMY.hpp"
 #include "UI.hpp"
-#include "BATTLE.hpp"
 
 //########## グローバルオブジェクト ##########
 FPS *fps = new FPS(GAME_FPS_SPEED);							//FPSクラスのオブジェクトを生成
@@ -34,8 +33,6 @@ FONT *font;							//フォント
 TEXTSTR *text;						//文字列
 UI *ui;								//UI
 
-BATTLE *battle;						//バトルの流れ
-
 PLAYER *player;						//主人公
 
 ENEMY *slime;						//スライム
@@ -47,6 +44,10 @@ MAP *mapdata[MAP_DATA_KIND][MAP_LAYER_KIND];		//マップデータ
 int GameSceneNow = (int)GAME_SCENE_TITLE;	//現在のゲームシーン
 int GameSceneBefor;							//前のゲームシーン
 int GameSceneNext;							//次のゲームシーン
+
+int BattleStageNow = (int)WAIT_PLAYER_ACT;	//バトルシーンの現在の状態
+int BattleActMsgCnt = 0;		//行動メッセージカウント
+int BattleActMsgCntMax = 60;	//行動メッセージの表示時間
 
 int MapKind[MAP_DATA_TATE_KIND][MAP_DATA_YOKO_KIND];			//マップの種類
 int MapNowPos[2] = {0};								//現在のマップのX位置とY位置を格納
@@ -91,8 +92,6 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 	if (font->GetIsLoad() == false) { return -1; }					//読み込み失敗時
 
 	text = new TEXTSTR();	//テキスト作成
-
-	battle = new BATTLE();	//バトル作成
 
 	player = new PLAYER();
 	if (player->SetImage(MY_IMG_DIR_CHARCTOR, MY_IMG_NAME_PLAYER) == false) { return -1; }	//読み込み失敗
@@ -318,29 +317,17 @@ void Battle()
 
 	Battle_Draw();			//描画処理
 
-	if (ui->GetChoiseCommamd() != -1)	//コマンドを選んだら
-		battle->SetIsActMsg(true);		//行動メッセージ描画スタート
 
-	if (battle->GetIsActMsg() == false)	//行動メッセージを表示していないとき（コマンドを選ぶ前）
+	switch (BattleStageNow)		//現在のバトル状態
 	{
+	case (int)WAIT_PLAYER_ACT:		//プレイヤーの行動選択待ち状態の時
 
-	}
-	else if (battle->GetIsActMsg())		//行動メッセージを表示しているとき(コマンドを選んだあと)
-	{
 		//▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼ バトルコマンド毎の処理ここから ▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼
 		switch (ui->GetChoiseCommamd())		//どのコマンドを選んだか
 		{
 		case (int)ATACK:					//攻撃を選んだ時
 
-			player->DrawAtk(350, 250);		//攻撃エフェクト描画
-
-			if (player->GetEffectEnd())		//エフェクト描画が終了したら
-			{
-				player->DamegeCalc(slime);		//ダメージ計算
-				ui->SetStateWindow(player);		//描画ステータス更新
-				ui->BattleInit();				//バトルコマンドリセット
-				player->EffectReset();			//エフェクト関連リセット
-			}
+			BattleStageNow = (int)DAMEGE_CALC;	//バトル状態をダメージ計算状態へ
 
 			break;
 
@@ -375,20 +362,76 @@ void Battle()
 		}
 		//▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲ バトルコマンド毎の処理ここまで ▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲
 
+
+		break;						//プレイヤーの行動選択待ち状態の処理ここまで
+
+	case (int)DAMEGE_CALC:			//ダメージ計算状態の時
+
+		player->DamegeCalc(slime);		//ダメージ計算
+
+		BattleStageNow = (int)ACT_MSG;	//行動メッセージ表示状態へ
+
+		break;						//ダメージ計算状態の時ここまで
+
+	case (int)ACT_MSG:				//行動メッセージ表示状態
+
+		ui->SetStateWindow(player);		//描画ステータス更新
+
+		if (BattleActMsgCnt == BattleActMsgCntMax)		//表示秒数になったら
+		{
+			BattleStageNow = (int)DRAW_EFFECT;			//エフェクト描画状態へ
+		}
+		else
+		{
+			BattleActMsgCnt++;	//カウントアップ
+		}
+
+		break;						//行動メッセージ表示状態ここまで
+
+	case (int)DRAW_EFFECT:			//エフェクト描画状態
+
+		player->DrawAtk(350, 250);		//攻撃エフェクト描画
+
+		if (player->GetEffectEnd())		//エフェクト描画が終了したら
+		{
+			ui->BattleInit();				//バトルコマンドリセット
+
+			player->EffectReset();			//エフェクト関連リセット
+
+			BattleStageNow = (int)WAIT_PLAYER_ACT;		//プレイヤーの行動選択状態へ
+
+			BattleActMsgCnt = 0;	//カウントリセット
+
+			slime->SetHP((slime->GetHP() - player->GetSendDamege()));	//ダメージを与える
+
+			if (slime->GetHP() <= 0)				//敵のHPが0になったら
+			{
+				slime->SetIsArive(false);		//敵死亡
+			}
+
+
+			//生存判定
+			if (slime->GetIsArive() == false)	//敵が死んだら
+			{
+				SceneChenge(GameSceneNow, (int)GAME_SCENE_PLAY);	//次の画面はプレイ画面
+				Init();									//初期化
+
+			}
+			else if (player->GetIsArive() == false)	//自分が死んだら
+			{
+				SceneChenge(GameSceneNow, (int)GAME_SCENE_END);	//次の画面はエンド画面
+				Init();									//初期化
+			}
+
+
+		}
+
+		break;
+
+
 	}
 
 
-	if (slime->GetIsArive() == false)	//敵が死んだら
-	{
-		SceneChenge(GameSceneNow, (int)GAME_SCENE_PLAY);	//次の画面はプレイ画面
-		Init();									//初期化
-
-	}
-	else if (player->GetIsArive() == false)	//自分が死んだら
-	{
-		SceneChenge(GameSceneNow, (int)GAME_SCENE_END);	//次の画面はエンド画面
-		Init();									//初期化
-	}
 
 	if (keydown->IsKeyDown(KEY_INPUT_R))		//Rキー押されたら
 	{
@@ -559,9 +602,9 @@ void Battle_Draw()
 
 	slime->Draw();	//スライム描画
 
-	if (ui->GetChoiseCommamd() != -1)
+	if (BattleStageNow==(int)ACT_MSG)	//行動メッセージ表示状態だったら
 	{
-		ui->DrawDamege(slime->GetName(), player->GetRecvDamege());
+		ui->DrawDamege(slime->GetName(), player->GetRecvDamege());		//行動メッセージ表示
 	}
 	else
 	{
