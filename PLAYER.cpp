@@ -33,10 +33,14 @@ bool PLAYER::SetInit()
 	this->Dist = FLONT;	//‰ŠúŒü‚«Ý’è
 	this->MoveSpeed = 5;//‰ŠúˆÚ“®‘¬“xÝ’è
 
+	this->SendDamege = 0;	//—^‚¦‚éƒ_ƒ[ƒW0
+	this->RecvDamege = 0;	//Žó‚¯‚éƒ_ƒ[ƒW0
+
 	this->Ilast->SetInit();	//‰æ‘œ‰ŠúÝ’è
 	this->IsKeyDown = false;//ƒL[ƒ{[ƒh‰Ÿ‚³‚ê‚Ä‚¢‚È‚¢
 	this->IsMenu = false;	//ƒƒjƒ…[ƒEƒBƒ“ƒhƒE•`‰æ‚³‚ê‚Ä‚¢‚È‚¢
 	this->EffectEnd = false;	//ƒGƒtƒFƒNƒg•`‰æˆ—I—¹‚µ‚Ä‚¢‚È‚¢
+	this->IsActMsg = false;		//s“®ƒƒbƒZ[ƒW•\Ž¦‚µ‚Ä‚¢‚È‚¢
 
 	this->Collision = new COLLISION();		//“–‚½‚è”»’è‚Ì—Ìˆæ‚ðì¬
 	this->Collision->SetValue(GAME_LEFT, GAME_TOP, this->Anime->GetWidth(),this->Anime->GetHeight());	//“–‚½‚è”»’è‚Ì—Ìˆæ‚ðÝ’è
@@ -262,6 +266,24 @@ bool PLAYER::GetIsMenu()
 	return this->IsMenu;
 }
 
+//—^‚¦‚éƒ_ƒ[ƒW‚ðŽæ“¾
+int PLAYER::GetSendDamege()
+{
+	return this->SendDamege;
+}
+
+//Žó‚¯‚éƒ_ƒ[ƒW‚ðŽæ“¾
+int PLAYER::GetRecvDamege()
+{
+	return this->RecvDamege;
+}
+
+//s“®ƒƒbƒZ[ƒW•\Ž¦’†‚©Žæ“¾
+bool PLAYER::GetIsActMsg()
+{
+	return this->IsActMsg;
+}
+
 //‘€ì
 void PLAYER::Operation(KEYDOWN *keydown)
 {
@@ -386,12 +408,11 @@ void PLAYER::MoveRight()
 //ƒ_ƒ[ƒWŒvŽZ
 void PLAYER::DamegeCalc(ENEMY *enemy)
 {
-	int damege = 0;	//ƒ_ƒ[ƒW
 	//¥¥¥¥¥¥¥¥¥¥¥¥¥¥¥¥¥¥¥ –¡•û‚ÌUŒ‚ˆ—‚±‚±‚©‚ç ¥¥¥¥¥¥¥¥¥¥¥¥¥¥¥¥¥¥¥¥¥¥
 	if (this->ATK > enemy->GetDEF())	//Ž©•ª‚ÌUŒ‚—Í‚ª“G‚Ì–hŒä—Í‚æ‚èã‚¾‚Á‚½‚ç
 	{
-		damege = this->ATK - enemy->GetDEF();		//ƒ_ƒ[ƒW—Ê‚ðŒvŽZ Ž©•ªUŒ‚—Í - “G–hŒä—Í‚Ìƒ_ƒ[ƒW‚ð—^‚¦‚é
-		enemy->SetHP((enemy->GetHP() - damege));	//ƒ_ƒ[ƒW‚ð—^‚¦‚é Œ»Ý‚ÌHP - Žó‚¯‚½ƒ_ƒ[ƒW ‚ðHP‚ÉÄÝ’è
+		this->SendDamege = this->ATK - enemy->GetDEF();		//ƒ_ƒ[ƒW—Ê‚ðŒvŽZ Ž©•ªUŒ‚—Í - “G–hŒä—Í‚Ìƒ_ƒ[ƒW‚ð—^‚¦‚é
+		enemy->SetHP((enemy->GetHP() - this->SendDamege));	//ƒ_ƒ[ƒW‚ð—^‚¦‚é Œ»Ý‚ÌHP - Žó‚¯‚½ƒ_ƒ[ƒW ‚ðHP‚ÉÄÝ’è
 		if (enemy->GetHP() <= 0)				//“G‚ÌHP‚ª0‚É‚È‚Á‚½‚ç
 		{
 			enemy->SetIsArive(false);		//“GŽ€–S
@@ -404,7 +425,8 @@ void PLAYER::DamegeCalc(ENEMY *enemy)
 	//¥¥¥¥¥¥¥¥¥¥¥¥¥¥¥¥¥¥¥ “G‚ÌUŒ‚ˆ—‚±‚±‚©‚ç ¥¥¥¥¥¥¥¥¥¥¥¥¥¥¥¥¥¥¥¥¥¥
 	if (enemy->GetATK() > this->DEF)		//“G‚ÌUŒ‚—Í‚ªŽ©•ª‚Ì–hŒä—Í‚æ‚èã‚¾‚Á‚½‚ç
 	{
-		this->HP -= enemy->GetATK() - this->DEF;	//“GUŒ‚—Í - Ž©•ª–hŒä—Í‚Ìƒ_ƒ[ƒW‚ð—^‚¦‚é
+		this->RecvDamege= enemy->GetATK() - this->DEF;	//“GUŒ‚—Í - Ž©•ª–hŒä—Í‚Ìƒ_ƒ[ƒW‚ð—^‚¦‚é
+		this->HP -= this->RecvDamege;
 		if (this->HP <= 0)			//Ž©•ª‚ÌHP‚ª0‚É‚È‚Á‚½‚ç
 		{
 			this->IsArive = false;		//Ž©•ªŽ€–S

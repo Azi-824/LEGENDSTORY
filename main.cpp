@@ -18,6 +18,7 @@
 #include "MUSIC.hpp"
 #include "ENEMY.hpp"
 #include "UI.hpp"
+#include "BATTLE.hpp"
 
 //########## グローバルオブジェクト ##########
 FPS *fps = new FPS(GAME_FPS_SPEED);							//FPSクラスのオブジェクトを生成
@@ -32,6 +33,8 @@ MUSIC *bgm;							//BGM
 FONT *font;							//フォント
 TEXTSTR *text;						//文字列
 UI *ui;								//UI
+
+BATTLE *battle;						//バトルの流れ
 
 PLAYER *player;						//主人公
 
@@ -89,6 +92,7 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 
 	text = new TEXTSTR();	//テキスト作成
 
+	battle = new BATTLE();	//バトル作成
 
 	player = new PLAYER();
 	if (player->SetImage(MY_IMG_DIR_CHARCTOR, MY_IMG_NAME_PLAYER) == false) { return -1; }	//読み込み失敗
@@ -101,6 +105,7 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 
 	slime = new ENEMY(ENEMY_DIR, ENEMY_NAME_SLIME);	//スライム作成
 	if (slime->GetIsLoad() == false) { return -1; }	//読み込み失敗
+	slime->SetName("スライム");//名前設定
 
 	mapimage = new MAPIMAGE();	//マップチップ生成
 	if (mapimage->GetIsLoad() == false) { return -1; }	//読み込み失敗
@@ -313,44 +318,65 @@ void Battle()
 
 	Battle_Draw();			//描画処理
 
+	if (ui->GetChoiseCommamd() != -1)	//コマンドを選んだら
+		battle->SetIsActMsg(true);		//行動メッセージ描画スタート
 
-	//▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼ バトルコマンド毎の処理ここから ▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼
-
-	if (ui->GetChoiseCommamd() == ATACK)		//攻撃を選んだ場合
+	if (battle->GetIsActMsg() == false)	//行動メッセージを表示していないとき（コマンドを選ぶ前）
 	{
-		player->DrawAtk(350, 250);		//攻撃エフェクト描画
 
-		if (player->GetEffectEnd())		//エフェクト描画が終了したら
+	}
+	else if (battle->GetIsActMsg())		//行動メッセージを表示しているとき(コマンドを選んだあと)
+	{
+		//▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼ バトルコマンド毎の処理ここから ▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼
+		switch (ui->GetChoiseCommamd())		//どのコマンドを選んだか
 		{
-			player->DamegeCalc(slime);		//ダメージ計算
-			ui->SetStateWindow(player);		//描画ステータス更新
-			ui->BattleInit();				//バトルコマンドリセット
-			player->EffectReset();			//エフェクト関連リセット
+		case (int)ATACK:					//攻撃を選んだ時
+
+			player->DrawAtk(350, 250);		//攻撃エフェクト描画
+
+			if (player->GetEffectEnd())		//エフェクト描画が終了したら
+			{
+				player->DamegeCalc(slime);		//ダメージ計算
+				ui->SetStateWindow(player);		//描画ステータス更新
+				ui->BattleInit();				//バトルコマンドリセット
+				player->EffectReset();			//エフェクト関連リセット
+			}
+
+			break;
+
+		case (int)DEFENSE:		//防御を選んだ時
+
+			ui->BattleInit();	//バトルコマンドリセット
+
+			break;
+
+		case (int)MAGIC:		//魔法を選んだ時
+
+			ui->BattleInit();	//バトルコマンドリセット
+
+			break;
+
+		case (int)ITEM:			//アイテムを選んだ時
+
+			ui->BattleInit();	//バトルコマンドリセット
+
+			break;
+
+		case (int)ESCAPE:		//逃げるを選んだ時
+
+			ui->BattleInit();	//バトルコマンドリセット
+			SceneChenge(GameSceneNow, (int)GAME_SCENE_PLAY);	//次の画面はプレイ画面
+			Init();									//初期化
+
+			break;
+
+		default:
+			break;
 		}
-	}
-	else if (ui->GetChoiseCommamd() == DEFENSE)	//防御を選んだ場合
-	{
-		ui->BattleInit();	//バトルコマンドリセット
+		//▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲ バトルコマンド毎の処理ここまで ▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲
 
 	}
-	else if (ui->GetChoiseCommamd() == MAGIC)		//魔法を選んだ場合
-	{
-		ui->BattleInit();	//バトルコマンドリセット
 
-	}
-	else if (ui->GetChoiseCommamd() == ITEM)			//アイテムを選んだ場合
-	{
-		ui->BattleInit();	//バトルコマンドリセット
-
-	}
-	else if (ui->GetChoiseCommamd() == ESCAPE)			//逃げるを選んだ場合
-	{
-		ui->BattleInit();	//バトルコマンドリセット
-		SceneChenge(GameSceneNow, (int)GAME_SCENE_PLAY);	//次の画面はプレイ画面
-		Init();									//初期化
-	}
-
-	//▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲ バトルコマンド毎の処理ここまで ▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲
 
 	if (slime->GetIsArive() == false)	//敵が死んだら
 	{
@@ -533,7 +559,14 @@ void Battle_Draw()
 
 	slime->Draw();	//スライム描画
 
-	ui->DrawCommand();						//バトルコマンド描画
+	if (ui->GetChoiseCommamd() != -1)
+	{
+		ui->DrawDamege(slime->GetName(), player->GetRecvDamege());
+	}
+	else
+	{
+		ui->DrawCommand();						//バトルコマンド描画
+	}
 
 	ui->DrawStateWindow();					//ステータスウィンドウ描画
 

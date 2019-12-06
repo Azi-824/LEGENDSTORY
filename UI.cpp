@@ -126,9 +126,16 @@ void UI::BattleOperation(KEYDOWN *keydown)
 void UI::DrawCommand()
 {
 	this->BattleCommand->Draw();	//描画
+
 	return;
 }
 
+//ダメージを描画する
+void UI::DrawDamege(const char *name, int damege)
+{	
+	this->BattleCommand->DamegeDraw(name, damege);	//ダメージ描画
+	return;
+}
 
 //ステータスウィンドウの設定
 void UI::SetStateWindow(PLAYER *player)

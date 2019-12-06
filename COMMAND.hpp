@@ -29,6 +29,8 @@ private:
 	int StrHeight;	//文字列の高さ
 	int StrWidth;	//文字列の幅
 
+	bool IsDrawDamege;	//ダメージを表示してよいか
+
 
 public:
 
@@ -37,6 +39,7 @@ public:
 	~COMMAND();			//デストラクタ
 
 	void Draw();		//描画
+	void DamegeDraw(const char *, int);	//ダメージ量の描画
 
 	int GetWidth();		//横幅取得
 	std::vector < std::string>::iterator GetCommand();	//選択しているコマンドを取得

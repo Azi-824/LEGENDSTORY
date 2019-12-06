@@ -10,6 +10,7 @@
 ENEMY::ENEMY(const char *dir,const char *name)
 {
 	//メンバ変数初期化
+	this->Name = "";
 	this->HP = 0;
 	this->ATK = 0;
 	this->DEF = 0;
@@ -38,6 +39,13 @@ ENEMY::ENEMY(const char *dir,const char *name)
 //デストラクタ
 ENEMY::~ENEMY()
 {
+	return;
+}
+
+//名前設定
+void ENEMY::SetName(const char *name)
+{
+	this->Name += name;
 	return;
 }
 
@@ -80,6 +88,12 @@ void ENEMY::StateSetInit()
 	this->SetIsArive(true);	//生きている
 
 	return;
+}
+
+//名前取得
+const char * ENEMY::GetName(void)
+{
+	return this->Name.c_str();
 }
 
 //体力取得

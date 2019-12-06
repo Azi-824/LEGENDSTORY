@@ -20,6 +20,8 @@ class ENEMY :public CHARACTOR		//キャラクタークラスを継承
 {
 private:
 
+	std::string Name;	//名前
+
 	int HP;		//体力
 	int ATK;	//攻撃力
 	int DEF;	//防御力
@@ -33,6 +35,7 @@ public:
 
 	~ENEMY();			//デストラクタ
 
+	void SetName(const char *);	//名前設定
 	void SetHP(int);		//体力設定
 	void SetATK(int);		//攻撃力設定
 	void SetDEF(int);		//防御力設定
@@ -40,6 +43,7 @@ public:
 
 	void StateSetInit();	//敵ステータス初期設定
 
+	const char * GetName();			//名前取得
 	int GetHP();			//体力取得
 	int GetATK();			//攻撃力取得
 	int GetDEF();			//防御力取得

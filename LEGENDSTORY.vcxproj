@@ -152,6 +152,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="ANIMATION.cpp" />
+    <ClCompile Include="BATTLE.cpp" />
     <ClCompile Include="CHARACTOR.cpp" />
     <ClCompile Include="COLLISION.cpp" />
     <ClCompile Include="COMMAND.cpp" />
@@ -173,6 +174,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="ANIMATION.hpp" />
+    <ClInclude Include="BATTLE.hpp" />
     <ClInclude Include="CHARACTOR.hpp" />
     <ClInclude Include="COLLISION.hpp" />
     <ClInclude Include="COMMAND.hpp" />

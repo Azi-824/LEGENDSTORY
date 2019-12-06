@@ -41,6 +41,9 @@ private:
 	int DEF;				//防御力
 	int SPD;				//速度
 
+	int SendDamege;			//与えるダメージ
+	int RecvDamege;			//受けるダメージ
+
 	int MoveSpeed;			//移動速度
 	int Dist;				//移動向き
 
@@ -50,6 +53,7 @@ private:
 	bool IsKeyDown;			//キーボードが押されているか
 	bool IsMenu;			//メニューウィンドウが描画されているか
 	bool EffectEnd;			//エフェクト描画処理が終了したか
+	bool IsActMsg;			//行動メッセージ表示中か
 
 
 public:
@@ -75,11 +79,13 @@ public:
 	void SetIsMenu(bool);		//メニュー描画中か設定
 
 
+	//ステータス関係
 	int GetHP();			//体力取得
 	int GetMP();			//MP取得
 	int GetATK();			//攻撃力取得
 	int GetDEF();			//防御力取得
 	int GetSPD();			//速度取得
+
 	int GetMoveSpeed();		//移動速度取得
 	bool GetIsArive();		//生きているか取得
 	bool GetIsDraw();		//描画できるか取得
@@ -87,6 +93,9 @@ public:
 	COLLISION * GetCollision();	//当たり判定を取得
 	bool GetEffectEnd();		//エフェクトの描画処理が終了したか取得
 	bool GetIsMenu();			//メニュー描画中か取得
+	int GetSendDamege();		//与えたダメージを取得
+	int GetRecvDamege();		//受けたダメージを取得
+	bool GetIsActMsg();			//行動メッセージ表示中か取得
 
 
 	void DrawAnime();			//描画
