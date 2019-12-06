@@ -30,10 +30,15 @@ void STATEWINDOW::Draw()
 	auto itr = this->GetNumPos();	//•`‰æ”šæ“¾
 
 	//•`‰æˆ—
+	if (*itr <= 0)		//HP‚ª0ˆÈ‰º‚É‚È‚Á‚½‚ç
+		DrawString(this->GetX(), this->GetY(), "HP:0", GetColor(255, 255, 255));		//HP‚Ì•`‰æ‚ğ0‚É‚·‚é
+	else				//HP‚ª0‚æ‚è‘½‚©‚Á‚½‚ç
  	DrawFormatString(this->GetX(), this->GetY(), GetColor(255, 255, 255), "HP:%d", *itr);	//HP•`‰æ
 		
 	++itr;	//Ÿ‚Ì—v‘f‚Ö
-
+	if (*itr <= 0)			//MP‚ª0ˆÈ‰º‚É‚È‚Á‚½‚ç
+		DrawString(this->GetX(), this->GetY(), "MP:0", GetColor(255, 255, 255));		//MP•`‰æ0
+	else				//MP‚ª0‚æ‚è‘½‚©‚Á‚½‚ç
 	DrawFormatString(this->GetX(), this->GetY() + 50, GetColor(255, 255, 255), "MP:%d", *itr);	//MP•`‰æ
 
 }
