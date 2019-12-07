@@ -10,7 +10,7 @@
 //##################### マクロ定義：ファイルパス、名前 ###################
 #define MY_MUSIC_DIR_BGM	R"(.\MY_MUSIC\BGM)"		//BGMのファイル名
 
-#define MY_MUSIC_NAME_BGM	R"(\cyber42.mp3)"		//BGMの名前
+#define MY_MUSIC_NAME_BGM	R"(\bgm_op.mp3)"		//BGMの名前
 
 //##################### マクロ定義：エラーメッセージ ######################
 #define MUSIC_ERROR_TITLE "MUSIC_ERROR"					//エラータイトル
