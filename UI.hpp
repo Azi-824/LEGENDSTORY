@@ -38,7 +38,8 @@ public:
 	void SetBattleFlg(std::vector<std::string>::iterator);	//戦闘画面で選んだコマンドのフラグを設定する
 	int GetChoiseCommamd();									//選択したコマンドの種類を取得
 	void DrawCommand();										//バトルコマンド描画
-	void DrawDamege(const char *,int);						//ダメージを描画する
+	void EnemyDrawDamege(const char *,int);					//受けたダメージを描画する
+	void MyDrawDamege(const char *, int);					//与えたダメージを描画する
 	void BattleOperation(KEYDOWN *);						//戦闘画面の操作
 	void BattleInit();										//バトルコマンドで使用する要素を初期化する
 

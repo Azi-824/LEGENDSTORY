@@ -77,8 +77,8 @@ void COMMAND::Draw()
 
 }
 
-//ダメージ量の描画
-void COMMAND::DamegeDraw(const char *name, int damege)
+//敵のダメージ量の描画
+void COMMAND::EnemyDamegeDraw(const char *name, int damege)
 {
 	SetDrawBlendMode(DX_BLENDMODE_ALPHA, 255 * 80 / 100);	//描画モードを透過ありに変更、透過率80％に設定
 
@@ -87,6 +87,21 @@ void COMMAND::DamegeDraw(const char *name, int damege)
 	SetDrawBlendMode(DX_BLENDMODE_NOBLEND, 0);				//描画モードを通常に戻す
 
 	DrawFormatString(this->X, this->Y, GetColor(255, 255, 255), "%sのこうげき！\n%dのダメージを受けた", name, damege);	//ダメージテキスト描画
+
+	return;
+
+}
+
+//敵の与えるダメージ量の描画
+void COMMAND::MyDamegeDraw(const char *name, int damege)
+{
+	SetDrawBlendMode(DX_BLENDMODE_ALPHA, 255 * 80 / 100);	//描画モードを透過ありに変更、透過率80％に設定
+
+	DrawBox(this->X, this->Y, this->X + this->Width, this->Y + this->Height, GetColor(0, 0, 0), TRUE);	//塗りつぶしありで四角形を描画
+
+	SetDrawBlendMode(DX_BLENDMODE_NOBLEND, 0);				//描画モードを通常に戻す
+
+	DrawFormatString(this->X, this->Y, GetColor(255, 255, 255), "%sのこうげき！\n%dのダメージを与えた", name, damege);	//ダメージテキスト描画
 
 	return;
 

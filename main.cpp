@@ -98,6 +98,7 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 	if (player->SetAnime(MY_ANIME_DIR_PLAYER, MY_ANIME_NAME_PLAYER, PLAYER_ALL_CNT, PLAYER_YOKO_CNT, PLAYER_TATE_CNT, PLAYER_WIDTH, PLAYER_HEIGHT, PLAYER_ANI_SPEED, true) == false) { return -1; } //読み込み失敗
 	if (player->AddEffect(MY_ANIME_DIR_ATKEFECT, MY_ANIME_NAME_ATKEFECT, ATK_ALL_CNT, ATK_YOKO_CNT, ATK_TATE_CNT, ATK_WIDTH, ATK_HEIGHT, ATK_SPEED, false) == false) { return -1; }
 	player->SetInit();	//初期設定
+	player->SetName("アジ");	//名前設定
 
 	ui = new UI();		//UI作成
 	ui->SetStateWindow(player);	//描画HP設定
@@ -320,6 +321,8 @@ void Battle()
 
 	switch (BattleStageNow)		//現在のバトル状態
 	{
+	//▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼ 味方のターンの処理ここから ▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼
+
 	case (int)WAIT_PLAYER_ACT:		//プレイヤーの行動選択待ち状態の時
 
 		//▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼ バトルコマンド毎の処理ここから ▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼
@@ -327,7 +330,7 @@ void Battle()
 		{
 		case (int)ATACK:					//攻撃を選んだ時
 
-			BattleStageNow = (int)DAMEGE_CALC;	//バトル状態をダメージ計算状態へ
+			BattleStageNow = (int)PLAYER_DAMEGE_CALC;	//バトル状態をダメージ計算状態へ
 
 			break;
 
@@ -365,21 +368,20 @@ void Battle()
 
 		break;						//プレイヤーの行動選択待ち状態の処理ここまで
 
-	case (int)DAMEGE_CALC:			//ダメージ計算状態の時
+	case (int)PLAYER_DAMEGE_CALC:			//ダメージ計算状態の時
 
 		player->DamegeCalc(slime);		//ダメージ計算
 
-		BattleStageNow = (int)ACT_MSG;	//行動メッセージ表示状態へ
+		BattleStageNow = (int)PLAYER_ACT_MSG;	//行動メッセージ表示状態へ
 
 		break;						//ダメージ計算状態の時ここまで
 
-	case (int)ACT_MSG:				//行動メッセージ表示状態
+	case (int)PLAYER_ACT_MSG:				//行動メッセージ表示状態
 
-		ui->SetStateWindow(player);		//描画ステータス更新
 
 		if (BattleActMsgCnt == BattleActMsgCntMax)		//表示秒数になったら
 		{
-			BattleStageNow = (int)DRAW_EFFECT;			//エフェクト描画状態へ
+			BattleStageNow = (int)PLAYER_DRAW_EFFECT;			//エフェクト描画状態へ
 		}
 		else
 		{
@@ -388,17 +390,16 @@ void Battle()
 
 		break;						//行動メッセージ表示状態ここまで
 
-	case (int)DRAW_EFFECT:			//エフェクト描画状態
+	case (int)PLAYER_DRAW_EFFECT:			//エフェクト描画状態
 
 		player->DrawAtk(350, 250);		//攻撃エフェクト描画
 
 		if (player->GetEffectEnd())		//エフェクト描画が終了したら
 		{
-			ui->BattleInit();				//バトルコマンドリセット
 
 			player->EffectReset();			//エフェクト関連リセット
 
-			BattleStageNow = (int)WAIT_PLAYER_ACT;		//プレイヤーの行動選択状態へ
+			BattleStageNow = (int)ENEMY_WAIT_ACT;		//敵の行動選択状態へ
 
 			BattleActMsgCnt = 0;	//カウントリセット
 
@@ -409,29 +410,90 @@ void Battle()
 				slime->SetIsArive(false);		//敵死亡
 			}
 
-
-			//生存判定
-			if (slime->GetIsArive() == false)	//敵が死んだら
-			{
-				SceneChenge(GameSceneNow, (int)GAME_SCENE_PLAY);	//次の画面はプレイ画面
-				Init();									//初期化
-
-			}
-			else if (player->GetIsArive() == false)	//自分が死んだら
-			{
-				SceneChenge(GameSceneNow, (int)GAME_SCENE_END);	//次の画面はエンド画面
-				Init();									//初期化
-			}
-
-
 		}
+
+		break;
+
+	//▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲ 味方のターンの処理ここまで ▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲
+
+
+	//▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼ 敵のターンの処理ここから ▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼
+
+	case (int)ENEMY_WAIT_ACT:			//敵の行動選択待ち状態
+
+		//敵の行動選択決定処理
+
+		BattleStageNow = (int)ENEMY_DAMEGE_CALC;	//敵のダメージ計算へ
+
+		break;
+
+	case (int)ENEMY_DAMEGE_CALC:		//敵のダメージ計算状態
+
+		//ダメージ計算
+
+		BattleStageNow = (int)ENEMY_ACT_MSG;	//敵の行動メッセージ表示へ
+		
+		break;
+
+	case (int)ENEMY_ACT_MSG:			//敵の行動メッセージ表示状態
+
+		//敵の行動メッセージ表示
+		if (BattleActMsgCnt == BattleActMsgCntMax)		//表示秒数になったら
+		{
+			BattleStageNow = (int)ENEMY_DRAW_EFFECT;			//敵のエフェクト描画状態へ
+		}
+		else
+		{
+			BattleActMsgCnt++;	//カウントアップ
+		}
+
+		break;
+
+	case (int)ENEMY_DRAW_EFFECT:		//敵のエフェクト表示状態
+
+		//敵のエフェクト表示
+
+		BattleActMsgCnt = 0;	//カウントリセット
+
+		player->SetHP(player->GetRecvDamege());		//味方にダメージを与える
+
+		ui->SetStateWindow(player);		//描画ステータス更新
+
+		ui->BattleInit();				//バトルコマンドリセット
+
+
+		BattleStageNow = (int)WAIT_PLAYER_ACT;		//味方の行動選択待ち状態へ
+
+		break;
+
+	//▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲ 敵のターンの処理ここまで ▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲
+
+
+	default:
 
 		break;
 
 
 	}
 
+	//生存判定
+	if (slime->GetIsArive() == false)	//敵が死んだら
+	{
+		SceneChenge(GameSceneNow, (int)GAME_SCENE_PLAY);	//次の画面はプレイ画面
 
+		BattleStageNow = (int)WAIT_PLAYER_ACT;		//味方の行動選択待ち状態へ
+
+		Init();									//初期化
+
+	}
+	else if (player->GetIsArive() == false)	//自分が死んだら
+	{
+		SceneChenge(GameSceneNow, (int)GAME_SCENE_END);	//次の画面はエンド画面
+
+		BattleStageNow = (int)WAIT_PLAYER_ACT;		//味方の行動選択待ち状態へ
+
+		Init();									//初期化
+	}
 
 	if (keydown->IsKeyDown(KEY_INPUT_R))		//Rキー押されたら
 	{
@@ -602,9 +664,13 @@ void Battle_Draw()
 
 	slime->Draw();	//スライム描画
 
-	if (BattleStageNow==(int)ACT_MSG)	//行動メッセージ表示状態だったら
+	if (BattleStageNow==(int)ENEMY_ACT_MSG)	//敵の行動メッセージ表示状態だったら
 	{
-		ui->DrawDamege(slime->GetName(), player->GetRecvDamege());		//行動メッセージ表示
+		ui->EnemyDrawDamege(slime->GetName(), player->GetRecvDamege());		//受けたメッセージ表示
+	}
+	else if (BattleStageNow == (int)PLAYER_ACT_MSG)	//味方の行動メッセージ表示状態だったら
+	{
+		ui->MyDrawDamege(player->GetName(), player->GetSendDamege());		//与えたダメージ表示
 	}
 	else
 	{

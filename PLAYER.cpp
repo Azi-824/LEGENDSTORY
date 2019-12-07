@@ -25,7 +25,8 @@ PLAYER::~PLAYER()
 //‰ŠúÝ’è
 bool PLAYER::SetInit()
 {
-	this->HP = 100;		//‰ŠúHPÝ’è
+	this->MaxHP = 100;		//‰ŠúÅ‘åHPÝ’è
+	this->NowHP = this->MaxHP;//‰ŠúŒ»Ý‚ÌHPÝ’è
 	this->MP = 100;		//‰ŠúMPÝ’è
 	this->ATK = 10;		//‰ŠúUŒ‚—ÍÝ’è
 	this->DEF = 10;		//‰Šú–hŒä—ÍÝ’è
@@ -87,6 +88,12 @@ bool PLAYER::AddEffect(const char *dir, const char *name, int SplitNumALL, int S
 
 }
 
+//–¼‘OÝ’è
+void PLAYER::SetName(const char *name)
+{
+	this->Name = name;
+	return;
+}
 
 //‰æ‘œÝ’è
 bool PLAYER::SetImage(const char *dir, const char *name)
@@ -106,10 +113,17 @@ void PLAYER::EffectReset()
 	return;
 }
 
-//HPÝ’è
+//Å‘åHPÝ’è
+void PLAYER::SetMaxHP(int hp)
+{
+	this->MaxHP = hp;
+	return;
+}
+
+//Œ»Ý‚ÌHPÝ’è
 void PLAYER::SetHP(int hp)
 {
-	this->HP += hp;
+	this->NowHP -= hp;
 	return;
 }
 
@@ -194,10 +208,22 @@ void PLAYER::SetIsMenu(bool ismenu)
 	return;
 }
 
-//‘Ì—ÍŽæ“¾
+//–¼‘OŽæ“¾
+const char * PLAYER::GetName(void)
+{
+	return this->Name.c_str();
+}
+
+//Å‘å‘Ì—ÍŽæ“¾
+int PLAYER::GetMaxHP(void)
+{
+	return this->MaxHP;
+}
+
+//Œ»Ý‚Ì‘Ì—ÍŽæ“¾
 int PLAYER::GetHP(void)
 {
-	return this->HP;
+	return this->NowHP;
 }
 
 //MPŽæ“¾
@@ -426,8 +452,8 @@ void PLAYER::DamegeCalc(ENEMY *enemy)
 	if (enemy->GetATK() > this->DEF)		//“G‚ÌUŒ‚—Í‚ªŽ©•ª‚Ì–hŒä—Í‚æ‚èã‚¾‚Á‚½‚ç
 	{
 		this->RecvDamege= enemy->GetATK() - this->DEF;	//“GUŒ‚—Í - Ž©•ª–hŒä—Í‚Ìƒ_ƒ[ƒW‚ð—^‚¦‚é
-		this->HP -= this->RecvDamege;
-		if (this->HP <= 0)			//Ž©•ª‚ÌHP‚ª0‚É‚È‚Á‚½‚ç
+		//this->HP -= this->RecvDamege;
+		if (this->NowHP <= 0)			//Ž©•ª‚ÌHP‚ª0‚É‚È‚Á‚½‚ç
 		{
 			this->IsArive = false;		//Ž©•ªŽ€–S
 		}

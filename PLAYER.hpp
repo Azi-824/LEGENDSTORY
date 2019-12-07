@@ -35,7 +35,10 @@ private:
 	COLLISION *Collision;	//当たり判定
 	CHARACTOR *Ilast;		//立ち絵
 
-	int HP;					//HP
+	std::string Name;		//キャラの名前
+
+	int MaxHP;				//HPの最大値
+	int NowHP;				//現在のHP
 	int MP;					//MP
 	int ATK;				//攻撃力
 	int DEF;				//防御力
@@ -66,7 +69,9 @@ public:
 	bool SetImage(const char *, const char *);		//画像の設定
 	void EffectReset();		//エフェクト関連のリセット
 	
-	void SetHP(int);		//体力設定
+	void SetName(const char *);//名前設定
+	void SetMaxHP(int);		//最大体力設定
+	void SetHP(int);		//現在の体力設定
 	void SetMP(int);		//MP設定
 	void SetATK(int);		//攻撃力設定
 	void SetDEF(int);		//防御力設定
@@ -80,7 +85,9 @@ public:
 
 
 	//ステータス関係
-	int GetHP();			//体力取得
+	const char *GetName();	//名前取得
+	int GetMaxHP();			//最大体力取得
+	int GetHP();			//現在の体力取得
 	int GetMP();			//MP取得
 	int GetATK();			//攻撃力取得
 	int GetDEF();			//防御力取得

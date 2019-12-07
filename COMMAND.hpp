@@ -39,7 +39,8 @@ public:
 	~COMMAND();			//デストラクタ
 
 	void Draw();		//描画
-	void DamegeDraw(const char *, int);	//ダメージ量の描画
+	void EnemyDamegeDraw(const char *, int);	//ダメージ量の描画
+	void MyDamegeDraw(const char *,int);		//味方のダメージ量の描画
 
 	int GetWidth();		//横幅取得
 	std::vector < std::string>::iterator GetCommand();	//選択しているコマンドを取得
