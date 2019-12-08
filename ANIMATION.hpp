@@ -40,7 +40,7 @@
 
 #define PLAYER_ANI_SPEED 1.0
 #define ATK_SPEED		 0.02
-#define MAGICN_SPEED	 0.02
+#define MAGICN_SPEED	 0.05
 
 //########## マクロ定義：エラーメッセージ##########
 #define ANIMATION_ERROR_TTILE	"ANIMATION_ERROR"						//エラータイトル

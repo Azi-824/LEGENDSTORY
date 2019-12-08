@@ -453,7 +453,7 @@ void Battle()
 	case (int)ENEMY_DRAW_EFFECT:		//敵のエフェクト表示状態
 
 		//敵のエフェクト表示
-		slime->DrawEffect();	//敵の攻撃エフェクト描画
+		slime->DrawEffect((GAME_WIDTH / 2 - MAGIC_WIDTH / 2),(GAME_HEIGHT / 2 - MAGIC_HEIGHT / 2));	//敵の攻撃エフェクト描画
 
 		if (slime->GetIeEffectEnd())		//エフェクト描画が終了したら
 		{

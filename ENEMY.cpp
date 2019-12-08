@@ -153,15 +153,42 @@ bool ENEMY::GetIeEffectEnd()
 }
 
 //エフェクト描画
-void ENEMY::DrawEffect()
+void ENEMY::DrawEffect(int x,int y)
 {
-	if (this->AtkEffect->GetIsAnimeStop() == false)	//アニメーションが終わってなければ
+	static int cnt = 0;		//フェードアウト用
+	static int cntMax = 60;	//フェードアウト用
+	static bool flg = false;//フェードアウト終了フラグ
+
+	//60フレーム分、待つ
+	if (cnt < cntMax)
 	{
-		this->AtkEffect->DrawEffect(0, 0);		//エフェクト描画
+		cnt++;	//カウントアップ
 	}
 	else
 	{
-		this->IsEffectEnd = true;	//エフェクト描画終了
+		flg = true;	//フェードアウト処理終了
 	}
+
+	//フェードアウトの処理
+	double ToukaPercent = (cnt / 2) / (double)cntMax;//透過％を求める
+	SetDrawBlendMode(DX_BLENDMODE_ALPHA, ToukaPercent * 255);	//透過させる
+	DrawBox(0, 0, GAME_WIDTH, GAME_HEIGHT, GetColor(0, 0, 0), TRUE);	//真っ暗な画面にする
+	SetDrawBlendMode(DX_BLENDMODE_NOBLEND, 0);	//透過をやめる
+
+	if (flg)
+	{
+		if (this->AtkEffect->GetIsAnimeStop() == false)	//アニメーションが終わってなければ
+		{
+			this->AtkEffect->DrawEffect(x, y);		//エフェクト描画
+		}
+		else
+		{
+			this->IsEffectEnd = true;	//エフェクト描画終了
+			flg = false;	//フェードアウトフラグリセット
+			cnt = 0;		//フェードアウトカウントリセット
+		}
+
+	}
+
 	return;
 }

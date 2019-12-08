@@ -58,7 +58,7 @@ public:
 	bool GetIsLoad();		//読み込めたかを取得
 	bool GetIeEffectEnd();		//エフェクト描画が終了したか取得
 
-	void DrawEffect();		//エフェクト描画
+	void DrawEffect(int,int);		//エフェクト描画
 
 
 
