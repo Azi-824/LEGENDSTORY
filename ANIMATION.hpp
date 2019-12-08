@@ -25,8 +25,8 @@
 #define PLAYER_HEIGHT	45	//•ªŠ„‚·‚é‚‚³‚Ì‘å‚«‚³
 #define ATK_WIDTH		120	//•ªŠ„‚·‚é•‚Ì‘å‚«‚³
 #define ATK_HEIGHT		120	//•ªŠ„‚·‚é‚‚³‚Ì‘å‚«‚³
-#define MAGIC_WIDTH		640	//•ªŠ„‚·‚é•‚Ì‘å‚«‚³
-#define MAGIC_HEIGHT	480	//•ªŠ„‚·‚é‚‚³‚Ì‘å‚«‚³
+#define MAGIC_WIDTH		800	//•ªŠ„‚·‚é•‚Ì‘å‚«‚³
+#define MAGIC_HEIGHT	600	//•ªŠ„‚·‚é‚‚³‚Ì‘å‚«‚³
 
 #define PLAYER_YOKO_CNT	3
 #define PLAYER_TATE_CNT	4

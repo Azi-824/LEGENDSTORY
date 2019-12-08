@@ -405,7 +405,7 @@ void Battle()
 
 		if (player->GetEffectEnd())		//エフェクト描画が終了したら
 		{
-
+			
 			player->EffectReset();			//エフェクト関連リセット
 
 			BattleStageNow = (int)ENEMY_WAIT_ACT;		//敵の行動選択状態へ
