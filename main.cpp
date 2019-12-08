@@ -97,6 +97,7 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 	if (player->SetImage(MY_IMG_DIR_CHARCTOR, MY_IMG_NAME_PLAYER) == false) { return -1; }	//読み込み失敗
 	if (player->SetAnime(MY_ANIME_DIR_PLAYER, MY_ANIME_NAME_PLAYER, PLAYER_ALL_CNT, PLAYER_YOKO_CNT, PLAYER_TATE_CNT, PLAYER_WIDTH, PLAYER_HEIGHT, PLAYER_ANI_SPEED, true) == false) { return -1; } //読み込み失敗
 	if (player->AddEffect(MY_ANIME_DIR_ATKEFECT, MY_ANIME_NAME_ATKEFECT, ATK_ALL_CNT, ATK_YOKO_CNT, ATK_TATE_CNT, ATK_WIDTH, ATK_HEIGHT, ATK_SPEED, false) == false) { return -1; }
+	if (player->AddMagicEffect(MY_ANIME_DIR_MAGIC, MY_ANIME_NAME_MAGIC2, MAGIC2_ALL_CNT, MAGIC2_YOKO_CNT, MAGIC2_TATE_CNT, MAGIC_WIDTH, MAGIC_HEIGHT, MAGICN_SPEED, false) == false) { return -1; }
 	player->SetInit();	//初期設定
 	player->SetName("アジ");	//名前設定
 
@@ -343,7 +344,7 @@ void Battle()
 
 		case (int)MAGIC:		//魔法を選んだ時
 
-			ui->BattleInit();	//バトルコマンドリセット
+			BattleStageNow = (int)PLAYER_DAMEGE_CALC;	//バトル状態をダメージ計算状態へ
 
 			break;
 
@@ -393,7 +394,14 @@ void Battle()
 
 	case (int)PLAYER_DRAW_EFFECT:			//エフェクト描画状態
 
-		player->DrawAtk(350, 250);		//攻撃エフェクト描画
+		if (ui->GetChoiseCommamd() == (int)ATACK)	//攻撃を選んでいたら
+		{
+			player->DrawAtk(350, 250);		//攻撃エフェクト描画
+		}
+		else if (ui->GetChoiseCommamd() == (int)MAGIC)	//魔法を選んでいたら
+		{
+			player->DrawMagic((GAME_WIDTH / 2 - MAGIC_WIDTH / 2), (GAME_HEIGHT / 2 - MAGIC_HEIGHT / 2));	//魔法エフェクト描画
+		}
 
 		if (player->GetEffectEnd())		//エフェクト描画が終了したら
 		{

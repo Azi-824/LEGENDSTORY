@@ -88,6 +88,17 @@ bool PLAYER::AddEffect(const char *dir, const char *name, int SplitNumALL, int S
 
 }
 
+//魔法エフェクトの画像設定
+bool PLAYER::AddMagicEffect(const char *dir, const char *name, int SplitNumALL, int SpritNumX, int SplitNumY, int SplitWidth, int SplitHeight, double changeSpeed, bool IsLoop)
+{
+	this->MagicEffect = new ANIMATION(dir, name, SplitNumALL, SpritNumX, SplitNumY, SplitWidth, SplitHeight, changeSpeed, IsLoop);
+	if (this->MagicEffect->GetIsLoad() == false) { return false; }		//読み込み失敗
+
+	return true;
+
+}
+
+
 //名前設定
 void PLAYER::SetName(const char *name)
 {
@@ -110,6 +121,7 @@ void PLAYER::EffectReset()
 {
 	this->EffectEnd = false;			//エフェクト描画終了していない
 	this->AtkEffect->ResetIsAnime();	//エフェクトのアニメーション処理リセット
+	this->MagicEffect->ResetIsAnime();	//魔法エフェクトのアニメーション処理リセット
 	return;
 }
 
@@ -389,6 +401,49 @@ void PLAYER::DrawAtk(int x, int y)
 		}
 	return;
 }
+
+//魔法エフェクト描画
+void PLAYER::DrawMagic(int x, int y)
+{
+
+	static int cnt = 0;		//フェードアウト用
+	static int cntMax = 60;	//フェードアウト用
+	static bool flg = false;//フェードアウト終了フラグ
+
+	//60フレーム分、待つ
+	if (cnt < cntMax)
+	{
+		cnt++;	//カウントアップ
+	}
+	else
+	{
+		flg = true;	//フェードアウト処理終了
+	}
+
+	//フェードアウトの処理
+	double ToukaPercent = (cnt / 2) / (double)cntMax;//透過％を求める
+	SetDrawBlendMode(DX_BLENDMODE_ALPHA, ToukaPercent * 255);	//透過させる
+	DrawBox(0, 0, GAME_WIDTH, GAME_HEIGHT, GetColor(0, 0, 0), TRUE);	//真っ暗な画面にする
+	SetDrawBlendMode(DX_BLENDMODE_NOBLEND, 0);	//透過をやめる
+	
+	if (flg)	//フェードアウトが終わったら
+	{
+		if (this->MagicEffect->GetIsAnimeStop() == false)	//アニメーション描画が終わっていない場合
+		{
+			this->MagicEffect->DrawEffect(x, y);		//アニメーション描画
+		}
+		else			//アニメーション描画が終わったら
+		{
+			this->EffectEnd = true;	//エフェクト描画処理終了
+			flg = false;	//フェードアウトフラグリセット
+			cnt = 0;		//フェードアウトカウントリセット
+		}
+
+	}
+
+	return;
+}
+
 
 //上へ移動
 void PLAYER::MoveUp()

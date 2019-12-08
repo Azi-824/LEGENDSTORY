@@ -19,6 +19,7 @@
 #define MY_ANIME_NAME_PLAYER	R"(player_walk.png)"			//プレイヤーの画像の名前
 #define MY_ANIME_NAME_ATKEFECT	R"(atack.png)"					//攻撃エフェクトの画像の名前
 #define MY_ANIME_NAME_MAGIC		R"(magic.png)"					//魔法エフェクトの画像の名前
+#define MY_ANIME_NAME_MAGIC2	R"(magic2.png)"					//魔法エフェクト2の画像の名前
 
 #define PLAYER_WIDTH	45	//分割する幅の大きさ
 #define PLAYER_HEIGHT	45	//分割する高さの大きさ
@@ -33,10 +34,13 @@
 #define ATK_TATE_CNT	1
 #define MAGIC_YOKO_CNT	1
 #define MAGIC_TATE_CNT	12
+#define MAGIC2_YOKO_CNT	5
+#define MAGIC2_TATE_CNT	5
 
 #define PLAYER_ALL_CNT	PLAYER_YOKO_CNT * PLAYER_TATE_CNT
 #define ATK_ALL_CNT	ATK_YOKO_CNT * ATK_TATE_CNT
 #define MAGIC_ALL_CNT MAGIC_YOKO_CNT * MAGIC_TATE_CNT
+#define MAGIC2_ALL_CNT	MAGIC2_YOKO_CNT * MAGIC2_TATE_CNT
 
 #define PLAYER_ANI_SPEED 1.0
 #define ATK_SPEED		 0.02

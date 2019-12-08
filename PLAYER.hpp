@@ -31,6 +31,7 @@ class PLAYER
 private:
 	ANIMATION *Anime;		//歩行画像
 	ANIMATION *AtkEffect;	//攻撃エフェクト
+	ANIMATION *MagicEffect;	//魔法エフェクト
 	
 	COLLISION *Collision;	//当たり判定
 	CHARACTOR *Ilast;		//立ち絵
@@ -66,6 +67,7 @@ public:
 	bool SetInit();			//初期設定
 	bool SetAnime(const char *, const char *, int, int, int, int, int, double, bool);	//アニメーション画像の設定
 	bool AddEffect(const char *, const char *, int, int, int, int, int, double, bool);	//エフェクト画像の設定
+	bool AddMagicEffect(const char *, const char *, int, int, int, int, int, double, bool);	//魔法エフェクト画像の設定
 	bool SetImage(const char *, const char *);		//画像の設定
 	void EffectReset();		//エフェクト関連のリセット
 	
@@ -107,6 +109,7 @@ public:
 
 	void DrawAnime();			//描画
 	void DrawAtk(int, int);		//攻撃エフェクト描画
+	void DrawMagic(int, int);	//魔法エフェクト描画
 
 	void Operation(KEYDOWN *);	//操作
 
