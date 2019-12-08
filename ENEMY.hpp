@@ -6,6 +6,7 @@
 //############### ヘッダファイル読み込み ###################
 #include "DxLib.h"
 #include "CHARACTOR.hpp"
+#include "ANIMATION.hpp"
 
 //############### マクロ定義：ファイルパス、名前 ################
 #define ENEMY_DIR		R"(.\MY_IMG\ENEMY\)"	//敵の画像のファイル
@@ -22,12 +23,15 @@ private:
 
 	std::string Name;	//名前
 
+	ANIMATION *AtkEffect;	//攻撃エフェクト
+
 	int HP;		//体力
 	int ATK;	//攻撃力
 	int DEF;	//防御力
 	int SPD;	//はやさ
 
 	bool IsLoad;	//読み込めたか
+	bool IsEffectEnd;	//エフェクト描画が終了したか
 
 public:
 
@@ -42,6 +46,8 @@ public:
 	void SetSPD(int);		//速度設定
 
 	void StateSetInit();	//敵ステータス初期設定
+	bool SetAtkEffect(const char *, const char * ,int, int, int, int, int, double, bool);	//攻撃エフェクト設定
+	void ResetEffect();		//エフェクト関連リセット
 
 	const char * GetName();			//名前取得
 	int GetHP();			//体力取得
@@ -50,6 +56,9 @@ public:
 	int GetSPD();			//速度取得
 
 	bool GetIsLoad();		//読み込めたかを取得
+	bool GetIeEffectEnd();		//エフェクト描画が終了したか取得
+
+	void DrawEffect();		//エフェクト描画
 
 
 

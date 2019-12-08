@@ -105,6 +105,7 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 
 	slime = new ENEMY(ENEMY_DIR, ENEMY_NAME_SLIME);	//スライム作成
 	if (slime->GetIsLoad() == false) { return -1; }	//読み込み失敗
+	if (slime->SetAtkEffect(MY_ANIME_DIR_MAGIC, MY_ANIME_NAME_MAGIC, MAGIC_ALL_CNT, MAGIC_YOKO_CNT, MAGIC_TATE_CNT, MAGIC_WIDTH, MAGIC_HEIGHT, MAGICN_SPEED, false) == false) { return -1; }
 	slime->SetName("スライム");//名前設定
 
 	mapimage = new MAPIMAGE();	//マップチップ生成
@@ -452,17 +453,23 @@ void Battle()
 	case (int)ENEMY_DRAW_EFFECT:		//敵のエフェクト表示状態
 
 		//敵のエフェクト表示
+		slime->DrawEffect();	//敵の攻撃エフェクト描画
 
-		BattleActMsgCnt = 0;	//カウントリセット
+		if (slime->GetIeEffectEnd())		//エフェクト描画が終了したら
+		{
+			BattleActMsgCnt = 0;	//カウントリセット
 
-		player->SetHP(player->GetRecvDamege());		//味方にダメージを与える
+			slime->ResetEffect();	//エフェクト関連リセット
 
-		ui->SetStateWindow(player);		//描画ステータス更新
+			player->SetHP(player->GetRecvDamege());		//味方にダメージを与える
 
-		ui->BattleInit();				//バトルコマンドリセット
+			ui->SetStateWindow(player);		//描画ステータス更新
 
+			ui->BattleInit();				//バトルコマンドリセット
 
-		BattleStageNow = (int)WAIT_PLAYER_ACT;		//味方の行動選択待ち状態へ
+			BattleStageNow = (int)WAIT_PLAYER_ACT;		//味方の行動選択待ち状態へ
+
+		}
 
 		break;
 

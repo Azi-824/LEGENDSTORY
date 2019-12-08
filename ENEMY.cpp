@@ -16,6 +16,7 @@ ENEMY::ENEMY(const char *dir,const char *name)
 	this->DEF = 0;
 	this->SPD = 0;
 	this->IsLoad = false;	
+	this->IsEffectEnd = false;
 
 	//画像設定
 	if (this->SetImage(dir, name))	//画像が読み込めていたら
@@ -39,6 +40,7 @@ ENEMY::ENEMY(const char *dir,const char *name)
 //デストラクタ
 ENEMY::~ENEMY()
 {
+	delete this->AtkEffect;	//AtkEffect破棄
 	return;
 }
 
@@ -90,6 +92,24 @@ void ENEMY::StateSetInit()
 	return;
 }
 
+//エフェクト設定
+bool ENEMY::SetAtkEffect(const char *dir, const char *name, int SplitNumALL, int SpritNumX, int SplitNumY, int SplitWidth, int SplitHeight, double changeSpeed, bool IsLoop)
+{
+	this->AtkEffect = new ANIMATION(dir, name, SplitNumALL, SpritNumX, SplitNumY, SplitWidth, SplitHeight, changeSpeed, IsLoop);
+	if (this->AtkEffect->GetIsLoad() == false) { return false; }		//読み込み失敗
+
+	return true;
+
+}
+
+//エフェクト関連リセット
+void ENEMY::ResetEffect()
+{
+	this->IsEffectEnd = false;
+	this->AtkEffect->ResetIsAnime();
+	return;
+}
+
 //名前取得
 const char * ENEMY::GetName(void)
 {
@@ -124,4 +144,24 @@ int ENEMY::GetSPD(void)
 bool ENEMY::GetIsLoad()
 {
 	return this->IsLoad;
+}
+
+//エフェクト描画終了したか取得
+bool ENEMY::GetIeEffectEnd()
+{
+	return this->IsEffectEnd;
+}
+
+//エフェクト描画
+void ENEMY::DrawEffect()
+{
+	if (this->AtkEffect->GetIsAnimeStop() == false)	//アニメーションが終わってなければ
+	{
+		this->AtkEffect->DrawEffect(0, 0);		//エフェクト描画
+	}
+	else
+	{
+		this->IsEffectEnd = true;	//エフェクト描画終了
+	}
+	return;
 }
