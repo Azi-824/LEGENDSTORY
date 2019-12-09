@@ -477,6 +477,11 @@ void Battle()
 
 			BattleStageNow = (int)WAIT_PLAYER_ACT;		//–¡•û‚Ìs“®‘I‘ð‘Ò‚¿ó‘Ô‚Ö
 
+			if (player->GetHP() <= 0)			//Ž©•ª‚ÌHP‚ª0‚É‚È‚Á‚½‚ç
+			{
+				player->SetIsArive(false);		//Ž©•ªŽ€–S
+			}
+
 		}
 
 		break;
