@@ -38,6 +38,7 @@ private:
 
 	std::string Name;		//キャラの名前
 
+	int Level;				//レベル
 	int MaxHP;				//HPの最大値
 	int NowHP;				//現在のHP
 	int MP;					//MP
@@ -72,6 +73,7 @@ public:
 	void EffectReset();		//エフェクト関連のリセット
 	
 	void SetName(const char *);//名前設定
+	void SetLevel(int);		//レベル設定
 	void SetMaxHP(int);		//最大体力設定
 	void SetHP(int);		//現在の体力設定
 	void SetMP(int);		//MP設定
@@ -88,6 +90,7 @@ public:
 
 	//ステータス関係
 	const char *GetName();	//名前取得
+	int GetLevel();			//レベル取得
 	int GetMaxHP();			//最大体力取得
 	int GetHP();			//現在の体力取得
 	int GetMP();			//MP取得

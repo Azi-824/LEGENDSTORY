@@ -25,6 +25,7 @@ PLAYER::~PLAYER()
 //初期設定
 bool PLAYER::SetInit()
 {
+	this->Level = 1;		//初期レベル設定
 	this->MaxHP = 100;		//初期最大HP設定
 	this->NowHP = this->MaxHP;//初期現在のHP設定
 	this->MP = 100;		//初期MP設定
@@ -122,6 +123,13 @@ void PLAYER::EffectReset()
 	this->EffectEnd = false;			//エフェクト描画終了していない
 	this->AtkEffect->ResetIsAnime();	//エフェクトのアニメーション処理リセット
 	this->MagicEffect->ResetIsAnime();	//魔法エフェクトのアニメーション処理リセット
+	return;
+}
+
+//レベル設定
+void PLAYER::SetLevel(int level)
+{
+	this->Level = level;
 	return;
 }
 
@@ -224,6 +232,12 @@ void PLAYER::SetIsMenu(bool ismenu)
 const char * PLAYER::GetName(void)
 {
 	return this->Name.c_str();
+}
+
+//レベル取得
+int PLAYER::GetLevel(void)
+{
+	return this->Level;
 }
 
 //最大体力取得
