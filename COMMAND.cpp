@@ -86,7 +86,7 @@ void COMMAND::EnemyDamegeDraw(const char *name, int damege)
 
 	SetDrawBlendMode(DX_BLENDMODE_NOBLEND, 0);				//描画モードを通常に戻す
 
-	DrawFormatString(this->X, this->Y, GetColor(255, 255, 255), "%sのこうげき！\n%dのダメージを受けた", name, damege);	//ダメージテキスト描画
+	DrawFormatString(this->X, this->Y, GetColor(255, 255, 255), "%sのこうげき！\n%dのダメージをうけた", name, damege);	//ダメージテキスト描画
 
 	return;
 
@@ -101,7 +101,7 @@ void COMMAND::MyDamegeDraw(const char *name, int damege)
 
 	SetDrawBlendMode(DX_BLENDMODE_NOBLEND, 0);				//描画モードを通常に戻す
 
-	DrawFormatString(this->X, this->Y, GetColor(255, 255, 255), "%sのこうげき！\n%dのダメージを与えた", name, damege);	//ダメージテキスト描画
+	DrawFormatString(this->X, this->Y, GetColor(255, 255, 255), "%sのこうげき！\n%dのダメージをあたえた", name, damege);	//ダメージテキスト描画
 
 	return;
 

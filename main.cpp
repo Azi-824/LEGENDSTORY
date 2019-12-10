@@ -99,7 +99,7 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 	if (player->AddEffect(MY_ANIME_DIR_ATKEFECT, MY_ANIME_NAME_ATKEFECT, ATK_ALL_CNT, ATK_YOKO_CNT, ATK_TATE_CNT, ATK_WIDTH, ATK_HEIGHT, ATK_SPEED, false) == false) { return -1; }
 	if (player->AddMagicEffect(MY_ANIME_DIR_MAGIC, MY_ANIME_NAME_MAGIC2, MAGIC2_ALL_CNT, MAGIC2_YOKO_CNT, MAGIC2_TATE_CNT, MAGIC_WIDTH, MAGIC_HEIGHT, MAGICN_SPEED, false) == false) { return -1; }
 	player->SetInit();	//初期設定
-	player->SetName("アジ");	//名前設定
+	player->SetName("アアア");	//名前設定
 
 	ui = new UI();		//UI作成
 	ui->SetStateWindow(player);	//描画HP設定
