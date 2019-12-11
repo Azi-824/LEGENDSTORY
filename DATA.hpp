@@ -1,5 +1,6 @@
 //DATA.hpp
 //データクラス
+//テキストファイルの文字コードをANSIにして保存する
 
 #pragma once
 
@@ -10,7 +11,7 @@
 
 
 //############## マクロ定義：ファイル名、パス ###################
-#define DATA_DIR	R"(.\MY_TEXT\MSG\)"		//メッセージテキストのファイル名
+#define DATA_DIR	R"(.\MY_TEXT\Message\)"		//メッセージテキストのファイル名
 
 #define DATA_NAME	R"(msg.txt)"			//メッセージテキストの名前
 

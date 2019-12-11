@@ -17,6 +17,7 @@ DATA::DATA(const char *dir, const char *name)
 	LoadFile += dir;
 	LoadFile += name;
 
+
 	std::ifstream ifs(LoadFile.c_str());	//ファイル読み取り
 
 	if (!ifs)		//ファイルオープン失敗時
