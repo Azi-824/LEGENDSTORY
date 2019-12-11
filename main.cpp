@@ -18,6 +18,7 @@
 #include "MUSIC.hpp"
 #include "ENEMY.hpp"
 #include "UI.hpp"
+#include "DATA.hpp"
 
 //########## グローバルオブジェクト ##########
 FPS *fps = new FPS(GAME_FPS_SPEED);							//FPSクラスのオブジェクトを生成
@@ -32,6 +33,7 @@ MUSIC *bgm;							//BGM
 FONT *font;							//フォント
 TEXTSTR *text;						//文字列
 UI *ui;								//UI
+DATA *data;	//データ
 
 PLAYER *player;						//主人公
 
@@ -92,7 +94,8 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 	if (font->GetIsLoad() == false) { return -1; }					//読み込み失敗時
 
 	text = new TEXTSTR();	//テキスト作成
-
+	data = new DATA(DATA_DIR, DATA_NAME);
+	
 	player = new PLAYER();
 	if (player->SetImage(MY_IMG_DIR_CHARCTOR, MY_IMG_NAME_PLAYER) == false) { return -1; }	//読み込み失敗
 	if (player->SetAnime(MY_ANIME_DIR_PLAYER, MY_ANIME_NAME_PLAYER, PLAYER_ALL_CNT, PLAYER_YOKO_CNT, PLAYER_TATE_CNT, PLAYER_WIDTH, PLAYER_HEIGHT, PLAYER_ANI_SPEED, true) == false) { return -1; } //読み込み失敗
@@ -357,6 +360,7 @@ void Battle()
 
 		case (int)ESCAPE:		//逃げるを選んだ時
 
+			data->Draw(200, 200);
 			ui->BattleInit();	//バトルコマンドリセット
 			SceneChenge(GameSceneNow, (int)GAME_SCENE_PLAY);	//次の画面はプレイ画面
 			Init();									//初期化
