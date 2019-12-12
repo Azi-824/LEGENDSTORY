@@ -36,7 +36,13 @@ DATA::DATA(const char *dir, const char *name)
 
 	}
 
-	ifs >> this->Text;		//ファイルからメンバー変数にデータを格納
+	//ifs >> this->Text;		//ファイルからメンバー変数にデータを格納
+	std::string buf;
+	while (!ifs.eof())			//ファイルの終端まで読み込む
+	{
+		std::getline(ifs, buf);	//1行読み込み
+		this->Text += buf + "\n";	//読み込んだデータを格納
+	}
 
 	return;
 
