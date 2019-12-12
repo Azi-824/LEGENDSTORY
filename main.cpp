@@ -221,6 +221,8 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 		fps->Wait();				//FPS‚Ìˆ—[‘Ò‚Â]
 	}
 
+	data->Output(player, PLAYER_DATA_DIR, PLAYER_DATA_NAME);
+
 	delete title;			//title‚ð”jŠü
 	delete fps;				//FPS‚ð”jŠü
 	delete keydown;			//keydown‚ð”jŠü

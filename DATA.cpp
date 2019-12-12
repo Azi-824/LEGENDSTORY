@@ -54,6 +54,44 @@ DATA::~DATA()
 	return;
 }
 
+//インプット
+template<typename T>
+void DATA::Input(T data)
+{
+	return;
+}
+
+//アウトプット
+void DATA::Output(PLAYER *data ,const char *dir,const char *name)
+{
+	std::string LoadFile;
+	LoadFile += dir;
+	LoadFile += name;
+	
+	std::ofstream ofs(LoadFile.c_str());	//ファイルオープン
+
+	if (!ofs)		//ファイルオープン失敗時
+	{
+		std::string ErrorMsg(DATA_ERROR_MSG);	//エラーメッセージ作成
+		ErrorMsg += TEXT('\n');						//改行
+		ErrorMsg += LoadFile;					//画像のパス
+
+		MessageBox(
+			NULL,
+			ErrorMsg.c_str(),	//char * を返す
+			TEXT(DATA_ERROR_TTILE),
+			MB_OK);
+
+		return;
+
+	}
+
+	//ofs << data << std::endl;		//アウトプット
+	ofs << data->GetHP() << std::endl;
+
+	return;
+}
+
 //描画
 void DATA::Draw(int x, int y)
 {
