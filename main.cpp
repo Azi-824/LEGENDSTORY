@@ -321,7 +321,6 @@ void Play()
 //戦闘画面の処理
 void Battle()
 {
-	ui->BattleOperation(keydown);			//戦闘画面のキー操作
 
 	Battle_Draw();			//描画処理
 
@@ -331,6 +330,8 @@ void Battle()
 	//▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼ 味方のターンの処理ここから ▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼
 
 	case (int)WAIT_PLAYER_ACT:		//プレイヤーの行動選択待ち状態の時
+
+		ui->BattleOperation(keydown);			//戦闘画面のキー操作
 
 		//▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼ バトルコマンド毎の処理ここから ▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼
 		switch (ui->GetChoiseCommamd())		//どのコマンドを選んだか
@@ -361,7 +362,7 @@ void Battle()
 
 		case (int)ESCAPE:		//逃げるを選んだ時
 
-			data->Draw(200, 200);
+			data->Draw(200, 200);			//逃げるときのメッセージ描画
 			ui->BattleInit();	//バトルコマンドリセット
 			SceneChenge(GameSceneNow, (int)GAME_SCENE_PLAY);	//次の画面はプレイ画面
 			Init();									//初期化
