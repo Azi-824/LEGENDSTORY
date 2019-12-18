@@ -92,6 +92,8 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 
 	font = new FONT(MY_FONT_DIR, MY_FONT_NAME, FONT_NAME);			//フォントを生成
 	if (font->GetIsLoad() == false) { return -1; }					//読み込み失敗時
+	font->AddFont(MY_FONT_DIR, MY_FONT_NAME2, FONT_NAME2);			//フォント追加
+	if (font->GetIsLoad() == false) { return -1; }					//読み込み失敗時
 
 	text = new TEXTSTR();	//テキスト作成
 	data = new DATA(DATA_DIR, DATA_NAME);
@@ -280,6 +282,7 @@ void Title()
 		if (*text->GetPos() == "START")		//選択している文字列が"START"だったら
 		{
 			SceneChenge(GameSceneNow, (int)GAME_SCENE_PLAY);	//次の画面はプレイ画面
+			font->ChengFont((int)TEXT_FONT);		//フォント変更
 		}
 		else
 		{
