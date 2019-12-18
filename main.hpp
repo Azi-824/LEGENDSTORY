@@ -39,6 +39,7 @@ enum BATTLE_STAGE
 	PLAYER_DAMEGE_CALC,		//ダメージ計算状態
 	PLAYER_ACT_MSG,			//行動メッセージ表示状態
 	PLAYER_DRAW_EFFECT,		//エフェクト表示状態
+	DRAW_DAMEGE,			//ダメージ描画状態
 	ENEMY_WAIT_ACT,			//敵の行動選択待ち状態
 	ENEMY_DAMEGE_CALC,		//敵のダメージ計算
 	ENEMY_ACT_MSG,			//敵の行動メッセージ表示状態

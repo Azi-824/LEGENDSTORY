@@ -394,6 +394,7 @@ void Battle()
 		if (BattleActMsgCnt == BattleActMsgCntMax)		//表示秒数になったら
 		{
 			BattleStageNow = (int)PLAYER_DRAW_EFFECT;			//エフェクト描画状態へ
+			BattleActMsgCnt = 0;	//カウントリセット
 		}
 		else
 		{
@@ -418,9 +419,7 @@ void Battle()
 			
 			player->EffectReset();			//エフェクト関連リセット
 
-			BattleStageNow = (int)ENEMY_WAIT_ACT;		//敵の行動選択状態へ
-
-			BattleActMsgCnt = 0;	//カウントリセット
+			BattleStageNow = (int)DRAW_DAMEGE;		//敵の行動選択状態へ
 
 			slime->SetHP((slime->GetHP() - player->GetSendDamege()));	//ダメージを与える
 
@@ -460,6 +459,7 @@ void Battle()
 		if (BattleActMsgCnt == BattleActMsgCntMax)		//表示秒数になったら
 		{
 			BattleStageNow = (int)ENEMY_DRAW_EFFECT;			//敵のエフェクト描画状態へ
+			BattleActMsgCnt = 0;	//カウントリセット
 		}
 		else
 		{
@@ -475,17 +475,13 @@ void Battle()
 
 		if (slime->GetIeEffectEnd())		//エフェクト描画が終了したら
 		{
-			BattleActMsgCnt = 0;	//カウントリセット
-
-			slime->ResetEffect();	//エフェクト関連リセット
-
 			player->SetHP(player->GetRecvDamege());		//味方にダメージを与える
 
 			ui->SetStateWindow(player);		//描画ステータス更新
 
 			ui->BattleInit();				//バトルコマンドリセット
 
-			BattleStageNow = (int)WAIT_PLAYER_ACT;		//味方の行動選択待ち状態へ
+			BattleStageNow = (int)DRAW_DAMEGE;		//味方の行動選択待ち状態へ
 
 			if (player->GetHP() <= 0)			//自分のHPが0になったら
 			{
@@ -498,6 +494,28 @@ void Battle()
 
 	//▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲ 敵のターンの処理ここまで ▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲
 
+	case (int)DRAW_DAMEGE:				//ダメージ描画状態
+
+		//ダメージ描画
+		if (BattleActMsgCnt == BattleActMsgCntMax)		//表示秒数になったら
+		{
+			if (slime->GetIeEffectEnd())		//敵の攻撃後の場合
+			{
+				BattleStageNow = (int)WAIT_PLAYER_ACT;		//味方の行動選択待ち状態へ
+				slime->ResetEffect();	//エフェクト関連リセット
+			}
+			else								//味方の攻撃後の場合
+			{
+				BattleStageNow = (int)ENEMY_WAIT_ACT;		//敵の行動選択状態へ
+			}
+			BattleActMsgCnt = 0;	//カウントリセット
+		}
+		else
+		{
+			BattleActMsgCnt++;	//カウントアップ
+		}
+
+		break;
 
 	default:
 
@@ -695,16 +713,26 @@ void Battle_Draw()
 
 	ui->DrawWindow();		//ウィンドウの描画
 
-
 	if (BattleStageNow==(int)ENEMY_ACT_MSG)	//敵の行動メッセージ表示状態だったら
 	{
-		ui->EnemyDrawDamege(slime->GetName(), player->GetRecvDamege());		//受けたメッセージ表示
+		ui->EnemyDrawName(slime->GetName());			//敵の名前描画
+	}
+	else if (BattleStageNow == (int)DRAW_DAMEGE)	//ダメージ描画状態だったら
+	{
+		if (slime->GetIeEffectEnd())	//敵の攻撃が終わっていたら
+		{
+			ui->EnemyDrawDamege(player->GetRecvDamege());		//受けたメッセージ表示
+		}
+		else						//敵の攻撃が終わっていなかったら（自分の攻撃の後だったら）
+		{
+			ui->MyDrawDamege(player->GetSendDamege());		//与えたダメージ表示
+		}
 	}
 	else if (BattleStageNow == (int)PLAYER_ACT_MSG)	//味方の行動メッセージ表示状態だったら
 	{
-		ui->MyDrawDamege(player->GetName(), player->GetSendDamege());		//与えたダメージ表示
+		ui->MyDrawName(player->GetName());			//味方の名前描画
 	}
-	else
+	else if(BattleStageNow == (int)WAIT_PLAYER_ACT)	//味方の行動選択状態の時
 	{
 		ui->DrawCommand();						//バトルコマンド描画
 	}

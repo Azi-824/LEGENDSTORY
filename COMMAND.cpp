@@ -72,21 +72,34 @@ void COMMAND::Draw()
 }
 
 //敵のダメージ量の描画
-void COMMAND::EnemyDamegeDraw(const char *name, int damege)
+void COMMAND::EnemyDamegeDraw(int damege)
 {
-	DrawFormatString(this->X, this->Y, GetColor(255, 255, 255), "%sのこうげき！\n%dのダメージをうけた", name, damege);	//ダメージテキスト描画
+	DrawFormatString(this->X, this->Y, GetColor(255, 255, 255), "%dのダメージをうけた",damege);	//ダメージテキスト描画
 
 	return;
 
 }
 
-//敵の与えるダメージ量の描画
-void COMMAND::MyDamegeDraw(const char *name, int damege)
+//敵の名前描画
+void COMMAND::EnemyNameDraw(const char *name)
 {
-	DrawFormatString(this->X, this->Y, GetColor(255, 255, 255), "%sのこうげき！\n%dのダメージをあたえた", name, damege);	//ダメージテキスト描画
+	DrawFormatString(this->X, this->Y, GetColor(255, 255, 255), "%sのこうげき！", name);	//敵の名前描画
+	return;
+}
+
+//敵に与えるダメージ量の描画
+void COMMAND::MyDamegeDraw(int damege)
+{
+	DrawFormatString(this->X, this->Y, GetColor(255, 255, 255), "%dのダメージをあたえた",damege);	//ダメージテキスト描画
 
 	return;
 
+}
+
+//味方の名前描画
+void COMMAND::MyNameDraw(const char *name)
+{
+	DrawFormatString(this->X, this->Y, GetColor(255, 255, 255), "%sのこうげき！", name);	//味方の名前描画
 }
 
 //横幅取得

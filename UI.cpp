@@ -132,16 +132,31 @@ void UI::DrawCommand()
 }
 
 //受けたダメージを描画する
-void UI::EnemyDrawDamege(const char *name, int damege)
+void UI::EnemyDrawDamege(int damege)
 {	
-	this->BattleCommand->EnemyDamegeDraw(name, damege);	//ダメージ描画
+	this->BattleCommand->EnemyDamegeDraw(damege);	//ダメージ描画
+	return;
+}
+
+//攻撃してきた敵の名前を描画
+void UI::EnemyDrawName(const char *name)
+{
+	this->BattleCommand->EnemyNameDraw(name);	//敵の名前描画
 	return;
 }
 
 //与えたダメージを描画する
-void UI::MyDrawDamege(const char *name, int damege)
+void UI::MyDrawDamege(int damege)
 {
-	this->BattleCommand->MyDamegeDraw(name, damege);	//与えたダメージ描画
+	this->BattleCommand->MyDamegeDraw(damege);	//与えたダメージ描画
+	return;
+}
+
+//攻撃した味方の名前を描画
+void UI::MyDrawName(const char *name)
+{
+	this->BattleCommand->MyNameDraw(name);		//味方の名前描画
+	return;	
 }
 
 //ステータスウィンドウの設定

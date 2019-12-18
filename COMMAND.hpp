@@ -39,8 +39,10 @@ public:
 	~COMMAND();			//デストラクタ
 
 	void Draw();		//描画
-	void EnemyDamegeDraw(const char *, int);	//ダメージ量の描画
-	void MyDamegeDraw(const char *,int);		//味方のダメージ量の描画
+	void EnemyDamegeDraw(int);	//ダメージ量の描画
+	void EnemyNameDraw(const char *);			//敵の名前描画
+	void MyDamegeDraw(int);		//味方のダメージ量の描画
+	void MyNameDraw(const char *);				//味方の名前描画
 
 	int GetWidth();		//横幅取得
 	std::vector < std::string>::iterator GetCommand();	//選択しているコマンドを取得
