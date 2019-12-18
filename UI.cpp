@@ -125,6 +125,7 @@ void UI::BattleOperation(KEYDOWN *keydown)
 //バトルコマンド描画
 void UI::DrawCommand()
 {
+
 	this->BattleCommand->Draw();	//描画
 
 	return;
@@ -157,4 +158,15 @@ void UI::SetStateWindow(PLAYER *player)
 void UI::DrawStateWindow()
 {
 	this->StateWindow->Draw();	//描画
+}
+
+//ウィンドウを描画する
+void UI::DrawWindow()
+{
+	SetDrawBlendMode(DX_BLENDMODE_ALPHA, 255 * 80 / 100);	//描画モードを透過ありに変更、透過率80％に設定
+
+	DrawBox(0, 380, 0 + 800,380 + 100, GetColor(0, 0, 0), TRUE);	//塗りつぶしありで四角形を描画
+
+	SetDrawBlendMode(DX_BLENDMODE_NOBLEND, 0);				//描画モードを通常に戻す
+
 }

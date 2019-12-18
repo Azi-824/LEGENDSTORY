@@ -327,6 +327,7 @@ void Battle()
 	Battle_Draw();			//描画処理
 
 
+
 	switch (BattleStageNow)		//現在のバトル状態
 	{
 	//▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼ 味方のターンの処理ここから ▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼
@@ -687,10 +688,13 @@ void Play_Draw()
 //戦闘画面の描画処理
 void Battle_Draw()
 {
+
 	back_battle->Draw(0, 0);	//背景画像を描画
 
-
 	slime->Draw();	//スライム描画
+
+	ui->DrawWindow();		//ウィンドウの描画
+
 
 	if (BattleStageNow==(int)ENEMY_ACT_MSG)	//敵の行動メッセージ表示状態だったら
 	{

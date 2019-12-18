@@ -47,4 +47,6 @@ public:
 	void SetStateWindow(PLAYER *);	//ステータスウィンドウの設定をする
 	void DrawStateWindow();			//ステータスウィンドウ描画
 
+	void DrawWindow();				//ウィンドウを描画する
+
 };
