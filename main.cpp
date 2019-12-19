@@ -328,7 +328,7 @@ void Battle()
 
 	switch (BattleStageNow)		//現在のバトル状態
 	{
-	//▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼ 味方のターンの処理ここから ▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼
+		//▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼ 味方のターンの処理ここから ▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼
 
 	case (int)WAIT_PLAYER_ACT:		//プレイヤーの行動選択待ち状態の時
 
@@ -363,11 +363,7 @@ void Battle()
 
 		case (int)ESCAPE:		//逃げるを選んだ時
 
-			data->Draw(200, 200);			//逃げるときのメッセージ描画
-			ui->BattleInit();	//バトルコマンドリセット
-			SceneChenge(GameSceneNow, (int)GAME_SCENE_PLAY);	//次の画面はプレイ画面
-			Init();									//初期化
-
+			BattleStageNow = (int)PLAYER_ACT_MSG;	//メッセージ描画状態
 			break;
 
 		default:
@@ -391,8 +387,18 @@ void Battle()
 
 		if (BattleActMsgCnt == BattleActMsgCntMax)		//表示秒数になったら
 		{
-			BattleStageNow = (int)PLAYER_DRAW_EFFECT;			//エフェクト描画状態へ
-			BattleActMsgCnt = 0;	//カウントリセット
+			if (ui->GetChoiseCommamd() == (int)ESCAPE)		//逃げるを選んだら
+			{
+				SceneChenge(GameSceneNow, (int)GAME_SCENE_PLAY);	//次の画面はプレイ画面
+				Init();									//初期化
+				BattleActMsgCnt = 0;	//カウントリセット
+				BattleStageNow = (int)WAIT_PLAYER_ACT;	//味方の行動選択待ち状態にする
+			}
+			else				//それ以外なら
+			{
+				BattleStageNow = (int)PLAYER_DRAW_EFFECT;			//エフェクト描画状態へ
+				BattleActMsgCnt = 0;	//カウントリセット
+			}
 		}
 		else
 		{
@@ -728,7 +734,14 @@ void Battle_Draw()
 	}
 	else if (BattleStageNow == (int)PLAYER_ACT_MSG)	//味方の行動メッセージ表示状態だったら
 	{
-		ui->MyDrawName(player->GetName());			//味方の名前描画
+		if (ui->GetChoiseCommamd() == (int)ESCAPE)		//逃げるを選んだ場合
+		{
+			DrawString(0, 400, "上手く逃げ切れた！", GetColor(255, 255, 255));	//文字描画
+		}
+		else
+		{
+			ui->MyDrawName(player->GetName());			//味方の名前描画
+		}
 	}
 	else if(BattleStageNow == (int)WAIT_PLAYER_ACT)	//味方の行動選択状態の時
 	{
@@ -736,6 +749,7 @@ void Battle_Draw()
 	}
 
 	ui->DrawStateWindow();					//ステータスウィンドウ描画
+
 
 	return;
 
