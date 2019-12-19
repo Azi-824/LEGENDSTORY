@@ -90,9 +90,7 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 	bgm = new MUSIC(MY_MUSIC_DIR_BGM, MY_MUSIC_NAME_BGM);			//BGMを生成
 	if (bgm->GetIsLoad() == false) { return -1; }					//読み込み失敗時
 
-	font = new FONT(MY_FONT_DIR, MY_FONT_NAME, FONT_NAME);			//フォントを生成
-	if (font->GetIsLoad() == false) { return -1; }					//読み込み失敗時
-	font->AddFont(MY_FONT_DIR, MY_FONT_NAME2, FONT_NAME2);			//フォント追加
+	font = new FONT(MY_FONT_DIR, MY_FONT_NAME2, FONT_NAME2);			//フォントを生成
 	if (font->GetIsLoad() == false) { return -1; }					//読み込み失敗時
 
 	text = new TEXTSTR();	//テキスト作成
