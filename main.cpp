@@ -280,7 +280,6 @@ void Title()
 		if (*text->GetPos() == "START")		//選択している文字列が"START"だったら
 		{
 			SceneChenge(GameSceneNow, (int)GAME_SCENE_PLAY);	//次の画面はプレイ画面
-			font->ChengFont((int)TEXT_FONT);		//フォント変更
 		}
 		else
 		{
@@ -326,8 +325,6 @@ void Battle()
 {
 
 	Battle_Draw();			//描画処理
-
-
 
 	switch (BattleStageNow)		//現在のバトル状態
 	{

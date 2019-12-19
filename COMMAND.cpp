@@ -13,7 +13,7 @@ COMMAND::COMMAND()
 	this->Command_itr = this->Command.begin();								//先頭のアドレスを入れる
 
 	this->X = 0;		//初期位置を設定
-	this->Y = 380;		//初期位置を設定
+	this->Y = 400;		//初期位置を設定
 
 	this->Width = 800;	//初期幅を設定
 	this->Height = 100;	//初期高さを設定
