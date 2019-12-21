@@ -54,7 +54,9 @@ int BattleActMsgCntMax = 60;	//行動メッセージの表示時間
 int MapKind[MAP_DATA_TATE_KIND][MAP_DATA_YOKO_KIND];			//マップの種類
 int MapNowPos[2] = {0};								//現在のマップのX位置とY位置を格納
 
-int ChengeDrawCount = 0;	//フェードイン処理に使用
+int ChengeDrawCount = 0;	//フェードアウト処理に使用
+
+int EncounteEnemyType = 0;	//遭遇した敵の種類
 
 bool StrSet_Flg = false;					//文字列設定フラグ
 bool GameEnd_Flg = false;					//ゲーム終了フラグ
@@ -385,7 +387,7 @@ void Battle()
 
 	case (int)PLAYER_DAMEGE_CALC:			//ダメージ計算状態の時
 
-		player->DamegeCalc(enemy[SLIME]);		//ダメージ計算
+		player->DamegeCalc(enemy[EncounteEnemyType]);		//ダメージ計算
 
 		BattleStageNow = (int)PLAYER_ACT_MSG;	//行動メッセージ表示状態へ
 
@@ -434,11 +436,11 @@ void Battle()
 
 			BattleStageNow = (int)DRAW_DAMEGE;		//敵の行動選択状態へ
 
-			enemy[SLIME]->SetHP((enemy[SLIME]->GetHP() - player->GetSendDamege()));	//ダメージを与える
+			enemy[EncounteEnemyType]->SetHP((enemy[EncounteEnemyType]->GetHP() - player->GetSendDamege()));	//ダメージを与える
 
-			if (enemy[SLIME]->GetHP() <= 0)				//敵のHPが0になったら
+			if (enemy[EncounteEnemyType]->GetHP() <= 0)				//敵のHPが0になったら
 			{
-				enemy[SLIME]->SetIsArive(false);		//敵死亡
+				enemy[EncounteEnemyType]->SetIsArive(false);		//敵死亡
 			}
 
 		}
@@ -484,9 +486,9 @@ void Battle()
 	case (int)ENEMY_DRAW_EFFECT:		//敵のエフェクト表示状態
 
 		//敵のエフェクト表示
-		enemy[SLIME]->DrawEffect((GAME_WIDTH / 2 - MAGIC_WIDTH / 2),(GAME_HEIGHT / 2 - MAGIC_HEIGHT / 2));	//敵の攻撃エフェクト描画
+		enemy[EncounteEnemyType]->DrawEffect((GAME_WIDTH / 2 - MAGIC_WIDTH / 2),(GAME_HEIGHT / 2 - MAGIC_HEIGHT / 2));	//敵の攻撃エフェクト描画
 
-		if (enemy[SLIME]->GetIeEffectEnd())		//エフェクト描画が終了したら
+		if (enemy[EncounteEnemyType]->GetIeEffectEnd())		//エフェクト描画が終了したら
 		{
 			player->SetHP(player->GetRecvDamege());		//味方にダメージを与える
 
@@ -512,10 +514,10 @@ void Battle()
 		//ダメージ描画
 		if (BattleActMsgCnt == BattleActMsgCntMax)		//表示秒数になったら
 		{
-			if (enemy[SLIME]->GetIeEffectEnd())		//敵の攻撃後の場合
+			if (enemy[EncounteEnemyType]->GetIeEffectEnd())		//敵の攻撃後の場合
 			{
 				BattleStageNow = (int)WAIT_PLAYER_ACT;		//味方の行動選択待ち状態へ
-				enemy[SLIME]->ResetEffect();	//エフェクト関連リセット
+				enemy[EncounteEnemyType]->ResetEffect();	//エフェクト関連リセット
 			}
 			else								//味方の攻撃後の場合
 			{
@@ -538,7 +540,7 @@ void Battle()
 	}
 
 	//生存判定
-	if (enemy[SLIME]->GetIsArive() == false)	//敵が死んだら
+	if (enemy[EncounteEnemyType]->GetIsArive() == false)	//敵が死んだら
 	{
 		SceneChenge(GameSceneNow, (int)GAME_SCENE_PLAY);	//次の画面はプレイ画面
 
@@ -658,9 +660,11 @@ void Init()
 {
 	ChengeDrawCount = 0;		//フェードイン用初期化
 
-	enemy[SLIME]->StateSetInit();		//敵初期化
+	enemy[EncounteEnemyType]->StateSetInit();		//遭遇した敵初期化
 
 	ui->BattleInit();			//バトルコマンド初期化
+
+	EncounteEnemyType = 0;		//遭遇した敵の種類をリセット
 
 }
 
@@ -722,17 +726,17 @@ void Battle_Draw()
 
 	back_battle->Draw(0, 0);	//背景画像を描画
 
-	enemy[SLIME]->Draw();	//スライム描画
+	enemy[EncounteEnemyType]->Draw();	//スライム描画
 
 	ui->DrawWindow();		//ウィンドウの描画
 
 	if (BattleStageNow==(int)ENEMY_ACT_MSG)	//敵の行動メッセージ表示状態だったら
 	{
-		ui->EnemyDrawName(enemy[SLIME]->GetName());			//敵の名前描画
+		ui->EnemyDrawName(enemy[EncounteEnemyType]->GetName());			//敵の名前描画
 	}
 	else if (BattleStageNow == (int)DRAW_DAMEGE)	//ダメージ描画状態だったら
 	{
-		if (enemy[SLIME]->GetIeEffectEnd())	//敵の攻撃が終わっていたら
+		if (enemy[EncounteEnemyType]->GetIeEffectEnd())	//敵の攻撃が終わっていたら
 		{
 			ui->EnemyDrawDamege(player->GetRecvDamege());		//受けたメッセージ表示
 		}
@@ -794,6 +798,9 @@ void Enconte()
 
 	if (rand%battleRate == 0)			//敵と遭遇した時
 	{
+
+		EncounteEnemyType = GetRand(ENEMY_KIND);	//ランダムに敵の種類を決定
+
 		SceneChenge(GameSceneNow, (int)GAME_SCENE_BATTLE);	//次の画面は戦闘画面
 	}
 
