@@ -8,6 +8,8 @@
 #include "CHARACTOR.hpp"
 #include "ANIMATION.hpp"
 #include "main.hpp"
+#include "EFFECT.hpp"
+#include <vector>
 
 //############### マクロ定義：ファイルパス、名前 ################
 #define ENEMY_DIR		R"(.\MY_IMG\ENEMY\)"	//敵の画像のファイル
@@ -40,6 +42,7 @@ private:
 	int ATK;	//攻撃力
 	int DEF;	//防御力
 	int SPD;	//はやさ
+	std::vector<int> Skil;	//スキル
 
 	bool IsLoad;	//読み込めたか
 	bool IsEffectEnd;	//エフェクト描画が終了したか
@@ -65,6 +68,7 @@ public:
 	int GetATK();			//攻撃力取得
 	int GetDEF();			//防御力取得
 	int GetSPD();			//速度取得
+	int GetSkil();			//使用するスキルの種類を取得
 
 	bool GetIsLoad();		//読み込めたかを取得
 	bool GetIeEffectEnd();		//エフェクト描画が終了したか取得

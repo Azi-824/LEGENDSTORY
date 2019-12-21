@@ -15,6 +15,7 @@ ENEMY::ENEMY(const char *dir,const char *name,const char *charaname)
 	this->ATK = 0;
 	this->DEF = 0;
 	this->SPD = 0;
+	this->Skil.push_back(MAGIC_1);	//スキル
 	this->IsLoad = false;	
 	this->IsEffectEnd = false;
 
@@ -44,7 +45,7 @@ ENEMY::ENEMY(const char *dir,const char *name,const char *charaname)
 //デストラクタ
 ENEMY::~ENEMY()
 {
-	delete this->AtkEffect;	//AtkEffect破棄
+	//delete this->AtkEffect;	//AtkEffect破棄
 	return;
 }
 
@@ -154,6 +155,12 @@ bool ENEMY::GetIsLoad()
 bool ENEMY::GetIeEffectEnd()
 {
 	return this->IsEffectEnd;
+}
+
+//使用するスキルの種類を取得
+int ENEMY::GetSkil()
+{
+	return this->Skil[0];
 }
 
 //エフェクト描画
