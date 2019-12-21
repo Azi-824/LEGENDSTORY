@@ -7,14 +7,25 @@
 #include "DxLib.h"
 #include "CHARACTOR.hpp"
 #include "ANIMATION.hpp"
+#include "main.hpp"
 
 //############### マクロ定義：ファイルパス、名前 ################
 #define ENEMY_DIR		R"(.\MY_IMG\ENEMY\)"	//敵の画像のファイル
 
 #define ENEMY_NAME_SLIME	R"(sraim.png)"			//スライムの画像の名前
+#define ENEMY_NAME_YADOKARI	R"(yadokari.png)"		//ヤドカリの画像の名前
 
 //############## マクロ定義：エラーメッセージ ###################
 
+//############## マクロ定義 ###################
+#define ENEMY_KIND 2			//敵の種類
+
+//############## 列挙型 ########################
+enum ENEMY_TYPE
+{
+	SLIME,				//スライム
+	YADOKARI			//ヤドカリ
+};
 
 //############## クラス定義 #####################
 class ENEMY :public CHARACTOR		//キャラクタークラスを継承
@@ -35,7 +46,7 @@ private:
 
 public:
 
-	ENEMY(const char *,const char *);			//コンストラクタ
+	ENEMY(const char *,const char *,const char *);			//コンストラクタ
 
 	~ENEMY();			//デストラクタ
 

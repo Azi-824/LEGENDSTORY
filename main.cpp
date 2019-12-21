@@ -37,7 +37,7 @@ DATA *data;	//データ
 
 PLAYER *player;						//主人公
 
-ENEMY *slime;						//スライム
+ENEMY *enemy[ENEMY_KIND];			//敵
 
 MAPIMAGE *mapimage;					//マップチップのデータ
 MAP *mapdata[MAP_DATA_KIND][MAP_LAYER_KIND];		//マップデータ
@@ -107,11 +107,13 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 	ui = new UI();		//UI作成
 	ui->SetStateWindow(player);	//描画HP設定
 
-	slime = new ENEMY(ENEMY_DIR, ENEMY_NAME_SLIME);	//スライム作成
-	if (slime->GetIsLoad() == false) { return -1; }	//読み込み失敗
-	if (slime->SetAtkEffect(MY_ANIME_DIR_MAGIC, MY_ANIME_NAME_MAGIC, MAGIC_ALL_CNT, MAGIC_YOKO_CNT, MAGIC_TATE_CNT, MAGIC_WIDTH, MAGIC_HEIGHT, MAGICN_SPEED, false) == false) { return -1; }
-	slime->SetImagePos(GAME_WIDTH / 2 - slime->GetWidth() / 2, GAME_HEIGHT / 2 - slime->GetHeight() / 2);	//スライムの位置調整(画面中央)
-	slime->SetName("スライム");//名前設定
+	enemy[SLIME] = new ENEMY(ENEMY_DIR, ENEMY_NAME_SLIME,"スライム");	//スライム作成
+	if (enemy[SLIME]->GetIsLoad() == false) { return -1; }	//読み込み失敗
+	if (enemy[SLIME]->SetAtkEffect(MY_ANIME_DIR_MAGIC, MY_ANIME_NAME_MAGIC, MAGIC_ALL_CNT, MAGIC_YOKO_CNT, MAGIC_TATE_CNT, MAGIC_WIDTH, MAGIC_HEIGHT, MAGICN_SPEED, false) == false) { return -1; }
+
+	enemy[YADOKARI]=new ENEMY(ENEMY_DIR, ENEMY_NAME_YADOKARI, "ヤドカリ");	//ヤドカリ作成
+	if (enemy[YADOKARI]->GetIsLoad() == false) { return -1; }	//読み込み失敗
+	if (enemy[YADOKARI]->SetAtkEffect(MY_ANIME_DIR_MAGIC, MY_ANIME_NAME_MAGIC, MAGIC_ALL_CNT, MAGIC_YOKO_CNT, MAGIC_TATE_CNT, MAGIC_WIDTH, MAGIC_HEIGHT, MAGICN_SPEED, false) == false) { return -1; }
 
 	mapimage = new MAPIMAGE();	//マップチップ生成
 	if (mapimage->GetIsLoad() == false) { return -1; }	//読み込み失敗
@@ -242,6 +244,11 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 			delete mapdata[i][cnt];	//mapdataを破棄
 		}
 
+	}
+
+	for (int i = 0; i < ENEMY_KIND; ++i)
+	{
+		delete enemy[i];			//enemyを破棄
 	}
 
 	DxLib_End();			//ＤＸライブラリ使用の終了処理
@@ -378,7 +385,7 @@ void Battle()
 
 	case (int)PLAYER_DAMEGE_CALC:			//ダメージ計算状態の時
 
-		player->DamegeCalc(slime);		//ダメージ計算
+		player->DamegeCalc(enemy[SLIME]);		//ダメージ計算
 
 		BattleStageNow = (int)PLAYER_ACT_MSG;	//行動メッセージ表示状態へ
 
@@ -427,11 +434,11 @@ void Battle()
 
 			BattleStageNow = (int)DRAW_DAMEGE;		//敵の行動選択状態へ
 
-			slime->SetHP((slime->GetHP() - player->GetSendDamege()));	//ダメージを与える
+			enemy[SLIME]->SetHP((enemy[SLIME]->GetHP() - player->GetSendDamege()));	//ダメージを与える
 
-			if (slime->GetHP() <= 0)				//敵のHPが0になったら
+			if (enemy[SLIME]->GetHP() <= 0)				//敵のHPが0になったら
 			{
-				slime->SetIsArive(false);		//敵死亡
+				enemy[SLIME]->SetIsArive(false);		//敵死亡
 			}
 
 		}
@@ -477,9 +484,9 @@ void Battle()
 	case (int)ENEMY_DRAW_EFFECT:		//敵のエフェクト表示状態
 
 		//敵のエフェクト表示
-		slime->DrawEffect((GAME_WIDTH / 2 - MAGIC_WIDTH / 2),(GAME_HEIGHT / 2 - MAGIC_HEIGHT / 2));	//敵の攻撃エフェクト描画
+		enemy[SLIME]->DrawEffect((GAME_WIDTH / 2 - MAGIC_WIDTH / 2),(GAME_HEIGHT / 2 - MAGIC_HEIGHT / 2));	//敵の攻撃エフェクト描画
 
-		if (slime->GetIeEffectEnd())		//エフェクト描画が終了したら
+		if (enemy[SLIME]->GetIeEffectEnd())		//エフェクト描画が終了したら
 		{
 			player->SetHP(player->GetRecvDamege());		//味方にダメージを与える
 
@@ -505,10 +512,10 @@ void Battle()
 		//ダメージ描画
 		if (BattleActMsgCnt == BattleActMsgCntMax)		//表示秒数になったら
 		{
-			if (slime->GetIeEffectEnd())		//敵の攻撃後の場合
+			if (enemy[SLIME]->GetIeEffectEnd())		//敵の攻撃後の場合
 			{
 				BattleStageNow = (int)WAIT_PLAYER_ACT;		//味方の行動選択待ち状態へ
-				slime->ResetEffect();	//エフェクト関連リセット
+				enemy[SLIME]->ResetEffect();	//エフェクト関連リセット
 			}
 			else								//味方の攻撃後の場合
 			{
@@ -531,7 +538,7 @@ void Battle()
 	}
 
 	//生存判定
-	if (slime->GetIsArive() == false)	//敵が死んだら
+	if (enemy[SLIME]->GetIsArive() == false)	//敵が死んだら
 	{
 		SceneChenge(GameSceneNow, (int)GAME_SCENE_PLAY);	//次の画面はプレイ画面
 
@@ -651,7 +658,7 @@ void Init()
 {
 	ChengeDrawCount = 0;		//フェードイン用初期化
 
-	slime->StateSetInit();		//敵初期化
+	enemy[SLIME]->StateSetInit();		//敵初期化
 
 	ui->BattleInit();			//バトルコマンド初期化
 
@@ -715,17 +722,17 @@ void Battle_Draw()
 
 	back_battle->Draw(0, 0);	//背景画像を描画
 
-	slime->Draw();	//スライム描画
+	enemy[SLIME]->Draw();	//スライム描画
 
 	ui->DrawWindow();		//ウィンドウの描画
 
 	if (BattleStageNow==(int)ENEMY_ACT_MSG)	//敵の行動メッセージ表示状態だったら
 	{
-		ui->EnemyDrawName(slime->GetName());			//敵の名前描画
+		ui->EnemyDrawName(enemy[SLIME]->GetName());			//敵の名前描画
 	}
 	else if (BattleStageNow == (int)DRAW_DAMEGE)	//ダメージ描画状態だったら
 	{
-		if (slime->GetIeEffectEnd())	//敵の攻撃が終わっていたら
+		if (enemy[SLIME]->GetIeEffectEnd())	//敵の攻撃が終わっていたら
 		{
 			ui->EnemyDrawDamege(player->GetRecvDamege());		//受けたメッセージ表示
 		}

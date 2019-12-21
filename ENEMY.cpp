@@ -7,7 +7,7 @@
 //###################### クラス定義 ##########################
 
 //コンストラクタ
-ENEMY::ENEMY(const char *dir,const char *name)
+ENEMY::ENEMY(const char *dir,const char *name,const char *charaname)
 {
 	//メンバ変数初期化
 	this->Name = "";
@@ -33,6 +33,10 @@ ENEMY::ENEMY(const char *dir,const char *name)
 	this->StateSetInit();	//ステータス初期設定
 
 	this->SetKeyOperation(false);	//キーボードで操作不可
+
+	this->Name = charaname;			//名前設定
+
+	this->SetImagePos(GAME_WIDTH / 2 - this->GetWidth() / 2, GAME_HEIGHT / 2 - this->GetHeight() / 2);	//位置調整(画面中央)
 
 	return;
 }
