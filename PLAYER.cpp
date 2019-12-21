@@ -336,6 +336,12 @@ bool PLAYER::GetIsActMsg()
 	return this->IsActMsg;
 }
 
+//ˆÚ“®’†‚©‚Ç‚¤‚©æ“¾
+bool PLAYER::GetIsMove()
+{
+	return this->IsKeyDown;
+}
+
 //‘€ì
 void PLAYER::Operation(KEYDOWN *keydown)
 {

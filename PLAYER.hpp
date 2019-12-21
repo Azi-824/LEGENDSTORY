@@ -108,6 +108,7 @@ public:
 	int GetSendDamege();		//与えたダメージを取得
 	int GetRecvDamege();		//受けたダメージを取得
 	bool GetIsActMsg();			//行動メッセージ表示中か取得
+	bool GetIsMove();			//移動中かどうか取得
 
 
 	void DrawAnime();			//描画

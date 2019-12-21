@@ -62,4 +62,6 @@ void Play_Draw();			//プレイ画面の描画処理
 void Battle_Draw();			//戦闘画面の描画処理
 void End_Draw();			//エンド画面の描画処理
 
+void Enconte();				//敵との遭遇処理
+
 //########## クラスの定義 ##########

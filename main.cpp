@@ -310,10 +310,12 @@ void Play()
 
 
 	//▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼ 画面遷移の処理 ▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼
-	if (keydown->IsKeyDown(KEY_INPUT_SPACE))
+
+	if (player->GetIsMove())			//プレイヤーが移動中だったら
 	{
-		SceneChenge(GameSceneNow, (int)GAME_SCENE_BATTLE);	//次の画面は戦闘画面
+		Enconte();			//敵との遭遇判定
 	}
+
 	//▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲ 画面遷移の処理 ▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲
 
 
@@ -768,6 +770,25 @@ void End_Draw()
 	}
 
 	text->Draw(GAME_WIDTH / 2 - text->GetWidth() / 2, DEFAULT_TEXT_Y, str.size(), true, GetColor(255, 255, 255));	//文字列描画（色指定）（矢印あり）
+
+	return;
+
+}
+
+//敵との遭遇処理
+void Enconte()
+{
+	int battleRate;	//敵との遭遇率
+	
+	battleRate = 100;	//100回に1回遭遇する
+
+	//ランダムで遭遇判定
+	int rand = GetRand(battleRate);		//遭遇率の範囲内で乱数を生成
+
+	if (rand%battleRate == 0)			//敵と遭遇した時
+	{
+		SceneChenge(GameSceneNow, (int)GAME_SCENE_BATTLE);	//次の画面は戦闘画面
+	}
 
 	return;
 
