@@ -434,9 +434,9 @@ void Battle()
 
 	case (int)ACT_MSG:				//行動メッセージ表示状態
 
-		if (Turn == (int)MY_TURN)		//味方のターンだったら
+		if (Wait())			//表示秒数になったら
 		{
-			if (BattleActMsgCnt == BattleActMsgCntMax)		//表示秒数になったら
+			if (Turn == (int)MY_TURN)		//味方のターンだったら
 			{
 				if (ui->GetChoiseCommamd() == (int)ESCAPE)		//逃げるを選んだら
 				{
@@ -450,26 +450,13 @@ void Battle()
 					BattleStageNow = (int)DRAW_EFFECT;			//エフェクト描画状態へ
 					BattleActMsgCnt = 0;	//カウントリセット
 				}
-			}
-			else
-			{
-				BattleActMsgCnt++;	//カウントアップ
-			}
 
-		}
-		else if (Turn = (int)ENEMY_TURN)	//敵のターンだったら
-		{
-			//敵の行動メッセージ表示
-			if (BattleActMsgCnt == BattleActMsgCntMax)		//表示秒数になったら
+			}
+			else if (Turn == (int)ENEMY_TURN)		//敵のターンだったら
 			{
 				BattleStageNow = (int)DRAW_EFFECT;			//エフェクト描画状態へ
 				BattleActMsgCnt = 0;	//カウントリセット
 			}
-			else
-			{
-				BattleActMsgCnt++;	//カウントアップ
-			}
-
 		}
 
 		break;						//行動メッセージ表示状態ここまで
@@ -521,7 +508,7 @@ void Battle()
 	case (int)DRAW_DAMEGE:				//ダメージ描画状態
 
 		//ダメージ描画
-		if (BattleActMsgCnt == BattleActMsgCntMax)		//表示秒数になったら
+		if (Wait())				//表示秒数になったら
 		{
 			if (Turn == (int)MY_TURN)			//味方のターンの時
 			{
@@ -547,13 +534,11 @@ void Battle()
 				enemy[EncounteEnemyType]->SetIsArive(false);		//敵死亡
 			}
 
-			BattleActMsgCnt = 0;	//カウントリセット
+		}
 
-		}
-		else
-		{
-			BattleActMsgCnt++;	//カウントアップ
-		}
+		break;
+
+	case (int)RESULT_MSG:		//戦闘終了後のメッセージを描画する状態
 
 		break;
 
@@ -846,4 +831,26 @@ void Enconte()
 
 	return;
 
+}
+
+//待つ処理
+/*
+戻り値：true：待つ時間が過ぎたら
+戻り値：false：待っているとき
+*/
+bool Wait()
+{
+	static int WaitCnt = 0;		//カウント用
+	static int WaitCntMax = 60;	//待つ最大値
+
+	if (WaitCnt == WaitCntMax)		//待つ時間が過ぎたら
+	{
+		WaitCnt = 0;	//カウントリセット
+		return true;
+	}
+	else
+	{
+		++WaitCnt;		//カウントアップ
+		return false;
+	}
 }

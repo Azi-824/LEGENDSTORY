@@ -35,11 +35,12 @@ enum GAME_SCENE {
 
 enum BATTLE_STAGE
 {
-	WAIT_ACT,		//プレイヤーの行動選択待ち状態
+	WAIT_ACT,			//行動選択待ち状態
 	DAMEGE_CALC,		//ダメージ計算状態
 	ACT_MSG,			//行動メッセージ表示状態
 	DRAW_EFFECT,		//エフェクト表示状態
-	DRAW_DAMEGE,			//ダメージ描画状態
+	DRAW_DAMEGE,		//ダメージ描画状態
+	RESULT_MSG			//リザルトメッセージ描画状態
 };
 
 enum TURN
@@ -65,5 +66,6 @@ void Battle_Draw();			//戦闘画面の描画処理
 void End_Draw();			//エンド画面の描画処理
 
 void Enconte();				//敵との遭遇処理
+bool Wait();				//待つ処理
 
 //########## クラスの定義 ##########
