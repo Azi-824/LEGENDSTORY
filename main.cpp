@@ -119,7 +119,7 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 	player->SetName("アアア");	//名前設定
 
 	ui = new UI();		//UI作成
-	ui->SetStateWindow(player);	//描画HP設定
+	ui->SetStateWindow(player->GetHP(),player->GetMP());	//描画ステータス設定
 
 	//敵関係
 	enemy[SLIME] = new ENEMY(ENEMY_DIR, ENEMY_NAME_SLIME);	//スライム作成
@@ -497,7 +497,7 @@ void Battle()
 			{
 				player->SetHP(player->GetRecvDamege());		//味方にダメージを与える
 
-				ui->SetStateWindow(player);		//描画ステータス更新
+				ui->SetStateWindow(player->GetHP(),player->GetMP());	//描画ステータス更新
 
 				ui->BattleInit();				//バトルコマンドリセット
 
