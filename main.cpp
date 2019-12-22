@@ -119,11 +119,13 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 	ui->SetStateWindow(player);	//描画HP設定
 
 	//敵関係
-	enemy[SLIME] = new ENEMY(ENEMY_DIR, ENEMY_NAME_SLIME,"スライム");	//スライム作成
+	enemy[SLIME] = new ENEMY(ENEMY_DIR, ENEMY_NAME_SLIME);	//スライム作成
 	if (enemy[SLIME]->GetIsLoad() == false) { return -1; }	//読み込み失敗
 
-	enemy[YADOKARI]=new ENEMY(ENEMY_DIR, ENEMY_NAME_YADOKARI, "ヤドカリ");	//ヤドカリ作成
+	enemy[YADOKARI]=new ENEMY(ENEMY_DIR, ENEMY_NAME_YADOKARI);	//ヤドカリ作成
 	if (enemy[YADOKARI]->GetIsLoad() == false) { return -1; }	//読み込み失敗
+
+	data->Input(enemy, ENEMY_DATA_DIR, ENEMY_DATA_NAME);		//敵のデータをcsvファイルから読み込み
 
 	//マップ関係
 	mapimage = new MAPIMAGE();	//マップチップ生成

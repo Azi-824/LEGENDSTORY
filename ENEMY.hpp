@@ -42,11 +42,13 @@ private:
 	int SPD;	//はやさ
 	std::vector<int> Skil;	//スキル
 
+	int EneType;	//敵の種類
+
 	bool IsLoad;	//読み込めたか
 
 public:
 
-	ENEMY(const char *,const char *,const char *);			//コンストラクタ
+	ENEMY(const char *,const char *);			//コンストラクタ
 
 	~ENEMY();			//デストラクタ
 
@@ -55,6 +57,7 @@ public:
 	void SetATK(int);		//攻撃力設定
 	void SetDEF(int);		//防御力設定
 	void SetSPD(int);		//速度設定
+	void SetSkil(int);		//スキル設定
 
 	void StateSetInit();	//敵ステータス初期設定
 
