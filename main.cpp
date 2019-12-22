@@ -348,7 +348,6 @@ void Battle()
 
 	switch (BattleStageNow)		//現在のバトル状態
 	{
-		//▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼ 味方のターンの処理ここから ▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼
 
 	case (int)WAIT_ACT:		//プレイヤーの行動選択待ち状態の時
 
@@ -361,6 +360,7 @@ void Battle()
 			{
 			case (int)ATACK:					//攻撃を選んだ時
 
+				player->SetChoiseSkil(0);			//使用するスキルを通常攻撃に設定する
 				BattleStageNow = (int)DAMEGE_CALC;	//バトル状態をダメージ計算状態へ
 
 				break;
@@ -373,6 +373,7 @@ void Battle()
 
 			case (int)MAGIC:		//魔法を選んだ時
 
+				player->SetChoiseSkil(1);			//使用するスキルを魔法に設定する
 				BattleStageNow = (int)DAMEGE_CALC;	//バトル状態をダメージ計算状態へ
 
 				break;
@@ -474,26 +475,23 @@ void Battle()
 		{
 			if (ui->GetChoiseCommamd() == (int)ATACK)	//攻撃を選んでいたら
 			{
-				player->DrawAtk(350, 250);		//攻撃エフェクト描画
+				//player->DrawAtk(350, 250);		//攻撃エフェクト描画
+				effect->Draw(350, 250, player->GetChoiseSkil());	//攻撃エフェクト描画
 			}
 			else if (ui->GetChoiseCommamd() == (int)MAGIC)	//魔法を選んでいたら
 			{
-				player->DrawMagic((GAME_WIDTH / 2 - MAGIC_WIDTH / 2), (GAME_HEIGHT / 2 - MAGIC_HEIGHT / 2));	//魔法エフェクト描画
+				//player->DrawMagic((GAME_WIDTH / 2 - MAGIC_WIDTH / 2), (GAME_HEIGHT / 2 - MAGIC_HEIGHT / 2));	//魔法エフェクト描画
+				effect->Draw((GAME_WIDTH / 2 - MAGIC_WIDTH / 2), (GAME_HEIGHT / 2 - MAGIC_HEIGHT / 2), player->GetChoiseSkil());	//魔法エフェクト描画
 			}
 
-			if (player->GetEffectEnd())		//エフェクト描画が終了したら
+			if (effect->GetIsDrawEnd())		//エフェクト描画が終了したら
 			{
 
-				player->EffectReset();			//エフェクト関連リセット
+				//player->EffectReset();			//エフェクト関連リセット
 
 				BattleStageNow = (int)DRAW_DAMEGE;		//ダメージ描画状態へ
 
 				enemy[EncounteEnemyType]->SetHP((enemy[EncounteEnemyType]->GetHP() - player->GetSendDamege()));	//ダメージを与える
-
-				if (enemy[EncounteEnemyType]->GetHP() <= 0)				//敵のHPが0になったら
-				{
-					enemy[EncounteEnemyType]->SetIsArive(false);		//敵死亡
-				}
 
 			}
 
@@ -513,42 +511,39 @@ void Battle()
 
 				BattleStageNow = (int)DRAW_DAMEGE;		//ダメージ描画状態へ
 
-				if (player->GetHP() <= 0)			//自分のHPが0になったら
-				{
-					player->SetIsArive(false);		//自分死亡
-				}
-
 			}
 
 		}
 
 		break;
 
-	//▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲ 味方のターンの処理ここまで ▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲
-
-
-	//▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼ 敵のターンの処理ここから ▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼
-
-	//▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲ 敵のターンの処理ここまで ▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲
-
 	case (int)DRAW_DAMEGE:				//ダメージ描画状態
-
-		//変更途中
 
 		//ダメージ描画
 		if (BattleActMsgCnt == BattleActMsgCntMax)		//表示秒数になったら
 		{
 			if (Turn == (int)MY_TURN)			//味方のターンの時
 			{
+				effect->ResetIsAnime(player->GetChoiseSkil());		//エフェクトリセット
 				BattleStageNow = (int)WAIT_ACT;		//行動選択状態へ
 				Turn = (int)ENEMY_TURN;				//敵のターンへ
 			}
 			else if (Turn == (int)ENEMY_TURN)			//敵のターンの時
 			{
+				effect->ResetIsAnime(enemy[EncounteEnemyType]->GetSkil());		//エフェクトリセット
 				BattleStageNow = (int)WAIT_ACT;		//行動選択待ち状態へ
 				Turn = (int)MY_TURN;				//味方のターンへ
-				effect->ResetIsAnime(enemy[EncounteEnemyType]->GetSkil());		//エフェクトリセット
 
+			}
+
+			if (player->GetHP() <= 0)			//自分のHPが0になったら
+			{
+				player->SetIsArive(false);		//自分死亡
+			}
+
+			if (enemy[EncounteEnemyType]->GetHP() <= 0)				//敵のHPが0になったら
+			{
+				enemy[EncounteEnemyType]->SetIsArive(false);		//敵死亡
 			}
 
 			BattleActMsgCnt = 0;	//カウントリセット
@@ -694,6 +689,8 @@ void Init()
 	ui->BattleInit();			//バトルコマンド初期化
 
 	EncounteEnemyType = 0;		//遭遇した敵の種類をリセット
+
+	Turn = (int)MY_TURN;		//ターンを味方のターンに設定
 
 }
 

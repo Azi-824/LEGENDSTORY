@@ -44,6 +44,10 @@ ENEMY::ENEMY(const char *dir,const char *name,const char *charaname)
 //デストラクタ
 ENEMY::~ENEMY()
 {
+	//vectorのメモリ解放を行う
+	std::vector<int> v;			//空のvectorを作成する
+	this->Skil.swap(v);		//空と中身を入れ替える
+
 	return;
 }
 

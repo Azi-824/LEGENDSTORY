@@ -9,6 +9,8 @@
 //コンストラクタ
 PLAYER::PLAYER()
 {
+	this->Skil.push_back(NOMAL_ATACK);	//通常攻撃のスキル
+	this->Skil.push_back(MAGIC_2);		//魔法2のスキル
 	return;
 }
 
@@ -19,6 +21,11 @@ PLAYER::~PLAYER()
 	delete this->AtkEffect;
 	delete this->Collision;
 	delete this->Ilast;
+
+	//vectorのメモリ解放を行う
+	std::vector<int> v;			//空のvectorを作成する
+	this->Skil.swap(v);		//空と中身を入れ替える
+
 	return;
 }
 
@@ -34,6 +41,8 @@ bool PLAYER::SetInit()
 	this->SPD = 10;		//初期速度設定
 	this->Dist = FLONT;	//初期向き設定
 	this->MoveSpeed = 5;//初期移動速度設定
+
+	this->ChoiseSkil = this->Skil[0];	//最初は通常攻撃を使用するスキルとして設定する
 
 	this->SendDamege = 0;	//与えるダメージ0
 	this->RecvDamege = 0;	//受けるダメージ0
@@ -174,6 +183,13 @@ void PLAYER::SetSPD(int spd)
 	return;
 }
 
+//使用するスキル設定
+void PLAYER::SetChoiseSkil(int type)
+{
+	this->ChoiseSkil = this->Skil[type];		//指定されたスキルを、使用するスキルとして設定
+	return;
+}
+
 //移動速度設定
 void PLAYER::SetMoveSpeed(int movespeed)
 {
@@ -274,6 +290,12 @@ int PLAYER::GetDEF(void)
 int PLAYER::GetSPD(void)
 {
 	return this->SPD;
+}
+
+//使用するスキルを取得
+int PLAYER::GetChoiseSkil(void)
+{
+	return this->ChoiseSkil;	
 }
 
 //移動速度取得

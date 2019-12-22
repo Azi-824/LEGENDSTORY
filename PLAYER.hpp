@@ -12,6 +12,7 @@
 #include "COMMAND.hpp"
 #include "ENEMY.hpp"
 #include "STATEWINDOW.hpp"
+#include "EFFECT.hpp"
 
 //################# マクロ定義: ファイルパス、名前 #######################
 
@@ -45,6 +46,8 @@ private:
 	int ATK;				//攻撃力
 	int DEF;				//防御力
 	int SPD;				//速度
+	std::vector<int> Skil;	//スキル一覧
+	int ChoiseSkil;			//使用するスキル
 
 	int SendDamege;			//与えるダメージ
 	int RecvDamege;			//受けるダメージ
@@ -80,6 +83,8 @@ public:
 	void SetATK(int);		//攻撃力設定
 	void SetDEF(int);		//防御力設定
 	void SetSPD(int);		//速度設定
+	void SetChoiseSkil(int);//使用するスキル設定
+
 	void SetMoveSpeed(int);	//移動速度設定
 	void SetIsArive(bool);	//生きているかを設定
 	void SetIsDraw(bool);	//描画してよいかを設定
@@ -97,6 +102,7 @@ public:
 	int GetATK();			//攻撃力取得
 	int GetDEF();			//防御力取得
 	int GetSPD();			//速度取得
+	int GetChoiseSkil();	//使用するスキル取得
 
 	int GetMoveSpeed();		//移動速度取得
 	bool GetIsArive();		//生きているか取得
