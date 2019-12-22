@@ -97,7 +97,7 @@ void DATA::Input(ENEMY *enemy[],const char *dir,const char *name)
 			enemy[i]->SetName(buf.c_str());	//名前読み込み
 
 			std::getline(ifs, buf, ',');	//カンマまで読み込み
-			enemy[i]->SetHP(atoi(buf.c_str()));	//HP読み込み
+			enemy[i]->SetMaxHP(atoi(buf.c_str()));	//HP読み込み
 
 			std::getline(ifs, buf, ',');	//カンマまで読み込み
 			enemy[i]->SetATK(atoi(buf.c_str()));	//ATK読み込み

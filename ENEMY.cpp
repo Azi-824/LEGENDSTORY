@@ -15,6 +15,7 @@ ENEMY::ENEMY(const char *dir,const char *name)
 	this->ATK = 0;
 	this->DEF = 0;
 	this->SPD = 0;
+	this->MaxHP = 0;
 	this->IsLoad = false;	
 	this->SetIsArive(true);	//生きている
 
@@ -56,6 +57,13 @@ void ENEMY::SetName(const char *name)
 	return;
 }
 
+//最大体力設定
+void ENEMY::SetMaxHP(int maxhp)
+{
+	this->MaxHP = maxhp;
+	return;
+}
+
 //HP設定
 void ENEMY::SetHP(int hp)
 {
@@ -94,10 +102,8 @@ void ENEMY::SetSkil(int skil)
 //敵ステータス初期設定
 void ENEMY::StateSetInit()
 {
-	this->HP = 10;	
-	this->ATK = 50;
-	this->DEF = 5;
-	this->SPD = 5;
+
+	this->HP = this->MaxHP;	//HP再設定
 
 	this->SetIsArive(true);	//生きている
 

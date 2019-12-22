@@ -126,6 +126,8 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 	if (enemy[YADOKARI]->GetIsLoad() == false) { return -1; }	//読み込み失敗
 
 	data->Input(enemy, ENEMY_DATA_DIR, ENEMY_DATA_NAME);		//敵のデータをcsvファイルから読み込み
+	enemy[SLIME]->StateSetInit();		//初期ステータス設定
+	enemy[YADOKARI]->StateSetInit();	//初期ステータス設定
 
 	//マップ関係
 	mapimage = new MAPIMAGE();	//マップチップ生成
@@ -427,8 +429,6 @@ void Battle()
 
 		}
 
-
-
 		break;						//ダメージ計算状態の時ここまで
 
 	case (int)ACT_MSG:				//行動メッセージ表示状態
@@ -468,7 +468,6 @@ void Battle()
 			{
 				BattleActMsgCnt++;	//カウントアップ
 			}
-
 
 		}
 

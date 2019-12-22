@@ -40,6 +40,9 @@ private:
 	int ATK;	//攻撃力
 	int DEF;	//防御力
 	int SPD;	//はやさ
+	
+	int MaxHP;	//最大HP
+
 	std::vector<int> Skil;	//スキル
 
 	int EneType;	//敵の種類
@@ -53,6 +56,7 @@ public:
 	~ENEMY();			//デストラクタ
 
 	void SetName(const char *);	//名前設定
+	void SetMaxHP(int);		//最大体力設定
 	void SetHP(int);		//体力設定
 	void SetATK(int);		//攻撃力設定
 	void SetDEF(int);		//防御力設定

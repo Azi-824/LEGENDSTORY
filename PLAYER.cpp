@@ -431,6 +431,10 @@ void PLAYER::DamegeCalc(ENEMY *enemy)
 	{
 		this->SendDamege = this->ATK - enemy->GetDEF();		//ダメージ量を計算 自分攻撃力 - 敵防御力のダメージを与える
 	}
+	else								//自分の攻撃力が敵の防御力より下だったら、
+	{
+		this->SendDamege = 0;			//与えるダメージは0
+	}
 	//▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲ 味方の攻撃処理ここまで ▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲
 
 
@@ -439,6 +443,10 @@ void PLAYER::DamegeCalc(ENEMY *enemy)
 	if (enemy->GetATK() > this->DEF)		//敵の攻撃力が自分の防御力より上だったら
 	{
 		this->RecvDamege= enemy->GetATK() - this->DEF;	//敵攻撃力 - 自分防御力のダメージを与える
+	}
+	else									//敵の攻撃力が自分の防御力より下だったら、
+	{
+		this->RecvDamege = 0;				//受けるダメージ0
 	}
 	//▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲ 敵の攻撃処理ここまで ▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲
 
