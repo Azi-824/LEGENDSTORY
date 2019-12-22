@@ -138,6 +138,7 @@ bool EFFECT::GetIsDrawEnd()
 void EFFECT::ResetIsAnime(int type)
 {
 	this->IsAnimeStop[type] = false;
+	this->IsDrawEnd = false;		
 	return;
 }
 

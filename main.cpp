@@ -496,7 +496,6 @@ void Battle()
 	case (int)ENEMY_DRAW_EFFECT:		//敵のエフェクト表示状態
 
 		//敵のエフェクト表示
-		//enemy[EncounteEnemyType]->DrawEffect((GAME_WIDTH / 2 - MAGIC_WIDTH / 2),(GAME_HEIGHT / 2 - MAGIC_HEIGHT / 2));	//敵の攻撃エフェクト描画
 		effect->Draw((GAME_WIDTH / 2 - MAGIC_WIDTH / 2), (GAME_HEIGHT / 2 - MAGIC_HEIGHT / 2), enemy[EncounteEnemyType]->GetSkil());
 
 		if (effect->GetIsDrawEnd())		//エフェクト描画終了したら
@@ -516,22 +515,6 @@ void Battle()
 
 		}
 
-		//if (enemy[EncounteEnemyType]->GetIeEffectEnd())		//エフェクト描画が終了したら
-		//{
-		//	player->SetHP(player->GetRecvDamege());		//味方にダメージを与える
-
-		//	ui->SetStateWindow(player);		//描画ステータス更新
-
-		//	ui->BattleInit();				//バトルコマンドリセット
-
-		//	BattleStageNow = (int)DRAW_DAMEGE;		//味方の行動選択待ち状態へ
-
-		//	if (player->GetHP() <= 0)			//自分のHPが0になったら
-		//	{
-		//		player->SetIsArive(false);		//自分死亡
-		//	}
-
-		//}
 
 		break;
 
@@ -547,7 +530,7 @@ void Battle()
 			if (effect->GetIsDrawEnd())		//敵の攻撃後の場合
 			{
 				BattleStageNow = (int)WAIT_PLAYER_ACT;		//味方の行動選択待ち状態へ
-				//enemy[EncounteEnemyType]->ResetEffect();	//エフェクト関連リセット
+				effect->ResetIsAnime(enemy[EncounteEnemyType]->GetSkil());		//エフェクトリセット
 			}
 			else								//味方の攻撃後の場合
 			{
@@ -766,7 +749,7 @@ void Battle_Draw()
 	}
 	else if (BattleStageNow == (int)DRAW_DAMEGE)	//ダメージ描画状態だったら
 	{
-		if (enemy[EncounteEnemyType]->GetIeEffectEnd())	//敵の攻撃が終わっていたら
+		if (effect->GetIsDrawEnd())	//敵の攻撃が終わっていたら
 		{
 			ui->EnemyDrawDamege(player->GetRecvDamege());		//受けたメッセージ表示
 		}
