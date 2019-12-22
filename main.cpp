@@ -108,23 +108,24 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 	if (effect->Add(MY_ANIME_DIR_MAGIC, MY_ANIME_NAME_MAGIC, MAGIC_ALL_CNT, MAGIC_YOKO_CNT, MAGIC_TATE_CNT, MAGIC_WIDTH, MAGIC_HEIGHT, MAGIC_SPEED, false, (int)MAGIC_1) == false) { return -1; }	//読み込み失敗
 	if (effect->Add(MY_ANIME_DIR_MAGIC, MY_ANIME_NAME_MAGIC2, MAGIC2_ALL_CNT, MAGIC2_YOKO_CNT, MAGIC2_TATE_CNT, MAGIC_WIDTH, MAGIC_HEIGHT, MAGIC_SPEED, false, (int)MAGIC_2) == false) { return -1; }	//読み込み失敗
 	
+	//プレイヤー関係
 	player = new PLAYER();
 	if (player->SetImage(MY_IMG_DIR_CHARCTOR, MY_IMG_NAME_PLAYER) == false) { return -1; }	//読み込み失敗
 	if (player->SetAnime(MY_ANIME_DIR_PLAYER, MY_ANIME_NAME_PLAYER, PLAYER_ALL_CNT, PLAYER_YOKO_CNT, PLAYER_TATE_CNT, PLAYER_WIDTH, PLAYER_HEIGHT, PLAYER_ANI_SPEED, true) == false) { return -1; } //読み込み失敗
-	if (player->AddEffect(MY_ANIME_DIR_ATKEFECT, MY_ANIME_NAME_ATKEFECT, ATK_ALL_CNT, ATK_YOKO_CNT, ATK_TATE_CNT, ATK_WIDTH, ATK_HEIGHT, ATK_SPEED, false) == false) { return -1; }
-	if (player->AddMagicEffect(MY_ANIME_DIR_MAGIC, MY_ANIME_NAME_MAGIC2, MAGIC2_ALL_CNT, MAGIC2_YOKO_CNT, MAGIC2_TATE_CNT, MAGIC_WIDTH, MAGIC_HEIGHT, MAGIC_SPEED, false) == false) { return -1; }
 	player->SetInit();	//初期設定
 	player->SetName("アアア");	//名前設定
 
 	ui = new UI();		//UI作成
 	ui->SetStateWindow(player);	//描画HP設定
 
+	//敵関係
 	enemy[SLIME] = new ENEMY(ENEMY_DIR, ENEMY_NAME_SLIME,"スライム");	//スライム作成
 	if (enemy[SLIME]->GetIsLoad() == false) { return -1; }	//読み込み失敗
 
 	enemy[YADOKARI]=new ENEMY(ENEMY_DIR, ENEMY_NAME_YADOKARI, "ヤドカリ");	//ヤドカリ作成
 	if (enemy[YADOKARI]->GetIsLoad() == false) { return -1; }	//読み込み失敗
 
+	//マップ関係
 	mapimage = new MAPIMAGE();	//マップチップ生成
 	if (mapimage->GetIsLoad() == false) { return -1; }	//読み込み失敗
 
@@ -248,6 +249,7 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 	delete data;			//dataを破棄
 	delete effect;			//effectを破棄
 
+	//マップデータの削除
 	for (int i = 0; i < MAP_DATA_KIND; i++)
 	{
 		for (int cnt = 0; cnt < MAP_LAYER_KIND; cnt++)
@@ -257,6 +259,7 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 
 	}
 
+	//敵の削除
 	for (int i = 0; i < ENEMY_KIND; ++i)
 	{
 		delete enemy[i];			//enemyを破棄
@@ -403,7 +406,7 @@ void Battle()
 
 		}
 
-		break;						//プレイヤーの行動選択待ち状態の処理ここまで
+		break;						//行動選択待ち状態の処理ここまで
 
 	case (int)DAMEGE_CALC:			//ダメージ計算状態の時
 
@@ -475,19 +478,15 @@ void Battle()
 		{
 			if (ui->GetChoiseCommamd() == (int)ATACK)	//攻撃を選んでいたら
 			{
-				//player->DrawAtk(350, 250);		//攻撃エフェクト描画
 				effect->Draw(350, 250, player->GetChoiseSkil());	//攻撃エフェクト描画
 			}
 			else if (ui->GetChoiseCommamd() == (int)MAGIC)	//魔法を選んでいたら
 			{
-				//player->DrawMagic((GAME_WIDTH / 2 - MAGIC_WIDTH / 2), (GAME_HEIGHT / 2 - MAGIC_HEIGHT / 2));	//魔法エフェクト描画
 				effect->Draw((GAME_WIDTH / 2 - MAGIC_WIDTH / 2), (GAME_HEIGHT / 2 - MAGIC_HEIGHT / 2), player->GetChoiseSkil());	//魔法エフェクト描画
 			}
 
 			if (effect->GetIsDrawEnd())		//エフェクト描画が終了したら
 			{
-
-				//player->EffectReset();			//エフェクト関連リセット
 
 				BattleStageNow = (int)DRAW_DAMEGE;		//ダメージ描画状態へ
 
@@ -568,7 +567,7 @@ void Battle()
 	{
 		SceneChenge(GameSceneNow, (int)GAME_SCENE_PLAY);	//次の画面はプレイ画面
 
-		BattleStageNow = (int)WAIT_ACT;		//味方の行動選択待ち状態へ
+		BattleStageNow = (int)WAIT_ACT;		//行動選択待ち状態へ
 
 		Init();									//初期化
 
@@ -577,7 +576,7 @@ void Battle()
 	{
 		SceneChenge(GameSceneNow, (int)GAME_SCENE_END);	//次の画面はエンド画面
 
-		BattleStageNow = (int)WAIT_ACT;		//味方の行動選択待ち状態へ
+		BattleStageNow = (int)WAIT_ACT;		//行動選択待ち状態へ
 
 		Init();									//初期化
 	}
