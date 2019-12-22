@@ -103,7 +103,7 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 
 	text = new TEXTSTR();	//テキスト作成
 	data = new DATA(DATA_DIR, DATA_NAME);
-	msg = new MESSAGE();
+	msg = new MESSAGE();		//メッセージ
 
 	//エフェクト関係
 	effect = new EFFECT(MY_ANIME_DIR_ATKEFECT, MY_ANIME_NAME_ATKEFECT, ATK_ALL_CNT, ATK_YOKO_CNT, ATK_TATE_CNT, ATK_WIDTH, ATK_HEIGHT, ATK_SPEED, false);
@@ -255,6 +255,7 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 	delete mapimage;		//mapimageを破棄
 	delete data;			//dataを破棄
 	delete effect;			//effectを破棄
+	delete msg;				//msgを破棄
 
 	//マップデータの削除
 	for (int i = 0; i < MAP_DATA_KIND; i++)
