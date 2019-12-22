@@ -324,14 +324,15 @@ void Play()
 	player->Operation(keydown);	//プレイヤーキー操作
 	Play_Draw();		//描画処理
 
-	if (keydown->IsKeyDownOne(KEY_INPUT_Q))		//Qキーを押された瞬間
-	{
-		player->SetIsMenu(true);		//メニュー描画開始
-	}
-	else if (keydown->IsKeyDownOne(KEY_INPUT_ESCAPE))	//Escキーを押された瞬間
+	if (player->GetIsMenu() == true && keydown->IsKeyDownOne(KEY_INPUT_Q))		//メニュー描画中でQキーを押された瞬間
 	{
 		player->SetIsMenu(false);		//メニュー描画終了
 	}
+	else if (keydown->IsKeyDownOne(KEY_INPUT_Q))		//Qキーを押された瞬間
+	{
+		player->SetIsMenu(true);		//メニュー描画開始
+	}
+
 
 
 	//▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼ 画面遷移の処理 ▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼
@@ -606,7 +607,7 @@ void End()
 	}
 
 	//▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼ 画面遷移の処理 ▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼
-	if (keydown->IsKeyDown(KEY_INPUT_BACK))
+	if (keydown->IsKeyDown(KEY_INPUT_RETURN))	//エンターキーを押された瞬間
 	{
 		if (*text->GetPos() == "TITLE")		//選択している文字列が"TITLE"だったら
 		{

@@ -45,7 +45,9 @@ BOOL KEYDOWN::IsKeyDown(int keycode)
 bool KEYDOWN::IsKeyDownOne(int keycode)
 {
 	if (this->AllKeyState[keycode] == 1)
+	{
 		return true;
+	}
 	else
 	{
 		return false;
