@@ -166,6 +166,7 @@
     <ClCompile Include="MAP.cpp" />
     <ClCompile Include="MAPIMAGE.cpp" />
     <ClCompile Include="MENU.cpp" />
+    <ClCompile Include="MSG.cpp" />
     <ClCompile Include="MUSIC.cpp" />
     <ClCompile Include="PLAYER.cpp" />
     <ClCompile Include="STATEWINDOW.cpp" />
@@ -189,6 +190,7 @@
     <ClInclude Include="MAP.hpp" />
     <ClInclude Include="MAPIMAGE.hpp" />
     <ClInclude Include="MENU.hpp" />
+    <ClInclude Include="MSG.hpp" />
     <ClInclude Include="MUSIC.hpp" />
     <ClInclude Include="PLAYER.hpp" />
     <ClInclude Include="STATEWINDOW.hpp" />

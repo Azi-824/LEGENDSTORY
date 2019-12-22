@@ -20,6 +20,7 @@
 #include "UI.hpp"
 #include "DATA.hpp"
 #include "EFFECT.hpp"
+#include "MSG.hpp"
 
 //########## グローバルオブジェクト ##########
 FPS *fps = new FPS(GAME_FPS_SPEED);							//FPSクラスのオブジェクトを生成
@@ -36,7 +37,8 @@ EFFECT *effect;						//エフェクト
 FONT *font;							//フォント
 TEXTSTR *text;						//文字列
 UI *ui;								//UI
-DATA *data;	//データ
+DATA *data;							//データ
+MESSAGE *msg;						//メッセージ
 
 PLAYER *player;						//主人公
 
@@ -101,6 +103,7 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 
 	text = new TEXTSTR();	//テキスト作成
 	data = new DATA(DATA_DIR, DATA_NAME);
+	msg = new MESSAGE();
 
 	//エフェクト関係
 	effect = new EFFECT(MY_ANIME_DIR_ATKEFECT, MY_ANIME_NAME_ATKEFECT, ATK_ALL_CNT, ATK_YOKO_CNT, ATK_TATE_CNT, ATK_WIDTH, ATK_HEIGHT, ATK_SPEED, false);
@@ -742,39 +745,9 @@ void Battle_Draw()
 
 	ui->DrawWindow();		//ウィンドウの描画
 
-	if (BattleStageNow==(int)ACT_MSG)	//行動メッセージ表示状態だったら
-	{
-		if (Turn == (int)MY_TURN)		//味方のターンだったら
-		{
-			if (ui->GetChoiseCommamd() == (int)ESCAPE)		//逃げるを選んだ場合
-			{
-				DrawString(0, 400, "上手く逃げ切れた！", GetColor(255, 255, 255));	//文字描画
-			}
-			else
-			{
-				ui->MyDrawName(player->GetName());			//味方の名前描画
-			}
+	msg->DrawBattleMsg(BattleStageNow, Turn, ui->GetChoiseCommamd(), player, enemy[EncounteEnemyType]);	//メッセージ関係描画
 
-		}
-		else if (Turn = (int)ENEMY_TURN)	//敵のターンだったら
-		{
-			ui->EnemyDrawName(enemy[EncounteEnemyType]->GetName());			//敵の名前描画
-		}
-
-	}
-	else if (BattleStageNow == (int)DRAW_DAMEGE)	//ダメージ描画状態だったら
-	{
-		if (Turn == (int)MY_TURN)		//味方のターンだったら
-		{
-			ui->MyDrawDamege(player->GetSendDamege());		//与えたダメージ表示
-		}
-		else if (Turn = (int)ENEMY_TURN)	//敵のターンだったら
-		{
-			ui->EnemyDrawDamege(player->GetRecvDamege());		//受けたメッセージ表示
-		}
-
-	}
-	else if(BattleStageNow == (int)WAIT_ACT)	//行動選択状態の時
+	if (BattleStageNow == (int)WAIT_ACT)		//行動選択状態の時
 	{
 		if (Turn == (int)MY_TURN)		//味方のターンだったら
 		{
