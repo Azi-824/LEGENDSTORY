@@ -50,7 +50,7 @@ int GameSceneNow = (int)GAME_SCENE_TITLE;	//現在のゲームシーン
 int GameSceneBefor;							//前のゲームシーン
 int GameSceneNext;							//次のゲームシーン
 
-int BattleStageNow = (int)WAIT_PLAYER_ACT;	//バトルシーンの現在の状態
+int BattleStageNow = (int)WAIT_ACT;	//バトルシーンの現在の状態
 int BattleActMsgCnt = 0;		//行動メッセージカウント
 int BattleActMsgCntMax = 60;	//行動メッセージの表示時間
 
@@ -60,6 +60,7 @@ int MapNowPos[2] = {0};								//現在のマップのX位置とY位置を格納
 int ChengeDrawCount = 0;	//フェードアウト処理に使用
 
 int EncounteEnemyType = 0;	//遭遇した敵の種類
+int Turn = (int)MY_TURN;	//ターン
 
 bool StrSet_Flg = false;					//文字列設定フラグ
 bool GameEnd_Flg = false;					//ゲーム終了フラグ
@@ -351,106 +352,174 @@ void Battle()
 	{
 		//▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼ 味方のターンの処理ここから ▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼
 
-	case (int)WAIT_PLAYER_ACT:		//プレイヤーの行動選択待ち状態の時
+	case (int)WAIT_ACT:		//プレイヤーの行動選択待ち状態の時
 
-		ui->BattleOperation(keydown);			//戦闘画面のキー操作
-
-		//▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼ バトルコマンド毎の処理ここから ▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼
-		switch (ui->GetChoiseCommamd())		//どのコマンドを選んだか
+		if (Turn == (int)MY_TURN)		//味方のターンだったら
 		{
-		case (int)ATACK:					//攻撃を選んだ時
+			ui->BattleOperation(keydown);			//戦闘画面のキー操作
 
-			BattleStageNow = (int)PLAYER_DAMEGE_CALC;	//バトル状態をダメージ計算状態へ
+			//▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼ バトルコマンド毎の処理ここから ▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼
+			switch (ui->GetChoiseCommamd())		//どのコマンドを選んだか
+			{
+			case (int)ATACK:					//攻撃を選んだ時
 
-			break;
+				BattleStageNow = (int)DAMEGE_CALC;	//バトル状態をダメージ計算状態へ
 
-		case (int)DEFENSE:		//防御を選んだ時
+				break;
 
-			ui->BattleInit();	//バトルコマンドリセット
+			case (int)DEFENSE:		//防御を選んだ時
 
-			break;
+				ui->BattleInit();	//バトルコマンドリセット
 
-		case (int)MAGIC:		//魔法を選んだ時
+				break;
 
-			BattleStageNow = (int)PLAYER_DAMEGE_CALC;	//バトル状態をダメージ計算状態へ
+			case (int)MAGIC:		//魔法を選んだ時
 
-			break;
+				BattleStageNow = (int)DAMEGE_CALC;	//バトル状態をダメージ計算状態へ
 
-		case (int)ITEM:			//アイテムを選んだ時
+				break;
 
-			ui->BattleInit();	//バトルコマンドリセット
+			case (int)ITEM:			//アイテムを選んだ時
 
-			break;
+				ui->BattleInit();	//バトルコマンドリセット
 
-		case (int)ESCAPE:		//逃げるを選んだ時
+				break;
 
-			BattleStageNow = (int)PLAYER_ACT_MSG;	//メッセージ描画状態
-			break;
+			case (int)ESCAPE:		//逃げるを選んだ時
 
-		default:
-			break;
+				BattleStageNow = (int)ACT_MSG;	//メッセージ描画状態
+				break;
+
+			default:
+				break;
+			}
+			//▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲ バトルコマンド毎の処理ここまで ▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲
+
+		} 
+		else if (Turn = (int)ENEMY_TURN)	//敵のターンだったら
+		{
+			//敵の行動選択決定処理
+
+			BattleStageNow = (int)DAMEGE_CALC;	//ダメージ計算へ
+
 		}
-		//▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲ バトルコマンド毎の処理ここまで ▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲
-
 
 		break;						//プレイヤーの行動選択待ち状態の処理ここまで
 
-	case (int)PLAYER_DAMEGE_CALC:			//ダメージ計算状態の時
+	case (int)DAMEGE_CALC:			//ダメージ計算状態の時
 
-		player->DamegeCalc(enemy[EncounteEnemyType]);		//ダメージ計算
+		if (Turn == (int)MY_TURN)		//味方のターンだったら
+		{
+			player->DamegeCalc(enemy[EncounteEnemyType]);		//ダメージ計算
 
-		BattleStageNow = (int)PLAYER_ACT_MSG;	//行動メッセージ表示状態へ
+			BattleStageNow = (int)ACT_MSG;	//行動メッセージ表示状態へ
+
+		}
+		else if (Turn = (int)ENEMY_TURN)	//敵のターンだったら
+		{
+			//ダメージ計算
+
+			BattleStageNow = (int)ACT_MSG;	//行動メッセージ表示へ
+
+		}
+
+
 
 		break;						//ダメージ計算状態の時ここまで
 
-	case (int)PLAYER_ACT_MSG:				//行動メッセージ表示状態
+	case (int)ACT_MSG:				//行動メッセージ表示状態
 
-
-		if (BattleActMsgCnt == BattleActMsgCntMax)		//表示秒数になったら
+		if (Turn == (int)MY_TURN)		//味方のターンだったら
 		{
-			if (ui->GetChoiseCommamd() == (int)ESCAPE)		//逃げるを選んだら
+			if (BattleActMsgCnt == BattleActMsgCntMax)		//表示秒数になったら
 			{
-				SceneChenge(GameSceneNow, (int)GAME_SCENE_PLAY);	//次の画面はプレイ画面
-				Init();									//初期化
-				BattleActMsgCnt = 0;	//カウントリセット
-				BattleStageNow = (int)WAIT_PLAYER_ACT;	//味方の行動選択待ち状態にする
+				if (ui->GetChoiseCommamd() == (int)ESCAPE)		//逃げるを選んだら
+				{
+					SceneChenge(GameSceneNow, (int)GAME_SCENE_PLAY);	//次の画面はプレイ画面
+					Init();									//初期化
+					BattleActMsgCnt = 0;	//カウントリセット
+					BattleStageNow = (int)WAIT_ACT;	//味方の行動選択待ち状態にする
+				}
+				else				//それ以外なら
+				{
+					BattleStageNow = (int)DRAW_EFFECT;			//エフェクト描画状態へ
+					BattleActMsgCnt = 0;	//カウントリセット
+				}
 			}
-			else				//それ以外なら
+			else
 			{
-				BattleStageNow = (int)PLAYER_DRAW_EFFECT;			//エフェクト描画状態へ
-				BattleActMsgCnt = 0;	//カウントリセット
+				BattleActMsgCnt++;	//カウントアップ
 			}
+
 		}
-		else
+		else if (Turn = (int)ENEMY_TURN)	//敵のターンだったら
 		{
-			BattleActMsgCnt++;	//カウントアップ
+			//敵の行動メッセージ表示
+			if (BattleActMsgCnt == BattleActMsgCntMax)		//表示秒数になったら
+			{
+				BattleStageNow = (int)DRAW_EFFECT;			//エフェクト描画状態へ
+				BattleActMsgCnt = 0;	//カウントリセット
+			}
+			else
+			{
+				BattleActMsgCnt++;	//カウントアップ
+			}
+
+
 		}
 
 		break;						//行動メッセージ表示状態ここまで
 
-	case (int)PLAYER_DRAW_EFFECT:			//エフェクト描画状態
+	case (int)DRAW_EFFECT:			//エフェクト描画状態
 
-		if (ui->GetChoiseCommamd() == (int)ATACK)	//攻撃を選んでいたら
+		if (Turn == (int)MY_TURN)		//味方のターンだったら
 		{
-			player->DrawAtk(350, 250);		//攻撃エフェクト描画
-		}
-		else if (ui->GetChoiseCommamd() == (int)MAGIC)	//魔法を選んでいたら
-		{
-			player->DrawMagic((GAME_WIDTH / 2 - MAGIC_WIDTH / 2), (GAME_HEIGHT / 2 - MAGIC_HEIGHT / 2));	//魔法エフェクト描画
-		}
-
-		if (player->GetEffectEnd())		//エフェクト描画が終了したら
-		{
-			
-			player->EffectReset();			//エフェクト関連リセット
-
-			BattleStageNow = (int)DRAW_DAMEGE;		//敵の行動選択状態へ
-
-			enemy[EncounteEnemyType]->SetHP((enemy[EncounteEnemyType]->GetHP() - player->GetSendDamege()));	//ダメージを与える
-
-			if (enemy[EncounteEnemyType]->GetHP() <= 0)				//敵のHPが0になったら
+			if (ui->GetChoiseCommamd() == (int)ATACK)	//攻撃を選んでいたら
 			{
-				enemy[EncounteEnemyType]->SetIsArive(false);		//敵死亡
+				player->DrawAtk(350, 250);		//攻撃エフェクト描画
+			}
+			else if (ui->GetChoiseCommamd() == (int)MAGIC)	//魔法を選んでいたら
+			{
+				player->DrawMagic((GAME_WIDTH / 2 - MAGIC_WIDTH / 2), (GAME_HEIGHT / 2 - MAGIC_HEIGHT / 2));	//魔法エフェクト描画
+			}
+
+			if (player->GetEffectEnd())		//エフェクト描画が終了したら
+			{
+
+				player->EffectReset();			//エフェクト関連リセット
+
+				BattleStageNow = (int)DRAW_DAMEGE;		//ダメージ描画状態へ
+
+				enemy[EncounteEnemyType]->SetHP((enemy[EncounteEnemyType]->GetHP() - player->GetSendDamege()));	//ダメージを与える
+
+				if (enemy[EncounteEnemyType]->GetHP() <= 0)				//敵のHPが0になったら
+				{
+					enemy[EncounteEnemyType]->SetIsArive(false);		//敵死亡
+				}
+
+			}
+
+		}
+		else if (Turn = (int)ENEMY_TURN)	//敵のターンだったら
+		{
+			//敵のエフェクト表示
+			effect->Draw((GAME_WIDTH / 2 - MAGIC_WIDTH / 2), (GAME_HEIGHT / 2 - MAGIC_HEIGHT / 2), enemy[EncounteEnemyType]->GetSkil());
+
+			if (effect->GetIsDrawEnd())		//エフェクト描画終了したら
+			{
+				player->SetHP(player->GetRecvDamege());		//味方にダメージを与える
+
+				ui->SetStateWindow(player);		//描画ステータス更新
+
+				ui->BattleInit();				//バトルコマンドリセット
+
+				BattleStageNow = (int)DRAW_DAMEGE;		//ダメージ描画状態へ
+
+				if (player->GetHP() <= 0)			//自分のHPが0になったら
+				{
+					player->SetIsArive(false);		//自分死亡
+				}
+
 			}
 
 		}
@@ -462,62 +531,6 @@ void Battle()
 
 	//▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼ 敵のターンの処理ここから ▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼
 
-	case (int)ENEMY_WAIT_ACT:			//敵の行動選択待ち状態
-
-		//敵の行動選択決定処理
-
-		BattleStageNow = (int)ENEMY_DAMEGE_CALC;	//敵のダメージ計算へ
-
-		break;
-
-	case (int)ENEMY_DAMEGE_CALC:		//敵のダメージ計算状態
-
-		//ダメージ計算
-
-		BattleStageNow = (int)ENEMY_ACT_MSG;	//敵の行動メッセージ表示へ
-		
-		break;
-
-	case (int)ENEMY_ACT_MSG:			//敵の行動メッセージ表示状態
-
-		//敵の行動メッセージ表示
-		if (BattleActMsgCnt == BattleActMsgCntMax)		//表示秒数になったら
-		{
-			BattleStageNow = (int)ENEMY_DRAW_EFFECT;			//敵のエフェクト描画状態へ
-			BattleActMsgCnt = 0;	//カウントリセット
-		}
-		else
-		{
-			BattleActMsgCnt++;	//カウントアップ
-		}
-
-		break;
-
-	case (int)ENEMY_DRAW_EFFECT:		//敵のエフェクト表示状態
-
-		//敵のエフェクト表示
-		effect->Draw((GAME_WIDTH / 2 - MAGIC_WIDTH / 2), (GAME_HEIGHT / 2 - MAGIC_HEIGHT / 2), enemy[EncounteEnemyType]->GetSkil());
-
-		if (effect->GetIsDrawEnd())		//エフェクト描画終了したら
-		{
-			player->SetHP(player->GetRecvDamege());		//味方にダメージを与える
-
-			ui->SetStateWindow(player);		//描画ステータス更新
-
-			ui->BattleInit();				//バトルコマンドリセット
-
-			BattleStageNow = (int)DRAW_DAMEGE;		//味方の行動選択待ち状態へ
-
-			if (player->GetHP() <= 0)			//自分のHPが0になったら
-			{
-				player->SetIsArive(false);		//自分死亡
-			}
-
-		}
-
-
-		break;
-
 	//▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲ 敵のターンの処理ここまで ▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲
 
 	case (int)DRAW_DAMEGE:				//ダメージ描画状態
@@ -527,16 +540,21 @@ void Battle()
 		//ダメージ描画
 		if (BattleActMsgCnt == BattleActMsgCntMax)		//表示秒数になったら
 		{
-			if (effect->GetIsDrawEnd())		//敵の攻撃後の場合
+			if (Turn == (int)MY_TURN)			//味方のターンの時
 			{
-				BattleStageNow = (int)WAIT_PLAYER_ACT;		//味方の行動選択待ち状態へ
+				BattleStageNow = (int)WAIT_ACT;		//行動選択状態へ
+				Turn = (int)ENEMY_TURN;				//敵のターンへ
+			}
+			else if (Turn == (int)ENEMY_TURN)			//敵のターンの時
+			{
+				BattleStageNow = (int)WAIT_ACT;		//行動選択待ち状態へ
+				Turn = (int)MY_TURN;				//味方のターンへ
 				effect->ResetIsAnime(enemy[EncounteEnemyType]->GetSkil());		//エフェクトリセット
+
 			}
-			else								//味方の攻撃後の場合
-			{
-				BattleStageNow = (int)ENEMY_WAIT_ACT;		//敵の行動選択状態へ
-			}
+
 			BattleActMsgCnt = 0;	//カウントリセット
+
 		}
 		else
 		{
@@ -557,7 +575,7 @@ void Battle()
 	{
 		SceneChenge(GameSceneNow, (int)GAME_SCENE_PLAY);	//次の画面はプレイ画面
 
-		BattleStageNow = (int)WAIT_PLAYER_ACT;		//味方の行動選択待ち状態へ
+		BattleStageNow = (int)WAIT_ACT;		//味方の行動選択待ち状態へ
 
 		Init();									//初期化
 
@@ -566,7 +584,7 @@ void Battle()
 	{
 		SceneChenge(GameSceneNow, (int)GAME_SCENE_END);	//次の画面はエンド画面
 
-		BattleStageNow = (int)WAIT_PLAYER_ACT;		//味方の行動選択待ち状態へ
+		BattleStageNow = (int)WAIT_ACT;		//味方の行動選択待ち状態へ
 
 		Init();									//初期化
 	}
@@ -743,39 +761,52 @@ void Battle_Draw()
 
 	ui->DrawWindow();		//ウィンドウの描画
 
-	if (BattleStageNow==(int)ENEMY_ACT_MSG)	//敵の行動メッセージ表示状態だったら
+	if (BattleStageNow==(int)ACT_MSG)	//行動メッセージ表示状態だったら
 	{
-		ui->EnemyDrawName(enemy[EncounteEnemyType]->GetName());			//敵の名前描画
+		if (Turn == (int)MY_TURN)		//味方のターンだったら
+		{
+			if (ui->GetChoiseCommamd() == (int)ESCAPE)		//逃げるを選んだ場合
+			{
+				DrawString(0, 400, "上手く逃げ切れた！", GetColor(255, 255, 255));	//文字描画
+			}
+			else
+			{
+				ui->MyDrawName(player->GetName());			//味方の名前描画
+			}
+
+		}
+		else if (Turn = (int)ENEMY_TURN)	//敵のターンだったら
+		{
+			ui->EnemyDrawName(enemy[EncounteEnemyType]->GetName());			//敵の名前描画
+		}
+
 	}
 	else if (BattleStageNow == (int)DRAW_DAMEGE)	//ダメージ描画状態だったら
 	{
-		if (effect->GetIsDrawEnd())	//敵の攻撃が終わっていたら
-		{
-			ui->EnemyDrawDamege(player->GetRecvDamege());		//受けたメッセージ表示
-		}
-		else						//敵の攻撃が終わっていなかったら（自分の攻撃の後だったら）
+		if (Turn == (int)MY_TURN)		//味方のターンだったら
 		{
 			ui->MyDrawDamege(player->GetSendDamege());		//与えたダメージ表示
 		}
-	}
-	else if (BattleStageNow == (int)PLAYER_ACT_MSG)	//味方の行動メッセージ表示状態だったら
-	{
-		if (ui->GetChoiseCommamd() == (int)ESCAPE)		//逃げるを選んだ場合
+		else if (Turn = (int)ENEMY_TURN)	//敵のターンだったら
 		{
-			DrawString(0, 400, "上手く逃げ切れた！", GetColor(255, 255, 255));	//文字描画
+			ui->EnemyDrawDamege(player->GetRecvDamege());		//受けたメッセージ表示
 		}
-		else
-		{
-			ui->MyDrawName(player->GetName());			//味方の名前描画
-		}
+
 	}
-	else if(BattleStageNow == (int)WAIT_PLAYER_ACT)	//味方の行動選択状態の時
+	else if(BattleStageNow == (int)WAIT_ACT)	//行動選択状態の時
 	{
-		ui->DrawCommand();						//バトルコマンド描画
+		if (Turn == (int)MY_TURN)		//味方のターンだったら
+		{
+			ui->DrawCommand();						//バトルコマンド描画
+		}
+		else if (Turn = (int)ENEMY_TURN)	//敵のターンだったら
+		{
+
+		}
+
 	}
 
-	ui->DrawStateWindow();					//ステータスウィンドウ描画
-
+	ui->DrawStateWindow();		//ステータスウィンドウ描画
 
 	return;
 
