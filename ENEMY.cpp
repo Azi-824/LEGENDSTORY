@@ -17,7 +17,6 @@ ENEMY::ENEMY(const char *dir,const char *name,const char *charaname)
 	this->SPD = 0;
 	this->Skil.push_back(MAGIC_1);	//スキル
 	this->IsLoad = false;	
-	this->IsEffectEnd = false;
 
 	//画像設定
 	if (this->SetImage(dir, name))	//画像が読み込めていたら
@@ -45,7 +44,6 @@ ENEMY::ENEMY(const char *dir,const char *name,const char *charaname)
 //デストラクタ
 ENEMY::~ENEMY()
 {
-	//delete this->AtkEffect;	//AtkEffect破棄
 	return;
 }
 
@@ -97,24 +95,6 @@ void ENEMY::StateSetInit()
 	return;
 }
 
-//エフェクト設定
-bool ENEMY::SetAtkEffect(const char *dir, const char *name, int SplitNumALL, int SpritNumX, int SplitNumY, int SplitWidth, int SplitHeight, double changeSpeed, bool IsLoop)
-{
-	this->AtkEffect = new ANIMATION(dir, name, SplitNumALL, SpritNumX, SplitNumY, SplitWidth, SplitHeight, changeSpeed, IsLoop);
-	if (this->AtkEffect->GetIsLoad() == false) { return false; }		//読み込み失敗
-
-	return true;
-
-}
-
-//エフェクト関連リセット
-void ENEMY::ResetEffect()
-{
-	this->IsEffectEnd = false;
-	this->AtkEffect->ResetIsAnime();
-	return;
-}
-
 //名前取得
 const char * ENEMY::GetName(void)
 {
@@ -151,55 +131,8 @@ bool ENEMY::GetIsLoad()
 	return this->IsLoad;
 }
 
-//エフェクト描画終了したか取得
-bool ENEMY::GetIeEffectEnd()
-{
-	return this->IsEffectEnd;
-}
-
 //使用するスキルの種類を取得
 int ENEMY::GetSkil()
 {
 	return this->Skil[0];
-}
-
-//エフェクト描画
-void ENEMY::DrawEffect(int x,int y)
-{
-	static int cnt = 0;		//フェードアウト用
-	static int cntMax = 60;	//フェードアウト用
-	static bool flg = false;//フェードアウト終了フラグ
-
-	//60フレーム分、待つ
-	if (cnt < cntMax)
-	{
-		cnt++;	//カウントアップ
-	}
-	else
-	{
-		flg = true;	//フェードアウト処理終了
-	}
-
-	//フェードアウトの処理
-	double ToukaPercent = (cnt / 2) / (double)cntMax;//透過％を求める
-	SetDrawBlendMode(DX_BLENDMODE_ALPHA, ToukaPercent * 255);	//透過させる
-	DrawBox(0, 0, GAME_WIDTH, GAME_HEIGHT, GetColor(0, 0, 0), TRUE);	//真っ暗な画面にする
-	SetDrawBlendMode(DX_BLENDMODE_NOBLEND, 0);	//透過をやめる
-
-	if (flg)
-	{
-		if (this->AtkEffect->GetIsAnimeStop() == false)	//アニメーションが終わってなければ
-		{
-			this->AtkEffect->DrawEffect(x, y);		//エフェクト描画
-		}
-		else
-		{
-			this->IsEffectEnd = true;	//エフェクト描画終了
-			flg = false;	//フェードアウトフラグリセット
-			cnt = 0;		//フェードアウトカウントリセット
-		}
-
-	}
-
-	return;
 }

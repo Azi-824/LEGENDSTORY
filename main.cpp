@@ -121,11 +121,9 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 
 	enemy[SLIME] = new ENEMY(ENEMY_DIR, ENEMY_NAME_SLIME,"スライム");	//スライム作成
 	if (enemy[SLIME]->GetIsLoad() == false) { return -1; }	//読み込み失敗
-	//if (enemy[SLIME]->SetAtkEffect(MY_ANIME_DIR_MAGIC, MY_ANIME_NAME_MAGIC, MAGIC_ALL_CNT, MAGIC_YOKO_CNT, MAGIC_TATE_CNT, MAGIC_WIDTH, MAGIC_HEIGHT, MAGIC_SPEED, false) == false) { return -1; }
 
 	enemy[YADOKARI]=new ENEMY(ENEMY_DIR, ENEMY_NAME_YADOKARI, "ヤドカリ");	//ヤドカリ作成
 	if (enemy[YADOKARI]->GetIsLoad() == false) { return -1; }	//読み込み失敗
-	//if (enemy[YADOKARI]->SetAtkEffect(MY_ANIME_DIR_MAGIC, MY_ANIME_NAME_MAGIC, MAGIC_ALL_CNT, MAGIC_YOKO_CNT, MAGIC_TATE_CNT, MAGIC_WIDTH, MAGIC_HEIGHT, MAGIC_SPEED, false) == false) { return -1; }
 
 	mapimage = new MAPIMAGE();	//マップチップ生成
 	if (mapimage->GetIsLoad() == false) { return -1; }	//読み込み失敗
