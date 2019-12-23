@@ -15,7 +15,13 @@
 #include "EFFECT.hpp"
 
 //################# マクロ定義 #######################
-#define EXP_INCREASE_VALUE 5		//経験値の最大値の増え幅
+#define EXP_INCREASE_VALUE	5		//経験値の最大値の増え幅
+#define HP_INCREASE_VALUE	5		//体力の増え幅
+#define MP_INCREASE_VALUE	5		//MPの増え幅
+#define ATK_INCREASE_VALUE	2		//攻撃力の増え幅
+#define DEF_INCREASE_VALUE	2		//防御力の増え幅
+#define SPD_INCREASE_VALUE	2		//速さの増え幅
+
 
 //################# 列挙型 ######################
 enum COMMANDTYPE

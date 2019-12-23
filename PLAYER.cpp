@@ -512,6 +512,17 @@ void PLAYER::AddExp(int exp)
 		this->NowEXP = 0;		//現在の経験値を0に戻す
 		this->NowEXP += work;	//超過した分の経験値を加算する
 
+		//ステータスの増加処理
+		this->MaxHP += HP_INCREASE_VALUE;	//最大HPを増やす
+		this->MaxMP += MP_INCREASE_VALUE;	//最大MPを増やす
+		this->ATK += ATK_INCREASE_VALUE;	//攻撃力を増やす
+		this->DEF += DEF_INCREASE_VALUE;	//防御力を増やす
+		this->SPD += SPD_INCREASE_VALUE;	//速さを増やす
+
+		//HPとMPを全回復させる
+		this->NowHP = this->MaxHP;
+		this->NowMP = this->MaxMP;
+
 		this->Level++;			//レベルを一つ上げる
 	}
 	return;
