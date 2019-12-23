@@ -93,6 +93,12 @@ void DATA::Input(PLAYER *player,const char *dir,const char *name)
 		player->SetLevel(atoi(buf.c_str()));	//レベル読み込み
 
 		std::getline(ifs, buf, ',');	//カンマまで読み込み
+		player->SetMaxEXP(atoi(buf.c_str()));	//経験値の最大値読み込み
+
+		std::getline(ifs, buf, ',');	//カンマまで読み込み
+		player->SetEXP(atoi(buf.c_str()));	//現在の経験値読み込み
+
+		std::getline(ifs, buf, ',');	//カンマまで読み込み
 		player->SetMaxHP(atoi(buf.c_str()));	//最大HP読み込み
 
 		std::getline(ifs, buf, ',');	//カンマまで読み込み

@@ -92,6 +92,20 @@ void PLAYER::SetLevel(int level)
 	return;
 }
 
+//経験値の最大値設定
+void PLAYER::SetMaxEXP(int maxexp)
+{
+	this->MaxEXP = maxexp;
+	return;
+}
+
+//現在の経験値設定
+void PLAYER::SetEXP(int exp)
+{
+	this->NowEXP = exp;
+	return;
+}
+
 //最大HP設定
 void PLAYER::SetMaxHP(int hp)
 {
@@ -225,6 +239,12 @@ const char * PLAYER::GetName(void)
 int PLAYER::GetLevel(void)
 {
 	return this->Level;
+}
+
+//現在の経験値取得
+int PLAYER::GetEXP(void)
+{
+	return this->NowEXP;
 }
 
 //最大体力取得

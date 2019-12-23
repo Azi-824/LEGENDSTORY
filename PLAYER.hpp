@@ -38,6 +38,9 @@ private:
 	std::string Name;		//キャラの名前
 
 	int Level;				//レベル
+	int MaxEXP;				//経験値の最大値
+	int NowEXP;				//現在の経験値
+
 	int MaxHP;				//HPの最大値
 	int NowHP;				//現在のHP
 	int MaxMP;				//MPの最大値
@@ -45,6 +48,7 @@ private:
 	int ATK;				//攻撃力
 	int DEF;				//防御力
 	int SPD;				//速度
+
 	std::vector<int> Skil;	//スキル一覧
 	int ChoiseSkil;			//使用するスキル
 
@@ -72,7 +76,11 @@ public:
 	bool SetImage(const char *, const char *);		//画像の設定
 	
 	void SetName(const char *);//名前設定
+
 	void SetLevel(int);		//レベル設定
+	void SetMaxEXP(int);	//経験値の最大値設定
+	void SetEXP(int);		//現在の経験値設定
+
 	void SetMaxHP(int);		//最大体力設定
 	void SetHP(int);		//現在の体力設定
 	void SetMaxMP(int);		//最大MP設定
@@ -80,6 +88,7 @@ public:
 	void SetATK(int);		//攻撃力設定
 	void SetDEF(int);		//防御力設定
 	void SetSPD(int);		//速度設定
+
 	void SetSkil(int);		//スキル一覧を設定
 	void SetChoiseSkil(int);//使用するスキル設定
 
@@ -94,7 +103,10 @@ public:
 
 	//ステータス関係
 	const char *GetName();	//名前取得
+
 	int GetLevel();			//レベル取得
+	int GetEXP();			//現在の経験値取得
+
 	int GetMaxHP();			//最大体力取得
 	int GetHP();			//現在の体力取得
 	int GetMaxMP();			//最大MP取得
