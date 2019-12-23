@@ -367,7 +367,6 @@ void Battle()
 			{
 			case (int)ATACK:					//攻撃を選んだ時
 
-				//player->SetChoiseSkil(0);			//使用するスキルを通常攻撃に設定する
 				BattleStageNow = (int)DAMEGE_CALC;	//バトル状態をダメージ計算状態へ
 
 				break;
