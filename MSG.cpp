@@ -11,6 +11,8 @@ MESSAGE::MESSAGE()
 {
 	this->X = MSG_DRAW_X;	//描画位置(X)
 	this->Y = MSG_DRAW_Y;	//描画位置(Y)
+	this->IsResultMsgEnd = false;	//リザルトメッセージ表示終了していない
+	this->ResultMsgStep = (int)WIN_MSG;	//表示段階は最初
 
 	return;
 }
@@ -27,7 +29,7 @@ MESSAGE::~MESSAGE()
 引数：int：現在のターン
 引数：int：選んだコマンド
 */
-void MESSAGE::DrawBattleMsg(int battlestage,int turn,int command,PLAYER *player,ENEMY *enemy)
+void MESSAGE::DrawBattleMsg(int battlestage,int turn,int command,PLAYER *player,ENEMY *enemy,bool push_enter)
 {
 	switch (battlestage)	//バトル状態によって表示する文字列を変える
 	{
@@ -69,7 +71,41 @@ void MESSAGE::DrawBattleMsg(int battlestage,int turn,int command,PLAYER *player,
 
 		if (player->GetIsBattleWin())			//戦闘に勝利していたら
 		{
-			DrawString(this->X, this->Y, "モンスターをやっつけた！", GetColor(255, 255, 255));	//文字描画
+			switch (this->ResultMsgStep)		//リザルトメッセージの表示段階に合わせて表示する文字を変える
+			{
+
+			case (int)WIN_MSG:		//戦闘に勝利したメッセージ
+
+				DrawString(this->X, this->Y, "モンスターをやっつけた！", GetColor(255, 255, 255));	//文字描画
+
+				break;
+
+			case (int)EXP_MSG:		//経験値のメッセージ
+
+				DrawFormatString(this->X, this->Y, GetColor(255, 255, 255), "%dの経験値をゲットした！", enemy->GetEXP());	//取得経験値の表示
+
+				break;
+
+			case(int)LEVELUP_MSG:	//レベルアップのメッセージ
+
+				DrawFormatString(this->X, this->Y, GetColor(255, 255, 255), "レベルが上がった！\nレベル%dになった！", player->GetLevel());
+
+				break;
+
+			default:
+				break;
+			}
+			if (push_enter)		//エンターキーを押されたら
+			{
+				if (this->ResultMsgStep < RESULT_MSG_KIND - 1)	//リザルトメッセージの種類より少なければ
+				{
+					this->ResultMsgStep++;	//リザルトメッセージの表示段階を次へ
+				}
+				else										//それ以外なら
+				{
+					this->IsResultMsgEnd = true;			//メッセージ表示終了
+				}
+			}
 		}
 		else if (player->GetIsBattleWin() == false)	//戦闘に敗北していたら
 		{
@@ -101,4 +137,26 @@ void MESSAGE::DrawDamage(int turn, int damege)
 void MESSAGE::DrawName(const char *name)
 {
 	DrawFormatString(this->X, this->Y, GetColor(255, 255, 255), "%sのこうげき！", name);	//敵の名前描画
+}
+
+//リザルトメッセージの表示が終了したか設定
+void MESSAGE::SetIsResultMsgEnd(bool isend)
+{
+	this->IsResultMsgEnd = isend;
+	return;
+}
+
+//リザルトメッセージ関係のメンバーをリセット
+void MESSAGE::ResetResultMsg(void)
+{
+	this->IsResultMsgEnd = false;	//リザルトメッセージ表示終了していない
+	this->ResultMsgStep = (int)WIN_MSG;	//表示段階は最初
+
+	return;
+}
+
+//リザルトメッセージの表示が終了したか取得
+bool MESSAGE::GetIsResultMsgEnd(void)
+{
+	return this->IsResultMsgEnd;
 }

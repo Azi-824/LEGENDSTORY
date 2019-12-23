@@ -548,9 +548,8 @@ void Battle()
 
 	case (int)RESULT_MSG:		//戦闘終了後のメッセージを描画する状態
 
-		if (Wait())			//待ち時間が経過したら
+		if (msg->GetIsResultMsgEnd())		//リザルトメッセージの表示が終了していたら
 		{
-
 			if (player->GetIsBattleWin())		//戦闘に勝利していたら
 			{
 				SceneChenge(GameSceneNow, (int)GAME_SCENE_PLAY);	//次の画面はプレイ画面
@@ -689,6 +688,9 @@ void Init()
 		BattleStageNow = (int)WAIT_ACT;	//バトル状態を、行動待ち状態へ
 
 		Turn = (int)MY_TURN;		//ターンを味方のターンに設定
+
+		msg->ResetResultMsg();		//リザルトメッセージ関係のメンバーをリセット
+
 	}
 }
 
@@ -754,7 +756,8 @@ void Battle_Draw()
 
 	ui->DrawWindow();		//ウィンドウの描画
 
-	msg->DrawBattleMsg(BattleStageNow, Turn, ui->GetChoiseCommamd(), player, enemy[EncounteEnemyType]);	//メッセージ関係描画
+	//メッセージ関係描画
+	msg->DrawBattleMsg(BattleStageNow, Turn, ui->GetChoiseCommamd(), player, enemy[EncounteEnemyType],keydown->IsKeyDownOne(KEY_INPUT_RETURN));
 
 	if (BattleStageNow == (int)WAIT_ACT)		//行動選択状態の時
 	{
