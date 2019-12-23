@@ -97,13 +97,28 @@ void MESSAGE::DrawBattleMsg(int battlestage,int turn,int command,PLAYER *player,
 			}
 			if (push_enter)		//エンターキーを押されたら
 			{
-				if (this->ResultMsgStep < RESULT_MSG_KIND - 1)	//リザルトメッセージの種類より少なければ
+				if (player->GetLevUpMsgStartFlg())	//レベルアップしたときは
 				{
-					this->ResultMsgStep++;	//リザルトメッセージの表示段階を次へ
+					if (this->ResultMsgStep < (int)LEVELUP_MSG)	//レベルアップメッセージまで
+					{
+						this->ResultMsgStep++;	//リザルトメッセージの表示段階を次へ
+					}
+					else										//それ以外なら
+					{
+						this->IsResultMsgEnd = true;			//メッセージ表示終了
+						player->SetLevUpMsgStartFlg(false);		//レベルアップメッセージ終了
+					}
 				}
-				else										//それ以外なら
+				else			//レベルアップしてないときは
 				{
-					this->IsResultMsgEnd = true;			//メッセージ表示終了
+					if (this->ResultMsgStep < (int)EXP_MSG)	//経験値メッセージまで
+					{
+						this->ResultMsgStep++;	//リザルトメッセージの表示段階を次へ
+					}
+					else										//それ以外なら
+					{
+						this->IsResultMsgEnd = true;			//メッセージ表示終了
+					}
 				}
 			}
 		}
