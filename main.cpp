@@ -281,8 +281,6 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 //タイトル画面の処理
 void Title()
 {
-	Init();		//初期化
-
 	//▼▼▼▼▼▼▼▼▼▼▼▼▼▼ 音の再生処理ここから ▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼
 	if (bgm->GetIsPlay() == false)	//再生中じゃないとき
 	{
@@ -323,8 +321,6 @@ void Title()
 //プレイ画面の処理
 void Play()
 {
-	Init();		//初期化
-
 	player->Operation(keydown);	//プレイヤーキー操作
 	Play_Draw();		//描画処理
 
@@ -336,8 +332,6 @@ void Play()
 	{
 		player->SetIsMenu(true);		//メニュー描画開始
 	}
-
-
 
 	//▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼ 画面遷移の処理 ▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼
 
@@ -445,7 +439,6 @@ void Battle()
 				if (ui->GetChoiseCommamd() == (int)ESCAPE)		//逃げるを選んだら
 				{
 					SceneChenge(GameSceneNow, (int)GAME_SCENE_PLAY);	//次の画面はプレイ画面
-					Init();									//初期化
 					BattleActMsgCnt = 0;	//カウントリセット
 					BattleStageNow = (int)WAIT_ACT;	//味方の行動選択待ち状態にする
 				}
@@ -566,11 +559,9 @@ void Battle()
 
 			BattleStageNow = (int)WAIT_ACT;		//行動選択待ち状態へ
 
-			Init();									//初期化
-
 		}
 
-		break;
+		break;					//戦闘終了後のメッセージを描画する状態の処理ここまで
 
 	default:
 
@@ -589,7 +580,6 @@ void Battle()
 //エンド画面の処理
 void End()
 {
-	Init();	//初期化
 
 	End_Draw();	//描画処理
 
@@ -655,6 +645,12 @@ void Chenge()
 		break;
 	}
 
+	//フェードアウトの処理
+	double ToukaPercent = ChengeDrawCount / (double)ChengeDrawCountMax;//透過％を求める
+	SetDrawBlendMode(DX_BLENDMODE_ALPHA, ToukaPercent * 255);	//透過させる
+	DrawBox(0, 0, GAME_WIDTH, GAME_HEIGHT, GetColor(0, 0, 0), TRUE);	//真っ暗な画面にする
+	SetDrawBlendMode(DX_BLENDMODE_NOBLEND, 0);	//透過をやめる
+
 	//60フレーム分、待つ
 	if (ChengeDrawCount < ChengeDrawCountMax)
 	{
@@ -663,14 +659,10 @@ void Chenge()
 	else
 	{
 		GameSceneNow = GameSceneNext;	//次の画面にする
+		Init();							//初期化
 		StrSet_Flg = false;				//文字列未設定
 	}
 
-	//フェードアウトの処理
-	double ToukaPercent = ChengeDrawCount / (double)ChengeDrawCountMax;//透過％を求める
-	SetDrawBlendMode(DX_BLENDMODE_ALPHA, ToukaPercent * 255);	//透過させる
-	DrawBox(0, 0, GAME_WIDTH, GAME_HEIGHT, GetColor(0, 0, 0), TRUE);	//真っ暗な画面にする
-	SetDrawBlendMode(DX_BLENDMODE_NOBLEND, 0);	//透過をやめる
 
 	return;
 
@@ -681,14 +673,16 @@ void Init()
 {
 	ChengeDrawCount = 0;		//フェードイン用初期化
 
-	enemy[EncounteEnemyType]->StateSetInit();		//遭遇した敵初期化
+	if (GameSceneBefor == (int)GAME_SCENE_BATTLE)	//戦闘画面から遷移した場合
+	{
+		enemy[EncounteEnemyType]->StateSetInit();		//遭遇した敵初期化
 
-	ui->BattleInit();			//バトルコマンド初期化
+		ui->BattleInit();			//バトルコマンド初期化
 
-	EncounteEnemyType = 0;		//遭遇した敵の種類をリセット
+		EncounteEnemyType = 0;		//遭遇した敵の種類をリセット
 
-	Turn = (int)MY_TURN;		//ターンを味方のターンに設定
-
+		Turn = (int)MY_TURN;		//ターンを味方のターンに設定
+	}
 }
 
 //シーンを変更する処理
