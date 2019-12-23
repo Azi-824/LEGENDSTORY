@@ -168,6 +168,9 @@ void DATA::Input(ENEMY *enemy[],const char *dir,const char *name)
 
 			std::getline(ifs, buf, ',');	//カンマまで読み込み
 			enemy[i]->SetSPD(atoi(buf.c_str()));	//SPD読み込み
+
+			std::getline(ifs, buf, ',');	//カンマまで読み込み
+			enemy[i]->SetEXP(atoi(buf.c_str()));	//EXP読み込み
 			
 			std::getline(ifs, buf, ',');	//カンマまで読み込み
 			enemy[i]->SetSkil(atoi(buf.c_str()));	//Skil1読み込み

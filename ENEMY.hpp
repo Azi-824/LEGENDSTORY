@@ -36,12 +36,13 @@ private:
 
 	std::string Name;	//名前
 
+	int MaxHP;	//最大HP
 	int HP;		//体力
 	int ATK;	//攻撃力
 	int DEF;	//防御力
 	int SPD;	//はやさ
 	
-	int MaxHP;	//最大HP
+	int EXP;	//経験値
 
 	std::vector<int> Skil;	//スキル
 
@@ -62,6 +63,7 @@ public:
 	void SetDEF(int);		//防御力設定
 	void SetSPD(int);		//速度設定
 	void SetSkil(int);		//スキル設定
+	void SetEXP(int);		//経験値設定
 
 	void StateSetInit();	//敵ステータス初期設定
 
@@ -71,6 +73,7 @@ public:
 	int GetDEF();			//防御力取得
 	int GetSPD();			//速度取得
 	int GetSkil();			//使用するスキルの種類を取得
+	int GetEXP();			//経験値取得
 
 	bool GetIsLoad();		//読み込めたかを取得
 

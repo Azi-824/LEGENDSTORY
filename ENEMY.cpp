@@ -16,6 +16,7 @@ ENEMY::ENEMY(const char *dir,const char *name)
 	this->DEF = 0;
 	this->SPD = 0;
 	this->MaxHP = 0;
+	this->EXP = 0;
 	this->IsLoad = false;	
 	this->SetIsArive(true);	//生きている
 
@@ -99,6 +100,13 @@ void ENEMY::SetSkil(int skil)
 	return;
 }
 
+//経験値設定
+void ENEMY::SetEXP(int exp)
+{
+	this->EXP = exp;
+	return;
+}
+
 //敵ステータス初期設定
 void ENEMY::StateSetInit()
 {
@@ -138,6 +146,12 @@ int ENEMY::GetDEF(void)
 int ENEMY::GetSPD(void)
 {
 	return this->SPD;
+}
+
+//経験値取得
+int ENEMY::GetEXP(void)
+{
+	return this->EXP;
 }
 
 //読み込めたかを取得
