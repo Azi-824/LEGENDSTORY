@@ -50,6 +50,7 @@ bool PLAYER::SetInit()
 	this->IsKeyDown = false;//キーボード押されていない
 	this->IsMenu = false;	//メニューウィンドウ描画されていない
 	this->IsActMsg = false;		//行動メッセージ表示していない
+	this->IsBattleWin = false;	//戦闘に勝っていない
 
 	this->Collision = new COLLISION();		//当たり判定の領域を作成
 	this->Collision->SetValue(GAME_LEFT, GAME_TOP, this->Anime->GetWidth(),this->Anime->GetHeight());	//当たり判定の領域を設定
@@ -202,6 +203,13 @@ void PLAYER::SetIsMenu(bool ismenu)
 	return;
 }
 
+//戦闘に勝ったか取得
+void PLAYER::SetIsBattleWin(bool isbattlewin)
+{
+	this->IsBattleWin = isbattlewin;
+	return;
+}
+
 //名前取得
 const char * PLAYER::GetName(void)
 {
@@ -314,6 +322,12 @@ bool PLAYER::GetIsActMsg()
 bool PLAYER::GetIsMove()
 {
 	return this->IsKeyDown;
+}
+
+//戦闘に勝ったか取得
+bool PLAYER::GetIsBattleWin()
+{
+	return this->IsBattleWin;
 }
 
 //操作

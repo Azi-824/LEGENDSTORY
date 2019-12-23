@@ -531,11 +531,19 @@ void Battle()
 			if (player->GetHP() <= 0)			//自分のHPが0になったら
 			{
 				player->SetIsArive(false);		//自分死亡
+
+				player->SetIsBattleWin(false);	//戦闘に敗北
+
+				BattleStageNow = (int)RESULT_MSG;		//リザルトメッセージ表示状態へ
 			}
 
 			if (enemy[EncounteEnemyType]->GetHP() <= 0)				//敵のHPが0になったら
 			{
 				enemy[EncounteEnemyType]->SetIsArive(false);		//敵死亡
+
+				player->SetIsBattleWin(true);		//戦闘に勝利
+
+				BattleStageNow = (int)RESULT_MSG;		//リザルトメッセージ表示状態へ
 			}
 
 		}
@@ -544,6 +552,24 @@ void Battle()
 
 	case (int)RESULT_MSG:		//戦闘終了後のメッセージを描画する状態
 
+		if (Wait())			//待ち時間が経過したら
+		{
+
+			if (player->GetIsBattleWin())		//戦闘に勝利していたら
+			{
+				SceneChenge(GameSceneNow, (int)GAME_SCENE_PLAY);	//次の画面はプレイ画面
+			}
+			else if (player->GetIsBattleWin() == false)	//戦闘に敗北していたら
+			{
+				SceneChenge(GameSceneNow, (int)GAME_SCENE_END);	//次の画面はエンド画面
+			}
+
+			BattleStageNow = (int)WAIT_ACT;		//行動選択待ち状態へ
+
+			Init();									//初期化
+
+		}
+
 		break;
 
 	default:
@@ -551,25 +577,6 @@ void Battle()
 		break;
 
 
-	}
-
-	//生存判定
-	if (enemy[EncounteEnemyType]->GetIsArive() == false)	//敵が死んだら
-	{
-		SceneChenge(GameSceneNow, (int)GAME_SCENE_PLAY);	//次の画面はプレイ画面
-
-		BattleStageNow = (int)WAIT_ACT;		//行動選択待ち状態へ
-
-		Init();									//初期化
-
-	}
-	else if (player->GetIsArive() == false)	//自分が死んだら
-	{
-		SceneChenge(GameSceneNow, (int)GAME_SCENE_END);	//次の画面はエンド画面
-
-		BattleStageNow = (int)WAIT_ACT;		//行動選択待ち状態へ
-
-		Init();									//初期化
 	}
 
 	if (keydown->IsKeyDown(KEY_INPUT_R))		//Rキー押されたら

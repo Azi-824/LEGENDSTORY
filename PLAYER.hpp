@@ -59,6 +59,7 @@ private:
 	bool IsKeyDown;			//キーボードが押されているか
 	bool IsMenu;			//メニューウィンドウが描画されているか
 	bool IsActMsg;			//行動メッセージ表示中か
+	bool IsBattleWin;		//戦闘に勝ったか
 
 
 public:
@@ -85,6 +86,7 @@ public:
 	void SetKeyOperation(bool); //キーボードで操作できるか設定
 	void SetPosition(int, int);	//位置を設定
 	void SetIsMenu(bool);		//メニュー描画中か設定
+	void SetIsBattleWin(bool);	//戦闘に勝ったか設定
 
 
 	//ステータス関係
@@ -108,6 +110,7 @@ public:
 	int GetRecvDamege();		//受けたダメージを取得
 	bool GetIsActMsg();			//行動メッセージ表示中か取得
 	bool GetIsMove();			//移動中かどうか取得
+	bool GetIsBattleWin();		//戦闘に勝ったか取得
 
 
 	void DrawAnime();			//描画

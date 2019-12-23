@@ -58,12 +58,23 @@ void MESSAGE::DrawBattleMsg(int battlestage,int turn,int command,PLAYER *player,
 		{
 			this->DrawDamage(turn,player->GetSendDamege());		//与えたダメージ表示
 		}
-		else if (turn = (int)ENEMY_TURN)	//敵のターンだったら
+		else if (turn == (int)ENEMY_TURN)	//敵のターンだったら
 		{
-			this->DrawDamage(turn,player->GetRecvDamege());		//受けたメッセージ表示
+			this->DrawDamage(turn,player->GetRecvDamege());		//受けたダメージ表示
 		}
 
 		break;				//ダメージ描画状態の処理ここまで
+
+	case(int)RESULT_MSG:			//リザルトメッセージ表示状態だったら
+
+		if (player->GetIsBattleWin())			//戦闘に勝利していたら
+		{
+			DrawString(this->X, this->Y, "モンスターをやっつけた！", GetColor(255, 255, 255));	//文字描画
+		}
+		else if (player->GetIsBattleWin() == false)	//戦闘に敗北していたら
+		{
+			DrawString(this->X, this->Y, "全滅してしまった・・・", GetColor(255, 255, 255));	//文字描画
+		}
 
 	default:
 		break;
