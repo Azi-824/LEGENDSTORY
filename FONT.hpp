@@ -19,6 +19,7 @@
 #define FONT_NAME		("GD-DOTFONT-DQ-OTF")				//フォントの正式名称
 #define FONT_NAME2		("PixelMplus10 Regular")			//フォント2の正式名称
 #define DEFAULT_FONTSIZE	20								//デフォルトのフォントサイズ
+#define	MSG_FONTSIZE		40								//メッセージのフォントサイズ
 #define BIG_FONTSIZE		64								//フォントサイズ大
 
 #define FONT_KIND			2								//フォントの種類

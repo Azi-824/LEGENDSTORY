@@ -132,12 +132,13 @@ void UI::DrawCommand()
 }
 
 //ステータスウィンドウの設定
-void UI::SetStateWindow(int hp,int mp)
+void UI::SetStateWindow(int level ,int hp,int mp)
 {
 	std::vector<int> set;
+	set.push_back(level);	//レベル取得
 	set.push_back(hp);//HP取得
 	set.push_back(mp);//MP取得
-	this->StateWindow->SetText(set);	//HP.MPを設定
+	this->StateWindow->SetText(set);	//Level、HP、MPを設定
 	return;
 }
 

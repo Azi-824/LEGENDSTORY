@@ -42,7 +42,7 @@ public:
 	void BattleInit();										//バトルコマンドで使用する要素を初期化する
 
 	//ステータスウィンドウ関連
-	void SetStateWindow(int,int);	//ステータスウィンドウの設定をする
+	void SetStateWindow(int,int,int);	//ステータスウィンドウの設定をする
 	void DrawStateWindow();			//ステータスウィンドウ描画
 
 	void DrawWindow();				//ウィンドウを描画する

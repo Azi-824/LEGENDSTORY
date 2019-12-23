@@ -5,6 +5,7 @@
 
 //######################### ヘッダファイル読み込み ###########################
 #include "DxLib.h"
+#include "FONT.hpp" 
 #include <vector>
 #include <string>
 

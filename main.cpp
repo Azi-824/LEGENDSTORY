@@ -120,7 +120,7 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 	player->SetInit();	//初期設定
 
 	ui = new UI();		//UI作成
-	ui->SetStateWindow(player->GetHP(),player->GetMP());	//描画ステータス設定
+	ui->SetStateWindow(player->GetLevel(),player->GetHP(),player->GetMP());	//描画ステータス設定
 
 	//敵関係
 	enemy[SLIME] = new ENEMY(ENEMY_DIR, ENEMY_NAME_SLIME);	//スライム作成
@@ -484,7 +484,7 @@ void Battle()
 			{
 				player->SetHP((player->GetMaxHP()) - (player->GetRecvDamege()));		//味方にダメージを与える
 
-				ui->SetStateWindow(player->GetHP(),player->GetMP());	//描画ステータス更新
+				ui->SetStateWindow(player->GetLevel(),player->GetHP(),player->GetMP());	//描画ステータス更新
 
 				BattleStageNow = (int)DRAW_DAMEGE;		//ダメージ描画状態へ
 
