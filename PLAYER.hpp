@@ -14,7 +14,8 @@
 #include "STATEWINDOW.hpp"
 #include "EFFECT.hpp"
 
-//################# マクロ定義: ファイルパス、名前 #######################
+//################# マクロ定義 #######################
+#define EXP_INCREASE_VALUE 5		//経験値の最大値の増え幅
 
 //################# 列挙型 ######################
 enum COMMANDTYPE
@@ -139,5 +140,7 @@ public:
 	void MoveRight();			//右へ移動
 
 	void DamegeCalc(ENEMY *);			//ダメージ計算
+
+	void AddExp(int);			//経験値追加処理
 
 };

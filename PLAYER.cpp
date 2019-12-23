@@ -497,3 +497,22 @@ void PLAYER::DamegeCalc(ENEMY *enemy)
 
 	return;
 }
+
+//経験値追加処理
+void PLAYER::AddExp(int exp)
+{
+	this->NowEXP += exp;	//現在の経験値に加算する
+
+	if (this->NowEXP >= this->MaxEXP)		//現在の経験値が経験値の最大値以上になったら
+	{
+		int work = 0;	//退避用変数
+		work = this->MaxEXP - this->NowEXP;	//最大値を超過した分を保管
+
+		this->MaxEXP += EXP_INCREASE_VALUE;	//経験値の最大値を増やす
+		this->NowEXP = 0;		//現在の経験値を0に戻す
+		this->NowEXP += work;	//超過した分の経験値を加算する
+
+		this->Level++;			//レベルを一つ上げる
+	}
+	return;
+}

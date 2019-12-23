@@ -120,7 +120,6 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 	player->SetInit();	//初期設定
 
 	ui = new UI();		//UI作成
-	ui->SetStateWindow(player->GetLevel(),player->GetHP(),player->GetMP());	//描画ステータス設定
 
 	//敵関係
 	enemy[SLIME] = new ENEMY(ENEMY_DIR, ENEMY_NAME_SLIME);	//スライム作成
@@ -393,6 +392,7 @@ void Battle()
 			case (int)ESCAPE:		//逃げるを選んだ時
 
 				BattleStageNow = (int)ACT_MSG;	//メッセージ描画状態
+				
 				break;
 
 			default:
@@ -439,14 +439,11 @@ void Battle()
 				if (ui->GetChoiseCommamd() == (int)ESCAPE)		//逃げるを選んだら
 				{
 					SceneChenge(GameSceneNow, (int)GAME_SCENE_PLAY);	//次の画面はプレイ画面
-					BattleActMsgCnt = 0;	//カウントリセット
-					BattleStageNow = (int)WAIT_ACT;	//味方の行動選択待ち状態にする
 				}
 
 			}
 
 			BattleStageNow = (int)DRAW_EFFECT;			//エフェクト描画状態へ
-			BattleActMsgCnt = 0;	//カウントリセット
 
 		}
 
@@ -482,7 +479,7 @@ void Battle()
 
 			if (effect->GetIsDrawEnd())		//エフェクト描画終了したら
 			{
-				player->SetHP((player->GetMaxHP()) - (player->GetRecvDamege()));		//味方にダメージを与える
+				player->SetHP((player->GetHP()) - (player->GetRecvDamege()));		//味方にダメージを与える
 
 				ui->SetStateWindow(player->GetLevel(),player->GetHP(),player->GetMP());	//描画ステータス更新
 
@@ -533,6 +530,8 @@ void Battle()
 				enemy[EncounteEnemyType]->SetIsArive(false);		//敵死亡
 
 				player->SetIsBattleWin(true);		//戦闘に勝利
+
+				player->AddExp(enemy[EncounteEnemyType]->GetEXP());	//経験値加算
 
 				BattleStageNow = (int)RESULT_MSG;		//リザルトメッセージ表示状態へ
 			}
@@ -677,6 +676,8 @@ void Init()
 {
 	ChengeDrawCount = 0;		//フェードイン用初期化
 
+	ui->SetStateWindow(player->GetLevel(), player->GetHP(), player->GetMP());	//描画ステータス更新
+
 	if (GameSceneBefor == (int)GAME_SCENE_BATTLE)	//戦闘画面から遷移した場合
 	{
 		enemy[EncounteEnemyType]->StateSetInit();		//遭遇した敵初期化
@@ -684,6 +685,8 @@ void Init()
 		ui->BattleInit();			//バトルコマンド初期化
 
 		EncounteEnemyType = 0;		//遭遇した敵の種類をリセット
+
+		BattleStageNow = (int)WAIT_ACT;	//バトル状態を、行動待ち状態へ
 
 		Turn = (int)MY_TURN;		//ターンを味方のターンに設定
 	}
