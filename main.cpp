@@ -367,7 +367,7 @@ void Battle()
 			{
 			case (int)ATACK:					//攻撃を選んだ時
 
-				player->SetChoiseSkil(0);			//使用するスキルを通常攻撃に設定する
+				//player->SetChoiseSkil(0);			//使用するスキルを通常攻撃に設定する
 				BattleStageNow = (int)DAMEGE_CALC;	//バトル状態をダメージ計算状態へ
 
 				break;
@@ -443,18 +443,12 @@ void Battle()
 					BattleActMsgCnt = 0;	//カウントリセット
 					BattleStageNow = (int)WAIT_ACT;	//味方の行動選択待ち状態にする
 				}
-				else				//それ以外なら
-				{
-					BattleStageNow = (int)DRAW_EFFECT;			//エフェクト描画状態へ
-					BattleActMsgCnt = 0;	//カウントリセット
-				}
 
 			}
-			else if (Turn == (int)ENEMY_TURN)		//敵のターンだったら
-			{
-				BattleStageNow = (int)DRAW_EFFECT;			//エフェクト描画状態へ
-				BattleActMsgCnt = 0;	//カウントリセット
-			}
+
+			BattleStageNow = (int)DRAW_EFFECT;			//エフェクト描画状態へ
+			BattleActMsgCnt = 0;	//カウントリセット
+
 		}
 
 		break;						//行動メッセージ表示状態ここまで
@@ -465,7 +459,7 @@ void Battle()
 		{
 			if (ui->GetChoiseCommamd() == (int)ATACK)	//攻撃を選んでいたら
 			{
-				effect->Draw(350, 250, player->GetChoiseSkil());	//攻撃エフェクト描画
+				effect->Draw(350, 250, (int)NOMAL_ATACK);	//攻撃エフェクト描画
 			}
 			else if (ui->GetChoiseCommamd() == (int)MAGIC)	//魔法を選んでいたら
 			{
@@ -493,8 +487,6 @@ void Battle()
 
 				ui->SetStateWindow(player->GetHP(),player->GetMP());	//描画ステータス更新
 
-				ui->BattleInit();				//バトルコマンドリセット
-
 				BattleStageNow = (int)DRAW_DAMEGE;		//ダメージ描画状態へ
 
 			}
@@ -510,14 +502,21 @@ void Battle()
 		{
 			if (Turn == (int)MY_TURN)			//味方のターンの時
 			{
-				effect->ResetIsAnime(player->GetChoiseSkil());		//エフェクトリセット
-				BattleStageNow = (int)WAIT_ACT;		//行動選択状態へ
+				if (ui->GetChoiseCommamd() == (int)ATACK)	//攻撃を選んだ時は
+				{
+					effect->ResetIsAnime((int)NOMAL_ATACK);		//エフェクトリセット
+				}
+				else							//攻撃以外を選んだ時は
+				{
+					effect->ResetIsAnime(player->GetChoiseSkil());		//エフェクトリセット
+				}
+
 				Turn = (int)ENEMY_TURN;				//敵のターンへ
+
 			}
 			else if (Turn == (int)ENEMY_TURN)			//敵のターンの時
 			{
 				effect->ResetIsAnime(enemy[EncounteEnemyType]->GetSkil());		//エフェクトリセット
-				BattleStageNow = (int)WAIT_ACT;		//行動選択待ち状態へ
 				Turn = (int)MY_TURN;				//味方のターンへ
 
 			}
@@ -530,8 +529,7 @@ void Battle()
 
 				BattleStageNow = (int)RESULT_MSG;		//リザルトメッセージ表示状態へ
 			}
-
-			if (enemy[EncounteEnemyType]->GetHP() <= 0)				//敵のHPが0になったら
+			else if (enemy[EncounteEnemyType]->GetHP() <= 0)				//敵のHPが0になったら
 			{
 				enemy[EncounteEnemyType]->SetIsArive(false);		//敵死亡
 
@@ -539,6 +537,12 @@ void Battle()
 
 				BattleStageNow = (int)RESULT_MSG;		//リザルトメッセージ表示状態へ
 			}
+			else
+			{
+				BattleStageNow = (int)WAIT_ACT;		//行動選択状態へ
+			}
+
+			ui->BattleInit();				//バトルコマンドリセット
 
 		}
 
