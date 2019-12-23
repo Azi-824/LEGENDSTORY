@@ -80,6 +80,7 @@ public:
 	void SetATK(int);		//攻撃力設定
 	void SetDEF(int);		//防御力設定
 	void SetSPD(int);		//速度設定
+	void SetSkil(int);		//スキル一覧を設定
 	void SetChoiseSkil(int);//使用するスキル設定
 
 	void SetMoveSpeed(int);	//移動速度設定

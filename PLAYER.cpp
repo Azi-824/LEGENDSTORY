@@ -9,8 +9,8 @@
 //コンストラクタ
 PLAYER::PLAYER()
 {
-	this->Skil.push_back(NOMAL_ATACK);	//通常攻撃のスキル
-	this->Skil.push_back(MAGIC_2);		//魔法2のスキル
+	//this->Skil.push_back(NOMAL_ATACK);	//通常攻撃のスキル
+	//this->Skil.push_back(MAGIC_2);		//魔法2のスキル
 	return;
 }
 
@@ -31,14 +31,14 @@ PLAYER::~PLAYER()
 //初期設定
 bool PLAYER::SetInit()
 {
-	this->Level = 1;		//初期レベル設定
-	this->MaxHP = 100;		//初期最大HP設定
-	this->NowHP = this->MaxHP;//初期現在のHP設定
-	this->MaxMP = 100;			//初期最大MP設定
-	this->NowMP = this->MaxMP;		//初期MP設定
-	this->ATK = 10;		//初期攻撃力設定
-	this->DEF = 10;		//初期防御力設定
-	this->SPD = 10;		//初期速度設定
+	//this->Level = 1;		//初期レベル設定
+	//this->MaxHP = 100;		//初期最大HP設定
+	//this->NowHP = this->MaxHP;//初期現在のHP設定
+	//this->MaxMP = 100;			//初期最大MP設定
+	//this->NowMP = this->MaxMP;		//初期MP設定
+	//this->ATK = 10;		//初期攻撃力設定
+	//this->DEF = 10;		//初期防御力設定
+	//this->SPD = 10;		//初期速度設定
 	this->Dist = FLONT;	//初期向き設定
 	this->MoveSpeed = 5;//初期移動速度設定
 
@@ -112,7 +112,7 @@ void PLAYER::SetMaxHP(int hp)
 //現在のHP設定
 void PLAYER::SetHP(int hp)
 {
-	this->NowHP -= hp;
+	this->NowHP = hp;
 	return;
 }
 
@@ -126,7 +126,7 @@ void PLAYER::SetMaxMP(int maxmp)
 //現在のMP設定
 void PLAYER::SetMP(int mp)
 {
-	this->NowMP -= mp;
+	this->NowMP = mp;
 }
 
 //攻撃力設定
@@ -147,6 +147,13 @@ void PLAYER::SetDEF(int def)
 void PLAYER::SetSPD(int spd)
 {
 	this->SPD = spd;
+	return;
+}
+
+//スキル一覧を設定
+void PLAYER::SetSkil(int skil)
+{
+	this->Skil.push_back(skil);
 	return;
 }
 

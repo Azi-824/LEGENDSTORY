@@ -115,8 +115,9 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 	player = new PLAYER();
 	if (player->SetImage(MY_IMG_DIR_CHARCTOR, MY_IMG_NAME_PLAYER) == false) { return -1; }	//読み込み失敗
 	if (player->SetAnime(MY_ANIME_DIR_PLAYER, MY_ANIME_NAME_PLAYER, PLAYER_ALL_CNT, PLAYER_YOKO_CNT, PLAYER_TATE_CNT, PLAYER_WIDTH, PLAYER_HEIGHT, PLAYER_ANI_SPEED, true) == false) { return -1; } //読み込み失敗
+	data->Input(player, PLAYER_DATA_DIR, PLAYER_DATA_NAME2);	//プレイヤーのデータをcsvファイルから読み込み
 	player->SetInit();	//初期設定
-	player->SetName("アアア");	//名前設定
+	//player->SetName("アアア");	//名前設定
 
 	ui = new UI();		//UI作成
 	ui->SetStateWindow(player->GetHP(),player->GetMP());	//描画ステータス設定
@@ -488,7 +489,7 @@ void Battle()
 
 			if (effect->GetIsDrawEnd())		//エフェクト描画終了したら
 			{
-				player->SetHP(player->GetRecvDamege());		//味方にダメージを与える
+				player->SetHP((player->GetMaxHP()) - (player->GetRecvDamege()));		//味方にダメージを与える
 
 				ui->SetStateWindow(player->GetHP(),player->GetMP());	//描画ステータス更新
 
