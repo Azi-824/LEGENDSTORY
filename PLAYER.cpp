@@ -34,7 +34,8 @@ bool PLAYER::SetInit()
 	this->Level = 1;		//‰ŠúƒŒƒxƒ‹Ý’è
 	this->MaxHP = 100;		//‰ŠúÅ‘åHPÝ’è
 	this->NowHP = this->MaxHP;//‰ŠúŒ»Ý‚ÌHPÝ’è
-	this->MP = 100;		//‰ŠúMPÝ’è
+	this->MaxMP = 100;			//‰ŠúÅ‘åMPÝ’è
+	this->NowMP = this->MaxMP;		//‰ŠúMPÝ’è
 	this->ATK = 10;		//‰ŠúUŒ‚—ÍÝ’è
 	this->DEF = 10;		//‰Šú–hŒä—ÍÝ’è
 	this->SPD = 10;		//‰Šú‘¬“xÝ’è
@@ -115,10 +116,17 @@ void PLAYER::SetHP(int hp)
 	return;
 }
 
-//MPÝ’è
+//Å‘åMPÝ’è
+void PLAYER::SetMaxMP(int maxmp)
+{
+	this->MaxMP = maxmp;
+	return;
+}
+
+//Œ»Ý‚ÌMPÝ’è
 void PLAYER::SetMP(int mp)
 {
-	this->MP += mp;
+	this->NowMP -= mp;
 }
 
 //UŒ‚—ÍÝ’è
@@ -234,10 +242,16 @@ int PLAYER::GetHP(void)
 	return this->NowHP;
 }
 
-//MPŽæ“¾
+//Å‘åMPŽæ“¾
+int PLAYER::GetMaxMP(void)
+{
+	return this->MaxMP;
+}
+
+//Œ»Ý‚ÌMPŽæ“¾
 int PLAYER::GetMP(void)
 {
-	return this->MP;
+	return this->NowMP;
 }
 
 //UŒ‚—ÍŽæ“¾

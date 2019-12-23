@@ -40,7 +40,8 @@ private:
 	int Level;				//ƒŒƒxƒ‹
 	int MaxHP;				//HP‚ÌÅ‘å’l
 	int NowHP;				//Œ»İ‚ÌHP
-	int MP;					//MP
+	int MaxMP;				//MP‚ÌÅ‘å’l
+	int NowMP;				//MP
 	int ATK;				//UŒ‚—Í
 	int DEF;				//–hŒä—Í
 	int SPD;				//‘¬“x
@@ -74,6 +75,7 @@ public:
 	void SetLevel(int);		//ƒŒƒxƒ‹İ’è
 	void SetMaxHP(int);		//Å‘å‘Ì—Íİ’è
 	void SetHP(int);		//Œ»İ‚Ì‘Ì—Íİ’è
+	void SetMaxMP(int);		//Å‘åMPİ’è
 	void SetMP(int);		//MPİ’è
 	void SetATK(int);		//UŒ‚—Íİ’è
 	void SetDEF(int);		//–hŒä—Íİ’è
@@ -94,6 +96,7 @@ public:
 	int GetLevel();			//ƒŒƒxƒ‹æ“¾
 	int GetMaxHP();			//Å‘å‘Ì—Íæ“¾
 	int GetHP();			//Œ»İ‚Ì‘Ì—Íæ“¾
+	int GetMaxMP();			//Å‘åMPæ“¾
 	int GetMP();			//MPæ“¾
 	int GetATK();			//UŒ‚—Íæ“¾
 	int GetDEF();			//–hŒä—Íæ“¾

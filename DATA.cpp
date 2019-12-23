@@ -55,7 +55,7 @@ DATA::~DATA()
 	return;
 }
 
-//インプット
+//インプット(味方のデータ)
 void DATA::Input(PLAYER *data,const char *dir,const char *name)
 {
 	return;
