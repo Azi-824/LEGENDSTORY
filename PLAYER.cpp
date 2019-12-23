@@ -42,6 +42,7 @@ bool PLAYER::SetInit()
 	this->IsMenu = false;	//メニューウィンドウ描画されていない
 	this->IsActMsg = false;		//行動メッセージ表示していない
 	this->IsBattleWin = false;	//戦闘に勝っていない
+	this->LevUpMsgStart_flg = false;	//レベルアップメッセージを表示していない
 
 	this->Collision = new COLLISION();		//当たり判定の領域を作成
 	this->Collision->SetValue(GAME_LEFT, GAME_TOP, this->Anime->GetWidth(),this->Anime->GetHeight());	//当たり判定の領域を設定
@@ -229,6 +230,13 @@ void PLAYER::SetIsBattleWin(bool isbattlewin)
 	return;
 }
 
+//レベルアップメッセージをスタートしたか取得
+void PLAYER::SetLevUpMsgStartFlg(bool start_flg)
+{
+	this->LevUpMsgStart_flg = start_flg;
+	return;
+}
+
 //名前取得
 const char * PLAYER::GetName(void)
 {
@@ -359,6 +367,12 @@ bool PLAYER::GetIsMove()
 bool PLAYER::GetIsBattleWin()
 {
 	return this->IsBattleWin;
+}
+
+//レベルアップメッセージを表示しているか取得
+bool PLAYER::GetLevUpMsgStartFlg()
+{
+	return this->LevUpMsgStart_flg;
 }
 
 //操作
@@ -524,6 +538,7 @@ void PLAYER::AddExp(int exp)
 		this->NowMP = this->MaxMP;
 
 		this->Level++;			//レベルを一つ上げる
+		this->LevUpMsgStart_flg = true;	//レベルアップメッセージの表示をスタートする
 	}
 	return;
 }

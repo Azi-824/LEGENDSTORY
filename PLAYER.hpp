@@ -72,6 +72,8 @@ private:
 	bool IsMenu;			//メニューウィンドウが描画されているか
 	bool IsActMsg;			//行動メッセージ表示中か
 	bool IsBattleWin;		//戦闘に勝ったか
+	bool LevUpMsgStart_flg;	//レベルアップメッセージスタートフラグ
+	//bool LevUpMsgEnd_flg;	//レベルアップメッセージ終了フラグ
 
 
 public:
@@ -106,6 +108,7 @@ public:
 	void SetPosition(int, int);	//位置を設定
 	void SetIsMenu(bool);		//メニュー描画中か設定
 	void SetIsBattleWin(bool);	//戦闘に勝ったか設定
+	void SetLevUpMsgStartFlg(bool);	//レベルアップメッセージスタートのフラグを設定
 
 
 	//ステータス関係
@@ -134,7 +137,7 @@ public:
 	bool GetIsActMsg();			//行動メッセージ表示中か取得
 	bool GetIsMove();			//移動中かどうか取得
 	bool GetIsBattleWin();		//戦闘に勝ったか取得
-
+	bool GetLevUpMsgStartFlg();	//レベルアップスタートメッセージフラグを取得
 
 	void DrawAnime();			//描画
 
