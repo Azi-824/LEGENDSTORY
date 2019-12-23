@@ -112,12 +112,12 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 	if (effect->Add(MY_ANIME_DIR_MAGIC, MY_ANIME_NAME_MAGIC2, MAGIC2_ALL_CNT, MAGIC2_YOKO_CNT, MAGIC2_TATE_CNT, MAGIC_WIDTH, MAGIC_HEIGHT, MAGIC_SPEED, false, (int)MAGIC_2) == false) { return -1; }	//読み込み失敗
 	
 	//プレイヤー関係
-	player = new PLAYER();
+	player = new PLAYER();		//プレイヤー生成
 	if (player->SetImage(MY_IMG_DIR_CHARCTOR, MY_IMG_NAME_PLAYER) == false) { return -1; }	//読み込み失敗
 	if (player->SetAnime(MY_ANIME_DIR_PLAYER, MY_ANIME_NAME_PLAYER, PLAYER_ALL_CNT, PLAYER_YOKO_CNT, PLAYER_TATE_CNT, PLAYER_WIDTH, PLAYER_HEIGHT, PLAYER_ANI_SPEED, true) == false) { return -1; } //読み込み失敗
+	
 	data->Input(player, PLAYER_DATA_DIR, PLAYER_DATA_NAME2);	//プレイヤーのデータをcsvファイルから読み込み
 	player->SetInit();	//初期設定
-	//player->SetName("アアア");	//名前設定
 
 	ui = new UI();		//UI作成
 	ui->SetStateWindow(player->GetHP(),player->GetMP());	//描画ステータス設定
