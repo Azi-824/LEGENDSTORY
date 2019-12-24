@@ -116,6 +116,7 @@ public:
 	const char *GetName();	//名前取得
 
 	int GetLevel();			//レベル取得
+	int GetMaxEXP();		//経験値の最大値取得
 	int GetEXP();			//現在の経験値取得
 
 	int GetMaxHP();			//最大体力取得

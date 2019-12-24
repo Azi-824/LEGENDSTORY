@@ -254,6 +254,12 @@ int PLAYER::GetLevel(void)
 	return this->Level;
 }
 
+//経験値の最大値取得
+int PLAYER::GetMaxEXP(void)
+{
+	return this->MaxEXP;
+}
+
 //現在の経験値取得
 int PLAYER::GetEXP(void)
 {
@@ -525,7 +531,7 @@ void PLAYER::AddExp(int exp)
 	if (this->NowEXP >= this->MaxEXP)		//現在の経験値が経験値の最大値以上になったら
 	{
 		int work = 0;	//退避用変数
-		work = this->MaxEXP - this->NowEXP;	//最大値を超過した分を保管
+		work = this->NowEXP - this->MaxEXP;	//最大値を超過した分を保管
 
 		this->MaxEXP += EXP_INCREASE_VALUE;	//経験値の最大値を増やす
 		this->NowEXP = 0;		//現在の経験値を0に戻す

@@ -19,9 +19,7 @@
 #define ENEMY_DATA_DIR	R"(.\MY_DATA\Enemy\)"	//敵のデータのファイル名
 
 #define DATA_NAME	R"(msg.txt)"			//メッセージテキストの名前
-#define PLAYER_DATA_NAME	R"(player.txt)"	//プレイヤーのデータの名前
-
-#define PLAYER_DATA_NAME2	R"(Player_Data.csv)"//プレイヤーのデータのcsvファイル
+#define PLAYER_DATA_NAME	R"(Player_Data.csv)"//プレイヤーのデータのcsvファイル
 #define ENEMY_DATA_NAME		R"(Enemy_Data.csv)"	//敵のデータの名前
 
 //############## マクロ定義：エラーメッセージ ###################

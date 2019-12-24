@@ -165,7 +165,7 @@ void DATA::Save(PLAYER *player ,const char *dir,const char *name)
 	LoadFile += dir;
 	LoadFile += name;
 	
-	std::ofstream ofs(LoadFile.c_str());	//ファイルオープン
+	std::ofstream ofs(LoadFile.c_str(),std::ios_base::ate);	//ファイルオープン
 
 	if (!ofs)		//ファイルオープン失敗時
 	{
@@ -183,8 +183,22 @@ void DATA::Save(PLAYER *player ,const char *dir,const char *name)
 
 	}
 
-	//ofs << data << std::endl;		//アウトプット
-	ofs << player->GetHP() << std::endl;
+	ofs << std::endl;		//1行目を飛ばす
+
+	//プレイヤー情報を書き出す
+	ofs << player->GetName() << ',';		//名前書き出し
+	ofs << player->GetLevel() << ',';		//レベル
+	ofs << player->GetMaxEXP() << ',';		//経験値の最大値
+	ofs << player->GetEXP() << ',';			//現在の経験値
+
+	ofs << player->GetMaxHP() << ',';		//最大HP
+	ofs << player->GetHP() << ',';			//現在のHP
+	ofs << player->GetMaxMP() << ',';		//最大MP
+	ofs << player->GetMP() << ',' ;			//現在のMP
+
+	ofs << player->GetATK() << ',';		//攻撃力
+	ofs << player->GetDEF() << ',';		//防御力
+	ofs << player->GetSPD() << std::endl;		//速さ
 
 	return;
 }
