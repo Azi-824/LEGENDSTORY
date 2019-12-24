@@ -328,6 +328,7 @@ void Title()
 void Play()
 {
 	player->Operation(keydown);	//プレイヤーキー操作
+
 	Play_Draw();		//描画処理
 
 	if (player->GetIsMenu() == true && keydown->IsKeyDownOne(KEY_INPUT_Q))		//メニュー描画中でQキーを押された瞬間
@@ -826,9 +827,13 @@ void Enconte()
 	if (rand%battleRate == 0)			//敵と遭遇した時
 	{
 
+		player->SetIsKeyDown(false);			//プレイヤーの動きを止める
+
 		EncounteEnemyType = GetRand(ENEMY_KIND - 1);	//ランダムに敵の種類を決定
 
 		SceneChenge(GameSceneNow, (int)GAME_SCENE_BATTLE);	//次の画面は戦闘画面
+
+
 	}
 
 	return;

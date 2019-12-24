@@ -105,6 +105,7 @@ public:
 	void SetIsArive(bool);	//生きているかを設定
 	void SetIsDraw(bool);	//描画してよいかを設定
 	void SetKeyOperation(bool); //キーボードで操作できるか設定
+	void SetIsKeyDown(bool);	//キー入力ありか設定
 	void SetPosition(int, int);	//位置を設定
 	void SetIsMenu(bool);		//メニュー描画中か設定
 	void SetIsBattleWin(bool);	//戦闘に勝ったか設定

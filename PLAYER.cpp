@@ -190,6 +190,11 @@ void PLAYER::SetKeyOperation(bool Iskeyoperation)
 	return;
 }
 
+//ƒL[“ü—Í‚ ‚è‚©İ’è
+void PLAYER::SetIsKeyDown(bool Iskeydown)
+{
+	this->IsKeyDown = Iskeydown;
+}
 
 //•`‰æ‚Å‚«‚é‚©İ’è
 void PLAYER::SetIsDraw(bool Isdraw)

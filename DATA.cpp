@@ -159,7 +159,7 @@ void DATA::Load(ENEMY *enemy[],const char *dir,const char *name)
 }
 
 //セーブ
-void DATA::Save(PLAYER *data ,const char *dir,const char *name)
+void DATA::Save(PLAYER *player ,const char *dir,const char *name)
 {
 	std::string LoadFile;
 	LoadFile += dir;
@@ -184,7 +184,7 @@ void DATA::Save(PLAYER *data ,const char *dir,const char *name)
 	}
 
 	//ofs << data << std::endl;		//アウトプット
-	ofs << data->GetHP() << std::endl;
+	ofs << player->GetHP() << std::endl;
 
 	return;
 }
