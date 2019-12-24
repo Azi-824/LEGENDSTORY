@@ -9,13 +9,15 @@
 //コンストラクタ
 //引　数：const char *：画像のディレクトリ
 //引　数：const char *：画像の名前
-MUSIC::MUSIC(const char *dir, const char *name)
+//引　数：int：音素材の種類数
+MUSIC::MUSIC(const char *dir, const char *name,int kind)
 {
 	//メンバ変数を初期化
 	this->FilePath = "";	//パス
 	this->FileName = "";	//名前
 
-	this->Handle = -1;		//ハンドル
+	this->Handle.resize(kind);		//サイズ変更
+	this->IsPlay.resize(kind);		//サイズ変更
 
 	this->IsLoad = false;	//読み込めたか？
 
@@ -24,9 +26,9 @@ MUSIC::MUSIC(const char *dir, const char *name)
 	LoadfilePath += dir;
 	LoadfilePath += name;
 
-	this->Handle = LoadSoundMem(LoadfilePath.c_str());	//音の読み込み
+	this->Handle[0] = LoadSoundMem(LoadfilePath.c_str());	//音の読み込み
 
-	if (this->Handle == -1)	//音が読み込めなかったとき
+	if (this->Handle[0] == -1)	//音が読み込めなかったとき
 	{
 		std::string ErroeMsg(MUSIC_ERROR_MSG);	//エラーメッセージ作成
 		ErroeMsg += TEXT('\n');					//改行
@@ -55,7 +57,23 @@ MUSIC::MUSIC(const char *dir, const char *name)
 //デストラクタ
 MUSIC::~MUSIC()
 {
-	DeleteMusicMem(this->Handle);	//音のハンドルの削除
+
+	//範囲ベースの for ループ
+	//vectorなどのコンテナクラスで使用できる
+	//auto：型推論：コンパイラが初期値から推論して型を決めてくれる
+	for (int handle : this->Handle)
+	{
+		DeleteMusicMem(handle);		//音のハンドルの削除
+	}
+
+	//vectorのメモリ解放を行う
+	std::vector<int> v;			//空のvectorを作成する
+	this->Handle.swap(v);		//空と中身を入れ替える
+
+	//vectorのメモリ解放を行う
+	std::vector<bool> v2;		//空のvectorを作成する
+	this->IsPlay.swap(v2);		//空と中身を入れ替える
+
 	return;
 }
 
@@ -67,17 +85,17 @@ bool MUSIC::GetIsLoad()
 
 //音が再生されているか取得
 //戻り値：再生中：true　再生中じゃない：false
-bool MUSIC::GetIsPlay()
+bool MUSIC::GetIsPlay(int kind)
 {
-	if (CheckSoundMem(this->Handle) == 1)	//再生中なら
+	if (CheckSoundMem(this->Handle[kind]) == 1)	//再生中なら
 	{
-		this->IsPlay = true;	//再生中
+		this->IsPlay[kind] = true;	//再生中
 	}
 	else									//再生中じゃなければ
 	{
-		this->IsPlay = false;	//再生中じゃない
+		this->IsPlay[kind] = false;	//再生中じゃない
 	}
-	return this->IsPlay;
+	return this->IsPlay[kind];
 }
 
 //再生方法を変更する
@@ -88,15 +106,45 @@ void MUSIC::ChengePlayType(int type)
 }
 
 //音量を変更する
-void MUSIC::ChengeVolume(int volume)
+void MUSIC::ChengeVolume(int volume,int kind)
 {
-	ChangeVolumeSoundMem(volume, this->Handle);
+	ChangeVolumeSoundMem(volume, this->Handle[kind]);
 	return;
 }
 
 //音を再生する
-void MUSIC::Play()
+void MUSIC::Play(int kind)
 {
-	PlaySoundMem(this->Handle, this->PlayType);	//音の再生
+	PlaySoundMem(this->Handle[kind], this->PlayType);	//音の再生
 	return;
+}
+
+//音を追加する
+bool MUSIC::Add(const char *dir, const char *name, int kind)
+{
+
+	//音を読み込み
+	std::string LoadfilePath;	//音のファイルパスを作成
+	LoadfilePath += dir;
+	LoadfilePath += name;
+
+	this->Handle[kind] = LoadSoundMem(LoadfilePath.c_str());	//音の読み込み
+
+	if (this->Handle[kind] == -1)	//音が読み込めなかったとき
+	{
+		std::string ErroeMsg(MUSIC_ERROR_MSG);	//エラーメッセージ作成
+		ErroeMsg += TEXT('\n');					//改行
+		ErroeMsg += LoadfilePath;				//音のパス
+
+		MessageBox(
+			NULL,
+			ErroeMsg.c_str(),	//char * を返す
+			TEXT(MUSIC_ERROR_TITLE),
+			MB_OK);
+
+		return false;	//読み込み失敗
+	}
+
+	return true;		//読み込み成功
+
 }

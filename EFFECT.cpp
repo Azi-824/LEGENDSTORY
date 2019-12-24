@@ -174,8 +174,6 @@ void EFFECT::Draw(int x, int y,int type)
 
 	if (flg)		//フェードアウトが終了していたら
 	{
-		//if (this->IsAnimeStop[type] == false)		//アニメーション描画が終了していなければ
-		//{
 			if (this->IsAnimeStop[type] == false)	//アニメーションをストップさせないなら
 			{
 				DrawGraph(x, y, *this->Handle_itr, TRUE);	//イテレータ(ポインタ)を使用して描画
@@ -212,14 +210,6 @@ void EFFECT::Draw(int x, int y,int type)
 			{
 				this->ChangeCnt++;	//カウントアップ
 			}
-
-		//} 
-		//else				//アニメーションが終わっていたら
-		//{
-		//	//this->IsDrawEnd = true;		//描画終了
-		//	//flg = false;	//フェードアウトフラグリセット
-		//	//cnt = 0;		//フェードアウトカウントリセット
-		//}
 
 	}
 	else

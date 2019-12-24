@@ -31,6 +31,7 @@ IMAGE *back;						//背景画像
 IMAGE *back_battle;					//戦闘画面の背景画像
 
 MUSIC *bgm;							//BGM
+MUSIC *se;							//SE
 
 EFFECT *effect;						//エフェクト
 
@@ -95,7 +96,7 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 	back_battle->AddImage(MY_IMG_DIR_BATTLE, MY_IMG_NAME_BATTLE_NIGHT);		//戦闘画面（夜）の背景画像の読み込み
 	if (back_battle->GetIsLoad() == false) { return -1; }					//読み込み失敗
 
-	bgm = new MUSIC(MY_MUSIC_DIR_BGM, MY_MUSIC_NAME_BGM);			//BGMを生成
+	bgm = new MUSIC(MY_MUSIC_DIR_BGM, MY_MUSIC_NAME_BGM,BGM_KIND);			//BGMを生成
 	if (bgm->GetIsLoad() == false) { return -1; }					//読み込み失敗時
 
 	font = new FONT(MY_FONT_DIR, MY_FONT_NAME2, FONT_NAME2);			//フォントを生成
@@ -282,10 +283,10 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 void Title()
 {
 	//▼▼▼▼▼▼▼▼▼▼▼▼▼▼ 音の再生処理ここから ▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼
-	if (bgm->GetIsPlay() == false)	//再生中じゃないとき
+	if (bgm->GetIsPlay((int)TITLE_BGM) == false)	//再生中じゃないとき
 	{
-		bgm->ChengeVolume(255 * 50 / 100);	//BGMの音量を50%に変更
-		bgm->Play();				//BGMを再生
+		bgm->ChengeVolume(255 * 50 / 100, (int)TITLE_BGM);	//BGMの音量を50%に変更
+		bgm->Play((int)TITLE_BGM);				//BGMを再生
 	}
 	//▲▲▲▲▲▲▲▲▲▲▲▲▲▲ 音の再生処理ここまで ▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲
 
