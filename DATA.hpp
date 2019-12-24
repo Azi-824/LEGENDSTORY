@@ -43,9 +43,9 @@ public:
 
 	~DATA();								//デストラクタ
 
-	void Input(PLAYER *,const char *, const char *);		//インプット（味方データ）
-	void Input(ENEMY *[],const char *, const char *);			//インプット（敵データ）
-	void Output(PLAYER *,const char *,const char *);		//アウトプット
+	void Load(PLAYER *,const char *, const char *);		//インプット（味方データ）
+	void Load(ENEMY *[],const char *, const char *);			//インプット（敵データ）
+	void Save(PLAYER *,const char *,const char *);		//アウトプット
 
 	void Draw(int, int);					//描画
 

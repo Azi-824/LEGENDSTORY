@@ -56,7 +56,7 @@ DATA::~DATA()
 }
 
 //インプット(味方のデータ)
-void DATA::Input(PLAYER *player,const char *dir,const char *name)
+void DATA::Load(PLAYER *player,const char *dir,const char *name)
 {
 
 	std::string LoadFile;
@@ -129,7 +129,7 @@ void DATA::Input(PLAYER *player,const char *dir,const char *name)
 }
 
 //インプット（敵データ）
-void DATA::Input(ENEMY *enemy[],const char *dir,const char *name)
+void DATA::Load(ENEMY *enemy[],const char *dir,const char *name)
 {
 	std::string LoadFile;
 	LoadFile += dir;
@@ -192,7 +192,7 @@ void DATA::Input(ENEMY *enemy[],const char *dir,const char *name)
 }
 
 //アウトプット
-void DATA::Output(PLAYER *data ,const char *dir,const char *name)
+void DATA::Save(PLAYER *data ,const char *dir,const char *name)
 {
 	std::string LoadFile;
 	LoadFile += dir;

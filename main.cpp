@@ -121,7 +121,7 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 	if (player->SetImage(MY_IMG_DIR_CHARCTOR, MY_IMG_NAME_PLAYER) == false) { return -1; }	//読み込み失敗
 	if (player->SetAnime(MY_ANIME_DIR_PLAYER, MY_ANIME_NAME_PLAYER, PLAYER_ALL_CNT, PLAYER_YOKO_CNT, PLAYER_TATE_CNT, PLAYER_WIDTH, PLAYER_HEIGHT, PLAYER_ANI_SPEED, true) == false) { return -1; } //読み込み失敗
 	
-	data->Input(player, PLAYER_DATA_DIR, PLAYER_DATA_NAME2);	//プレイヤーのデータをcsvファイルから読み込み
+	data->Load(player, PLAYER_DATA_DIR, PLAYER_DATA_NAME2);	//プレイヤーのデータをcsvファイルから読み込み
 	player->SetInit();	//初期設定
 
 	ui = new UI();		//UI作成
@@ -133,7 +133,7 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 	enemy[YADOKARI]=new ENEMY(ENEMY_DIR, ENEMY_NAME_YADOKARI);	//ヤドカリ作成
 	if (enemy[YADOKARI]->GetIsLoad() == false) { return -1; }	//読み込み失敗
 
-	data->Input(enemy, ENEMY_DATA_DIR, ENEMY_DATA_NAME);		//敵のデータをcsvファイルから読み込み
+	data->Load(enemy, ENEMY_DATA_DIR, ENEMY_DATA_NAME);		//敵のデータをcsvファイルから読み込み
 	enemy[SLIME]->StateSetInit();		//初期ステータス設定
 	enemy[YADOKARI]->StateSetInit();	//初期ステータス設定
 
@@ -246,7 +246,7 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 		fps->Wait();				//FPSの処理[待つ]
 	}
 
-	data->Output(player, PLAYER_DATA_DIR, PLAYER_DATA_NAME);
+	data->Save(player, PLAYER_DATA_DIR, PLAYER_DATA_NAME);
 
 	delete title;			//titleを破棄
 	delete fps;				//FPSを破棄
