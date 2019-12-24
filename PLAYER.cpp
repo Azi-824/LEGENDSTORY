@@ -539,7 +539,7 @@ void PLAYER::AddExp(int exp)
 		int work = 0;	//退避用変数
 		work = this->NowEXP - this->MaxEXP;	//最大値を超過した分を保管
 
-		this->MaxEXP += EXP_INCREASE_VALUE;	//経験値の最大値を増やす
+		this->MaxEXP += EXP_INCREASE_VALUE * this->Level;	//経験値の最大値を増やす(経験値の増え幅 * 現在のレベル)
 		this->NowEXP = 0;		//現在の経験値を0に戻す
 		this->NowEXP += work;	//超過した分の経験値を加算する
 

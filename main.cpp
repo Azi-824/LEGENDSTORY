@@ -562,6 +562,9 @@ void Battle()
 				se->Play((int)LEVELUP_SE);		//レベルアップのSEを鳴らす
 				se->SetIsPlayEnd(true);			//再生終了
 			}
+
+			ui->SetStateWindow(player->GetLevel(), player->GetHP(), player->GetMP());	//描画ステータス更新
+
 		}
 
 		if (msg->GetIsResultMsgEnd())		//リザルトメッセージの表示が終了していたら

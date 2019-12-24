@@ -213,5 +213,9 @@ void DATA::Save(PLAYER *player ,const char *dir,const char *name)
 		}
 	}
 
+	//vector‚Ìƒƒ‚ƒŠ‰ğ•ú‚ğs‚¤
+	std::vector<int> v;			//‹ó‚Ìvector‚ğì¬‚·‚é
+	skil.swap(v);				//‹ó‚Æ’†g‚ğ“ü‚ê‘Ö‚¦‚é
+
 	return;
 }
