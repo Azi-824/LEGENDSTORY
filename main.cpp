@@ -761,6 +761,7 @@ void Play_Draw()
 	}
 
 	player->DrawAnime();		//アニメーション描画
+
 	ui->MenuOperation(keydown, player->GetIsMenu());	//メニュー画面操作
 
 	return;

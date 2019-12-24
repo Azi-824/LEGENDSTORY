@@ -86,3 +86,9 @@ void MENU::Back()
 	}
 	return;
 }
+
+//‘I‘ğ‚µ‚½€–Ú‚ğæ“¾
+std::vector<std::string>::iterator MENU::GetChoiseMenu()
+{
+	return this->Menu_itr;
+}

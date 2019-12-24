@@ -39,6 +39,6 @@ public:
 
 	void Back();	//選択要素を前へ移動
 
-
+	std::vector<std::string>::iterator GetChoiseMenu();	//選択した項目を取得
 
 };
