@@ -33,20 +33,14 @@ class DATA
 {
 private:
 
-	std::string Text;		//文字データ
-
-	std::vector<int> Data;
-
 public:
 
-	DATA(const char *, const char *);		//コンストラクタ
+	DATA();		//コンストラクタ
 
 	~DATA();								//デストラクタ
 
-	void Load(PLAYER *,const char *, const char *);		//インプット（味方データ）
-	void Load(ENEMY *[],const char *, const char *);			//インプット（敵データ）
-	void Save(PLAYER *,const char *,const char *);		//アウトプット
-
-	void Draw(int, int);					//描画
+	void Load(PLAYER *,const char *, const char *);		//読み込み（味方データ）
+	void Load(ENEMY *[],const char *, const char *);	//読み込み（敵データ）
+	void Save(PLAYER *,const char *,const char *);		//セーブ
 
 };

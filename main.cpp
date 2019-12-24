@@ -107,7 +107,7 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 	if (font->GetIsLoad() == false) { return -1; }					//読み込み失敗時
 
 	text = new TEXTSTR();	//テキスト作成
-	data = new DATA(DATA_DIR, DATA_NAME);
+	data = new DATA();
 	msg = new MESSAGE();		//メッセージ
 
 	//エフェクト関係
