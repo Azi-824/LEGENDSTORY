@@ -314,6 +314,12 @@ int PLAYER::GetChoiseSkil(void)
 	return this->ChoiseSkil;	
 }
 
+//スキル一覧の先頭要素取得
+std::vector<int> PLAYER::GetSkil(void)
+{
+	return this->Skil;
+}
+
 //移動速度取得
 int PLAYER::GetMoveSpeed(void)
 {

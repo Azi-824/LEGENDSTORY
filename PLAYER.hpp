@@ -73,7 +73,6 @@ private:
 	bool IsActMsg;			//行動メッセージ表示中か
 	bool IsBattleWin;		//戦闘に勝ったか
 	bool LevUpMsgStart_flg;	//レベルアップメッセージスタートフラグ
-	//bool LevUpMsgEnd_flg;	//レベルアップメッセージ終了フラグ
 
 
 public:
@@ -127,6 +126,7 @@ public:
 	int GetDEF();			//防御力取得
 	int GetSPD();			//速度取得
 	int GetChoiseSkil();	//使用するスキル取得
+	std::vector<int> GetSkil();		//スキル一覧の先頭要素取得
 
 	int GetMoveSpeed();		//移動速度取得
 	bool GetIsArive();		//生きているか取得
