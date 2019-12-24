@@ -50,6 +50,8 @@ MUSIC::MUSIC(const char *dir, const char *name,int kind)
 
 	this->IsLoad = true;				//“Ç‚Ýž‚Ý¬Œ÷
 
+	this->IsPlayEnd = false;			//Ä¶I—¹‚µ‚Ä‚¢‚È‚¢
+
 	return;
 
 }
@@ -147,4 +149,17 @@ bool MUSIC::Add(const char *dir, const char *name, int kind)
 
 	return true;		//“Ç‚Ýž‚Ý¬Œ÷
 
+}
+
+//Ä¶I—¹‚µ‚½‚©Ý’è
+void MUSIC::SetIsPlayEnd(bool isend)
+{
+	this->IsPlayEnd = isend;
+	return;
+}
+
+//Ä¶I—¹‚µ‚½‚©Žæ“¾
+bool MUSIC::GetIsPlayEnd(void)
+{
+	return this->IsPlayEnd;
 }

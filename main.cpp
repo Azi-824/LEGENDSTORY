@@ -96,8 +96,12 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 	back_battle->AddImage(MY_IMG_DIR_BATTLE, MY_IMG_NAME_BATTLE_NIGHT);		//戦闘画面（夜）の背景画像の読み込み
 	if (back_battle->GetIsLoad() == false) { return -1; }					//読み込み失敗
 
+	//音関係
 	bgm = new MUSIC(MY_MUSIC_DIR_BGM, MY_MUSIC_NAME_BGM,BGM_KIND);			//BGMを生成
 	if (bgm->GetIsLoad() == false) { return -1; }					//読み込み失敗時
+	se = new MUSIC(MY_MUSIC_DIR_SE, MY_SE_NAME_LEVUP, SE_KIND);			//SEを生成
+	if (se->GetIsLoad() == false) { return -1; }						//読み込み失敗時
+	se->ChengePlayType(DX_PLAYTYPE_BACK);								//再生方法変更
 
 	font = new FONT(MY_FONT_DIR, MY_FONT_NAME2, FONT_NAME2);			//フォントを生成
 	if (font->GetIsLoad() == false) { return -1; }					//読み込み失敗時
@@ -250,6 +254,7 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 	delete font;			//fontを破棄
 	delete text;			//textを破棄
 	delete bgm;				//bgmを破棄
+	delete se;				//seを破棄
 	delete player;			//playerを破棄
 	delete back;			//backを破棄
 	delete back_battle;		//back_battleを破棄
@@ -549,6 +554,15 @@ void Battle()
 
 	case (int)RESULT_MSG:		//戦闘終了後のメッセージを描画する状態
 
+		if (msg->GetDrawMsgKind()==(int)LEVELUP_MSG && se->GetIsPlayEnd()==false)	//レベルアップしたときは
+		{
+			if (se->GetIsPlay((int)LEVELUP_SE) == false)		//再生中じゃなければ
+			{
+				se->Play((int)LEVELUP_SE);		//レベルアップのSEを鳴らす
+				se->SetIsPlayEnd(true);			//再生終了
+			}
+		}
+
 		if (msg->GetIsResultMsgEnd())		//リザルトメッセージの表示が終了していたら
 		{
 			if (player->GetIsBattleWin())		//戦闘に勝利していたら
@@ -677,6 +691,8 @@ void Init()
 	ChengeDrawCount = 0;		//フェードイン用初期化
 
 	ui->SetStateWindow(player->GetLevel(), player->GetHP(), player->GetMP());	//描画ステータス更新
+
+	se->SetIsPlayEnd(false);	//SEの再生状態リセット
 
 	if (GameSceneBefor == (int)GAME_SCENE_BATTLE)	//戦闘画面から遷移した場合
 	{

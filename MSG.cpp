@@ -175,3 +175,9 @@ bool MESSAGE::GetIsResultMsgEnd(void)
 {
 	return this->IsResultMsgEnd;
 }
+
+//どのメッセージを描画している状態か取得
+int MESSAGE::GetDrawMsgKind(void)
+{
+	return this->ResultMsgStep;
+}

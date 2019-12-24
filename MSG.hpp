@@ -52,5 +52,6 @@ public:
 	void ResetResultMsg();				//リザルトメッセージ関係のメンバーをリセット
 
 	bool GetIsResultMsgEnd(void);		//リザルトメッセージの表示が終了したか取得
+	int GetDrawMsgKind(void);			//どのメッセージを描画している状態か取得
 
 };

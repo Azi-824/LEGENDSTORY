@@ -47,6 +47,7 @@ private:
 
 	bool IsLoad;				//“Ç‚İ‚ß‚½‚©
 	std::vector<bool> IsPlay;	//Ä¶’†‚©
+	bool IsPlayEnd;				//Ä¶I—¹‚µ‚½‚©
 
 public:
 
@@ -64,5 +65,9 @@ public:
 	void Play(int);							//‰¹‚ğÄ¶‚·‚é
 
 	bool Add(const char*, const char*, int);	//‰¹‚ğ’Ç‰Á‚·‚é
+
+	void SetIsPlayEnd(bool);				//Ä¶I—¹‚µ‚½‚©İ’è
+
+	bool GetIsPlayEnd(void);				//Ä¶I—¹‚µ‚½‚©æ“¾
 
 };
