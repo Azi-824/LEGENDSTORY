@@ -55,6 +55,7 @@ private:
 	int EXP;	//経験値
 
 	int EmergenceMap;	//出現するMAPのNo
+	int EncounteRate;	//遭遇率
 
 	std::vector<int> Skil;	//スキル
 
@@ -78,6 +79,7 @@ public:
 	void SetEXP(int);		//経験値設定
 
 	void SetEmergenceMap(int);	//出現MAPNoの設定
+	void SetEncounteRate(int);	//遭遇率設定
 
 	void StateSetInit();	//敵ステータス初期設定
 
@@ -90,6 +92,7 @@ public:
 	int GetEXP();			//経験値取得
 	
 	int GetEmergenceMap();	//出現MAPNoの所得
+	int GetEncounteRate();	//遭遇率の取得
 
 	bool GetIsLoad();		//読み込めたかを取得
 

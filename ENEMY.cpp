@@ -21,6 +21,7 @@ ENEMY::ENEMY(const char *dir,const char *name)
 	this->SetIsArive(true);	//生きている
 
 	this->EmergenceMap = 0;	//出現MAP
+	this->EncounteRate = 0;	//遭遇率
 
 	this->EneType = 0;	//敵の種類
 
@@ -116,6 +117,13 @@ void ENEMY::SetEmergenceMap(int mapno)
 	return;
 }
 
+//遭遇率の設定
+void ENEMY::SetEncounteRate(int encounterate)
+{
+	this->EncounteRate = encounterate;
+	return;
+}
+
 //敵ステータス初期設定
 void ENEMY::StateSetInit()
 {
@@ -167,6 +175,12 @@ int ENEMY::GetEXP(void)
 int ENEMY::GetEmergenceMap(void)
 {
 	return this->EmergenceMap;
+}
+
+//遭遇率の取得
+int ENEMY::GetEncounteRate(void)
+{
+	return this->EncounteRate;
 }
 
 //読み込めたかを取得

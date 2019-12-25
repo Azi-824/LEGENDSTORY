@@ -883,24 +883,27 @@ void End_Draw()
 //敵との遭遇処理
 void Enconte()
 {
-	int battleRate;	//敵との遭遇率
-	
-	battleRate = 100;	//100回に1回遭遇する
 
-	//ランダムで遭遇判定
-	int rand = GetRand(battleRate);		//遭遇率の範囲内で乱数を生成
-
-	if (rand%battleRate == 0)			//敵と遭遇した時
+	for (int i = 0; i < ENEMY_KIND; ++i)		//敵の分だけループする
 	{
+		if (enemy[i]->GetEmergenceMap() == MapKind[MAPPOS_Y][MAPPOS_X])		//敵の出現MAPが現在のMAPだったら
+		{
+			//ランダムで遭遇判定
+			int rand = GetRand(enemy[i]->GetEncounteRate());		//遭遇率の範囲内で乱数を生成
 
-		player->SetIsKeyDown(false);			//プレイヤーの動きを止める
+			if (rand%enemy[i]->GetEncounteRate() == 0)			//敵と遭遇した時
+			{
 
-		EncounteEnemyType = GetRand(ENEMY_KIND - 1);	//ランダムに敵の種類を決定
+				player->SetIsKeyDown(false);			//プレイヤーの動きを止める
 
-		SceneChenge(GameSceneNow, (int)GAME_SCENE_BATTLE);	//次の画面は戦闘画面
+				EncounteEnemyType = i;		//遭遇した敵を設定
 
+				SceneChenge(GameSceneNow, (int)GAME_SCENE_BATTLE);	//次の画面は戦闘画面
 
+			}
+		}
 	}
+
 
 	return;
 
