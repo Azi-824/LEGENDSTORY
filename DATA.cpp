@@ -146,8 +146,11 @@ bool DATA::LoadEnemy(ENEMY *enemy[],const char *dir,const char *name)
 			std::getline(ifs, buf, ',');	//カンマまで読み込み
 			enemy[i]->SetSkil(atoi(buf.c_str()));	//Skil1読み込み
 
-			std::getline(ifs, buf, '\n');	//最後は改行まで読み込み
+			std::getline(ifs, buf, ',');	//カンマまで読み込み
 			enemy[i]->SetSkil(atoi(buf.c_str()));	//Skil2読み込み
+
+			std::getline(ifs, buf, '\n');	//最後は改行まで読み込み
+			enemy[i]->SetEmergenceMap(atoi(buf.c_str()));	//出現MAP読み込み
 
 		}
 

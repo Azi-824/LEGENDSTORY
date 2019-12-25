@@ -20,6 +20,8 @@ ENEMY::ENEMY(const char *dir,const char *name)
 	this->IsLoad = false;	
 	this->SetIsArive(true);	//生きている
 
+	this->EmergenceMap = 0;	//出現MAP
+
 	this->EneType = 0;	//敵の種類
 
 	//画像設定
@@ -107,6 +109,13 @@ void ENEMY::SetEXP(int exp)
 	return;
 }
 
+//出現MAPの設定
+void ENEMY::SetEmergenceMap(int mapno)
+{
+	this->EmergenceMap = mapno;
+	return;
+}
+
 //敵ステータス初期設定
 void ENEMY::StateSetInit()
 {
@@ -152,6 +161,12 @@ int ENEMY::GetSPD(void)
 int ENEMY::GetEXP(void)
 {
 	return this->EXP;
+}
+
+//出現MAPの取得
+int ENEMY::GetEmergenceMap(void)
+{
+	return this->EmergenceMap;
 }
 
 //読み込めたかを取得

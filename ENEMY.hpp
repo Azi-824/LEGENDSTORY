@@ -54,6 +54,8 @@ private:
 	
 	int EXP;	//経験値
 
+	int EmergenceMap;	//出現するMAPのNo
+
 	std::vector<int> Skil;	//スキル
 
 	int EneType;	//敵の種類
@@ -75,6 +77,8 @@ public:
 	void SetSkil(int);		//スキル設定
 	void SetEXP(int);		//経験値設定
 
+	void SetEmergenceMap(int);	//出現MAPNoの設定
+
 	void StateSetInit();	//敵ステータス初期設定
 
 	const char * GetName();			//名前取得
@@ -84,6 +88,8 @@ public:
 	int GetSPD();			//速度取得
 	int GetSkil();			//使用するスキルの種類を取得
 	int GetEXP();			//経験値取得
+	
+	int GetEmergenceMap();	//出現MAPNoの所得
 
 	bool GetIsLoad();		//読み込めたかを取得
 

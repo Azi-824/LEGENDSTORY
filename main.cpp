@@ -388,7 +388,6 @@ void Play()
 				DrawString(400, 300, "セーブ中です。", GetColor(255, 255, 255));	//文字描画
 			}
 
-
 			break;						//セーブを選んだ時の処理ここまで
 
 		default:
