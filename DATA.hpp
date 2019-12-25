@@ -37,8 +37,8 @@ public:
 
 	~DATA();								//デストラクタ
 
-	void Load(PLAYER *,const char *, const char *);		//読み込み（味方データ）
-	void Load(ENEMY *[],const char *, const char *);	//読み込み（敵データ）
-	void Save(PLAYER *,const char *,const char *);		//セーブ
+	bool LoadPlayer(PLAYER *,const char *, const char *);		//読み込み（味方データ）
+	bool LoadEnemy(ENEMY *[],const char *, const char *);		//読み込み（敵データ）
+	bool Save(PLAYER *,const char *,const char *);		//セーブ
 
 };

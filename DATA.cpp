@@ -23,7 +23,7 @@ DATA::~DATA()
 }
 
 //読み込み(味方のデータ)
-void DATA::Load(PLAYER *player,const char *dir,const char *name)
+bool DATA::LoadPlayer(PLAYER *player,const char *dir,const char *name)
 {
 
 	std::string LoadFile;
@@ -44,7 +44,7 @@ void DATA::Load(PLAYER *player,const char *dir,const char *name)
 			TEXT(DATA_ERROR_TTILE),
 			MB_OK);
 
-		return;
+		return false;	//読み込み失敗
 
 	}
 
@@ -90,11 +90,11 @@ void DATA::Load(PLAYER *player,const char *dir,const char *name)
 	std::getline(ifs, buf, '\n');	//最後は改行まで読み込み
 	player->SetSkil(atoi(buf.c_str()));	//Skil2読み込み
 
-	return;
+	return true;	//読み込み成功
 }
 
 //読み込み（敵データ）
-void DATA::Load(ENEMY *enemy[],const char *dir,const char *name)
+bool DATA::LoadEnemy(ENEMY *enemy[],const char *dir,const char *name)
 {
 	std::string LoadFile;
 	LoadFile += dir;
@@ -114,7 +114,7 @@ void DATA::Load(ENEMY *enemy[],const char *dir,const char *name)
 			TEXT(DATA_ERROR_TTILE),
 			MB_OK);
 
-		return;
+		return false;	//読み込み失敗
 
 	}
 
@@ -151,13 +151,12 @@ void DATA::Load(ENEMY *enemy[],const char *dir,const char *name)
 
 		}
 
-	return;
-
+		return true;	//読み込み成功
 
 }
 
 //セーブ
-void DATA::Save(PLAYER *player ,const char *dir,const char *name)
+bool DATA::Save(PLAYER *player ,const char *dir,const char *name)
 {
 	std::string LoadFile;
 	LoadFile += dir;
@@ -177,7 +176,7 @@ void DATA::Save(PLAYER *player ,const char *dir,const char *name)
 			TEXT(DATA_ERROR_TTILE),
 			MB_OK);
 
-		return;
+		return false;		//セーブ失敗
 
 	}
 
@@ -217,5 +216,5 @@ void DATA::Save(PLAYER *player ,const char *dir,const char *name)
 	std::vector<int> v;			//空のvectorを作成する
 	skil.swap(v);				//空と中身を入れ替える
 
-	return;
+	return true;		//セーブ成功
 }
