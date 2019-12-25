@@ -46,6 +46,14 @@ void UI::MenuOperation(KEYDOWN *keydown,bool ismenu)
 			this->menuwindow->Next();	//次の要素へ
 		}
 		this->DrawMenu();	//メニューウィンドウ描画
+
+		//コマンド決定処理
+		if (keydown->IsKeyDownOne(KEY_INPUT_RETURN))		//エンターキーが押された瞬間
+		{
+			auto itr = this->menuwindow->GetChoiseMenu();	//メニュー画面の選択内容を取得
+			this->SetChoiseMenu(itr);						//選択内容を設定
+		}
+
 	}
 	return;
 }
@@ -61,8 +69,27 @@ void UI::DrawMenu()
 void UI::SetChoiseMenu(std::vector<std::string>::iterator itr)
 {
 
-	//if(itr == (int)MENU_STATUS)
-
+	if (*itr == "ステータス")		//ステータスを選んだ場合
+	{
+		this->ChoiseMenu = (int)MENU_STATUS;	//ステータス
+		return;
+	}
+	else if (*itr == "アイテム")	//アイテムを選んだ場合
+	{
+		this->ChoiseMenu = (int)MENU_ITEM;		//アイテム
+		return;
+	}
+	else if (*itr == "装備")			//装備を選んだ場合
+	{
+		this->ChoiseMenu = (int)MENU_SOUBI;		//装備
+		return;
+	}
+	else if (*itr == "セーブ")			//セーブを選んだ場合
+	{
+		this->ChoiseMenu = (int)MENU_SAVE;		//セーブ
+		return;
+	}
+		
 	return;
 }
 

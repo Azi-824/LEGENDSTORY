@@ -246,8 +246,6 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 		fps->Wait();				//FPSの処理[待つ]
 	}
 
-	data->Save(player, PLAYER_DATA_DIR, PLAYER_DATA_NAME);		//プレイヤー情報のセーブ
-
 	delete title;			//titleを破棄
 	delete fps;				//FPSを破棄
 	delete keydown;			//keydownを破棄
@@ -339,6 +337,38 @@ void Play()
 	{
 		player->SetIsMenu(true);		//メニュー描画開始
 	}
+
+	//▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼ メニュー毎の処理ここから ▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼
+	if (player->GetIsMenu())			//メニュー描画中だったら
+	{
+		switch (ui->GetChoiseMenu())		//メニュー画面での選択内容ごとに処理を分ける
+		{
+
+		case (int)MENU_STATUS:			//ステータスを選んだ時の処理ここから
+
+			break;						//ステータスを選んだときの処理ここまで
+
+		case (int)MENU_ITEM:			//アイテムを選んだ時の処理ここから
+
+			break;						//アイテムを選んだ時の処理ここまで
+
+		case (int)MENU_SOUBI:			//装備を選んだ時の処理ここから
+
+			break;						//装備を選んだ時の処理ここまで
+
+		case (int)MENU_SAVE:			//セーブを選んだ時の処理ここから
+
+			data->Save(player, PLAYER_DATA_DIR, PLAYER_DATA_NAME);		//プレイヤー情報のセーブ
+
+			break;						//セーブを選んだ時の処理ここまで
+
+		default:
+			break;
+		}
+	}
+	//▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲ メニュー毎の処理ここまで ▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲
+
+
 
 	//▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼ 画面遷移の処理 ▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼
 
