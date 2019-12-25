@@ -352,6 +352,7 @@ void Play()
 	if (player->GetIsMenu() == true && keydown->IsKeyDownOne(KEY_INPUT_Q))		//メニュー描画中でQキーを押された瞬間
 	{
 		player->SetIsMenu(false);		//メニュー描画終了
+		ui->ResetMenu();	//メニュー関係のリセット
 	}
 	else if (keydown->IsKeyDownOne(KEY_INPUT_Q))		//Qキーを押された瞬間
 	{

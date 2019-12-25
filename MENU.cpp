@@ -87,6 +87,13 @@ void MENU::Back()
 	return;
 }
 
+//選択要素をリセット
+void MENU::Reset()
+{
+	this->Menu_itr = this->Menu.begin();
+	return;
+}
+
 //選択した項目を取得
 std::vector<std::string>::iterator MENU::GetChoiseMenu()
 {

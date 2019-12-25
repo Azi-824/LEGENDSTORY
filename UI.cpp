@@ -99,6 +99,13 @@ int UI::GetChoiseMenu()
 	return this->ChoiseMenu;
 }
 
+//メニュー関係のメンバーをリセット
+void UI::ResetMenu()
+{
+	this->ChoiseMenu = -1;		//選択内容をリセット
+	this->menuwindow->Reset();	//選択内容リセット
+}
+
 //バトルコマンドで使用する要素を初期化する
 void UI::BattleInit()
 {

@@ -37,6 +37,7 @@ public:
 	void DrawMenu();				//メニューウィンドウ描画
 	void SetChoiseMenu(std::vector<std::string>::iterator);	//メニューで選んだ内容を設定する
 	int GetChoiseMenu();				//メニュー画面での選択内容を取得
+	void ResetMenu();					//メニュー関係のメンバーをリセット
 
 	//バトルコマンド関連
 	void SetBattleFlg(std::vector<std::string>::iterator);	//戦闘画面で選んだコマンドのフラグを設定する
