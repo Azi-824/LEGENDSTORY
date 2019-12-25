@@ -50,6 +50,8 @@ public:
 	void SetStateWindow(int,int,int);	//ステータスウィンドウの設定をする
 	void DrawStateWindow();			//ステータスウィンドウ描画
 
+	
+
 	void DrawWindow();				//ウィンドウを描画する
 
 };

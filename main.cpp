@@ -352,7 +352,6 @@ void Play()
 	if (player->GetIsMenu() == true && keydown->IsKeyDownOne(KEY_INPUT_Q))		//メニュー描画中でQキーを押された瞬間
 	{
 		player->SetIsMenu(false);		//メニュー描画終了
-		ui->ResetMenu();	//メニュー関係のリセット
 	}
 	else if (keydown->IsKeyDownOne(KEY_INPUT_Q))		//Qキーを押された瞬間
 	{
@@ -379,13 +378,26 @@ void Play()
 
 		case (int)MENU_SAVE:			//セーブを選んだ時の処理ここから
 
-			data->Save(player, PLAYER_DATA_DIR, PLAYER_DATA_NAME);		//プレイヤー情報のセーブ
+			if (Wait())			//待ち時間が過ぎたら
+			{
+				data->Save(player, PLAYER_DATA_DIR, PLAYER_DATA_NAME);		//プレイヤー情報のセーブ
+				player->SetIsMenu(false);		//メニュー描画終了
+			}
+			else				//待ち時間の間は
+			{
+				DrawString(400, 300, "セーブ中です。", GetColor(255, 255, 255));	//文字描画
+			}
+
 
 			break;						//セーブを選んだ時の処理ここまで
 
 		default:
 			break;
 		}
+	}
+	else			//メニュー描画終了してたら
+	{
+		ui->ResetMenu();	//メニュー関係のリセット
 	}
 	//▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲ メニュー毎の処理ここまで ▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲
 
