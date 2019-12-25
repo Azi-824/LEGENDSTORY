@@ -17,6 +17,8 @@ UI::UI()
 
 	this->BattleCommadType = -1;			//選択したバトルコマンドの種類を初期化
 
+	this->ChoiseMenu = -1;					//メニュー画面での選択内容を初期化
+
 	return;
 }
 
@@ -53,6 +55,21 @@ void UI::DrawMenu()
 {
 	this->menuwindow->Draw();	//メニュー描画
 	return;
+}
+
+//メニューで選んだ内容を設定
+void UI::SetChoiseMenu(std::vector<std::string>::iterator itr)
+{
+
+	//if(itr == (int)MENU_STATUS)
+
+	return;
+}
+
+//メニュー画面での選択内容を取得
+int UI::GetChoiseMenu()
+{
+	return this->ChoiseMenu;
 }
 
 //バトルコマンドで使用する要素を初期化する

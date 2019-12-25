@@ -24,6 +24,8 @@ private:
 
 	int BattleCommadType;			//選択したバトルコマンドの種類
 
+	int ChoiseMenu;					//メニュー画面で選択した内容
+
 public:
 
 	UI();					//コンストラクタ
@@ -33,6 +35,8 @@ public:
 	//メニューウィンドウ関連
 	void MenuOperation(KEYDOWN *,bool);	//メニューウィンドウのキーボード操作
 	void DrawMenu();				//メニューウィンドウ描画
+	void SetChoiseMenu(std::vector<std::string>::iterator);	//メニューで選んだ内容を設定する
+	int GetChoiseMenu();				//メニュー画面での選択内容を取得
 
 	//バトルコマンド関連
 	void SetBattleFlg(std::vector<std::string>::iterator);	//戦闘画面で選んだコマンドのフラグを設定する
