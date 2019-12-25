@@ -128,16 +128,34 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 	ui = new UI();		//UI作成
 
 	//敵関係
-	enemy[SLIME] = new ENEMY(ENEMY_DIR, ENEMY_NAME_SLIME);	//スライム作成
-	if (enemy[SLIME]->GetIsLoad() == false) { return -1; }	//読み込み失敗
+	enemy[(int)SLIME] = new ENEMY(ENEMY_DIR, ENEMY_NAME_SLIME);	//スライム作成
+	if (enemy[(int)SLIME]->GetIsLoad() == false) { return -1; }	//読み込み失敗
 
-	enemy[YADOKARI]=new ENEMY(ENEMY_DIR, ENEMY_NAME_YADOKARI);	//ヤドカリ作成
-	if (enemy[YADOKARI]->GetIsLoad() == false) { return -1; }	//読み込み失敗
+	enemy[(int)YADOKARI]=new ENEMY(ENEMY_DIR, ENEMY_NAME_YADOKARI);	//ヤドカリ作成
+	if (enemy[(int)YADOKARI]->GetIsLoad() == false) { return -1; }	//読み込み失敗
+
+	enemy[(int)BAT] = new ENEMY(ENEMY_DIR, ENEMY_NAME_BAT);	//こうもり作成
+	if (enemy[(int)BAT]->GetIsLoad() == false) { return -1; }	//読み込み失敗
+
+	enemy[(int)FARAO] = new ENEMY(ENEMY_DIR, ENEMY_NAME_FARAO);	//ファラオ作成
+	if (enemy[(int)FARAO]->GetIsLoad() == false) { return -1; }	//読み込み失敗
+
+	enemy[(int)GOBURIN] = new ENEMY(ENEMY_DIR, ENEMY_NAME_GOBURIN);	//ゴブリン作成
+	if (enemy[(int)GOBURIN]->GetIsLoad() == false) { return -1; }	//読み込み失敗
+
+	enemy[(int)AKUMA] = new ENEMY(ENEMY_DIR, ENEMY_NAME_AKUMA);	//デーモン作成
+	if (enemy[(int)AKUMA]->GetIsLoad() == false) { return -1; }	//読み込み失敗
+
+	enemy[(int)HARPY] = new ENEMY(ENEMY_DIR, ENEMY_NAME_HARPY);	//ハーピー作成
+	if (enemy[(int)HARPY]->GetIsLoad() == false) { return -1; }	//読み込み失敗
 
 	//敵のデータをcsvファイルから読み込み
 	if (data->LoadEnemy(enemy, ENEMY_DATA_DIR, ENEMY_DATA_NAME) == false) { return -1; }		//読み込み失敗
-	enemy[SLIME]->StateSetInit();		//初期ステータス設定
-	enemy[YADOKARI]->StateSetInit();	//初期ステータス設定
+	//初期設定
+	for (int i = 0; i < ENEMY_KIND; ++i)		//敵の数だけ初期設定
+	{
+		enemy[i]->StateSetInit();		//初期設定
+	}
 
 	//マップ関係
 	mapimage = new MAPIMAGE();	//マップチップ生成

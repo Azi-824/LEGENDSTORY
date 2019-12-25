@@ -16,17 +16,27 @@
 
 #define ENEMY_NAME_SLIME	R"(sraim.png)"			//スライムの画像の名前
 #define ENEMY_NAME_YADOKARI	R"(yadokari.png)"		//ヤドカリの画像の名前
+#define ENEMY_NAME_BAT		R"(bat.png)"			//こうもりの画像の名前
+#define ENEMY_NAME_FARAO	R"(farao.png)"			//ファラオの画像の名前
+#define ENEMY_NAME_GOBURIN	R"(goburin.png)"		//ゴブリンの画像の名前
+#define ENEMY_NAME_AKUMA	R"(akuma.png)"			//悪魔の画像の名前
+#define ENEMY_NAME_HARPY	R"(harpy.png)"			//ハーピーの画像の名前
 
 //############## マクロ定義：エラーメッセージ ###################
 
 //############## マクロ定義 ###################
-#define ENEMY_KIND 2			//敵の種類
+#define ENEMY_KIND 7			//敵の種類
 
 //############## 列挙型 ########################
 enum ENEMY_TYPE
 {
 	SLIME,				//スライム
-	YADOKARI			//ヤドカリ
+	YADOKARI,			//ヤドカリ
+	BAT,				//こうもり
+	FARAO,				//ファラオ
+	GOBURIN,			//ゴブリン
+	AKUMA,				//悪魔
+	HARPY,				//ハーピー
 };
 
 //############## クラス定義 #####################
