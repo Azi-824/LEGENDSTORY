@@ -60,8 +60,32 @@ void UI::MenuOperation(KEYDOWN *keydown,bool ismenu)
 //メニューウィンドウ描画
 void UI::DrawMenu(int x,int y)
 {
-	this->DrawWindow(x + MENU_WINDOW_RELATIVE_X, y + MENU_WINDOW_RELATIVE_Y, MENU_WINDOW_WIDTH, MENU_WINDOW_HEIGHT);	//ウィンドウ描画
-	this->menuwindow->Draw(x + MENU_WINDOW_RELATIVE_X, y + MENU_WINDOW_RELATIVE_Y);	//メニュー描画
+	//プレイヤーの位置によって描画位置を変える
+	if (x <= MENU_WINDOW_CHENGE_POSX && y >= MENU_WINDOW_CHENGE_POSY)	//左上にいるときは
+	{
+		//プレイヤーの右上にメニューウィンドウを表示
+		this->DrawWindow(x + MENU_WINDOW_RELATIVE_X, y + (-MENU_WINDOW_RELATIVE_Y), MENU_WINDOW_WIDTH, MENU_WINDOW_HEIGHT);	//ウィンドウ描画
+		this->menuwindow->Draw(x + MENU_WINDOW_RELATIVE_X, y + (-MENU_WINDOW_RELATIVE_Y));	//メニュー描画
+	}
+	else if (x <= MENU_WINDOW_CHENGE_POSX && y <= MENU_WINDOW_CHENGE_POSY)	//左側にいるときは
+	{
+		//プレイヤーの右下にメニューウィンドウを表示
+		this->DrawWindow(x + MENU_WINDOW_RELATIVE_X, y + MENU_WINDOW_RELATIVE_Y, MENU_WINDOW_WIDTH, MENU_WINDOW_HEIGHT);	//ウィンドウ描画
+		this->menuwindow->Draw(x + MENU_WINDOW_RELATIVE_X, y + MENU_WINDOW_RELATIVE_Y);	//メニュー描画
+	}
+	else if (x >= MENU_WINDOW_CHENGE_POSX && y <= MENU_WINDOW_CHENGE_POSY)	//上側にいるときは
+	{
+		//プレイヤーの左下にメニューウィンドウを表示
+		this->DrawWindow(x + (-MENU_WINDOW_RELATIVE_X), y + MENU_WINDOW_RELATIVE_Y, MENU_WINDOW_WIDTH, MENU_WINDOW_HEIGHT);	//ウィンドウ描画
+		this->menuwindow->Draw(x + (-MENU_WINDOW_RELATIVE_X), y + MENU_WINDOW_RELATIVE_Y);	//メニュー描画
+	}
+	else			//それ以外の時は
+	{
+		//プレイヤーの左上にメニューウィンドウを表示
+		this->DrawWindow(x + (-MENU_WINDOW_RELATIVE_X), y + (-MENU_WINDOW_RELATIVE_Y), MENU_WINDOW_WIDTH, MENU_WINDOW_HEIGHT);	//ウィンドウ描画
+		this->menuwindow->Draw(x + (-MENU_WINDOW_RELATIVE_X), y + (-MENU_WINDOW_RELATIVE_Y));	//メニュー描画
+	}
+
 	return;
 }
 
