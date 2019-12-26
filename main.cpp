@@ -441,7 +441,7 @@ void Battle()
 
 			case (int)DEFENSE:		//防御を選んだ時
 
-				ui->BattleInit();	//バトルコマンドリセット
+				BattleStageNow = (int)DAMEGE_CALC;	//バトル状態をダメージ計算状態へ
 
 				break;
 
@@ -484,7 +484,7 @@ void Battle()
 
 		if (Turn == (int)MY_TURN)		//味方のターンだったら
 		{
-			player->DamegeCalc(enemy[EncounteEnemyType]);		//ダメージ計算
+			player->DamegeCalc(enemy[EncounteEnemyType],ui->GetChoiseCommamd());		//ダメージ計算
 
 			BattleStageNow = (int)ACT_MSG;	//行動メッセージ表示状態へ
 
@@ -509,7 +509,11 @@ void Battle()
 				{
 					SceneChenge(GameSceneNow, (int)GAME_SCENE_PLAY);	//次の画面はプレイ画面
 				}
+			}
 
+			if (ui->GetChoiseCommamd() == (int)DEFENSE)		//防御を選んだら
+			{
+				effect->SetIsDrawEnd(true);	//描画処理を飛ばすために、描画終了フラグを立てる
 			}
 
 			BattleStageNow = (int)DRAW_EFFECT;			//エフェクト描画状態へ

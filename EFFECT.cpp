@@ -134,6 +134,13 @@ bool EFFECT::GetIsDrawEnd()
 	return this->IsDrawEnd;
 }
 
+//描画終了したか設定
+void EFFECT::SetIsDrawEnd(bool isend)
+{
+	this->IsDrawEnd = isend;
+	return;
+}
+
 //アニメーションがストップしたかをリセット
 void EFFECT::ResetIsAnime(int type)
 {

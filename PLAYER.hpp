@@ -22,6 +22,9 @@
 #define DEF_INCREASE_VALUE	2		//防御力の増え幅
 #define SPD_INCREASE_VALUE	2		//速さの増え幅
 
+#define	DEF_BOOST	1.7				//防御を選んだ時の防御力の強化倍率
+#define ATK_BOOST	2				//攻撃力の強化倍率
+
 
 //################# 列挙型 ######################
 enum COMMANDTYPE
@@ -150,7 +153,7 @@ public:
 	void MoveLeft();			//左へ移動
 	void MoveRight();			//右へ移動
 
-	void DamegeCalc(ENEMY *);			//ダメージ計算
+	void DamegeCalc(ENEMY *,int);			//ダメージ計算
 
 	void AddExp(int);			//経験値追加処理
 

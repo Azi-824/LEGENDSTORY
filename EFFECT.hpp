@@ -88,7 +88,9 @@ public:
 
 	bool GetIsAnimeStop(int);		//アニメーションはストップしたかを取得
 
-	bool GetIsDrawEnd();		//描画終了したか
+	bool GetIsDrawEnd();		//描画終了したか取得
+
+	void SetIsDrawEnd(bool);	//描画終了したか設定
 
 	void ResetIsAnime(int);		//アニメーションがストップしたかをリセット
 
