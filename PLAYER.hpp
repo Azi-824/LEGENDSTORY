@@ -157,4 +157,6 @@ public:
 
 	void AddExp(int);			//ŒoŒ±’l’Ç‰Áˆ—
 
+	void GetNowPos(int *, int *);	//Œ»İ‚ÌˆÊ’u‚ğæ“¾
+
 };

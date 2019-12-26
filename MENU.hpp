@@ -11,10 +11,10 @@
 //######################### マクロ定義 ###########################
 #define MENU_SPACE	30			//文字と文字の間隔
 
-#define MENU_WINDOW_START_X	0	//メッセージウィンドのスタート位置（X）
-#define MENU_WINDOW_START_Y	380	//メッセージウィンドのスタート位置（Y）
-#define MENU_WINDOW_END_X	800	//メッセージウィンドの終了位置（X）
-#define MENU_WINDOW_END_Y	480	//メッセージウィンドの終了位置（Y）
+#define MENU_WINDOW_RELATIVE_X	-100	//メニューウィンドウの相対位置(X)
+#define MENU_WINDOW_RELATIVE_Y	-100	//メニューウィンドウの相対位置(Y)
+#define MENU_WINDOW_WIDTH	100	//メニューウィンドの幅
+#define MENU_WINDOW_HEIGHT	180	//メニューウィンドの高さ
 
 //######################### 列挙型 ###############################
 enum MENU_COMMAND
@@ -47,7 +47,7 @@ public:
 
 	~MENU();		//デストラクタ
 
-	void Draw();	//描画
+	void Draw(int,int);	//描画
 	void DrawChoise(int);	//選んだ内容ごとの描画
 
 	void Next();	//選択要素を次へ移動

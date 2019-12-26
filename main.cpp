@@ -839,6 +839,15 @@ void Play_Draw()
 
 	ui->MenuOperation(keydown, player->GetIsMenu());	//メニュー画面操作
 
+	static int Player_X = 0, Player_Y = 0;	//プレイヤーのX位置とY位置
+
+	player->GetNowPos(&Player_X, &Player_Y);//プレイヤーの現在位置を取得
+
+	if (player->GetIsMenu())	//メニュー描画中なら
+	{
+		ui->DrawMenu(Player_X,Player_Y);	//メニューウィンドウ描画
+	}
+
 	return;
 
 }
@@ -851,7 +860,7 @@ void Battle_Draw()
 
 	enemy[EncounteEnemyType]->Draw();	//敵描画
 
-	ui->DrawWindow(MSG_WINDOW_START_X, MSG_WINDOW_START_Y, MSG_WINDOW_END_X, MSG_WINDOW_END_Y);		//ウィンドウの描画
+	ui->DrawWindow(MSG_WINDOW_START_X, MSG_WINDOW_START_Y, MSG_WINDOW_WIDTH, MSG_WINDOW_HEIGHT);		//ウィンドウの描画
 
 	//メッセージ関係描画
 	msg->DrawBattleMsg(BattleStageNow, Turn, ui->GetChoiseCommamd(), player, enemy[EncounteEnemyType],keydown->IsKeyDownOne(KEY_INPUT_RETURN));

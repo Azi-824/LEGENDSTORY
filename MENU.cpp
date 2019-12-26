@@ -36,8 +36,13 @@ MENU::~MENU()
 }
 
 //•`‰æ
-void MENU::Draw()
+void MENU::Draw(int x,int y)
 {
+
+	//•`‰æˆÊ’uİ’è
+	this->X = x;
+	this->Y = y;
+
 	int cnt = 0;	//•`‰æˆÊ’u—p
 	
 	auto w_itr = this->Menu_itr;	//‘Ş”ğ—p

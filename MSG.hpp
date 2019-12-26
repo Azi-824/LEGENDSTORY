@@ -16,8 +16,8 @@
 
 #define MSG_WINDOW_START_X	0	//メッセージウィンドのスタート位置（X）
 #define MSG_WINDOW_START_Y	380	//メッセージウィンドのスタート位置（Y）
-#define MSG_WINDOW_END_X	800	//メッセージウィンドの終了位置（X）
-#define MSG_WINDOW_END_Y	480	//メッセージウィンドの終了位置（Y）
+#define MSG_WINDOW_WIDTH	800	//メッセージウィンドの幅
+#define MSG_WINDOW_HEIGHT	100	//メッセージウィンドの高さ
 
 #define RESULT_MSG_KIND	3	//リザルト画面のメッセージの種類
 

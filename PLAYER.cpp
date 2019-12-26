@@ -631,3 +631,16 @@ void PLAYER::AddExp(int exp)
 	}
 	return;
 }
+
+//現在の位置を取得
+/*
+引数：int：X位置をセットする
+引数：int：Y位置をセットする
+*/
+
+void PLAYER::GetNowPos(int *x, int *y)
+{
+	*x = this->Collision->Left;	//X位置設定
+	*y = this->Collision->Top;	//Y位置設定
+	return;
+}

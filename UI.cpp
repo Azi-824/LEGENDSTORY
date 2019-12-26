@@ -45,7 +45,6 @@ void UI::MenuOperation(KEYDOWN *keydown,bool ismenu)
 		{
 			this->menuwindow->Next();	//次の要素へ
 		}
-		this->DrawMenu();	//メニューウィンドウ描画
 
 		//コマンド決定処理
 		if (keydown->IsKeyDownOne(KEY_INPUT_RETURN))		//エンターキーが押された瞬間
@@ -59,10 +58,10 @@ void UI::MenuOperation(KEYDOWN *keydown,bool ismenu)
 }
 
 //メニューウィンドウ描画
-void UI::DrawMenu()
+void UI::DrawMenu(int x,int y)
 {
-	this->DrawWindow(100, 100, 200, 280);	//ウィンドウ描画
-	this->menuwindow->Draw();	//メニュー描画
+	this->DrawWindow(x + MENU_WINDOW_RELATIVE_X, y + MENU_WINDOW_RELATIVE_Y, MENU_WINDOW_WIDTH, MENU_WINDOW_HEIGHT);	//ウィンドウ描画
+	this->menuwindow->Draw(x + MENU_WINDOW_RELATIVE_X, y + MENU_WINDOW_RELATIVE_Y);	//メニュー描画
 	return;
 }
 
@@ -208,11 +207,11 @@ void UI::DrawStateWindow()
 }
 
 //ウィンドウを描画する
-void UI::DrawWindow(int left,int top,int right,int bottom)
+void UI::DrawWindow(int x,int y,int width,int height)
 {
 	SetDrawBlendMode(DX_BLENDMODE_ALPHA, 255 * 80 / 100);	//描画モードを透過ありに変更、透過率80％に設定
 
-	DrawBox(left, top, right, bottom, GetColor(0, 0, 0), TRUE);	//塗りつぶしありで四角形を描画
+	DrawBox(x, y, x + width, y + height, GetColor(0, 0, 0), TRUE);	//塗りつぶしありで四角形を描画
 
 	SetDrawBlendMode(DX_BLENDMODE_NOBLEND, 0);				//描画モードを通常に戻す
 
