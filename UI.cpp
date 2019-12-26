@@ -106,6 +106,14 @@ void UI::ResetMenu()
 	this->menuwindow->Reset();	//選択内容リセット
 }
 
+//選んだ内容ごとのメニューを描画
+void UI::DrawChoiseMenu()
+{
+	//this->menuwindow->DrawChoise(choise);
+	this->menuwindow->DrawChoise(this->ChoiseMenu);
+	return;
+}
+
 //バトルコマンドで使用する要素を初期化する
 void UI::BattleInit()
 {

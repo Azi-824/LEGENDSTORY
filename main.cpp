@@ -361,38 +361,47 @@ void Play()
 	//▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼ メニュー毎の処理ここから ▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼
 	if (player->GetIsMenu())			//メニュー描画中だったら
 	{
-		switch (ui->GetChoiseMenu())		//メニュー画面での選択内容ごとに処理を分ける
+
+		ui->DrawChoiseMenu();			//選んだメニュー毎の描画処理
+
+		if (ui->GetChoiseMenu() == (int)MENU_SAVE)	//セーブを選んだ時
 		{
-
-		case (int)MENU_STATUS:			//ステータスを選んだ時の処理ここから
-
-			break;						//ステータスを選んだときの処理ここまで
-
-		case (int)MENU_ITEM:			//アイテムを選んだ時の処理ここから
-
-			break;						//アイテムを選んだ時の処理ここまで
-
-		case (int)MENU_SOUBI:			//装備を選んだ時の処理ここから
-
-			break;						//装備を選んだ時の処理ここまで
-
-		case (int)MENU_SAVE:			//セーブを選んだ時の処理ここから
-
 			if (Wait())			//待ち時間が過ぎたら
 			{
 				data->Save(player, PLAYER_DATA_DIR, PLAYER_DATA_NAME);		//プレイヤー情報のセーブ
 				player->SetIsMenu(false);		//メニュー描画終了
 			}
-			else				//待ち時間の間は
-			{
-				DrawString(400, 300, "セーブ中です。", GetColor(255, 255, 255));	//文字描画
-			}
 
-			break;						//セーブを選んだ時の処理ここまで
-
-		default:
-			break;
 		}
+
+		//switch (ui->GetChoiseMenu())		//メニュー画面での選択内容ごとに処理を分ける
+		//{
+
+		//case (int)MENU_STATUS:			//ステータスを選んだ時の処理ここから
+
+		//	break;						//ステータスを選んだときの処理ここまで
+
+		//case (int)MENU_ITEM:			//アイテムを選んだ時の処理ここから
+
+		//	break;						//アイテムを選んだ時の処理ここまで
+
+		//case (int)MENU_SOUBI:			//装備を選んだ時の処理ここから
+
+		//	break;						//装備を選んだ時の処理ここまで
+
+		//case (int)MENU_SAVE:			//セーブを選んだ時の処理ここから
+
+			//if (Wait())			//待ち時間が過ぎたら
+			//{
+			//	data->Save(player, PLAYER_DATA_DIR, PLAYER_DATA_NAME);		//プレイヤー情報のセーブ
+			//	player->SetIsMenu(false);		//メニュー描画終了
+			//}
+
+		//	break;						//セーブを選んだ時の処理ここまで
+
+		//default:
+		//	break;
+		//}
 	}
 	else			//メニュー描画終了してたら
 	{
@@ -501,7 +510,7 @@ void Battle()
 
 	case (int)ACT_MSG:				//行動メッセージ表示状態
 
-		if (Wait())			//表示秒数になったら
+		if (Wait())			//待ち時間が過ぎたら
 		{
 			if (Turn == (int)MY_TURN)		//味方のターンだったら
 			{
@@ -567,7 +576,7 @@ void Battle()
 	case (int)DRAW_DAMEGE:				//ダメージ描画状態
 
 		//ダメージ描画
-		if (Wait())				//表示秒数になったら
+		if (Wait())				//待ち時間が過ぎたら
 		{
 			if (Turn == (int)MY_TURN)			//味方のターンの時
 			{

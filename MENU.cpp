@@ -67,6 +67,48 @@ void MENU::Draw()
 
 }
 
+//選んだ内容ごとの描画
+void MENU::DrawChoise(int choise)
+{
+
+	switch (choise)			//選んだ内容ごとに処理を分ける
+	{
+
+	case (int)MENU_STATUS:	//ステータスを選んだ時の処理ここから
+
+		//ステータス描画処理
+		DrawString(400, 300, "ステータス描画", GetColor(255, 255, 255));	//文字描画
+
+		break;				//ステータスを選んだ時の処理ここまで
+
+	case (int)MENU_ITEM:	//アイテムを選んだ時の処理ここから
+
+		//アイテム描画処理
+		DrawString(400, 300, "アイテム描画", GetColor(255, 255, 255));	//文字描画
+
+		break;				//アイテムを選んだときの処理ここまで
+
+	case (int)MENU_SOUBI:	//装備を選んだ時の処理ここから
+
+		//装備描画処理
+		DrawString(400, 300, "装備描画", GetColor(255, 255, 255));	//文字描画
+
+		break;				//装備を選んだ時の処理ここまで
+
+	case (int)MENU_SAVE:	//セーブを選んだ時の処理ここから
+
+		//セーブ時の描画処理
+		DrawString(400, 300, "セーブ中です。", GetColor(255, 255, 255));	//文字描画
+
+		break;				//セーブを選んだ時の処理ここまで
+
+	default:
+		break;
+	}
+
+	return;
+}
+
 //選択要素を次へ移動
 void MENU::Next()
 {

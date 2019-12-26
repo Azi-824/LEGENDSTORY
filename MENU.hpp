@@ -43,6 +43,7 @@ public:
 	~MENU();		//デストラクタ
 
 	void Draw();	//描画
+	void DrawChoise(int);	//選んだ内容ごとの描画
 
 	void Next();	//選択要素を次へ移動
 
