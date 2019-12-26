@@ -851,7 +851,7 @@ void Battle_Draw()
 
 	enemy[EncounteEnemyType]->Draw();	//“G•`‰æ
 
-	ui->DrawWindow();		//ƒEƒBƒ“ƒhƒE‚Ì•`‰æ
+	ui->DrawWindow(MSG_WINDOW_START_X, MSG_WINDOW_START_Y, MSG_WINDOW_END_X, MSG_WINDOW_END_Y);		//ƒEƒBƒ“ƒhƒE‚Ì•`‰æ
 
 	//ƒƒbƒZ[ƒWŠÖŒW•`‰æ
 	msg->DrawBattleMsg(BattleStageNow, Turn, ui->GetChoiseCommamd(), player, enemy[EncounteEnemyType],keydown->IsKeyDownOne(KEY_INPUT_RETURN));

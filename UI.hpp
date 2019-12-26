@@ -53,6 +53,6 @@ public:
 
 	
 
-	void DrawWindow();				//ウィンドウを描画する
+	void DrawWindow(int,int,int,int);				//ウィンドウを描画する
 
 };

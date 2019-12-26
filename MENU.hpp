@@ -9,7 +9,12 @@
 #include <string>
 
 //######################### マクロ定義 ###########################
-#define MENU_SPACE	30		//文字と文字の間隔
+#define MENU_SPACE	30			//文字と文字の間隔
+
+#define MENU_WINDOW_START_X	0	//メッセージウィンドのスタート位置（X）
+#define MENU_WINDOW_START_Y	380	//メッセージウィンドのスタート位置（Y）
+#define MENU_WINDOW_END_X	800	//メッセージウィンドの終了位置（X）
+#define MENU_WINDOW_END_Y	480	//メッセージウィンドの終了位置（Y）
 
 //######################### 列挙型 ###############################
 enum MENU_COMMAND

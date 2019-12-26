@@ -14,6 +14,11 @@
 #define MSG_DRAW_X 0		//メッセージの描画位置(X)
 #define MSG_DRAW_Y 400		//メッセージの描画位置(Y)
 
+#define MSG_WINDOW_START_X	0	//メッセージウィンドのスタート位置（X）
+#define MSG_WINDOW_START_Y	380	//メッセージウィンドのスタート位置（Y）
+#define MSG_WINDOW_END_X	800	//メッセージウィンドの終了位置（X）
+#define MSG_WINDOW_END_Y	480	//メッセージウィンドの終了位置（Y）
+
 #define RESULT_MSG_KIND	3	//リザルト画面のメッセージの種類
 
 //################ 列挙型 ########################

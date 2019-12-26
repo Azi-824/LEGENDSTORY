@@ -38,12 +38,6 @@ MENU::~MENU()
 //•`‰æ
 void MENU::Draw()
 {
-	SetDrawBlendMode(DX_BLENDMODE_ALPHA, 255 * 80 / 100);	//•`‰æƒ‚[ƒh‚ğ“§‰ß‚ ‚è‚É•ÏXA“§‰ß—¦80“‚Éİ’è
-
-	DrawBox(this->X, this->Y, this->X + this->Width, this->Y + this->Height, GetColor(0, 0, 0), TRUE);	//“h‚è‚Â‚Ô‚µ‚ ‚è‚ÅlŠpŒ`‚ğ•`‰æ
-
-	SetDrawBlendMode(DX_BLENDMODE_NOBLEND, 0);				//•`‰æƒ‚[ƒh‚ğ’Êí‚É–ß‚·
-
 	int cnt = 0;	//•`‰æˆÊ’u—p
 	
 	auto w_itr = this->Menu_itr;	//‘Ş”ğ—p

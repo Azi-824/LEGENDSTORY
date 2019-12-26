@@ -61,6 +61,7 @@ void UI::MenuOperation(KEYDOWN *keydown,bool ismenu)
 //メニューウィンドウ描画
 void UI::DrawMenu()
 {
+	this->DrawWindow(100, 100, 200, 280);	//ウィンドウ描画
 	this->menuwindow->Draw();	//メニュー描画
 	return;
 }
@@ -207,11 +208,11 @@ void UI::DrawStateWindow()
 }
 
 //ウィンドウを描画する
-void UI::DrawWindow()
+void UI::DrawWindow(int left,int top,int right,int bottom)
 {
 	SetDrawBlendMode(DX_BLENDMODE_ALPHA, 255 * 80 / 100);	//描画モードを透過ありに変更、透過率80％に設定
 
-	DrawBox(0, 380, 0 + 800,380 + 100, GetColor(0, 0, 0), TRUE);	//塗りつぶしありで四角形を描画
+	DrawBox(left, top, right, bottom, GetColor(0, 0, 0), TRUE);	//塗りつぶしありで四角形を描画
 
 	SetDrawBlendMode(DX_BLENDMODE_NOBLEND, 0);				//描画モードを通常に戻す
 
