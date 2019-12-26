@@ -109,7 +109,6 @@ void UI::ResetMenu()
 //選んだ内容ごとのメニューを描画
 void UI::DrawChoiseMenu()
 {
-	//this->menuwindow->DrawChoise(choise);
 	this->menuwindow->DrawChoise(this->ChoiseMenu);
 	return;
 }
