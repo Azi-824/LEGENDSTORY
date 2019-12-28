@@ -259,7 +259,7 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 
 		//▲▲▲▲▲ゲームのシーンここまで▲▲▲▲▲
 
-		fps->Draw(0, 0);				//FPSの処理[描画]
+		//fps->Draw(0, 0);				//FPSの処理[描画]
 
 		ScreenFlip();				//モニタのリフレッシュレートの速さで裏画面を再描画
 
