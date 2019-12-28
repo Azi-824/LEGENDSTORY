@@ -51,6 +51,7 @@ void UI::MenuOperation(KEYDOWN *keydown,bool ismenu)
 		{
 			auto itr = this->menuwindow->GetChoiseMenu();	//メニュー画面の選択内容を取得
 			this->SetChoiseMenu(itr);						//選択内容を設定
+			this->menuwindow->SetIsChoise(true);
 		}
 
 	}
@@ -131,10 +132,17 @@ void UI::ResetMenu()
 }
 
 //選んだ内容ごとのメニューを描画
-void UI::DrawChoiseMenu()
+void UI::DrawChoiseMenu(PLAYER *player)
 {
-	this->menuwindow->DrawChoise(this->ChoiseMenu);
+	this->DrawWindow(0, 0, GAME_WIDTH, GAME_HEIGHT);
+	this->menuwindow->DrawChoise(this->ChoiseMenu,player);
 	return;
+}
+
+//選択されているか取得
+bool UI::GetIsChoise(void)
+{
+	return this->menuwindow->GetIsChoise();
 }
 
 //バトルコマンドで使用する要素を初期化する

@@ -12,13 +12,15 @@ MENU::MENU()
 	this->Menu = { "ステータス","アイテム","装備","セーブ" };	//メニューウィンドウの文字列を設定
 	this->Menu_itr = this->Menu.begin();	//先頭のアドレスを入れる
 
-	this->X = 100;		//初期位置を100で設定
-	this->Y = 100;		//初期位置を100で設定
+	this->X = 0;		
+	this->Y = 0;		
 
-	this->Width = 100;	//初期幅を100で設定
-	this->Height = 180;	//初期高さを180で設定
+	this->Width = 0;	
+	this->Height = 0;	
 
 	this->StrHeight = GetFontSize();	//高さを取得
+
+	this->IsChoise = false;		//選択されていない
 
 	return;
 
@@ -67,7 +69,7 @@ void MENU::Draw(int x,int y)
 }
 
 //選んだ内容ごとの描画
-void MENU::DrawChoise(int choise)
+void MENU::DrawChoise(int choise,PLAYER *player)
 {
 
 	switch (choise)			//選んだ内容ごとに処理を分ける
@@ -77,6 +79,9 @@ void MENU::DrawChoise(int choise)
 
 		//ステータス描画処理
 		DrawString(400, 300, "ステータス描画", GetColor(255, 255, 255));	//文字描画
+
+		DrawFormatString(0, 50, GetColor(255, 255, 255), "%s\nHP %d/%d\nMP %d/%d\nATK %d\nDEF %d\nSPD %d",
+			player->GetName(), player->GetHP(), player->GetMaxHP(), player->GetMP(), player->GetMaxMP(), player->GetATK(), player->GetDEF(), player->GetSPD());
 
 		break;				//ステータスを選んだ時の処理ここまで
 
@@ -132,6 +137,7 @@ void MENU::Back()
 void MENU::Reset()
 {
 	this->Menu_itr = this->Menu.begin();
+	this->IsChoise = false;
 	return;
 }
 
@@ -139,4 +145,17 @@ void MENU::Reset()
 std::vector<std::string>::iterator MENU::GetChoiseMenu()
 {
 	return this->Menu_itr;
+}
+
+//選択されているか設定
+void MENU::SetIsChoise(bool Ischoise)
+{
+	this->IsChoise = Ischoise;
+	return;
+}
+
+//選択されているか取得
+bool MENU::GetIsChoise(void)
+{
+	return this->IsChoise;
 }

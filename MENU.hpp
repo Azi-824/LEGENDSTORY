@@ -5,6 +5,7 @@
 
 //######################### ヘッダファイル読み込み ######################
 #include "DxLib.h"
+#include "PLAYER.hpp"
 #include <vector>
 #include <string>
 
@@ -43,6 +44,8 @@ private :
 
 	int StrHeight;	//文字列の高さ
 
+	bool IsChoise;	//選択されているか
+
 public:
 
 	MENU();			//コンストラクタ
@@ -50,7 +53,7 @@ public:
 	~MENU();		//デストラクタ
 
 	void Draw(int,int);	//描画
-	void DrawChoise(int);	//選んだ内容ごとの描画
+	void DrawChoise(int,PLAYER *);	//選んだ内容ごとの描画
 
 	void Next();	//選択要素を次へ移動
 
@@ -59,5 +62,9 @@ public:
 	void Reset();	//選択要素をリセット
 
 	std::vector<std::string>::iterator GetChoiseMenu();	//選択した項目を取得
+
+	void SetIsChoise(bool);	//選択されているか設定
+
+	bool GetIsChoise(void);	//選択されているか取得
 
 };

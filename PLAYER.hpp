@@ -8,11 +8,7 @@
 #include "ANIMATION.hpp"
 #include "CHARACTOR.hpp"
 #include "COLLISION.hpp"
-#include "MENU.hpp"
-#include "COMMAND.hpp"
 #include "ENEMY.hpp"
-#include "STATEWINDOW.hpp"
-#include "EFFECT.hpp"
 
 //################# マクロ定義 #######################
 #define EXP_INCREASE_VALUE	5		//経験値の最大値の増え幅

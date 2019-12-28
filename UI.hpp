@@ -7,6 +7,7 @@
 #include "DxLib.h"
 #include "STATEWINDOW.hpp"
 #include "COMMAND.hpp"
+#include "MENU.hpp"
 #include "PLAYER.hpp"
 
 //######################### マクロ定義 #####################################
@@ -38,7 +39,8 @@ public:
 	void SetChoiseMenu(std::vector<std::string>::iterator);	//メニューで選んだ内容を設定する
 	int GetChoiseMenu();				//メニュー画面での選択内容を取得
 	void ResetMenu();					//メニュー関係のメンバーをリセット
-	void DrawChoiseMenu();				//選んだメニュー内容ごとの描画
+	void DrawChoiseMenu(PLAYER *);				//選んだメニュー内容ごとの描画
+	bool GetIsChoise(void);				//選択されているか取得
 
 	//バトルコマンド関連
 	void SetBattleFlg(std::vector<std::string>::iterator);	//戦闘画面で選んだコマンドのフラグを設定する
