@@ -78,9 +78,10 @@ void MENU::DrawChoise(int choise,PLAYER *player)
 	case (int)MENU_STATUS:	//ステータスを選んだ時の処理ここから
 
 		//ステータス描画処理
-		DrawString(400, 300, "ステータス描画", GetColor(255, 255, 255));	//文字描画
+		//DrawString(400, 300, "ステータス描画", GetColor(255, 255, 255));	//文字描画
 
-		DrawFormatString(0, 50, GetColor(255, 255, 255), "%s\nHP %d/%d\nMP %d/%d\nATK %d\nDEF %d\nSPD %d",
+		//ステータス描画
+		DrawFormatString(0, 0, GetColor(255, 255, 255), "%s\nHP %d/%d\nMP %d/%d\nATK %d\nDEF %d\nSPD %d",
 			player->GetName(), player->GetHP(), player->GetMaxHP(), player->GetMP(), player->GetMaxMP(), player->GetATK(), player->GetDEF(), player->GetSPD());
 
 		break;				//ステータスを選んだ時の処理ここまで
