@@ -21,6 +21,7 @@
 #include "DATA.hpp"
 #include "EFFECT.hpp"
 #include "MSG.hpp"
+#include "ITEM.hpp"
 
 //########## グローバルオブジェクト ##########
 FPS *fps = new FPS(GAME_FPS_SPEED);							//FPSクラスのオブジェクトを生成
@@ -44,6 +45,8 @@ MESSAGE *msg;						//メッセージ
 PLAYER *player;						//主人公
 
 ENEMY *enemy[ENEMY_KIND];			//敵
+
+ITEM *item[ITEM_KIND];				//アイテム
 
 MAPIMAGE *mapimage;					//マップチップのデータ
 MAP *mapdata[MAP_DATA_KIND][MAP_LAYER_KIND];		//マップデータ
@@ -156,6 +159,15 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 	{
 		enemy[i]->StateSetInit();		//初期設定
 	}
+
+	//アイテム関係
+	for (int i = 0; i < ITEM_KIND; ++i)	//アイテムの種類分だけ
+	{
+		item[i] = new ITEM();	//アイテム作成
+	}
+
+	//アイテムデータをcsvファイルから読み込み
+	if (data->LoadItem(item, ITEM_DATA_DIR, ITEM_DATA_NAME) == false) { return -1; }		//読み込み失敗
 
 	//マップ関係
 	mapimage = new MAPIMAGE();	//マップチップ生成

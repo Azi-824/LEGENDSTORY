@@ -188,7 +188,7 @@ bool DATA::LoadItem(ITEM *item[], const char *dir, const char *name)
 
 
 	std::string buf;
-	//1行目を読み込んで飛ばす
+	//1行目を読み込んで飛ばす（1行目は説明文のため）
 	std::getline(ifs, buf);	//1行読み込み
 
 	for (int i = 0; i < ITEM_KIND; ++i)				//アイテムの種類分読み込み
