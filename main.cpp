@@ -447,32 +447,32 @@ void Battle()
 			//▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼ バトルコマンド毎の処理ここから ▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼
 			switch (ui->GetChoiseCommamd())		//どのコマンドを選んだか
 			{
-			case (int)ATACK:					//攻撃を選んだ時
+			case (int)COMMANDE_ATACK:					//攻撃を選んだ時
 
 				BattleStageNow = (int)DAMEGE_CALC;	//バトル状態をダメージ計算状態へ
 
 				break;
 
-			case (int)DEFENSE:		//防御を選んだ時
+			case (int)COMMANDE_DEFENSE:		//防御を選んだ時
 
 				BattleStageNow = (int)DAMEGE_CALC;	//バトル状態をダメージ計算状態へ
 
 				break;
 
-			case (int)MAGIC:		//魔法を選んだ時
+			case (int)COMMANDE_MAGIC:		//魔法を選んだ時
 
 				player->SetChoiseSkil(1);			//使用するスキルを魔法に設定する
 				BattleStageNow = (int)DAMEGE_CALC;	//バトル状態をダメージ計算状態へ
 
 				break;
 
-			case (int)ITEM:			//アイテムを選んだ時
+			case (int)COMMANDE_ITEM:			//アイテムを選んだ時
 
 				ui->BattleInit();	//バトルコマンドリセット
 
 				break;
 
-			case (int)ESCAPE:		//逃げるを選んだ時
+			case (int)COMMANDE_ESCAPE:		//逃げるを選んだ時
 
 				BattleStageNow = (int)ACT_MSG;	//メッセージ描画状態
 				
@@ -519,13 +519,13 @@ void Battle()
 		{
 			if (Turn == (int)MY_TURN)		//味方のターンだったら
 			{
-				if (ui->GetChoiseCommamd() == (int)ESCAPE)		//逃げるを選んだら
+				if (ui->GetChoiseCommamd() == (int)COMMANDE_ESCAPE)		//逃げるを選んだら
 				{
 					SceneChenge(GameSceneNow, (int)GAME_SCENE_PLAY);	//次の画面はプレイ画面
 				}
 			}
 
-			if (ui->GetChoiseCommamd() == (int)DEFENSE)		//防御を選んだら
+			if (ui->GetChoiseCommamd() == (int)COMMANDE_DEFENSE)		//防御を選んだら
 			{
 				effect->SetIsDrawEnd(true);	//描画処理を飛ばすために、描画終了フラグを立てる
 			}
@@ -540,11 +540,11 @@ void Battle()
 
 		if (Turn == (int)MY_TURN)		//味方のターンだったら
 		{
-			if (ui->GetChoiseCommamd() == (int)ATACK)	//攻撃を選んでいたら
+			if (ui->GetChoiseCommamd() == (int)COMMANDE_ATACK)	//攻撃を選んでいたら
 			{
 				effect->Draw(350, 250, (int)NOMAL_ATACK);	//攻撃エフェクト描画
 			}
-			else if (ui->GetChoiseCommamd() == (int)MAGIC)	//魔法を選んでいたら
+			else if (ui->GetChoiseCommamd() == (int)COMMANDE_MAGIC)	//魔法を選んでいたら
 			{
 				effect->Draw((GAME_WIDTH / 2 - MAGIC_WIDTH / 2), (GAME_HEIGHT / 2 - MAGIC_HEIGHT / 2), player->GetChoiseSkil());	//魔法エフェクト描画
 			}
@@ -585,7 +585,7 @@ void Battle()
 		{
 			if (Turn == (int)MY_TURN)			//味方のターンの時
 			{
-				if (ui->GetChoiseCommamd() == (int)ATACK)	//攻撃を選んだ時は
+				if (ui->GetChoiseCommamd() == (int)COMMANDE_ATACK)	//攻撃を選んだ時は
 				{
 					effect->ResetIsAnime((int)NOMAL_ATACK);		//エフェクトリセット
 				}

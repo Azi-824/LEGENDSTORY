@@ -38,11 +38,11 @@ void MESSAGE::DrawBattleMsg(int battlestage,int turn,int command,PLAYER *player,
 
 		if (turn == (int)MY_TURN)	//味方のターンだったら
 		{
-			if (command == (int)ESCAPE)	//選んだコマンドが逃げるだったら
+			if (command == (int)COMMANDE_ESCAPE)	//選んだコマンドが逃げるだったら
 			{
 				DrawString(this->X, this->Y, "上手く逃げ切れた！", GetColor(255, 255, 255));	//文字描画
 			}
-			else if (command == (int)DEFENSE)	//防御を選んだ時は
+			else if (command == (int)COMMANDE_DEFENSE)	//防御を選んだ時は
 			{
 				DrawString(this->X, this->Y, "防御している！", GetColor(255, 255, 255));		//文字描画
 			}
@@ -62,7 +62,7 @@ void MESSAGE::DrawBattleMsg(int battlestage,int turn,int command,PLAYER *player,
 
 		if (turn == (int)MY_TURN)		//味方のターンだったら
 		{
-			if (command == (int)DEFENSE)	//防御を選んだ時は
+			if (command == (int)COMMANDE_DEFENSE)	//防御を選んだ時は
 			{
 				DrawString(this->X, this->Y, "防御している！",GetColor(255, 255, 255));		//文字描画
 			}

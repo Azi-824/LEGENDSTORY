@@ -25,11 +25,11 @@
 //################# 列挙型 ######################
 enum COMMANDTYPE
 {
-	ATACK,		//攻撃
-	DEFENSE,	//防御
-	MAGIC,		//魔法
-	ITEM,		//アイテム
-	ESCAPE,		//逃げる
+	COMMANDE_ATACK,		//攻撃
+	COMMANDE_DEFENSE,	//防御
+	COMMANDE_MAGIC,		//魔法
+	COMMANDE_ITEM,		//アイテム
+	COMMANDE_ESCAPE,	//逃げる
 };	//選択したコマンドの種類
 
 //################# クラス定義 ##################

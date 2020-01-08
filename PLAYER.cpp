@@ -505,7 +505,7 @@ void PLAYER::DamegeCalc(ENEMY *enemy,int choiecommand)
 	switch (choiecommand)		//選択したコマンド
 	{
 
-	case(int)ATACK:				//攻撃を選んだ時の処理ここから
+	case(int)COMMANDE_ATACK:				//攻撃を選んだ時の処理ここから
 
 		//▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼ 味方の攻撃処理ここから ▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼
 		if (this->ATK > enemy->GetDEF())	//自分の攻撃力が敵の防御力より上だったら
@@ -534,7 +534,7 @@ void PLAYER::DamegeCalc(ENEMY *enemy,int choiecommand)
 
 		break;					//攻撃を選んだ時の処理ここまで
 
-	case (int)DEFENSE:			//防御を選んだ時の処理ここから
+	case (int)COMMANDE_DEFENSE:			//防御を選んだ時の処理ここから
 
 		//▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼ 味方の攻撃処理ここから ▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼
 		this->SendDamege = 0;	//防御を選んだ時はダメージを与えない
@@ -558,7 +558,7 @@ void PLAYER::DamegeCalc(ENEMY *enemy,int choiecommand)
 
 		break;					//防御を選んだ時の処理ここまで
 
-	case (int)MAGIC:			//魔法を選んだ時の処理ここから
+	case (int)COMMANDE_MAGIC:			//魔法を選んだ時の処理ここから
 
 		//▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼ 味方の攻撃処理ここから ▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼
 
@@ -590,7 +590,7 @@ void PLAYER::DamegeCalc(ENEMY *enemy,int choiecommand)
 
 		break;					//魔法を選んだ時の処理ここまで
 
-	case(int)ITEM:				//アイテムを選んだ時の処理ここから
+	case(int)COMMANDE_ITEM:				//アイテムを選んだ時の処理ここから
 
 		break;					//アイテムを選んだ時の処理ここまで
 

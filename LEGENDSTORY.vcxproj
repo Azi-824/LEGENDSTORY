@@ -161,6 +161,7 @@
     <ClCompile Include="FONT.cpp" />
     <ClCompile Include="FPS.cpp" />
     <ClCompile Include="IMAGE.cpp" />
+    <ClCompile Include="ITEM.cpp" />
     <ClCompile Include="KEYDOWN.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="MAP.cpp" />
@@ -185,6 +186,7 @@
     <ClInclude Include="FONT.hpp" />
     <ClInclude Include="FPS.hpp" />
     <ClInclude Include="IMAGE.hpp" />
+    <ClInclude Include="ITEM.hpp" />
     <ClInclude Include="KEYDOWN.hpp" />
     <ClInclude Include="main.hpp" />
     <ClInclude Include="MAP.hpp" />

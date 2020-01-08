@@ -11,6 +11,7 @@
 #include <fstream>
 #include "PLAYER.hpp"
 #include "ENEMY.hpp"
+#include "ITEM.hpp"
 
 
 //############## マクロ定義：ファイル名、パス ###################
@@ -39,6 +40,7 @@ public:
 
 	bool LoadPlayer(PLAYER *,const char *, const char *);		//読み込み（味方データ）
 	bool LoadEnemy(ENEMY *[],const char *, const char *);		//読み込み（敵データ）
+	bool LoadItem(ITEM *[], const char *, const char *);		//読み込み（アイテムデータ）
 	bool Save(PLAYER *,const char *,const char *);		//セーブ
 
 };

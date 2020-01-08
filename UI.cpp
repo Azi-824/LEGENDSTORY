@@ -157,27 +157,27 @@ void UI::SetBattleFlg(std::vector<std::string>::iterator choise_itr)
 {
 	if (*choise_itr == "こうげき")			//攻撃を選んだ場合
 	{
-		this->BattleCommadType = ATACK;	//攻撃
+		this->BattleCommadType = COMMANDE_ATACK;	//攻撃
 		return;
 	}
 	else if (*choise_itr == "ぼうぎょ")		//防御を選んだ場合
 	{
-		this->BattleCommadType = DEFENSE;	//防御
+		this->BattleCommadType = COMMANDE_DEFENSE;	//防御
 		return;
 	}
 	else if (*choise_itr == "まほう")			//魔法を選んだ場合
 	{
-		this->BattleCommadType = MAGIC;	//魔法
+		this->BattleCommadType = COMMANDE_MAGIC;	//魔法
 		return;
 	}
 	else if (*choise_itr == "アイテム")		//アイテムを選んだ場合
 	{
-		this->BattleCommadType = ITEM;	//アイテム
+		this->BattleCommadType = COMMANDE_ITEM;	//アイテム
 		return;
 	}
 	else if (*choise_itr == "にげる")			//逃げるを選んだ場合
 	{
-		this->BattleCommadType = ESCAPE;	//逃げる
+		this->BattleCommadType = COMMANDE_ESCAPE;	//逃げる
 		return;
 	}
 	return;
