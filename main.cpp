@@ -165,7 +165,6 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 	{
 		item[i] = new ITEM();	//アイテム作成
 	}
-
 	//アイテムデータをcsvファイルから読み込み
 	if (data->LoadItem(item, ITEM_DATA_DIR, ITEM_DATA_NAME) == false) { return -1; }		//読み込み失敗
 

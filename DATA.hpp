@@ -15,12 +15,10 @@
 
 
 //############## マクロ定義：ファイル名、パス ###################
-#define DATA_DIR	R"(.\MY_TEXT\Message\)"		//メッセージテキストのファイル名
 #define PLAYER_DATA_DIR	R"(.\MY_DATA\Player\)"	//プレイヤーのデータのファイル名
 #define ENEMY_DATA_DIR	R"(.\MY_DATA\Enemy\)"	//敵のデータのファイル名
 #define ITEM_DATA_DIR	R"(.\MY_DATA\Item\)"	//アイテムのデータのファイル名
 
-#define DATA_NAME	R"(msg.txt)"			//メッセージテキストの名前
 #define PLAYER_DATA_NAME	R"(Player_Data.csv)"//プレイヤーのデータのcsvファイル
 #define ENEMY_DATA_NAME		R"(Enemy_Data.csv)"	//敵のデータの名前
 #define ITEM_DATA_NAME		R"(Item_Data.csv)"	//アイテムのデータの名前
