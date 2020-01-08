@@ -277,36 +277,7 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 		fps->Wait();				//FPS‚Ìˆ—[‘Ò‚Â]
 	}
 
-	delete title;			//title‚ğ”jŠü
-	delete fps;				//FPS‚ğ”jŠü
-	delete keydown;			//keydown‚ğ”jŠü
-	delete font;			//font‚ğ”jŠü
-	delete text;			//text‚ğ”jŠü
-	delete bgm;				//bgm‚ğ”jŠü
-	delete se;				//se‚ğ”jŠü
-	delete player;			//player‚ğ”jŠü
-	delete back;			//back‚ğ”jŠü
-	delete back_battle;		//back_battle‚ğ”jŠü
-	delete mapimage;		//mapimage‚ğ”jŠü
-	delete data;			//data‚ğ”jŠü
-	delete effect;			//effect‚ğ”jŠü
-	delete msg;				//msg‚ğ”jŠü
-
-	//ƒ}ƒbƒvƒf[ƒ^‚Ìíœ
-	for (int i = 0; i < MAP_DATA_KIND; i++)
-	{
-		for (int cnt = 0; cnt < MAP_LAYER_KIND; cnt++)
-		{
-			delete mapdata[i][cnt];	//mapdata‚ğ”jŠü
-		}
-
-	}
-
-	//“G‚Ìíœ
-	for (int i = 0; i < ENEMY_KIND; ++i)
-	{
-		delete enemy[i];			//enemy‚ğ”jŠü
-	}
+	Delete_Class();			//g—p‚µ‚½ƒNƒ‰ƒX‚ğ”jŠü
 
 	DxLib_End();			//‚c‚wƒ‰ƒCƒuƒ‰ƒŠg—p‚ÌI—¹ˆ—
 
@@ -967,4 +938,48 @@ bool Wait()
 		++WaitCnt;		//ƒJƒEƒ“ƒgƒAƒbƒv
 		return false;
 	}
+}
+
+//ƒQ[ƒ€“à‚Åg—p‚µ‚½ƒNƒ‰ƒX‚ğíœ‚·‚éˆ—
+void Delete_Class()
+{
+	delete title;			//title‚ğ”jŠü
+	delete fps;				//FPS‚ğ”jŠü
+	delete keydown;			//keydown‚ğ”jŠü
+	delete font;			//font‚ğ”jŠü
+	delete text;			//text‚ğ”jŠü
+	delete bgm;				//bgm‚ğ”jŠü
+	delete se;				//se‚ğ”jŠü
+	delete player;			//player‚ğ”jŠü
+	delete back;			//back‚ğ”jŠü
+	delete back_battle;		//back_battle‚ğ”jŠü
+	delete mapimage;		//mapimage‚ğ”jŠü
+	delete data;			//data‚ğ”jŠü
+	delete effect;			//effect‚ğ”jŠü
+	delete msg;				//msg‚ğ”jŠü
+
+	//ƒ}ƒbƒvƒf[ƒ^‚Ìíœ
+	for (int i = 0; i < MAP_DATA_KIND; i++)	//ƒ}ƒbƒv‚Ìí—Ş•ª
+	{
+		for (int cnt = 0; cnt < MAP_LAYER_KIND; cnt++)	//ƒ}ƒbƒv‚ÌƒŒƒCƒ„[•ª
+		{
+			delete mapdata[i][cnt];	//mapdata‚ğ”jŠü
+		}
+
+	}
+
+	//“G‚Ìíœ
+	for (int i = 0; i < ENEMY_KIND; ++i)	//“G‚Ìí—Ş•ª
+	{
+		delete enemy[i];			//enemy‚ğ”jŠü
+	}
+
+	//ƒAƒCƒeƒ€‚Ìíœ
+	for (int i = 0; i < ITEM_KIND; ++i)	//ƒAƒCƒeƒ€‚Ìí—Ş•ª
+	{
+		delete item[i];				//item‚ğ”jŠü
+	}
+
+	return;
+
 }
