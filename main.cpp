@@ -346,7 +346,7 @@ void Play()
 
 		if (ui->GetIsChoise())			//メニューを選択したら
 		{
-			ui->DrawChoiseMenu(player);			//選んだメニュー毎の描画処理
+			ui->DrawChoiseMenu(player,item);			//選んだメニュー毎の描画処理
 
 			if (ui->GetChoiseMenu() == (int)MENU_SAVE)	//セーブを選んだ時
 			{

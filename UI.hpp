@@ -9,6 +9,7 @@
 #include "COMMAND.hpp"
 #include "MENU.hpp"
 #include "PLAYER.hpp"
+#include "ITEM.hpp"
 
 //######################### マクロ定義 #####################################
 
@@ -39,7 +40,7 @@ public:
 	void SetChoiseMenu(std::vector<std::string>::iterator);	//メニューで選んだ内容を設定する
 	int GetChoiseMenu();				//メニュー画面での選択内容を取得
 	void ResetMenu();					//メニュー関係のメンバーをリセット
-	void DrawChoiseMenu(PLAYER *);				//選んだメニュー内容ごとの描画
+	void DrawChoiseMenu(PLAYER *,ITEM *[]);	//選んだメニュー内容ごとの描画
 	bool GetIsChoise(void);				//選択されているか取得
 
 	//バトルコマンド関連

@@ -6,6 +6,7 @@
 //######################### ヘッダファイル読み込み ######################
 #include "DxLib.h"
 #include "PLAYER.hpp"
+#include "ITEM.hpp"
 #include <vector>
 #include <string>
 
@@ -53,7 +54,7 @@ public:
 	~MENU();		//デストラクタ
 
 	void Draw(int,int);	//描画
-	void DrawChoise(int,PLAYER *);	//選んだ内容ごとの描画
+	void DrawChoise(int,PLAYER *,ITEM *[]);	//選んだ内容ごとの描画
 
 	void Next();	//選択要素を次へ移動
 

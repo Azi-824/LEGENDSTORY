@@ -132,10 +132,10 @@ void UI::ResetMenu()
 }
 
 //選んだ内容ごとのメニューを描画
-void UI::DrawChoiseMenu(PLAYER *player)
+void UI::DrawChoiseMenu(PLAYER *player,ITEM *item[])
 {
 	this->DrawWindow(0, 0, GAME_WIDTH, GAME_HEIGHT);
-	this->menuwindow->DrawChoise(this->ChoiseMenu,player);
+	this->menuwindow->DrawChoise(this->ChoiseMenu,player,item);
 	return;
 }
 

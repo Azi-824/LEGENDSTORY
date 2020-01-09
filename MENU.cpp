@@ -69,7 +69,7 @@ void MENU::Draw(int x,int y)
 }
 
 //選んだ内容ごとの描画
-void MENU::DrawChoise(int choise,PLAYER *player)
+void MENU::DrawChoise(int choise,PLAYER *player,ITEM *item[])
 {
 
 	switch (choise)			//選んだ内容ごとに処理を分ける
@@ -89,7 +89,13 @@ void MENU::DrawChoise(int choise,PLAYER *player)
 	case (int)MENU_ITEM:	//アイテムを選んだ時の処理ここから
 
 		//アイテム描画処理
-		DrawString(400, 300, "アイテム描画", GetColor(255, 255, 255));	//文字描画
+		//DrawString(400, 300, "アイテム描画", GetColor(255, 255, 255));	//文字描画
+
+		for (int cnt = 0; cnt < ITEM_KIND; ++cnt)
+		{
+			DrawFormatString(0, cnt * MENU_SPACE, GetColor(255, 255, 255), "%s %s\n", item[cnt]->GetName(), item[cnt]->GetDescription());
+		}
+
 
 		break;				//アイテムを選んだときの処理ここまで
 
