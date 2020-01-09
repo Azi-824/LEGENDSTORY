@@ -75,7 +75,9 @@ public:
 
 	void Draw(int,int);				//‰æ‘œ‚ğ•`‰æ
 
-	void AddImage(const char *, const char *);	//‰æ‘œ‚ğ’Ç‰Á
+	void Draw(int, int, int);		//w’è‚³‚ê‚½‰æ‘œ‚ğ•`‰æ
+
+	bool AddImage(const char *, const char *,int);	//‰æ‘œ‚ğ’Ç‰Á
 
 	void ChengeImage(int);				//•`‰æ‚·‚é‰æ‘œ‚ğ•ÏX
 

@@ -136,10 +136,16 @@ void IMAGE::Draw(int X,int Y)
 	return;
 }
 
+//画像を描画（指定された）
+void IMAGE::Draw(int x, int y, int type)
+{
+	DrawGraph(x, y, this->Handle[type], TRUE);	//指定された画像を描画
+}
+
 //画像を追加
 //引　数：const char *：画像のディレクトリ
 //引　数：const char *：画像の名前
-void IMAGE::AddImage(const char *dir, const char *name)
+bool IMAGE::AddImage(const char *dir, const char *name,int type)
 {
 
 	this->IsLoad = false;	//読み込めていない
@@ -170,14 +176,22 @@ void IMAGE::AddImage(const char *dir, const char *name)
 			TEXT(IMAGE_ERROR_TITLE),
 			MB_OK);
 
-		return;
+		return false;
 	}
+
+	//GetGraphSize(
+	//	*this->Handle_itr,	//このハンドルの画像の大きさを取得
+	//	this->Width.data(),		//Widthのアドレスを渡す
+	//	this->Height.data()		//Heightのアドレスを渡す
+	//);
 
 	GetGraphSize(
 		*this->Handle_itr,	//このハンドルの画像の大きさを取得
-		this->Width.data(),		//Widthのアドレスを渡す
-		this->Height.data()		//Heightのアドレスを渡す
+		&this->Width[type],		//Widthのアドレスを渡す
+		&this->Height[type]		//Heightのアドレスを渡す
 	);
+
+
 
 
 	this->IsLoad = true;		//読み込めた
@@ -188,7 +202,7 @@ void IMAGE::AddImage(const char *dir, const char *name)
 	this->Width_itr = this->Width.begin();		//横幅の先頭アドレス
 	this->Height_itr = this->Height.begin();	//高さの先頭アドレス
 
-	return;
+	return true;
 
 }
 

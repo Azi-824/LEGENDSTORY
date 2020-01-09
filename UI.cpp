@@ -9,6 +9,9 @@
 //コンストラクタ
 UI::UI()
 {
+
+	this->UiImage = new IMAGE(UI_DIR, UI_NAME);	//uiの画像作成
+
 	this->menuwindow = new MENU();			//メニューウィンドウ作成
 
 	this->StateWindow = new STATEWINDOW();	//ステータスウィンドウ作成
@@ -28,6 +31,7 @@ UI::~UI()
 	delete this->menuwindow;	//menuwindow破棄
 	delete this->BattleCommand;	//BattleCommand破棄
 	delete this->StateWindow;	//StateWindow破棄
+	delete this->UiImage;			//Ui破棄
 
 	return;
 }
@@ -247,4 +251,37 @@ void UI::DrawWindow(int x,int y,int width,int height)
 
 	SetDrawBlendMode(DX_BLENDMODE_NOBLEND, 0);				//描画モードを通常に戻す
 
+}
+
+//ui画像を描画する
+void UI::DrawUiImage(int x, int y,int type)
+{
+	this->UiImage->Draw(x, y,type);
+	return;
+}
+
+//ui画像を追加する
+bool UI::AddUiImage(const char *dir, const char *name,int type)
+{
+	if (this->UiImage->AddImage(dir, name,type))	//読み込み成功したら
+	{
+		return true;	//読み込み成功
+	}
+	else
+	{
+		return false;	//読み込み失敗
+	}
+	
+}
+
+//ui画像の幅を取得
+int UI::GetUiImageWidth(int type)
+{
+	return this->UiImage->GetWidth(type);
+}
+
+//ui画像の高さ取得
+int UI::GetUiImageHeight(int type)
+{
+	return this->UiImage->GetHeight(type);
 }

@@ -12,6 +12,19 @@
 #include "ITEM.hpp"
 
 //######################### マクロ定義 #####################################
+#define UI_DIR	R"(.\MY_IMG\Ui\)"	//UI画像のフォルダ名
+
+#define	UI_NAME R"(ui1.png)"		//uiの名前
+#define UI_START_NAME R"(start.png)"	//startの画像の名前
+#define UI_END_NAME	R"(end.png)"		//endの画像の名前
+
+//######################### 列挙型 #################################
+enum UI_IMAGE_TYPE
+{
+	UI_ARROW,		//選択用の画像
+	UI_START,		//STARTの画像
+	UI_END			//ENDの画像
+};
 
 //######################### クラス定義 #####################################
 class UI
@@ -23,6 +36,8 @@ private:
 	COMMAND *BattleCommand;			//バトルコマンド
 
 	STATEWINDOW *StateWindow;		//ステータスウィンドウ
+
+	IMAGE *UiImage;						//uiの画像
 
 	int BattleCommadType;			//選択したバトルコマンドの種類
 
@@ -55,5 +70,12 @@ public:
 	void DrawStateWindow();			//ステータスウィンドウ描画
 
 	void DrawWindow(int,int,int,int);				//ウィンドウを描画する
+
+	//UI画像関係
+	void DrawUiImage(int, int,int);				//UIの画像を描画する
+	bool AddUiImage(const char *, const char *,int);//ui画像を追加する
+
+	int GetUiImageWidth(int);					//ui画像の横幅取得
+	int GetUiImageHeight(int);					//ui画像の高さ取得
 
 };

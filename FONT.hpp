@@ -12,12 +12,10 @@
 //################ マクロ定義 ファイルパスと名前 ###############
 #define MY_FONT_DIR		R"(.\MY_FONT)"						//フォントファイルの場所
 
-#define MY_FONT_NAME	R"(\GD-DOTFONT-DQ-OTF.otf)"			//フォントの名前
-#define MY_FONT_NAME2	R"(\PixelMplus10-Regular.ttf)"			//フォントの名前
+#define MY_FONT_NAME	R"(\PixelMplus10-Regular.ttf)"			//フォントの名前
 
 //############### マクロ定義 ##################
-#define FONT_NAME		("GD-DOTFONT-DQ-OTF")				//フォントの正式名称
-#define FONT_NAME2		("PixelMplus10 Regular")			//フォント2の正式名称
+#define FONT_NAME		("PixelMplus10 Regular")			//フォント2の正式名称
 #define DEFAULT_FONTSIZE	20								//デフォルトのフォントサイズ
 #define	MSG_FONTSIZE		40								//メッセージのフォントサイズ
 #define BIG_FONTSIZE		64								//フォントサイズ大
