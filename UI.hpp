@@ -83,8 +83,15 @@ public:
 	void ChoiseClear();							//選択肢の内容をクリアする
 
 	//選択肢を描画
+	/*
+	引数：int：x位置
+	引数：int：y位置
+	引数：bool：真ん中に描画するか
+	引数：unsignd int：描画色
+	引数：Args：描画文字列
+	*/
 	template<typename...Args>
-	void ChoiseDraw(int x,int y,Args...args)
+	void ChoiseDraw(int x,int y,bool center,unsigned int color, Args...args)
 	{
 		
 		int Size = sizeof...(args);	//要素数取得
@@ -99,26 +106,29 @@ public:
 		}
 
 		//▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼ 幅、高さ取得処理ここから ▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼
-		int Strlen = 0;		//文字列の長さ取得用
 		int Width = 0;
-		std::string MaxStr;	//最も長い文字列
-
-		MaxStr = work[0].c_str();	//最も長い文字列に最初の文字列をセット
-
-		for (int i = 0; i < (int)work.size(); i++)
+		if (center)			//真ん中に描画するときは
 		{
-			if (MaxStr < work[i].c_str())	//現在の最大文字列よりも大きければ
+			int Strlen = 0;		//文字列の長さ取得用
+			std::string MaxStr;	//最も長い文字列
+
+			MaxStr = work[0].c_str();	//最も長い文字列に最初の文字列をセット
+
+			for (int i = 0; i < (int)work.size(); i++)
 			{
-				MaxStr = work[i].c_str();	//最大文字列を更新
+				if (MaxStr < work[i].c_str())	//現在の最大文字列よりも大きければ
+				{
+					MaxStr = work[i].c_str();	//最大文字列を更新
+				}
 			}
+
+			//文字列の長さを取得
+			Strlen = strlen(MaxStr.c_str());
+
+			Width = GetDrawStringWidth(MaxStr.c_str(), Strlen);	//横幅取得
+
+			x -= (Width / 2);	//文字の幅の半分を引いて、真ん中に描画する
 		}
-
-		//文字列の長さを取得
-		Strlen = strlen(MaxStr.c_str());
-
-		Width = GetDrawStringWidth(MaxStr.c_str(), Strlen);	//横幅取得
-
-		x -= (Width / 2);	//文字の幅の半分を引いて、真ん中に描画する
 
 		int Height = GetFontSize();	//高さ取得
 
@@ -132,11 +142,11 @@ public:
 			if (*this->Str_itr == work[i].c_str())		//選択している内容だったら
 			{
 				this->DrawUiImage(x - ui_width, y + i * Height + UI_IMAGE_SPACE, (int)UI_ARROW);	//ui画像（横向き三角）描画
-				DrawFormatString(x, y + i * Height, GetColor(0, 0, 0), "%s", work[i].c_str());	//文字描画
+				DrawFormatString(x, y + i * Height, color, "%s", work[i].c_str());	//文字描画
 			}
 			else								//それ以外だったら
 			{
-				DrawFormatString(x, y + i * Height, GetColor(0, 0, 0), "%s", work[i].c_str());	//文字描画
+				DrawFormatString(x, y + i * Height, color, "%s", work[i].c_str());	//文字描画
 			}
 		}
 

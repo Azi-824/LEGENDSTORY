@@ -75,7 +75,9 @@ void UI::DrawMenu(int x,int y)
 	{
 		//プレイヤーの右上にメニューウィンドウを表示
 		this->DrawWindow(x + MENU_WINDOW_RELATIVE_X, y + (-MENU_WINDOW_RELATIVE_Y), MENU_WINDOW_WIDTH, MENU_WINDOW_HEIGHT);	//ウィンドウ描画
-		this->menuwindow->Draw(x + MENU_WINDOW_RELATIVE_X, y + (-MENU_WINDOW_RELATIVE_Y));	//メニュー描画
+		//this->menuwindow->Draw(x + MENU_WINDOW_RELATIVE_X, y + (-MENU_WINDOW_RELATIVE_Y));	//メニュー描画
+		this->ChoiseDraw(x + MENU_WINDOW_RELATIVE_X, y + (-MENU_WINDOW_RELATIVE_Y),false ,GetColor(255,255,255),"ステータス", "アイテム", "装備", "セーブ");
+
 	}
 	else if (x <= MENU_WINDOW_CHENGE_POSX && y <= MENU_WINDOW_CHENGE_POSY)	//左側にいるときは
 	{

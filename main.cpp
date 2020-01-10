@@ -785,7 +785,7 @@ void Title_Draw()
 
 	font->SetSize(BIG_FONTSIZE);		//フォントサイズを大きくする
 
-	ui->ChoiseDraw(GAME_WIDTH / 2 , DEFAULT_TEXT_Y,"START", "END");	//選択肢描画
+	ui->ChoiseDraw(GAME_WIDTH / 2 , DEFAULT_TEXT_Y,true,GetColor(255,255,255),"START", "END");	//選択肢描画
 	
 	return;
 
@@ -860,7 +860,7 @@ void End_Draw()
 
 	font->SetSize(BIG_FONTSIZE);	//フォントサイズを大きくする
 
-	ui->ChoiseDraw(GAME_WIDTH / 2, DEFAULT_TEXT_Y, "TITLE", "END");	//選択肢描画
+	ui->ChoiseDraw(GAME_WIDTH / 2, DEFAULT_TEXT_Y, true ,GetColor(0,0,0),"TITLE", "END");	//選択肢描画
 
 	return;
 
