@@ -36,7 +36,7 @@ void STATEWINDOW::Draw()
 	++itr;	//ŽŸ‚Ì—v‘f‚Ö
 
 	if (*itr <= 0)		//HP‚ª0ˆÈ‰º‚É‚È‚Á‚½‚ç
-		DrawString(this->GetX(), this->GetY(), "HP:0", GetColor(255, 255, 255));		//HP‚Ì•`‰æ‚ð0‚É‚·‚é
+		DrawString(this->GetX(), this->GetY() + 40, "HP:0", GetColor(255, 255, 255));		//HP‚Ì•`‰æ‚ð0‚É‚·‚é
 	else				//HP‚ª0‚æ‚è‘½‚©‚Á‚½‚ç
  	DrawFormatString(this->GetX(), this->GetY() + 40, GetColor(255, 255, 255), "HP:%d", *itr);	//HP•`‰æ
 		

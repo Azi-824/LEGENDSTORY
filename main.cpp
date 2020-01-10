@@ -152,6 +152,9 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 	enemy[(int)HARPY] = new ENEMY(ENEMY_DIR, ENEMY_NAME_HARPY);	//ハーピー作成
 	if (enemy[(int)HARPY]->GetIsLoad() == false) { return -1; }	//読み込み失敗
 
+	enemy[(int)IFRIT] = new ENEMY(ENEMY_DIR, ENEMY_NAME_IFRIT);	//イフリート作成
+	if (enemy[(int)IFRIT]->GetIsLoad() == false) { return -1; }	//読み込み失敗
+
 	//敵のデータをcsvファイルから読み込み
 	if (data->LoadEnemy(enemy, ENEMY_DATA_DIR, ENEMY_DATA_NAME) == false) { return -1; }		//読み込み失敗
 	//初期設定
@@ -298,19 +301,10 @@ void Title()
 
 	Title_Draw();		//タイトル画面の描画処理
 
-	if (keydown->IsKeyDown(KEY_INPUT_S))	//Sキーを押されたら
-	{
-		text->Next();	//選択を一つ次へ
-	}
-	else if (keydown->IsKeyDown(KEY_INPUT_W))	//Wキーを押されたら
-	{
-		text->Back();	//選択を一つ前へ
-	}
-
 	//▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼ 画面遷移の処理 ▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼
 	if (keydown->IsKeyDown(KEY_INPUT_RETURN))				//エンターキーを押されたら
 	{
-		if (*text->GetPos() == "START")		//選択している文字列が"START"だったら
+		if (*ui->GetNowChoise() == "START")		//選択している文字列が"START"だったら
 		{
 			SceneChenge(GameSceneNow, (int)GAME_SCENE_PLAY);	//次の画面はプレイ画面
 		}
@@ -320,6 +314,8 @@ void Title()
 		}
 	}
 	//▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲ 画面遷移の処理 ▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲
+
+	ui->ChoiseOperation(keydown);	//選択肢のキー操作
 
 	return;
 }
@@ -666,19 +662,10 @@ void End()
 
 	End_Draw();	//描画処理
 
-	if (keydown->IsKeyDown(KEY_INPUT_S))	//Sキーを押されたら
-	{
-		text->Next();	//選択を一つ次へ
-	}
-	else if (keydown->IsKeyDown(KEY_INPUT_W))	//Wキーを押されたら
-	{
-		text->Back();	//選択を一つ前へ
-	}
-
 	//▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼ 画面遷移の処理 ▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼
 	if (keydown->IsKeyDown(KEY_INPUT_RETURN))	//エンターキーを押された瞬間
 	{
-		if (*text->GetPos() == "TITLE")		//選択している文字列が"TITLE"だったら
+		if (*ui->GetNowChoise() == "TITLE")		//選択している文字列が"TITLE"だったら
 		{
 			SceneChenge(GameSceneNow, (int)GAME_SCENE_TITLE);	//次の画面はタイトル画面
 		}
@@ -689,6 +676,8 @@ void End()
 
 	}
 	//▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲ 画面遷移の処理 ▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲
+
+	ui->ChoiseOperation(keydown);	//選択肢のキー操作
 
 	return;
 }
@@ -793,18 +782,7 @@ void Title_Draw()
 
 	title->Draw(0, GAME_HEIGHT / 2 - title->GetHeight(0) / 2);		//画面中央にタイトル描画
 
-	std::vector<std::string> str = { "START","END" };
-
-	if (StrSet_Flg == false)
-	{
-		text->SetText(str);		//描画文字セット
-
-		StrSet_Flg = true;		//文字列設定
-
-		font->SetSize(BIG_FONTSIZE);		//フォントサイズを大きくする
-	}
-
-	ui->ChoiseOperation(keydown);	//選択肢のキー操作
+	font->SetSize(BIG_FONTSIZE);		//フォントサイズを大きくする
 
 	ui->ChoiseDraw(GAME_WIDTH / 2 , DEFAULT_TEXT_Y,"START", "END");	//選択肢描画
 	
@@ -876,16 +854,9 @@ void Battle_Draw()
 //エンド画面の描画処理
 void End_Draw()
 {
-	std::vector<std::string> str = { "TITLE","END" };
+	font->SetSize(BIG_FONTSIZE);	//フォントサイズを大きくする
 
-	if (StrSet_Flg == false)
-	{
-		text->SetText(str);		//描画文字セット
-
-		StrSet_Flg = true;		//文字列設定
-	}
-
-	text->Draw(GAME_WIDTH / 2 - text->GetWidth() / 2, DEFAULT_TEXT_Y, str.size(), true, GetColor(255, 255, 255));	//文字列描画（色指定）（矢印あり）
+	ui->ChoiseDraw(GAME_WIDTH / 2, DEFAULT_TEXT_Y, "TITLE", "END");	//選択肢描画
 
 	return;
 

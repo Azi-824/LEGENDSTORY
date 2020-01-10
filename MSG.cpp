@@ -136,6 +136,10 @@ void MESSAGE::DrawBattleMsg(int battlestage,int turn,int command,PLAYER *player,
 		else if (player->GetIsBattleWin() == false)	//戦闘に敗北していたら
 		{
 			DrawString(this->X, this->Y, "全滅してしまった・・・", GetColor(255, 255, 255));	//文字描画
+			if (push_enter)	//エンターキーを押されたら
+			{
+				this->IsResultMsgEnd = true;			//メッセージ表示終了
+			}
 		}
 
 	default:
