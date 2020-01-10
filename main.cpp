@@ -91,8 +91,10 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 	title = new IMAGE(MY_IMG_DIR_TITLE, MY_ING_NAME_TITLE);			//タイトル画像を生成
 	if (title->GetIsLoad() == false) { return -1; }					//読み込み失敗時
 
-	back = new IMAGE(MY_IMG_DIR_BACK, MY_IMG_NAME_BACK);			//背景画像を生成
+	back = new IMAGE(MY_IMG_DIR_BACK, MY_IMG_NAME_BACK_TITLE);			//背景画像を生成
 	if (back->GetIsLoad() == false) { return -1; }					//読み込み失敗時
+	back->AddImage(MY_IMG_DIR_BACK, MY_IMG_NAME_BACK_END, (int)END_BACK);	//エンド画面の背景画像読み込み
+	if (back->GetIsLoad() == false) { return -1; }							//読み込み失敗
 
 	back_battle = new IMAGE(MY_IMG_DIR_BATTLE, MY_IMG_NAME_BATTLE_NORMAL);	//戦闘画面の背景画像読み込み
 	if (back_battle->GetIsLoad() == false) { return -1; }					//読み込み失敗
@@ -111,7 +113,7 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 
 	text = new TEXTSTR();	//テキスト作成
 	data = new DATA();
-	msg = new MESSAGE();		//メッセージ
+	msg = new MESSAGE();	//メッセージ
 
 	//エフェクト関係
 	effect = new EFFECT(MY_ANIME_DIR_ATKEFECT, MY_ANIME_NAME_ATKEFECT, ATK_ALL_CNT, ATK_YOKO_CNT, ATK_TATE_CNT, ATK_WIDTH, ATK_HEIGHT, ATK_SPEED, false);
@@ -301,6 +303,8 @@ void Title()
 
 	Title_Draw();		//タイトル画面の描画処理
 
+	ui->ChoiseOperation(keydown);	//選択肢のキー操作
+
 	//▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼ 画面遷移の処理 ▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼
 	if (keydown->IsKeyDown(KEY_INPUT_RETURN))				//エンターキーを押されたら
 	{
@@ -314,8 +318,6 @@ void Title()
 		}
 	}
 	//▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲ 画面遷移の処理 ▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲
-
-	ui->ChoiseOperation(keydown);	//選択肢のキー操作
 
 	return;
 }
@@ -662,6 +664,8 @@ void End()
 
 	End_Draw();	//描画処理
 
+	ui->ChoiseOperation(keydown);	//選択肢のキー操作
+
 	//▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼ 画面遷移の処理 ▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼
 	if (keydown->IsKeyDown(KEY_INPUT_RETURN))	//エンターキーを押された瞬間
 	{
@@ -673,11 +677,8 @@ void End()
 		{
 			GameEnd_Flg = true;	//ゲーム終了
 		}
-
 	}
 	//▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲ 画面遷移の処理 ▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲
-
-	ui->ChoiseOperation(keydown);	//選択肢のキー操作
 
 	return;
 }
@@ -732,7 +733,7 @@ void Chenge()
 	{
 		GameSceneNow = GameSceneNext;	//次の画面にする
 		Init();							//初期化
-		StrSet_Flg = false;				//文字列未設定
+		ui->ChoiseClear();				//選択肢の内容をクリアする
 	}
 
 
@@ -778,7 +779,7 @@ void SceneChenge(int beforscene, int nextscene)
 //タイトル画面の描画処理
 void Title_Draw()
 {
-	back->Draw(0, 0);	//背景画像描画
+	back->Draw(0, 0,(int)TITLE_BACK);	//背景画像描画
 
 	title->Draw(0, GAME_HEIGHT / 2 - title->GetHeight(0) / 2);		//画面中央にタイトル描画
 
@@ -854,6 +855,9 @@ void Battle_Draw()
 //エンド画面の描画処理
 void End_Draw()
 {
+
+	back->Draw(0, 0, (int)END_BACK);	//背景画像描画
+
 	font->SetSize(BIG_FONTSIZE);	//フォントサイズを大きくする
 
 	ui->ChoiseDraw(GAME_WIDTH / 2, DEFAULT_TEXT_Y, "TITLE", "END");	//選択肢描画

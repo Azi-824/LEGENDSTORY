@@ -308,12 +308,6 @@ void UI::ChoiseOperation(KEYDOWN *keydown)
 			++this->Str_itr;		//次の要素へ
 		}
 	}
-	else if (keydown->IsKeyDownOne(KEY_INPUT_RETURN))	//エンターキーを押されたら
-	{
-		//選択肢の内容を消去
-		this->Str.clear();	
-		this->Str_itr = this->Str.begin();
-	}
 	return;
 }
 
@@ -321,4 +315,12 @@ void UI::ChoiseOperation(KEYDOWN *keydown)
 std::vector<std::string>::iterator UI::GetNowChoise()
 {
 	return this->Str_itr;
+}
+
+//選択肢の内容をクリアする
+void UI::ChoiseClear(void)
+{
+	this->Str.clear();
+	this->Str_itr = this->Str.begin();
+	return;
 }

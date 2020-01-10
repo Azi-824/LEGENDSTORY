@@ -80,7 +80,7 @@ public:
 
 	void ChoiseOperation(KEYDOWN *);			//選択肢のキー操作を行う
 	std::vector<std::string>::iterator GetNowChoise();	//現在選択している要素を取得する
-
+	void ChoiseClear();							//選択肢の内容をクリアする
 
 	//選択肢を描画
 	template<typename...Args>
@@ -132,11 +132,11 @@ public:
 			if (*this->Str_itr == work[i].c_str())		//選択している内容だったら
 			{
 				this->DrawUiImage(x - ui_width, y + i * Height + UI_IMAGE_SPACE, (int)UI_ARROW);	//ui画像（横向き三角）描画
-				DrawFormatString(x, y + i * Height, GetColor(255, 255, 255), "%s", work[i].c_str());	//文字描画
+				DrawFormatString(x, y + i * Height, GetColor(0, 0, 0), "%s", work[i].c_str());	//文字描画
 			}
 			else								//それ以外だったら
 			{
-				DrawFormatString(x, y + i * Height, GetColor(255, 255, 255), "%s", work[i].c_str());	//文字描画
+				DrawFormatString(x, y + i * Height, GetColor(0, 0, 0), "%s", work[i].c_str());	//文字描画
 			}
 		}
 
