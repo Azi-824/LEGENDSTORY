@@ -76,12 +76,48 @@ public:
 
 	//選択肢を描画
 	template<typename...Args>
-	void ChoiseDraw(Args...args)
+	void ChoiseDraw(int x,int y,Args...args)
 	{
 		
-		std::vector<std::string> Str = { args... };
+		int Size = sizeof...(args);	//要素数取得
 
-		DrawFormatString(400, 400, GetColor(255, 255, 255), "%s", Str[0].c_str());
+		std::vector<std::string> Str = { args... };		//展開
+
+		//▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼ 幅、高さ取得処理ここから ▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼
+		int Strlen = 0;		//文字列の長さ取得用
+		int Width = 0;
+		std::string MaxStr;	//最も長い文字列
+
+		MaxStr = Str[0].c_str();	//最も長い文字列に最初の文字列をセット
+
+		for (int i = 0; i < Str.size(); i++)
+		{
+			if (MaxStr < Str[i].c_str())	//現在の最大文字列よりも大きければ
+			{
+				MaxStr = Str[i].c_str();	//最大文字列を更新
+			}
+		}
+
+		//文字列の長さを取得
+		Strlen = strlen(MaxStr.c_str());
+
+		Width = GetDrawStringWidth(MaxStr.c_str(), Strlen);	//横幅取得
+
+		x -= (Width / 2);	//文字の幅の半分を引いて、真ん中に描画する
+
+		int Height = GetFontSize();	//高さ取得
+		//▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲ 幅、高さ取得処理ここまで ▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲
+
+
+		//描画処理
+		for (int i = 0; i < Size; ++i)		//要素数の分ループ
+		{
+			DrawFormatString(x, y + i * Height, GetColor(255, 255, 255), "%s", Str[i].c_str());	//文字描画
+		}
+
+		//vectorのメモリ解放を行う
+		std::vector<std::string> v;			//空のvectorを作成する
+		Str.swap(v);						//空と中身を入れ替える
 
 		return;
 

@@ -285,15 +285,3 @@ int UI::GetUiImageHeight(int type)
 {
 	return this->UiImage->GetHeight(type);
 }
-
-//‘I‘ðŽˆ‚ð•`‰æ
-//template<typename...Args>
-//void UI::ChoiseDraw(Args...args)
-//{
-//	std::vector<std::string> Str = { args... };
-//
-//	DrawFormatString(400, 400, GetColor(255, 255, 255), "%s", Str[0].c_str());
-//
-//	return;
-//
-//}

@@ -806,7 +806,7 @@ void Title_Draw()
 
 	//text->Draw(GAME_WIDTH / 2 - text->GetWidth() / 2, DEFAULT_TEXT_Y, str.size(), false);	//•`‰æi–îˆó‚È‚µj
 
-	ui->ChoiseDraw<const char *>("START", "END");
+	ui->ChoiseDraw(GAME_WIDTH / 2 , DEFAULT_TEXT_Y,"START", "END");	//‘I‘ðŽˆ•`‰æ
 
 	ui->DrawUiImage(GAME_WIDTH / 2, DEFAULT_TEXT_Y ,(int)UI_ARROW);	//‘I‘ð—p‚ÌUI•`‰æ
 	
