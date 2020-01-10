@@ -17,6 +17,9 @@
 #define	UI_NAME R"(ui1.png)"		//uiの名前
 
 #define UI_IMAGE_SPACE	10			//ui画像（横向き三角）の位置調整用数値
+#define STR_SPACE	100			//文字列間の空白
+
+#define DEFAULT_TEXT_Y	450		//デフォルトのテキスト描画位置（Y座標）
 
 //######################### 列挙型 #################################
 enum UI_IMAGE_TYPE

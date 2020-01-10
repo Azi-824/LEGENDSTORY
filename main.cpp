@@ -6,15 +6,10 @@
 #include "main.hpp"
 #include "FPS.hpp"
 #include "KEYDOWN.hpp"
-#include "IMAGE.hpp"
-#include "ANIMATION.hpp"
 #include "FONT.hpp"
-#include "CHARACTOR.hpp"
-#include "COLLISION.hpp"
 #include "PLAYER.hpp"
 #include "MAP.hpp"
 #include "MAPIMAGE.hpp"
-#include "TEXTSTR.hpp"
 #include "MUSIC.hpp"
 #include "ENEMY.hpp"
 #include "UI.hpp"
@@ -37,7 +32,6 @@ MUSIC *se;							//SE
 EFFECT *effect;						//エフェクト
 
 FONT *font;							//フォント
-TEXTSTR *text;						//文字列
 UI *ui;								//UI
 DATA *data;							//データ
 MESSAGE *msg;						//メッセージ
@@ -111,7 +105,6 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 	font = new FONT(MY_FONT_DIR, MY_FONT_NAME, FONT_NAME);			//フォントを生成
 	if (font->GetIsLoad() == false) { return -1; }					//読み込み失敗時
 
-	text = new TEXTSTR();	//テキスト作成
 	data = new DATA();
 	msg = new MESSAGE();	//メッセージ
 
@@ -903,7 +896,6 @@ void Delete_Class()
 	delete fps;				//FPSを破棄
 	delete keydown;			//keydownを破棄
 	delete font;			//fontを破棄
-	delete text;			//textを破棄
 	delete bgm;				//bgmを破棄
 	delete se;				//seを破棄
 	delete player;			//playerを破棄
