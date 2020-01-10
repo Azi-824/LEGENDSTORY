@@ -804,11 +804,9 @@ void Title_Draw()
 		font->SetSize(BIG_FONTSIZE);		//フォントサイズを大きくする
 	}
 
-	//text->Draw(GAME_WIDTH / 2 - text->GetWidth() / 2, DEFAULT_TEXT_Y, str.size(), false);	//描画（矢印なし）
+	ui->ChoiseOperation(keydown);	//選択肢のキー操作
 
 	ui->ChoiseDraw(GAME_WIDTH / 2 , DEFAULT_TEXT_Y,"START", "END");	//選択肢描画
-
-	ui->DrawUiImage(GAME_WIDTH / 2, DEFAULT_TEXT_Y ,(int)UI_ARROW);	//選択用のUI描画
 	
 	return;
 

@@ -33,6 +33,11 @@ UI::~UI()
 	delete this->StateWindow;	//StateWindow破棄
 	delete this->UiImage;			//Ui破棄
 
+	//vectorのメモリ解放を行う
+	std::vector<std::string> v;			//空のvectorを作成する
+	this->Str.swap(v);						//空と中身を入れ替える
+
+
 	return;
 }
 
@@ -284,4 +289,36 @@ int UI::GetUiImageWidth(int type)
 int UI::GetUiImageHeight(int type)
 {
 	return this->UiImage->GetHeight(type);
+}
+
+//選択肢のキー操作を行う
+void UI::ChoiseOperation(KEYDOWN *keydown)
+{
+	if (keydown->IsKeyDownOne(KEY_INPUT_W))		//Wキーを押されたら
+	{
+		if (this->Str_itr != this->Str.begin())	//最初の要素を選択していなければ
+		{
+			--this->Str_itr;		//前の要素へ
+		}
+	}
+	else if (keydown->IsKeyDownOne(KEY_INPUT_S))	//Sキーを押されたら
+	{
+		if (this->Str_itr != this->Str.end() - 1)	//最後の要素を選択していなければ
+		{
+			++this->Str_itr;		//次の要素へ
+		}
+	}
+	else if (keydown->IsKeyDownOne(KEY_INPUT_RETURN))	//エンターキーを押されたら
+	{
+		//選択肢の内容を消去
+		this->Str.clear();	
+		this->Str_itr = this->Str.begin();
+	}
+	return;
+}
+
+//現在選択している要素を取得する
+std::vector<std::string>::iterator UI::GetNowChoise()
+{
+	return this->Str_itr;
 }

@@ -16,6 +16,8 @@
 
 #define	UI_NAME R"(ui1.png)"		//uiの名前
 
+#define UI_IMAGE_SPACE	10			//ui画像（横向き三角）の位置調整用数値
+
 //######################### 列挙型 #################################
 enum UI_IMAGE_TYPE
 {
@@ -38,6 +40,9 @@ private:
 	int BattleCommadType;			//選択したバトルコマンドの種類
 
 	int ChoiseMenu;					//メニュー画面で選択した内容
+
+	std::vector<std::string> Str;	//文字列格納用
+	std::vector<std::string>::iterator Str_itr;	//イテレータ
 
 public:
 
@@ -70,9 +75,12 @@ public:
 	//UI画像関係
 	void DrawUiImage(int, int,int);				//UIの画像を描画する
 	bool AddUiImage(const char *, const char *,int);//ui画像を追加する
-
 	int GetUiImageWidth(int);					//ui画像の横幅取得
 	int GetUiImageHeight(int);					//ui画像の高さ取得
+
+	void ChoiseOperation(KEYDOWN *);			//選択肢のキー操作を行う
+	std::vector<std::string>::iterator GetNowChoise();	//現在選択している要素を取得する
+
 
 	//選択肢を描画
 	template<typename...Args>
@@ -81,20 +89,27 @@ public:
 		
 		int Size = sizeof...(args);	//要素数取得
 
-		std::vector<std::string> Str = { args... };		//展開
+		std::vector<std::string> work = { args... };		//展開
+		std::vector<std::string>::iterator work_itr = work.begin();	//先頭要素
+
+		if (this->Str.empty())	//展開した内容を格納していなければ
+		{
+			this->Str = work;	//展開した内容を格納
+			this->Str_itr = this->Str.begin();	//先頭要素
+		}
 
 		//▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼ 幅、高さ取得処理ここから ▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼
 		int Strlen = 0;		//文字列の長さ取得用
 		int Width = 0;
 		std::string MaxStr;	//最も長い文字列
 
-		MaxStr = Str[0].c_str();	//最も長い文字列に最初の文字列をセット
+		MaxStr = work[0].c_str();	//最も長い文字列に最初の文字列をセット
 
-		for (int i = 0; i < Str.size(); i++)
+		for (int i = 0; i < (int)work.size(); i++)
 		{
-			if (MaxStr < Str[i].c_str())	//現在の最大文字列よりも大きければ
+			if (MaxStr < work[i].c_str())	//現在の最大文字列よりも大きければ
 			{
-				MaxStr = Str[i].c_str();	//最大文字列を更新
+				MaxStr = work[i].c_str();	//最大文字列を更新
 			}
 		}
 
@@ -106,18 +121,28 @@ public:
 		x -= (Width / 2);	//文字の幅の半分を引いて、真ん中に描画する
 
 		int Height = GetFontSize();	//高さ取得
+
+		int ui_width = this->UiImage->GetWidth((int)UI_ARROW);	//ui画像の横幅取得
 		//▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲ 幅、高さ取得処理ここまで ▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲
 
 
 		//描画処理
 		for (int i = 0; i < Size; ++i)		//要素数の分ループ
 		{
-			DrawFormatString(x, y + i * Height, GetColor(255, 255, 255), "%s", Str[i].c_str());	//文字描画
+			if (*this->Str_itr == work[i].c_str())		//選択している内容だったら
+			{
+				this->DrawUiImage(x - ui_width, y + i * Height + UI_IMAGE_SPACE, (int)UI_ARROW);	//ui画像（横向き三角）描画
+				DrawFormatString(x, y + i * Height, GetColor(255, 255, 255), "%s", work[i].c_str());	//文字描画
+			}
+			else								//それ以外だったら
+			{
+				DrawFormatString(x, y + i * Height, GetColor(255, 255, 255), "%s", work[i].c_str());	//文字描画
+			}
 		}
 
 		//vectorのメモリ解放を行う
 		std::vector<std::string> v;			//空のvectorを作成する
-		Str.swap(v);						//空と中身を入れ替える
+		work.swap(v);						//空と中身を入れ替える
 
 		return;
 
