@@ -34,9 +34,6 @@ class MENU
 {
 private :
 	
-	std::vector<std::string> Menu;					//メニューウィンドウの文字列
-	std::vector<std::string>::iterator Menu_itr;	//文字列のハンドル
-
 	int X;			//メニューウィンドウの枠のX座標
 	int Y;			//メニューウィンドウの枠のY座標
 
@@ -53,16 +50,9 @@ public:
 
 	~MENU();		//デストラクタ
 
-	void Draw(int,int);	//描画
 	void DrawChoise(int,PLAYER *,ITEM *[]);	//選んだ内容ごとの描画
 
-	void Next();	//選択要素を次へ移動
-
-	void Back();	//選択要素を前へ移動
-
 	void Reset();	//選択要素をリセット
-
-	std::vector<std::string>::iterator GetChoiseMenu();	//選択した項目を取得
 
 	void SetIsChoise(bool);	//選択されているか設定
 

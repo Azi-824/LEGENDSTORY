@@ -51,7 +51,6 @@ public:
 	~UI();					//デストラクタ
 
 	//メニューウィンドウ関連
-	void MenuOperation(KEYDOWN *,bool);	//メニューウィンドウのキーボード操作
 	void DrawMenu(int ,int);				//メニューウィンドウ描画
 	void SetChoiseMenu(std::vector<std::string>::iterator);	//メニューで選んだ内容を設定する
 	int GetChoiseMenu();				//メニュー画面での選択内容を取得

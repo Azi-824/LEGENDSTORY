@@ -341,11 +341,16 @@ void Play()
 	//▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼ メニュー毎の処理ここから ▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼
 	if (player->GetIsMenu())			//メニュー描画中だったら
 	{
+		ui->ChoiseOperation(keydown);		//メニューウィンドウキー操作
 
-		if (ui->GetIsChoise())			//メニューを選択したら
+		if (keydown->IsKeyDownOne(KEY_INPUT_RETURN))	//エンターキーを押されたら
 		{
-			ui->DrawChoiseMenu(player,item);			//選んだメニュー毎の描画処理
+			ui->SetChoiseMenu(ui->GetNowChoise());		//選択した内容をセット
 
+		}
+
+		if (ui->GetIsChoise())	//選択していたら
+		{
 			if (ui->GetChoiseMenu() == (int)MENU_SAVE)	//セーブを選んだ時
 			{
 				if (Wait())			//待ち時間が過ぎたら
@@ -355,35 +360,6 @@ void Play()
 				}
 
 			}
-
-			//switch (ui->GetChoiseMenu())		//メニュー画面での選択内容ごとに処理を分ける
-			//{
-
-			//case (int)MENU_STATUS:			//ステータスを選んだ時の処理ここから
-
-			//	break;						//ステータスを選んだときの処理ここまで
-
-			//case (int)MENU_ITEM:			//アイテムを選んだ時の処理ここから
-
-			//	break;						//アイテムを選んだ時の処理ここまで
-
-			//case (int)MENU_SOUBI:			//装備を選んだ時の処理ここから
-
-			//	break;						//装備を選んだ時の処理ここまで
-
-			//case (int)MENU_SAVE:			//セーブを選んだ時の処理ここから
-
-				//if (Wait())			//待ち時間が過ぎたら
-				//{
-				//	data->Save(player, PLAYER_DATA_DIR, PLAYER_DATA_NAME);		//プレイヤー情報のセーブ
-				//	player->SetIsMenu(false);		//メニュー描画終了
-				//}
-
-			//	break;						//セーブを選んだ時の処理ここまで
-
-			//default:
-			//	break;
-			//}
 
 		}
 
@@ -805,8 +781,6 @@ void Play_Draw()
 
 	player->DrawAnime();		//アニメーション描画
 
-	ui->MenuOperation(keydown, player->GetIsMenu());	//メニュー画面操作
-
 	static int Player_X = 0, Player_Y = 0;	//プレイヤーのX位置とY位置
 
 	player->GetNowPos(&Player_X, &Player_Y);//プレイヤーの現在位置を取得
@@ -814,6 +788,11 @@ void Play_Draw()
 	if (player->GetIsMenu())	//メニュー描画中なら
 	{
 		ui->DrawMenu(Player_X,Player_Y);	//メニューウィンドウ描画
+
+		if (ui->GetIsChoise())	//選択したら
+		{
+			ui->DrawChoiseMenu(player, item);	//選択肢毎の描画
+		}
 	}
 
 	return;
