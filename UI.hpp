@@ -15,15 +15,11 @@
 #define UI_DIR	R"(.\MY_IMG\Ui\)"	//UI画像のフォルダ名
 
 #define	UI_NAME R"(ui1.png)"		//uiの名前
-#define UI_START_NAME R"(start.png)"	//startの画像の名前
-#define UI_END_NAME	R"(end.png)"		//endの画像の名前
 
 //######################### 列挙型 #################################
 enum UI_IMAGE_TYPE
 {
-	UI_ARROW,		//選択用の画像
-	UI_START,		//STARTの画像
-	UI_END			//ENDの画像
+	UI_ARROW		//選択用の画像
 };
 
 //######################### クラス定義 #####################################
@@ -37,7 +33,7 @@ private:
 
 	STATEWINDOW *StateWindow;		//ステータスウィンドウ
 
-	IMAGE *UiImage;						//uiの画像
+	IMAGE *UiImage;					//uiの画像
 
 	int BattleCommadType;			//選択したバトルコマンドの種類
 
@@ -77,5 +73,18 @@ public:
 
 	int GetUiImageWidth(int);					//ui画像の横幅取得
 	int GetUiImageHeight(int);					//ui画像の高さ取得
+
+	//選択肢を描画
+	template<typename...Args>
+	void ChoiseDraw(Args...args)
+	{
+		
+		std::vector<std::string> Str = { args... };
+
+		DrawFormatString(400, 400, GetColor(255, 255, 255), "%s", Str[0].c_str());
+
+		return;
+
+	}
 
 };

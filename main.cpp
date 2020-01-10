@@ -129,8 +129,6 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 	player->SetInit();	//‰ŠúÝ’è
 
 	ui = new UI();		//UIì¬
-	if (ui->AddUiImage(UI_DIR, UI_START_NAME,(int)UI_START) == false) { return -1; }	//start‰æ‘œ’Ç‰Á
-	if (ui->AddUiImage(UI_DIR, UI_END_NAME,(int)UI_END) == false) { return -1; }	//end‰æ‘œ’Ç‰Á
 
 	//“GŠÖŒW
 	enemy[(int)SLIME] = new ENEMY(ENEMY_DIR, ENEMY_NAME_SLIME);	//ƒXƒ‰ƒCƒ€ì¬
@@ -806,13 +804,11 @@ void Title_Draw()
 		font->SetSize(BIG_FONTSIZE);		//ƒtƒHƒ“ƒgƒTƒCƒY‚ð‘å‚«‚­‚·‚é
 	}
 
-	text->Draw(GAME_WIDTH / 2 - text->GetWidth() / 2, DEFAULT_TEXT_Y, str.size(), false);	//•`‰æi–îˆó•t‚«j
+	//text->Draw(GAME_WIDTH / 2 - text->GetWidth() / 2, DEFAULT_TEXT_Y, str.size(), false);	//•`‰æi–îˆó‚È‚µj
 
-	ui->DrawUiImage(GAME_WIDTH / 2 - ui->GetUiImageWidth((int)UI_START) / 2, 450, (int)UI_START);	//start‰æ‘œ‚Ì•`‰æ
+	ui->ChoiseDraw<const char *>("START", "END");
 
-	ui->DrawUiImage(GAME_WIDTH / 2 - ui->GetUiImageWidth((int)UI_START) / 2, 500, (int)UI_END);		//end‰æ‘œ‚Ì•`‰æ
-
-	ui->DrawUiImage(GAME_WIDTH / 2 - ui->GetUiImageWidth((int)UI_START) / 2, DEFAULT_TEXT_Y,(int)UI_ARROW);	//‘I‘ð—p‚ÌUI•`‰æ
+	ui->DrawUiImage(GAME_WIDTH / 2, DEFAULT_TEXT_Y ,(int)UI_ARROW);	//‘I‘ð—p‚ÌUI•`‰æ
 	
 	return;
 
