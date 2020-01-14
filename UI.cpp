@@ -10,7 +10,7 @@
 UI::UI()
 {
 
-	this->UiImage = new IMAGE(UI_DIR, UI_NAME);	//uiの画像作成
+	this->UiImage = new IMAGE(UI_DIR, UI_TRIANGLENAME);	//uiの画像作成
 
 	this->menuwindow = new MENU();			//メニューウィンドウ作成
 
@@ -48,28 +48,28 @@ void UI::DrawMenu(int x,int y)
 	if (x <= MENU_WINDOW_CHENGE_POSX && y >= MENU_WINDOW_CHENGE_POSY)	//左上にいるときは
 	{
 		//プレイヤーの右上にメニューウィンドウを表示
-		this->DrawWindow(x + MENU_WINDOW_RELATIVE_X, y + (-MENU_WINDOW_RELATIVE_Y), MENU_WINDOW_WIDTH, MENU_WINDOW_HEIGHT);	//ウィンドウ描画
-		this->ChoiseDraw(x + MENU_WINDOW_RELATIVE_X, y + (-MENU_WINDOW_RELATIVE_Y),false ,GetColor(255,255,255),"ステータス", "アイテム", "装備", "操作説明","セーブ");
+		this->DrawWindow(x + MENU_WINDOW_RELATIVE_X - this->UiImage->GetWidth((int)UI_TRIANGLE_MINI), y + (-MENU_WINDOW_RELATIVE_Y), MENU_WINDOW_WIDTH, MENU_WINDOW_HEIGHT);	//ウィンドウ描画
+		this->ChoiseDraw(x + MENU_WINDOW_RELATIVE_X, y + (-MENU_WINDOW_RELATIVE_Y),(int)UI_TRIANGLE_MINI,false ,GetColor(255,255,255),"ステータス", "アイテム", "装備", "操作説明","セーブ");
 
 	}
 	else if (x <= MENU_WINDOW_CHENGE_POSX && y <= MENU_WINDOW_CHENGE_POSY)	//左側にいるときは
 	{
 		//プレイヤーの右下にメニューウィンドウを表示
-		this->DrawWindow(x + MENU_WINDOW_RELATIVE_X, y + MENU_WINDOW_RELATIVE_Y, MENU_WINDOW_WIDTH, MENU_WINDOW_HEIGHT);	//ウィンドウ描画
-		this->ChoiseDraw(x + MENU_WINDOW_RELATIVE_X, y + MENU_WINDOW_RELATIVE_Y, false, GetColor(255, 255, 255), "ステータス", "アイテム", "装備", "操作説明", "セーブ");
+		this->DrawWindow((x + MENU_WINDOW_RELATIVE_X) - this->UiImage->GetWidth((int)UI_TRIANGLE_MINI), y + MENU_WINDOW_RELATIVE_Y, MENU_WINDOW_WIDTH, MENU_WINDOW_HEIGHT);	//ウィンドウ描画
+		this->ChoiseDraw(x + MENU_WINDOW_RELATIVE_X, y + MENU_WINDOW_RELATIVE_Y, (int)UI_TRIANGLE_MINI,false, GetColor(255, 255, 255), "ステータス", "アイテム", "装備", "操作説明", "セーブ");
 	}
 	else if (x >= MENU_WINDOW_CHENGE_POSX && y <= MENU_WINDOW_CHENGE_POSY)	//上側にいるときは
 	{
 		//プレイヤーの左下にメニューウィンドウを表示
-		this->DrawWindow(x + (-MENU_WINDOW_RELATIVE_X), y + MENU_WINDOW_RELATIVE_Y, MENU_WINDOW_WIDTH, MENU_WINDOW_HEIGHT);	//ウィンドウ描画
-		this->ChoiseDraw(x + (-MENU_WINDOW_RELATIVE_X), y + MENU_WINDOW_RELATIVE_Y, false, GetColor(255, 255, 255), "ステータス", "アイテム", "装備", "操作説明", "セーブ");
+		this->DrawWindow(x + (-MENU_WINDOW_RELATIVE_X) - this->UiImage->GetWidth((int)UI_TRIANGLE_MINI), y + MENU_WINDOW_RELATIVE_Y, MENU_WINDOW_WIDTH, MENU_WINDOW_HEIGHT);	//ウィンドウ描画
+		this->ChoiseDraw(x + (-MENU_WINDOW_RELATIVE_X), y + MENU_WINDOW_RELATIVE_Y, (int)UI_TRIANGLE_MINI, false, GetColor(255, 255, 255), "ステータス", "アイテム", "装備", "操作説明", "セーブ");
 
 	}
 	else			//それ以外の時は
 	{
 		//プレイヤーの左上にメニューウィンドウを表示
-		this->DrawWindow(x + (-MENU_WINDOW_RELATIVE_X), y + (-MENU_WINDOW_RELATIVE_Y), MENU_WINDOW_WIDTH, MENU_WINDOW_HEIGHT);	//ウィンドウ描画
-		this->ChoiseDraw(x + (-MENU_WINDOW_RELATIVE_X), y + (-MENU_WINDOW_RELATIVE_Y), false, GetColor(255, 255, 255), "ステータス", "アイテム", "装備", "操作説明", "セーブ");
+		this->DrawWindow(x + (-MENU_WINDOW_RELATIVE_X) - this->UiImage->GetWidth((int)UI_TRIANGLE_MINI), y + (-MENU_WINDOW_RELATIVE_Y), MENU_WINDOW_WIDTH, MENU_WINDOW_HEIGHT);	//ウィンドウ描画
+		this->ChoiseDraw(x + (-MENU_WINDOW_RELATIVE_X), y + (-MENU_WINDOW_RELATIVE_Y), (int)UI_TRIANGLE_MINI, false, GetColor(255, 255, 255), "ステータス", "アイテム", "装備", "操作説明", "セーブ");
 	}
 
 	return;

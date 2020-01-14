@@ -125,7 +125,9 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 	if (data->LoadPlayer(player, PLAYER_DATA_DIR, PLAYER_DATA_NAME) == false) { return -1; }	//読み込み失敗
 	player->SetInit();	//初期設定
 
+	//UI関係
 	ui = new UI();		//UI作成
+	if (ui->AddUiImage(UI_DIR, UI_TRIANGLE_MINI_NAME, (int)UI_TRIANGLE_MINI) == false) { return -1; }	//横向き三角（ミニ）の画像の追加
 
 	//敵関係
 	enemy[(int)SLIME] = new ENEMY(ENEMY_DIR, ENEMY_NAME_SLIME);	//スライム作成
@@ -756,7 +758,7 @@ void Title_Draw()
 
 	font->SetSize(BIG_FONTSIZE);		//フォントサイズを大きくする
 
-	ui->ChoiseDraw(GAME_WIDTH / 2 , DEFAULT_TEXT_Y,true,GetColor(255,255,255),"START", "END");	//選択肢描画
+	ui->ChoiseDraw(GAME_WIDTH / 2 , DEFAULT_TEXT_Y,(int)UI_TRIANGLE,true,GetColor(255,255,255),"START", "END");	//選択肢描画
 	
 	return;
 
@@ -890,7 +892,7 @@ void End_Draw()
 
 	font->SetSize(BIG_FONTSIZE);	//フォントサイズを大きくする
 
-	ui->ChoiseDraw(GAME_WIDTH / 2, DEFAULT_TEXT_Y, true ,GetColor(0,0,0),"TITLE", "END");	//選択肢描画
+	ui->ChoiseDraw(GAME_WIDTH / 2, DEFAULT_TEXT_Y, (int)UI_TRIANGLE,true ,GetColor(0,0,0),"TITLE", "END");	//選択肢描画
 
 	return;
 

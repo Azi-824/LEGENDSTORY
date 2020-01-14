@@ -13,17 +13,20 @@
 //######################### マクロ定義 #####################################
 #define UI_DIR	R"(.\MY_IMG\Ui\)"	//UI画像のフォルダ名
 
-#define	UI_NAME R"(ui1.png)"		//uiの名前
+#define	UI_TRIANGLENAME		  R"(triangle1.png)"	//横向き三角の名前
+#define	UI_TRIANGLE_MINI_NAME R"(triangle2.png)"	//横向き三角（ミニ）の名前
 
 #define UI_IMAGE_SPACE	10			//ui画像（横向き三角）の位置調整用数値
-#define STR_SPACE	100				//文字列間の空白
+#define UI_IMAGE_MINI_SPACE 5		//ミニサイズ版
+#define STR_SPACE		100			//文字列間の空白
 
 #define DEFAULT_TEXT_Y	450			//デフォルトのテキスト描画位置（Y座標）
 
 //######################### 列挙型 #################################
 enum UI_IMAGE_TYPE
 {
-	UI_TRIANGLE		//横向き三角の画像
+	UI_TRIANGLE,		//横向き三角の画像
+	UI_TRIANGLE_MINI	//横向き三角（ミニ）の画像
 };
 
 //######################### クラス定義 #####################################
@@ -86,12 +89,13 @@ public:
 	/*
 	引数：int：x位置
 	引数：int：y位置
+	引数：int：描画するUI画像の種類
 	引数：bool：真ん中に描画するか
 	引数：unsignd int：描画色
 	引数：Args：描画文字列
 	*/
 	template<typename...Args>
-	void ChoiseDraw(int x,int y,bool center,unsigned int color, Args...args)
+	void ChoiseDraw(int x,int y,int kind ,bool center,unsigned int color, Args...args)
 	{
 		
 		int Size = sizeof...(args);	//要素数取得
@@ -132,7 +136,7 @@ public:
 
 		int Height = GetFontSize();	//高さ取得
 
-		int ui_width = this->UiImage->GetWidth((int)UI_TRIANGLE);	//ui画像の横幅取得
+		int ui_width = this->UiImage->GetWidth(kind);	//ui画像の横幅取得
 		//▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲ 幅、高さ取得処理ここまで ▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲
 
 
@@ -141,7 +145,14 @@ public:
 		{
 			if (*this->Str_itr == work[i].c_str())		//選択している内容だったら
 			{
-				this->DrawUiImage(x - ui_width, y + i * Height + UI_IMAGE_SPACE, (int)UI_TRIANGLE);	//ui画像（横向き三角）描画
+				if (kind == (int)UI_TRIANGLE)	//通常サイズの場合
+				{
+					this->DrawUiImage(x - ui_width, y + i * Height + UI_IMAGE_SPACE, kind);	//ui画像描画
+				}
+				else							//ミニサイズの場合
+				{
+					this->DrawUiImage(x - ui_width, y + i * Height + UI_IMAGE_MINI_SPACE, kind);	//ui画像描画
+				}
 				DrawFormatString(x, y + i * Height, color, "%s", work[i].c_str());	//文字描画
 			}
 			else								//それ以外だったら
