@@ -22,6 +22,8 @@
 #define MY_IMG_NAME_BATTLE_NORMAL	R"(\pipo-battlebg011.jpg)"//通常戦闘画面の背景画像の名前
 #define MY_IMG_NAME_BATTLE_NIGHT	R"(\pipo-battlebg020.jpg)"//戦闘画面（夜）の背景画像の名前
 
+#define SETUMEI_NAME			R"(\setumei_dumy.jpg)"		  //説明画像の名前
+
 //########## マクロ定義：エラーメッセージ##########
 #define IMAGE_ERROR_TITLE "IMAGE_ERROR"					//エラータイトル
 #define IMAGE_ERROR_MSG	"画像が読み込めませんでした"	//エラーメッセージ

@@ -49,27 +49,27 @@ void UI::DrawMenu(int x,int y)
 	{
 		//プレイヤーの右上にメニューウィンドウを表示
 		this->DrawWindow(x + MENU_WINDOW_RELATIVE_X, y + (-MENU_WINDOW_RELATIVE_Y), MENU_WINDOW_WIDTH, MENU_WINDOW_HEIGHT);	//ウィンドウ描画
-		this->ChoiseDraw(x + MENU_WINDOW_RELATIVE_X, y + (-MENU_WINDOW_RELATIVE_Y),false ,GetColor(255,255,255),"ステータス", "アイテム", "装備", "セーブ");
+		this->ChoiseDraw(x + MENU_WINDOW_RELATIVE_X, y + (-MENU_WINDOW_RELATIVE_Y),false ,GetColor(255,255,255),"ステータス", "アイテム", "装備", "操作説明","セーブ");
 
 	}
 	else if (x <= MENU_WINDOW_CHENGE_POSX && y <= MENU_WINDOW_CHENGE_POSY)	//左側にいるときは
 	{
 		//プレイヤーの右下にメニューウィンドウを表示
 		this->DrawWindow(x + MENU_WINDOW_RELATIVE_X, y + MENU_WINDOW_RELATIVE_Y, MENU_WINDOW_WIDTH, MENU_WINDOW_HEIGHT);	//ウィンドウ描画
-		this->ChoiseDraw(x + MENU_WINDOW_RELATIVE_X, y + MENU_WINDOW_RELATIVE_Y, false, GetColor(255, 255, 255), "ステータス", "アイテム", "装備", "セーブ");
+		this->ChoiseDraw(x + MENU_WINDOW_RELATIVE_X, y + MENU_WINDOW_RELATIVE_Y, false, GetColor(255, 255, 255), "ステータス", "アイテム", "装備", "操作説明", "セーブ");
 	}
 	else if (x >= MENU_WINDOW_CHENGE_POSX && y <= MENU_WINDOW_CHENGE_POSY)	//上側にいるときは
 	{
 		//プレイヤーの左下にメニューウィンドウを表示
 		this->DrawWindow(x + (-MENU_WINDOW_RELATIVE_X), y + MENU_WINDOW_RELATIVE_Y, MENU_WINDOW_WIDTH, MENU_WINDOW_HEIGHT);	//ウィンドウ描画
-		this->ChoiseDraw(x + (-MENU_WINDOW_RELATIVE_X), y + MENU_WINDOW_RELATIVE_Y, false, GetColor(255, 255, 255), "ステータス", "アイテム", "装備", "セーブ");
+		this->ChoiseDraw(x + (-MENU_WINDOW_RELATIVE_X), y + MENU_WINDOW_RELATIVE_Y, false, GetColor(255, 255, 255), "ステータス", "アイテム", "装備", "操作説明", "セーブ");
 
 	}
 	else			//それ以外の時は
 	{
 		//プレイヤーの左上にメニューウィンドウを表示
 		this->DrawWindow(x + (-MENU_WINDOW_RELATIVE_X), y + (-MENU_WINDOW_RELATIVE_Y), MENU_WINDOW_WIDTH, MENU_WINDOW_HEIGHT);	//ウィンドウ描画
-		this->ChoiseDraw(x + (-MENU_WINDOW_RELATIVE_X), y + (-MENU_WINDOW_RELATIVE_Y), false, GetColor(255, 255, 255), "ステータス", "アイテム", "装備", "セーブ");
+		this->ChoiseDraw(x + (-MENU_WINDOW_RELATIVE_X), y + (-MENU_WINDOW_RELATIVE_Y), false, GetColor(255, 255, 255), "ステータス", "アイテム", "装備", "操作説明", "セーブ");
 	}
 
 	return;
@@ -94,6 +94,10 @@ void UI::SetChoiseMenu(std::vector<std::string>::iterator itr)
 		this->ChoiseMenu = (int)MENU_SOUBI;		//装備
 		//return;
 	}
+	else if (*itr == "操作説明")			//操作説明を選んだ場合
+	{
+		this->ChoiseMenu = (int)MENU_SETUMEI;	//操作説明
+	}
 	else if (*itr == "セーブ")			//セーブを選んだ場合
 	{
 		this->ChoiseMenu = (int)MENU_SAVE;		//セーブ
@@ -117,14 +121,6 @@ void UI::ResetMenu()
 	this->ChoiseMenu = -1;		//選択内容をリセット
 	this->Str_itr = this->Str.begin();	//先頭要素へ
 	this->menuwindow->Reset();	//選択内容リセット
-}
-
-//選んだ内容ごとのメニューを描画
-void UI::DrawChoiseMenu(PLAYER *player,ITEM *item[])
-{
-	this->DrawWindow(0, 0, GAME_WIDTH, GAME_HEIGHT);
-	this->menuwindow->DrawChoise(this->ChoiseMenu,player,item);
-	return;
 }
 
 //選択されているか取得

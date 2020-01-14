@@ -26,6 +26,7 @@ enum MENU_COMMAND
 	MENU_STATUS,		//ステータス
 	MENU_ITEM,			//アイテム
 	MENU_SOUBI,			//装備
+	MENU_SETUMEI,		//操作説明
 	MENU_SAVE			//セーブ
 };
 
@@ -49,8 +50,6 @@ public:
 	MENU();			//コンストラクタ
 
 	~MENU();		//デストラクタ
-
-	void DrawChoise(int,PLAYER *,ITEM *[]);	//選んだ内容ごとの描画
 
 	void Reset();	//選択要素をリセット
 

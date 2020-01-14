@@ -14,7 +14,7 @@
 #define GAME_HEIGHT	600		//画面の縦の大きさ
 #define GAME_COLOR	32		//画面のカラービット
 
-#define GAME_WINDOW_NAME	"GAME TITLE"		//ウィンドウのタイトル
+#define GAME_WINDOW_NAME	"LEGEND STORY"		//ウィンドウのタイトル
 #define GAME_WINDOW_MODECHANGE	TRUE			//TRUE：ウィンドウモード / FALSE：フルスクリーン
 
 #define SET_WINDOW_ST_MODE_DEFAULT			0	//デフォルト
@@ -64,6 +64,7 @@ void Title_Draw();			//タイトル画面の描画処理
 void Play_Draw();			//プレイ画面の描画処理
 void Battle_Draw();			//戦闘画面の描画処理
 void End_Draw();			//エンド画面の描画処理
+void Setumei_Draw();		//説明画面の描画処理
 
 void Enconte();				//敵との遭遇処理
 bool Wait();				//待つ処理

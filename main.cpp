@@ -25,6 +25,7 @@ KEYDOWN *keydown = new KEYDOWN();							//KEYDOWNクラスのオブジェクトを生成
 IMAGE *title;						//タイトル画像
 IMAGE *back;						//背景画像
 IMAGE *back_battle;					//戦闘画面の背景画像
+IMAGE *setumei;						//説明画像
 
 MUSIC *bgm;							//BGM
 MUSIC *se;							//SE
@@ -94,6 +95,9 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 	if (back_battle->GetIsLoad() == false) { return -1; }					//読み込み失敗
 	back_battle->AddImage(MY_IMG_DIR_BATTLE, MY_IMG_NAME_BATTLE_NIGHT,(int)NIGHT);		//戦闘画面（夜）の背景画像の読み込み
 	if (back_battle->GetIsLoad() == false) { return -1; }					//読み込み失敗
+
+	setumei = new IMAGE(MY_IMG_DIR_BACK, SETUMEI_NAME);		//説明画像の読み込み
+	if (setumei->GetIsLoad() == false) { return -1; }		//読み込み失敗
 
 	//音関係
 	bgm = new MUSIC(MY_MUSIC_DIR_BGM, MY_MUSIC_NAME_BGM,BGM_KIND);			//BGMを生成
@@ -778,15 +782,71 @@ void Play_Draw()
 
 	player->GetNowPos(&Player_X, &Player_Y);//プレイヤーの現在位置を取得
 
+
+	//▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼ メニュー描画処理ここから ▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼
 	if (player->GetIsMenu())	//メニュー描画中なら
 	{
 		ui->DrawMenu(Player_X,Player_Y);	//メニューウィンドウ描画
 
 		if (ui->GetIsChoise())	//選択したら
 		{
-			ui->DrawChoiseMenu(player, item);	//選択肢毎の描画
+
+			ui->DrawWindow(0, 0, GAME_WIDTH, GAME_HEIGHT);	//ウィンドウ描画
+
+			switch (ui->GetChoiseMenu())		//選んだ内容ごとに処理を分ける
+			{
+
+			case (int)MENU_STATUS:	//ステータスを選んだ時の処理ここから
+
+				//ステータス描画
+				DrawFormatString(0, 0, GetColor(255, 255, 255), "%s\nHP %d/%d\nMP %d/%d\nATK %d\nDEF %d\nSPD %d",
+					player->GetName(), player->GetHP(), player->GetMaxHP(), player->GetMP(), player->GetMaxMP(), player->GetATK(), player->GetDEF(), player->GetSPD());
+
+				break;				//ステータスを選んだ時の処理ここまで
+
+			case (int)MENU_ITEM:	//アイテムを選んだ時の処理ここから
+
+				//アイテム描画処理
+				for (int cnt = 0; cnt < ITEM_KIND; ++cnt)
+				{
+					DrawFormatString(0, cnt * MENU_SPACE, GetColor(255, 255, 255), "%s %s\n", item[cnt]->GetName(), item[cnt]->GetDescription());
+				}
+
+				break;				//アイテムを選んだときの処理ここまで
+
+			case (int)MENU_SOUBI:	//装備を選んだ時の処理ここから
+
+				//装備描画処理
+				DrawString(400, 300, "装備描画", GetColor(255, 255, 255));	//文字描画
+
+				break;				//装備を選んだ時の処理ここまで
+
+			case (int)MENU_SETUMEI:	//操作説明を選んだ時の処理ここから
+
+				//操作説明描画処理
+				setumei->Draw(0, 0);	//説明画像の描画
+				if (keydown->IsKeyDownOne(KEY_INPUT_E))	//Eキーを押されたら
+				{
+					ui->ResetMenu();	//メニューリセット
+				}
+
+				break;				//操作説明を選んだ時の処理ここまで
+
+			case (int)MENU_SAVE:	//セーブを選んだ時の処理ここから
+
+				//セーブ時の描画処理
+				DrawString(400, 300, "セーブ中です。", GetColor(255, 255, 255));	//文字描画
+
+				break;				//セーブを選んだ時の処理ここまで
+
+			default:
+				break;
+			}
+
+
 		}
 	}
+	//▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲ メニュー描画処理ここまで ▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲
 
 	return;
 
@@ -836,6 +896,13 @@ void End_Draw()
 
 	return;
 
+}
+
+//説明の描画処理
+void Setumei_Draw()
+{
+	setumei->Draw(0, 0);	//説明画像描画
+	return;
 }
 
 //敵との遭遇処理
@@ -893,6 +960,7 @@ bool Wait()
 void Delete_Class()
 {
 	delete title;			//titleを破棄
+	delete setumei;			//setumeiを破棄
 	delete fps;				//FPSを破棄
 	delete keydown;			//keydownを破棄
 	delete font;			//fontを破棄
