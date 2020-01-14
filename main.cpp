@@ -56,16 +56,14 @@ int BattleActMsgCnt = 0;		//行動メッセージカウント
 int BattleActMsgCntMax = 60;	//行動メッセージの表示時間
 
 int MapKind[MAP_DATA_TATE_KIND][MAP_DATA_YOKO_KIND];			//マップの種類
-int MapNowPos[2] = {0};								//現在のマップのX位置とY位置を格納
+int MapNowPos[2] = {0};											//現在のマップのX位置とY位置を格納
 
 int ChengeDrawCount = 0;	//フェードアウト処理に使用
 
 int EncounteEnemyType = 0;	//遭遇した敵の種類
 int Turn = (int)MY_TURN;	//ターン
 
-bool StrSet_Flg = false;					//文字列設定フラグ
-bool GameEnd_Flg = false;					//ゲーム終了フラグ
-
+bool GameEnd_Flg = false;	//ゲーム終了フラグ
 
 //########## プログラムで最初に実行される関数 ##########
 int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine, int nCmdShow)
@@ -100,8 +98,8 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 	if (setumei->GetIsLoad() == false) { return -1; }		//読み込み失敗
 
 	//音関係
-	bgm = new MUSIC(MY_MUSIC_DIR_BGM, MY_MUSIC_NAME_BGM,BGM_KIND);			//BGMを生成
-	if (bgm->GetIsLoad() == false) { return -1; }					//読み込み失敗時
+	bgm = new MUSIC(MY_MUSIC_DIR_BGM, MY_MUSIC_NAME_BGM,BGM_KIND);		//BGMを生成
+	if (bgm->GetIsLoad() == false) { return -1; }						//読み込み失敗時
 	se = new MUSIC(MY_MUSIC_DIR_SE, MY_SE_NAME_LEVUP, SE_KIND);			//SEを生成
 	if (se->GetIsLoad() == false) { return -1; }						//読み込み失敗時
 	se->ChengePlayType(DX_PLAYTYPE_BACK);								//再生方法変更
@@ -159,13 +157,13 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 	//初期設定
 	for (int i = 0; i < ENEMY_KIND; ++i)		//敵の数だけ初期設定
 	{
-		enemy[i]->StateSetInit();		//初期設定
+		enemy[i]->StateSetInit();				//初期設定
 	}
 
 	//アイテム関係
 	for (int i = 0; i < ITEM_KIND; ++i)	//アイテムの種類分だけ
 	{
-		item[i] = new ITEM();	//アイテム作成
+		item[i] = new ITEM();			//アイテム作成
 	}
 	//アイテムデータをcsvファイルから読み込み
 	if (data->LoadItem(item, ITEM_DATA_DIR, ITEM_DATA_NAME) == false) { return -1; }		//読み込み失敗
@@ -176,25 +174,25 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 
 	//▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼ マップデータ読み込み開始 ▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼
 	mapdata[MAP_1][FIRST_LAYER] = new MAP();	//一層目のマップデータ生成
-	if (mapdata[MAP_1][FIRST_LAYER]->LoadCsv(MY_MAP_DIR, MY_MAP_1_1) == false) { return -1; }		//読み込み失敗
+	if (mapdata[MAP_1][FIRST_LAYER]->LoadCsv(MY_MAP_DIR, MY_MAP_1_1) == false) { return -1; }	//読み込み失敗
 
 	mapdata[MAP_1][SECOND_LAYER] = new MAP();	//二層目のマップデータ生成
 	if (mapdata[MAP_1][SECOND_LAYER]->LoadCsv(MY_MAP_DIR, MY_MAP_1_2) == false) { return -1; }	//読み込み失敗
 
 	mapdata[MAP_2][FIRST_LAYER] = new MAP();	//一層目のマップデータ生成
-	if (mapdata[MAP_2][FIRST_LAYER]->LoadCsv(MY_MAP_DIR, MY_MAP_2_1) == false) { return -1; }		//読み込み失敗
+	if (mapdata[MAP_2][FIRST_LAYER]->LoadCsv(MY_MAP_DIR, MY_MAP_2_1) == false) { return -1; }	//読み込み失敗
 
 	mapdata[MAP_2][SECOND_LAYER] = new MAP();	//二層目のマップデータ生成
 	if (mapdata[MAP_2][SECOND_LAYER]->LoadCsv(MY_MAP_DIR, MY_MAP_2_2) == false) { return -1; }	//読み込み失敗
 
 	mapdata[MAP_3][FIRST_LAYER] = new MAP();	//一層目のマップデータ生成
-	if (mapdata[MAP_3][FIRST_LAYER]->LoadCsv(MY_MAP_DIR, MY_MAP_3_1) == false) { return -1; }		//読み込み失敗
+	if (mapdata[MAP_3][FIRST_LAYER]->LoadCsv(MY_MAP_DIR, MY_MAP_3_1) == false) { return -1; }	//読み込み失敗
 
 	mapdata[MAP_3][SECOND_LAYER] = new MAP();	//二層目のマップデータ生成
 	if (mapdata[MAP_3][SECOND_LAYER]->LoadCsv(MY_MAP_DIR, MY_MAP_3_2) == false) { return -1; }	//読み込み失敗
 
 	mapdata[MAP_4][FIRST_LAYER] = new MAP();	//一層目のマップデータ生成
-	if (mapdata[MAP_4][FIRST_LAYER]->LoadCsv(MY_MAP_DIR, MY_MAP_4_1) == false) { return -1; }		//読み込み失敗
+	if (mapdata[MAP_4][FIRST_LAYER]->LoadCsv(MY_MAP_DIR, MY_MAP_4_1) == false) { return -1; }	//読み込み失敗
 
 	mapdata[MAP_4][SECOND_LAYER] = new MAP();	//二層目のマップデータ生成
 	if (mapdata[MAP_4][SECOND_LAYER]->LoadCsv(MY_MAP_DIR, MY_MAP_4_2) == false) { return -1; }	//読み込み失敗
@@ -272,7 +270,7 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 
 		//▲▲▲▲▲ゲームのシーンここまで▲▲▲▲▲
 
-		//fps->Draw(0, 0);				//FPSの処理[描画]
+		//fps->Draw(0, 0);			//FPSの処理[描画]
 
 		ScreenFlip();				//モニタのリフレッシュレートの速さで裏画面を再描画
 
