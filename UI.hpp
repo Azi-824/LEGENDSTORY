@@ -9,22 +9,21 @@
 #include "COMMAND.hpp"
 #include "MENU.hpp"
 #include "PLAYER.hpp"
-#include "ITEM.hpp"
-
+//
 //######################### マクロ定義 #####################################
 #define UI_DIR	R"(.\MY_IMG\Ui\)"	//UI画像のフォルダ名
 
 #define	UI_NAME R"(ui1.png)"		//uiの名前
 
 #define UI_IMAGE_SPACE	10			//ui画像（横向き三角）の位置調整用数値
-#define STR_SPACE	100			//文字列間の空白
+#define STR_SPACE	100				//文字列間の空白
 
-#define DEFAULT_TEXT_Y	450		//デフォルトのテキスト描画位置（Y座標）
+#define DEFAULT_TEXT_Y	450			//デフォルトのテキスト描画位置（Y座標）
 
 //######################### 列挙型 #################################
 enum UI_IMAGE_TYPE
 {
-	UI_ARROW		//選択用の画像
+	UI_TRIANGLE		//横向き三角の画像
 };
 
 //######################### クラス定義 #####################################
@@ -69,9 +68,9 @@ public:
 
 	//ステータスウィンドウ関連
 	void SetStateWindow(int,int,int);	//ステータスウィンドウの設定をする
-	void DrawStateWindow();			//ステータスウィンドウ描画
+	void DrawStateWindow();				//ステータスウィンドウ描画
 
-	void DrawWindow(int,int,int,int);				//ウィンドウを描画する
+	void DrawWindow(int,int,int,int);	//ウィンドウを描画する
 
 	//UI画像関係
 	void DrawUiImage(int, int,int);				//UIの画像を描画する
@@ -133,7 +132,7 @@ public:
 
 		int Height = GetFontSize();	//高さ取得
 
-		int ui_width = this->UiImage->GetWidth((int)UI_ARROW);	//ui画像の横幅取得
+		int ui_width = this->UiImage->GetWidth((int)UI_TRIANGLE);	//ui画像の横幅取得
 		//▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲ 幅、高さ取得処理ここまで ▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲
 
 
@@ -142,7 +141,7 @@ public:
 		{
 			if (*this->Str_itr == work[i].c_str())		//選択している内容だったら
 			{
-				this->DrawUiImage(x - ui_width, y + i * Height + UI_IMAGE_SPACE, (int)UI_ARROW);	//ui画像（横向き三角）描画
+				this->DrawUiImage(x - ui_width, y + i * Height + UI_IMAGE_SPACE, (int)UI_TRIANGLE);	//ui画像（横向き三角）描画
 				DrawFormatString(x, y + i * Height, color, "%s", work[i].c_str());	//文字描画
 			}
 			else								//それ以外だったら

@@ -752,9 +752,9 @@ void SceneChenge(int beforscene, int nextscene)
 //タイトル画面の描画処理
 void Title_Draw()
 {
-	back->Draw(0, 0,(int)TITLE_BACK);	//背景画像描画
+	back->Draw(GAME_LEFT, GAME_TOP,(int)TITLE_BACK);	//背景画像描画
 
-	title->Draw(0, GAME_HEIGHT / 2 - title->GetHeight(0) / 2);		//画面中央にタイトル描画
+	title->Draw(GAME_LEFT, GAME_HEIGHT / 2 - title->GetHeight(0) / 2);		//画面中央にタイトル描画
 
 	font->SetSize(BIG_FONTSIZE);		//フォントサイズを大きくする
 
@@ -791,7 +791,7 @@ void Play_Draw()
 		if (ui->GetIsChoise())	//選択したら
 		{
 
-			ui->DrawWindow(0, 0, GAME_WIDTH, GAME_HEIGHT);	//ウィンドウ描画
+			ui->DrawWindow(GAME_LEFT, GAME_TOP, GAME_WIDTH, GAME_HEIGHT);	//ウィンドウ描画
 
 			switch (ui->GetChoiseMenu())		//選んだ内容ごとに処理を分ける
 			{
@@ -799,7 +799,7 @@ void Play_Draw()
 			case (int)MENU_STATUS:	//ステータスを選んだ時の処理ここから
 
 				//ステータス描画
-				DrawFormatString(0, 0, GetColor(255, 255, 255), "%s\nHP %d/%d\nMP %d/%d\nATK %d\nDEF %d\nSPD %d",
+				DrawFormatString(GAME_LEFT, GAME_TOP, GetColor(255, 255, 255), "%s\nHP %d/%d\nMP %d/%d\nATK %d\nDEF %d\nSPD %d",
 					player->GetName(), player->GetHP(), player->GetMaxHP(), player->GetMP(), player->GetMaxMP(), player->GetATK(), player->GetDEF(), player->GetSPD());
 
 				break;				//ステータスを選んだ時の処理ここまで
@@ -809,7 +809,7 @@ void Play_Draw()
 				//アイテム描画処理
 				for (int cnt = 0; cnt < ITEM_KIND; ++cnt)
 				{
-					DrawFormatString(0, cnt * MENU_SPACE, GetColor(255, 255, 255), "%s %s\n", item[cnt]->GetName(), item[cnt]->GetDescription());
+					DrawFormatString(GAME_LEFT, cnt * MENU_SPACE, GetColor(255, 255, 255), "%s %s\n", item[cnt]->GetName(), item[cnt]->GetDescription());
 				}
 
 				break;				//アイテムを選んだときの処理ここまで
@@ -824,7 +824,7 @@ void Play_Draw()
 			case (int)MENU_SETUMEI:	//操作説明を選んだ時の処理ここから
 
 				//操作説明描画処理
-				setumei->Draw(0, 0);	//説明画像の描画
+				setumei->Draw(GAME_LEFT, GAME_TOP);	//説明画像の描画
 				if (keydown->IsKeyDownOne(KEY_INPUT_E))	//Eキーを押されたら
 				{
 					ui->ResetMenu();	//メニューリセット
@@ -856,7 +856,7 @@ void Play_Draw()
 void Battle_Draw()
 {
 
-	back_battle->Draw(0, 0);	//背景画像を描画
+	back_battle->Draw(GAME_LEFT, GAME_TOP);	//背景画像を描画
 
 	enemy[EncounteEnemyType]->Draw();	//敵描画
 
@@ -888,7 +888,7 @@ void Battle_Draw()
 void End_Draw()
 {
 
-	back->Draw(0, 0, (int)END_BACK);	//背景画像描画
+	back->Draw(GAME_LEFT, GAME_TOP, (int)END_BACK);	//背景画像描画
 
 	font->SetSize(BIG_FONTSIZE);	//フォントサイズを大きくする
 
@@ -896,13 +896,6 @@ void End_Draw()
 
 	return;
 
-}
-
-//説明の描画処理
-void Setumei_Draw()
-{
-	setumei->Draw(0, 0);	//説明画像描画
-	return;
 }
 
 //敵との遭遇処理

@@ -5,8 +5,6 @@
 
 //######################### ヘッダファイル読み込み ######################
 #include "DxLib.h"
-#include "PLAYER.hpp"
-#include "ITEM.hpp"
 #include <vector>
 #include <string>
 
