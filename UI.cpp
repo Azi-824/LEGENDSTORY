@@ -170,34 +170,9 @@ int UI::GetChoiseCommamd()
 	return this->BattleCommadType;
 }
 
-//戦闘画面の操作
-void UI::BattleOperation(KEYDOWN *keydown)
-{
-	//コマンド選択処理
-	if (keydown->IsKeyDownOne(KEY_INPUT_D))			//Dキーを押された瞬間
-	{
-		this->BattleCommand->Next();	//次の要素へ
-	}
-	else if (keydown->IsKeyDownOne(KEY_INPUT_A))	//Aキーを押された瞬間
-	{
-		this->BattleCommand->Back();	//前の要素へ
-	}
-
-	//コマンド決定処理
-	if (keydown->IsKeyDownOne(KEY_INPUT_RETURN))		//エンターキーが押された瞬間
-	{
-		auto itr = this->BattleCommand->GetCommand();	//選択しているコマンドを取得
-		this->SetBattleFlg(itr);	//バトルフラグ設定
-	}
-
-	return;
-}
-
 //バトルコマンド描画
 void UI::DrawCommand()
 {
-
-	//this->BattleCommand->Draw();	//描画
 
 	this->DrawWindow(280, 400, 120, 100);
 

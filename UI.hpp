@@ -63,7 +63,6 @@ public:
 	void SetBattleFlg(std::vector<std::string>::iterator);	//戦闘画面で選んだコマンドのフラグを設定する
 	int GetChoiseCommamd();									//選択したコマンドの種類を取得
 	void DrawCommand();										//バトルコマンド描画
-	void BattleOperation(KEYDOWN *);						//戦闘画面の操作
 	void BattleInit();										//バトルコマンドで使用する要素を初期化する
 
 	//ステータスウィンドウ関連
@@ -77,6 +76,7 @@ public:
 	int GetUiImageWidth(int);					//ui画像の横幅取得
 	int GetUiImageHeight(int);					//ui画像の高さ取得
 
+	//選択肢関係
 	void ChoiseOperation(KEYDOWN *);			//選択肢のキー操作を行う
 	std::vector<std::string>::iterator GetNowChoise();	//現在選択している要素を取得する
 	void ChoiseClear();							//選択肢の内容をクリアする

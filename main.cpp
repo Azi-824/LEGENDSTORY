@@ -388,6 +388,7 @@ void Battle()
 
 	Battle_Draw();			//描画処理
 
+
 	switch (BattleStageNow)		//現在のバトル状態
 	{
 
@@ -395,7 +396,13 @@ void Battle()
 
 		if (Turn == (int)MY_TURN)		//味方のターンだったら
 		{
-			ui->BattleOperation(keydown);			//戦闘画面のキー操作
+
+			ui->ChoiseOperation(keydown);		//バトルコマンドキー操作
+
+			if (keydown->IsKeyDownOne(KEY_INPUT_RETURN))	//エンターキーを押されたら
+			{
+				ui->SetBattleFlg(ui->GetNowChoise());	//選択したコマンドを設定
+			}
 
 			//▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼ バトルコマンド毎の処理ここから ▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼
 			switch (ui->GetChoiseCommamd())		//どのコマンドを選んだか
