@@ -528,9 +528,12 @@ void Battle()
 			{
 				player->SetHP((player->GetHP()) - (player->GetRecvDamege()));		//味方にダメージを与える
 
-				//ui->SetStateWindow(player->GetLevel(),player->GetHP(),player->GetMP());	//描画ステータス更新
+				if (player->GetHP() <= 0)			//HPが0以下になったら
+				{
+					player->SetHP(0);				//HPを0にする
+				}
 
-				BattleStageNow = (int)DRAW_DAMEGE;		//ダメージ描画状態へ
+				BattleStageNow = (int)DRAW_DAMEGE;	//ダメージ描画状態へ
 
 			}
 
@@ -602,8 +605,6 @@ void Battle()
 				se->Play((int)LEVELUP_SE);		//レベルアップのSEを鳴らす
 				se->SetIsPlayEnd(true);			//再生終了
 			}
-
-			//ui->SetStateWindow(player->GetLevel(), player->GetHP(), player->GetMP());	//描画ステータス更新
 
 		}
 
@@ -725,8 +726,6 @@ void Chenge()
 void Init()
 {
 	ChengeDrawCount = 0;		//フェードイン用初期化
-
-	//ui->SetStateWindow(player->GetLevel(), player->GetHP(), player->GetMP());	//描画ステータス更新
 
 	se->SetIsPlayEnd(false);	//SEの再生状態リセット
 
