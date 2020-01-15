@@ -401,7 +401,7 @@ void Battle()
 
 			if (keydown->IsKeyDownOne(KEY_INPUT_RETURN))	//エンターキーを押されたら
 			{
-				ui->SetBattleFlg(ui->GetNowChoise());	//選択したコマンドを設定
+				ui->SetBattleFlg();	//選択したコマンドを設定
 			}
 
 			//▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼ バトルコマンド毎の処理ここから ▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼

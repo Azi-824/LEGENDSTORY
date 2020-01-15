@@ -130,8 +130,10 @@ void UI::BattleInit()
 }
 
 //戦闘画面で選んだコマンドを設定する
-void UI::SetBattleFlg(std::vector<std::string>::iterator choise_itr)
+void UI::SetBattleFlg()
 {
+
+	auto choise_itr = this->Str_itr;
 	if (*choise_itr == "こうげき")			//攻撃を選んだ場合
 	{
 		this->BattleCommadType = COMMANDE_ATACK;	//攻撃
@@ -170,9 +172,9 @@ int UI::GetChoiseCommamd()
 void UI::DrawCommand()
 {
 
-	this->DrawWindow(280, 400, 120, 100);
+	this->DrawWindow(150, 400, 120, 100);
 
-	this->ChoiseDraw(300, 400, (int)UI_TRIANGLE_MINI, false, GetColor(255, 255, 255), "こうげき", "ぼうぎょ", "まほう", "アイテム", "にげる");
+	this->ChoiseDraw(180, 400, (int)UI_TRIANGLE_MINI, false, GetColor(255, 255, 255), "こうげき", "ぼうぎょ", "まほう", "アイテム", "にげる");
 
 	return;
 }
@@ -181,20 +183,32 @@ void UI::DrawCommand()
 void UI::DrawStateWindow(PLAYER *player)
 {
 
-	DrawBox(0, 400, 250, 500, GetColor(255, 0, 0), true);
+	this->DrawWindow(STA_WIN_X, STA_WIN_Y,STA_WIN_WIDTH, STA_WIN_HEIGHT, GetColor(255, 0, 0));	//ウィンドウ描画
+	
+	DrawString(STA_TXT_X, STA_TXT_Y, "Lev HP MP", GetColor(255, 255, 255));	//ステータス目次描画
 
-	DrawString(0, 400, "Lev HP MP", GetColor(255, 255, 255));
-
-	DrawFormatString(0, 420, GetColor(255, 255, 255), "%d %3d %3d", player->GetLevel(), player->GetHP(), player->GetMP());
+	//ステータス描画
+	DrawFormatString(STA_TXT_X, STA_TXT_Y + STA_SPACE, GetColor(255, 255, 255), "%d %3d %3d", player->GetLevel(), player->GetHP(), player->GetMP());
 
 }
 
 //ウィンドウを描画する
-void UI::DrawWindow(int x,int y,int width,int height)
+void UI::DrawWindow(int x, int y, int width, int height)
 {
 	SetDrawBlendMode(DX_BLENDMODE_ALPHA, 255 * 80 / 100);	//描画モードを透過ありに変更、透過率80％に設定
 
 	DrawBox(x, y, x + width, y + height, GetColor(0, 0, 0), TRUE);	//塗りつぶしありで四角形を描画
+
+	SetDrawBlendMode(DX_BLENDMODE_NOBLEND, 0);				//描画モードを通常に戻す
+
+}
+
+//ウィンドウを描画する(色指定)
+void UI::DrawWindow(int x,int y,int width,int height,unsigned int color)
+{
+	SetDrawBlendMode(DX_BLENDMODE_ALPHA, 255 * 80 / 100);	//描画モードを透過ありに変更、透過率80％に設定
+
+	DrawBox(x, y, x + width, y + height, color, TRUE);	//塗りつぶしありで四角形を描画
 
 	SetDrawBlendMode(DX_BLENDMODE_NOBLEND, 0);				//描画モードを通常に戻す
 

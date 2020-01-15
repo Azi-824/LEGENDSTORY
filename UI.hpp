@@ -18,6 +18,16 @@
 #define UI_IMAGE_MINI_SPACE 5		//ミニサイズ版
 #define STR_SPACE		100			//文字列間の空白
 
+//ステータスウィンドウ関係
+#define STA_WIN_X		0			//ステータスウィンドウ描画開始X位置
+#define STA_WIN_Y		400			//ステータスウィンドウ描画開始Y位置
+#define STA_WIN_WIDTH	150			//ステータスウィンドウの横幅
+#define STA_WIN_HEIGHT	100			//ステータスウィンドウの高さ
+#define STA_TXT_X		10			//ステータスの文字の描画開始X位置
+#define STA_TXT_Y		400			//ステータスの文字の描画開始Y位置
+#define STA_SPACE		20			//ステータス文字の間隔
+
+
 #define DEFAULT_TEXT_Y	450			//デフォルトのテキスト描画位置（Y座標）
 
 //######################### 列挙型 #################################
@@ -57,15 +67,16 @@ public:
 	bool GetIsChoise(void);				//選択されているか取得
 
 	//バトルコマンド関連
-	void SetBattleFlg(std::vector<std::string>::iterator);	//戦闘画面で選んだコマンドのフラグを設定する
-	int GetChoiseCommamd();									//選択したコマンドの種類を取得
-	void DrawCommand();										//バトルコマンド描画
-	void BattleInit();										//バトルコマンドで使用する要素を初期化する
+	void SetBattleFlg();				//戦闘画面で選んだコマンドのフラグを設定する
+	int GetChoiseCommamd();				//選択したコマンドの種類を取得
+	void DrawCommand();					//バトルコマンド描画
+	void BattleInit();					//バトルコマンドで使用する要素を初期化する
 
 	//ステータスウィンドウ関連
 	void DrawStateWindow(PLAYER *);				//ステータスウィンドウ描画
 
-	void DrawWindow(int,int,int,int);			//ウィンドウを描画する
+	void DrawWindow(int, int, int, int);				//ウィンドウを描画する
+	void DrawWindow(int,int,int,int,unsigned int);		//ウィンドウを描画する(色指定)
 
 	//UI画像関係
 	void DrawUiImage(int, int,int);				//UIの画像を描画する
