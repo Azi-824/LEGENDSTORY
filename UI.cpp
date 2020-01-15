@@ -171,10 +171,9 @@ int UI::GetChoiseCommamd()
 //バトルコマンド描画
 void UI::DrawCommand()
 {
-
 	this->DrawWindow(150, 400, 120, 100);
 
-	this->ChoiseDraw(180, 400, (int)UI_TRIANGLE_MINI, false, GetColor(255, 255, 255), "こうげき", "ぼうぎょ", "まほう", "アイテム", "にげる");
+	this->ChoiseDraw(170, 400, (int)UI_TRIANGLE_MINI, false, GetColor(255, 255, 255), "こうげき", "ぼうぎょ", "まほう", "アイテム", "にげる");
 
 	return;
 }
