@@ -5,7 +5,6 @@
 
 //######################### ヘッダファイル読み込み #############################
 #include "DxLib.h"
-#include "COMMAND.hpp"
 #include "MENU.hpp"
 #include "PLAYER.hpp"
 //
@@ -34,8 +33,6 @@ class UI
 private:
 
 	MENU *menuwindow;				//メニューウィンドウ
-
-	COMMAND *BattleCommand;			//バトルコマンド
 
 	IMAGE *UiImage;					//uiの画像
 

@@ -154,7 +154,6 @@
     <ClCompile Include="ANIMATION.cpp" />
     <ClCompile Include="CHARACTOR.cpp" />
     <ClCompile Include="COLLISION.cpp" />
-    <ClCompile Include="COMMAND.cpp" />
     <ClCompile Include="DATA.cpp" />
     <ClCompile Include="EFFECT.cpp" />
     <ClCompile Include="ENEMY.cpp" />
@@ -176,7 +175,6 @@
     <ClInclude Include="ANIMATION.hpp" />
     <ClInclude Include="CHARACTOR.hpp" />
     <ClInclude Include="COLLISION.hpp" />
-    <ClInclude Include="COMMAND.hpp" />
     <ClInclude Include="DATA.hpp" />
     <ClInclude Include="EFFECT.hpp" />
     <ClInclude Include="ENEMY.hpp" />

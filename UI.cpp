@@ -14,8 +14,6 @@ UI::UI()
 
 	this->menuwindow = new MENU();			//メニューウィンドウ作成
 
-	this->BattleCommand = new COMMAND();	//バトルコマンド作成
-
 	this->BattleCommadType = -1;			//選択したバトルコマンドの種類を初期化
 
 	this->ChoiseMenu = -1;					//メニュー画面での選択内容を初期化
@@ -27,7 +25,6 @@ UI::UI()
 UI::~UI()
 {
 	delete this->menuwindow;	//menuwindow破棄
-	delete this->BattleCommand;	//BattleCommand破棄
 	delete this->UiImage;			//Ui破棄
 
 	//vectorのメモリ解放を行う
@@ -129,7 +126,6 @@ bool UI::GetIsChoise(void)
 //バトルコマンドで使用する要素を初期化する
 void UI::BattleInit()
 {
-	this->BattleCommand->Init();	//選択要素の初期化
 	this->BattleCommadType = -1;	//選択したコマンド内容リセット
 }
 
