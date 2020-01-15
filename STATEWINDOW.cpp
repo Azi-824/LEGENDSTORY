@@ -27,7 +27,7 @@ void STATEWINDOW::Draw()
 
 	SetDrawBlendMode(DX_BLENDMODE_NOBLEND, 0);				//描画モードを通常に戻す
 
-	SetFontSize(MSG_FONTSIZE);		//フォントサイズを大きくする
+	//SetFontSize(MSG_FONTSIZE);		//フォントサイズを大きくする
 
 	auto itr = this->GetNumPos();	//描画数字取得
 
@@ -36,16 +36,16 @@ void STATEWINDOW::Draw()
 	++itr;	//次の要素へ
 
 	if (*itr <= 0)		//HPが0以下になったら
-		DrawString(this->GetX(), this->GetY() + 40, "HP:0", GetColor(255, 255, 255));		//HPの描画を0にする
+		DrawString(this->GetX(), this->GetY() + 20, "HP:0", GetColor(255, 255, 255));		//HPの描画を0にする
 	else				//HPが0より多かったら
- 	DrawFormatString(this->GetX(), this->GetY() + 40, GetColor(255, 255, 255), "HP:%d", *itr);	//HP描画
+ 	DrawFormatString(this->GetX(), this->GetY() + 20, GetColor(255, 255, 255), "HP:%d", *itr);	//HP描画
 		
 	++itr;	//次の要素へ
 	if (*itr <= 0)			//MPが0以下になったら
 		DrawString(this->GetX(), this->GetY(), "MP:0", GetColor(255, 255, 255));		//MP描画0
 	else				//MPが0より多かったら
-	DrawFormatString(this->GetX(), this->GetY() + 80, GetColor(255, 255, 255), "MP:%d", *itr);	//MP描画
+	DrawFormatString(this->GetX(), this->GetY() + 40, GetColor(255, 255, 255), "MP:%d", *itr);	//MP描画
 
-	SetFontSize(DEFAULT_FONTSIZE);		//フォントサイズ変更(元のサイズに戻す)
+	//SetFontSize(DEFAULT_FONTSIZE);		//フォントサイズ変更(元のサイズに戻す)
 
 }

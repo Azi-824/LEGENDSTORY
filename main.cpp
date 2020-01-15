@@ -521,7 +521,7 @@ void Battle()
 			{
 				player->SetHP((player->GetHP()) - (player->GetRecvDamege()));		//味方にダメージを与える
 
-				ui->SetStateWindow(player->GetLevel(),player->GetHP(),player->GetMP());	//描画ステータス更新
+				//ui->SetStateWindow(player->GetLevel(),player->GetHP(),player->GetMP());	//描画ステータス更新
 
 				BattleStageNow = (int)DRAW_DAMEGE;		//ダメージ描画状態へ
 
@@ -596,7 +596,7 @@ void Battle()
 				se->SetIsPlayEnd(true);			//再生終了
 			}
 
-			ui->SetStateWindow(player->GetLevel(), player->GetHP(), player->GetMP());	//描画ステータス更新
+			//ui->SetStateWindow(player->GetLevel(), player->GetHP(), player->GetMP());	//描画ステータス更新
 
 		}
 
@@ -719,7 +719,7 @@ void Init()
 {
 	ChengeDrawCount = 0;		//フェードイン用初期化
 
-	ui->SetStateWindow(player->GetLevel(), player->GetHP(), player->GetMP());	//描画ステータス更新
+	//ui->SetStateWindow(player->GetLevel(), player->GetHP(), player->GetMP());	//描画ステータス更新
 
 	se->SetIsPlayEnd(false);	//SEの再生状態リセット
 
@@ -860,7 +860,7 @@ void Battle_Draw()
 
 	enemy[EncounteEnemyType]->Draw();	//敵描画
 
-	ui->DrawWindow(MSG_WINDOW_START_X, MSG_WINDOW_START_Y, MSG_WINDOW_WIDTH, MSG_WINDOW_HEIGHT);		//ウィンドウの描画
+	//ui->DrawWindow(MSG_WINDOW_START_X, MSG_WINDOW_START_Y, MSG_WINDOW_WIDTH, MSG_WINDOW_HEIGHT);		//ウィンドウの描画
 
 	//メッセージ関係描画
 	msg->DrawBattleMsg(BattleStageNow, Turn, ui->GetChoiseCommamd(), player, enemy[EncounteEnemyType],keydown->IsKeyDownOne(KEY_INPUT_RETURN));
@@ -878,7 +878,7 @@ void Battle_Draw()
 
 	}
 
-	ui->DrawStateWindow();		//ステータスウィンドウ描画
+	ui->DrawStateWindow(player);		//ステータスウィンドウ描画
 
 	return;
 

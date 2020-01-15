@@ -14,8 +14,6 @@ UI::UI()
 
 	this->menuwindow = new MENU();			//メニューウィンドウ作成
 
-	this->StateWindow = new STATEWINDOW();	//ステータスウィンドウ作成
-
 	this->BattleCommand = new COMMAND();	//バトルコマンド作成
 
 	this->BattleCommadType = -1;			//選択したバトルコマンドの種類を初期化
@@ -30,12 +28,11 @@ UI::~UI()
 {
 	delete this->menuwindow;	//menuwindow破棄
 	delete this->BattleCommand;	//BattleCommand破棄
-	delete this->StateWindow;	//StateWindow破棄
 	delete this->UiImage;			//Ui破棄
 
 	//vectorのメモリ解放を行う
 	std::vector<std::string> v;			//空のvectorを作成する
-	this->Str.swap(v);						//空と中身を入れ替える
+	this->Str.swap(v);					//空と中身を入れ替える
 
 
 	return;
@@ -200,26 +197,25 @@ void UI::BattleOperation(KEYDOWN *keydown)
 void UI::DrawCommand()
 {
 
-	this->BattleCommand->Draw();	//描画
+	//this->BattleCommand->Draw();	//描画
 
-	return;
-}
+	this->DrawWindow(280, 400, 120, 100);
 
-//ステータスウィンドウの設定
-void UI::SetStateWindow(int level ,int hp,int mp)
-{
-	std::vector<int> set;
-	set.push_back(level);	//レベル取得
-	set.push_back(hp);//HP取得
-	set.push_back(mp);//MP取得
-	this->StateWindow->SetText(set);	//Level、HP、MPを設定
+	this->ChoiseDraw(300, 400, (int)UI_TRIANGLE_MINI, false, GetColor(255, 255, 255), "こうげき", "ぼうぎょ", "まほう", "アイテム", "にげる");
+
 	return;
 }
 
 //ステータスウィンドウ描画
-void UI::DrawStateWindow()
+void UI::DrawStateWindow(PLAYER *player)
 {
-	this->StateWindow->Draw();	//描画
+
+	DrawBox(0, 400, 250, 500, GetColor(255, 0, 0), true);
+
+	DrawString(0, 400, "Lev HP MP", GetColor(255, 255, 255));
+
+	DrawFormatString(0, 420, GetColor(255, 255, 255), "%d %3d %3d", player->GetLevel(), player->GetHP(), player->GetMP());
+
 }
 
 //ウィンドウを描画する

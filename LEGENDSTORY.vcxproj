@@ -170,9 +170,7 @@
     <ClCompile Include="MSG.cpp" />
     <ClCompile Include="MUSIC.cpp" />
     <ClCompile Include="PLAYER.cpp" />
-    <ClCompile Include="STATEWINDOW.cpp" />
     <ClCompile Include="UI.cpp" />
-    <ClCompile Include="WINDOW.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="ANIMATION.hpp" />
@@ -194,9 +192,7 @@
     <ClInclude Include="MSG.hpp" />
     <ClInclude Include="MUSIC.hpp" />
     <ClInclude Include="PLAYER.hpp" />
-    <ClInclude Include="STATEWINDOW.hpp" />
     <ClInclude Include="UI.hpp" />
-    <ClInclude Include="WINDOW.hpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

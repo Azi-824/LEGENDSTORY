@@ -5,7 +5,6 @@
 
 //######################### ヘッダファイル読み込み #############################
 #include "DxLib.h"
-#include "STATEWINDOW.hpp"
 #include "COMMAND.hpp"
 #include "MENU.hpp"
 #include "PLAYER.hpp"
@@ -38,8 +37,6 @@ private:
 
 	COMMAND *BattleCommand;			//バトルコマンド
 
-	STATEWINDOW *StateWindow;		//ステータスウィンドウ
-
 	IMAGE *UiImage;					//uiの画像
 
 	int BattleCommadType;			//選択したバトルコマンドの種類
@@ -70,10 +67,9 @@ public:
 	void BattleInit();										//バトルコマンドで使用する要素を初期化する
 
 	//ステータスウィンドウ関連
-	void SetStateWindow(int,int,int);	//ステータスウィンドウの設定をする
-	void DrawStateWindow();				//ステータスウィンドウ描画
+	void DrawStateWindow(PLAYER *);				//ステータスウィンドウ描画
 
-	void DrawWindow(int,int,int,int);	//ウィンドウを描画する
+	void DrawWindow(int,int,int,int);			//ウィンドウを描画する
 
 	//UI画像関係
 	void DrawUiImage(int, int,int);				//UIの画像を描画する

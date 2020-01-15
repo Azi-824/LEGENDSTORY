@@ -19,7 +19,7 @@ WINDOW::WINDOW()
 	this->Height = 120;		//‚‚³‚ğ‰Šú‰»
 
 	this->X = 0;			//XˆÊ’u‚ğ‰Šú‰»
-	this->Y = 480;			//YˆÊ’u‚ğ‰Šú‰»
+	this->Y = 400;			//YˆÊ’u‚ğ‰Šú‰»
 
 	this->StrHeight = GetFontSize();	//‚‚³‚ğæ“¾
 
