@@ -27,6 +27,13 @@
 #define STA_TXT_Y		400			//ステータスの文字の描画開始Y位置
 #define STA_SPACE		20			//ステータス文字の間隔
 
+//バトルコマンド関係
+#define CMD_WIN_X		150			//バトルコマンドのウィンドウの描画開始X位置
+#define	CMD_WIN_Y		400			//バトルコマンドのウィンドウの描画開始Y位置
+#define CMD_WIN_WIDTH	120			//バトルコマンドのウィンドウの横幅
+#define CMD_WIN_HEIGHT	100			//バトルコマンドのウィンドウの高さ
+#define CMD_TXT_X		170			//バトルコマンドの文字の描画開始X位置
+#define CMD_TXT_Y		400			//バトルコマンドの文字の描画開始Y位置
 
 #define DEFAULT_TEXT_Y	450			//デフォルトのテキスト描画位置（Y座標）
 
