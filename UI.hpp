@@ -14,6 +14,7 @@
 #define	UI_TRIANGLENAME		  R"(triangle1.png)"	//横向き三角の名前
 #define	UI_TRIANGLE_MINI_NAME R"(triangle2.png)"	//横向き三角（ミニ）の名前
 #define UI_WINDOW_NAME		  R"(window.png)"		//ウィンドウの名前
+#define UI_TXTPOSE_NAME		  R"(TextPause.png)"	//テキストポーズの名前
 
 #define UI_IMAGE_SPACE	10			//ui画像（横向き三角）の位置調整用数値
 #define UI_IMAGE_MINI_SPACE 5		//ミニサイズ版
@@ -47,7 +48,8 @@ enum UI_IMAGE_TYPE
 {
 	UI_TRIANGLE,		//横向き三角の画像
 	UI_TRIANGLE_MINI,	//横向き三角（ミニ）の画像
-	UI_WINDOW			//ウィンドウ
+	UI_WINDOW,			//ウィンドウ
+	UI_TXTPOSE			//テキストポーズ
 };
 
 //######################### クラス定義 #####################################
