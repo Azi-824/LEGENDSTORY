@@ -128,6 +128,7 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 	//UI関係
 	ui = new UI();		//UI作成
 	if (ui->AddUiImage(UI_DIR, UI_TRIANGLE_MINI_NAME, (int)UI_TRIANGLE_MINI) == false) { return -1; }	//横向き三角（ミニ）の画像の追加
+	if (ui->AddUiImage(UI_DIR, UI_WINDOW_NAME, (int)UI_WINDOW) == false) { return -1; }	//ウィンドウ
 
 	//敵関係
 	enemy[(int)SLIME] = new ENEMY(ENEMY_DIR, ENEMY_NAME_SLIME);	//スライム作成
@@ -868,9 +869,6 @@ void Battle_Draw()
 
 	//ui->DrawWindow(MSG_WINDOW_START_X, MSG_WINDOW_START_Y, MSG_WINDOW_WIDTH, MSG_WINDOW_HEIGHT);		//ウィンドウの描画
 
-	//メッセージ関係描画
-	msg->DrawBattleMsg(BattleStageNow, Turn, ui->GetChoiseCommamd(), player, enemy[EncounteEnemyType],keydown->IsKeyDownOne(KEY_INPUT_RETURN));
-
 	if (BattleStageNow == (int)WAIT_ACT)		//行動選択状態の時
 	{
 		if (Turn == (int)MY_TURN)		//味方のターンだったら
@@ -879,12 +877,18 @@ void Battle_Draw()
 		}
 		else if (Turn = (int)ENEMY_TURN)	//敵のターンだったら
 		{
-
+			
 		}
 
 	}
 
 	ui->DrawStateWindow(player);		//ステータスウィンドウ描画
+
+	ui->DrawUiImage(0, 350, (int)UI_WINDOW);	//ウィンドウ描画
+
+	//メッセージ関係描画
+	msg->DrawBattleMsg(BattleStageNow, Turn, ui->GetChoiseCommamd(), player, enemy[EncounteEnemyType], keydown->IsKeyDownOne(KEY_INPUT_RETURN));
+
 
 	return;
 

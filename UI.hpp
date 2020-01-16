@@ -13,6 +13,7 @@
 
 #define	UI_TRIANGLENAME		  R"(triangle1.png)"	//横向き三角の名前
 #define	UI_TRIANGLE_MINI_NAME R"(triangle2.png)"	//横向き三角（ミニ）の名前
+#define UI_WINDOW_NAME		  R"(window.png)"		//ウィンドウの名前
 
 #define UI_IMAGE_SPACE	10			//ui画像（横向き三角）の位置調整用数値
 #define UI_IMAGE_MINI_SPACE 5		//ミニサイズ版
@@ -20,20 +21,20 @@
 
 //ステータスウィンドウ関係
 #define STA_WIN_X		0			//ステータスウィンドウ描画開始X位置
-#define STA_WIN_Y		400			//ステータスウィンドウ描画開始Y位置
-#define STA_WIN_WIDTH	150			//ステータスウィンドウの横幅
+#define STA_WIN_Y		500			//ステータスウィンドウ描画開始Y位置
+#define STA_WIN_WIDTH	190			//ステータスウィンドウの横幅
 #define STA_WIN_HEIGHT	100			//ステータスウィンドウの高さ
 #define STA_TXT_X		10			//ステータスの文字の描画開始X位置
-#define STA_TXT_Y		400			//ステータスの文字の描画開始Y位置
+#define STA_TXT_Y		500			//ステータスの文字の描画開始Y位置
 #define STA_SPACE		20			//ステータス文字の間隔
 
 //バトルコマンド関係
-#define CMD_WIN_X		150			//バトルコマンドのウィンドウの描画開始X位置
-#define	CMD_WIN_Y		400			//バトルコマンドのウィンドウの描画開始Y位置
+#define CMD_WIN_X		190			//バトルコマンドのウィンドウの描画開始X位置
+#define	CMD_WIN_Y		500			//バトルコマンドのウィンドウの描画開始Y位置
 #define CMD_WIN_WIDTH	120			//バトルコマンドのウィンドウの横幅
 #define CMD_WIN_HEIGHT	100			//バトルコマンドのウィンドウの高さ
-#define CMD_TXT_X		170			//バトルコマンドの文字の描画開始X位置
-#define CMD_TXT_Y		400			//バトルコマンドの文字の描画開始Y位置
+#define CMD_TXT_X		210			//バトルコマンドの文字の描画開始X位置
+#define CMD_TXT_Y		500			//バトルコマンドの文字の描画開始Y位置
 
 #define DEFAULT_TEXT_Y	450			//デフォルトのテキスト描画位置（Y座標）
 
@@ -41,7 +42,8 @@
 enum UI_IMAGE_TYPE
 {
 	UI_TRIANGLE,		//横向き三角の画像
-	UI_TRIANGLE_MINI	//横向き三角（ミニ）の画像
+	UI_TRIANGLE_MINI,	//横向き三角（ミニ）の画像
+	UI_WINDOW			//ウィンドウ
 };
 
 //######################### クラス定義 #####################################
