@@ -880,7 +880,7 @@ void Battle_Draw()
 		msg->DrawBattleMsg(BattleStageNow, Turn, ui->GetChoiseCommamd(), player, enemy[EncounteEnemyType], keydown->IsKeyDownOne(KEY_INPUT_RETURN));
 	
 		//テキストポーズ描画
-		ui->DrawUiImage(ui->GetUiImageWidth((int)UI_WINDOW) / 2 - ui->GetUiImageWidth((int)UI_TXTPOSE), 470, (int)UI_TXTPOSE);
+		ui->DrawUiImage(ui->GetUiImageWidth((int)UI_WINDOW) / 2 - ui->GetUiImageWidth((int)UI_TXTPOSE) / 2, 470, (int)UI_TXTPOSE);
 	}
 
 	return;
