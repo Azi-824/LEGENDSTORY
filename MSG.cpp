@@ -9,10 +9,11 @@
 //コンストラクタ
 MESSAGE::MESSAGE()
 {
-	this->X = MSG_DRAW_X;	//描画位置(X)
-	this->Y = MSG_DRAW_Y;	//描画位置(Y)
+	this->X = BT_MSG_DRAW_X;	//描画位置(X)
+	this->Y = BT_MSG_DRAW_Y;	//描画位置(Y)
 	this->IsResultMsgEnd = false;	//リザルトメッセージ表示終了していない
 	this->ResultMsgStep = (int)WIN_MSG;	//表示段階は最初
+	this->IsDrawMsg = false;		//メッセージ描画中ではない
 
 	return;
 }
@@ -56,6 +57,8 @@ void MESSAGE::DrawBattleMsg(int battlestage,int turn,int command,PLAYER *player,
 			this->DrawName(enemy->GetName());		//名前描画
 		}
 
+		this->IsDrawMsg = true;	//メッセージ描画中
+
 		break;			//行動メッセージ表示状態の処理ここから
 
 	case(int)DRAW_DAMEGE:			//ダメージ描画状態だったら
@@ -75,6 +78,8 @@ void MESSAGE::DrawBattleMsg(int battlestage,int turn,int command,PLAYER *player,
 		{
 			this->DrawDamage(turn,player->GetRecvDamege());		//受けたダメージ表示
 		}
+
+		this->IsDrawMsg = true;	//メッセージ描画中
 
 		break;				//ダメージ描画状態の処理ここまで
 
@@ -142,7 +147,14 @@ void MESSAGE::DrawBattleMsg(int battlestage,int turn,int command,PLAYER *player,
 			}
 		}
 
+		this->IsDrawMsg = true;	//メッセージ描画中
+
+		break;
+
 	default:
+
+		this->IsDrawMsg = false;	//メッセージ描画中ではない
+
 		break;
 	}
 
@@ -185,6 +197,14 @@ void MESSAGE::ResetResultMsg(void)
 	return;
 }
 
+//メッセージ描画中か設定
+void MESSAGE::SetIsDrawMsg(bool isdrawmsg)
+{
+	this->IsDrawMsg = isdrawmsg;
+	return;
+}
+
+
 //リザルトメッセージの表示が終了したか取得
 bool MESSAGE::GetIsResultMsgEnd(void)
 {
@@ -195,4 +215,10 @@ bool MESSAGE::GetIsResultMsgEnd(void)
 int MESSAGE::GetDrawMsgKind(void)
 {
 	return this->ResultMsgStep;
+}
+
+//メッセージ描画中か取得
+bool MESSAGE::GetIsDrawMsg(void)
+{
+	return this->IsDrawMsg;
 }

@@ -11,13 +11,8 @@
 #include "ENEMY.hpp"
 
 //################ マクロ定義 ####################
-#define MSG_DRAW_X 0		//メッセージの描画位置(X)
-#define MSG_DRAW_Y 400		//メッセージの描画位置(Y)
-
-#define MSG_WINDOW_START_X	0	//メッセージウィンドのスタート位置（X）
-#define MSG_WINDOW_START_Y	380	//メッセージウィンドのスタート位置（Y）
-#define MSG_WINDOW_WIDTH	800	//メッセージウィンドの幅
-#define MSG_WINDOW_HEIGHT	100	//メッセージウィンドの高さ
+#define BT_MSG_DRAW_X 15	//戦闘画面のメッセージの描画位置(X)
+#define BT_MSG_DRAW_Y 370	//戦闘画面のメッセージの描画位置(Y)
 
 #define RESULT_MSG_KIND	3	//リザルト画面のメッセージの種類
 
@@ -40,6 +35,7 @@ private:
 	int ResultMsgStep;		//リザルトメッセージの表示段階
 
 	bool IsResultMsgEnd;	//リザルト画面のメッセージ表示が終了したか
+	bool IsDrawMsg;			//メッセージ描画中か
 
 public:
 
@@ -55,8 +51,10 @@ public:
 
 	void SetIsResultMsgEnd(bool);		//リザルトメッセージの表示が終了したか設定
 	void ResetResultMsg();				//リザルトメッセージ関係のメンバーをリセット
+	void SetIsDrawMsg(bool);			//メッセージ描画中か設定
 
 	bool GetIsResultMsgEnd(void);		//リザルトメッセージの表示が終了したか取得
 	int GetDrawMsgKind(void);			//どのメッセージを描画している状態か取得
+	bool GetIsDrawMsg(void);			//メッセージ描画中か取得
 
 };

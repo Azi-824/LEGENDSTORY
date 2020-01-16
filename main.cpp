@@ -867,28 +867,18 @@ void Battle_Draw()
 
 	enemy[EncounteEnemyType]->Draw();	//敵描画
 
-	//ui->DrawWindow(MSG_WINDOW_START_X, MSG_WINDOW_START_Y, MSG_WINDOW_WIDTH, MSG_WINDOW_HEIGHT);		//ウィンドウの描画
-
-	if (BattleStageNow == (int)WAIT_ACT)		//行動選択状態の時
-	{
-		if (Turn == (int)MY_TURN)		//味方のターンだったら
-		{
-			ui->DrawCommand();						//バトルコマンド描画
-		}
-		else if (Turn = (int)ENEMY_TURN)	//敵のターンだったら
-		{
-			
-		}
-
-	}
-
 	ui->DrawStateWindow(player);		//ステータスウィンドウ描画
 
-	ui->DrawUiImage(0, 350, (int)UI_WINDOW);	//ウィンドウ描画
+	ui->DrawCommand();						//バトルコマンド描画
 
-	//メッセージ関係描画
-	msg->DrawBattleMsg(BattleStageNow, Turn, ui->GetChoiseCommamd(), player, enemy[EncounteEnemyType], keydown->IsKeyDownOne(KEY_INPUT_RETURN));
+	if (BattleStageNow != (int)WAIT_ACT)	//行動選択状態以外の時
+	{
+		ui->DrawUiImage(BT_WINDOW_X, BT_WINDOW_Y, (int)UI_WINDOW);	//メッセージウィンドウ描画
 
+		//メッセージ描画
+		msg->DrawBattleMsg(BattleStageNow, Turn, ui->GetChoiseCommamd(), player, enemy[EncounteEnemyType], keydown->IsKeyDownOne(KEY_INPUT_RETURN));
+	
+	}
 
 	return;
 
