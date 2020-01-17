@@ -451,6 +451,9 @@ void Battle()
 
 			case (int)COMMANDE_ESCAPE:		//逃げるを選んだ時
 
+				Work_Str = "上手く逃げ切れた！";
+				msg[(int)MSG_BATTLE]->SetMsg(Work_Str.c_str());	//文字列設定
+
 				BattleStageNow = (int)ACT_MSG;	//メッセージ描画状態
 				
 				break;
@@ -612,6 +615,11 @@ void Battle()
 				player->SetIsArive(false);		//自分死亡
 				player->SetIsBattleWin(false);	//戦闘に敗北
 
+				//▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼ リザルトメッセージ設定処理ここから ▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼
+				Work_Str = "全滅してしまった…";
+				msg[(int)MSG_RESULT]->SetMsg(Work_Str.c_str());	//文字列設定
+				//▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲ リザルトメッセージ設定処理ここまで ▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲
+
 				BattleStageNow = (int)RESULT_MSG;		//リザルトメッセージ表示状態へ
 			}
 			else if (enemy[EncounteEnemyType]->GetHP() <= 0)				//敵のHPが0になったら
@@ -638,6 +646,9 @@ void Battle()
 				//▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲ リザルトメッセージ設定処理ここまで ▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲
 
 				BattleStageNow = (int)RESULT_MSG;		//リザルトメッセージ表示状態へ
+
+				ui->BattleInit();				//バトルコマンドリセット
+
 			}
 			else
 			{
@@ -647,8 +658,6 @@ void Battle()
 			msg[(int)MSG_BATTLE]->NextMsg();	//次のメッセージへ
 
 		}
-
-		ui->BattleInit();				//バトルコマンドリセット
 
 		break;
 
@@ -809,6 +818,11 @@ void Init()
 
 		Turn = (int)MY_TURN;		//ターンを味方のターンに設定
 
+		for (int i = 0; i < MSG_KIND; ++i)	//メッセージの種類分
+		{
+			msg[i]->ResetFlg();		//フラグリセット
+		}
+
 	}
 }
 
@@ -936,13 +950,11 @@ void Battle_Draw()
 
 	ui->DrawCommand();						//バトルコマンド描画
 
-	if (BattleStageNow != (int)WAIT_ACT)	//行動選択状態以外の時
-	{
-		ui->DrawUiImage(BT_WINDOW_X, BT_WINDOW_Y, (int)UI_WINDOW);	//メッセージウィンドウ描画
+	ui->DrawUiImage(BT_WINDOW_X, BT_WINDOW_Y, (int)UI_WINDOW);	//メッセージウィンドウ描画
 
-		//テキストポーズ描画
-		ui->DrawUiAnime(ui->GetUiImageWidth((int)UI_WINDOW) / 2 - TXT_POSE_WIDTH / 2, BT_TXT_POSE_Y);
-	}
+	//テキストポーズ描画
+	ui->DrawUiAnime(ui->GetUiImageWidth((int)UI_WINDOW) / 2 - TXT_POSE_WIDTH / 2, BT_TXT_POSE_Y);
+
 
 	return;
 
