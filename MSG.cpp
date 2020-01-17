@@ -9,6 +9,7 @@
 //コンストラクタ
 MESSAGE::MESSAGE()
 {
+	//初期化処理
 	this->X = BT_MSG_DRAW_X;	//描画位置(X)
 	this->Y = BT_MSG_DRAW_Y;	//描画位置(Y)
 	this->IsResultMsgEnd = false;	//リザルトメッセージ表示終了していない
@@ -21,6 +22,10 @@ MESSAGE::MESSAGE()
 //デストラクタ
 MESSAGE::~MESSAGE()
 {
+
+	std::vector<std::string> v;			//空のvectorを作成する
+	this->Msg.swap(v);					//空と中身を入れ替える
+
 	return;
 }
 
@@ -221,4 +226,31 @@ int MESSAGE::GetDrawMsgKind(void)
 bool MESSAGE::GetIsDrawMsg(void)
 {
 	return this->IsDrawMsg;
+}
+
+//文字列を設定
+void MESSAGE::SetMsg(const char *msg)
+{
+	this->Msg.push_back(msg);		//受け取った文字列を追加
+	this->Msg_itr = this->Msg.begin();	//先頭要素のアドレスを取得
+	return;
+}
+
+//次のメッセージへ移動する
+void MESSAGE::NextMsg(void)
+{
+	if (*this->Msg_itr != this->Msg.back())			//最後のメッセージでなければ
+	{
+		++this->Msg_itr;	//次のメッセージへ
+	}
+	return;
+}
+
+//前のメッセージへ移動する
+void MESSAGE::BackMsg(void)
+{
+	if (*this->Msg_itr != this->Msg.front())		//最初のメッセージじゃなければ
+	{
+		--this->Msg_itr;	//前のメッセージへ
+	}
 }

@@ -29,6 +29,9 @@ class MESSAGE
 {
 private:
 
+	std::vector<std::string> Msg;		//メッセージ格納用
+	std::vector<std::string>::iterator Msg_itr;	//Msgのイテレータ
+
 	int X;		//X描画位置
 	int Y;		//Y描画位置
 
@@ -56,5 +59,9 @@ public:
 	bool GetIsResultMsgEnd(void);		//リザルトメッセージの表示が終了したか取得
 	int GetDrawMsgKind(void);			//どのメッセージを描画している状態か取得
 	bool GetIsDrawMsg(void);			//メッセージ描画中か取得
+
+	void SetMsg(const char *);			//文字列を設定する
+	void NextMsg(void);					//次のメッセージへ移動する
+	void BackMsg(void);					//前のメッセージへ移動する
 
 };
