@@ -129,7 +129,6 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 	ui = new UI();		//UI作成
 	if (ui->AddUiImage(UI_DIR, UI_TRIANGLE_MINI_NAME, (int)UI_TRIANGLE_MINI) == false) { return -1; }	//横向き三角（ミニ）の画像の追加
 	if (ui->AddUiImage(UI_DIR, UI_WINDOW_NAME, (int)UI_WINDOW) == false) { return -1; }	//ウィンドウ
-	if (ui->AddUiImage(UI_DIR, UI_TXTPOSE_NAME, (int)UI_TXTPOSE) == false) { return -1; }	//テキストポーズ
 
 	//敵関係
 	enemy[(int)SLIME] = new ENEMY(ENEMY_DIR, ENEMY_NAME_SLIME);	//スライム作成
@@ -880,7 +879,8 @@ void Battle_Draw()
 		msg->DrawBattleMsg(BattleStageNow, Turn, ui->GetChoiseCommamd(), player, enemy[EncounteEnemyType], keydown->IsKeyDownOne(KEY_INPUT_RETURN));
 	
 		//テキストポーズ描画
-		ui->DrawUiImage(ui->GetUiImageWidth((int)UI_WINDOW) / 2 - ui->GetUiImageWidth((int)UI_TXTPOSE) / 2, 470, (int)UI_TXTPOSE);
+		ui->DrawUiAnime(ui->GetUiImageWidth((int)UI_WINDOW) / 2 - ui->GetUiImageWidth(3) / 2, 470
+		);
 	}
 
 	return;

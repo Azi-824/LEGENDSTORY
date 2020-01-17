@@ -27,8 +27,8 @@ ANIMATION::ANIMATION(const char *dir, const char *name, int SplitNumALL, int Spr
 	this->Handle.resize(SplitNumALL);			//resize：vectorの要素数を変更する
 	this->Handle_itr = this->Handle.begin();	//先頭のポインタを入れる
 
-	this->ChangeMaxCnt = PLAYER_YOKO_CNT;						//アニメーションするフレームの最大値
-	this->ChangeCnt = 0;										//アニメーションするフレームのカウント
+	this->ChangeMaxCnt = SpritNumX;						//アニメーションするフレームの最大値
+	this->ChangeCnt = 0;								//アニメーションするフレームのカウント
 	this->ChangeCntMax = 5;
 	this->ChangeCntNow = 0;
 
@@ -183,4 +183,43 @@ void ANIMATION::Draw(int X, int Y,int Dist,bool animetion)
 	
 
 	return;
+}
+
+void ANIMATION::DrawAnime(int x, int y)
+{
+	if (this->IsAnimeStop == false)	//アニメーションをストップさせないなら
+	{
+		DrawGraph(x, y, *this->Handle_itr, TRUE);	//イテレータ(ポインタ)を使用して描画
+	}
+	else
+	{
+		
+	}
+
+	if (this->ChangeCnt == this->NextChangeSpeed)	//次の画像を表示する時がきたら
+	{
+		//this->Handle.end()は、最後の要素の１個次のイテレータを返すので、-1している。
+		if (this->Handle_itr == this->Handle.end() - 1)	//イテレータ(ポインタ)が最後の要素のときは
+		{
+			//アニメーションをループしないなら
+			if (this->IsAnimeLoop == false)
+			{
+				this->IsAnimeStop = true;	//アニメーションを止める
+			}
+
+			//次回の描画に備えて、先頭の画像に戻しておく
+			this->Handle_itr = this->Handle.begin();	//イテレータ(ポインタ)を要素の最初に戻す
+		}
+		else
+		{
+			this->Handle_itr++;	//次のイテレータ(ポインタ)(次の画像)に移動する
+		}
+
+		this->ChangeCnt = 0;	//カウント初期化
+	}
+	else
+	{
+		this->ChangeCnt++;	//カウントアップ
+	}
+
 }

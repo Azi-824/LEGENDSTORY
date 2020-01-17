@@ -13,18 +13,27 @@
 
 //########## マクロ定義：画像のファイルパスと名前 ##########
 #define MY_ANIME_DIR_PLAYER		R"(.\MY_ANIME\walk\)"			//プレイヤーの画像ファイルの場所
+#define TXT_POSE_DIR			R"(.\MY_ANIME\Ui\)"				//UIの画像ファイルの場所
 
 #define MY_ANIME_NAME_PLAYER	R"(player_walk.png)"			//プレイヤーの画像の名前
+#define TXT_POSE_NAME			R"(txtpose.png)"				//テキストポーズの画像の名前
 
 #define PLAYER_WIDTH	45	//分割する幅の大きさ
 #define PLAYER_HEIGHT	45	//分割する高さの大きさ
 
+#define TXT_POSE_WIDTH	30	//分割高さ
+#define TXT_POSE_HEIGHT	16	//分割幅
+
 #define PLAYER_YOKO_CNT	3
 #define PLAYER_TATE_CNT	4
+#define TXT_POSE_YOKO_CNT	1
+#define TXT_POSE_TATE_CNT	6
 
 #define PLAYER_ALL_CNT	PLAYER_YOKO_CNT * PLAYER_TATE_CNT
+#define	TXT_POSE_ALL_CNT TXT_POSE_YOKO_CNT * TXT_POSE_TATE_CNT
 
 #define PLAYER_ANI_SPEED 1.0
+#define TXT_POSE_SPEED	10.0
 
 //########## マクロ定義：エラーメッセージ##########
 #define ANIMATION_ERROR_TTILE	"ANIMATION_ERROR"						//エラータイトル
@@ -78,6 +87,8 @@ public:
 	void ResetIsAnime(void);		//アニメーションがストップしたかをリセット
 
 	void Draw(int,int,int,bool);	//画像を描画
+
+	void DrawAnime(int, int);
 
 };
 

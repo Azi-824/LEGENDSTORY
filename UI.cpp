@@ -18,6 +18,8 @@ UI::UI()
 
 	this->ChoiseMenu = -1;					//メニュー画面での選択内容を初期化
 
+	this->UiAnime = new ANIMATION(TXT_POSE_DIR, TXT_POSE_NAME, TXT_POSE_ALL_CNT, TXT_POSE_YOKO_CNT, TXT_POSE_TATE_CNT, TXT_POSE_WIDTH, TXT_POSE_HEIGHT, TXT_POSE_SPEED, true);
+
 	return;
 }
 
@@ -25,7 +27,8 @@ UI::UI()
 UI::~UI()
 {
 	delete this->menuwindow;	//menuwindow破棄
-	delete this->UiImage;			//Ui破棄
+	delete this->UiImage;		//Ui破棄
+	delete this->UiAnime;		//uianime破棄
 
 	//vectorのメモリ解放を行う
 	std::vector<std::string> v;			//空のvectorを作成する
@@ -282,4 +285,16 @@ void UI::ChoiseClear(void)
 	this->Str.clear();
 	this->Str_itr = this->Str.begin();
 	return;
+}
+
+//アニメーション画像追加
+bool UI::AddUiAnime(const char *dir, const char *name, int SplitNumALL, int SpritNumX, int SplitNumY, int SplitWidth, int SplitHeight, double changeSpeed, bool IsLoop)
+{
+	return true;
+}
+
+//UIアニメ描画
+void UI::DrawUiAnime(int x,int y)
+{
+	this->UiAnime->DrawAnime(x, y);	//アニメーション描画
 }

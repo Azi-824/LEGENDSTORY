@@ -14,7 +14,6 @@
 #define	UI_TRIANGLENAME		  R"(triangle1.png)"	//横向き三角の名前
 #define	UI_TRIANGLE_MINI_NAME R"(triangle2.png)"	//横向き三角（ミニ）の名前
 #define UI_WINDOW_NAME		  R"(window.png)"		//ウィンドウの名前
-#define UI_TXTPOSE_NAME		  R"(TextPause.png)"	//テキストポーズの名前
 
 #define UI_IMAGE_SPACE	10			//ui画像（横向き三角）の位置調整用数値
 #define UI_IMAGE_MINI_SPACE 5		//ミニサイズ版
@@ -48,8 +47,7 @@ enum UI_IMAGE_TYPE
 {
 	UI_TRIANGLE,		//横向き三角の画像
 	UI_TRIANGLE_MINI,	//横向き三角（ミニ）の画像
-	UI_WINDOW,			//ウィンドウ
-	UI_TXTPOSE			//テキストポーズ
+	UI_WINDOW			//ウィンドウ
 };
 
 //######################### クラス定義 #####################################
@@ -60,6 +58,8 @@ private:
 	MENU *menuwindow;				//メニューウィンドウ
 
 	IMAGE *UiImage;					//uiの画像
+
+	ANIMATION *UiAnime;				//uiのアニメーション
 
 	int BattleCommadType;			//選択したバトルコマンドの種類
 
@@ -103,6 +103,10 @@ public:
 	void ChoiseOperation(KEYDOWN *);			//選択肢のキー操作を行う
 	std::vector<std::string>::iterator GetNowChoise();	//現在選択している要素を取得する
 	void ChoiseClear();							//選択肢の内容をクリアする
+
+	//アニメーション関係
+	bool AddUiAnime(const char *, const char *, int, int, int, int, int, double, bool);	//アニメーション画像を追加する
+	void DrawUiAnime(int,int);			//アニメーション画像を描画する
 
 	//選択肢を描画
 	/*
