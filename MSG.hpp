@@ -64,4 +64,6 @@ public:
 	void NextMsg(void);					//次のメッセージへ移動する
 	void BackMsg(void);					//前のメッセージへ移動する
 
+	void DrawMsg(int, int,unsigned int);				//メッセージ描画
+
 };

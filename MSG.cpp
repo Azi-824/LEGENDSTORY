@@ -254,3 +254,10 @@ void MESSAGE::BackMsg(void)
 		--this->Msg_itr;	//前のメッセージへ
 	}
 }
+
+//メッセージ描画
+void MESSAGE::DrawMsg(int x, int y,unsigned int color)
+{
+	DrawFormatString(x, y, color, "%s", this->Msg_itr->c_str());	//メッセージ描画
+	return;
+}
