@@ -16,7 +16,7 @@
 
 #define RESULT_MSG_KIND	3	//リザルト画面のメッセージの種類
 
-#define MSG_KIND	3	//メッセージの種類
+#define MSG_KIND	2	//メッセージの種類
 
 //################ 列挙型 ########################
 enum MSG_STEP
@@ -29,8 +29,7 @@ enum MSG_STEP
 enum MSG_TYPE
 {
 	MSG_BATTLE,		//バトルメッセージ
-	MSG_RESULT,		//リザルトメッセージ
-	MSG_LEVELUP		//レベルアップメッセージ
+	MSG_RESULT		//リザルトメッセージ
 };
 
 //################ クラス定義 ####################
@@ -50,6 +49,7 @@ private:
 
 	bool IsResultMsgEnd;	//リザルト画面のメッセージ表示が終了したか
 	bool IsDrawMsg;			//メッセージ描画中か
+	bool IsMsgEnd;			//メッセージ描画終了か
 
 public:
 
@@ -78,5 +78,7 @@ public:
 
 	void DrawMsg(int, int,unsigned int);				//メッセージ描画
 	bool GetIsLastMsg(void);				//最後のメッセージかどうか取得
+	bool GetIsEmpty(void);					//空かどうか取得
+	bool GetIsMsgEnd(void);					//メッセージ描画狩猟か取得
 
 };

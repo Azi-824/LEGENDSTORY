@@ -121,7 +121,7 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 	msg[(int)MSG_RESULT]->SetMsg("かきくけこ");
 	msg[(int)MSG_RESULT]->SetMsg("さしすせそ");
 
-	msg[(int)MSG_LEVELUP]->SetMsg("レベルが上がった！");
+	//msg[(int)MSG_LEVELUP]->SetMsg("レベルが上がった！");
 
 
 	//エフェクト関係
@@ -511,7 +511,7 @@ void Battle()
 
 	case (int)ACT_MSG:				//行動メッセージ表示状態
 
-		msg[(int)MSG_BATTLE]->DrawMsg(400, 400, GetColor(255, 255, 255));	//メッセージ描画
+		msg[(int)MSG_BATTLE]->DrawMsg(BT_MSG_DRAW_X, BT_MSG_DRAW_Y, GetColor(255, 255, 255));	//メッセージ描画
 
 
 		if (keydown->IsKeyDownOne(KEY_INPUT_RETURN))		//エンターキーを押されたら
@@ -580,11 +580,10 @@ void Battle()
 		break;
 
 	case (int)DRAW_DAMEGE:				//ダメージ描画状態
-
-		msg[(int)MSG_BATTLE]->DrawMsg(400, 400, GetColor(255, 255, 255));
-
-
+		
 		//ダメージ描画
+		msg[(int)MSG_BATTLE]->DrawMsg(BT_MSG_DRAW_X, BT_MSG_DRAW_Y, GetColor(255, 255, 255));	//メッセージ描画
+
 		if (keydown->IsKeyDownOne(KEY_INPUT_RETURN))	//エンターキーを押されたら
 		{
 
@@ -629,6 +628,13 @@ void Battle()
 				Work_Str += "の経験値を手に入れた！";
 				msg[(int)MSG_RESULT]->AddMsg(Work_Str.c_str());	//文字列設定
 
+				if (player->GetLevUpMsgStartFlg())		//レベルアップしたときは
+				{
+					Work_Str = "レベル";
+					Work_Str += std::to_string(player->GetLevel());	//レベル取得
+					Work_Str += "になった！";
+					msg[(int)MSG_RESULT]->AddMsg(Work_Str.c_str());	//文字列設定
+				}
 				//▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲ リザルトメッセージ設定処理ここまで ▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲
 
 				BattleStageNow = (int)RESULT_MSG;		//リザルトメッセージ表示状態へ
@@ -648,40 +654,41 @@ void Battle()
 
 	case (int)RESULT_MSG:		//戦闘終了後のメッセージを描画する状態
 
-		msg[(int)MSG_RESULT]->DrawMsg(400, 400, GetColor(255, 255, 255));	//メッセージ描画
+		msg[(int)MSG_RESULT]->DrawMsg(BT_MSG_DRAW_X, BT_MSG_DRAW_Y, GetColor(255, 255, 255));	//メッセージ描画
+
 		if (keydown->IsKeyDownOne(KEY_INPUT_RETURN))		//エンターキーを押されたとき
 		{
+
 			msg[(int)MSG_RESULT]->NextMsg();	//次のメッセージへ
-		}
 
-		if (player->GetLevUpMsgStartFlg())		//レベルアップしたときは
-		{
-			//msg[(int)MSG_LEVELUP]->DrawMsg(400,400,GetColor(255,255,255));
-		}
-
-		if (msg[(int)MSG_RESULT]->GetDrawMsgKind()==(int)LEVELUP_MSG && se->GetIsPlayEnd()==false)	//レベルアップしたときは
-		{
-			if (se->GetIsPlay((int)LEVELUP_SE) == false)		//再生中じゃなければ
+			if (msg[(int)MSG_RESULT]->GetIsLastMsg())		//最後のメッセージだったら
 			{
-				se->Play((int)LEVELUP_SE);		//レベルアップのSEを鳴らす
-				se->SetIsPlayEnd(true);			//再生終了
+				if (player->GetLevUpMsgStartFlg())			//レベルアップしていたら
+				{
+					if (se->GetIsPlay((int)LEVELUP_SE) == false)		//再生中じゃなければ
+					{
+						se->Play((int)LEVELUP_SE);		//レベルアップのSEを鳴らす
+						se->SetIsPlayEnd(true);			//再生終了
+						player->SetLevUpMsgStartFlg(false);	//レベルアップ終了
+					}
+				}
+
+				if (msg[(int)MSG_RESULT]->GetIsMsgEnd())	//全てのメッセージ描画が終了したら
+				{
+					if (player->GetIsBattleWin())		//戦闘に勝利していたら
+					{
+						SceneChenge(GameSceneNow, (int)GAME_SCENE_PLAY);	//次の画面はプレイ画面
+					}
+					else if (player->GetIsBattleWin() == false)	//戦闘に敗北していたら
+					{
+						SceneChenge(GameSceneNow, (int)GAME_SCENE_END);	//次の画面はエンド画面
+					}
+
+					BattleStageNow = (int)WAIT_ACT;		//行動選択待ち状態へ
+
+				}
+
 			}
-
-		}
-
-		if (msg[(int)MSG_RESULT]->GetIsResultMsgEnd())		//リザルトメッセージの表示が終了していたら
-		{
-			if (player->GetIsBattleWin())		//戦闘に勝利していたら
-			{
-				SceneChenge(GameSceneNow, (int)GAME_SCENE_PLAY);	//次の画面はプレイ画面
-			}
-			else if (player->GetIsBattleWin() == false)	//戦闘に敗北していたら
-			{
-				SceneChenge(GameSceneNow, (int)GAME_SCENE_END);	//次の画面はエンド画面
-			}
-
-			BattleStageNow = (int)WAIT_ACT;		//行動選択待ち状態へ
-
 		}
 
 		break;					//戦闘終了後のメッセージを描画する状態の処理ここまで
@@ -801,8 +808,6 @@ void Init()
 		BattleStageNow = (int)WAIT_ACT;	//バトル状態を、行動待ち状態へ
 
 		Turn = (int)MY_TURN;		//ターンを味方のターンに設定
-
-		msg[(int)MSG_RESULT]->ResetResultMsg();		//リザルトメッセージ関係のメンバーをリセット
 
 	}
 }
@@ -934,10 +939,6 @@ void Battle_Draw()
 	if (BattleStageNow != (int)WAIT_ACT)	//行動選択状態以外の時
 	{
 		ui->DrawUiImage(BT_WINDOW_X, BT_WINDOW_Y, (int)UI_WINDOW);	//メッセージウィンドウ描画
-
-		//メッセージ描画
-		//msg[(int)MSG_RESULT]->DrawBattleMsg(BattleStageNow, Turn, ui->GetChoiseCommamd(), player, enemy[EncounteEnemyType], keydown->IsKeyDownOne(KEY_INPUT_RETURN));
-
 
 		//テキストポーズ描画
 		ui->DrawUiAnime(ui->GetUiImageWidth((int)UI_WINDOW) / 2 - TXT_POSE_WIDTH / 2, BT_TXT_POSE_Y);

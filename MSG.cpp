@@ -16,6 +16,7 @@ MESSAGE::MESSAGE()
 	this->ResultMsgStep = (int)WIN_MSG;	//表示段階は最初
 	this->IsDrawMsg = false;		//メッセージ描画中ではない
 	this->IsLastMsg = false;		//最後のメッセージではない
+	this->IsMsgEnd = false;			//メッセージ描画終了ではない
 
 	return;
 }
@@ -252,11 +253,17 @@ void MESSAGE::AddMsg(const char *msg)
 //次のメッセージへ移動する
 void MESSAGE::NextMsg(void)
 {
+
+	if (this->IsLastMsg)	//最後のメッセージを表示していたら
+	{
+		this->IsMsgEnd = true;	//メッセージ描画終了
+	}
+
 	if (*this->Msg_itr != this->Msg.back())			//最後のメッセージでなければ
 	{
 		++this->Msg_itr;	//次のメッセージへ
 	}
-	else				//最後のメッセージだったら
+	if(*this->Msg_itr == this->Msg.back())			//最後のメッセージだったら
 	{
 		this->IsLastMsg = true;	//フラグを立てる
 	}
@@ -283,4 +290,16 @@ void MESSAGE::DrawMsg(int x, int y,unsigned int color)
 bool MESSAGE::GetIsLastMsg(void)
 {
 	return this->IsLastMsg;
+}
+
+//空かどうか取得
+bool MESSAGE::GetIsEmpty(void)
+{
+	return this->Msg.empty();
+}
+
+//メッセージ描画終了か取得
+bool MESSAGE::GetIsMsgEnd(void)
+{
+	return this->IsMsgEnd;
 }
