@@ -18,25 +18,25 @@
 //引　数：int：画像の分割された縦の大きさ
 //引　数：double：次の画像に変更する速さ
 //引　数：bool：アニメーションをループするかどうか
-ANIMATION::ANIMATION(const char *dir, const char *name, int SplitNumALL, int SpritNumX, int SplitNumY, int SplitWidth, int SplitHeight, double changeSpeed, bool IsLoop)
+ANIMATION::ANIMATION(const char *dir, const char *name, int SplitNumALL, int SpritNumX, int SplitNumY, int SplitWidth, int SplitHeight, double changeSpeed, bool IsLoop,int size)
 {
 	//メンバ変数を初期化
 	this->FilePath = "";	//パス
 	this->FileName = "";	//名前
+	this->Handle.resize(size);
 
-	this->Handle.resize(SplitNumALL);			//resize：vectorの要素数を変更する
-	this->Handle_itr = this->Handle.begin();	//先頭のポインタを入れる
+	this->Handle[0].resize(SplitNumALL);			//resize：vectorの要素数を変更する
+	this->Handle_itr = this->Handle[0].begin();		//先頭のポインタを入れる
 
-	this->ChangeMaxCnt = SpritNumX;						//アニメーションするフレームの最大値
-	this->ChangeCnt = 0;								//アニメーションするフレームのカウント
-	this->ChangeCntMax = 5;
-	this->ChangeCntNow = 0;
+	this->ChangeMaxCnt.push_back(SpritNumX);
+	this->ChangeCnt.push_back(0);
+	this->ChangeCntNow.push_back(0);
 
-	this->IsAnimeLoop = IsLoop;		//アニメーションはループする？
-	this->IsAnimeStop = false;		//アニメーションを動かす
+	this->IsAnimeLoop.push_back(IsLoop);
+	this->IsAnimeStop.push_back(false);
 
-	this->Width = 0;	
-	this->Height = 0;
+	this->Width.push_back(0);
+	this->Height.push_back(0);
 
 	this->IsLoad = false;			//読み込めたか？
 
@@ -46,9 +46,9 @@ ANIMATION::ANIMATION(const char *dir, const char *name, int SplitNumALL, int Spr
 	LoadfilePath += name;
 
 	//画像を分割して読み込み
-	LoadDivGraph(LoadfilePath.c_str(), SplitNumALL, SpritNumX, SplitNumY, SplitWidth, SplitHeight, &this->Handle[0]);
+	LoadDivGraph(LoadfilePath.c_str(), SplitNumALL, SpritNumX, SplitNumY, SplitWidth, SplitHeight, &this->Handle[0][0]);
 
-	if (this->Handle[0] == -1)	//画像が読み込めなかったとき
+	if (this->Handle[0][0] == -1)	//画像が読み込めなかったとき
 	{
 		std::string ErrorMsg(ANIMATION_ERROR_MSG);	//エラーメッセージ作成
 		ErrorMsg += TEXT('\n');						//改行
@@ -67,12 +67,12 @@ ANIMATION::ANIMATION(const char *dir, const char *name, int SplitNumALL, int Spr
 	this->FileName = name;				//画像の名前を設定
 
 	GetGraphSize(
-		this->Handle[0],	//このハンドルの画像の大きさを取得
-		&this->Width,		//Widthのアドレスを渡す
-		&this->Height		//Heightのアドレスを渡す
+		this->Handle[0][0],	//このハンドルの画像の大きさを取得
+		&this->Width[0],		//Widthのアドレスを渡す
+		&this->Height[0]		//Heightのアドレスを渡す
 	);
 
-	this->NextChangeSpeed = changeSpeed;	//画像を変える速さ
+	this->NextChangeSpeed.push_back(changeSpeed);
 
 	this->IsLoad = true;		//読み込めた
 
@@ -82,17 +82,37 @@ ANIMATION::ANIMATION(const char *dir, const char *name, int SplitNumALL, int Spr
 //デストラクタ
 ANIMATION::~ANIMATION()
 {
-	//範囲ベースの for ループ
-	//vectorなどのコンテナクラスで使用できる
-	//auto：型推論：コンパイラが初期値から推論して型を決めてくれる
-	for (int handle : this->Handle)
+
+	for (int i = 0; i < this->Handle.size(); ++i)
 	{
-		DeleteGraph(handle);
+		DeleteGraph(this->Handle[i][0]);
 	}
 
+
 	//vectorのメモリ解放を行う
-	std::vector<int> v;			//空のvectorを作成する
-	this->Handle.swap(v);		//空と中身を入れ替える
+	std::vector<std::vector<int>> v;			//空のvectorを作成する
+	this->Handle.swap(v);						//空と中身を入れ替える
+
+	std::vector<int> v2;
+	this->Width.swap(v2);
+
+	std::vector<int> v3;
+	this->Height.swap(v3);
+
+	std::vector<bool> v4;
+	this->IsAnimeLoop.swap(v4);
+
+	std::vector<bool> v5;
+	this->IsAnimeStop.swap(v5);
+
+	std::vector<int> v6;
+	this->ChangeMaxCnt.swap(v6);
+
+	std::vector<int> v7;
+	this->ChangeCnt.swap(v7);
+
+	std::vector<double> v8;
+	this->NextChangeSpeed.swap(v8);
 
 	return;
 }
@@ -104,15 +124,15 @@ std::string ANIMATION::GetFileName(void)
 }
 
 //幅を取得
-int ANIMATION::GetWidth(void)
+int ANIMATION::GetWidth(int type)
 {
-	return this->Width;
+	return this->Width[type];
 }
 
 //高さを取得
-int ANIMATION::GetHeight(void)
+int ANIMATION::GetHeight(int type)
 {
-	return this->Height;
+	return this->Height[type];
 }
 
 //読み込めた？
@@ -122,15 +142,15 @@ bool ANIMATION::GetIsLoad(void)
 }
 
 //アニメーションはストップしたかを取得
-bool  ANIMATION::GetIsAnimeStop(void)
+bool  ANIMATION::GetIsAnimeStop(int type)
 {
-	return this->IsAnimeStop;
+	return this->IsAnimeStop[type];
 }
 
 //アニメーションがストップしたかをリセット
-void ANIMATION::ResetIsAnime()
+void ANIMATION::ResetIsAnime(int type)
 {
-	this->IsAnimeStop = false;
+	this->IsAnimeStop[type] = false;
 	return;
 }
 
@@ -139,32 +159,32 @@ void ANIMATION::ResetIsAnime()
 //引数：int ：Y座標
 //引数：int ：移動方向
 //引数：bool：アニメーションするか
-void ANIMATION::Draw(int X, int Y,int Dist,bool animetion)
+void ANIMATION::Draw(int X, int Y,int Dist,bool animetion,int type)
 {
 	if (animetion)	//アニメーションで描画する場合
 	{
-		if (*this->Handle_itr == this->Handle[Dist+ChangeCnt])
+		if (*this->Handle_itr == this->Handle[type][Dist+this->ChangeCnt[type]])
 		{
-			if (this->ChangeCntNow < this->ChangeCntMax)
+			if (this->ChangeCntNow[type] < this->NextChangeSpeed[type])
 			{
-				this->ChangeCntNow++;
+				this->ChangeCntNow[type]++;
 				DrawGraph(X, Y, *this->Handle_itr, TRUE);	//描画
 			}
 			else
 			{
-				if (this->ChangeCnt < this->ChangeMaxCnt - 1)	//最後の画像じゃないとき
+				if (this->ChangeCnt[type] < this->ChangeMaxCnt[type] - 1)	//最後の画像じゃないとき
 				{
 					DrawGraph(X, Y, *this->Handle_itr, TRUE);	//描画
-					this->ChangeCnt++; //カウントアップ
+					this->ChangeCnt[type]++; //カウントアップ
 					this->Handle_itr++;//次の画像
 
 				}
 				else
 				{
 					DrawGraph(X, Y, *this->Handle_itr, TRUE);	//描画
-					this->ChangeCnt = 0;	//カウントリセット
+					this->ChangeCnt[type] = 0;	//カウントリセット
 				}
-				this->ChangeCntNow = 0;		//カウントリセット
+				this->ChangeCntNow[type] = 0;		//カウントリセット
 
 			}
 
@@ -172,7 +192,7 @@ void ANIMATION::Draw(int X, int Y,int Dist,bool animetion)
 		else
 		{
 			DrawGraph(X, Y, *this->Handle_itr, TRUE);	//描画
-			this->Handle_itr = this->Handle.begin() + Dist + ChangeCnt;
+			this->Handle_itr = this->Handle[type].begin() + Dist + this->ChangeCnt[type];
 		}
 
 	}
@@ -185,9 +205,10 @@ void ANIMATION::Draw(int X, int Y,int Dist,bool animetion)
 	return;
 }
 
-void ANIMATION::DrawAnime(int x, int y)
+//アニメーション描画
+void ANIMATION::DrawAnime(int x, int y,int type)
 {
-	if (this->IsAnimeStop == false)	//アニメーションをストップさせないなら
+	if (this->IsAnimeStop[type] == false)	//アニメーションをストップさせないなら
 	{
 		DrawGraph(x, y, *this->Handle_itr, TRUE);	//イテレータ(ポインタ)を使用して描画
 	}
@@ -196,30 +217,69 @@ void ANIMATION::DrawAnime(int x, int y)
 		
 	}
 
-	if (this->ChangeCnt == this->NextChangeSpeed)	//次の画像を表示する時がきたら
+	if (this->ChangeCnt[type] == this->NextChangeSpeed[type])	//次の画像を表示する時がきたら
 	{
 		//this->Handle.end()は、最後の要素の１個次のイテレータを返すので、-1している。
-		if (this->Handle_itr == this->Handle.end() - 1)	//イテレータ(ポインタ)が最後の要素のときは
+		if (this->Handle_itr == this->Handle[type].end() - 1)	//イテレータ(ポインタ)が最後の要素のときは
 		{
 			//アニメーションをループしないなら
-			if (this->IsAnimeLoop == false)
+			if (this->IsAnimeLoop[type] == false)
 			{
-				this->IsAnimeStop = true;	//アニメーションを止める
+				this->IsAnimeStop[type] = true;	//アニメーションを止める
 			}
 
 			//次回の描画に備えて、先頭の画像に戻しておく
-			this->Handle_itr = this->Handle.begin();	//イテレータ(ポインタ)を要素の最初に戻す
+			this->Handle_itr = this->Handle[type].begin();	//イテレータ(ポインタ)を要素の最初に戻す
 		}
 		else
 		{
 			this->Handle_itr++;	//次のイテレータ(ポインタ)(次の画像)に移動する
 		}
 
-		this->ChangeCnt = 0;	//カウント初期化
+		this->ChangeCnt[type] = 0;	//カウント初期化
 	}
 	else
 	{
-		this->ChangeCnt++;	//カウントアップ
+		this->ChangeCnt[type]++;	//カウントアップ
 	}
+
+}
+
+//アニメーション追加
+bool ANIMATION::Add(const char *dir, const char *name, int SplitNumALL, int SpritNumX, int SplitNumY, int SplitWidth, int SplitHeight, double changeSpeed, bool IsLoop, int type)
+{
+	this->IsAnimeLoop[type] = IsLoop;		//アニメーションはループする？
+	this->IsAnimeStop[type] = false;		//アニメーションを動かす
+
+	//画像を読み込み
+	std::string LoadfilePath;		//画像のファイルパスを作成
+	LoadfilePath += dir;
+	LoadfilePath += name;
+
+	//画像を分割して読み込み
+	LoadDivGraph(LoadfilePath.c_str(), SplitNumALL, SpritNumX, SplitNumY, SplitWidth, SplitHeight, &this->Handle[type][0]);
+
+	if (this->Handle[type][0] == -1)	//画像が読み込めなかったとき
+	{
+		std::string ErrorMsg(ANIMATION_ERROR_MSG);	//エラーメッセージ作成
+		ErrorMsg += TEXT('\n');						//改行
+		ErrorMsg += LoadfilePath;					//画像のパス
+
+		MessageBox(
+			NULL,
+			ErrorMsg.c_str(),	//char * を返す
+			TEXT(ANIMATION_ERROR_TTILE),
+			MB_OK);
+
+		return false;		//読み込み失敗
+	}
+
+	GetGraphSize(
+		this->Handle[type][0],	//このハンドルの画像の大きさを取得
+		&this->Width[0],		//Widthのアドレスを渡す
+		&this->Height[0]		//Heightのアドレスを渡す
+	);
+
+	return true;		//読み込めた
 
 }

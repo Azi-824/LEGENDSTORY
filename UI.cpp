@@ -18,6 +18,7 @@ UI::UI()
 
 	this->ChoiseMenu = -1;					//メニュー画面での選択内容を初期化
 
+	//アニメーション画像を生成（テキストポーズ）
 	this->UiAnime = new ANIMATION(TXT_POSE_DIR, TXT_POSE_NAME, TXT_POSE_ALL_CNT, TXT_POSE_YOKO_CNT, TXT_POSE_TATE_CNT, TXT_POSE_WIDTH, TXT_POSE_HEIGHT, TXT_POSE_SPEED, true);
 
 	return;
@@ -290,7 +291,8 @@ void UI::ChoiseClear(void)
 //アニメーション画像追加
 bool UI::AddUiAnime(const char *dir, const char *name, int SplitNumALL, int SpritNumX, int SplitNumY, int SplitWidth, int SplitHeight, double changeSpeed, bool IsLoop)
 {
-	return true;
+	
+	return this->UiAnime->Add(dir, name, SplitNumALL,SpritNumX, SplitNumY, SplitWidth, SplitHeight, changeSpeed, IsLoop);
 }
 
 //UIアニメ描画

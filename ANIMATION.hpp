@@ -54,41 +54,42 @@ private:
 	std::string FilePath;	//パス
 	std::string FileName;	//名前
 
-	std::vector<int> Handle;				//ハンドル
+	std::vector<std::vector<int>> Handle;				//ハンドル
 	std::vector<int>::iterator Handle_itr;	//ハンドルのイテレータ(ポインタ)
 
-	int Width;					//幅
-	int Height;					//高さ
+	std::vector<int> Width;					//幅
+	std::vector<int> Height;				//高さ
 
-	double NextChangeSpeed;		//アニメーションを変更する速さ(秒)
-	int ChangeMaxCnt;			//アニメーションするフレームの最大値
-	int ChangeCnt;				//アニメーションするフレームのカウント
-	int ChangeCntNow;			//チェンジカウント
-	int ChangeCntMax;			//チェンジカウント最大値
+	std::vector<double> NextChangeSpeed;	//アニメーションを変更する速さ(秒)
+	std::vector<int> ChangeMaxCnt;			//アニメーションするフレームの最大値
+	std::vector<int> ChangeCnt;				//アニメーションするフレームのカウント
+	std::vector<int> ChangeCntNow;			//チェンジカウント
 
-	bool IsAnimeLoop;			//アニメーションはループする？
-	bool IsAnimeStop;			//アニメーションはストップしたか？
+	std::vector<bool> IsAnimeLoop;			//アニメーションはループする？
+	std::vector<bool> IsAnimeStop;			//アニメーションはストップしたか？
 
 	bool IsLoad;				//読み込めたか？
 	
 public:
-	ANIMATION(const char *, const char *, int, int, int, int, int, double,bool);	//コンストラクタ
+	ANIMATION(const char *, const char *, int, int, int, int, int, double,bool,int size=1);	//コンストラクタ
 	virtual ~ANIMATION();	//デストラクタ
 
 	std::string GetFileName(void);	//名前を取得
 
-	int GetWidth(void);				//幅を取得
-	int GetHeight(void);			//高さを取得
+	int GetWidth(int=0);				//幅を取得
+	int GetHeight(int=0);			//高さを取得
 
-	bool GetIsLoad(void);			//読み込めた？
+	bool GetIsLoad();			//読み込めた？
 
-	bool GetIsAnimeStop(void);		//アニメーションはストップしたかを取得
+	bool GetIsAnimeStop(int=0);		//アニメーションはストップしたかを取得
 
-	void ResetIsAnime(void);		//アニメーションがストップしたかをリセット
+	void ResetIsAnime(int=0);		//アニメーションがストップしたかをリセット
 
-	void Draw(int,int,int,bool);	//画像を描画
+	void Draw(int,int,int,bool,int=0);	//画像を描画
 
-	void DrawAnime(int, int);
+	void DrawAnime(int, int,int=0);		//アニメーション描画
+
+	bool Add(const char *, const char *, int, int, int, int, int, double, bool, int = 0);	//アニメーション追加
 
 };
 
