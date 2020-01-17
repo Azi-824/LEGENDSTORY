@@ -35,7 +35,7 @@ EFFECT *effect;						//エフェクト
 FONT *font;							//フォント
 UI *ui;								//UI
 DATA *data;							//データ
-MESSAGE *msg;						//メッセージ
+MESSAGE *msg[MSG_KIND];				//メッセージ
 
 PLAYER *player;						//主人公
 
@@ -64,6 +64,8 @@ int EncounteEnemyType = 0;	//遭遇した敵の種類
 int Turn = (int)MY_TURN;	//ターン
 
 bool GameEnd_Flg = false;	//ゲーム終了フラグ
+
+std::string Work_Str;		//作業用文字列
 
 //########## プログラムで最初に実行される関数 ##########
 int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine, int nCmdShow)
@@ -109,7 +111,18 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 	if (font->GetIsLoad() == false) { return -1; }					//読み込み失敗時
 
 	data = new DATA();		//データ
-	msg = new MESSAGE();	//メッセージ
+
+	//メッセージ関係
+	for (int cnt = 0; cnt < MSG_KIND; ++cnt)
+	{
+		msg[cnt] = new MESSAGE();	//メッセージ作成
+	}
+	msg[(int)MSG_RESULT]->SetMsg("あいうえお");
+	msg[(int)MSG_RESULT]->SetMsg("かきくけこ");
+	msg[(int)MSG_RESULT]->SetMsg("さしすせそ");
+
+	msg[(int)MSG_LEVELUP]->SetMsg("レベルが上がった！");
+
 
 	//エフェクト関係
 	effect = new EFFECT(MY_ANIME_DIR_ATKEFECT, MY_ANIME_NAME_ATKEFECT, ATK_ALL_CNT, ATK_YOKO_CNT, ATK_TATE_CNT, ATK_WIDTH, ATK_HEIGHT, ATK_SPEED, false);
@@ -131,10 +144,6 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 	if (ui->AddUiImage(UI_DIR, UI_TRIANGLE_MINI_NAME, (int)UI_TRIANGLE_MINI) == false) { return -1; }	//横向き三角（ミニ）の画像の追加
 	if (ui->AddUiImage(UI_DIR, UI_WINDOW_NAME, (int)UI_WINDOW) == false) { return -1; }	//ウィンドウ
 
-	//メッセージ関係
-	msg->SetMsg("あいうえお");
-	msg->SetMsg("かきくけこ");
-	msg->SetMsg("さしすせそ");
 
 	//敵関係
 	enemy[(int)SLIME] = new ENEMY(ENEMY_DIR, ENEMY_NAME_SLIME);	//スライム作成
@@ -409,6 +418,7 @@ void Battle()
 			if (keydown->IsKeyDownOne(KEY_INPUT_RETURN))	//エンターキーを押されたら
 			{
 				ui->SetBattleFlg();	//選択したコマンドを設定
+
 			}
 
 			//▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼ バトルコマンド毎の処理ここから ▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼
@@ -467,21 +477,42 @@ void Battle()
 		{
 			player->DamegeCalc(enemy[EncounteEnemyType],ui->GetChoiseCommamd());		//ダメージ計算
 
+			//▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼ メッセージ設定処理ここから ▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼
+			//味方
+			Work_Str = player->GetName();					//味方の名前取得
+			Work_Str += "の攻撃!";			
+			msg[(int)MSG_BATTLE]->SetMsg(Work_Str.c_str());	//文字列設定
+			Work_Str = std::to_string(player->GetSendDamege());	//与えたダメージ取得
+			Work_Str += "のダメージを与えた";
+			msg[(int)MSG_BATTLE]->AddMsg(Work_Str.c_str());	//文字列設定
+
+			//敵
+			Work_Str = enemy[EncounteEnemyType]->GetName();	//敵の名前取得
+			Work_Str += "の攻撃!";
+			msg[(int)MSG_BATTLE]->AddMsg(Work_Str.c_str());	//文字列設定
+			Work_Str = std::to_string(player->GetRecvDamege());	//受けたダメージ取得
+			Work_Str += "のダメージを受けた";
+			msg[(int)MSG_BATTLE]->AddMsg(Work_Str.c_str());	//文字列設定
+			//▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲ メッセージ設定処理ここまで ▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲
+
 			BattleStageNow = (int)ACT_MSG;	//行動メッセージ表示状態へ
 
 		}
 		else if (Turn = (int)ENEMY_TURN)	//敵のターンだったら
 		{
 			//ダメージ計算
-
 			BattleStageNow = (int)ACT_MSG;	//行動メッセージ表示へ
 
 		}
 
 
+
 		break;						//ダメージ計算状態の時ここまで
 
 	case (int)ACT_MSG:				//行動メッセージ表示状態
+
+		msg[(int)MSG_BATTLE]->DrawMsg(400, 400, GetColor(255, 255, 255));	//メッセージ描画
+
 
 		if (keydown->IsKeyDownOne(KEY_INPUT_RETURN))		//エンターキーを押されたら
 		{
@@ -497,7 +528,7 @@ void Battle()
 			{
 				effect->SetIsDrawEnd(true);	//描画処理を飛ばすために、描画終了フラグを立てる
 			}
-
+			msg[(int)MSG_BATTLE]->NextMsg();	//次のメッセージへ
 			BattleStageNow = (int)DRAW_EFFECT;	//行動メッセージ表示状態へ
 		}
 
@@ -550,6 +581,9 @@ void Battle()
 
 	case (int)DRAW_DAMEGE:				//ダメージ描画状態
 
+		msg[(int)MSG_BATTLE]->DrawMsg(400, 400, GetColor(255, 255, 255));
+
+
 		//ダメージ描画
 		if (keydown->IsKeyDownOne(KEY_INPUT_RETURN))	//エンターキーを押されたら
 		{
@@ -584,8 +618,18 @@ void Battle()
 			else if (enemy[EncounteEnemyType]->GetHP() <= 0)				//敵のHPが0になったら
 			{
 				enemy[EncounteEnemyType]->SetIsArive(false);		//敵死亡
-				player->SetIsBattleWin(true);		//戦闘に勝利
+				player->SetIsBattleWin(true);						//戦闘に勝利
 				player->AddExp(enemy[EncounteEnemyType]->GetEXP());	//経験値加算
+
+				//▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼ リザルトメッセージ設定処理ここから ▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼
+				Work_Str = enemy[EncounteEnemyType]->GetName();
+				Work_Str += "を倒した！";
+				msg[(int)MSG_RESULT]->SetMsg(Work_Str.c_str());	//文字列設定
+				Work_Str = std::to_string(enemy[EncounteEnemyType]->GetEXP());
+				Work_Str += "の経験値を手に入れた！";
+				msg[(int)MSG_RESULT]->AddMsg(Work_Str.c_str());	//文字列設定
+
+				//▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲ リザルトメッセージ設定処理ここまで ▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲
 
 				BattleStageNow = (int)RESULT_MSG;		//リザルトメッセージ表示状態へ
 			}
@@ -593,6 +637,8 @@ void Battle()
 			{
 				BattleStageNow = (int)WAIT_ACT;		//行動選択状態へ
 			}
+
+			msg[(int)MSG_BATTLE]->NextMsg();	//次のメッセージへ
 
 		}
 
@@ -602,7 +648,18 @@ void Battle()
 
 	case (int)RESULT_MSG:		//戦闘終了後のメッセージを描画する状態
 
-		if (msg->GetDrawMsgKind()==(int)LEVELUP_MSG && se->GetIsPlayEnd()==false)	//レベルアップしたときは
+		msg[(int)MSG_RESULT]->DrawMsg(400, 400, GetColor(255, 255, 255));	//メッセージ描画
+		if (keydown->IsKeyDownOne(KEY_INPUT_RETURN))		//エンターキーを押されたとき
+		{
+			msg[(int)MSG_RESULT]->NextMsg();	//次のメッセージへ
+		}
+
+		if (player->GetLevUpMsgStartFlg())		//レベルアップしたときは
+		{
+			//msg[(int)MSG_LEVELUP]->DrawMsg(400,400,GetColor(255,255,255));
+		}
+
+		if (msg[(int)MSG_RESULT]->GetDrawMsgKind()==(int)LEVELUP_MSG && se->GetIsPlayEnd()==false)	//レベルアップしたときは
 		{
 			if (se->GetIsPlay((int)LEVELUP_SE) == false)		//再生中じゃなければ
 			{
@@ -612,7 +669,7 @@ void Battle()
 
 		}
 
-		if (msg->GetIsResultMsgEnd())		//リザルトメッセージの表示が終了していたら
+		if (msg[(int)MSG_RESULT]->GetIsResultMsgEnd())		//リザルトメッセージの表示が終了していたら
 		{
 			if (player->GetIsBattleWin())		//戦闘に勝利していたら
 			{
@@ -745,7 +802,7 @@ void Init()
 
 		Turn = (int)MY_TURN;		//ターンを味方のターンに設定
 
-		msg->ResetResultMsg();		//リザルトメッセージ関係のメンバーをリセット
+		msg[(int)MSG_RESULT]->ResetResultMsg();		//リザルトメッセージ関係のメンバーをリセット
 
 	}
 }
@@ -879,8 +936,9 @@ void Battle_Draw()
 		ui->DrawUiImage(BT_WINDOW_X, BT_WINDOW_Y, (int)UI_WINDOW);	//メッセージウィンドウ描画
 
 		//メッセージ描画
-		msg->DrawBattleMsg(BattleStageNow, Turn, ui->GetChoiseCommamd(), player, enemy[EncounteEnemyType], keydown->IsKeyDownOne(KEY_INPUT_RETURN));
-	
+		//msg[(int)MSG_RESULT]->DrawBattleMsg(BattleStageNow, Turn, ui->GetChoiseCommamd(), player, enemy[EncounteEnemyType], keydown->IsKeyDownOne(KEY_INPUT_RETURN));
+
+
 		//テキストポーズ描画
 		ui->DrawUiAnime(ui->GetUiImageWidth((int)UI_WINDOW) / 2 - TXT_POSE_WIDTH / 2, BT_TXT_POSE_Y);
 	}
@@ -970,7 +1028,12 @@ void Delete_Class()
 	delete mapimage;		//mapimageを破棄
 	delete data;			//dataを破棄
 	delete effect;			//effectを破棄
-	delete msg;				//msgを破棄
+
+	//メッセージの削除
+	for (int i = 0; i < MSG_KIND; ++i)
+	{
+		delete msg[i];				//msgを破棄
+	}
 
 	//マップデータの削除
 	for (int i = 0; i < MAP_DATA_KIND; i++)	//マップの種類分

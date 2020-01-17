@@ -15,6 +15,7 @@ MESSAGE::MESSAGE()
 	this->IsResultMsgEnd = false;	//リザルトメッセージ表示終了していない
 	this->ResultMsgStep = (int)WIN_MSG;	//表示段階は最初
 	this->IsDrawMsg = false;		//メッセージ描画中ではない
+	this->IsLastMsg = false;		//最後のメッセージではない
 
 	return;
 }
@@ -231,6 +232,18 @@ bool MESSAGE::GetIsDrawMsg(void)
 //文字列を設定
 void MESSAGE::SetMsg(const char *msg)
 {
+	//this->Msg.push_back(msg);		//受け取った文字列を追加
+	//this->Msg_itr = this->Msg.begin();	//先頭要素のアドレスを取得
+
+	this->Msg.clear();					//中身をクリア
+	this->Msg.push_back(msg);			//受け取った文字列を追加
+	this->Msg_itr = this->Msg.begin();	//先頭要素のアドレスを取得
+	return;
+}
+
+//文字列を追加
+void MESSAGE::AddMsg(const char *msg)
+{
 	this->Msg.push_back(msg);		//受け取った文字列を追加
 	this->Msg_itr = this->Msg.begin();	//先頭要素のアドレスを取得
 	return;
@@ -242,6 +255,10 @@ void MESSAGE::NextMsg(void)
 	if (*this->Msg_itr != this->Msg.back())			//最後のメッセージでなければ
 	{
 		++this->Msg_itr;	//次のメッセージへ
+	}
+	else				//最後のメッセージだったら
+	{
+		this->IsLastMsg = true;	//フラグを立てる
 	}
 	return;
 }
@@ -260,4 +277,10 @@ void MESSAGE::DrawMsg(int x, int y,unsigned int color)
 {
 	DrawFormatString(x, y, color, "%s", this->Msg_itr->c_str());	//メッセージ描画
 	return;
+}
+
+//最後のメッセージかどうか取得
+bool MESSAGE::GetIsLastMsg(void)
+{
+	return this->IsLastMsg;
 }

@@ -16,12 +16,21 @@
 
 #define RESULT_MSG_KIND	3	//リザルト画面のメッセージの種類
 
+#define MSG_KIND	3	//メッセージの種類
+
 //################ 列挙型 ########################
 enum MSG_STEP
 {
 	WIN_MSG,		//戦闘に勝利したメッセージ
 	EXP_MSG,		//経験値のメッセージ
 	LEVELUP_MSG		//レベルアップメッセージ
+};
+
+enum MSG_TYPE
+{
+	MSG_BATTLE,		//バトルメッセージ
+	MSG_RESULT,		//リザルトメッセージ
+	MSG_LEVELUP		//レベルアップメッセージ
 };
 
 //################ クラス定義 ####################
@@ -34,6 +43,8 @@ private:
 
 	int X;		//X描画位置
 	int Y;		//Y描画位置
+
+	bool IsLastMsg;	//最後のメッセージか
 
 	int ResultMsgStep;		//リザルトメッセージの表示段階
 
@@ -61,9 +72,11 @@ public:
 	bool GetIsDrawMsg(void);			//メッセージ描画中か取得
 
 	void SetMsg(const char *);			//文字列を設定する
+	void AddMsg(const char *);			//文字列を追加する
 	void NextMsg(void);					//次のメッセージへ移動する
 	void BackMsg(void);					//前のメッセージへ移動する
 
 	void DrawMsg(int, int,unsigned int);				//メッセージ描画
+	bool GetIsLastMsg(void);				//最後のメッセージかどうか取得
 
 };
