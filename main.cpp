@@ -108,7 +108,7 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 	font = new FONT(MY_FONT_DIR, MY_FONT_NAME, FONT_NAME);			//フォントを生成
 	if (font->GetIsLoad() == false) { return -1; }					//読み込み失敗時
 
-	data = new DATA();
+	data = new DATA();		//データ
 	msg = new MESSAGE();	//メッセージ
 
 	//エフェクト関係
@@ -478,11 +478,12 @@ void Battle()
 
 		}
 
+
 		break;						//ダメージ計算状態の時ここまで
 
 	case (int)ACT_MSG:				//行動メッセージ表示状態
 
-		if (Wait())			//待ち時間が過ぎたら
+		if (keydown->IsKeyDownOne(KEY_INPUT_RETURN))		//エンターキーを押されたら
 		{
 			if (Turn == (int)MY_TURN)		//味方のターンだったら
 			{
@@ -497,8 +498,7 @@ void Battle()
 				effect->SetIsDrawEnd(true);	//描画処理を飛ばすために、描画終了フラグを立てる
 			}
 
-			BattleStageNow = (int)DRAW_EFFECT;			//エフェクト描画状態へ
-
+			BattleStageNow = (int)DRAW_EFFECT;	//行動メッセージ表示状態へ
 		}
 
 		break;						//行動メッセージ表示状態ここまで
@@ -551,8 +551,9 @@ void Battle()
 	case (int)DRAW_DAMEGE:				//ダメージ描画状態
 
 		//ダメージ描画
-		if (Wait())				//待ち時間が過ぎたら
+		if (keydown->IsKeyDownOne(KEY_INPUT_RETURN))	//エンターキーを押されたら
 		{
+
 			if (Turn == (int)MY_TURN)			//味方のターンの時
 			{
 				if (ui->GetChoiseCommamd() == (int)COMMANDE_ATACK)	//攻撃を選んだ時は
@@ -571,13 +572,11 @@ void Battle()
 			{
 				effect->ResetIsAnime(enemy[EncounteEnemyType]->GetSkil());		//エフェクトリセット
 				Turn = (int)MY_TURN;				//味方のターンへ
-
 			}
 
 			if (player->GetHP() <= 0)			//自分のHPが0になったら
 			{
 				player->SetIsArive(false);		//自分死亡
-
 				player->SetIsBattleWin(false);	//戦闘に敗北
 
 				BattleStageNow = (int)RESULT_MSG;		//リザルトメッセージ表示状態へ
@@ -585,9 +584,7 @@ void Battle()
 			else if (enemy[EncounteEnemyType]->GetHP() <= 0)				//敵のHPが0になったら
 			{
 				enemy[EncounteEnemyType]->SetIsArive(false);		//敵死亡
-
 				player->SetIsBattleWin(true);		//戦闘に勝利
-
 				player->AddExp(enemy[EncounteEnemyType]->GetEXP());	//経験値加算
 
 				BattleStageNow = (int)RESULT_MSG;		//リザルトメッセージ表示状態へ
@@ -597,9 +594,9 @@ void Battle()
 				BattleStageNow = (int)WAIT_ACT;		//行動選択状態へ
 			}
 
-			ui->BattleInit();				//バトルコマンドリセット
-
 		}
+
+		ui->BattleInit();				//バトルコマンドリセット
 
 		break;
 
