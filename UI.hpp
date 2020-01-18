@@ -106,6 +106,7 @@ public:
 	void ChoiseOperation(KEYDOWN *);			//選択肢のキー操作を行う
 	std::vector<std::string>::iterator GetNowChoise();	//現在選択している要素を取得する
 	void ChoiseClear();							//選択肢の内容をクリアする
+	void NowChoiseReset();						//現在選択している内容を、最初の要素に戻す
 
 	//アニメーション関係
 	bool AddUiAnime(const char *, const char *, int, int, int, int, int, double, bool);	//アニメーション画像を追加する

@@ -482,12 +482,23 @@ void Battle()
 
 			//▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼ メッセージ設定処理ここから ▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼
 			//味方
-			Work_Str = player->GetName();					//味方の名前取得
-			Work_Str += "の攻撃!";			
-			msg[(int)MSG_BATTLE]->SetMsg(Work_Str.c_str());	//文字列設定
-			Work_Str = std::to_string(player->GetSendDamege());	//与えたダメージ取得
-			Work_Str += "のダメージを与えた";
-			msg[(int)MSG_BATTLE]->AddMsg(Work_Str.c_str());	//文字列設定
+			if (ui->GetChoiseCommamd() == (int)COMMANDE_DEFENSE)	//防御を選んだ時
+			{
+				Work_Str = player->GetName();					//味方の名前取得
+				Work_Str += "は防御している！";
+				msg[(int)MSG_BATTLE]->SetMsg(Work_Str.c_str());	//文字列設定
+				Work_Str = "防御に集中している！";
+				msg[(int)MSG_BATTLE]->AddMsg(Work_Str.c_str());	//文字列設定
+			}
+			else					//それ以外の時
+			{
+				Work_Str = player->GetName();					//味方の名前取得
+				Work_Str += "の攻撃!";
+				msg[(int)MSG_BATTLE]->SetMsg(Work_Str.c_str());	//文字列設定
+				Work_Str = std::to_string(player->GetSendDamege());	//与えたダメージ取得
+				Work_Str += "のダメージを与えた";
+				msg[(int)MSG_BATTLE]->AddMsg(Work_Str.c_str());	//文字列設定
+			}
 
 			//敵
 			Work_Str = enemy[EncounteEnemyType]->GetName();	//敵の名前取得
@@ -499,6 +510,8 @@ void Battle()
 			//▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲ メッセージ設定処理ここまで ▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲
 
 			BattleStageNow = (int)ACT_MSG;	//行動メッセージ表示状態へ
+
+			ui->NowChoiseReset();		//選択を最初の要素へ戻す
 
 		}
 		else if (Turn = (int)ENEMY_TURN)	//敵のターンだったら
@@ -532,7 +545,7 @@ void Battle()
 				effect->SetIsDrawEnd(true);	//描画処理を飛ばすために、描画終了フラグを立てる
 			}
 			msg[(int)MSG_BATTLE]->NextMsg();	//次のメッセージへ
-			BattleStageNow = (int)DRAW_EFFECT;	//行動メッセージ表示状態へ
+			BattleStageNow = (int)DRAW_EFFECT;	//エフェクト表示状態へ
 		}
 
 		break;						//行動メッセージ表示状態ここまで
@@ -647,8 +660,6 @@ void Battle()
 
 				BattleStageNow = (int)RESULT_MSG;		//リザルトメッセージ表示状態へ
 
-				ui->BattleInit();				//バトルコマンドリセット
-
 			}
 			else
 			{
@@ -656,6 +667,8 @@ void Battle()
 			}
 
 			msg[(int)MSG_BATTLE]->NextMsg();	//次のメッセージへ
+
+			ui->BattleInit();				//バトルコマンドリセット
 
 		}
 

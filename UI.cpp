@@ -288,6 +288,13 @@ void UI::ChoiseClear(void)
 	return;
 }
 
+//現在選択している内容を最初の要素に戻す
+void UI::NowChoiseReset(void)
+{
+	this->Str_itr = this->Str.begin();
+	return;
+}
+
 //アニメーション画像追加
 bool UI::AddUiAnime(const char *dir, const char *name, int SplitNumALL, int SpritNumX, int SplitNumY, int SplitWidth, int SplitHeight, double changeSpeed, bool IsLoop)
 {
