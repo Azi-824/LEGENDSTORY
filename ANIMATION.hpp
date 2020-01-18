@@ -32,7 +32,7 @@
 #define PLAYER_ALL_CNT	PLAYER_YOKO_CNT * PLAYER_TATE_CNT
 #define	TXT_POSE_ALL_CNT TXT_POSE_YOKO_CNT * TXT_POSE_TATE_CNT
 
-#define PLAYER_ANI_SPEED 1.0
+#define PLAYER_ANI_SPEED 5.0
 #define TXT_POSE_SPEED	10.0
 
 //########## マクロ定義：エラーメッセージ##########
