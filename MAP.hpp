@@ -26,6 +26,9 @@
 #define MY_MAP_4_2		R"(map_4_2.csv)"			//マップcsvの名前(4マップ目レイヤー2)
 #define MY_MAP_4_3		R"(map_4_3.csv)"			//マップcsvの名前(4マップ目レイヤー3)
 
+#define MAP_NG_KIND		1	//通行できないマップの種類
+#define MAP_OK_KIND		1	//通行できるマップの種類
+
 //##################### マクロ定義：エラーメッセージ ####################
 
 //##################### 列挙型 #########################
@@ -42,6 +45,16 @@ enum MAP_KIND
 	MAP_2,				//ニマップ目
 	MAP_3,				//三マップ目
 	MAP_4				//四マップ目
+};
+
+enum MAP_NG_NUM
+{
+	MAP_NG_KIND1 =83		//通行できないマップの数字
+};
+
+enum MAP_OK_NUM
+{
+	MAP_OK_KIND1 = 1		//通行できるマップの数字
 };
 
 //##################### マクロ定義 ########################
@@ -68,6 +81,9 @@ private:
 
 	int MapData[MAP_TATE][MAP_YOKO];		//マップデータ
 
+	COLLISION *RectOK[MAP_TATE][MAP_YOKO];		//当たり判定(通行できる)
+	COLLISION *RectNG[MAP_TATE][MAP_YOKO];		//当たり判定（通行できない）
+
 	FILE *fp_map_csv;						//マップファイルのポインタ
 
 public :
@@ -81,5 +97,7 @@ public :
 	void ChengeMap(PLAYER *,int *);				//マップを切り替える
 
 	void Draw(int *);		//描画
+
+	void CreateRect(int *,int *);	//当たり判定の領域を作成
 
 };

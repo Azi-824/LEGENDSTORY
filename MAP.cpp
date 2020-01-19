@@ -8,12 +8,46 @@
 //コンストラクタ
 MAP::MAP()
 {
+	for (int tate = 0; tate < MAP_TATE; ++tate)
+	{
+		for (int yoko = 0; yoko < MAP_YOKO; ++yoko)
+		{
+			this->RectOK[tate][yoko] = new COLLISION();	//当たり判定の領域を作成(通行できる)
+			this->RectNG[tate][yoko] = new COLLISION();	//当たり判定の領域を作成(通行できない)
+
+			//当たり判定初期化
+			this->RectOK[tate][yoko]->Left = 0;
+			this->RectOK[tate][yoko]->Top = 0;
+			this->RectOK[tate][yoko]->Right = 0;
+			this->RectOK[tate][yoko]->Bottom = 0;
+			this->RectOK[tate][yoko]->Width = MAP_YOKO_SIZE;
+			this->RectOK[tate][yoko]->Height = MAP_TATE_SIZE;
+
+			this->RectNG[tate][yoko]->Left = 0;
+			this->RectNG[tate][yoko]->Top = 0;
+			this->RectNG[tate][yoko]->Right = 0;
+			this->RectNG[tate][yoko]->Bottom = 0;
+			this->RectNG[tate][yoko]->Width = MAP_YOKO_SIZE;
+			this->RectNG[tate][yoko]->Height = MAP_TATE_SIZE;
+
+
+		}
+	}
 	return;
 }
 
 //デストラクタ
 MAP::~MAP()
 {
+	for (int tate = 0; tate < MAP_TATE; ++tate)
+	{
+		for (int yoko = 0; yoko < MAP_YOKO; ++yoko)
+		{
+			delete this->RectOK[tate][yoko];	//当たり判定を破棄(通行できる)
+			delete this->RectNG[tate][yoko];	//当たり判定を破棄(通行できない)
+		}
+	}
+
 	return;
 }
 
@@ -109,4 +143,43 @@ void MAP::Draw(int *handle)
 	}
 
 	return;
+}
+
+//当たり判定の領域を作成
+void MAP::CreateRect(int *ok_kind,int *ng_kind)
+{
+	for (int tate = 0; tate < MAP_TATE; ++tate)
+	{
+		for (int yoko = 0; yoko < MAP_YOKO; ++yoko)
+		{
+
+			//当たり判定の領域を作成(通行できる)
+			for (int cnt = 0; cnt < MAP_OK_KIND; ++cnt)
+			{
+				if (this->MapData[tate][yoko] == ok_kind[cnt])
+				{
+					this->RectOK[tate][yoko]->Left = yoko * this->RectOK[tate][yoko]->Width + 1;
+					this->RectOK[tate][yoko]->Top = tate * this->RectOK[tate][yoko]->Height + 1;
+					this->RectOK[tate][yoko]->Right = (yoko + 1) * this->RectOK[tate][yoko]->Width - 1;
+					this->RectOK[tate][yoko]->Bottom = (tate + 1)*this->RectOK[tate][yoko]->Height - 1;
+				}
+			}
+
+			//当たり判定の領域を作成(通行できない)
+			for (int cnt = 0; cnt < MAP_NG_KIND; ++cnt)
+			{
+				if (this->MapData[tate][yoko] == ng_kind[cnt])
+				{
+					this->RectNG[tate][yoko]->Left = yoko * this->RectOK[tate][yoko]->Width + 1;
+					this->RectNG[tate][yoko]->Top = tate * this->RectOK[tate][yoko]->Height + 1;
+					this->RectNG[tate][yoko]->Right = (yoko + 1) * this->RectOK[tate][yoko]->Width - 1;
+					this->RectNG[tate][yoko]->Bottom = (tate + 1)*this->RectOK[tate][yoko]->Height - 1;
+				}
+			}
+
+		}
+	}
+
+	return;
+
 }
