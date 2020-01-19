@@ -13,14 +13,18 @@
 //###################### マクロ定義：ファイルパス、名前 ##################
 #define MY_MAP_DIR		R"(.\MY_MAP\map_csv\)"			//マップcsvのファイルの場所
 
-#define MY_MAP_1_1		R"(map_1.csv)"				//マップcsvの名前
-#define MY_MAP_1_2		R"(map_1_2.csv)"			//マップcsvの名前
-#define MY_MAP_2_1		R"(map_2_1.csv)"			//マップcsvの名前
-#define MY_MAP_2_2		R"(map_2_2.csv)"			//マップcsvの名前
-#define MY_MAP_3_1		R"(map_3_1.csv)"			//マップcsvの名前
-#define MY_MAP_3_2		R"(map_3_2.csv)"			//マップcsvの名前
-#define MY_MAP_4_1		R"(map_4_1.csv)"			//マップcsvの名前
-#define MY_MAP_4_2		R"(map_4_2.csv)"			//マップcsvの名前
+#define MY_MAP_1_1		R"(map_1_1.csv)"			//マップcsvの名前(1マップ目レイヤー1)
+#define MY_MAP_1_2		R"(map_1_2.csv)"			//マップcsvの名前(1マップ目レイヤー2)
+#define MY_MAP_1_3		R"(map_1_3.csv)"			//マップcsvの名前(1マップ目レイヤー3)
+#define MY_MAP_2_1		R"(map_2_1.csv)"			//マップcsvの名前(2マップ目レイヤー1)
+#define MY_MAP_2_2		R"(map_2_2.csv)"			//マップcsvの名前(2マップ目レイヤー2)
+#define MY_MAP_2_3		R"(map_2_3.csv)"			//マップcsvの名前(2マップ目レイヤー3)
+#define MY_MAP_3_1		R"(map_3_1.csv)"			//マップcsvの名前(3マップ目レイヤー1)
+#define MY_MAP_3_2		R"(map_3_2.csv)"			//マップcsvの名前(3マップ目レイヤー2)
+#define MY_MAP_3_3		R"(map_3_3.csv)"			//マップcsvの名前(3マップ目レイヤー3)
+#define MY_MAP_4_1		R"(map_4_1.csv)"			//マップcsvの名前(4マップ目レイヤー1)
+#define MY_MAP_4_2		R"(map_4_2.csv)"			//マップcsvの名前(4マップ目レイヤー2)
+#define MY_MAP_4_3		R"(map_4_3.csv)"			//マップcsvの名前(4マップ目レイヤー3)
 
 //##################### マクロ定義：エラーメッセージ ####################
 
@@ -28,7 +32,8 @@
 enum MAP_LAYER
 {
 	FIRST_LAYER,		//一層目
-	SECOND_LAYER		//二層目
+	SECOND_LAYER,		//二層目
+	THIRD_LAYER			//三層目
 };
 
 enum MAP_KIND
@@ -43,7 +48,7 @@ enum MAP_KIND
 #define MAP_YOKO		20			//マップの数（横）
 #define MAP_TATE		15			//マップの数（縦）
 
-#define MAP_LAYER_KIND	2										//マップデータのレイヤー数
+#define MAP_LAYER_KIND	3										//マップデータのレイヤー数
 #define MAP_DATA_KIND	MAP_DATA_YOKO_KIND * MAP_DATA_TATE_KIND	//マップデータの種類数
 #define MAP_DATA_YOKO_KIND	2									//マップデータの横方向の種類数
 #define MAP_DATA_TATE_KIND	2									//マップデータの縦方の種類数

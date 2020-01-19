@@ -191,29 +191,41 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 	if (mapimage->GetIsLoad() == false) { return -1; }	//読み込み失敗
 
 	//▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼ マップデータ読み込み開始 ▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼
-	mapdata[MAP_1][FIRST_LAYER] = new MAP();	//一層目のマップデータ生成
-	if (mapdata[MAP_1][FIRST_LAYER]->LoadCsv(MY_MAP_DIR, MY_MAP_1_1) == false) { return -1; }	//読み込み失敗
+	mapdata[(int)MAP_1][(int)FIRST_LAYER] = new MAP();	//一層目のマップデータ生成
+	if (mapdata[(int)MAP_1][(int)FIRST_LAYER]->LoadCsv(MY_MAP_DIR, MY_MAP_1_1) == false) { return -1; }	//読み込み失敗
 
-	mapdata[MAP_1][SECOND_LAYER] = new MAP();	//二層目のマップデータ生成
-	if (mapdata[MAP_1][SECOND_LAYER]->LoadCsv(MY_MAP_DIR, MY_MAP_1_2) == false) { return -1; }	//読み込み失敗
+	mapdata[MAP_1][(int)SECOND_LAYER] = new MAP();	//二層目のマップデータ生成
+	if (mapdata[(int)MAP_1][(int)SECOND_LAYER]->LoadCsv(MY_MAP_DIR, MY_MAP_1_2) == false) { return -1; }	//読み込み失敗
 
-	mapdata[MAP_2][FIRST_LAYER] = new MAP();	//一層目のマップデータ生成
-	if (mapdata[MAP_2][FIRST_LAYER]->LoadCsv(MY_MAP_DIR, MY_MAP_2_1) == false) { return -1; }	//読み込み失敗
+	mapdata[(int)MAP_1][(int)THIRD_LAYER] = new MAP();	//三層目のマップデータ生成
+	if (mapdata[(int)MAP_1][(int)THIRD_LAYER]->LoadCsv(MY_MAP_DIR, MY_MAP_1_3) == false) { return -1; }	//読み込み失敗
 
-	mapdata[MAP_2][SECOND_LAYER] = new MAP();	//二層目のマップデータ生成
-	if (mapdata[MAP_2][SECOND_LAYER]->LoadCsv(MY_MAP_DIR, MY_MAP_2_2) == false) { return -1; }	//読み込み失敗
+	mapdata[(int)MAP_2][(int)FIRST_LAYER] = new MAP();	//一層目のマップデータ生成
+	if (mapdata[(int)MAP_2][(int)FIRST_LAYER]->LoadCsv(MY_MAP_DIR, MY_MAP_2_1) == false) { return -1; }	//読み込み失敗
 
-	mapdata[MAP_3][FIRST_LAYER] = new MAP();	//一層目のマップデータ生成
-	if (mapdata[MAP_3][FIRST_LAYER]->LoadCsv(MY_MAP_DIR, MY_MAP_3_1) == false) { return -1; }	//読み込み失敗
+	mapdata[(int)MAP_2][(int)SECOND_LAYER] = new MAP();	//二層目のマップデータ生成
+	if (mapdata[(int)MAP_2][(int)SECOND_LAYER]->LoadCsv(MY_MAP_DIR, MY_MAP_2_2) == false) { return -1; }	//読み込み失敗
 
-	mapdata[MAP_3][SECOND_LAYER] = new MAP();	//二層目のマップデータ生成
-	if (mapdata[MAP_3][SECOND_LAYER]->LoadCsv(MY_MAP_DIR, MY_MAP_3_2) == false) { return -1; }	//読み込み失敗
+	mapdata[(int)MAP_2][(int)THIRD_LAYER] = new MAP();	//三層目のマップデータ生成
+	if (mapdata[(int)MAP_2][(int)THIRD_LAYER]->LoadCsv(MY_MAP_DIR, MY_MAP_2_3) == false) { return -1; }	//読み込み失敗
 
-	mapdata[MAP_4][FIRST_LAYER] = new MAP();	//一層目のマップデータ生成
-	if (mapdata[MAP_4][FIRST_LAYER]->LoadCsv(MY_MAP_DIR, MY_MAP_4_1) == false) { return -1; }	//読み込み失敗
+	mapdata[(int)MAP_3][(int)FIRST_LAYER] = new MAP();	//一層目のマップデータ生成
+	if (mapdata[(int)MAP_3][(int)FIRST_LAYER]->LoadCsv(MY_MAP_DIR, MY_MAP_3_1) == false) { return -1; }	//読み込み失敗
 
-	mapdata[MAP_4][SECOND_LAYER] = new MAP();	//二層目のマップデータ生成
-	if (mapdata[MAP_4][SECOND_LAYER]->LoadCsv(MY_MAP_DIR, MY_MAP_4_2) == false) { return -1; }	//読み込み失敗
+	mapdata[(int)MAP_3][(int)SECOND_LAYER] = new MAP();	//二層目のマップデータ生成
+	if (mapdata[(int)MAP_3][(int)SECOND_LAYER]->LoadCsv(MY_MAP_DIR, MY_MAP_3_2) == false) { return -1; }	//読み込み失敗
+
+	mapdata[(int)MAP_3][(int)THIRD_LAYER] = new MAP();	//三層目のマップデータ生成
+	if (mapdata[(int)MAP_3][(int)THIRD_LAYER]->LoadCsv(MY_MAP_DIR, MY_MAP_3_3) == false) { return -1; }	//読み込み
+
+	mapdata[(int)MAP_4][(int)FIRST_LAYER] = new MAP();	//一層目のマップデータ生成
+	if (mapdata[(int)MAP_4][(int)FIRST_LAYER]->LoadCsv(MY_MAP_DIR, MY_MAP_4_1) == false) { return -1; }	//読み込み失敗
+
+	mapdata[(int)MAP_4][(int)SECOND_LAYER] = new MAP();	//二層目のマップデータ生成
+	if (mapdata[(int)MAP_4][(int)SECOND_LAYER]->LoadCsv(MY_MAP_DIR, MY_MAP_4_2) == false) { return -1; }	//読み込み失敗
+
+	mapdata[(int)MAP_4][(int)THIRD_LAYER] = new MAP();	//三層目のマップデータ生成
+	if (mapdata[(int)MAP_4][(int)THIRD_LAYER]->LoadCsv(MY_MAP_DIR, MY_MAP_4_3) == false) { return -1; }	//読み込み失敗
 
 	//マップの種類を二次元配列で管理
 	for (int yoko = 0; yoko < MAP_DATA_YOKO_KIND; yoko++)
