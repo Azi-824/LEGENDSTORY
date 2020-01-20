@@ -100,4 +100,6 @@ public :
 
 	void CreateRect(int *,int *);	//当たり判定の領域を作成
 
+	bool CheckDetectionPlayer(COLLISION *player, int *detectionX, int *detectionY);	//プレイヤーとマップが当たっているか確認
+
 };

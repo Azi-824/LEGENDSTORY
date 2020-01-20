@@ -16,20 +16,9 @@ MAP::MAP()
 			this->RectNG[tate][yoko] = new COLLISION();	//当たり判定の領域を作成(通行できない)
 
 			//当たり判定初期化
-			this->RectOK[tate][yoko]->Left = 0;
-			this->RectOK[tate][yoko]->Top = 0;
-			this->RectOK[tate][yoko]->Right = 0;
-			this->RectOK[tate][yoko]->Bottom = 0;
-			this->RectOK[tate][yoko]->Width = MAP_YOKO_SIZE;
-			this->RectOK[tate][yoko]->Height = MAP_TATE_SIZE;
+			this->RectOK[tate][yoko]->SetValue(0, 0, MAP_YOKO_SIZE, MAP_TATE_SIZE);
 
-			this->RectNG[tate][yoko]->Left = 0;
-			this->RectNG[tate][yoko]->Top = 0;
-			this->RectNG[tate][yoko]->Right = 0;
-			this->RectNG[tate][yoko]->Bottom = 0;
-			this->RectNG[tate][yoko]->Width = MAP_YOKO_SIZE;
-			this->RectNG[tate][yoko]->Height = MAP_TATE_SIZE;
-
+			this->RectNG[tate][yoko]->SetValue(0, 0, MAP_YOKO_SIZE, MAP_TATE_SIZE);
 
 		}
 	}
@@ -162,6 +151,11 @@ void MAP::CreateRect(int *ok_kind,int *ng_kind)
 					this->RectOK[tate][yoko]->Top = tate * this->RectOK[tate][yoko]->Height + 1;
 					this->RectOK[tate][yoko]->Right = (yoko + 1) * this->RectOK[tate][yoko]->Width - 1;
 					this->RectOK[tate][yoko]->Bottom = (tate + 1)*this->RectOK[tate][yoko]->Height - 1;
+
+					//this->RectOK[tate][yoko]->SetValue(yoko * this->RectOK[tate][yoko]->Width + 1,
+					//	tate * this->RectOK[tate][yoko]->Height + 1,
+					//	MAP_YOKO_SIZE - 1, MAP_TATE_SIZE - 1);
+
 				}
 			}
 
@@ -181,5 +175,27 @@ void MAP::CreateRect(int *ok_kind,int *ng_kind)
 	}
 
 	return;
+
+}
+
+//プレイヤーとマップが当たっているか確認
+bool MAP::CheckDetectionPlayer(COLLISION *player, int *detectionX, int *detectionY)
+{
+	for (int tate = 0; tate < MAP_TATE; tate++)
+	{
+		for (int yoko = 0; yoko < MAP_YOKO; yoko++)
+		{
+			//キャラクターの当たっている場所を取得
+			if(this->RectNG[tate][yoko]->DetectionCheck(player))
+			{
+				*detectionY = tate;	//atariYのアドレスが指し示す先の場所に、当たったモノの縦の位置を入れる
+				*detectionX = yoko;	//atariXのアドレスが指し示す先の場所に、当たったモノの横の位置を入れる
+
+				return true;
+			}
+		}
+	}
+
+	return false;
 
 }
