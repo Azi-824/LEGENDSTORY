@@ -54,6 +54,19 @@ bool PLAYER::SetInit()
 	this->IsBattleWin = false;	//戦闘に勝っていない
 	this->LevUpMsgStart_flg = false;	//レベルアップメッセージを表示していない
 
+	//描画領域作成
+	this->sikaku_draw->SetValue(this->sikaku_draw->Left,
+		this->sikaku_draw->Top,
+		this->Anime->GetWidth(),
+		this->Anime->GetHeight());
+
+	//当たり判定領域作成
+	this->Collision->SetValue(this->sikaku_draw->Left,
+		this->sikaku_draw->Top,
+		this->Anime->GetWidth(),
+		this->Anime->GetHeight());
+
+
 	this->Stopflg.assign(DIST_KIND, false);	//全ての方向へ移動
 
 	return true;
