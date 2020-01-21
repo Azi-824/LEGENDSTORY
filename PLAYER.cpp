@@ -24,6 +24,9 @@ PLAYER::~PLAYER()
 	std::vector<int> v;			//空のvectorを作成する
 	this->Skil.swap(v);		//空と中身を入れ替える
 
+	std::vector<bool> v2;			//空のvectorを作成する
+	this->Stopflg.swap(v2);			//空と中身を入れ替える
+
 	return;
 }
 
@@ -45,6 +48,8 @@ bool PLAYER::SetInit()
 	this->IsActMsg = false;		//行動メッセージ表示していない
 	this->IsBattleWin = false;	//戦闘に勝っていない
 	this->LevUpMsgStart_flg = false;	//レベルアップメッセージを表示していない
+
+	this->Stopflg.assign(DIST_KIND, false);	//全ての方向へ移動
 
 	this->Collision = new COLLISION();		//当たり判定の領域を作成
 	this->Collision->SetValue(400, 400, this->Anime->GetWidth(),this->Anime->GetHeight());	//当たり判定の領域を設定
@@ -258,6 +263,21 @@ void PLAYER::SetLevUpMsgStartFlg(bool start_flg)
 	return;
 }
 
+//ストップするか設定
+void PLAYER::SetStopFlg(bool stop_flg)
+{
+	this->Stopflg.assign(DIST_KIND, false);
+	this->Stopflg[this->InKeyKind] = stop_flg;
+	return;
+}
+
+//ストップフラグリセット
+void PLAYER::ResetStopFlg(void)
+{
+	this->Stopflg.assign(DIST_KIND, false);	
+	return;
+}
+
 //名前取得
 const char * PLAYER::GetName(void)
 {
@@ -423,28 +443,40 @@ void PLAYER::Operation(KEYDOWN *keydown)
 		this->IsKeyDown = true;		//キー入力あり
 		this->Dist = BACK;			//移動方向を上にする
 		this->InKeyKind = (int)KEY_UP;	//キー入力の種類、上
-		this->MoveUp();				//上へ移動
+		if (this->Stopflg[(int)KEY_UP] == false)	//ストップフラグが立っていなければ
+		{
+			this->MoveUp();				//上へ移動
+		}
 	}
 	else if (this->IsMenu == false && keydown->IsKeyDown(KEY_INPUT_S))	//メニュー描画中でなく、Sキーを押しているとき
 	{
 		this->IsKeyDown = true;		//キー入力あり
 		this->Dist = FLONT;			//移動方向下
 		this->InKeyKind = (int)KEY_DOWN;	//キー入力の種類、下
-		this->MoveDown();			//下へ移動
+		if (this->Stopflg[(int)KEY_DOWN] == false)	//ストップフラグが立っていなければ
+		{
+			this->MoveDown();			//下へ移動
+		}
 	}
 	else if (this->IsMenu == false && keydown->IsKeyDown(KEY_INPUT_A))	//メニュー描画中でなく、Aキーを押しているとき
 	{
 		this->IsKeyDown = true;		//キー入力あり
 		this->Dist = LEFT;			//移動方向左
 		this->InKeyKind = (int)KEY_LEFT;	//キー入力の種類、左
-		this->MoveLeft();			//左へ移動
+		if (this->Stopflg[(int)KEY_LEFT] == false)	//ストップフラグが立っていなければ
+		{
+			this->MoveLeft();			//左へ移動
+		}
 	}
 	else if (this->IsMenu == false && keydown->IsKeyDown(KEY_INPUT_D))	//メニュー描画中でなく、Dキーを押しているとき
 	{
 		this->IsKeyDown = true;		//キー入力あり
 		this->Dist = RIGHT;			//移動方向右
 		this->InKeyKind = (int)KEY_RIGHT;	//キー入力の種類、右
-		this->MoveRight();			//右へ移動
+		if (this->Stopflg[(int)KEY_RIGHT] == false)	//ストップフラグが立っていなければ
+		{
+			this->MoveRight();			//右へ移動
+		}
 	}
 	else
 	{

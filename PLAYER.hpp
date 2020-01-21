@@ -21,6 +21,8 @@
 #define	DEF_BOOST	1.7				//防御を選んだ時の防御力の強化倍率
 #define ATK_BOOST	2				//攻撃力の強化倍率
 
+#define DIST_KIND	4				//移動方向の種類
+
 
 //################# 列挙型 ######################
 enum COMMANDTYPE
@@ -75,6 +77,7 @@ private:
 	bool IsBattleWin;		//戦闘に勝ったか
 	bool LevUpMsgStart_flg;	//レベルアップメッセージスタートフラグ
 
+	std::vector<bool> Stopflg;	//ストップするか
 
 public:
 	PLAYER();				//コンストラクタ
@@ -110,7 +113,8 @@ public:
 	void SetIsMenu(bool);		//メニュー描画中か設定
 	void SetIsBattleWin(bool);	//戦闘に勝ったか設定
 	void SetLevUpMsgStartFlg(bool);	//レベルアップメッセージスタートのフラグを設定
-
+	void SetStopFlg(bool);		//ストップするか設定
+	void ResetStopFlg(void);		//ストップフラグリセット
 
 	//ステータス関係
 	const char *GetName();	//名前取得

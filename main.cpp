@@ -361,7 +361,12 @@ void Play()
 		if (mapdata[MapKind[MAPPOS_Y][MAPPOS_X]][(int)THIRD_LAYER]->CheckDetectionPlayer(player->GetCollision(), player->GetInKeyKind(), &X, &Y))
 		{
 			//通行できなかったとき
-			int a = 1;
+			player->SetStopFlg(true);
+		}
+		else
+		{
+			//通行できるとき
+			player->ResetStopFlg();	//ストップラグリセット
 		}
 
 	}

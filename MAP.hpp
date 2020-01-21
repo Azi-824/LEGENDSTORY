@@ -72,6 +72,8 @@ enum MAP_OK_NUM
 #define POS_X	0									//X座標
 #define POS_Y	1									//Y座標
 
+#define RECT_STAGGER	4	//領域をずらす量
+
 //##################### クラス定義 ###################
 class MAP
 {

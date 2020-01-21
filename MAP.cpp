@@ -190,8 +190,8 @@ bool MAP::CheckDetectionPlayer(COLLISION *player,int keykind, int *detectionX, i
 	case (int)KEY_UP:		//上キーの時
 
 		//領域を少し上へずらす
-		player->Top -= 4;
-		player->Bottom -= 4;
+		player->Top -= RECT_STAGGER;
+		player->Bottom -= RECT_STAGGER;
 
 		for (int tate = 0; tate < MAP_TATE; tate++)
 		{
@@ -216,8 +216,8 @@ bool MAP::CheckDetectionPlayer(COLLISION *player,int keykind, int *detectionX, i
 	case (int)KEY_DOWN:		//下キーの時
 
 		//領域を少し下へずらす
-		player->Top += 4;
-		player->Bottom += 4;
+		player->Top += RECT_STAGGER;
+		player->Bottom += RECT_STAGGER;
 
 		for (int tate = 0; tate < MAP_TATE; tate++)
 		{
@@ -242,8 +242,8 @@ bool MAP::CheckDetectionPlayer(COLLISION *player,int keykind, int *detectionX, i
 	case(int)KEY_LEFT:		//左キーの時
 
 		//領域を少し左へずらす
-		player->Left -= 4;
-		player->Right -= 4;
+		player->Left -= RECT_STAGGER;
+		player->Right -= RECT_STAGGER;
 
 		for (int tate = 0; tate < MAP_TATE; tate++)
 		{
@@ -268,8 +268,8 @@ bool MAP::CheckDetectionPlayer(COLLISION *player,int keykind, int *detectionX, i
 	case(int)KEY_RIGHT:		//右キーの時
 
 		//領域を少し右へずらす 
-		player->Left += 4;
-		player->Right += 4;
+		player->Left += RECT_STAGGER;
+		player->Right += RECT_STAGGER;
 
 		for (int tate = 0; tate < MAP_TATE; tate++)
 		{
