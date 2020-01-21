@@ -709,8 +709,8 @@ void PLAYER::AddExp(int exp)
 
 //現在の位置を取得
 /*
-引数：int：X位置をセットする
-引数：int：Y位置をセットする
+引数：int *：X位置をセットする
+引数：int *：Y位置をセットする
 */
 void PLAYER::GetNowPos(int *x, int *y)
 {
@@ -720,6 +720,10 @@ void PLAYER::GetNowPos(int *x, int *y)
 }
 
 //現在の位置を設定
+/*
+引数：int：現在のX位置
+引数：int：現在のY位置
+*/
 void PLAYER::SetNowPos(int x, int y)
 {
 	this->sikaku_draw->Left = x;

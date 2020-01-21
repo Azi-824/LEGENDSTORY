@@ -369,7 +369,7 @@ void Play()
 		else
 		{
 			//通行できるとき
-			player->ResetStopFlg();	//ストップラグリセット
+			player->ResetStopFlg();	//ストップフラグリセット
 		}
 
 	}
@@ -440,7 +440,6 @@ void Battle()
 {
 
 	Battle_Draw();			//描画処理
-
 
 	switch (BattleStageNow)		//現在のバトル状態
 	{
@@ -559,8 +558,6 @@ void Battle()
 
 		}
 
-
-
 		break;						//ダメージ計算状態の時ここまで
 
 	case (int)ACT_MSG:				//行動メッセージ表示状態
@@ -671,6 +668,7 @@ void Battle()
 				//▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲ リザルトメッセージ設定処理ここまで ▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲
 
 				BattleStageNow = (int)RESULT_MSG;		//リザルトメッセージ表示状態へ
+
 			}
 			else if (enemy[EncounteEnemyType]->GetHP() <= 0)				//敵のHPが0になったら
 			{
@@ -748,6 +746,7 @@ void Battle()
 				}
 
 			}
+
 		}
 
 		break;					//戦闘終了後のメッセージを描画する状態の処理ここまで
@@ -756,13 +755,13 @@ void Battle()
 
 		break;
 
-
 	}
 
 	if (keydown->IsKeyDown(KEY_INPUT_R))		//Rキー押されたら
 	{
 		back_battle->ChengeImage(NIGHT);		//背景画像を（夜）に変更
 	}
+
 	return;
 }
 
@@ -918,7 +917,6 @@ void Play_Draw()
 
 	player->GetNowPos(&Player_X, &Player_Y);//プレイヤーの現在位置を取得
 
-
 	//▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼ メニュー描画処理ここから ▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼
 	if (player->GetIsMenu())	//メニュー描画中なら
 	{
@@ -979,7 +977,6 @@ void Play_Draw()
 				break;
 			}
 
-
 		}
 	}
 	//▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲ メニュー描画処理ここまで ▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲
@@ -1002,9 +999,7 @@ void Battle_Draw()
 
 	ui->DrawUiImage(BT_WINDOW_X, BT_WINDOW_Y, (int)UI_WINDOW);	//メッセージウィンドウ描画
 
-	//テキストポーズ描画
-	ui->DrawUiAnime(ui->GetUiImageWidth((int)UI_WINDOW) / 2 - TXT_POSE_WIDTH / 2, BT_TXT_POSE_Y);
-
+	ui->DrawUiAnime(ui->GetUiImageWidth((int)UI_WINDOW) / 2 - TXT_POSE_WIDTH / 2, BT_TXT_POSE_Y);		//テキストポーズ描画
 
 	return;
 

@@ -121,6 +121,7 @@ void MAP::ChengeMap(PLAYER *player,int *mapnowpos)
 }
 
 //描画
+//引数：int *：描画したいマップのマップチップのハンドル
 void MAP::Draw(int *handle)
 {
 	for (int tate = 0; tate < MAP_TATE; tate++)
@@ -135,6 +136,10 @@ void MAP::Draw(int *handle)
 }
 
 //当たり判定の領域を作成
+/*
+引数：int *：通行できるマップのナンバー
+引数：int *：通行できないマップのナンバー
+*/
 void MAP::CreateRect(int *ok_kind,int *ng_kind)
 {
 	for (int tate = 0; tate < MAP_TATE; ++tate)
@@ -151,10 +156,6 @@ void MAP::CreateRect(int *ok_kind,int *ng_kind)
 					this->RectOK[tate][yoko]->Top = tate * this->RectOK[tate][yoko]->Height + 1;
 					this->RectOK[tate][yoko]->Right = (yoko + 1) * this->RectOK[tate][yoko]->Width - 1;
 					this->RectOK[tate][yoko]->Bottom = (tate + 1)*this->RectOK[tate][yoko]->Height - 1;
-
-					//this->RectOK[tate][yoko]->SetValue(yoko * this->RectOK[tate][yoko]->Width + 1,
-					//	tate * this->RectOK[tate][yoko]->Height + 1,
-					//	MAP_YOKO_SIZE - 1, MAP_TATE_SIZE - 1);
 
 				}
 			}
@@ -179,6 +180,12 @@ void MAP::CreateRect(int *ok_kind,int *ng_kind)
 }
 
 //プレイヤーとマップが当たっているか確認
+/*
+引数：COLLISION：マップと当たったか判定する領域
+引数：int：キー入力の種類
+引数：int：当たった場所のX位置を返す
+引数：int：当たった場所のY位置を返す
+*/
 bool MAP::CheckDetectionPlayer(COLLISION *player,int keykind, int *detectionX, int *detectionY)
 {
 
