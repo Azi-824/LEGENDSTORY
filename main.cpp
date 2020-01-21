@@ -360,6 +360,7 @@ void Play()
 		//通行できるか判定
 		if (mapdata[MapKind[MAPPOS_Y][MAPPOS_X]][(int)THIRD_LAYER]->CheckDetectionPlayer(player->GetCollision(), player->GetInKeyKind(), &X, &Y))
 		{
+			//通行できなかったとき
 			int a = 1;
 		}
 
@@ -440,6 +441,7 @@ void Battle()
 
 		if (Turn == (int)MY_TURN)		//味方のターンだったら
 		{
+			msg[(int)MSG_BATTLE]->DrawMsg(BT_MSG_DRAW_X, BT_MSG_DRAW_Y, GetColor(255, 255, 255));	//メッセージ描画
 
 			ui->ChoiseOperation(keydown);		//バトルコマンドキー操作
 
@@ -556,7 +558,6 @@ void Battle()
 	case (int)ACT_MSG:				//行動メッセージ表示状態
 
 		msg[(int)MSG_BATTLE]->DrawMsg(BT_MSG_DRAW_X, BT_MSG_DRAW_Y, GetColor(255, 255, 255));	//メッセージ描画
-
 
 		if (keydown->IsKeyDownOne(KEY_INPUT_RETURN))		//エンターキーを押されたら
 		{
@@ -1032,6 +1033,10 @@ void Enconte()
 				player->SetIsKeyDown(false);			//プレイヤーの動きを止める
 
 				EncounteEnemyType = i;		//遭遇した敵を設定
+
+				//描画文字設定
+				Work_Str = "どうする？";
+				msg[(int)MSG_BATTLE]->SetMsg(Work_Str.c_str());	//文字列設定
 
 				SceneChenge(GameSceneNow, (int)GAME_SCENE_BATTLE);	//次の画面は戦闘画面
 
