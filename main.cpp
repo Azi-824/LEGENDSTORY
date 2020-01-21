@@ -356,7 +356,7 @@ void Title()
 void Play()
 {
 
-	static int X = 0, Y = 0;
+	static int X = 0, Y = 0;	//“–‚½‚Á‚½êŠ‚ðŽæ“¾
 
 	if (player->GetIsKeyDown())	//ƒL[‘€ì‚ª‚ ‚é‚Æ‚«
 	{
