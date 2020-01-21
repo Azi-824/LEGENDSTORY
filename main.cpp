@@ -356,7 +356,7 @@ void Title()
 void Play()
 {
 
-	static int X = 0, Y = 0;	//当たった場所を取得
+	static int X = 0, Y = 0;	//マップとプレイヤーの当たった場所を格納するための変数
 
 	if (player->GetIsKeyDown())	//キー操作があるとき
 	{
@@ -906,7 +906,7 @@ void Play_Draw()
 	font->SetSize(DEFAULT_FONTSIZE);	//フォントサイズを標準に戻す
 
 	//マップ描画処理
-	for (int cnt = 0; cnt < MAP_LAYER_KIND; cnt++)
+	for (int cnt = 0; cnt < MAP_LAYER_KIND - 1; cnt++)		//最後のレイヤーは、当たり判定用なので、描画処理は行わない
 	{
 		mapdata[MapKind[MAPPOS_Y][MAPPOS_X]][cnt]->Draw(mapimage->GetHandle((int)FILED));		//マップ描画
 		mapdata[MapKind[MAPPOS_Y][MAPPOS_X]][cnt]->ChengeMap(player, MapNowPos);				//マップの切り替え処理
