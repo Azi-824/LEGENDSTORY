@@ -198,6 +198,7 @@ void ANIMATION::Draw(int X, int Y,int Dist,bool animetion,int type)
 	}
 	else	//ƒAƒjƒ[ƒVƒ‡ƒ“•`‰æ‚¶‚á‚È‚¢‚Æ‚«
 	{
+		this->Handle_itr = this->Handle[type].begin() + Dist + 1;	//Ž~‚Ü‚Á‚Ä‚¢‚é‚Æ‚«‚Ì‰æ‘œ
 		DrawGraph(X, Y, *this->Handle_itr, TRUE);	//•`‰æ
 	}
 	

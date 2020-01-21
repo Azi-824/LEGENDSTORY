@@ -84,6 +84,13 @@ bool DATA::LoadPlayer(PLAYER *player,const char *dir,const char *name)
 	std::getline(ifs, buf, ',');	//カンマまで読み込み
 	player->SetSPD(atoi(buf.c_str()));	//SPD読み込み
 
+	static int x = 0, y = 0;
+	std::getline(ifs, buf, ',');	//カンマまで読み込み
+	x = atoi(buf.c_str());			//X位置格納
+	std::getline(ifs, buf,',');		//カンマまで読み込み
+	y = atoi(buf.c_str());			//Y位置格納
+	player->SetNowPos(x, y);		//現在位置設定
+
 	std::getline(ifs, buf, ',');	//カンマまで読み込み
 	player->SetSkil(atoi(buf.c_str()));	//Skil1読み込み
 
@@ -245,6 +252,10 @@ bool DATA::Save(PLAYER *player ,const char *dir,const char *name)
 	ofs << player->GetATK() << ',';			//攻撃力
 	ofs << player->GetDEF() << ',';			//防御力
 	ofs << player->GetSPD() << ',';			//速さ
+
+	static int x = 0, y = 0;
+	player->GetNowPos(&x, &y);	//現在位置取得
+	ofs << x << ',' << y << ',';	//現在位置セーブ
 
 	std::vector<int> skil = player->GetSkil();	//スキル一覧を取得
 

@@ -9,6 +9,11 @@
 //コンストラクタ
 PLAYER::PLAYER()
 {
+
+	this->Collision = new COLLISION();		//当たり判定の領域を作成
+
+	this->sikaku_draw = new SIKAKU();		//描画領域を作成
+
 	return;
 }
 
@@ -33,7 +38,7 @@ PLAYER::~PLAYER()
 //初期設定
 bool PLAYER::SetInit()
 {
-	this->Dist = FLONT;	//初期向き設定
+	this->Dist = (int)FLONT;	//初期向き設定
 	this->MoveSpeed = 5;//初期移動速度設定
 	this->InKeyKind = -1;	//押されていないときはー1
 
@@ -50,12 +55,6 @@ bool PLAYER::SetInit()
 	this->LevUpMsgStart_flg = false;	//レベルアップメッセージを表示していない
 
 	this->Stopflg.assign(DIST_KIND, false);	//全ての方向へ移動
-
-	this->Collision = new COLLISION();		//当たり判定の領域を作成
-	this->Collision->SetValue(400, 400, this->Anime->GetWidth(),this->Anime->GetHeight());	//当たり判定の領域を設定
-
-	this->sikaku_draw = new SIKAKU();		//描画領域を作成
-	this->sikaku_draw->SetValue(400, 400, this->Anime->GetWidth(), this->Anime->GetHeight());	//当たり判定の領域を設定
 
 	return true;
 }
@@ -705,6 +704,29 @@ void PLAYER::GetNowPos(int *x, int *y)
 	*x = this->sikaku_draw->Left;	//X位置設定
 	*y = this->sikaku_draw->Top;	//Y位置設定
 	return;
+}
+
+//現在の位置を設定
+void PLAYER::SetNowPos(int x, int y)
+{
+	this->sikaku_draw->Left = x;
+	this->sikaku_draw->Top = y;
+
+	//描画領域再設定
+	this->sikaku_draw->SetValue(
+		this->sikaku_draw->Left,
+		this->sikaku_draw->Top,
+		this->sikaku_draw->Width,
+		this->sikaku_draw->Height);
+
+	//領域再設定
+	this->Collision->SetValue(
+		this->sikaku_draw->Left,
+		this->sikaku_draw->Top,
+		this->sikaku_draw->Width,
+		this->sikaku_draw->Height);
+
+
 }
 
 //現在のキー入力の種類を取得

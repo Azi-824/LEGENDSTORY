@@ -161,6 +161,7 @@ public:
 	void AddExp(int);			//経験値追加処理
 
 	void GetNowPos(int *, int *);	//現在の位置を取得
+	void SetNowPos(int, int);		//現在の位置を設定
 
 	int GetInKeyKind(void);		//現在のキー入力の種類を取得
 
