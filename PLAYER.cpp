@@ -492,10 +492,10 @@ void PLAYER::Operation(KEYDOWN *keydown)
 
 	//—ÌˆæÄİ’è
 	this->Collision->SetValue(
-		this->Collision->Left,
-		this->Collision->Top,
-		this->Collision->Width,
-		this->Collision->Height);
+		this->sikaku_draw->Left,
+		this->sikaku_draw->Top,
+		this->sikaku_draw->Width,
+		this->sikaku_draw->Height);
 
 	return;
 

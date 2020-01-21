@@ -182,7 +182,7 @@ void MAP::CreateRect(int *ok_kind,int *ng_kind)
 bool MAP::CheckDetectionPlayer(COLLISION *player,int keykind, int *detectionX, int *detectionY)
 {
 
-	auto CollisionInit = player;
+	COLLISION CollisionInit = *player;
 
 	switch (keykind)		//キー入力の種類で判別
 	{
@@ -203,7 +203,7 @@ bool MAP::CheckDetectionPlayer(COLLISION *player,int keykind, int *detectionX, i
 					*detectionY = tate;	//atariYのアドレスが指し示す先の場所に、当たったモノの縦の位置を入れる
 					*detectionX = yoko;	//atariXのアドレスが指し示す先の場所に、当たったモノの横の位置を入れる
 
-					player = CollisionInit;	//ずらした分を元に戻す
+					player = &CollisionInit;	//ずらした分を元に戻す
 
 					return true;
 				}
@@ -229,7 +229,7 @@ bool MAP::CheckDetectionPlayer(COLLISION *player,int keykind, int *detectionX, i
 					*detectionY = tate;	//atariYのアドレスが指し示す先の場所に、当たったモノの縦の位置を入れる
 					*detectionX = yoko;	//atariXのアドレスが指し示す先の場所に、当たったモノの横の位置を入れる
 
-					player = CollisionInit;	//ずらした分を元に戻す
+					player = &CollisionInit;	//ずらした分を元に戻す
 
 					return true;
 				}
@@ -255,7 +255,7 @@ bool MAP::CheckDetectionPlayer(COLLISION *player,int keykind, int *detectionX, i
 					*detectionY = tate;	//atariYのアドレスが指し示す先の場所に、当たったモノの縦の位置を入れる
 					*detectionX = yoko;	//atariXのアドレスが指し示す先の場所に、当たったモノの横の位置を入れる
 
-					player = CollisionInit;	//ずらした分を元に戻す
+					player = &CollisionInit;	//ずらした分を元に戻す
 
 					return true;
 				}
@@ -281,7 +281,7 @@ bool MAP::CheckDetectionPlayer(COLLISION *player,int keykind, int *detectionX, i
 					*detectionY = tate;	//atariYのアドレスが指し示す先の場所に、当たったモノの縦の位置を入れる
 					*detectionX = yoko;	//atariXのアドレスが指し示す先の場所に、当たったモノの横の位置を入れる
 
-					player = CollisionInit;	//ずらした分を元に戻す
+					player = &CollisionInit;	//ずらした分を元に戻す
 
 					return true;
 				}
@@ -297,7 +297,7 @@ bool MAP::CheckDetectionPlayer(COLLISION *player,int keykind, int *detectionX, i
 	}
 
 
-	player = CollisionInit;	//ずらした分を元に戻す
+	player = &CollisionInit;	//ずらした分を元に戻す
 
 	return false;
 
