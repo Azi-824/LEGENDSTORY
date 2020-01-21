@@ -16,6 +16,7 @@ CHARACTOR::~CHARACTOR()
 {
 	delete this->collision;	//collisioníœ
 	delete this->image;		//imageíœ
+	delete this->sikaku_draw;	//sikaku_drawíœ
 
 	return;
 }
@@ -23,9 +24,9 @@ CHARACTOR::~CHARACTOR()
 //ã‚ÖˆÚ“®
 void CHARACTOR::MoveUp()
 {
-	if (this->collision->Top - this->Speed >= GAME_TOP)
+	if (this->sikaku_draw->Top - this->Speed >= GAME_TOP)
 	{
-		this->collision->Top -= this->Speed;	//“–‚½‚è”»’è‚ÆA•`‰æˆÊ’u‚ðã‚ÖˆÚ“®
+		this->sikaku_draw->Top -= this->Speed;	//“–‚½‚è”»’è‚ÆA•`‰æˆÊ’u‚ðã‚ÖˆÚ“®
 	}
 
 	return;
@@ -34,9 +35,9 @@ void CHARACTOR::MoveUp()
 //‰º‚ÖˆÚ“®
 void CHARACTOR::MoveDown()
 {
-	if (this->collision->Bottom + this->Speed <= GAME_HEIGHT)
+	if (this->sikaku_draw->Bottom + this->Speed <= GAME_HEIGHT)
 	{
-		this->collision->Top += this->Speed;	//‰º‚ÖˆÚ“®
+		this->sikaku_draw->Top += this->Speed;	//‰º‚ÖˆÚ“®
 	}
 	return;
 }
@@ -44,9 +45,9 @@ void CHARACTOR::MoveDown()
 //¶‚ÖˆÚ“®
 void CHARACTOR::MoveLeft()
 {
-	if (this->collision->Left - this->Speed >= GAME_LEFT)
+	if (this->sikaku_draw->Left - this->Speed >= GAME_LEFT)
 	{
-		this->collision->Left -= this->Speed;	//¶‚ÖˆÚ“®
+		this->sikaku_draw->Left -= this->Speed;	//¶‚ÖˆÚ“®
 	}
 	return;
 }
@@ -54,9 +55,9 @@ void CHARACTOR::MoveLeft()
 //‰E‚ÖˆÚ“®
 void CHARACTOR::MoveRight()
 {
-	if (this->collision->Right + this->Speed <= GAME_WIDTH)
+	if (this->sikaku_draw->Right + this->Speed <= GAME_WIDTH)
 	{
-		this->collision->Left += this->Speed;	//‰E‚ÖˆÚ“®
+		this->sikaku_draw->Left += this->Speed;	//‰E‚ÖˆÚ“®
 	}
 	return;
 }
@@ -116,6 +117,17 @@ void CHARACTOR::SetImagePos(int x, int y)
 {
 	this->collision->Left = x;	//XÀ•W
 	this->collision->Top = y;	//YÀ•W
+
+	this->sikaku_draw->Left = x;
+	this->sikaku_draw->Top = y;
+
+	//•`‰æ—ÂŠï
+	this->sikaku_draw->SetValue(
+		this->sikaku_draw->Left,
+		this->sikaku_draw->Top,
+		this->sikaku_draw->Width,
+		this->sikaku_draw->Height
+	);
 
 	//—ÌˆæÄÝ’è
 	this->collision->SetValue(
@@ -177,6 +189,13 @@ void CHARACTOR::Operation(KEYDOWN *keydown)
 		this->MoveRight();						//‰E‚ÖˆÚ“®
 	}
 
+	//•`‰æ—ÌˆæÄÝ’è
+	this->sikaku_draw->SetValue(
+		this->sikaku_draw->Left,
+		this->sikaku_draw->Top,
+		this->sikaku_draw->Width,
+		this->sikaku_draw->Height);
+
 	//—ÌˆæÄÝ’è
 	this->collision->SetValue(
 		this->collision->Left,
@@ -194,6 +213,9 @@ bool CHARACTOR::SetInit()
 	this->collision = new COLLISION();		//“–‚½‚è”»’è‚Ì—Ìˆæ‚ðì¬
 	this->collision->SetValue(GAME_LEFT, GAME_TOP, this->image->GetWidth(0), this->image->GetHeight(0));	//“–‚½‚è”»’è‚Ì—Ìˆæ‚ðÝ’è
 
+	this->sikaku_draw = new SIKAKU();		//•`‰æ—Ìˆæ‚ðì¬
+	this->sikaku_draw->SetValue(GAME_LEFT, GAME_TOP, this->image->GetWidth(0), this->image->GetHeight(0));	//“–‚½‚è”»’è‚Ì—Ìˆæ‚ðÝ’è
+
 	this->IsArive = true;	//¶‚«‚Ä‚¢‚é
 	this->IsDraw = true;	//•`‰æ‚µ‚Ä‚æ‚¢
 	this->IsKeyOperation = true;	//ƒL[ƒ{[ƒh‘€ì‚Å‚«‚é
@@ -209,7 +231,7 @@ void CHARACTOR::Draw()
 	{
 		if (this->IsDraw)	//•`‰æ‚Å‚«‚ê‚Î
 		{
-			this->image->Draw(this->collision->Left, this->collision->Top);	//‰æ‘œ•`‰æ
+			this->image->Draw(this->sikaku_draw->Left, this->sikaku_draw->Top);	//‰æ‘œ•`‰æ
 		}
 	}
 }

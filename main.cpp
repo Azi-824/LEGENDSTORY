@@ -352,6 +352,20 @@ void Title()
 //プレイ画面の処理
 void Play()
 {
+
+	static int X = 0, Y = 0;
+
+	if (player->GetIsKeyDown())	//キー操作があるとき
+	{
+		//通行できるか判定
+		if (mapdata[MapKind[MAPPOS_Y][MAPPOS_X]][(int)THIRD_LAYER]->CheckDetectionPlayer(player->GetCollision(), player->GetInKeyKind(), &X, &Y))
+		{
+			int a = 1;
+		}
+
+	}
+
+
 	player->Operation(keydown);	//プレイヤーキー操作
 
 	Play_Draw();		//描画処理

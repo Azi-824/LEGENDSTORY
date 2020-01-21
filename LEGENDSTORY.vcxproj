@@ -169,6 +169,7 @@
     <ClCompile Include="MSG.cpp" />
     <ClCompile Include="MUSIC.cpp" />
     <ClCompile Include="PLAYER.cpp" />
+    <ClCompile Include="SIKAKU.cpp" />
     <ClCompile Include="UI.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -190,6 +191,7 @@
     <ClInclude Include="MSG.hpp" />
     <ClInclude Include="MUSIC.hpp" />
     <ClInclude Include="PLAYER.hpp" />
+    <ClInclude Include="SIKAKU.hpp" />
     <ClInclude Include="UI.hpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

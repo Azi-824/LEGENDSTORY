@@ -179,22 +179,125 @@ void MAP::CreateRect(int *ok_kind,int *ng_kind)
 }
 
 //プレイヤーとマップが当たっているか確認
-bool MAP::CheckDetectionPlayer(COLLISION *player, int *detectionX, int *detectionY)
+bool MAP::CheckDetectionPlayer(COLLISION *player,int keykind, int *detectionX, int *detectionY)
 {
-	for (int tate = 0; tate < MAP_TATE; tate++)
-	{
-		for (int yoko = 0; yoko < MAP_YOKO; yoko++)
-		{
-			//キャラクターの当たっている場所を取得
-			if(this->RectNG[tate][yoko]->DetectionCheck(player))
-			{
-				*detectionY = tate;	//atariYのアドレスが指し示す先の場所に、当たったモノの縦の位置を入れる
-				*detectionX = yoko;	//atariXのアドレスが指し示す先の場所に、当たったモノの横の位置を入れる
 
-				return true;
+	auto CollisionInit = player;
+
+	switch (keykind)		//キー入力の種類で判別
+	{
+
+	case (int)KEY_UP:		//上キーの時
+
+		//領域を少し上へずらす
+		player->Top -= 4;
+		player->Bottom -= 4;
+
+		for (int tate = 0; tate < MAP_TATE; tate++)
+		{
+			for (int yoko = 0; yoko < MAP_YOKO; yoko++)
+			{
+				//キャラクターの当たっている場所を取得
+				if (this->RectNG[tate][yoko]->DetectionCheck(player))
+				{
+					*detectionY = tate;	//atariYのアドレスが指し示す先の場所に、当たったモノの縦の位置を入れる
+					*detectionX = yoko;	//atariXのアドレスが指し示す先の場所に、当たったモノの横の位置を入れる
+
+					player = CollisionInit;	//ずらした分を元に戻す
+
+					return true;
+				}
 			}
 		}
+
+
+		break;	//上キーの時ここまで
+
+	case (int)KEY_DOWN:		//下キーの時
+
+		//領域を少し下へずらす
+		player->Top += 4;
+		player->Bottom += 4;
+
+		for (int tate = 0; tate < MAP_TATE; tate++)
+		{
+			for (int yoko = 0; yoko < MAP_YOKO; yoko++)
+			{
+				//キャラクターの当たっている場所を取得
+				if (this->RectNG[tate][yoko]->DetectionCheck(player))
+				{
+					*detectionY = tate;	//atariYのアドレスが指し示す先の場所に、当たったモノの縦の位置を入れる
+					*detectionX = yoko;	//atariXのアドレスが指し示す先の場所に、当たったモノの横の位置を入れる
+
+					player = CollisionInit;	//ずらした分を元に戻す
+
+					return true;
+				}
+			}
+		}
+
+
+		break;		//下キーの時ここまで
+
+	case(int)KEY_LEFT:		//左キーの時
+
+		//領域を少し左へずらす
+		player->Left -= 4;
+		player->Right -= 4;
+
+		for (int tate = 0; tate < MAP_TATE; tate++)
+		{
+			for (int yoko = 0; yoko < MAP_YOKO; yoko++)
+			{
+				//キャラクターの当たっている場所を取得
+				if (this->RectNG[tate][yoko]->DetectionCheck(player))
+				{
+					*detectionY = tate;	//atariYのアドレスが指し示す先の場所に、当たったモノの縦の位置を入れる
+					*detectionX = yoko;	//atariXのアドレスが指し示す先の場所に、当たったモノの横の位置を入れる
+
+					player = CollisionInit;	//ずらした分を元に戻す
+
+					return true;
+				}
+			}
+		}
+
+
+		break;		//左キーの時ここまで
+
+	case(int)KEY_RIGHT:		//右キーの時
+
+		//領域を少し右へずらす 
+		player->Left += 4;
+		player->Right += 4;
+
+		for (int tate = 0; tate < MAP_TATE; tate++)
+		{
+			for (int yoko = 0; yoko < MAP_YOKO; yoko++)
+			{
+				//キャラクターの当たっている場所を取得
+				if (this->RectNG[tate][yoko]->DetectionCheck(player))
+				{
+					*detectionY = tate;	//atariYのアドレスが指し示す先の場所に、当たったモノの縦の位置を入れる
+					*detectionX = yoko;	//atariXのアドレスが指し示す先の場所に、当たったモノの横の位置を入れる
+
+					player = CollisionInit;	//ずらした分を元に戻す
+
+					return true;
+				}
+			}
+		}
+
+
+		break;		//右キーの時ここまで
+
+
+	default:
+		break;
 	}
+
+
+	player = CollisionInit;	//ずらした分を元に戻す
 
 	return false;
 

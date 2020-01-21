@@ -9,6 +9,7 @@
 #include "IMAGE.hpp"
 #include "KEYDOWN.hpp"
 #include "COLLISION.hpp"
+#include "SIKAKU.hpp"
 
 
 //###################### マクロ定義 #######################
@@ -19,6 +20,7 @@ class CHARACTOR
 private:
 	IMAGE *image;				//画像
 	COLLISION *collision;		//当たり判定の領域
+	SIKAKU *sikaku_draw;			//キャラの描画する領域
 
 	int Speed;					//移動速度
 

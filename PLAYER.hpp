@@ -39,6 +39,7 @@ private:
 	ANIMATION *Anime;		//歩行画像
 	
 	COLLISION *Collision;	//当たり判定
+	SIKAKU *sikaku_draw;	//描画領域
 	CHARACTOR *Ilast;		//立ち絵
 
 	std::string Name;		//キャラの名前
@@ -63,6 +64,7 @@ private:
 
 	int MoveSpeed;			//移動速度
 	int Dist;				//移動向き
+	int InKeyKind;			//押されているキーボードの種類
 
 	bool IsArive;			//生きているか
 	bool IsDraw;			//描画してよいか
@@ -139,6 +141,7 @@ public:
 	bool GetIsMove();			//移動中かどうか取得
 	bool GetIsBattleWin();		//戦闘に勝ったか取得
 	bool GetLevUpMsgStartFlg();	//レベルアップスタートメッセージフラグを取得
+	bool GetIsKeyDown();		//キー入力があるか取得
 
 	void DrawAnime();			//描画
 
@@ -154,5 +157,7 @@ public:
 	void AddExp(int);			//経験値追加処理
 
 	void GetNowPos(int *, int *);	//現在の位置を取得
+
+	int GetInKeyKind(void);		//現在のキー入力の種類を取得
 
 };

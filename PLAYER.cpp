@@ -18,6 +18,7 @@ PLAYER::~PLAYER()
 	delete this->Anime;
 	delete this->Collision;
 	delete this->Ilast;
+	delete this->sikaku_draw;
 
 	//vectorのメモリ解放を行う
 	std::vector<int> v;			//空のvectorを作成する
@@ -31,6 +32,7 @@ bool PLAYER::SetInit()
 {
 	this->Dist = FLONT;	//初期向き設定
 	this->MoveSpeed = 5;//初期移動速度設定
+	this->InKeyKind = -1;	//押されていないときはー1
 
 	this->ChoiseSkil = this->Skil[0];	//最初は通常攻撃を使用するスキルとして設定する
 
@@ -45,7 +47,10 @@ bool PLAYER::SetInit()
 	this->LevUpMsgStart_flg = false;	//レベルアップメッセージを表示していない
 
 	this->Collision = new COLLISION();		//当たり判定の領域を作成
-	this->Collision->SetValue(GAME_LEFT, GAME_TOP, this->Anime->GetWidth(),this->Anime->GetHeight());	//当たり判定の領域を設定
+	this->Collision->SetValue(400, 400, this->Anime->GetWidth(),this->Anime->GetHeight());	//当たり判定の領域を設定
+
+	this->sikaku_draw = new SIKAKU();		//描画領域を作成
+	this->sikaku_draw->SetValue(400, 400, this->Anime->GetWidth(), this->Anime->GetHeight());	//当たり判定の領域を設定
 
 	return true;
 }
@@ -210,6 +215,17 @@ void PLAYER::SetPosition(int x, int y)
 {
 	this->Collision->Left += x;	//X位置を設定
 	this->Collision->Top += y;	//Y位置を設定
+
+	this->sikaku_draw->Left += x;
+	this->sikaku_draw->Top += y;
+
+	//描画領域再設定
+	this->sikaku_draw->SetValue(
+		this->sikaku_draw->Left,
+		this->sikaku_draw->Top,
+		this->sikaku_draw->Width,
+		this->sikaku_draw->Height);
+
 
 	//領域再設定
 	this->Collision->SetValue(
@@ -392,6 +408,12 @@ bool PLAYER::GetLevUpMsgStartFlg()
 	return this->LevUpMsgStart_flg;
 }
 
+//キー入力があるか取得
+bool PLAYER::GetIsKeyDown()
+{
+	return this->IsKeyDown;
+}
+
 //操作
 void PLAYER::Operation(KEYDOWN *keydown)
 {
@@ -400,24 +422,28 @@ void PLAYER::Operation(KEYDOWN *keydown)
 	{
 		this->IsKeyDown = true;		//キー入力あり
 		this->Dist = BACK;			//移動方向を上にする
+		this->InKeyKind = (int)KEY_UP;	//キー入力の種類、上
 		this->MoveUp();				//上へ移動
 	}
 	else if (this->IsMenu == false && keydown->IsKeyDown(KEY_INPUT_S))	//メニュー描画中でなく、Sキーを押しているとき
 	{
 		this->IsKeyDown = true;		//キー入力あり
 		this->Dist = FLONT;			//移動方向下
+		this->InKeyKind = (int)KEY_DOWN;	//キー入力の種類、下
 		this->MoveDown();			//下へ移動
 	}
 	else if (this->IsMenu == false && keydown->IsKeyDown(KEY_INPUT_A))	//メニュー描画中でなく、Aキーを押しているとき
 	{
 		this->IsKeyDown = true;		//キー入力あり
 		this->Dist = LEFT;			//移動方向左
+		this->InKeyKind = (int)KEY_LEFT;	//キー入力の種類、左
 		this->MoveLeft();			//左へ移動
 	}
 	else if (this->IsMenu == false && keydown->IsKeyDown(KEY_INPUT_D))	//メニュー描画中でなく、Dキーを押しているとき
 	{
 		this->IsKeyDown = true;		//キー入力あり
 		this->Dist = RIGHT;			//移動方向右
+		this->InKeyKind = (int)KEY_RIGHT;	//キー入力の種類、右
 		this->MoveRight();			//右へ移動
 	}
 	else
@@ -425,7 +451,12 @@ void PLAYER::Operation(KEYDOWN *keydown)
 		this->IsKeyDown = false;	//キー入力なし
 	}
 
-
+	//描画領域再設定
+	this->sikaku_draw->SetValue(
+		this->sikaku_draw->Left,
+		this->sikaku_draw->Top,
+		this->sikaku_draw->Width,
+		this->sikaku_draw->Height);
 
 	//領域再設定
 	this->Collision->SetValue(
@@ -447,12 +478,12 @@ void PLAYER::DrawAnime()
 		{
 			if (this->IsKeyDown)		//キーボードが押されているとき
 			{
-				this->Anime->Draw(this->Collision->Left, this->Collision->Top, this->Dist, true);	//アニメーションで描画
+				this->Anime->Draw(this->sikaku_draw->Left, this->sikaku_draw->Top, this->Dist, true);	//アニメーションで描画
 
 			}
 			else						//キーボードが押されていないとき
 			{
-				this->Anime->Draw(this->Collision->Left, this->Collision->Top, this->Dist, false);	//通常描画
+				this->Anime->Draw(this->sikaku_draw->Left, this->sikaku_draw->Top, this->Dist, false);	//通常描画
 			}
 		}
 	}
@@ -461,9 +492,9 @@ void PLAYER::DrawAnime()
 //上へ移動
 void PLAYER::MoveUp()
 {
-	if (this->Collision->Top - this->MoveSpeed >= GAME_TOP)
+	if (this->sikaku_draw->Top - this->MoveSpeed >= GAME_TOP)
 	{
-		this->Collision->Top -= this->MoveSpeed;	//当たり判定と、描画位置を上へ移動
+		this->sikaku_draw->Top -= this->MoveSpeed;	//当たり判定と、描画位置を上へ移動
 	}
 
 	return;
@@ -472,9 +503,9 @@ void PLAYER::MoveUp()
 //下へ移動
 void PLAYER::MoveDown()
 {
-	if (this->Collision->Bottom + this->MoveSpeed <= GAME_HEIGHT)
+	if (this->sikaku_draw->Bottom + this->MoveSpeed <= GAME_HEIGHT)
 	{
-		this->Collision->Top += this->MoveSpeed;	//下へ移動
+		this->sikaku_draw->Top += this->MoveSpeed;	//下へ移動
 	}
 	return;
 }
@@ -482,9 +513,9 @@ void PLAYER::MoveDown()
 //左へ移動
 void PLAYER::MoveLeft()
 {
-	if (this->Collision->Left - this->MoveSpeed >= GAME_LEFT)
+	if (this->sikaku_draw->Left - this->MoveSpeed >= GAME_LEFT)
 	{
-		this->Collision->Left -= this->MoveSpeed;	//左へ移動
+		this->sikaku_draw->Left -= this->MoveSpeed;	//左へ移動
 	}
 	return;
 }
@@ -492,9 +523,9 @@ void PLAYER::MoveLeft()
 //右へ移動
 void PLAYER::MoveRight()
 {
-	if (this->Collision->Right + this->MoveSpeed <= GAME_WIDTH)
+	if (this->sikaku_draw->Right + this->MoveSpeed <= GAME_WIDTH)
 	{
-		this->Collision->Left += this->MoveSpeed;	//右へ移動
+		this->sikaku_draw->Left += this->MoveSpeed;	//右へ移動
 	}
 	return;
 }
@@ -637,10 +668,15 @@ void PLAYER::AddExp(int exp)
 引数：int：X位置をセットする
 引数：int：Y位置をセットする
 */
-
 void PLAYER::GetNowPos(int *x, int *y)
 {
-	*x = this->Collision->Left;	//X位置設定
-	*y = this->Collision->Top;	//Y位置設定
+	*x = this->sikaku_draw->Left;	//X位置設定
+	*y = this->sikaku_draw->Top;	//Y位置設定
 	return;
+}
+
+//現在のキー入力の種類を取得
+int PLAYER::GetInKeyKind(void)
+{
+	return this->InKeyKind;
 }
