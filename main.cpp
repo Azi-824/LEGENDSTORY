@@ -364,7 +364,7 @@ void Play()
 		if (mapdata[MapKind[MAPPOS_Y][MAPPOS_X]][(int)THIRD_LAYER]->CheckDetectionPlayer(player->GetCollision(), player->GetInKeyKind(), &X, &Y))
 		{
 			//通行できなかったとき
-			player->SetStopFlg(true);
+			player->SetStopFlg(true);	//ストップフラグ
 		}
 		else
 		{
@@ -373,7 +373,6 @@ void Play()
 		}
 
 	}
-
 
 	player->Operation(keydown);	//プレイヤーキー操作
 
