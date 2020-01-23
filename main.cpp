@@ -120,9 +120,6 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 	{
 		bt_msg[cnt] = new MESSAGE();	//メッセージ作成
 	}
-	bt_msg[(int)BT_MSG_RESULT]->SetMsg("あいうえお");
-	bt_msg[(int)BT_MSG_RESULT]->SetMsg("かきくけこ");
-	bt_msg[(int)BT_MSG_RESULT]->SetMsg("さしすせそ");
 
 	msg = new MESSAGE();	//メッセージ作成
 	data->LoadMsg(msg, MSG_DATA_DIR, MSG_DATA_NAME);	//メッセージデータ読み込み
