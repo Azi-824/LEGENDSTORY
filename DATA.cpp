@@ -213,6 +213,48 @@ bool DATA::LoadItem(ITEM *item[], const char *dir, const char *name)
 
 }
 
+//読み込み（メッセージデータ）
+bool DATA::LoadMsg(MESSAGE *msg, const char *dir, const char *name)
+{
+	std::string LoadFile;
+	LoadFile += dir;
+	LoadFile += name;
+
+	std::ifstream ifs(LoadFile.c_str());	//ファイル読み取り
+
+	if (!ifs)		//ファイルオープン失敗時
+	{
+		std::string ErrorMsg(DATA_ERROR_MSG);	//エラーメッセージ作成
+		ErrorMsg += TEXT('\n');						//改行
+		ErrorMsg += LoadFile;					//画像のパス
+
+		MessageBox(
+			NULL,
+			ErrorMsg.c_str(),	//char * を返す
+			TEXT(DATA_ERROR_TTILE),
+			MB_OK);
+
+		return false;	//読み込み失敗
+
+	}
+
+
+	std::string buf;
+
+		std::getline(ifs, buf);					//1行読み込み
+		msg->SetMsg(buf.c_str());				//文字列読み込み
+
+		while (!ifs.eof())	//最後の行まで読み込み
+		{
+			std::getline(ifs, buf);	//1行読み込み
+			msg->AddMsg(buf.c_str());	//文字列追加
+		}
+
+		return true;	//読み込み成功
+
+}
+
+
 //セーブ
 bool DATA::Save(PLAYER *player ,const char *dir,const char *name)
 {

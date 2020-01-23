@@ -35,7 +35,8 @@ EFFECT *effect;						//エフェクト
 FONT *font;							//フォント
 UI *ui;								//UI
 DATA *data;							//データ
-MESSAGE *msg[MSG_KIND];				//メッセージ
+MESSAGE *bt_msg[BT_MSG_KIND];		//戦闘画面のメッセージ
+MESSAGE *msg;		//メッセージ
 
 PLAYER *player;						//主人公
 
@@ -115,13 +116,16 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 	data = new DATA();		//データ
 
 	//メッセージ関係
-	for (int cnt = 0; cnt < MSG_KIND; ++cnt)
+	for (int cnt = 0; cnt < BT_MSG_KIND; ++cnt)
 	{
-		msg[cnt] = new MESSAGE();	//メッセージ作成
+		bt_msg[cnt] = new MESSAGE();	//メッセージ作成
 	}
-	msg[(int)MSG_RESULT]->SetMsg("あいうえお");
-	msg[(int)MSG_RESULT]->SetMsg("かきくけこ");
-	msg[(int)MSG_RESULT]->SetMsg("さしすせそ");
+	bt_msg[(int)BT_MSG_RESULT]->SetMsg("あいうえお");
+	bt_msg[(int)BT_MSG_RESULT]->SetMsg("かきくけこ");
+	bt_msg[(int)BT_MSG_RESULT]->SetMsg("さしすせそ");
+
+	msg = new MESSAGE();	//メッセージ作成
+	data->LoadMsg(msg, MSG_DATA_DIR, MSG_DATA_NAME);	//メッセージデータ読み込み
 
 	//msg[(int)MSG_LEVELUP]->SetMsg("レベルが上がった！");
 
@@ -447,7 +451,7 @@ void Battle()
 
 		if (Turn == (int)MY_TURN)		//味方のターンだったら
 		{
-			msg[(int)MSG_BATTLE]->DrawMsg(BT_MSG_DRAW_X, BT_MSG_DRAW_Y, GetColor(255, 255, 255));	//メッセージ描画
+			bt_msg[(int)BT_MSG_ACT]->DrawMsg(BT_MSG_DRAW_X, BT_MSG_DRAW_Y, GetColor(255, 255, 255));	//メッセージ描画
 
 			ui->ChoiseOperation(keydown);		//バトルコマンドキー操作
 
@@ -488,7 +492,7 @@ void Battle()
 			case (int)COMMANDE_ESCAPE:		//逃げるを選んだ時
 
 				Work_Str = "上手く逃げ切れた！";
-				msg[(int)MSG_BATTLE]->SetMsg(Work_Str.c_str());	//文字列設定
+				bt_msg[(int)BT_MSG_ACT]->SetMsg(Work_Str.c_str());	//文字列設定
 
 				BattleStageNow = (int)ACT_MSG;	//メッセージ描画状態
 				
@@ -522,27 +526,27 @@ void Battle()
 			{
 				Work_Str = player->GetName();					//味方の名前取得
 				Work_Str += "は防御している！";
-				msg[(int)MSG_BATTLE]->SetMsg(Work_Str.c_str());	//文字列設定
+				bt_msg[(int)BT_MSG_ACT]->SetMsg(Work_Str.c_str());	//文字列設定
 				Work_Str = "防御に集中している！";
-				msg[(int)MSG_BATTLE]->AddMsg(Work_Str.c_str());	//文字列設定
+				bt_msg[(int)BT_MSG_ACT]->AddMsg(Work_Str.c_str());	//文字列設定
 			}
 			else					//それ以外の時
 			{
 				Work_Str = player->GetName();					//味方の名前取得
 				Work_Str += "の攻撃!";
-				msg[(int)MSG_BATTLE]->SetMsg(Work_Str.c_str());	//文字列設定
+				bt_msg[(int)BT_MSG_ACT]->SetMsg(Work_Str.c_str());	//文字列設定
 				Work_Str = std::to_string(player->GetSendDamege());	//与えたダメージ取得
 				Work_Str += "のダメージを与えた";
-				msg[(int)MSG_BATTLE]->AddMsg(Work_Str.c_str());	//文字列設定
+				bt_msg[(int)BT_MSG_ACT]->AddMsg(Work_Str.c_str());	//文字列設定
 			}
 
 			//敵
 			Work_Str = enemy[EncounteEnemyType]->GetName();	//敵の名前取得
 			Work_Str += "の攻撃!";
-			msg[(int)MSG_BATTLE]->AddMsg(Work_Str.c_str());	//文字列設定
+			bt_msg[(int)BT_MSG_ACT]->AddMsg(Work_Str.c_str());	//文字列設定
 			Work_Str = std::to_string(player->GetRecvDamege());	//受けたダメージ取得
 			Work_Str += "のダメージを受けた";
-			msg[(int)MSG_BATTLE]->AddMsg(Work_Str.c_str());	//文字列設定
+			bt_msg[(int)BT_MSG_ACT]->AddMsg(Work_Str.c_str());	//文字列設定
 			//▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲ メッセージ設定処理ここまで ▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲
 
 			BattleStageNow = (int)ACT_MSG;	//行動メッセージ表示状態へ
@@ -561,7 +565,7 @@ void Battle()
 
 	case (int)ACT_MSG:				//行動メッセージ表示状態
 
-		msg[(int)MSG_BATTLE]->DrawMsg(BT_MSG_DRAW_X, BT_MSG_DRAW_Y, GetColor(255, 255, 255));	//メッセージ描画
+		bt_msg[(int)BT_MSG_ACT]->DrawMsg(BT_MSG_DRAW_X, BT_MSG_DRAW_Y, GetColor(255, 255, 255));	//メッセージ描画
 
 		if (keydown->IsKeyDownOne(KEY_INPUT_RETURN))		//エンターキーを押されたら
 		{
@@ -577,7 +581,7 @@ void Battle()
 			{
 				effect->SetIsDrawEnd(true);	//描画処理を飛ばすために、描画終了フラグを立てる
 			}
-			msg[(int)MSG_BATTLE]->NextMsg();	//次のメッセージへ
+			bt_msg[(int)BT_MSG_ACT]->NextMsg();	//次のメッセージへ
 			BattleStageNow = (int)DRAW_EFFECT;	//エフェクト表示状態へ
 		}
 
@@ -631,7 +635,7 @@ void Battle()
 	case (int)DRAW_DAMEGE:				//ダメージ描画状態
 		
 		//ダメージ描画
-		msg[(int)MSG_BATTLE]->DrawMsg(BT_MSG_DRAW_X, BT_MSG_DRAW_Y, GetColor(255, 255, 255));	//メッセージ描画
+		bt_msg[(int)BT_MSG_ACT]->DrawMsg(BT_MSG_DRAW_X, BT_MSG_DRAW_Y, GetColor(255, 255, 255));	//メッセージ描画
 
 		if (keydown->IsKeyDownOne(KEY_INPUT_RETURN))	//エンターキーを押されたら
 		{
@@ -663,7 +667,7 @@ void Battle()
 
 				//▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼ リザルトメッセージ設定処理ここから ▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼
 				Work_Str = "全滅してしまった…";
-				msg[(int)MSG_RESULT]->SetMsg(Work_Str.c_str());	//文字列設定
+				bt_msg[(int)BT_MSG_RESULT]->SetMsg(Work_Str.c_str());	//文字列設定
 				//▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲ リザルトメッセージ設定処理ここまで ▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲
 
 				BattleStageNow = (int)RESULT_MSG;		//リザルトメッセージ表示状態へ
@@ -678,17 +682,17 @@ void Battle()
 				//▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼ リザルトメッセージ設定処理ここから ▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼
 				Work_Str = enemy[EncounteEnemyType]->GetName();
 				Work_Str += "を倒した！";
-				msg[(int)MSG_RESULT]->SetMsg(Work_Str.c_str());	//文字列設定
+				bt_msg[(int)BT_MSG_RESULT]->SetMsg(Work_Str.c_str());	//文字列設定
 				Work_Str = std::to_string(enemy[EncounteEnemyType]->GetEXP());
 				Work_Str += "の経験値を手に入れた！";
-				msg[(int)MSG_RESULT]->AddMsg(Work_Str.c_str());	//文字列設定
+				bt_msg[(int)BT_MSG_RESULT]->AddMsg(Work_Str.c_str());	//文字列設定
 
 				if (player->GetLevUpMsgStartFlg())		//レベルアップしたときは
 				{
 					Work_Str = "レベル";
 					Work_Str += std::to_string(player->GetLevel());	//レベル取得
 					Work_Str += "になった！";
-					msg[(int)MSG_RESULT]->AddMsg(Work_Str.c_str());	//文字列設定
+					bt_msg[(int)BT_MSG_RESULT]->AddMsg(Work_Str.c_str());	//文字列設定
 				}
 				//▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲ リザルトメッセージ設定処理ここまで ▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲
 
@@ -700,7 +704,7 @@ void Battle()
 				BattleStageNow = (int)WAIT_ACT;		//行動選択状態へ
 			}
 
-			msg[(int)MSG_BATTLE]->NextMsg();	//次のメッセージへ
+			bt_msg[(int)BT_MSG_ACT]->NextMsg();	//次のメッセージへ
 
 			ui->BattleInit();				//バトルコマンドリセット
 
@@ -710,14 +714,14 @@ void Battle()
 
 	case (int)RESULT_MSG:		//戦闘終了後のメッセージを描画する状態
 
-		msg[(int)MSG_RESULT]->DrawMsg(BT_MSG_DRAW_X, BT_MSG_DRAW_Y, GetColor(255, 255, 255));	//メッセージ描画
+		bt_msg[(int)BT_MSG_RESULT]->DrawMsg(BT_MSG_DRAW_X, BT_MSG_DRAW_Y, GetColor(255, 255, 255));	//メッセージ描画
 
 		if (keydown->IsKeyDownOne(KEY_INPUT_RETURN))		//エンターキーを押されたとき
 		{
 
-			msg[(int)MSG_RESULT]->NextMsg();	//次のメッセージへ
+			bt_msg[(int)BT_MSG_RESULT]->NextMsg();	//次のメッセージへ
 
-			if (msg[(int)MSG_RESULT]->GetIsLastMsg())		//最後のメッセージだったら
+			if (bt_msg[(int)BT_MSG_RESULT]->GetIsLastMsg())		//最後のメッセージだったら
 			{
 				if (player->GetLevUpMsgStartFlg())			//レベルアップしていたら
 				{
@@ -729,7 +733,7 @@ void Battle()
 					}
 				}
 
-				if (msg[(int)MSG_RESULT]->GetIsMsgEnd())	//全てのメッセージ描画が終了したら
+				if (bt_msg[(int)BT_MSG_RESULT]->GetIsMsgEnd())	//全てのメッセージ描画が終了したら
 				{
 					if (player->GetIsBattleWin())		//戦闘に勝利していたら
 					{
@@ -866,9 +870,9 @@ void Init()
 
 		Turn = (int)MY_TURN;		//ターンを味方のターンに設定
 
-		for (int i = 0; i < MSG_KIND; ++i)	//メッセージの種類分
+		for (int i = 0; i < BT_MSG_KIND; ++i)	//メッセージの種類分
 		{
-			msg[i]->ResetFlg();		//フラグリセット
+			bt_msg[i]->ResetFlg();		//フラグリセット
 		}
 
 	}
@@ -1038,7 +1042,7 @@ void Enconte()
 
 				//描画文字設定
 				Work_Str = "どうする？";
-				msg[(int)MSG_BATTLE]->SetMsg(Work_Str.c_str());	//文字列設定
+				bt_msg[(int)BT_MSG_ACT]->SetMsg(Work_Str.c_str());	//文字列設定
 
 				SceneChenge(GameSceneNow, (int)GAME_SCENE_BATTLE);	//次の画面は戦闘画面
 
@@ -1090,10 +1094,12 @@ void Delete_Class()
 	delete data;			//dataを破棄
 	delete effect;			//effectを破棄
 
+	delete msg;//msg破棄
+
 	//メッセージの削除
-	for (int i = 0; i < MSG_KIND; ++i)
+	for (int i = 0; i < BT_MSG_KIND; ++i)
 	{
-		delete msg[i];				//msgを破棄
+		delete bt_msg[i];				//msgを破棄
 	}
 
 	//マップデータの削除
