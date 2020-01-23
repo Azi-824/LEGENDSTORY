@@ -6,7 +6,6 @@
 //####################### ヘッダファイル読み込み #######################
 #include "DxLib.h"
 #include "MAPIMAGE.hpp"
-#include "PLAYER.hpp"
 #include "COLLISION.hpp"
 #include <string>
 
@@ -46,6 +45,15 @@ enum MAP_KIND
 	MAP_3,				//三マップ目
 	MAP_4				//四マップ目
 };
+
+enum MAP_CHENGE_DIST
+{
+	MAP_CHENGE_UP,		//上のマップへ
+	MAP_CHENGE_DOWN,	//下のマップへ
+	MAP_CHENGE_LEFT,	//左のマップへ
+	MAP_CHENGE_RIGHT,	//右のマップへ
+	MAP_CHENGE_NONE = -1//マップ切り替えなし
+};//どの方向へマップ切り替えるか
 
 enum MAP_NG_NUM
 {
@@ -96,12 +104,16 @@ public :
 
 	bool LoadCsv(const char *, const char *);	//csvデータ読み込み
 
-	void ChengeMap(PLAYER *,int *);				//マップを切り替える
+	int ChengeMap(int,int *);			//マップを切り替える
 
 	void Draw(int *);		//描画
 
 	void CreateRect(int *,int *);	//当たり判定の領域を作成
 
-	bool CheckDetectionPlayer(COLLISION *,int , int *, int *);	//プレイヤーとマップが当たっているか確認
+	//通行できない領域を取得する
+	auto GetRectNG(void)
+	{
+		return this->RectNG;
+	}
 
 };

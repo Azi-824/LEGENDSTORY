@@ -353,25 +353,53 @@ void Title()
 void Play()
 {
 
-	static int X = 0, Y = 0;	//マップとプレイヤーの当たった場所を格納するための変数
+	player->Operation(keydown, mapdata[MapKind[MAPPOS_Y][MAPPOS_X]][(int)THIRD_LAYER]->GetRectNG());	//プレイヤーキー操作
 
-	if (player->GetIsKeyDown())	//キー操作があるとき
+	if (player->GetChengeMapKind() != -1)
 	{
-		//通行できるか判定
-		if (mapdata[MapKind[MAPPOS_Y][MAPPOS_X]][(int)THIRD_LAYER]->CheckDetectionPlayer(player->GetCollision(), player->GetInKeyKind(), &X, &Y))
-		{
-			//通行できなかったとき
-			player->SetStopFlg(true);	//ストップフラグ
-		}
-		else
-		{
-			//通行できるとき
-			player->ResetStopFlg();	//ストップフラグリセット
-		}
+		int chengekind = (int)MAP_CHENGE_NONE;	//マップ切り替えの種類
+		//マップの切り替え処理
+		chengekind = mapdata[MapKind[MAPPOS_Y][MAPPOS_X]][(int)THIRD_LAYER]->ChengeMap(player->GetChengeMapKind(), MapNowPos);
 
+		if (chengekind != (int)MAP_CHENGE_NONE)	//マップ切り替えを行ったときは
+		{
+			auto p_coli = player->GetCollision();	//プレイヤーの当たり判定取得
+
+			switch (chengekind)	//切り替え方向毎に処理
+			{
+
+			case (int)MAP_CHENGE_UP:	//上へ切り替えるとき、ここから
+
+				player->SetPosition(0, GAME_HEIGHT - (p_coli->Height + RECT_STAGGER));	//位置を修正
+
+				break;
+
+			case (int)MAP_CHENGE_DOWN:	//下へ切り替えるとき、ここから
+
+				player->SetPosition(0, -(p_coli->Top - RECT_STAGGER));	//位置を修正
+
+				break;
+
+			case (int)MAP_CHENGE_LEFT:	//左へ切り替えるとき、ここから
+
+				player->SetPosition(GAME_WIDTH - (p_coli->Width + RECT_STAGGER), 0);	//位置を修正
+
+				break;
+
+			case (int)MAP_CHENGE_RIGHT:	//右へ切り替えるとき、ここから
+
+				player->SetPosition(-(p_coli->Left - RECT_STAGGER), 0);	//位置を修正
+
+				break;
+
+			default:
+				break;
+			}
+
+			player->ResetChengeMapKind();	//マップ切り替えの種類リセット
+
+		}
 	}
-
-	player->Operation(keydown);	//プレイヤーキー操作
 
 	Play_Draw();		//描画処理
 
@@ -904,7 +932,6 @@ void Play_Draw()
 	for (int cnt = 0; cnt < MAP_LAYER_KIND - 1; cnt++)		//最後のレイヤーは、当たり判定用なので、描画処理は行わない
 	{
 		mapdata[MapKind[MAPPOS_Y][MAPPOS_X]][cnt]->Draw(mapimage->GetHandle((int)FILED));		//マップ描画
-		mapdata[MapKind[MAPPOS_Y][MAPPOS_X]][cnt]->ChengeMap(player, MapNowPos);				//マップの切り替え処理
 	}
 
 	player->DrawAnime();		//アニメーション描画

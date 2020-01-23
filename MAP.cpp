@@ -78,46 +78,63 @@ bool MAP::LoadCsv(const char *dir, const char *name)
 }
 
 //マップを切り替える
-//引数：PLAYER：主人公の情報
+//引数：int	  ：マップ切り替えの種類
 //引数：int	　：現在のマップのX座標とY座標の情報
-void MAP::ChengeMap(PLAYER *player,int *mapnowpos)
+int MAP::ChengeMap(int kind,int *mapnowpos)
 {
-	COLLISION *player_collision = player->GetCollision();	//プレイヤーの当たり判定を取得
 
-	if (player_collision->Bottom >= GAME_HEIGHT)	//画面の下に来たら
+	switch (kind)	//マップ変更の種類
 	{
-		if ((mapnowpos[POS_Y]) < MAP_DATA_TATE_KIND - 1)	//下のマップがある場合は
-		{
-			mapnowpos[POS_Y]++;	//下のマップへ
-			player->SetPosition(0, -(player_collision->Top - 5));	//位置を修正
-		}
-	}
-	else if (player_collision->Top <= GAME_TOP)		//画面の上に来たら
-	{
+
+	case (int)MAP_CHENGE_UP:	//上へ切り替えるとき、ここから
+
 		if ((mapnowpos[POS_Y]) > 0)	//上のマップがある場合は
 		{
 			mapnowpos[POS_Y]--;	//上のマップへ
-			player->SetPosition(0, GAME_HEIGHT- (player_collision->Height + 5));	//位置を修正
+
+			return (int)MAP_CHENGE_UP;//切り替え方向、上
 		}
 
-	}
-	else if (player_collision->Right >= GAME_WIDTH)	//画面の右に来たら
-	{
-		if ((mapnowpos[POS_X]) + MAP_DATA_TATE_KIND <= MAP_DATA_TATE_KIND)	//横にマップがある場合は
+		break;	//上へ切り替えるとき、ここまで
+
+	case (int)MAP_CHENGE_DOWN:	//下へ切り替えるとき、ここから
+
+		if ((mapnowpos[POS_Y]) < MAP_DATA_TATE_KIND - 1)	//下のマップがある場合は
 		{
-			(mapnowpos[POS_X]) += (MAP_DATA_TATE_KIND - 1);	//右のマップへ
-			player->SetPosition(-(player_collision->Left - 5), 0);	//位置を修正
+			mapnowpos[POS_Y]++;	//下のマップへ
+
+			return (int)MAP_CHENGE_DOWN;	//切り替え方向、下
 		}
-	}
-	else if (player_collision->Left <= GAME_LEFT)		//画面の左に来たら
-	{
+
+		break;	//下へ切り替えるとき、ここまで
+
+	case (int)MAP_CHENGE_LEFT:	//左へ切り替えるとき、ここから
+
 		if ((mapnowpos[POS_X]) - (MAP_DATA_TATE_KIND - 1) >= 0)			//左のマップがある場合は
 		{
 			(mapnowpos[POS_X]) -= (MAP_DATA_TATE_KIND - 1);	//左のマップへ
-			player->SetPosition(GAME_WIDTH - (player_collision->Width + 5), 0);	//位置を修正
+
+			return (int)MAP_CHENGE_LEFT;	//切り替え方向、左
 		}
+
+		break;	//下へ切り替えるとき、ここまで
+
+	case (int)MAP_CHENGE_RIGHT:	//右へ切り替えるとき、ここから
+
+		if ((mapnowpos[POS_X]) + MAP_DATA_TATE_KIND <= MAP_DATA_TATE_KIND)	//横にマップがある場合は
+		{
+			(mapnowpos[POS_X]) += (MAP_DATA_TATE_KIND - 1);	//右のマップへ
+
+			return (int)MAP_CHENGE_RIGHT;	//切り替え方向、右
+		}
+
+		break;	//右へ切り替えるとき、ここまで
+
+	default:
+		break;
 	}
-	return;
+
+	return (int)MAP_CHENGE_NONE;	//切り替えなし
 }
 
 //描画
@@ -176,136 +193,5 @@ void MAP::CreateRect(int *ok_kind,int *ng_kind)
 	}
 
 	return;
-
-}
-
-//プレイヤーとマップが当たっているか確認
-/*
-引数：COLLISION：マップと当たったか判定する領域
-引数：int：キー入力の種類
-引数：int：当たった場所のX位置を返す
-引数：int：当たった場所のY位置を返す
-*/
-bool MAP::CheckDetectionPlayer(COLLISION *player,int keykind, int *detectionX, int *detectionY)
-{
-
-	COLLISION CollisionInit = *player;
-
-	switch (keykind)		//キー入力の種類で判別
-	{
-
-	case (int)KEY_UP:		//上キーの時
-
-		//領域を少し上へずらす
-		player->Top -= RECT_STAGGER;
-		player->Bottom -= RECT_STAGGER;
-
-		for (int tate = 0; tate < MAP_TATE; tate++)
-		{
-			for (int yoko = 0; yoko < MAP_YOKO; yoko++)
-			{
-				//キャラクターの当たっている場所を取得
-				if (this->RectNG[tate][yoko]->DetectionCheck(player))
-				{
-					*detectionY = tate;	//atariYのアドレスが指し示す先の場所に、当たったモノの縦の位置を入れる
-					*detectionX = yoko;	//atariXのアドレスが指し示す先の場所に、当たったモノの横の位置を入れる
-
-					player = &CollisionInit;	//ずらした分を元に戻す
-
-					return true;
-				}
-			}
-		}
-
-
-		break;	//上キーの時ここまで
-
-	case (int)KEY_DOWN:		//下キーの時
-
-		//領域を少し下へずらす
-		player->Top += RECT_STAGGER;
-		player->Bottom += RECT_STAGGER;
-
-		for (int tate = 0; tate < MAP_TATE; tate++)
-		{
-			for (int yoko = 0; yoko < MAP_YOKO; yoko++)
-			{
-				//キャラクターの当たっている場所を取得
-				if (this->RectNG[tate][yoko]->DetectionCheck(player))
-				{
-					*detectionY = tate;	//atariYのアドレスが指し示す先の場所に、当たったモノの縦の位置を入れる
-					*detectionX = yoko;	//atariXのアドレスが指し示す先の場所に、当たったモノの横の位置を入れる
-
-					player = &CollisionInit;	//ずらした分を元に戻す
-
-					return true;
-				}
-			}
-		}
-
-
-		break;		//下キーの時ここまで
-
-	case(int)KEY_LEFT:		//左キーの時
-
-		//領域を少し左へずらす
-		player->Left -= RECT_STAGGER;
-		player->Right -= RECT_STAGGER;
-
-		for (int tate = 0; tate < MAP_TATE; tate++)
-		{
-			for (int yoko = 0; yoko < MAP_YOKO; yoko++)
-			{
-				//キャラクターの当たっている場所を取得
-				if (this->RectNG[tate][yoko]->DetectionCheck(player))
-				{
-					*detectionY = tate;	//atariYのアドレスが指し示す先の場所に、当たったモノの縦の位置を入れる
-					*detectionX = yoko;	//atariXのアドレスが指し示す先の場所に、当たったモノの横の位置を入れる
-
-					player = &CollisionInit;	//ずらした分を元に戻す
-
-					return true;
-				}
-			}
-		}
-
-
-		break;		//左キーの時ここまで
-
-	case(int)KEY_RIGHT:		//右キーの時
-
-		//領域を少し右へずらす 
-		player->Left += RECT_STAGGER;
-		player->Right += RECT_STAGGER;
-
-		for (int tate = 0; tate < MAP_TATE; tate++)
-		{
-			for (int yoko = 0; yoko < MAP_YOKO; yoko++)
-			{
-				//キャラクターの当たっている場所を取得
-				if (this->RectNG[tate][yoko]->DetectionCheck(player))
-				{
-					*detectionY = tate;	//atariYのアドレスが指し示す先の場所に、当たったモノの縦の位置を入れる
-					*detectionX = yoko;	//atariXのアドレスが指し示す先の場所に、当たったモノの横の位置を入れる
-
-					player = &CollisionInit;	//ずらした分を元に戻す
-
-					return true;
-				}
-			}
-		}
-
-
-		break;		//右キーの時ここまで
-
-
-	default:
-		break;
-	}
-
-
-	player = &CollisionInit;	//ずらした分を元に戻す
-
-	return false;
 
 }

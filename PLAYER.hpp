@@ -9,6 +9,7 @@
 #include "CHARACTOR.hpp"
 #include "COLLISION.hpp"
 #include "ENEMY.hpp"
+#include "MAP.hpp"
 
 //################# マクロ定義 #######################
 #define EXP_INCREASE_VALUE	5		//経験値の最大値の増え幅
@@ -77,7 +78,7 @@ private:
 	bool IsBattleWin;		//戦闘に勝ったか
 	bool LevUpMsgStart_flg;	//レベルアップメッセージスタートフラグ
 
-	std::vector<bool> Stopflg;	//ストップするか
+	int ChengeMapKind;	//マップ切り替えの種類
 
 public:
 	PLAYER();				//コンストラクタ
@@ -113,8 +114,8 @@ public:
 	void SetIsMenu(bool);		//メニュー描画中か設定
 	void SetIsBattleWin(bool);	//戦闘に勝ったか設定
 	void SetLevUpMsgStartFlg(bool);	//レベルアップメッセージスタートのフラグを設定
-	void SetStopFlg(bool);		//ストップするか設定
-	void ResetStopFlg(void);		//ストップフラグリセット
+	//void SetChengeMapKind(int);			//切り替えるマップの種類を設定
+	void ResetChengeMapKind(void);		//切り替えるマップの種類をリセット
 
 	//ステータス関係
 	const char *GetName();	//名前取得
@@ -146,10 +147,11 @@ public:
 	bool GetIsBattleWin();		//戦闘に勝ったか取得
 	bool GetLevUpMsgStartFlg();	//レベルアップスタートメッセージフラグを取得
 	bool GetIsKeyDown();		//キー入力があるか取得
+	int GetChengeMapKind();		//切り替えるマップの種類を取得
 
 	void DrawAnime();			//描画
 
-	void Operation(KEYDOWN *);	//操作
+	void Operation(KEYDOWN *, COLLISION *[][MAP_YOKO]);	//操作
 
 	void MoveUp();				//上へ移動
 	void MoveDown();			//下へ移動
@@ -164,5 +166,7 @@ public:
 	void SetNowPos(int, int);		//現在の位置を設定
 
 	int GetInKeyKind(void);		//現在のキー入力の種類を取得
+
+	bool CheckDetectionMap(COLLISION *[][20], int *, int *);	//マップとの当たり判定をする
 
 };

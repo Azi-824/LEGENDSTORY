@@ -29,9 +29,6 @@ PLAYER::~PLAYER()
 	std::vector<int> v;			//空のvectorを作成する
 	this->Skil.swap(v);		//空と中身を入れ替える
 
-	std::vector<bool> v2;			//空のvectorを作成する
-	this->Stopflg.swap(v2);			//空と中身を入れ替える
-
 	return;
 }
 
@@ -66,8 +63,6 @@ bool PLAYER::SetInit()
 		this->Anime->GetWidth(),
 		this->Anime->GetHeight());
 
-
-	this->Stopflg.assign(DIST_KIND, false);	//全ての方向へ移動
 
 	return true;
 }
@@ -276,17 +271,16 @@ void PLAYER::SetLevUpMsgStartFlg(bool start_flg)
 }
 
 //ストップするか設定
-void PLAYER::SetStopFlg(bool stop_flg)
-{
-	this->Stopflg.assign(DIST_KIND, false);
-	this->Stopflg[this->InKeyKind] = stop_flg;
-	return;
-}
+//void PLAYER::SetChengeMapKind(int chengekind)
+//{
+//	this->ChengeMapKind = chengekind;
+//	return;
+//}
 
 //ストップフラグリセット
-void PLAYER::ResetStopFlg(void)
+void PLAYER::ResetChengeMapKind(void)
 {
-	this->Stopflg.assign(DIST_KIND, false);	
+	this->ChengeMapKind = -1;
 	return;
 }
 
@@ -446,49 +440,86 @@ bool PLAYER::GetIsKeyDown()
 	return this->IsKeyDown;
 }
 
-//操作
-void PLAYER::Operation(KEYDOWN *keydown)
+//切り替えるマップの種類を取得
+int PLAYER::GetChengeMapKind()
 {
+	return this->ChengeMapKind;
+}
+
+//操作
+void PLAYER::Operation(KEYDOWN *keydown, COLLISION *map[][MAP_YOKO])
+{
+
+	static int x = 0, y = 0;	//当たった場所を取得
 
 	if (this->IsMenu ==false && keydown->IsKeyDown(KEY_INPUT_W))		//メニュー描画中でなく、Wキーを押しているとき
 	{
 		this->IsKeyDown = true;		//キー入力あり
 		this->Dist = BACK;			//移動方向を上にする
 		this->InKeyKind = (int)KEY_UP;	//キー入力の種類、上
-		if (this->Stopflg[(int)KEY_UP] == false)	//ストップフラグが立っていなければ
+
+		//領域を少し上へずらす
+		this->Collision->Top -= RECT_STAGGER;
+		this->Collision->Bottom -= RECT_STAGGER;
+
+		//マップとの当たり判定
+		if (this->CheckDetectionMap(map, &x, &y) == false)	//通行できるなら
 		{
 			this->MoveUp();				//上へ移動
 		}
+
 	}
 	else if (this->IsMenu == false && keydown->IsKeyDown(KEY_INPUT_S))	//メニュー描画中でなく、Sキーを押しているとき
 	{
 		this->IsKeyDown = true;		//キー入力あり
 		this->Dist = FLONT;			//移動方向下
 		this->InKeyKind = (int)KEY_DOWN;	//キー入力の種類、下
-		if (this->Stopflg[(int)KEY_DOWN] == false)	//ストップフラグが立っていなければ
+
+		//領域を少し下へずらす
+		this->Collision->Top += RECT_STAGGER;
+		this->Collision->Bottom += RECT_STAGGER;
+
+		//マップとの当たり判定
+		if (this->CheckDetectionMap(map, &x, &y) == false)	//通行できるなら
 		{
-			this->MoveDown();			//下へ移動
+			this->MoveDown();				//下へ移動
 		}
+
+
 	}
 	else if (this->IsMenu == false && keydown->IsKeyDown(KEY_INPUT_A))	//メニュー描画中でなく、Aキーを押しているとき
 	{
 		this->IsKeyDown = true;		//キー入力あり
 		this->Dist = LEFT;			//移動方向左
 		this->InKeyKind = (int)KEY_LEFT;	//キー入力の種類、左
-		if (this->Stopflg[(int)KEY_LEFT] == false)	//ストップフラグが立っていなければ
+
+		//領域を少し左へずらす
+		this->Collision->Left -= RECT_STAGGER;
+		this->Collision->Right -= RECT_STAGGER;
+
+		//マップとの当たり判定
+		if (this->CheckDetectionMap(map, &x, &y) == false)	//通行できるなら
 		{
-			this->MoveLeft();			//左へ移動
+			this->MoveLeft();				//左へ移動
 		}
+
 	}
 	else if (this->IsMenu == false && keydown->IsKeyDown(KEY_INPUT_D))	//メニュー描画中でなく、Dキーを押しているとき
 	{
 		this->IsKeyDown = true;		//キー入力あり
 		this->Dist = RIGHT;			//移動方向右
 		this->InKeyKind = (int)KEY_RIGHT;	//キー入力の種類、右
-		if (this->Stopflg[(int)KEY_RIGHT] == false)	//ストップフラグが立っていなければ
+
+		//領域を少し右へずらす
+		this->Collision->Left += RECT_STAGGER;
+		this->Collision->Right += RECT_STAGGER;
+
+		//マップとの当たり判定
+		if (this->CheckDetectionMap(map, &x, &y) == false)	//通行できるなら
 		{
-			this->MoveRight();			//右へ移動
+			this->MoveRight();				//右へ移動
 		}
+
 	}
 	else
 	{
@@ -540,6 +571,10 @@ void PLAYER::MoveUp()
 	{
 		this->sikaku_draw->Top -= this->MoveSpeed;	//当たり判定と、描画位置を上へ移動
 	}
+	else
+	{
+		this->ChengeMapKind = (int)MAP_CHENGE_UP;//切り替え方向、上
+	}
 
 	return;
 }
@@ -551,6 +586,10 @@ void PLAYER::MoveDown()
 	{
 		this->sikaku_draw->Top += this->MoveSpeed;	//下へ移動
 	}
+	else
+	{
+		this->ChengeMapKind = (int)MAP_CHENGE_DOWN;	//切り替え方向、下
+	}
 	return;
 }
 
@@ -561,6 +600,10 @@ void PLAYER::MoveLeft()
 	{
 		this->sikaku_draw->Left -= this->MoveSpeed;	//左へ移動
 	}
+	else
+	{
+		this->ChengeMapKind = (int)MAP_CHENGE_LEFT;	//切り替え方向、左
+	}
 	return;
 }
 
@@ -570,6 +613,10 @@ void PLAYER::MoveRight()
 	if (this->sikaku_draw->Right + this->MoveSpeed <= GAME_WIDTH)
 	{
 		this->sikaku_draw->Left += this->MoveSpeed;	//右へ移動
+	}
+	else
+	{
+		this->ChengeMapKind = (int)MAP_CHENGE_RIGHT;	//切り替え方向、右
 	}
 	return;
 }
@@ -750,4 +797,26 @@ void PLAYER::SetNowPos(int x, int y)
 int PLAYER::GetInKeyKind(void)
 {
 	return this->InKeyKind;
+}
+
+//マップとの当たり判定
+bool PLAYER::CheckDetectionMap(COLLISION * map[][MAP_YOKO], int *detectionX, int *detectionY)
+{
+
+	for (int tate = 0; tate < 15; tate++)
+	{
+		for (int yoko = 0; yoko < 20; yoko++)
+		{
+			//キャラクターの当たっている場所を取得
+			if (map[tate][yoko]->DetectionCheck(this->Collision))
+			{
+				*detectionY = tate;	//atariYのアドレスが指し示す先の場所に、当たったモノの縦の位置を入れる
+				*detectionX = yoko;	//atariXのアドレスが指し示す先の場所に、当たったモノの横の位置を入れる
+
+				return true;
+			}
+		}
+	}
+
+	return false;
 }
