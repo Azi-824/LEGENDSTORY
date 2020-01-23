@@ -120,12 +120,8 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 	{
 		bt_msg[cnt] = new MESSAGE();	//メッセージ作成
 	}
-
 	msg = new MESSAGE();	//メッセージ作成
-	data->LoadMsg(msg, MSG_DATA_DIR, MSG_DATA_NAME);	//メッセージデータ読み込み
-
-	//msg[(int)MSG_LEVELUP]->SetMsg("レベルが上がった！");
-
+	if (data->LoadMsg(msg, MSG_DATA_DIR, MSG_DATA_NAME) == false) { return -1; }	//メッセージデータ読み込み
 
 	//エフェクト関係
 	effect = new EFFECT(MY_ANIME_DIR_ATKEFECT, MY_ANIME_NAME_ATKEFECT, ATK_ALL_CNT, ATK_YOKO_CNT, ATK_TATE_CNT, ATK_WIDTH, ATK_HEIGHT, ATK_SPEED, false);
