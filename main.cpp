@@ -355,6 +355,7 @@ void Play()
 
 	player->Operation(keydown, mapdata[MapKind[MAPPOS_Y][MAPPOS_X]][(int)THIRD_LAYER]->GetRectNG());	//プレイヤーキー操作
 
+	//▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼ マップ切り替え処理ここから ▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼
 	if (player->GetChengeMapKind() != -1)
 	{
 		int chengekind = (int)MAP_CHENGE_NONE;	//マップ切り替えの種類
@@ -400,6 +401,7 @@ void Play()
 
 		}
 	}
+	//▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲ マップ切り替え処理ここまで ▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲
 
 	Play_Draw();		//描画処理
 

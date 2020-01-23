@@ -803,9 +803,9 @@ int PLAYER::GetInKeyKind(void)
 bool PLAYER::CheckDetectionMap(COLLISION * map[][MAP_YOKO], int *detectionX, int *detectionY)
 {
 
-	for (int tate = 0; tate < 15; tate++)
+	for (int tate = 0; tate < MAP_TATE; tate++)
 	{
-		for (int yoko = 0; yoko < 20; yoko++)
+		for (int yoko = 0; yoko < MAP_YOKO; yoko++)
 		{
 			//キャラクターの当たっている場所を取得
 			if (map[tate][yoko]->DetectionCheck(this->Collision))
