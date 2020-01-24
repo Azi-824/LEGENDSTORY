@@ -164,7 +164,6 @@
     <ClCompile Include="KEYDOWN.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="MAP.cpp" />
-    <ClCompile Include="MAPIMAGE.cpp" />
     <ClCompile Include="MENU.cpp" />
     <ClCompile Include="MSG.cpp" />
     <ClCompile Include="MUSIC.cpp" />
@@ -187,7 +186,6 @@
     <ClInclude Include="KEYDOWN.hpp" />
     <ClInclude Include="main.hpp" />
     <ClInclude Include="MAP.hpp" />
-    <ClInclude Include="MAPIMAGE.hpp" />
     <ClInclude Include="MENU.hpp" />
     <ClInclude Include="MSG.hpp" />
     <ClInclude Include="MUSIC.hpp" />

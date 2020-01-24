@@ -17,13 +17,13 @@
 #define MAP_ERROR_MSG		"マップが読み込めませんでした"	//エラーメッセージ
 
 //##################### マクロ定義 ###########################
-#define MAP_BUN_YOKO	8			//マップの分割数（横）
-#define MAP_BUN_TATE	11			//マップの分割数（縦）
-
-#define MAP_IMAGE_KIND	1			//使用するマップイメージ画像の種類
-
-#define MAP_YOKO_SIZE	40			//マップの大きさ（横）
-#define MAP_TATE_SIZE	40			//マップの大きさ（縦）
+//#define MAP_BUN_YOKO	8			//マップの分割数（横）
+//#define MAP_BUN_TATE	11			//マップの分割数（縦）
+//
+//#define MAP_IMAGE_KIND	1			//使用するマップイメージ画像の種類
+//
+//#define MAP_YOKO_SIZE	40			//マップの大きさ（横）
+//#define MAP_TATE_SIZE	40			//マップの大きさ（縦）
 
 //##################### 列挙型 ######################
 enum MAPIMAGEKIND

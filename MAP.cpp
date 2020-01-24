@@ -141,17 +141,8 @@ int MAP::ChengeMap(int kind,int *mapnowpos)
 }
 
 //描画
-//引数：int *：描画したいマップのマップチップのハンドル
-void MAP::Draw(int *handle)
+void MAP::Draw()
 {
-	//for (int tate = 0; tate < MAP_TATE; tate++)
-	//{
-	//	for (int yoko = 0; yoko < MAP_YOKO; yoko++)
-	//	{
-	//		DrawGraph(yoko*MAP_YOKO_SIZE, tate*MAP_TATE_SIZE, handle[this->MapData[tate][yoko]], TRUE);	//マップ描画
-	//	}
-	//}
-
 	this->Map_Image->Draw(0, 0);
 
 	return;
