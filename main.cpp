@@ -1091,7 +1091,7 @@ void Delete_Class()
 	//メッセージの削除
 	for (int i = 0; i < BT_MSG_KIND; ++i)
 	{
-		delete bt_msg[i];				//msgを破棄
+		delete bt_msg[i];				//bt_msgを破棄
 	}
 
 	//マップデータの削除
