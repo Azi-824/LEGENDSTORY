@@ -27,6 +27,10 @@
 #define MY_MAP_4_3		R"(map_4_3.csv)"			//マップcsvの名前(4マップ目レイヤー3)
 
 #define MY_MAP_SOUGEN_ATARI	R"(sougen_atari.csv)"	//草原の当たり判定
+#define MY_MAP_TEST2_ATARI	R"(test2_atari.csv)"
+#define MY_MAP_TEST3_ATARI	R"(test3_atari.csv)"
+#define MY_MAP_TEST4_ATARI	R"(test4_atari.csv)"
+
 
 #define MAP_NG_KIND		1	//通行できないマップの種類
 #define MAP_OK_KIND		1	//通行できるマップの種類

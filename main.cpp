@@ -195,6 +195,15 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 	mapdata[(int)MAP_1] = new MAP(IMG_DIR_MAP, IMG_NAME_MAP_SOUGEN);
 	if (mapdata[(int)MAP_1]->LoadCsv(MY_MAP_DIR, MY_MAP_SOUGEN_ATARI) == false) { return -1; }	//読み込み失敗
 
+	mapdata[(int)MAP_2] = new MAP(IMG_DIR_MAP, MY_MAP_TEST2);
+	if (mapdata[(int)MAP_2]->LoadCsv(MY_MAP_DIR, MY_MAP_TEST2_ATARI) == false) { return -1; }	//読み込み失敗
+
+	mapdata[(int)MAP_3] = new MAP(IMG_DIR_MAP, MY_MAP_TEST3);
+	if (mapdata[(int)MAP_3]->LoadCsv(MY_MAP_DIR, MY_MAP_TEST3_ATARI) == false) { return -1; }	//読み込み失敗
+
+	mapdata[(int)MAP_4] = new MAP(IMG_DIR_MAP, MY_MAP_TEST4);
+	if (mapdata[(int)MAP_4]->LoadCsv(MY_MAP_DIR, MY_MAP_TEST4_ATARI) == false) { return -1; }	//読み込み失敗
+
 	//▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼ マップデータ読み込み開始 ▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼
 	//mapdata[(int)MAP_1][(int)FIRST_LAYER] = new MAP();	//一層目のマップデータ生成
 	//if (mapdata[(int)MAP_1][(int)FIRST_LAYER]->LoadCsv(MY_MAP_DIR, MY_MAP_1_1) == false) { return -1; }	//読み込み失敗
