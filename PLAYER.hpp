@@ -114,8 +114,9 @@ public:
 	void SetIsMenu(bool);		//メニュー描画中か設定
 	void SetIsBattleWin(bool);	//戦闘に勝ったか設定
 	void SetLevUpMsgStartFlg(bool);	//レベルアップメッセージスタートのフラグを設定
-	//void SetChengeMapKind(int);			//切り替えるマップの種類を設定
+	//void SetChengeMapKind(int);		//切り替えるマップの種類を設定
 	void ResetChengeMapKind(void);		//切り替えるマップの種類をリセット
+	void SetChengePos(int);				//マップ切り替えをしたときにプレイヤーの位置を設定
 
 	//ステータス関係
 	const char *GetName();	//名前取得

@@ -277,11 +277,50 @@ void PLAYER::SetLevUpMsgStartFlg(bool start_flg)
 //	return;
 //}
 
-//ストップフラグリセット
+//マップ切り替えの種類リセット
 void PLAYER::ResetChengeMapKind(void)
 {
 	this->ChengeMapKind = -1;
 	return;
+}
+
+//マップ切り替えをしたときにプレイヤーの位置を設定
+//引数：int：切り替えた方向
+void PLAYER::SetChengePos(int kind)
+{
+	switch (kind)	//切り替え方向毎に処理
+	{
+
+	case (int)MAP_CHENGE_UP:	//上へ切り替えるとき、ここから
+
+		this->SetPosition(0, GAME_HEIGHT - (this->Collision->Height + RECT_STAGGER));	//位置を修正
+
+		break;
+
+	case (int)MAP_CHENGE_DOWN:	//下へ切り替えるとき、ここから
+
+		this->SetPosition(0, -(this->Collision->Top - RECT_STAGGER));	//位置を修正
+
+		break;
+
+	case (int)MAP_CHENGE_LEFT:	//左へ切り替えるとき、ここから
+
+		this->SetPosition(GAME_WIDTH - (this->Collision->Width + RECT_STAGGER), 0);	//位置を修正
+
+		break;
+
+	case (int)MAP_CHENGE_RIGHT:	//右へ切り替えるとき、ここから
+
+		this->SetPosition(-(this->Collision->Left - RECT_STAGGER), 0);	//位置を修正
+
+		break;
+
+	default:
+		break;
+	}
+
+	return;
+
 }
 
 //名前取得

@@ -364,40 +364,10 @@ void Play()
 
 		if (chengekind != (int)MAP_CHENGE_NONE)	//マップ切り替えを行ったときは
 		{
-			auto p_coli = player->GetCollision();	//プレイヤーの当たり判定取得
 
-			switch (chengekind)	//切り替え方向毎に処理
-			{
+			player->SetChengePos(chengekind);		//プレイヤーの位置を修正
 
-			case (int)MAP_CHENGE_UP:	//上へ切り替えるとき、ここから
-
-				player->SetPosition(0, GAME_HEIGHT - (p_coli->Height + RECT_STAGGER));	//位置を修正
-
-				break;
-
-			case (int)MAP_CHENGE_DOWN:	//下へ切り替えるとき、ここから
-
-				player->SetPosition(0, -(p_coli->Top - RECT_STAGGER));	//位置を修正
-
-				break;
-
-			case (int)MAP_CHENGE_LEFT:	//左へ切り替えるとき、ここから
-
-				player->SetPosition(GAME_WIDTH - (p_coli->Width + RECT_STAGGER), 0);	//位置を修正
-
-				break;
-
-			case (int)MAP_CHENGE_RIGHT:	//右へ切り替えるとき、ここから
-
-				player->SetPosition(-(p_coli->Left - RECT_STAGGER), 0);	//位置を修正
-
-				break;
-
-			default:
-				break;
-			}
-
-			player->ResetChengeMapKind();	//マップ切り替えの種類リセット
+			player->ResetChengeMapKind();			//マップ切り替えの種類リセット
 
 		}
 	}
