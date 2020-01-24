@@ -7,6 +7,7 @@
 #include "DxLib.h"
 #include "MAPIMAGE.hpp"
 #include "COLLISION.hpp"
+#include "IMAGE.hpp"
 #include <string>
 
 //###################### マクロ定義：ファイルパス、名前 ##################
@@ -24,6 +25,8 @@
 #define MY_MAP_4_1		R"(map_4_1.csv)"			//マップcsvの名前(4マップ目レイヤー1)
 #define MY_MAP_4_2		R"(map_4_2.csv)"			//マップcsvの名前(4マップ目レイヤー2)
 #define MY_MAP_4_3		R"(map_4_3.csv)"			//マップcsvの名前(4マップ目レイヤー3)
+
+#define MY_MAP_SOUGEN_ATARI	R"(sougen_atari.csv)"	//草原の当たり判定
 
 #define MAP_NG_KIND		1	//通行できないマップの種類
 #define MAP_OK_KIND		1	//通行できるマップの種類
@@ -91,6 +94,8 @@ private:
 
 	int MapData[MAP_TATE][MAP_YOKO];		//マップデータ
 
+	IMAGE *Map_Image;		//マップ画像
+
 	COLLISION *RectOK[MAP_TATE][MAP_YOKO];		//当たり判定(通行できる)
 	COLLISION *RectNG[MAP_TATE][MAP_YOKO];		//当たり判定（通行できない）
 
@@ -98,7 +103,7 @@ private:
 
 public :
 	
-	MAP();				//コンストラクタ
+	MAP(const char *,const char *);				//コンストラクタ
 
 	~MAP();				//デストラクタ
 

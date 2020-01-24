@@ -6,8 +6,11 @@
 
 //################## クラス定義 #####################
 //コンストラクタ
-MAP::MAP()
+MAP::MAP(const char *dir,const char *name)
 {
+
+	this->Map_Image = new IMAGE(dir, name);	//マップ画像作成
+
 	for (int tate = 0; tate < MAP_TATE; ++tate)
 	{
 		for (int yoko = 0; yoko < MAP_YOKO; ++yoko)
@@ -141,13 +144,15 @@ int MAP::ChengeMap(int kind,int *mapnowpos)
 //引数：int *：描画したいマップのマップチップのハンドル
 void MAP::Draw(int *handle)
 {
-	for (int tate = 0; tate < MAP_TATE; tate++)
-	{
-		for (int yoko = 0; yoko < MAP_YOKO; yoko++)
-		{
-			DrawGraph(yoko*MAP_YOKO_SIZE, tate*MAP_TATE_SIZE, handle[this->MapData[tate][yoko]], TRUE);	//マップ描画
-		}
-	}
+	//for (int tate = 0; tate < MAP_TATE; tate++)
+	//{
+	//	for (int yoko = 0; yoko < MAP_YOKO; yoko++)
+	//	{
+	//		DrawGraph(yoko*MAP_YOKO_SIZE, tate*MAP_TATE_SIZE, handle[this->MapData[tate][yoko]], TRUE);	//マップ描画
+	//	}
+	//}
+
+	this->Map_Image->Draw(0, 0);
 
 	return;
 }
@@ -169,10 +174,10 @@ void MAP::CreateRect(int *ok_kind,int *ng_kind)
 			{
 				if (this->MapData[tate][yoko] == ok_kind[cnt])
 				{
-					this->RectOK[tate][yoko]->Left = yoko * this->RectOK[tate][yoko]->Width + 1;
-					this->RectOK[tate][yoko]->Top = tate * this->RectOK[tate][yoko]->Height + 1;
-					this->RectOK[tate][yoko]->Right = (yoko + 1) * this->RectOK[tate][yoko]->Width - 1;
-					this->RectOK[tate][yoko]->Bottom = (tate + 1)*this->RectOK[tate][yoko]->Height - 1;
+					this->RectOK[tate][yoko]->Left = yoko * this->RectOK[tate][yoko]->Width;
+					this->RectOK[tate][yoko]->Top = tate * this->RectOK[tate][yoko]->Height;
+					this->RectOK[tate][yoko]->Right = (yoko + 1) * this->RectOK[tate][yoko]->Width;
+					this->RectOK[tate][yoko]->Bottom = (tate + 1)*this->RectOK[tate][yoko]->Height;
 
 				}
 			}
@@ -182,10 +187,10 @@ void MAP::CreateRect(int *ok_kind,int *ng_kind)
 			{
 				if (this->MapData[tate][yoko] == ng_kind[cnt])
 				{
-					this->RectNG[tate][yoko]->Left = yoko * this->RectOK[tate][yoko]->Width + 1;
-					this->RectNG[tate][yoko]->Top = tate * this->RectOK[tate][yoko]->Height + 1;
-					this->RectNG[tate][yoko]->Right = (yoko + 1) * this->RectOK[tate][yoko]->Width - 1;
-					this->RectNG[tate][yoko]->Bottom = (tate + 1)*this->RectOK[tate][yoko]->Height - 1;
+					this->RectNG[tate][yoko]->Left = yoko * this->RectOK[tate][yoko]->Width;
+					this->RectNG[tate][yoko]->Top = tate * this->RectOK[tate][yoko]->Height;
+					this->RectNG[tate][yoko]->Right = (yoko + 1) * this->RectOK[tate][yoko]->Width;
+					this->RectNG[tate][yoko]->Bottom = (tate + 1)*this->RectOK[tate][yoko]->Height;
 				}
 			}
 

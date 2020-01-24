@@ -14,6 +14,7 @@
 #define MY_IMG_DIR_CHARCTOR	R"(.\MY_IMG\CHARACTOR)"			//キャラクターの画像のファイルの場所
 #define MY_IMG_DIR_BACK		R"(.\MY_IMG\BACK)"				//背景画像のファイルの場所
 #define MY_IMG_DIR_BATTLE	R"(.\MY_IMG\BATTLE)"			//戦闘画面の背景画像
+#define IMG_DIR_MAP			R"(.\MY_IMG\Map)"				//マップの画像ファイりの場所
 
 #define MY_ING_NAME_TITLE	R"(\Title_Logo.png)"			//タイトル画像の名前
 #define MY_IMG_NAME_PLAYER	R"(\yh032.png)"					//主人公の画像の名前
@@ -21,6 +22,7 @@
 #define MY_IMG_NAME_BACK_END R"(\end_back.jpg)"				//エンドの背景画像の名前
 #define MY_IMG_NAME_BATTLE_NORMAL	R"(\pipo-battlebg011.jpg)"//通常戦闘画面の背景画像の名前
 #define MY_IMG_NAME_BATTLE_NIGHT	R"(\pipo-battlebg020.jpg)"//戦闘画面（夜）の背景画像の名前
+#define IMG_NAME_MAP_SOUGEN			R"(\sougen.png)"		  //草原の画像の名前
 
 #define SETUMEI_NAME			R"(\setumei_dumy.jpg)"		  //説明画像の名前
 

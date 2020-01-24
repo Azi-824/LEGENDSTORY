@@ -26,6 +26,7 @@ IMAGE *title;						//タイトル画像
 IMAGE *back;						//背景画像
 IMAGE *back_battle;					//戦闘画面の背景画像
 IMAGE *setumei;						//説明画像
+IMAGE *map_i;//マップ画像
 
 MUSIC *bgm;							//BGM
 MUSIC *se;							//SE
@@ -45,7 +46,7 @@ ENEMY *enemy[ENEMY_KIND];			//敵
 ITEM *item[ITEM_KIND];				//アイテム
 
 MAPIMAGE *mapimage;					//マップチップのデータ
-MAP *mapdata[MAP_DATA_KIND][MAP_LAYER_KIND];		//マップデータ
+MAP *mapdata[MAP_DATA_KIND];		//マップデータ
 
 //############## グローバル変数 ##############
 int GameSceneNow = (int)GAME_SCENE_TITLE;	//現在のゲームシーン
@@ -189,42 +190,47 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 	mapimage = new MAPIMAGE();	//マップチップ生成
 	if (mapimage->GetIsLoad() == false) { return -1; }	//読み込み失敗
 
+	//map_i = new IMAGE(IMG_DIR_MAP, IMG_NAME_MAP_SOUGEN);
+
+	mapdata[(int)MAP_1] = new MAP(IMG_DIR_MAP, IMG_NAME_MAP_SOUGEN);
+	if (mapdata[(int)MAP_1]->LoadCsv(MY_MAP_DIR, MY_MAP_SOUGEN_ATARI) == false) { return -1; }	//読み込み失敗
+
 	//▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼ マップデータ読み込み開始 ▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼
-	mapdata[(int)MAP_1][(int)FIRST_LAYER] = new MAP();	//一層目のマップデータ生成
-	if (mapdata[(int)MAP_1][(int)FIRST_LAYER]->LoadCsv(MY_MAP_DIR, MY_MAP_1_1) == false) { return -1; }	//読み込み失敗
+	//mapdata[(int)MAP_1][(int)FIRST_LAYER] = new MAP();	//一層目のマップデータ生成
+	//if (mapdata[(int)MAP_1][(int)FIRST_LAYER]->LoadCsv(MY_MAP_DIR, MY_MAP_1_1) == false) { return -1; }	//読み込み失敗
 
-	mapdata[MAP_1][(int)SECOND_LAYER] = new MAP();	//二層目のマップデータ生成
-	if (mapdata[(int)MAP_1][(int)SECOND_LAYER]->LoadCsv(MY_MAP_DIR, MY_MAP_1_2) == false) { return -1; }	//読み込み失敗
+	//mapdata[MAP_1][(int)SECOND_LAYER] = new MAP();	//二層目のマップデータ生成
+	//if (mapdata[(int)MAP_1][(int)SECOND_LAYER]->LoadCsv(MY_MAP_DIR, MY_MAP_1_2) == false) { return -1; }	//読み込み失敗
 
-	mapdata[(int)MAP_1][(int)THIRD_LAYER] = new MAP();	//三層目のマップデータ生成
-	if (mapdata[(int)MAP_1][(int)THIRD_LAYER]->LoadCsv(MY_MAP_DIR, MY_MAP_1_3) == false) { return -1; }	//読み込み失敗
+	//mapdata[(int)MAP_1][(int)THIRD_LAYER] = new MAP();	//三層目のマップデータ生成
+	//if (mapdata[(int)MAP_1][(int)THIRD_LAYER]->LoadCsv(MY_MAP_DIR, MY_MAP_1_3) == false) { return -1; }	//読み込み失敗
 
-	mapdata[(int)MAP_2][(int)FIRST_LAYER] = new MAP();	//一層目のマップデータ生成
-	if (mapdata[(int)MAP_2][(int)FIRST_LAYER]->LoadCsv(MY_MAP_DIR, MY_MAP_2_1) == false) { return -1; }	//読み込み失敗
+	//mapdata[(int)MAP_2][(int)FIRST_LAYER] = new MAP();	//一層目のマップデータ生成
+	//if (mapdata[(int)MAP_2][(int)FIRST_LAYER]->LoadCsv(MY_MAP_DIR, MY_MAP_2_1) == false) { return -1; }	//読み込み失敗
 
-	mapdata[(int)MAP_2][(int)SECOND_LAYER] = new MAP();	//二層目のマップデータ生成
-	if (mapdata[(int)MAP_2][(int)SECOND_LAYER]->LoadCsv(MY_MAP_DIR, MY_MAP_2_2) == false) { return -1; }	//読み込み失敗
+	//mapdata[(int)MAP_2][(int)SECOND_LAYER] = new MAP();	//二層目のマップデータ生成
+	//if (mapdata[(int)MAP_2][(int)SECOND_LAYER]->LoadCsv(MY_MAP_DIR, MY_MAP_2_2) == false) { return -1; }	//読み込み失敗
 
-	mapdata[(int)MAP_2][(int)THIRD_LAYER] = new MAP();	//三層目のマップデータ生成
-	if (mapdata[(int)MAP_2][(int)THIRD_LAYER]->LoadCsv(MY_MAP_DIR, MY_MAP_2_3) == false) { return -1; }	//読み込み失敗
+	//mapdata[(int)MAP_2][(int)THIRD_LAYER] = new MAP();	//三層目のマップデータ生成
+	//if (mapdata[(int)MAP_2][(int)THIRD_LAYER]->LoadCsv(MY_MAP_DIR, MY_MAP_2_3) == false) { return -1; }	//読み込み失敗
 
-	mapdata[(int)MAP_3][(int)FIRST_LAYER] = new MAP();	//一層目のマップデータ生成
-	if (mapdata[(int)MAP_3][(int)FIRST_LAYER]->LoadCsv(MY_MAP_DIR, MY_MAP_3_1) == false) { return -1; }	//読み込み失敗
+	//mapdata[(int)MAP_3][(int)FIRST_LAYER] = new MAP();	//一層目のマップデータ生成
+	//if (mapdata[(int)MAP_3][(int)FIRST_LAYER]->LoadCsv(MY_MAP_DIR, MY_MAP_3_1) == false) { return -1; }	//読み込み失敗
 
-	mapdata[(int)MAP_3][(int)SECOND_LAYER] = new MAP();	//二層目のマップデータ生成
-	if (mapdata[(int)MAP_3][(int)SECOND_LAYER]->LoadCsv(MY_MAP_DIR, MY_MAP_3_2) == false) { return -1; }	//読み込み失敗
+	//mapdata[(int)MAP_3][(int)SECOND_LAYER] = new MAP();	//二層目のマップデータ生成
+	//if (mapdata[(int)MAP_3][(int)SECOND_LAYER]->LoadCsv(MY_MAP_DIR, MY_MAP_3_2) == false) { return -1; }	//読み込み失敗
 
-	mapdata[(int)MAP_3][(int)THIRD_LAYER] = new MAP();	//三層目のマップデータ生成
-	if (mapdata[(int)MAP_3][(int)THIRD_LAYER]->LoadCsv(MY_MAP_DIR, MY_MAP_3_3) == false) { return -1; }	//読み込み
+	//mapdata[(int)MAP_3][(int)THIRD_LAYER] = new MAP();	//三層目のマップデータ生成
+	//if (mapdata[(int)MAP_3][(int)THIRD_LAYER]->LoadCsv(MY_MAP_DIR, MY_MAP_3_3) == false) { return -1; }	//読み込み
 
-	mapdata[(int)MAP_4][(int)FIRST_LAYER] = new MAP();	//一層目のマップデータ生成
-	if (mapdata[(int)MAP_4][(int)FIRST_LAYER]->LoadCsv(MY_MAP_DIR, MY_MAP_4_1) == false) { return -1; }	//読み込み失敗
+	//mapdata[(int)MAP_4][(int)FIRST_LAYER] = new MAP();	//一層目のマップデータ生成
+	//if (mapdata[(int)MAP_4][(int)FIRST_LAYER]->LoadCsv(MY_MAP_DIR, MY_MAP_4_1) == false) { return -1; }	//読み込み失敗
 
-	mapdata[(int)MAP_4][(int)SECOND_LAYER] = new MAP();	//二層目のマップデータ生成
-	if (mapdata[(int)MAP_4][(int)SECOND_LAYER]->LoadCsv(MY_MAP_DIR, MY_MAP_4_2) == false) { return -1; }	//読み込み失敗
+	//mapdata[(int)MAP_4][(int)SECOND_LAYER] = new MAP();	//二層目のマップデータ生成
+	//if (mapdata[(int)MAP_4][(int)SECOND_LAYER]->LoadCsv(MY_MAP_DIR, MY_MAP_4_2) == false) { return -1; }	//読み込み失敗
 
-	mapdata[(int)MAP_4][(int)THIRD_LAYER] = new MAP();	//三層目のマップデータ生成
-	if (mapdata[(int)MAP_4][(int)THIRD_LAYER]->LoadCsv(MY_MAP_DIR, MY_MAP_4_3) == false) { return -1; }	//読み込み失敗
+	//mapdata[(int)MAP_4][(int)THIRD_LAYER] = new MAP();	//三層目のマップデータ生成
+	//if (mapdata[(int)MAP_4][(int)THIRD_LAYER]->LoadCsv(MY_MAP_DIR, MY_MAP_4_3) == false) { return -1; }	//読み込み失敗
 
 	//マップの種類を二次元配列で管理
 	for (int yoko = 0; yoko < MAP_DATA_YOKO_KIND; yoko++)
@@ -236,10 +242,12 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 			cnt++;
 		}
 	}
-	mapdata[(int)MAP_1][(int)THIRD_LAYER]->CreateRect(&MapOKKind[0], &MapNGKind[0]);	//当たり判定の領域を作成
-	mapdata[(int)MAP_2][(int)THIRD_LAYER]->CreateRect(&MapOKKind[0], &MapNGKind[0]);	//当たり判定の領域を作成
-	mapdata[(int)MAP_3][(int)THIRD_LAYER]->CreateRect(&MapOKKind[0], &MapNGKind[0]);	//当たり判定の領域を作成
-	mapdata[(int)MAP_4][(int)THIRD_LAYER]->CreateRect(&MapOKKind[0], &MapNGKind[0]);	//当たり判定の領域を作成
+
+	mapdata[(int)MAP_1]->CreateRect(&MapOKKind[0], &MapNGKind[0]);	//当たり判定の領域を作成
+	//mapdata[(int)MAP_1][(int)THIRD_LAYER]->CreateRect(&MapOKKind[0], &MapNGKind[0]);	//当たり判定の領域を作成
+	//mapdata[(int)MAP_2][(int)THIRD_LAYER]->CreateRect(&MapOKKind[0], &MapNGKind[0]);	//当たり判定の領域を作成
+	//mapdata[(int)MAP_3][(int)THIRD_LAYER]->CreateRect(&MapOKKind[0], &MapNGKind[0]);	//当たり判定の領域を作成
+	//mapdata[(int)MAP_4][(int)THIRD_LAYER]->CreateRect(&MapOKKind[0], &MapNGKind[0]);	//当たり判定の領域を作成
 	//▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲ マップデータ読み込みここまで ▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲
 
 
@@ -353,14 +361,15 @@ void Title()
 void Play()
 {
 
-	player->Operation(keydown, mapdata[MapKind[MAPPOS_Y][MAPPOS_X]][(int)THIRD_LAYER]->GetRectNG());	//プレイヤーキー操作
+	//player->Operation(keydown, mapdata[MapKind[MAPPOS_Y][MAPPOS_X]][(int)THIRD_LAYER]->GetRectNG());	//プレイヤーキー操作
+	player->Operation(keydown, mapdata[MapKind[MAPPOS_Y][MAPPOS_X]]->GetRectNG());	//プレイヤーキー操作
 
 	//▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼ マップ切り替え処理ここから ▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼
 	if (player->GetChengeMapKind() != -1)		//マップの端に来た時
 	{
 		int chengekind = (int)MAP_CHENGE_NONE;	//マップ切り替えの種類
 		//マップの切り替え処理
-		chengekind = mapdata[MapKind[MAPPOS_Y][MAPPOS_X]][(int)THIRD_LAYER]->ChengeMap(player->GetChengeMapKind(), MapNowPos);
+		chengekind = mapdata[MapKind[MAPPOS_Y][MAPPOS_X]]->ChengeMap(player->GetChengeMapKind(), MapNowPos);
 
 		if (chengekind != (int)MAP_CHENGE_NONE)	//マップ切り替えを行ったときは
 		{
@@ -901,10 +910,14 @@ void Play_Draw()
 	font->SetSize(DEFAULT_FONTSIZE);	//フォントサイズを標準に戻す
 
 	//マップ描画処理
-	for (int cnt = 0; cnt < MAP_LAYER_KIND - 1; cnt++)		//最後のレイヤーは、当たり判定用なので、描画処理は行わない
-	{
-		mapdata[MapKind[MAPPOS_Y][MAPPOS_X]][cnt]->Draw(mapimage->GetHandle((int)FILED));		//マップ描画
-	}
+	//for (int cnt = 0; cnt < MAP_LAYER_KIND - 1; cnt++)		//最後のレイヤーは、当たり判定用なので、描画処理は行わない
+	//{
+	//	mapdata[MapKind[MAPPOS_Y][MAPPOS_X]][cnt]->Draw(mapimage->GetHandle((int)FILED));		//マップ描画
+	//}
+
+	mapdata[MapKind[MAPPOS_Y][MAPPOS_X]]->Draw(mapimage->GetHandle((int)FILED));
+
+	//map_i->Draw(0, 0);
 
 	player->DrawAnime();		//アニメーション描画
 
@@ -1097,11 +1110,7 @@ void Delete_Class()
 	//マップデータの削除
 	for (int i = 0; i < MAP_DATA_KIND; i++)	//マップの種類分
 	{
-		for (int cnt = 0; cnt < MAP_LAYER_KIND; cnt++)	//マップのレイヤー分
-		{
-			delete mapdata[i][cnt];	//mapdataを破棄
-		}
-
+			delete mapdata[i];	//mapdataを破棄
 	}
 
 	//敵の削除
