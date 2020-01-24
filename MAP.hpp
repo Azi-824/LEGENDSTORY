@@ -14,12 +14,12 @@
 #define IMG_DIR_MAP		R"(.\MY_MAP\map_image\)"	//マップの画像ファイルの場所
 
 #define IMG_NAME_MAP_SOUGEN	R"(sougen.png)"			//草原の画像の名前
-#define MY_MAP_TEST2		R"(test_2.png)"			//テスト用
+#define MY_MAP_TEST2		R"(forest.png)"			//森の画像の名前
 #define MY_MAP_TEST3		R"(test_3.png)"			//テスト用
 #define MY_MAP_TEST4		R"(test_4.png)"			//テスト用
 
 #define MY_MAP_SOUGEN_ATARI	R"(sougen_atari.csv)"	//草原の当たり判定
-#define MY_MAP_TEST2_ATARI	R"(test2_atari.csv)"
+#define MY_MAP_TEST2_ATARI	R"(forest_atari.csv)"	//森の当たり判定
 #define MY_MAP_TEST3_ATARI	R"(test3_atari.csv)"
 #define MY_MAP_TEST4_ATARI	R"(test4_atari.csv)"
 
