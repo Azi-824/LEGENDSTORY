@@ -113,23 +113,25 @@ int MAP::ChengeMap(int kind,int *mapnowpos)
 
 	case (int)MAP_CHENGE_LEFT:	//左へ切り替えるとき、ここから
 
-		if ((mapnowpos[POS_X]) - (MAP_DATA_TATE_KIND - 1) >= 0)			//左のマップがある場合は
-		{
-			(mapnowpos[POS_X]) -= (MAP_DATA_TATE_KIND - 1);	//左のマップへ
+			if (mapnowpos[POS_X] - 1 >= 0)	//横にマップがある場合は
+			{
+				mapnowpos[POS_X]--;	//左のマップへ
 
-			return (int)MAP_CHENGE_LEFT;	//切り替え方向、左
-		}
+				return (int)MAP_CHENGE_LEFT;	//切り替え方向、左
+
+			}
 
 		break;	//下へ切り替えるとき、ここまで
 
 	case (int)MAP_CHENGE_RIGHT:	//右へ切り替えるとき、ここから
 
-		if ((mapnowpos[POS_X]) + MAP_DATA_TATE_KIND <= MAP_DATA_TATE_KIND)	//横にマップがある場合は
-		{
-			(mapnowpos[POS_X]) += (MAP_DATA_TATE_KIND - 1);	//右のマップへ
+			if (mapnowpos[POS_X] + 1 < MAP_DATA_YOKO_KIND)	//横にマップがある場合は
+			{
+				mapnowpos[POS_X]++;	//右のマップへ
 
-			return (int)MAP_CHENGE_RIGHT;	//切り替え方向、右
-		}
+				return (int)MAP_CHENGE_RIGHT;	//切り替え方向、右
+
+			}
 
 		break;	//右へ切り替えるとき、ここまで
 

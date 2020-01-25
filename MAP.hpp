@@ -14,12 +14,16 @@
 #define IMG_DIR_MAP		R"(.\MY_MAP\map_image\)"	//マップの画像ファイルの場所
 
 #define IMG_NAME_MAP_SOUGEN	R"(sougen.png)"			//草原の画像の名前
-#define MY_MAP_TEST2		R"(forest.png)"			//森の画像の名前
+#define IMG_NAME_MAP_FOREST	R"(forest.png)"			//森の画像の名前
+#define IMG_NAME_MAP_OCEAN	R"(ocean.png)"			//海の画像の名前
+#define IMG_NAME_MAP_SPRING	R"(spring.png)"			//春の画像の名前
 #define MY_MAP_TEST3		R"(test_3.png)"			//テスト用
 #define MY_MAP_TEST4		R"(test_4.png)"			//テスト用
 
 #define MY_MAP_SOUGEN_ATARI	R"(sougen_atari.csv)"	//草原の当たり判定
-#define MY_MAP_TEST2_ATARI	R"(forest_atari.csv)"	//森の当たり判定
+#define MY_MAP_FOREST_ATARI	R"(forest_atari.csv)"	//森の当たり判定
+#define MY_MAP_OCEAN_ATARI	R"(ocean_atari.csv)"	//海の画像の当たり判定
+#define MY_MAP_SPRING_ATARI	R"(spring_atari.csv)"	//春の画像の当たり判定
 #define MY_MAP_TEST3_ATARI	R"(test3_atari.csv)"
 #define MY_MAP_TEST4_ATARI	R"(test4_atari.csv)"
 
@@ -38,7 +42,7 @@
 
 #define MAP_DATA_KIND	MAP_DATA_YOKO_KIND * MAP_DATA_TATE_KIND	//マップデータの種類数
 #define MAP_DATA_YOKO_KIND	2									//マップデータの横方向の種類数
-#define MAP_DATA_TATE_KIND	2									//マップデータの縦方の種類数
+#define MAP_DATA_TATE_KIND	3									//マップデータの縦方の種類数
 
 #define MAPPOS_X	MapNowPos[0]						//マップのX位置
 #define MAPPOS_Y	MapNowPos[1]						//マップのY位置
@@ -53,8 +57,10 @@ enum MAP_KIND
 {
 	MAP_SOUGEN,				//一マップ目(草原)
 	MAP_FOREST,				//ニマップ目(森)
-	MAP_3,				//三マップ目
-	MAP_4				//四マップ目
+	MAP_OCEAN,				//三マップ目(海)
+	MAP_TEST3,				//テスト用
+	MAP_TEST4,				//テスト用
+	MAP_SPRING				//六マップ目(春)
 };
 
 enum MAP_CHENGE_DIST

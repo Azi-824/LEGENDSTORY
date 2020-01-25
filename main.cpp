@@ -187,16 +187,26 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 	//マップ関係
 	//▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼ マップデータ読み込み開始 ▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼
 	mapdata[(int)MAP_SOUGEN] = new MAP(IMG_DIR_MAP, IMG_NAME_MAP_SOUGEN);
-	if (mapdata[(int)MAP_SOUGEN]->LoadCsv(MY_MAP_DIR, MY_MAP_SOUGEN_ATARI) == false) { return -1; }	//当たり判定作成失敗
+	if (mapdata[(int)MAP_SOUGEN]->LoadCsv(MY_MAP_DIR, MY_MAP_SOUGEN_ATARI) == false) { return -1; }	//当たり判定読み込み失敗
 
-	mapdata[(int)MAP_FOREST] = new MAP(IMG_DIR_MAP, MY_MAP_TEST2);
-	if (mapdata[(int)MAP_FOREST]->LoadCsv(MY_MAP_DIR, MY_MAP_TEST2_ATARI) == false) { return -1; }	//当たり判定作成失敗
+	mapdata[(int)MAP_FOREST] = new MAP(IMG_DIR_MAP, IMG_NAME_MAP_FOREST);
+	if (mapdata[(int)MAP_FOREST]->LoadCsv(MY_MAP_DIR, MY_MAP_FOREST_ATARI) == false) { return -1; }	//当たり読み込み作成失敗
 
-	mapdata[(int)MAP_3] = new MAP(IMG_DIR_MAP, MY_MAP_TEST3);
-	if (mapdata[(int)MAP_3]->LoadCsv(MY_MAP_DIR, MY_MAP_TEST3_ATARI) == false) { return -1; }	//当たり判定作成失敗
+	mapdata[(int)MAP_OCEAN] = new MAP(IMG_DIR_MAP, IMG_NAME_MAP_OCEAN);
+	if (mapdata[(int)MAP_OCEAN]->LoadCsv(MY_MAP_DIR, MY_MAP_OCEAN_ATARI) == false) { return -1; }	//当たり読み込み作成失敗
 
-	mapdata[(int)MAP_4] = new MAP(IMG_DIR_MAP, MY_MAP_TEST4);
-	if (mapdata[(int)MAP_4]->LoadCsv(MY_MAP_DIR, MY_MAP_TEST4_ATARI) == false) { return -1; }	//当たり判定作成失敗
+	mapdata[(int)MAP_TEST3] = new MAP(IMG_DIR_MAP, MY_MAP_TEST3);
+	if (mapdata[(int)MAP_TEST3]->LoadCsv(MY_MAP_DIR, MY_MAP_TEST3_ATARI) == false) { return -1; }	//当たり読み込み作成失敗
+
+	mapdata[(int)MAP_TEST4] = new MAP(IMG_DIR_MAP, MY_MAP_TEST4);
+	if (mapdata[(int)MAP_TEST4]->LoadCsv(MY_MAP_DIR, MY_MAP_TEST4_ATARI) == false) { return -1; }	//当たり読み込み作成失敗
+
+	mapdata[(int)MAP_SPRING] = new MAP(IMG_DIR_MAP, IMG_NAME_MAP_SPRING);
+	if (mapdata[(int)MAP_SPRING]->LoadCsv(MY_MAP_DIR, MY_MAP_SPRING_ATARI) == false) { return -1; }	//当たり読み込み作成失敗
+
+
+	//mapdata[(int)MAP_4] = new MAP(IMG_DIR_MAP, MY_MAP_TEST4);
+	//if (mapdata[(int)MAP_4]->LoadCsv(MY_MAP_DIR, MY_MAP_TEST4_ATARI) == false) { return -1; }	//当たり判定作成失敗
 
 	//マップの種類を二次元配列で管理
 	for (int yoko = 0; yoko < MAP_DATA_YOKO_KIND; yoko++)
@@ -211,8 +221,11 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 
 	mapdata[(int)MAP_SOUGEN]->CreateRect(&MapOKKind[0], &MapNGKind[0]);	//当たり判定の領域を作成
 	mapdata[(int)MAP_FOREST]->CreateRect(&MapOKKind[0], &MapNGKind[0]);	//当たり判定の領域を作成
-	mapdata[(int)MAP_3]->CreateRect(&MapOKKind[0], &MapNGKind[0]);	//当たり判定の領域を作成
-	mapdata[(int)MAP_4]->CreateRect(&MapOKKind[0], &MapNGKind[0]);	//当たり判定の領域を作成
+	mapdata[(int)MAP_OCEAN]->CreateRect(&MapOKKind[0], &MapNGKind[0]);	//当たり判定の領域を作成
+	mapdata[(int)MAP_TEST3]->CreateRect(&MapOKKind[0], &MapNGKind[0]);	//当たり判定の領域を作成
+	mapdata[(int)MAP_TEST4]->CreateRect(&MapOKKind[0], &MapNGKind[0]);	//当たり判定の領域を作成
+	mapdata[(int)MAP_SPRING]->CreateRect(&MapOKKind[0], &MapNGKind[0]);	//当たり判定の領域を作成
+	//mapdata[(int)MAP_4]->CreateRect(&MapOKKind[0], &MapNGKind[0]);	//当たり判定の領域を作成
 	//▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲ マップデータ読み込みここまで ▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲
 
 

@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.2" tiledversion="1.3.1" orientation="orthogonal" renderorder="right-down" compressionlevel="-1" width="55" height="40" tilewidth="16" tileheight="16" infinite="0" nextlayerid="4" nextobjectid="1">
+<map version="1.2" tiledversion="1.3.1" orientation="orthogonal" renderorder="right-down" compressionlevel="0" width="55" height="40" tilewidth="16" tileheight="16" infinite="0" nextlayerid="4" nextobjectid="1">
  <editorsettings>
   <export target="../map_csv/work/sougen2.csv" format="csv"/>
  </editorsettings>
@@ -93,7 +93,7 @@
 59,60,59,60,59,60,59,60,59,60,59,60,59,60,59,60,59,60,59,60,59,60,59,60,59,60,59,60,59,60,59,60,59,60,59,60,59,60,59,60,59,60,59,60,59,60,59,60,59,60,86,0,0,59,60
 </data>
  </layer>
- <layer id="3" name="sougen_atari" width="55" height="40">
+ <layer id="3" name="sougen_atari" width="55" height="40" locked="1">
   <data encoding="csv">
 2438,2438,2438,2438,2438,2438,2438,2438,2438,2438,2438,2438,2438,2438,2438,2438,2438,2438,2438,2438,2438,2438,2438,2438,2438,2438,2438,2438,2438,2438,2438,2438,2438,2438,2438,2438,2438,2438,2438,2438,2438,2438,2438,2438,2438,2438,2438,2438,2438,2438,2438,2438,2438,2438,2438,
 2438,2438,2438,2438,2438,2438,2438,2438,2438,2438,2438,2438,2438,2438,2438,2438,2438,2438,2438,2438,2438,2438,2438,2438,2438,2438,2438,2438,2438,2438,2438,2438,2438,2438,2438,2438,2438,2438,2438,2438,2438,2438,2438,2438,2438,2438,2438,2438,2438,2438,2438,2438,2438,2438,2438,
