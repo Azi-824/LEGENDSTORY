@@ -273,8 +273,8 @@ bool EFFECT::Add(const char *dir, const char *name, int SplitNumALL, int SpritNu
 
 	GetGraphSize(
 		this->Handle[type][0],	//このハンドルの画像の大きさを取得
-		&this->Width[0],		//Widthのアドレスを渡す
-		&this->Height[0]		//Heightのアドレスを渡す
+		&this->Width[type],		//Widthのアドレスを渡す
+		&this->Height[type]		//Heightのアドレスを渡す
 	);
 
 	return true;		//読み込めた

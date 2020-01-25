@@ -189,8 +189,8 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 	mapdata[(int)MAP_SOUGEN] = new MAP(IMG_DIR_MAP, IMG_NAME_MAP_SOUGEN);
 	if (mapdata[(int)MAP_SOUGEN]->LoadCsv(MY_MAP_DIR, MY_MAP_SOUGEN_ATARI) == false) { return -1; }	//“–‚½‚è”»’èì¬Ž¸”s
 
-	mapdata[(int)MAP_2] = new MAP(IMG_DIR_MAP, MY_MAP_TEST2);
-	if (mapdata[(int)MAP_2]->LoadCsv(MY_MAP_DIR, MY_MAP_TEST2_ATARI) == false) { return -1; }	//“–‚½‚è”»’èì¬Ž¸”s
+	mapdata[(int)MAP_FOREST] = new MAP(IMG_DIR_MAP, MY_MAP_TEST2);
+	if (mapdata[(int)MAP_FOREST]->LoadCsv(MY_MAP_DIR, MY_MAP_TEST2_ATARI) == false) { return -1; }	//“–‚½‚è”»’èì¬Ž¸”s
 
 	mapdata[(int)MAP_3] = new MAP(IMG_DIR_MAP, MY_MAP_TEST3);
 	if (mapdata[(int)MAP_3]->LoadCsv(MY_MAP_DIR, MY_MAP_TEST3_ATARI) == false) { return -1; }	//“–‚½‚è”»’èì¬Ž¸”s
@@ -210,7 +210,7 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 	}
 
 	mapdata[(int)MAP_SOUGEN]->CreateRect(&MapOKKind[0], &MapNGKind[0]);	//“–‚½‚è”»’è‚Ì—Ìˆæ‚ðì¬
-	mapdata[(int)MAP_2]->CreateRect(&MapOKKind[0], &MapNGKind[0]);	//“–‚½‚è”»’è‚Ì—Ìˆæ‚ðì¬
+	mapdata[(int)MAP_FOREST]->CreateRect(&MapOKKind[0], &MapNGKind[0]);	//“–‚½‚è”»’è‚Ì—Ìˆæ‚ðì¬
 	mapdata[(int)MAP_3]->CreateRect(&MapOKKind[0], &MapNGKind[0]);	//“–‚½‚è”»’è‚Ì—Ìˆæ‚ðì¬
 	mapdata[(int)MAP_4]->CreateRect(&MapOKKind[0], &MapNGKind[0]);	//“–‚½‚è”»’è‚Ì—Ìˆæ‚ðì¬
 	//£££££££££££££££££££ ƒ}ƒbƒvƒf[ƒ^“Ç‚Ýž‚Ý‚±‚±‚Ü‚Å £££££££££££££££££££
@@ -559,7 +559,7 @@ void Battle()
 		{
 			if (ui->GetChoiseCommamd() == (int)COMMANDE_ATACK)	//UŒ‚‚ð‘I‚ñ‚Å‚¢‚½‚ç
 			{
-				effect->Draw(350, 250, (int)NOMAL_ATACK);	//UŒ‚ƒGƒtƒFƒNƒg•`‰æ
+				effect->Draw(ATK_DRAW_X, ATK_DRAW_Y, (int)NOMAL_ATACK);	//UŒ‚ƒGƒtƒFƒNƒg•`‰æ
 			}
 			else if (ui->GetChoiseCommamd() == (int)COMMANDE_MAGIC)	//–‚–@‚ð‘I‚ñ‚Å‚¢‚½‚ç
 			{

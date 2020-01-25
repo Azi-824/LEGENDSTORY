@@ -25,8 +25,8 @@
 //###################### マクロ定義 #################################
 #define ATK_WIDTH		120	//分割する幅の大きさ
 #define ATK_HEIGHT		120	//分割する高さの大きさ
-#define MAGIC_WIDTH		800	//分割する幅の大きさ
-#define MAGIC_HEIGHT	600	//分割する高さの大きさ
+#define MAGIC_WIDTH		880	//分割する幅の大きさ
+#define MAGIC_HEIGHT	640	//分割する高さの大きさ
 
 #define ATK_YOKO_CNT	9
 #define ATK_TATE_CNT	1
@@ -40,7 +40,10 @@
 #define MAGIC2_ALL_CNT	MAGIC2_YOKO_CNT * MAGIC2_TATE_CNT
 
 #define ATK_SPEED		 0.02
-#define MAGIC_SPEED		 0.05
+#define MAGIC_SPEED		 1.0
+
+#define ATK_DRAW_X		375
+#define ATK_DRAW_Y		290
 
 #define EFFECT_KIND		3			//エフェクトの種類
 

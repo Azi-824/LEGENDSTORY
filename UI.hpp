@@ -21,29 +21,29 @@
 
 //ステータスウィンドウ関係
 #define STA_WIN_X		0			//ステータスウィンドウ描画開始X位置
-#define STA_WIN_Y		500			//ステータスウィンドウ描画開始Y位置
+#define STA_WIN_Y		540			//ステータスウィンドウ描画開始Y位置
 #define STA_WIN_WIDTH	190			//ステータスウィンドウの横幅
 #define STA_WIN_HEIGHT	100			//ステータスウィンドウの高さ
 #define STA_TXT_X		10			//ステータスの文字の描画開始X位置
-#define STA_TXT_Y		500			//ステータスの文字の描画開始Y位置
+#define STA_TXT_Y		540			//ステータスの文字の描画開始Y位置
 #define STA_SPACE		20			//ステータス文字の間隔
 
 //バトルコマンド関係
 #define CMD_WIN_X		190			//バトルコマンドのウィンドウの描画開始X位置
-#define	CMD_WIN_Y		500			//バトルコマンドのウィンドウの描画開始Y位置
+#define	CMD_WIN_Y		540			//バトルコマンドのウィンドウの描画開始Y位置
 #define CMD_WIN_WIDTH	120			//バトルコマンドのウィンドウの横幅
 #define CMD_WIN_HEIGHT	100			//バトルコマンドのウィンドウの高さ
 #define CMD_TXT_X		210			//バトルコマンドの文字の描画開始X位置
-#define CMD_TXT_Y		500			//バトルコマンドの文字の描画開始Y位置
+#define CMD_TXT_Y		540			//バトルコマンドの文字の描画開始Y位置
 
 //ウィンドウ関係
 #define BT_WINDOW_X		0			//バトル画面のウィンドウの描画開始X位置
-#define BT_WINDOW_Y		350			//バトル画面のウィンドウの描画開始Y位置
+#define BT_WINDOW_Y		390			//バトル画面のウィンドウの描画開始Y位置
 
 //テキストポーズ関係
-#define BT_TXT_POSE_Y	470			//バトル画面のテキストポーズの描画Y位置
+#define BT_TXT_POSE_Y	510			//バトル画面のテキストポーズの描画Y位置
 
-#define DEFAULT_TEXT_Y	450			//デフォルトのテキスト描画位置（Y座標）
+#define DEFAULT_TEXT_Y	490			//デフォルトのテキスト描画位置（Y座標）
 
 //######################### 列挙型 #################################
 enum UI_IMAGE_TYPE
