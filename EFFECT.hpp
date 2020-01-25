@@ -14,7 +14,6 @@
 #define MY_ANIME_DIR_ATKEFECT	R"(.\MY_ANIME\atack\)"			//攻撃エフェクトの画像ファイルの場所
 #define MY_ANIME_DIR_MAGIC		R"(.\MY_ANIME\magic\)"			//魔法エフェクトの画像ファイルの場所
 
-#define MY_ANIME_NAME_PLAYER	R"(player_walk.png)"			//プレイヤーの画像の名前
 #define MY_ANIME_NAME_ATKEFECT	R"(atack.png)"					//攻撃エフェクトの画像の名前
 #define MY_ANIME_NAME_MAGIC		R"(magic.png)"					//魔法エフェクトの画像の名前
 #define MY_ANIME_NAME_MAGIC2	R"(magic2.png)"					//魔法エフェクト2の画像の名前

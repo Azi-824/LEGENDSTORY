@@ -30,11 +30,11 @@
 //##################### マクロ定義：エラーメッセージ ####################
 
 //##################### マクロ定義 ########################
-#define MAP_YOKO		20			//マップの数（横）
-#define MAP_TATE		15			//マップの数（縦）
+#define MAP_YOKO		55			//マップの数（横）
+#define MAP_TATE		40			//マップの数（縦）
 
-#define MAP_YOKO_SIZE	40			//マップの大きさ（横）
-#define MAP_TATE_SIZE	40			//マップの大きさ（縦）
+#define MAP_YOKO_SIZE	16			//マップの大きさ（横）
+#define MAP_TATE_SIZE	16			//マップの大きさ（縦）
 
 #define MAP_DATA_KIND	MAP_DATA_YOKO_KIND * MAP_DATA_TATE_KIND	//マップデータの種類数
 #define MAP_DATA_YOKO_KIND	2									//マップデータの横方向の種類数
@@ -46,7 +46,7 @@
 #define POS_X	0									//X座標
 #define POS_Y	1									//Y座標
 
-#define RECT_STAGGER	4	//領域をずらす量
+#define RECT_STAGGER	2	//領域をずらす量
 
 //##################### 列挙型 #########################
 enum MAP_KIND
@@ -68,12 +68,12 @@ enum MAP_CHENGE_DIST
 
 enum MAP_NG_NUM
 {
-	MAP_NG_KIND1 =83		//通行できないマップの数字
+	MAP_NG_KIND1 =101		//通行できないマップの数字
 };
 
 enum MAP_OK_NUM
 {
-	MAP_OK_KIND1 = 1		//通行できるマップの数字
+	MAP_OK_KIND1 = 51		//通行できるマップの数字
 };
 
 //enum MAPIMAGEKIND

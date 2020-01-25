@@ -15,11 +15,11 @@
 #define MY_ANIME_DIR_PLAYER		R"(.\MY_ANIME\walk\)"			//プレイヤーの画像ファイルの場所
 #define TXT_POSE_DIR			R"(.\MY_ANIME\Ui\)"				//UIの画像ファイルの場所
 
-#define MY_ANIME_NAME_PLAYER	R"(player_walk.png)"			//プレイヤーの画像の名前
+#define MY_ANIME_NAME_PLAYER	R"(player_work.png)"			//プレイヤーの画像の名前
 #define TXT_POSE_NAME			R"(txtpose.png)"				//テキストポーズの画像の名前
 
-#define PLAYER_WIDTH	45	//分割する幅の大きさ
-#define PLAYER_HEIGHT	45	//分割する高さの大きさ
+#define PLAYER_WIDTH	24	//分割する幅の大きさ
+#define PLAYER_HEIGHT	24	//分割する高さの大きさ
 
 #define TXT_POSE_WIDTH	30	//分割高さ
 #define TXT_POSE_HEIGHT	16	//分割幅

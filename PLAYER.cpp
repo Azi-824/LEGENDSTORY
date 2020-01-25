@@ -36,7 +36,7 @@ PLAYER::~PLAYER()
 bool PLAYER::SetInit()
 {
 	this->Dist = (int)FLONT;	//初期向き設定
-	this->MoveSpeed = 5;//初期移動速度設定
+	this->MoveSpeed = 2;//初期移動速度設定
 	this->InKeyKind = -1;	//押されていないときはー1
 
 	this->ChoiseSkil = this->Skil[0];	//最初は通常攻撃を使用するスキルとして設定する
