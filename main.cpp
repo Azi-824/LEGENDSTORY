@@ -195,8 +195,8 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 	mapdata[(int)MAP_OCEAN] = new MAP(IMG_DIR_MAP, IMG_NAME_MAP_OCEAN);
 	if (mapdata[(int)MAP_OCEAN]->LoadCsv(MY_MAP_DIR, MY_MAP_OCEAN_ATARI) == false) { return -1; }	//“–‚½‚è“Ç‚İ‚İì¬¸”s
 
-	mapdata[(int)MAP_TEST3] = new MAP(IMG_DIR_MAP, MY_MAP_TEST3);
-	if (mapdata[(int)MAP_TEST3]->LoadCsv(MY_MAP_DIR, MY_MAP_TEST3_ATARI) == false) { return -1; }	//“–‚½‚è“Ç‚İ‚İì¬¸”s
+	mapdata[(int)MAP_AUTUMN] = new MAP(IMG_DIR_MAP, IMG_NAME_MAP_AUTUMN);
+	if (mapdata[(int)MAP_AUTUMN]->LoadCsv(MY_MAP_DIR, MY_MAP_AUTUMN_ATARI) == false) { return -1; }	//“–‚½‚è“Ç‚İ‚İì¬¸”s
 
 	mapdata[(int)MAP_CITY_UNDER] = new MAP(IMG_DIR_MAP, IMG_NAME_MAP_CITY_UNDER);
 	if (mapdata[(int)MAP_CITY_UNDER]->LoadCsv(MY_MAP_DIR, MY_MAP_CITY_UNDER_ATARI) == false) { return -1; }	//“–‚½‚è“Ç‚İ‚İì¬¸”s
@@ -222,7 +222,7 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 	mapdata[(int)MAP_SOUGEN]->CreateRect(&MapOKKind[0], &MapNGKind[0]);	//“–‚½‚è”»’è‚Ì—Ìˆæ‚ğì¬
 	mapdata[(int)MAP_FOREST]->CreateRect(&MapOKKind[0], &MapNGKind[0]);	//“–‚½‚è”»’è‚Ì—Ìˆæ‚ğì¬
 	mapdata[(int)MAP_OCEAN]->CreateRect(&MapOKKind[0], &MapNGKind[0]);	//“–‚½‚è”»’è‚Ì—Ìˆæ‚ğì¬
-	mapdata[(int)MAP_TEST3]->CreateRect(&MapOKKind[0], &MapNGKind[0]);	//“–‚½‚è”»’è‚Ì—Ìˆæ‚ğì¬
+	mapdata[(int)MAP_AUTUMN]->CreateRect(&MapOKKind[0], &MapNGKind[0]);	//“–‚½‚è”»’è‚Ì—Ìˆæ‚ğì¬
 	mapdata[(int)MAP_CITY_UNDER]->CreateRect(&MapOKKind[0], &MapNGKind[0]);	//“–‚½‚è”»’è‚Ì—Ìˆæ‚ğì¬
 	mapdata[(int)MAP_SPRING]->CreateRect(&MapOKKind[0], &MapNGKind[0]);	//“–‚½‚è”»’è‚Ì—Ìˆæ‚ğì¬
 	//mapdata[(int)MAP_4]->CreateRect(&MapOKKind[0], &MapNGKind[0]);	//“–‚½‚è”»’è‚Ì—Ìˆæ‚ğì¬
