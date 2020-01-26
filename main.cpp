@@ -198,8 +198,8 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 	mapdata[(int)MAP_TEST3] = new MAP(IMG_DIR_MAP, MY_MAP_TEST3);
 	if (mapdata[(int)MAP_TEST3]->LoadCsv(MY_MAP_DIR, MY_MAP_TEST3_ATARI) == false) { return -1; }	//当たり読み込み作成失敗
 
-	mapdata[(int)MAP_TEST4] = new MAP(IMG_DIR_MAP, MY_MAP_TEST4);
-	if (mapdata[(int)MAP_TEST4]->LoadCsv(MY_MAP_DIR, MY_MAP_TEST4_ATARI) == false) { return -1; }	//当たり読み込み作成失敗
+	mapdata[(int)MAP_CITY_UNDER] = new MAP(IMG_DIR_MAP, IMG_NAME_MAP_CITY_UNDER);
+	if (mapdata[(int)MAP_CITY_UNDER]->LoadCsv(MY_MAP_DIR, MY_MAP_CITY_UNDER_ATARI) == false) { return -1; }	//当たり読み込み作成失敗
 
 	mapdata[(int)MAP_SPRING] = new MAP(IMG_DIR_MAP, IMG_NAME_MAP_SPRING);
 	if (mapdata[(int)MAP_SPRING]->LoadCsv(MY_MAP_DIR, MY_MAP_SPRING_ATARI) == false) { return -1; }	//当たり読み込み作成失敗
@@ -223,7 +223,7 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 	mapdata[(int)MAP_FOREST]->CreateRect(&MapOKKind[0], &MapNGKind[0]);	//当たり判定の領域を作成
 	mapdata[(int)MAP_OCEAN]->CreateRect(&MapOKKind[0], &MapNGKind[0]);	//当たり判定の領域を作成
 	mapdata[(int)MAP_TEST3]->CreateRect(&MapOKKind[0], &MapNGKind[0]);	//当たり判定の領域を作成
-	mapdata[(int)MAP_TEST4]->CreateRect(&MapOKKind[0], &MapNGKind[0]);	//当たり判定の領域を作成
+	mapdata[(int)MAP_CITY_UNDER]->CreateRect(&MapOKKind[0], &MapNGKind[0]);	//当たり判定の領域を作成
 	mapdata[(int)MAP_SPRING]->CreateRect(&MapOKKind[0], &MapNGKind[0]);	//当たり判定の領域を作成
 	//mapdata[(int)MAP_4]->CreateRect(&MapOKKind[0], &MapNGKind[0]);	//当たり判定の領域を作成
 	//▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲ マップデータ読み込みここまで ▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲
