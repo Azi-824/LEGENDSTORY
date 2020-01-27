@@ -58,11 +58,10 @@ bool PLAYER::SetInit()
 		this->Anime->GetHeight());
 
 	//当たり判定領域作成
-	this->Collision->SetValue(this->sikaku_draw->Left,
+	this->Collision->SetValue(this->sikaku_draw->Left + RECT_STAGGER,
 		this->sikaku_draw->Top,
-		this->Anime->GetWidth(),
+		this->Anime->GetWidth() - RECT_STAGGER,
 		this->Anime->GetHeight());
-
 
 	return true;
 }
@@ -573,11 +572,11 @@ void PLAYER::Operation(KEYDOWN *keydown, COLLISION *map[][MAP_YOKO])
 		this->sikaku_draw->Height);
 
 	//領域再設定
-	this->Collision->SetValue(
-		this->sikaku_draw->Left,
+	this->Collision->SetValue(this->sikaku_draw->Left + RECT_STAGGER,
 		this->sikaku_draw->Top,
-		this->sikaku_draw->Width,
-		this->sikaku_draw->Height);
+		this->Anime->GetWidth() - RECT_STAGGER * 2,
+		this->Anime->GetHeight());
+
 
 	return;
 
@@ -838,7 +837,7 @@ int PLAYER::GetInKeyKind(void)
 	return this->InKeyKind;
 }
 
-//マップとの当たり判定
+//マップとの当たり判定(当たった場所を取得する)
 bool PLAYER::CheckDetectionMap(COLLISION * map[][MAP_YOKO], int *detectionX, int *detectionY)
 {
 
@@ -859,3 +858,23 @@ bool PLAYER::CheckDetectionMap(COLLISION * map[][MAP_YOKO], int *detectionX, int
 
 	return false;
 }
+
+//マップとの当たり判定(当たった場所を取得しない)
+bool PLAYER::CheckDetectionMap(COLLISION * map[][MAP_YOKO])
+{
+
+	for (int tate = 0; tate < MAP_TATE; tate++)
+	{
+		for (int yoko = 0; yoko < MAP_YOKO; yoko++)
+		{
+			//キャラクターの当たっている場所を取得
+			if (map[tate][yoko]->DetectionCheck(this->Collision))
+			{
+				return true;
+			}
+		}
+	}
+
+	return false;
+}
+

@@ -26,7 +26,7 @@ MAP::MAP(const char *dir,const char *name)
 
 			//“–‚½‚è”»’è‰Šú‰»
 			this->RectOK[tate][yoko]->SetValue(0, 0, MAP_YOKO_SIZE, MAP_TATE_SIZE);
-
+			this->RectEncount[tate][yoko]->SetValue(0, 0, MAP_YOKO_SIZE, MAP_TATE_SIZE);
 			this->RectNG[tate][yoko]->SetValue(0, 0, MAP_YOKO_SIZE, MAP_TATE_SIZE);
 
 		}

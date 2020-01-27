@@ -65,7 +65,7 @@
 #define POS_X	0									//X座標
 #define POS_Y	1									//Y座標
 
-#define RECT_STAGGER	2	//領域をずらす量
+#define RECT_STAGGER	4	//領域をずらす量
 
 //##################### 列挙型 #########################
 enum MAP_KIND
@@ -89,6 +89,13 @@ enum MAP_CHENGE_DIST
 	MAP_CHENGE_RIGHT,	//右のマップへ
 	MAP_CHENGE_NONE = -1//マップ切り替えなし
 };//どの方向へマップ切り替えるか
+
+enum MAP_NUM_KIND
+{
+	MAP_NG,			//通行できない
+	MAP_OK,			//通行できる
+	MAP_ENCOUNT		//通行できる(敵と遭遇する)
+};
 
 enum MAP_NG_NUM
 {
@@ -146,10 +153,33 @@ public :
 
 	void CreateRect();	//当たり判定の領域を作成
 
-	//通行できない領域を取得する
-	auto GetRectNG(void)
+	//指定された領域を取得する
+	auto GetRect(int kind)
 	{
-		return this->RectNG;
+		switch (kind)
+		{
+
+		case (int)MAP_NG:		//通行できない時
+			
+			return this->RectNG;
+
+			break;
+
+		case (int)MAP_OK:		//通行できるとき
+
+			return this->RectOK;
+
+			break;
+
+		case (int)MAP_ENCOUNT:	//敵と遭遇するとき
+
+			return this->RectEncount;
+
+			break;
+
+		default:
+			break;
+		}
 	}
 
 };

@@ -334,7 +334,7 @@ void Title()
 void Play()
 {
 
-	player->Operation(keydown, mapdata[MapKind[MAPPOS_Y][MAPPOS_X]]->GetRectNG());	//プレイヤーキー操作
+	player->Operation(keydown, mapdata[MapKind[MAPPOS_Y][MAPPOS_X]]->GetRect((int)MAP_NG));	//プレイヤーキー操作
 
 	//▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼ マップ切り替え処理ここから ▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼
 	if (player->GetChengeMapKind() != -1)		//マップの端に来た時
@@ -403,7 +403,10 @@ void Play()
 
 	if (player->GetIsMove())			//プレイヤーが移動中だったら
 	{
-		Enconte();			//敵との遭遇判定
+		if (player->CheckDetectionMap(mapdata[MapKind[MAPPOS_Y][MAPPOS_X]]->GetRect((int)MAP_ENCOUNT)))	//敵と遭遇するマップだったら
+		{
+			Enconte();			//敵との遭遇判定
+		}
 	}
 
 	//▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲ 画面遷移の処理 ▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲

@@ -1,5 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <map version="1.2" tiledversion="1.3.1" orientation="orthogonal" renderorder="right-down" compressionlevel="-1" width="55" height="40" tilewidth="16" tileheight="16" infinite="0" nextlayerid="8" nextobjectid="1">
+ <editorsettings>
+  <export target="../map_csv/work/castle.csv" format="csv"/>
+ </editorsettings>
  <tileset firstgid="1" source="base2.tsx"/>
  <tileset firstgid="2337" source="yougan.tsx"/>
  <tileset firstgid="2367" source="maouzyou.tsx"/>
@@ -180,7 +183,7 @@
 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
 </data>
  </layer>
- <layer id="7" name="atari" width="55" height="40">
+ <layer id="7" name="atari" width="55" height="40" locked="1">
   <data encoding="csv">
 4668,4668,4668,4668,4668,4668,4668,4668,4668,4668,4668,4668,4668,4668,4668,4668,4668,4668,4668,4668,4668,4668,4668,4668,4668,4668,4668,4718,4718,4668,4668,4668,4668,4668,4668,4668,4668,4668,4668,4668,4668,4668,4668,4668,4668,4668,4668,4668,4668,4668,4668,4668,4668,4668,4668,
 4668,4668,4668,4668,4668,4668,4668,4668,4668,4668,4668,4668,4668,4668,4668,4668,4668,4668,4668,4668,4668,4668,4668,4668,4668,4668,4668,4718,4718,4668,4668,4668,4668,4668,4668,4668,4668,4668,4668,4668,4668,4668,4668,4668,4668,4668,4668,4668,4668,4668,4668,4668,4668,4668,4668,

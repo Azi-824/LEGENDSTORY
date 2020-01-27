@@ -169,5 +169,6 @@ public:
 	int GetInKeyKind(void);		//現在のキー入力の種類を取得
 
 	bool CheckDetectionMap(COLLISION *[][MAP_YOKO], int *, int *);	//マップとの当たり判定をする
+	bool CheckDetectionMap(COLLISION *[][MAP_YOKO]);				//マップとの当たり判定をする(当たった場所を取得しない)
 
 };
