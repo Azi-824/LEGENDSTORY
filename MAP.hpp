@@ -20,6 +20,7 @@
 #define IMG_NAME_MAP_AUTUMN	R"(autumn.png)"			//秋の画像の名前
 #define IMG_NAME_MAP_WINTER	R"(winter.png)"			//冬の画像の名前
 #define IMG_NAME_MAP_REMAINS R"(remains.png)"		//遺跡の画像の名前
+#define IMG_NAME_MAP_CASTLE	R"(castle.png)"			//魔王城の画像の名前
 
 #define IMG_NAME_MAP_CITY_UNDER	R"(city_under.png)"	//街、下の画像の名前
 
@@ -33,6 +34,7 @@
 #define MY_MAP_AUTUMN_ATARI	R"(autumn_atari.csv)"	//秋の画像の当たり判定
 #define MY_MAP_WINTER_ATARI	R"(winter_atari.csv)"	//冬の画像の当たり判定
 #define MY_MAP_REMAINS_ATARI R"(remains_atari.csv)"	//遺跡の画像の当たり判定
+#define MY_MAP_CASTLE_ATARI	R"(castle_atari.csv)"	//魔王城の画像の当たり判定
 
 #define MY_MAP_CITY_UNDER_ATARI	R"(city_under_atari.csv)"	//街、下の当たり判定
 
@@ -75,7 +77,7 @@ enum MAP_KIND
 	MAP_SPRING,				//六マップ目(春)
 	MAP_WINTER,				//七マップ目(冬)
 	MAP_REMAINS,			//八マップ目(遺跡)
-	MAP_TEST2				//テスト用
+	MAP_CASTLE				//九マップ目(魔王城)
 };
 
 enum MAP_CHENGE_DIST

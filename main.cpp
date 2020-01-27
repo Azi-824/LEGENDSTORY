@@ -210,8 +210,8 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 	mapdata[(int)MAP_REMAINS] = new MAP(IMG_DIR_MAP, IMG_NAME_MAP_REMAINS);					//遺跡マップ生成
 	if (mapdata[(int)MAP_REMAINS]->LoadCsv(MY_MAP_DIR, MY_MAP_REMAINS_ATARI) == false) { return -1; }	//当たり判定読み込み失敗
 
-	mapdata[(int)MAP_TEST2] = new MAP(IMG_DIR_MAP, MY_MAP_TEST4);					//テスト用マップ生成
-	if (mapdata[(int)MAP_TEST2]->LoadCsv(MY_MAP_DIR, MY_MAP_TEST4_ATARI) == false) { return -1; }	//当たり判定読み込み失敗
+	mapdata[(int)MAP_CASTLE] = new MAP(IMG_DIR_MAP, IMG_NAME_MAP_CASTLE);					//魔王城マップ生成
+	if (mapdata[(int)MAP_CASTLE]->LoadCsv(MY_MAP_DIR, MY_MAP_CASTLE_ATARI) == false) { return -1; }	//当たり判定読み込み失敗
 
 	//マップの種類を二次元配列で管理
 	for (int yoko = 0; yoko < MAP_DATA_YOKO_KIND; yoko++)
@@ -231,10 +231,8 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 	mapdata[(int)MAP_CITY_UNDER]->CreateRect(&MapOKKind[0], &MapNGKind[0]);	//当たり判定の領域を作成
 	mapdata[(int)MAP_SPRING]->CreateRect(&MapOKKind[0], &MapNGKind[0]);	//当たり判定の領域を作成
 	mapdata[(int)MAP_WINTER]->CreateRect(&MapOKKind[0], &MapNGKind[0]);	//当たり判定の領域を作成
-	
 	mapdata[(int)MAP_REMAINS]->CreateRect(&MapOKKind[0], &MapNGKind[0]);	//当たり判定の領域を作成
-	mapdata[(int)MAP_TEST2]->CreateRect(&MapOKKind[0], &MapNGKind[0]);	//当たり判定の領域を作成
-	//mapdata[(int)MAP_4]->CreateRect(&MapOKKind[0], &MapNGKind[0]);	//当たり判定の領域を作成
+	mapdata[(int)MAP_CASTLE]->CreateRect(&MapOKKind[0], &MapNGKind[0]);	//当たり判定の領域を作成
 	//▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲ マップデータ読み込みここまで ▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲
 
 
