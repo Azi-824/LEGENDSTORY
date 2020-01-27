@@ -57,9 +57,6 @@ int BattleActMsgCntMax = 60;	//行動メッセージの表示時間
 
 int MapKind[MAP_DATA_TATE_KIND][MAP_DATA_YOKO_KIND];			//マップの種類
 int MapNowPos[2] = {0};											//現在のマップのX位置とY位置を格納
-int MapNGKind[MAP_NG_KIND] = { (int)MAP_NG_KIND1 };				//通行できないマップの種類
-int MapOKKind[MAP_OK_KIND] = { (int)MAP_OK_KIND1,
-								(int)MAP_OK_KIND_ENCOUNT };		//通行できるマップの種類
 
 int ChengeDrawCount = 0;	//フェードアウト処理に使用
 
@@ -224,16 +221,6 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 			cnt++;
 		}
 	}
-
-	mapdata[(int)MAP_SOUGEN]->CreateRect(&MapOKKind[0], &MapNGKind[0]);	//当たり判定の領域を作成
-	mapdata[(int)MAP_FOREST]->CreateRect(&MapOKKind[0], &MapNGKind[0]);	//当たり判定の領域を作成
-	mapdata[(int)MAP_OCEAN]->CreateRect(&MapOKKind[0], &MapNGKind[0]);	//当たり判定の領域を作成
-	mapdata[(int)MAP_AUTUMN]->CreateRect(&MapOKKind[0], &MapNGKind[0]);	//当たり判定の領域を作成
-	mapdata[(int)MAP_CITY_UNDER]->CreateRect(&MapOKKind[0], &MapNGKind[0]);	//当たり判定の領域を作成
-	mapdata[(int)MAP_SPRING]->CreateRect(&MapOKKind[0], &MapNGKind[0]);	//当たり判定の領域を作成
-	mapdata[(int)MAP_WINTER]->CreateRect(&MapOKKind[0], &MapNGKind[0]);	//当たり判定の領域を作成
-	mapdata[(int)MAP_REMAINS]->CreateRect(&MapOKKind[0], &MapNGKind[0]);	//当たり判定の領域を作成
-	mapdata[(int)MAP_CASTLE]->CreateRect(&MapOKKind[0], &MapNGKind[0]);	//当たり判定の領域を作成
 	//▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲ マップデータ読み込みここまで ▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲
 
 

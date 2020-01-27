@@ -43,7 +43,8 @@
 
 
 #define MAP_NG_KIND		1	//通行できないマップの種類
-#define MAP_OK_KIND		2	//通行できるマップの種類
+#define MAP_OK_KIND		1	//通行できるマップの種類
+#define MAP_ENCOUNT_KIND 1	//敵と遭遇するマップの種類
 
 //##################### マクロ定義：エラーメッセージ ####################
 
@@ -96,14 +97,19 @@ enum MAP_NG_NUM
 
 enum MAP_OK_NUM
 {
-	MAP_OK_KIND1 = 51,			//通行できるマップ(敵と遭遇しない)
-	MAP_OK_KIND_ENCOUNT	=151	//通行できるマップ(敵と遭遇する)
+	MAP_OK_KIND1 = 51			//通行できるマップ(敵と遭遇しない)
+};
+enum MAP_ENCOOUNT_NUM
+{
+	MAP_OK_KIND_ENCOUNT = 151	//通行できるマップ(敵と遭遇する)
 };
 
 //enum MAPIMAGEKIND
 //{
 //	FILED		//フィールドのマップチップ画像
 //};
+
+//##################### グローバル変数 #################
 
 //##################### クラス定義 ###################
 class MAP
@@ -117,9 +123,14 @@ private:
 	IMAGE *Map_Image;		//マップ画像
 
 	COLLISION *RectOK[MAP_TATE][MAP_YOKO];		//当たり判定(通行できる)
+	COLLISION *RectEncount[MAP_TATE][MAP_YOKO];	//当たり判定(敵と遭遇する)
 	COLLISION *RectNG[MAP_TATE][MAP_YOKO];		//当たり判定（通行できない）
 
 	FILE *fp_map_csv;						//マップファイルのポインタ
+
+	int MapNGKind[MAP_NG_KIND];				//通行できないマップの種類
+	int MapOKKind[MAP_OK_KIND];				//通行できるマップの種類
+	int MapEncountKind[MAP_ENCOUNT_KIND];	//敵と遭遇するマップの種類
 
 public :
 	
@@ -133,7 +144,7 @@ public :
 
 	void Draw();		//描画
 
-	void CreateRect(int *,int *);	//当たり判定の領域を作成
+	void CreateRect();	//当たり判定の領域を作成
 
 	//通行できない領域を取得する
 	auto GetRectNG(void)

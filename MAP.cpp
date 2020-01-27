@@ -11,12 +11,18 @@ MAP::MAP(const char *dir,const char *name)
 
 	this->Map_Image = new IMAGE(dir, name);	//マップ画像作成
 
+	this->MapOKKind[0] = (int)MAP_OK_KIND1;	//通行できるマップの種類
+	this->MapEncountKind[0] = (int)MAP_OK_KIND_ENCOUNT;	//通行できるマップの種類(敵と遭遇する)
+	this->MapNGKind[0] = (int)MAP_NG_KIND1;			//通行できないマップの種類
+
 	for (int tate = 0; tate < MAP_TATE; ++tate)
 	{
 		for (int yoko = 0; yoko < MAP_YOKO; ++yoko)
 		{
 			this->RectOK[tate][yoko] = new COLLISION();	//当たり判定の領域を作成(通行できる)
+			this->RectEncount[tate][yoko] = new COLLISION();//当たり判定の領域を作成(敵と遭遇する)
 			this->RectNG[tate][yoko] = new COLLISION();	//当たり判定の領域を作成(通行できない)
+
 
 			//当たり判定初期化
 			this->RectOK[tate][yoko]->SetValue(0, 0, MAP_YOKO_SIZE, MAP_TATE_SIZE);
@@ -36,6 +42,7 @@ MAP::~MAP()
 		for (int yoko = 0; yoko < MAP_YOKO; ++yoko)
 		{
 			delete this->RectOK[tate][yoko];	//当たり判定を破棄(通行できる)
+			delete this->RectEncount[tate][yoko];//当たり判定を破棄(敵と遭遇する)
 			delete this->RectNG[tate][yoko];	//当たり判定を破棄(通行できない)
 		}
 	}
@@ -75,6 +82,8 @@ bool MAP::LoadCsv(const char *dir, const char *name)
 
 	this->FilePath = LoadFilePath;
 	this->FileName = name;
+
+	this->CreateRect();			//当たり判定作成
 
 	return true;
 
@@ -155,17 +164,17 @@ void MAP::Draw()
 引数：int *：通行できるマップのナンバー
 引数：int *：通行できないマップのナンバー
 */
-void MAP::CreateRect(int *ok_kind,int *ng_kind)
+void MAP::CreateRect()
 {
 	for (int tate = 0; tate < MAP_TATE; ++tate)
 	{
 		for (int yoko = 0; yoko < MAP_YOKO; ++yoko)
 		{
-
+			
 			//当たり判定の領域を作成(通行できる)
 			for (int cnt = 0; cnt < MAP_OK_KIND; ++cnt)
 			{
-				if (this->MapData[tate][yoko] == ok_kind[cnt])
+				if (this->MapData[tate][yoko] == this->MapOKKind[cnt])
 				{
 					this->RectOK[tate][yoko]->Left = yoko * this->RectOK[tate][yoko]->Width;
 					this->RectOK[tate][yoko]->Top = tate * this->RectOK[tate][yoko]->Height;
@@ -175,15 +184,28 @@ void MAP::CreateRect(int *ok_kind,int *ng_kind)
 				}
 			}
 
+			//当たり判定の領域を作成(敵と遭遇する)
+			for (int cnt = 0; cnt < MAP_ENCOUNT_KIND; ++cnt)
+			{
+				if (this->MapData[tate][yoko] == this->MapEncountKind[cnt])
+				{
+					this->RectEncount[tate][yoko]->Left = yoko * this->RectEncount[tate][yoko]->Width;
+					this->RectEncount[tate][yoko]->Top = tate * this->RectEncount[tate][yoko]->Height;
+					this->RectEncount[tate][yoko]->Right = (yoko + 1) * this->RectEncount[tate][yoko]->Width;
+					this->RectEncount[tate][yoko]->Bottom = (tate + 1)*this->RectEncount[tate][yoko]->Height;
+
+				}
+			}
+
 			//当たり判定の領域を作成(通行できない)
 			for (int cnt = 0; cnt < MAP_NG_KIND; ++cnt)
 			{
-				if (this->MapData[tate][yoko] == ng_kind[cnt])
+				if (this->MapData[tate][yoko] == this->MapNGKind[cnt])
 				{
-					this->RectNG[tate][yoko]->Left = yoko * this->RectOK[tate][yoko]->Width;
-					this->RectNG[tate][yoko]->Top = tate * this->RectOK[tate][yoko]->Height;
-					this->RectNG[tate][yoko]->Right = (yoko + 1) * this->RectOK[tate][yoko]->Width;
-					this->RectNG[tate][yoko]->Bottom = (tate + 1)*this->RectOK[tate][yoko]->Height;
+					this->RectNG[tate][yoko]->Left = yoko * this->RectNG[tate][yoko]->Width;
+					this->RectNG[tate][yoko]->Top = tate * this->RectNG[tate][yoko]->Height;
+					this->RectNG[tate][yoko]->Right = (yoko + 1) * this->RectNG[tate][yoko]->Width;
+					this->RectNG[tate][yoko]->Bottom = (tate + 1)*this->RectNG[tate][yoko]->Height;
 				}
 			}
 
