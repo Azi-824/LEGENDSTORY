@@ -18,8 +18,10 @@
 #define IMG_NAME_MAP_OCEAN	R"(ocean.png)"			//海の画像の名前
 #define IMG_NAME_MAP_SPRING	R"(spring.png)"			//春の画像の名前
 #define IMG_NAME_MAP_AUTUMN	R"(autumn.png)"			//秋の画像の名前
+#define IMG_NAME_MAP_WINTER	R"(winter.png)"			//冬の画像の名前
 
 #define IMG_NAME_MAP_CITY_UNDER	R"(city_under.png)"	//街、下の画像の名前
+
 #define MY_MAP_TEST3		R"(test_3.png)"			//テスト用
 #define MY_MAP_TEST4		R"(test_4.png)"			//テスト用
 
@@ -28,8 +30,10 @@
 #define MY_MAP_OCEAN_ATARI	R"(ocean_atari.csv)"	//海の画像の当たり判定
 #define MY_MAP_SPRING_ATARI	R"(spring_atari.csv)"	//春の画像の当たり判定
 #define MY_MAP_AUTUMN_ATARI	R"(autumn_atari.csv)"	//秋の画像の当たり判定
+#define MY_MAP_WINTER_ATARI	R"(winter_atari.csv)"	//冬の画像の当たり判定
 
 #define MY_MAP_CITY_UNDER_ATARI	R"(city_under_atari.csv)"	//街、下の当たり判定
+
 #define MY_MAP_TEST3_ATARI	R"(test3_atari.csv)"
 #define MY_MAP_TEST4_ATARI	R"(test4_atari.csv)"
 
@@ -47,7 +51,7 @@
 #define MAP_TATE_SIZE	16			//マップの大きさ（縦）
 
 #define MAP_DATA_KIND	MAP_DATA_YOKO_KIND * MAP_DATA_TATE_KIND	//マップデータの種類数
-#define MAP_DATA_YOKO_KIND	2									//マップデータの横方向の種類数
+#define MAP_DATA_YOKO_KIND	3									//マップデータの横方向の種類数
 #define MAP_DATA_TATE_KIND	3									//マップデータの縦方の種類数
 
 #define MAPPOS_X	MapNowPos[0]						//マップのX位置
@@ -66,7 +70,10 @@ enum MAP_KIND
 	MAP_OCEAN,				//三マップ目(海)
 	MAP_AUTUMN,				//四マップ目(秋)
 	MAP_CITY_UNDER,			//五マップ目(街、下)
-	MAP_SPRING				//六マップ目(春)
+	MAP_SPRING,				//六マップ目(春)
+	MAP_WINTER,				//七マップ目(冬)
+	MAP_TEST,				//テスト用
+	MAP_TEST2				//テスト用
 };
 
 enum MAP_CHENGE_DIST
