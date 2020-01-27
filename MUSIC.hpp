@@ -13,7 +13,7 @@
 #define MY_MUSIC_DIR_SE		R"(.\MY_MUSIC\SE)"		//SEのファイル名
 
 #define MY_MUSIC_NAME_BGM	R"(\bgm_op.mp3)"		//BGMの名前
-#define MY_SE_NAME_LEVUP	R"(\LevelUp.mp3)"		//SE（レベルアップ）の名前
+#define MY_SE_NAME_LEVUP	R"(\levelup.mp3)"		//SE（レベルアップ）の名前
 
 //##################### マクロ定義：エラーメッセージ ######################
 #define MUSIC_ERROR_TITLE "MUSIC_ERROR"					//エラータイトル
