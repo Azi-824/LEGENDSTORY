@@ -43,7 +43,7 @@
 
 
 #define MAP_NG_KIND		1	//通行できないマップの種類
-#define MAP_OK_KIND		1	//通行できるマップの種類
+#define MAP_OK_KIND		2	//通行できるマップの種類
 
 //##################### マクロ定義：エラーメッセージ ####################
 
@@ -96,7 +96,8 @@ enum MAP_NG_NUM
 
 enum MAP_OK_NUM
 {
-	MAP_OK_KIND1 = 51		//通行できるマップの数字
+	MAP_OK_KIND1 = 51,			//通行できるマップ(敵と遭遇しない)
+	MAP_OK_KIND_ENCOUNT	=151	//通行できるマップ(敵と遭遇する)
 };
 
 //enum MAPIMAGEKIND

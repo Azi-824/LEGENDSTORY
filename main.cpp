@@ -58,7 +58,8 @@ int BattleActMsgCntMax = 60;	//行動メッセージの表示時間
 int MapKind[MAP_DATA_TATE_KIND][MAP_DATA_YOKO_KIND];			//マップの種類
 int MapNowPos[2] = {0};											//現在のマップのX位置とY位置を格納
 int MapNGKind[MAP_NG_KIND] = { (int)MAP_NG_KIND1 };				//通行できないマップの種類
-int MapOKKind[MAP_OK_KIND] = { (int)MAP_OK_KIND1 };				//通行できるマップの種類
+int MapOKKind[MAP_OK_KIND] = { (int)MAP_OK_KIND1,
+								(int)MAP_OK_KIND_ENCOUNT };		//通行できるマップの種類
 
 int ChengeDrawCount = 0;	//フェードアウト処理に使用
 
