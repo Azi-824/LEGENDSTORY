@@ -753,12 +753,18 @@ void End()
 
 	ui->ChoiseOperation(keydown);	//選択肢のキー操作
 
+	player->Recovery();		//回復
+
 	//▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼ 画面遷移の処理 ▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼
 	if (keydown->IsKeyDown(KEY_INPUT_RETURN))	//エンターキーを押された瞬間
 	{
 		if (*ui->GetNowChoise() == "TITLE")		//選択している文字列が"TITLE"だったら
 		{
 			SceneChenge(GameSceneNow, (int)GAME_SCENE_TITLE);	//次の画面はタイトル画面
+		}
+		else if (*ui->GetNowChoise() == "PLAY")	//プレイを選択したら
+		{
+			SceneChenge(GameSceneNow, (int)GAME_SCENE_PLAY);	//次の画面はプレイ画面
 		}
 		else
 		{
@@ -988,7 +994,7 @@ void End_Draw()
 
 	font->SetSize(BIG_FONTSIZE);	//フォントサイズを大きくする
 
-	ui->ChoiseDraw(GAME_WIDTH / 2, DEFAULT_TEXT_Y, (int)UI_TRIANGLE,true ,GetColor(0,0,0),"TITLE", "END");	//選択肢描画
+	ui->ChoiseDraw(GAME_WIDTH / 2, TXT_Y_3, (int)UI_TRIANGLE,true ,GetColor(0,0,0),"TITLE","PLAY", "END");	//選択肢描画
 
 	return;
 

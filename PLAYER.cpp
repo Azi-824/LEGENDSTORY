@@ -878,3 +878,14 @@ bool PLAYER::CheckDetectionMap(COLLISION * map[][MAP_YOKO])
 	return false;
 }
 
+//‰ñ•œ‚³‚¹‚é
+void PLAYER::Recovery(void)
+{
+	this->NowHP = this->MaxHP;	//HP‰ñ•œ
+	this->NowMP = this->MaxMP;	//MP‰ñ•œ
+
+	this->IsArive = true;		//¶‚«‚Ä‚¢‚é
+
+	return;
+}
+
