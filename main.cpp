@@ -44,7 +44,8 @@ ENEMY *enemy[ENEMY_KIND];			//敵
 
 ITEM *item[ITEM_KIND];				//アイテム
 
-MAP *mapdata[MAP_DATA_KIND];		//マップデータ
+MAP *mapdata_field[MAP_DATA_KIND];		//マップデータ（フィールド）
+MAP *mapdata_city[MAP_DATA_KIND];		//マップデータ（街）
 
 //############## グローバル変数 ##############
 int GameSceneNow = (int)GAME_SCENE_TITLE;	//現在のゲームシーン
@@ -185,61 +186,61 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 	//マップ関係
 	//▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼ マップデータ読み込み開始 ▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼
 	//フィールドマップ読み込み
-	mapdata[(int)MAP_SOUGEN] = new MAP(IMG_DIR_MAP_FIELD, IMG_NAME_MAP_SOUGEN);	//草原マップ生成
-	if (mapdata[(int)MAP_SOUGEN]->LoadCsv(MY_MAP_FIELD_CSV_DIR, MY_MAP_SOUGEN_ATARI) == false) { return -1; }	//当たり判定読み込み失敗
+	mapdata_field[(int)MAP_SOUGEN] = new MAP(IMG_DIR_MAP_FIELD, IMG_NAME_MAP_SOUGEN);	//草原マップ生成
+	if (mapdata_field[(int)MAP_SOUGEN]->LoadCsv(MY_MAP_FIELD_CSV_DIR, MY_MAP_SOUGEN_ATARI) == false) { return -1; }	//当たり判定読み込み失敗
 
-	mapdata[(int)MAP_FOREST] = new MAP(IMG_DIR_MAP_FIELD, IMG_NAME_MAP_FOREST);	//森マップ生成
-	if (mapdata[(int)MAP_FOREST]->LoadCsv(MY_MAP_FIELD_CSV_DIR, MY_MAP_FOREST_ATARI) == false) { return -1; }	//当たり判定読み込み失敗
+	mapdata_field[(int)MAP_FOREST] = new MAP(IMG_DIR_MAP_FIELD, IMG_NAME_MAP_FOREST);	//森マップ生成
+	if (mapdata_field[(int)MAP_FOREST]->LoadCsv(MY_MAP_FIELD_CSV_DIR, MY_MAP_FOREST_ATARI) == false) { return -1; }	//当たり判定読み込み失敗
 
-	mapdata[(int)MAP_OCEAN] = new MAP(IMG_DIR_MAP_FIELD, IMG_NAME_MAP_OCEAN);		//海マップ生成
-	if (mapdata[(int)MAP_OCEAN]->LoadCsv(MY_MAP_FIELD_CSV_DIR, MY_MAP_OCEAN_ATARI) == false) { return -1; }	//当たり判定読み込み失敗
+	mapdata_field[(int)MAP_OCEAN] = new MAP(IMG_DIR_MAP_FIELD, IMG_NAME_MAP_OCEAN);		//海マップ生成
+	if (mapdata_field[(int)MAP_OCEAN]->LoadCsv(MY_MAP_FIELD_CSV_DIR, MY_MAP_OCEAN_ATARI) == false) { return -1; }	//当たり判定読み込み失敗
 
-	mapdata[(int)MAP_AUTUMN] = new MAP(IMG_DIR_MAP_FIELD, IMG_NAME_MAP_AUTUMN);	//秋マップ生成
-	if (mapdata[(int)MAP_AUTUMN]->LoadCsv(MY_MAP_FIELD_CSV_DIR, MY_MAP_AUTUMN_ATARI) == false) { return -1; }	//当たり判定読み込み失敗
+	mapdata_field[(int)MAP_AUTUMN] = new MAP(IMG_DIR_MAP_FIELD, IMG_NAME_MAP_AUTUMN);	//秋マップ生成
+	if (mapdata_field[(int)MAP_AUTUMN]->LoadCsv(MY_MAP_FIELD_CSV_DIR, MY_MAP_AUTUMN_ATARI) == false) { return -1; }	//当たり判定読み込み失敗
 
-	mapdata[(int)MAP_CITY] = new MAP(IMG_DIR_MAP_FIELD, IMG_NAME_MAP_CITY_S);	//街、下マップ生成
-	if (mapdata[(int)MAP_CITY]->LoadCsv(MY_MAP_FIELD_CSV_DIR, MY_MAP_CITY_S_ATARI) == false) { return -1; }	//当たり判定読み込み失敗
+	mapdata_field[(int)MAP_CITY] = new MAP(IMG_DIR_MAP_FIELD, IMG_NAME_MAP_CITY_S);	//街、下マップ生成
+	if (mapdata_field[(int)MAP_CITY]->LoadCsv(MY_MAP_FIELD_CSV_DIR, MY_MAP_CITY_S_ATARI) == false) { return -1; }	//当たり判定読み込み失敗
 
-	mapdata[(int)MAP_SPRING] = new MAP(IMG_DIR_MAP_FIELD, IMG_NAME_MAP_SPRING);			//春マップ生成
-	if (mapdata[(int)MAP_SPRING]->LoadCsv(MY_MAP_FIELD_CSV_DIR, MY_MAP_SPRING_ATARI) == false) { return -1; }	//当たり判定読み込み失敗
+	mapdata_field[(int)MAP_SPRING] = new MAP(IMG_DIR_MAP_FIELD, IMG_NAME_MAP_SPRING);			//春マップ生成
+	if (mapdata_field[(int)MAP_SPRING]->LoadCsv(MY_MAP_FIELD_CSV_DIR, MY_MAP_SPRING_ATARI) == false) { return -1; }	//当たり判定読み込み失敗
 
-	mapdata[(int)MAP_WINTER] = new MAP(IMG_DIR_MAP_FIELD, IMG_NAME_MAP_WINTER);			//冬マップ生成
-	if (mapdata[(int)MAP_WINTER]->LoadCsv(MY_MAP_FIELD_CSV_DIR, MY_MAP_WINTER_ATARI) == false) { return -1; }	//当たり判定読み込み失敗
+	mapdata_field[(int)MAP_WINTER] = new MAP(IMG_DIR_MAP_FIELD, IMG_NAME_MAP_WINTER);			//冬マップ生成
+	if (mapdata_field[(int)MAP_WINTER]->LoadCsv(MY_MAP_FIELD_CSV_DIR, MY_MAP_WINTER_ATARI) == false) { return -1; }	//当たり判定読み込み失敗
 
-	mapdata[(int)MAP_REMAINS] = new MAP(IMG_DIR_MAP_FIELD, IMG_NAME_MAP_REMAINS);					//遺跡マップ生成
-	if (mapdata[(int)MAP_REMAINS]->LoadCsv(MY_MAP_FIELD_CSV_DIR, MY_MAP_REMAINS_ATARI) == false) { return -1; }	//当たり判定読み込み失敗
+	mapdata_field[(int)MAP_REMAINS] = new MAP(IMG_DIR_MAP_FIELD, IMG_NAME_MAP_REMAINS);					//遺跡マップ生成
+	if (mapdata_field[(int)MAP_REMAINS]->LoadCsv(MY_MAP_FIELD_CSV_DIR, MY_MAP_REMAINS_ATARI) == false) { return -1; }	//当たり判定読み込み失敗
 
-	mapdata[(int)MAP_CASTLE] = new MAP(IMG_DIR_MAP_FIELD, IMG_NAME_MAP_CASTLE);					//魔王城マップ生成
-	if (mapdata[(int)MAP_CASTLE]->LoadCsv(MY_MAP_FIELD_CSV_DIR, MY_MAP_CASTLE_ATARI) == false) { return -1; }	//当たり判定読み込み失敗
+	mapdata_field[(int)MAP_CASTLE] = new MAP(IMG_DIR_MAP_FIELD, IMG_NAME_MAP_CASTLE);					//魔王城マップ生成
+	if (mapdata_field[(int)MAP_CASTLE]->LoadCsv(MY_MAP_FIELD_CSV_DIR, MY_MAP_CASTLE_ATARI) == false) { return -1; }	//当たり判定読み込み失敗
 
 
 	//街マップ読み込み
-	//mapdata[(int)MAP_CITY_NW] = new MAP(IMG_DIR_MAP_CITY, IMG_NAME_MAP_CITY_NW);	//北西マップ生成
-	//if (mapdata[(int)MAP_CITY_NW]->LoadCsv(MY_MAP_CITY_CSV_DIR, MY_MAP_CITY_NW_ATARI) == false) { return -1; }	//当たり判定読み込み失敗
+	mapdata_city[(int)MAP_CITY_NW] = new MAP(IMG_DIR_MAP_CITY, IMG_NAME_MAP_CITY_NW);	//北西マップ生成
+	if (mapdata_city[(int)MAP_CITY_NW]->LoadCsv(MY_MAP_CITY_CSV_DIR, MY_MAP_CITY_NW_ATARI) == false) { return -1; }	//当たり判定読み込み失敗
 
-	//mapdata[(int)MAP_CITY_W] = new MAP(IMG_DIR_MAP_CITY, IMG_NAME_MAP_CITY_W);	//西マップ生成
-	//if (mapdata[(int)MAP_CITY_W]->LoadCsv(MY_MAP_CITY_CSV_DIR, MY_MAP_CITY_W_ATARI) == false) { return -1; }	//当たり判定読み込み失敗
+	mapdata_city[(int)MAP_CITY_W] = new MAP(IMG_DIR_MAP_CITY, IMG_NAME_MAP_CITY_W);	//西マップ生成
+	if (mapdata_city[(int)MAP_CITY_W]->LoadCsv(MY_MAP_CITY_CSV_DIR, MY_MAP_CITY_W_ATARI) == false) { return -1; }	//当たり判定読み込み失敗
 
-	//mapdata[(int)MAP_CITY_SW] = new MAP(IMG_DIR_MAP_CITY, IMG_NAME_MAP_CITY_SW);		//南西マップ生成
-	//if (mapdata[(int)MAP_CITY_SW]->LoadCsv(MY_MAP_CITY_CSV_DIR, MY_MAP_CITY_SW_ATARI) == false) { return -1; }	//当たり判定読み込み失敗
+	mapdata_city[(int)MAP_CITY_SW] = new MAP(IMG_DIR_MAP_CITY, IMG_NAME_MAP_CITY_SW);		//南西マップ生成
+	if (mapdata_city[(int)MAP_CITY_SW]->LoadCsv(MY_MAP_CITY_CSV_DIR, MY_MAP_CITY_SW_ATARI) == false) { return -1; }	//当たり判定読み込み失敗
 
-	//mapdata[(int)MAP_CITY_N] = new MAP(IMG_DIR_MAP_CITY, IMG_NAME_MAP_CITY_N);	//北マップ生成
-	//if (mapdata[(int)MAP_CITY_N]->LoadCsv(MY_MAP_CITY_CSV_DIR, MY_MAP_CITY_N_ATARI) == false) { return -1; }	//当たり判定読み込み失敗
+	mapdata_city[(int)MAP_CITY_N] = new MAP(IMG_DIR_MAP_CITY, IMG_NAME_MAP_CITY_N);	//北マップ生成
+	if (mapdata_city[(int)MAP_CITY_N]->LoadCsv(MY_MAP_CITY_CSV_DIR, MY_MAP_CITY_N_ATARI) == false) { return -1; }	//当たり判定読み込み失敗
 
-	//mapdata[(int)MAP_CITY_CNETER] = new MAP(IMG_DIR_MAP_CITY, IMG_NAME_MAP_CITY_CENTER);	//中央マップ生成
-	//if (mapdata[(int)MAP_CITY_CNETER]->LoadCsv(MY_MAP_CITY_CSV_DIR, MY_MAP_CITY_CENTER_ATARI) == false) { return -1; }	//当たり判定読み込み失敗
+	mapdata_city[(int)MAP_CITY_CNETER] = new MAP(IMG_DIR_MAP_CITY, IMG_NAME_MAP_CITY_CENTER);	//中央マップ生成
+	if (mapdata_city[(int)MAP_CITY_CNETER]->LoadCsv(MY_MAP_CITY_CSV_DIR, MY_MAP_CITY_CENTER_ATARI) == false) { return -1; }	//当たり判定読み込み失敗
 
-	//mapdata[(int)MAP_CITY_S] = new MAP(IMG_DIR_MAP_CITY, IMG_NAME_MAP_CITY_S);			//南マップ生成
-	//if (mapdata[(int)MAP_CITY_S]->LoadCsv(MY_MAP_CITY_CSV_DIR, MY_MAP_CITY_S_ATARI) == false) { return -1; }	//当たり判定読み込み失敗
+	mapdata_city[(int)MAP_CITY_S] = new MAP(IMG_DIR_MAP_CITY, IMG_NAME_MAP_CITY_S);			//南マップ生成
+	if (mapdata_city[(int)MAP_CITY_S]->LoadCsv(MY_MAP_CITY_CSV_DIR, MY_MAP_CITY_S_ATARI) == false) { return -1; }	//当たり判定読み込み失敗
 
-	//mapdata[(int)MAP_CITY_NE] = new MAP(IMG_DIR_MAP_CITY, IMG_NAME_MAP_CITY_NE);			//北東マップ生成
-	//if (mapdata[(int)MAP_CITY_NE]->LoadCsv(MY_MAP_CITY_CSV_DIR, MY_MAP_CITY_NE_ATARI) == false) { return -1; }	//当たり判定読み込み失敗
+	mapdata_city[(int)MAP_CITY_NE] = new MAP(IMG_DIR_MAP_CITY, IMG_NAME_MAP_CITY_NE);			//北東マップ生成
+	if (mapdata_city[(int)MAP_CITY_NE]->LoadCsv(MY_MAP_CITY_CSV_DIR, MY_MAP_CITY_NE_ATARI) == false) { return -1; }	//当たり判定読み込み失敗
 
-	//mapdata[(int)MAP_CITY_E] = new MAP(IMG_DIR_MAP_CITY, IMG_NAME_MAP_CITY_E);					//東マップ生成
-	//if (mapdata[(int)MAP_CITY_E]->LoadCsv(MY_MAP_CITY_CSV_DIR, MY_MAP_CITY_E_ATARI) == false) { return -1; }	//当たり判定読み込み失敗
+	mapdata_city[(int)MAP_CITY_E] = new MAP(IMG_DIR_MAP_CITY, IMG_NAME_MAP_CITY_E);					//東マップ生成
+	if (mapdata_city[(int)MAP_CITY_E]->LoadCsv(MY_MAP_CITY_CSV_DIR, MY_MAP_CITY_E_ATARI) == false) { return -1; }	//当たり判定読み込み失敗
 
-	//mapdata[(int)MAP_CITY_SE] = new MAP(IMG_DIR_MAP_CITY, IMG_NAME_MAP_CITY_SE);					//南東マップ生成
-	//if (mapdata[(int)MAP_CITY_SE]->LoadCsv(MY_MAP_CITY_CSV_DIR, MY_MAP_CITY_SE_ATARI) == false) { return -1; }	//当たり判定読み込み失敗
+	mapdata_city[(int)MAP_CITY_SE] = new MAP(IMG_DIR_MAP_CITY, IMG_NAME_MAP_CITY_SE);					//南東マップ生成
+	if (mapdata_city[(int)MAP_CITY_SE]->LoadCsv(MY_MAP_CITY_CSV_DIR, MY_MAP_CITY_SE_ATARI) == false) { return -1; }	//当たり判定読み込み失敗
 
 
 	//マップの種類を二次元配列で管理
@@ -365,14 +366,14 @@ void Title()
 void Play()
 {
 
-	player->Operation(keydown, mapdata[MapKind[MAPPOS_Y][MAPPOS_X]]->GetRect((int)MAP_NG));	//プレイヤーキー操作
+	player->Operation(keydown, mapdata_field[MapKind[MAPPOS_Y][MAPPOS_X]]->GetRect((int)MAP_NG));	//プレイヤーキー操作
 
 	//▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼ マップ切り替え処理ここから ▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼
 	if (player->GetChengeMapKind() != -1)		//マップの端に来た時
 	{
 		int chengekind = (int)MAP_CHENGE_NONE;	//マップ切り替えの種類
 		//マップの切り替え処理
-		chengekind = mapdata[MapKind[MAPPOS_Y][MAPPOS_X]]->ChengeMap(player->GetChengeMapKind(), MapNowPos);
+		chengekind = mapdata_field[MapKind[MAPPOS_Y][MAPPOS_X]]->ChengeMap(player->GetChengeMapKind(), MapNowPos);
 
 		if (chengekind != (int)MAP_CHENGE_NONE)	//マップ切り替えを行ったときは
 		{
@@ -434,7 +435,7 @@ void Play()
 
 	if (player->GetIsMove())			//プレイヤーが移動中だったら
 	{
-		if (player->CheckDetectionMap(mapdata[MapKind[MAPPOS_Y][MAPPOS_X]]->GetRect((int)MAP_ENCOUNT)))	//敵と遭遇するマップだったら
+		if (player->CheckDetectionMap(mapdata_field[MapKind[MAPPOS_Y][MAPPOS_X]]->GetRect((int)MAP_ENCOUNT)))	//敵と遭遇するマップだったら
 		{
 			Enconte();			//敵との遭遇判定
 		}
@@ -921,7 +922,7 @@ void Play_Draw()
 {
 	font->SetSize(DEFAULT_FONTSIZE);	//フォントサイズを標準に戻す
 
-	mapdata[MapKind[MAPPOS_Y][MAPPOS_X]]->Draw();	//マップ描画
+	mapdata_field[MapKind[MAPPOS_Y][MAPPOS_X]]->Draw();	//マップ描画
 
 	player->DrawAnime();		//アニメーション描画
 
@@ -1113,7 +1114,7 @@ void Delete_Class()
 	//マップデータの削除
 	for (int i = 0; i < MAP_DATA_KIND; i++)	//マップの種類分
 	{
-			delete mapdata[i];	//mapdataを破棄
+			delete mapdata_field[i];	//mapdataを破棄
 	}
 
 	//敵の削除
