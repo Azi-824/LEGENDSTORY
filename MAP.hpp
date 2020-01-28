@@ -22,11 +22,20 @@
 #define IMG_NAME_MAP_REMAINS R"(remains.png)"		//遺跡の画像の名前
 #define IMG_NAME_MAP_CASTLE	R"(castle.png)"			//魔王城の画像の名前
 
-#define IMG_NAME_MAP_CITY_S	R"(city_S.png)"			//街、南の画像の名前
+#define IMG_NAME_MAP_CITY_NW R"(city_NW.png)"			//街、北西の画像の名前
+#define IMG_NAME_MAP_CITY_W	 R"(city_W.png)"			//街、西の画像の名前
+#define IMG_NAME_MAP_CITY_SW R"(city_SW.png)"			//街、南西の画像の名前
+#define IMG_NAME_MAP_CITY_N	 R"(city_N.png)"			//街、北の画像の名前
+#define IMG_NAME_MAP_CITY_CENTER R"(city_center.png)"	//街、中央の画像の名前
+#define IMG_NAME_MAP_CITY_S	 R"(city_S.png)"			//街、南の画像の名前
+#define IMG_NAME_MAP_CITY_NE R"(city_NE.png)"			//街、北東の画像の名前
+#define IMG_NAME_MAP_CITY_E	 R"(city_E.png)"			//街、東の画像の名前
+#define IMG_NAME_MAP_CITY_SE R"(city_SE.png)"			//街、南東の画像の名前
 
 #define MY_MAP_TEST3		R"(test_3.png)"			//テスト用
 #define MY_MAP_TEST4		R"(test_4.png)"			//テスト用
 
+//フィールドマップ
 #define MY_MAP_SOUGEN_ATARI	R"(sougen_atari.csv)"	//草原の当たり判定
 #define MY_MAP_FOREST_ATARI	R"(forest_atari.csv)"	//森の当たり判定
 #define MY_MAP_OCEAN_ATARI	R"(ocean_atari.csv)"	//海の画像の当たり判定
@@ -36,7 +45,16 @@
 #define MY_MAP_REMAINS_ATARI R"(remains_atari.csv)"	//遺跡の画像の当たり判定
 #define MY_MAP_CASTLE_ATARI	R"(castle_atari.csv)"	//魔王城の画像の当たり判定
 
-#define MY_MAP_CITY_S_ATARI	R"(city_S_atari.csv)"	//街、南の当たり判定
+//街のマップ
+#define MY_MAP_CITY_NW_ATARI R"(city_NW_atari.csv)"	//街、北西の当たり判定
+#define MY_MAP_CITY_W_ATARI R"(city_W_atari.csv)"	//街、西の当たり判定
+#define MY_MAP_CITY_SW_ATARI R"(city_SW_atari.csv)"	//街、南西の当たり判定
+#define MY_MAP_CITY_N_ATARI R"(city_N_atari.csv)"	//街、北の当たり判定
+#define MY_MAP_CITY_CENTER_ATARI R"(city_center_atari.csv)"	//街、中央の当たり判定
+#define MY_MAP_CITY_S_ATARI	 R"(city_S_atari.csv)"	//街、南の当たり判定
+#define MY_MAP_CITY_NE_ATARI R"(city_NE_atari.csv)"	//街、北東の当たり判定
+#define MY_MAP_CITY_E_ATARI R"(city_E_atari.csv)"	//街、東の当たり判定
+#define MY_MAP_CITY_SE_ATARI R"(city_SE_atari.csv)"	//街、南東の当たり判定
 
 #define MY_MAP_TEST3_ATARI	R"(test3_atari.csv)"
 #define MY_MAP_TEST4_ATARI	R"(test4_atari.csv)"
