@@ -10,9 +10,11 @@
 #include <string>
 
 //###################### マクロ定義：ファイルパス、名前 ##################
-#define MY_MAP_DIR		R"(.\MY_MAP\map_csv\)"		//マップcsvのファイルの場所
-#define IMG_DIR_MAP		R"(.\MY_MAP\map_image\)"	//マップの画像ファイルの場所
+#define MY_MAP_CSV_DIR			R"(.\MY_MAP\map_csv\)"		//マップcsvのファイルの場所
+#define MY_MAP_CSV_CITY			R"(.\MY_MAP\map_csv\city\)"	//マップのcsvファイルの場所(街)
+#define IMG_DIR_MAP_FIELD		R"(.\MY_MAP\map_image\)"	//マップの画像ファイルの場所
 
+//フィールドマップ
 #define IMG_NAME_MAP_SOUGEN	R"(sougen.png)"			//草原の画像の名前
 #define IMG_NAME_MAP_FOREST	R"(forest.png)"			//森の画像の名前
 #define IMG_NAME_MAP_OCEAN	R"(ocean.png)"			//海の画像の名前
@@ -22,6 +24,7 @@
 #define IMG_NAME_MAP_REMAINS R"(remains.png)"		//遺跡の画像の名前
 #define IMG_NAME_MAP_CASTLE	R"(castle.png)"			//魔王城の画像の名前
 
+//街マップ
 #define IMG_NAME_MAP_CITY_NW R"(city_NW.png)"			//街、北西の画像の名前
 #define IMG_NAME_MAP_CITY_W	 R"(city_W.png)"			//街、西の画像の名前
 #define IMG_NAME_MAP_CITY_SW R"(city_SW.png)"			//街、南西の画像の名前
@@ -86,18 +89,31 @@
 #define RECT_STAGGER	4	//領域をずらす量
 
 //##################### 列挙型 #########################
-enum MAP_KIND
+enum MAP_FIELD_KIND
 {
 	MAP_SOUGEN,				//一マップ目(草原)
 	MAP_FOREST,				//ニマップ目(森)
 	MAP_OCEAN,				//三マップ目(海)
 	MAP_AUTUMN,				//四マップ目(秋)
-	MAP_CITY_S,				//五マップ目(街、南)
+	MAP_CITY,				//五マップ目(街、南)
 	MAP_SPRING,				//六マップ目(春)
 	MAP_WINTER,				//七マップ目(冬)
 	MAP_REMAINS,			//八マップ目(遺跡)
 	MAP_CASTLE				//九マップ目(魔王城)
-};
+};//フィールドマップの種類
+
+enum MAP_CITY_KIND
+{
+	MAP_CITY_NW,			//一マップ目（北西）
+	MAP_CITY_W,				//二マップ目（西）
+	MAP_CITY_SW,			//三マップ目（南西）
+	MAP_CITY_N,				//四マップ目（北）
+	MAP_CITY_CNETER,		//五マップ目（中央）
+	MAP_CITY_S,				//六マップ目（南）
+	MAP_CITY_NE,			//七マップ目（北東）
+	MAP_CITY_E,				//八マップ目（東）
+	MAP_CITY_SE				//九マップ目（南東)
+};//街マップの種類
 
 enum MAP_CHENGE_DIST
 {
