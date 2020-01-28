@@ -178,7 +178,6 @@
     <ClInclude Include="DATA.hpp" />
     <ClInclude Include="EFFECT.hpp" />
     <ClInclude Include="ENEMY.hpp" />
-    <ClInclude Include="EVENT.hpp" />
     <ClInclude Include="FONT.hpp" />
     <ClInclude Include="FPS.hpp" />
     <ClInclude Include="IMAGE.hpp" />
