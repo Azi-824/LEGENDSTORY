@@ -196,8 +196,8 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 	mapdata[(int)MAP_AUTUMN] = new MAP(IMG_DIR_MAP, IMG_NAME_MAP_AUTUMN);	//秋マップ生成
 	if (mapdata[(int)MAP_AUTUMN]->LoadCsv(MY_MAP_DIR, MY_MAP_AUTUMN_ATARI) == false) { return -1; }	//当たり判定読み込み失敗
 
-	mapdata[(int)MAP_CITY_UNDER] = new MAP(IMG_DIR_MAP, IMG_NAME_MAP_CITY_UNDER);	//街、下マップ生成
-	if (mapdata[(int)MAP_CITY_UNDER]->LoadCsv(MY_MAP_DIR, MY_MAP_CITY_UNDER_ATARI) == false) { return -1; }	//当たり判定読み込み失敗
+	mapdata[(int)MAP_CITY_S] = new MAP(IMG_DIR_MAP, IMG_NAME_MAP_CITY_S);	//街、下マップ生成
+	if (mapdata[(int)MAP_CITY_S]->LoadCsv(MY_MAP_DIR, MY_MAP_CITY_S_ATARI) == false) { return -1; }	//当たり判定読み込み失敗
 
 	mapdata[(int)MAP_SPRING] = new MAP(IMG_DIR_MAP, IMG_NAME_MAP_SPRING);			//春マップ生成
 	if (mapdata[(int)MAP_SPRING]->LoadCsv(MY_MAP_DIR, MY_MAP_SPRING_ATARI) == false) { return -1; }	//当たり判定読み込み失敗

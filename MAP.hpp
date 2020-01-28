@@ -22,7 +22,7 @@
 #define IMG_NAME_MAP_REMAINS R"(remains.png)"		//遺跡の画像の名前
 #define IMG_NAME_MAP_CASTLE	R"(castle.png)"			//魔王城の画像の名前
 
-#define IMG_NAME_MAP_CITY_UNDER	R"(city_under.png)"	//街、下の画像の名前
+#define IMG_NAME_MAP_CITY_S	R"(city_S.png)"			//街、南の画像の名前
 
 #define MY_MAP_TEST3		R"(test_3.png)"			//テスト用
 #define MY_MAP_TEST4		R"(test_4.png)"			//テスト用
@@ -36,7 +36,7 @@
 #define MY_MAP_REMAINS_ATARI R"(remains_atari.csv)"	//遺跡の画像の当たり判定
 #define MY_MAP_CASTLE_ATARI	R"(castle_atari.csv)"	//魔王城の画像の当たり判定
 
-#define MY_MAP_CITY_UNDER_ATARI	R"(city_under_atari.csv)"	//街、下の当たり判定
+#define MY_MAP_CITY_S_ATARI	R"(city_S_atari.csv)"	//街、南の当たり判定
 
 #define MY_MAP_TEST3_ATARI	R"(test3_atari.csv)"
 #define MY_MAP_TEST4_ATARI	R"(test4_atari.csv)"
@@ -74,7 +74,7 @@ enum MAP_KIND
 	MAP_FOREST,				//ニマップ目(森)
 	MAP_OCEAN,				//三マップ目(海)
 	MAP_AUTUMN,				//四マップ目(秋)
-	MAP_CITY_UNDER,			//五マップ目(街、下)
+	MAP_CITY_S,				//五マップ目(街、南)
 	MAP_SPRING,				//六マップ目(春)
 	MAP_WINTER,				//七マップ目(冬)
 	MAP_REMAINS,			//八マップ目(遺跡)
