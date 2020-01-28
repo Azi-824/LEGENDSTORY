@@ -10,9 +10,11 @@
 #include <string>
 
 //###################### マクロ定義：ファイルパス、名前 ##################
-#define MY_MAP_CSV_DIR			R"(.\MY_MAP\map_csv\)"		//マップcsvのファイルの場所
-#define MY_MAP_CSV_CITY			R"(.\MY_MAP\map_csv\city\)"	//マップのcsvファイルの場所(街)
-#define IMG_DIR_MAP_FIELD		R"(.\MY_MAP\map_image\)"	//マップの画像ファイルの場所
+#define MY_MAP_FIELD_CSV_DIR	R"(.\MY_MAP\map_csv\field\)"	//マップcsvのファイルの場所(フィールド)
+#define MY_MAP_CITY_CSV_DIR		R"(.\MY_MAP\map_csv\city\)"		//マップのcsvファイルの場所(街)
+
+#define IMG_DIR_MAP_FIELD		R"(.\MY_MAP\map_image\field\)"	//マップの画像ファイルの場所(フィールド)
+#define IMG_DIR_MAP_CITY		R"(.\MY_MAP\map_image\city\)"	//マップの画像ファイルの場所(街)
 
 //フィールドマップ
 #define IMG_NAME_MAP_SOUGEN	R"(sougen.png)"			//草原の画像の名前
