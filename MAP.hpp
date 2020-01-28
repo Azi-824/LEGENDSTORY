@@ -67,7 +67,9 @@
 
 #define MAP_NG_KIND		1	//通行できないマップの種類
 #define MAP_OK_KIND		1	//通行できるマップの種類
+#define MAP_WARP_KIND	1	//街へ移動するマップの種類
 #define MAP_ENCOUNT_KIND 1	//敵と遭遇するマップの種類
+#define DRAW_MAP_KIND	2	//描画するマップの種類
 
 //##################### マクロ定義：エラーメッセージ ####################
 
@@ -130,7 +132,8 @@ enum MAP_NUM_KIND
 {
 	MAP_NG,			//通行できない
 	MAP_OK,			//通行できる
-	MAP_ENCOUNT		//通行できる(敵と遭遇する)
+	MAP_ENCOUNT,	//通行できる(敵と遭遇する)
+	MAP_WARP		//街へ移動する
 };
 
 enum MAP_NG_NUM
@@ -147,10 +150,16 @@ enum MAP_ENCOOUNT_NUM
 	MAP_OK_KIND_ENCOUNT = 151	//通行できるマップ(敵と遭遇する)
 };
 
-//enum MAPIMAGEKIND
-//{
-//	FILED		//フィールドのマップチップ画像
-//};
+enum MAP_WARP_CITY_NUM
+{
+	MAP_WARP_CITY = 201			//通行できる（街へ移動する）
+};
+
+enum DRAWMAPKIND
+{
+	DRAW_FILED,		//フィールド
+	DRAW_CITY		//街
+};
 
 //##################### グローバル変数 #################
 
@@ -167,12 +176,14 @@ private:
 
 	COLLISION *RectOK[MAP_TATE][MAP_YOKO];		//当たり判定(通行できる)
 	COLLISION *RectEncount[MAP_TATE][MAP_YOKO];	//当たり判定(敵と遭遇する)
+	COLLISION *RectWarp[MAP_TATE][MAP_YOKO];	//当たり判定(街へワープする)
 	COLLISION *RectNG[MAP_TATE][MAP_YOKO];		//当たり判定（通行できない）
 
 	FILE *fp_map_csv;						//マップファイルのポインタ
 
 	int MapNGKind[MAP_NG_KIND];				//通行できないマップの種類
 	int MapOKKind[MAP_OK_KIND];				//通行できるマップの種類
+	int MapWarpKind[MAP_WARP_KIND];			//街へ移動するマップの種類
 	int MapEncountKind[MAP_ENCOUNT_KIND];	//敵と遭遇するマップの種類
 
 public :
@@ -210,6 +221,12 @@ public :
 		case (int)MAP_ENCOUNT:	//敵と遭遇するとき
 
 			return this->RectEncount;
+
+			break;
+
+		case (int)MAP_WARP:		//街へ移動する
+
+			return this->RectWarp;
 
 			break;
 

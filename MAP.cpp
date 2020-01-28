@@ -13,6 +13,7 @@ MAP::MAP(const char *dir,const char *name)
 
 	this->MapOKKind[0] = (int)MAP_OK_KIND1;	//通行できるマップの種類
 	this->MapEncountKind[0] = (int)MAP_OK_KIND_ENCOUNT;	//通行できるマップの種類(敵と遭遇する)
+	this->MapWarpKind[0] = (int)MAP_WARP_CITY;			//街へ移動するマップの種類
 	this->MapNGKind[0] = (int)MAP_NG_KIND1;			//通行できないマップの種類
 
 	for (int tate = 0; tate < MAP_TATE; ++tate)
@@ -21,12 +22,14 @@ MAP::MAP(const char *dir,const char *name)
 		{
 			this->RectOK[tate][yoko] = new COLLISION();	//当たり判定の領域を作成(通行できる)
 			this->RectEncount[tate][yoko] = new COLLISION();//当たり判定の領域を作成(敵と遭遇する)
+			this->RectWarp[tate][yoko] = new COLLISION();//当たり判定の領域を作成(街へ移動する)
 			this->RectNG[tate][yoko] = new COLLISION();	//当たり判定の領域を作成(通行できない)
 
 
 			//当たり判定初期化
 			this->RectOK[tate][yoko]->SetValue(0, 0, MAP_YOKO_SIZE, MAP_TATE_SIZE);
 			this->RectEncount[tate][yoko]->SetValue(0, 0, MAP_YOKO_SIZE, MAP_TATE_SIZE);
+			this->RectWarp[tate][yoko]->SetValue(0, 0, MAP_YOKO_SIZE, MAP_TATE_SIZE);
 			this->RectNG[tate][yoko]->SetValue(0, 0, MAP_YOKO_SIZE, MAP_TATE_SIZE);
 
 		}
@@ -41,9 +44,10 @@ MAP::~MAP()
 	{
 		for (int yoko = 0; yoko < MAP_YOKO; ++yoko)
 		{
-			delete this->RectOK[tate][yoko];	//当たり判定を破棄(通行できる)
+			delete this->RectOK[tate][yoko];	 //当たり判定を破棄(通行できる)
 			delete this->RectEncount[tate][yoko];//当たり判定を破棄(敵と遭遇する)
-			delete this->RectNG[tate][yoko];	//当たり判定を破棄(通行できない)
+			delete this->RectWarp[tate][yoko];	 //当たり判定を破棄(街へ移動する)
+			delete this->RectNG[tate][yoko];	 //当たり判定を破棄(通行できない)
 		}
 	}
 
@@ -196,6 +200,20 @@ void MAP::CreateRect()
 
 				}
 			}
+
+			//当たり判定の領域を作成(街へ移動する)
+			for (int cnt = 0; cnt < MAP_WARP_KIND; ++cnt)
+			{
+				if (this->MapData[tate][yoko] == this->MapWarpKind[cnt])
+				{
+					this->RectWarp[tate][yoko]->Left = yoko * this->RectWarp[tate][yoko]->Width;
+					this->RectWarp[tate][yoko]->Top = tate * this->RectWarp[tate][yoko]->Height;
+					this->RectWarp[tate][yoko]->Right = (yoko + 1) * this->RectWarp[tate][yoko]->Width;
+					this->RectWarp[tate][yoko]->Bottom = (tate + 1)*this->RectWarp[tate][yoko]->Height;
+
+				}
+			}
+
 
 			//当たり判定の領域を作成(通行できない)
 			for (int cnt = 0; cnt < MAP_NG_KIND; ++cnt)
