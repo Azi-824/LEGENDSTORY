@@ -60,6 +60,7 @@ private:
 	int EncounteRate;	//遭遇率
 
 	std::vector<int> Skil;	//スキル
+	int ChoiseSkil;			//使用するスキル
 
 	int EneType;	//敵の種類
 
@@ -90,12 +91,14 @@ public:
 	int GetATK();			//攻撃力取得
 	int GetDEF();			//防御力取得
 	int GetSPD();			//速度取得
-	int GetSkil();			//使用するスキルの種類を取得
+	int GetChoiseSkil();	//使用するスキルの種類を取得
 	int GetEXP();			//経験値取得
 	
 	int GetEmergenceMap();	//出現MAPNoの所得
 	int GetEncounteRate();	//遭遇率の取得
 
 	bool GetIsLoad();		//読み込めたかを取得
+
+	void ActDecision();		//行動決定処理
 
 };

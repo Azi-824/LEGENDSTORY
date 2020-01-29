@@ -24,6 +24,7 @@ ENEMY::ENEMY(const char *dir,const char *name)
 	this->EncounteRate = 0;	//遭遇率
 
 	this->EneType = 0;	//敵の種類
+	this->ChoiseSkil = -1;	//使用するスキル初期化
 
 	//画像設定
 	if (this->SetImage(dir, name))	//画像が読み込めていたら
@@ -132,6 +133,8 @@ void ENEMY::StateSetInit()
 
 	this->SetIsArive(true);	//生きている
 
+	this->ChoiseSkil = -1;	//使用するスキル初期化
+
 	return;
 }
 
@@ -190,7 +193,18 @@ bool ENEMY::GetIsLoad()
 }
 
 //使用するスキルの種類を取得
-int ENEMY::GetSkil()
+int ENEMY::GetChoiseSkil()
 {
-	return this->Skil[1];
+	return this->ChoiseSkil;
+}
+
+//行動決定処理
+void ENEMY::ActDecision(void)
+{
+	int rand = GetRand(this->Skil.size() - 1);		//使用するスキルをランダムで決定
+
+	this->ChoiseSkil = rand;	//使用するスキル設定
+
+	return;
+	
 }

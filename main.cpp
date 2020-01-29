@@ -554,6 +554,7 @@ void Battle()
 		else if (Turn = (int)ENEMY_TURN)	//敵のターンだったら
 		{
 			//敵の行動選択決定処理
+			enemy[EncounteEnemyType]->ActDecision();		//行動決定処理
 
 			BattleStageNow = (int)DAMEGE_CALC;	//ダメージ計算へ
 
@@ -662,9 +663,9 @@ void Battle()
 		else if (Turn = (int)ENEMY_TURN)	//敵のターンだったら
 		{
 			//敵のエフェクト表示
-			Enemy_Atk_effect->Draw((GAME_WIDTH / 2 - Enemy_Atk_effect->GetWidth(enemy[EncounteEnemyType]->GetSkil()) / 2),
-				(GAME_HEIGHT / 2 - Enemy_Atk_effect->GetHeight(enemy[EncounteEnemyType]->GetSkil()) / 2),
-				enemy[EncounteEnemyType]->GetSkil());
+			Enemy_Atk_effect->Draw((GAME_WIDTH / 2 - Enemy_Atk_effect->GetWidth(enemy[EncounteEnemyType]->GetChoiseSkil()) / 2),
+				(GAME_HEIGHT / 2 - Enemy_Atk_effect->GetHeight(enemy[EncounteEnemyType]->GetChoiseSkil()) / 2),
+				enemy[EncounteEnemyType]->GetChoiseSkil());
 
 			if (Enemy_Atk_effect->GetIsDrawEnd())		//エフェクト描画終了したら
 			{
@@ -707,8 +708,7 @@ void Battle()
 			}
 			else if (Turn == (int)ENEMY_TURN)			//敵のターンの時
 			{
-				Enemy_Atk_effect->ResetIsAnime(enemy[EncounteEnemyType]->GetSkil());		//エフェクトリセット
-				//Magic_effect->ResetIsAnime(enemy[EncounteEnemyType]->GetSkil());		//エフェクトリセット
+				Enemy_Atk_effect->ResetIsAnime(enemy[EncounteEnemyType]->GetChoiseSkil());		//エフェクトリセット
 				Turn = (int)MY_TURN;				//味方のターンへ
 			}
 
