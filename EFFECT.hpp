@@ -152,7 +152,7 @@ public:
 	void ResetIsAnime(int);		//アニメーションがストップしたかをリセット
 
 	void Draw(int, int,int);			//描画
-	void Draw(int, int, int,int);		//描画(最大透過率を指定)
+	void DrawNormal(int, int, int);			//描画(フェードアウトなし)
 
 	bool Add(const char *, const char *, int, int, int, int, int, double, bool, int);	//エフェクト追加
 

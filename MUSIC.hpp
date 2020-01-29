@@ -14,6 +14,7 @@
 
 #define MY_MUSIC_NAME_BGM	R"(\bgm_op.mp3)"		//BGMの名前
 #define MY_SE_NAME_LEVUP	R"(\levelup.mp3)"		//SE（レベルアップ）の名前
+#define MY_SE_NAME_SLASH	R"(\slash.mp3)"			//斬るときの音の名前
 
 //##################### マクロ定義：エラーメッセージ ######################
 #define MUSIC_ERROR_TITLE "MUSIC_ERROR"					//エラータイトル
@@ -21,7 +22,7 @@
 
 //##################### マクロ定義 ##########################
 #define BGM_KIND	1	//BGMの種類
-#define SE_KIND		1	//SEの種類
+#define BT_SE_KIND	2	//バトルで使用するSEの種類
 
 //##################### 列挙型 #########################
 enum BGM_TYPE
@@ -29,9 +30,10 @@ enum BGM_TYPE
 	TITLE_BGM		//タイトル画面のBGM
 };
 
-enum SE_TYPE
+enum BT_SE_TYPE
 {
-	LEVELUP_SE		//レベルアップのSE
+	BT_SE_LEVELUP,		//レベルアップのSE
+	BT_SE_SLASH			//斬るときの音
 };
 
 //##################### クラス定義 ############################
@@ -48,6 +50,7 @@ private:
 	bool IsLoad;				//読み込めたか
 	std::vector<bool> IsPlay;	//再生中か
 	bool IsPlayEnd;				//再生終了したか
+	bool IsPlayed;				//再生済みか
 
 public:
 
@@ -69,5 +72,11 @@ public:
 	void SetIsPlayEnd(bool);				//再生終了したか設定
 
 	bool GetIsPlayEnd(void);				//再生終了したか取得
+
+	void SetIsPlayed(bool);					//再生済みか設定
+
+	bool GetIsPlayed(void);					//再生済みか取得
+
+	void Reset(void);						//再生状態リセット
 
 };

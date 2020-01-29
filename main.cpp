@@ -28,7 +28,7 @@ IMAGE *setumei;						//説明画像
 IMAGE *map_i;//マップ画像
 
 MUSIC *bgm;							//BGM
-MUSIC *se;							//SE
+MUSIC *bt_se;						//戦闘で使用するSE
 
 EFFECT *Magic_effect;				//魔法エフェクト
 EFFECT *Atack_effect;				//攻撃エフェクト
@@ -107,10 +107,15 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 	//音関係
 	bgm = new MUSIC(MY_MUSIC_DIR_BGM, MY_MUSIC_NAME_BGM,BGM_KIND);		//BGMを生成
 	if (bgm->GetIsLoad() == false) { return -1; }						//読み込み失敗時
-	se = new MUSIC(MY_MUSIC_DIR_SE, MY_SE_NAME_LEVUP, SE_KIND);			//SEを生成
-	if (se->GetIsLoad() == false) { return -1; }						//読み込み失敗時
-	se->ChengePlayType(DX_PLAYTYPE_BACK);								//再生方法変更
 
+	bt_se = new MUSIC(MY_MUSIC_DIR_SE, MY_SE_NAME_LEVUP, BT_SE_KIND);	//SEを生成
+	if (bt_se->GetIsLoad() == false) { return -1; }						//読み込み失敗時
+	bt_se->ChengePlayType(DX_PLAYTYPE_BACK);							//再生方法変更
+	//音の追加処理
+	if (bt_se->Add(MY_MUSIC_DIR_SE, MY_SE_NAME_SLASH, (int)BT_SE_SLASH) == false) { return -1; }	//斬るときの音追加
+
+
+	//フォント関係
 	font = new FONT(MY_FONT_DIR, MY_FONT_NAME, FONT_NAME);			//フォントを生成
 	if (font->GetIsLoad() == false) { return -1; }					//読み込み失敗時
 
@@ -658,13 +663,25 @@ void Battle()
 		{
 			if (ui->GetChoiseCommamd() == (int)COMMANDE_ATACK)	//攻撃を選んでいたら
 			{
-				//暗転率50％で描画
-				Atack_effect->Draw(ATK_DRAW_X, ATK_DRAW_Y, (int)NOMAL_ATACK,50);	//攻撃エフェクト描画
+				//フェードアウトなしで描画
+				Atack_effect->DrawNormal(ATK_DRAW_X, ATK_DRAW_Y, (int)NOMAL_ATACK);	//攻撃エフェクト描画
+
+				if (bt_se->GetIsPlayed() == false)		//再生済みでなければ
+				{
+					if (bt_se->GetIsPlay((int)BT_SE_SLASH) == false)		//再生中じゃなければ
+					{
+						bt_se->Play((int)BT_SE_SLASH);		//斬るときのSEを鳴らす
+						bt_se->SetIsPlayEnd(true);			//再生終了
+						bt_se->SetIsPlayed(true);			//再生済み
+					}
+
+				}
+
 			}
 			else if (ui->GetChoiseCommamd() == (int)COMMANDE_MAGIC)	//魔法を選んでいたら
 			{
-				//暗転率50％で描画
-				Magic_effect->Draw((GAME_WIDTH / 2 - MAGIC_WIDTH / 2), (GAME_HEIGHT / 2 - MAGIC_HEIGHT / 2), player->GetChoiseSkil(),50);	//魔法エフェクト描画
+				//フェードアウトなしで描画
+				Magic_effect->DrawNormal((GAME_WIDTH / 2 - MAGIC_WIDTH / 2), (GAME_HEIGHT / 2 - MAGIC_HEIGHT / 2), player->GetChoiseSkil());	//魔法エフェクト描画
 			}
 
 			if (Magic_effect->GetIsDrawEnd()||Atack_effect->GetIsDrawEnd())		//エフェクト描画が終了したら
@@ -714,6 +731,7 @@ void Battle()
 				if (ui->GetChoiseCommamd() == (int)COMMANDE_ATACK)	//攻撃を選んだ時は
 				{
 					Atack_effect->ResetIsAnime((int)NOMAL_ATACK);		//攻撃エフェクトリセット
+					bt_se->Reset();	//SEの再生状態をリセット
 				}
 				else							//攻撃以外を選んだ時は
 				{
@@ -798,10 +816,10 @@ void Battle()
 			{
 				if (player->GetLevUpMsgStartFlg())			//レベルアップしていたら
 				{
-					if (se->GetIsPlay((int)LEVELUP_SE) == false)		//再生中じゃなければ
+					if (bt_se->GetIsPlay((int)BT_SE_LEVELUP) == false)		//再生中じゃなければ
 					{
-						se->Play((int)LEVELUP_SE);		//レベルアップのSEを鳴らす
-						se->SetIsPlayEnd(true);			//再生終了
+						bt_se->Play((int)BT_SE_LEVELUP);		//レベルアップのSEを鳴らす
+						bt_se->SetIsPlayEnd(true);			//再生終了
 						player->SetLevUpMsgStartFlg(false);	//レベルアップ終了
 					}
 				}
@@ -935,13 +953,15 @@ void Init()
 {
 	ChengeDrawCount = 0;		//フェードイン用初期化
 
-	se->SetIsPlayEnd(false);	//SEの再生状態リセット
+	bt_se->SetIsPlayEnd(false);	//SEの再生状態リセット
 
 	if (GameSceneBefor == (int)GAME_SCENE_BATTLE)	//戦闘画面から遷移した場合
 	{
 		enemy[EncounteEnemyType]->StateSetInit();		//遭遇した敵初期化
 
 		ui->BattleInit();			//バトルコマンド初期化
+
+		bt_se->Reset();				//SEの再生状態をリセット
 
 		EncounteEnemyType = 0;		//遭遇した敵の種類をリセット
 
@@ -1164,7 +1184,7 @@ void Delete_Class()
 	delete keydown;			//keydownを破棄
 	delete font;			//fontを破棄
 	delete bgm;				//bgmを破棄
-	delete se;				//seを破棄
+	delete bt_se;				//seを破棄
 	delete player;			//playerを破棄
 	delete back;			//backを破棄
 	delete back_battle;		//back_battleを破棄

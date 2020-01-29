@@ -229,38 +229,15 @@ void EFFECT::Draw(int x, int y,int type)
 
 }
 
-//描画(最大透過率を指定する)
+//描画（フェードアウトなし）
 /*
 引数：int：Xの描画位置
 引数：int：Yの描画位置
 引数：int：描画するエフェクトの種類
-引数：int：最大透過率(0～100%)
 */
-void EFFECT::Draw(int x, int y, int type,int maxtouka)
+void EFFECT::DrawNormal(int x, int y, int type)
 {
 
-	static int cnt = 0;		//フェードアウト用
-	static int cntMax = 60;	//フェードアウト用
-	static bool flg = false;//フェードアウト終了フラグ
-
-	//60フレーム分、待つ
-	if (cnt < cntMax)
-	{
-		cnt++;	//カウントアップ
-	}
-	else
-	{
-		flg = true;	//フェードアウト処理終了
-	}
-
-	//フェードアウトの処理
-	double ToukaPercent = (cnt / ( 100 / maxtouka)) / (double)cntMax;//透過％を求める
-	SetDrawBlendMode(DX_BLENDMODE_ALPHA, ToukaPercent * 255);	//透過させる
-	DrawBox(0, 0, GAME_WIDTH, GAME_HEIGHT, GetColor(0, 0, 0), TRUE);	//真っ暗な画面にする
-	SetDrawBlendMode(DX_BLENDMODE_NOBLEND, 0);	//透過をやめる
-
-	if (flg)		//フェードアウトが終了していたら
-	{
 		if (this->IsAnimeStop[type] == false)	//アニメーションをストップさせないなら
 		{
 			DrawGraph(x, y, *this->Handle_itr, TRUE);	//イテレータ(ポインタ)を使用して描画
@@ -268,8 +245,6 @@ void EFFECT::Draw(int x, int y, int type,int maxtouka)
 		else
 		{
 			this->IsDrawEnd = true;		//描画終了
-			flg = false;	//フェードアウトフラグリセット
-			cnt = 0;		//フェードアウトカウントリセット
 		}
 
 		if (this->ChangeCnt == this->ChangeMaxCnt)	//次の画像を表示する時がきたら
@@ -298,11 +273,11 @@ void EFFECT::Draw(int x, int y, int type,int maxtouka)
 			this->ChangeCnt++;	//カウントアップ
 		}
 
-	}
-	else
-	{
-		this->Handle_itr = this->Handle[type].begin();		//指定されたエフェクトタイプのハンドルを代入
-	}
+	//}
+	//else
+	//{
+	//	this->Handle_itr = this->Handle[type].begin();		//指定されたエフェクトタイプのハンドルを代入
+	//}
 
 	return;
 

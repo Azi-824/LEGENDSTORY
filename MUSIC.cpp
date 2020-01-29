@@ -51,6 +51,7 @@ MUSIC::MUSIC(const char *dir, const char *name,int kind)
 	this->IsLoad = true;				//読み込み成功
 
 	this->IsPlayEnd = false;			//再生終了していない
+	this->IsPlayed = false;				//再生済みでない
 
 	return;
 
@@ -162,4 +163,25 @@ void MUSIC::SetIsPlayEnd(bool isend)
 bool MUSIC::GetIsPlayEnd(void)
 {
 	return this->IsPlayEnd;
+}
+
+//再生済みか設定
+void MUSIC::SetIsPlayed(bool Isplayed)
+{
+	this->IsPlayed = Isplayed;
+	return;
+}
+
+//再生済みか取得
+bool MUSIC::GetIsPlayed(void)
+{
+	return this->IsPlayed;
+}
+
+//再生状態リセット
+void MUSIC::Reset(void)
+{
+	this->IsPlayed = false;	//再生済みではない
+	this->IsPlayEnd = false;	//再生終了していない
+	return;
 }
