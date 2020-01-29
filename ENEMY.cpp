@@ -195,7 +195,8 @@ bool ENEMY::GetIsLoad()
 //使用するスキルの種類を取得
 int ENEMY::GetChoiseSkil()
 {
-	return this->ChoiseSkil;
+	//return this->ChoiseSkil;
+	return 2;
 }
 
 //行動決定処理

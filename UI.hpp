@@ -72,6 +72,8 @@ private:
 	std::vector<std::string> Str;	//文字列格納用
 	std::vector<std::string>::iterator Str_itr;	//イテレータ
 
+	bool IsDrawUIAnime;				//UIのアニメーションを描画してよいか
+
 public:
 
 	UI();					//コンストラクタ
@@ -112,6 +114,8 @@ public:
 	//アニメーション関係
 	bool AddUiAnime(const char *, const char *, int, int, int, int, int, double, bool);	//アニメーション画像を追加する
 	void DrawUiAnime(int,int);			//アニメーション画像を描画する
+	void SetIsDrawUIAnime(bool);		//アニメーション画像を描画してよいか設定
+	bool GetIsDrawUIAnime(void);		//アニメーション画像を描画してよいか取得
 
 	//選択肢を描画
 	/*

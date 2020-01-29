@@ -20,6 +20,7 @@
 #define MY_ANIME_NAME_MAGIC2	R"(magic2.png)"					//魔法エフェクト2の画像の名前
 #define MY_ANIME_NAME_ENE_ATK_TUME	R"(tume.png)"				//敵の攻撃（爪）のエフェクト画像の名前
 #define MY_ANIME_NAME_ENE_ATK_KIBA	R"(kiba.png)"				//敵の攻撃（牙）のエフェクト画像の名前
+#define MY_ANIME_NAME_ENE_ATK_TAIL_BIG	R"(tail_big.png)"		//敵の攻撃（尻尾大）のエフェクト画像の名前
 
 //###################### マクロ定義：エラーメッセージ ########################
 #define EFFECT_ERROR_TTILE	"EFFECT_ERROR"						//エラータイトル
@@ -39,6 +40,8 @@
 #define ENE_ATK_TUME_HEIGHT	240	//分割高さ
 #define ENE_ATK_KIBA_WIDTH	240	//分割幅
 #define ENE_ATK_KIBA_HEIGHT	240	//分割高さ
+#define ENE_ATK_TAIL_BIG_WIDTH 880	//分割幅
+#define ENE_ATK_TAIL_BIG_HEIGHT	640	//分割高さ
 
 
 //********************** 分割数 **************************
@@ -55,6 +58,8 @@
 #define ENE_ATK_TUME_TATE_CNT 2	//縦分割数
 #define ENE_ATK_KIBA_YOKO_CNT 5	//横分割数
 #define ENE_ATK_KIBA_TATE_CNT 2	//縦分割数
+#define ENE_ATK_TAIL_BIG_YOKO_CNT	5	//横分割数
+#define ENE_ATK_TAIL_BIG_TATE_CNT	2	//縦分割数
 
 
 //************************ 総分割数 **************************
@@ -66,7 +71,7 @@
 //敵の攻撃
 #define ENE_ATK_TUME_ALL_CNT 8	//総分割数
 #define ENE_ATK_KIBA_ALL_CNT 8	//総分割数
-
+#define ENE_ATK_TAIL_BIG_ALL_CNT ENE_ATK_TAIL_BIG_YOKO_CNT * ENE_ATK_TAIL_BIG_TATE_CNT	//総分割数
 
 //************************ 描画速度 ***************************
 //攻撃
@@ -76,6 +81,7 @@
 //敵の攻撃
 #define ENE_ATK_TUME_SPEED	0.05
 #define ENE_ATK_KIBA_SPEED	0.05
+#define ENE_ATK_TAIL_BIG_SPEED	0.05
 
 
 #define ATK_DRAW_X		375
@@ -83,7 +89,7 @@
 
 #define MAGIC_EFFECT_KIND		2			//魔法エフェクトの種類
 #define ATACK_EFFECT_KIND		1			//攻撃エフェクトの種類
-#define ENE_ATK_EFFECT_KIND		2			//敵攻撃エフェクトの種類
+#define ENE_ATK_EFFECT_KIND		3			//敵攻撃エフェクトの種類
 
 //###################### 列挙型 ##########################
 enum MAGIC_EFFECT_TYPE
@@ -99,8 +105,9 @@ enum ATACK_EFFECT_TYPE
 
 enum ENEMY_ATACK_EFFECT_TYPE
 {
-	ENE_ATK_TUME,	//爪攻撃
-	ENE_ATK_KIBA	//牙攻撃
+	ENE_ATK_TUME,		//爪攻撃
+	ENE_ATK_KIBA,		//牙攻撃
+	ENE_ATK_TAIL_BIG	//尻尾（大）攻撃
 };
 
 //###################### クラス定義 ################################

@@ -137,9 +137,9 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 	//敵攻撃エフェクト
 	Enemy_Atk_effect = new EFFECT(MY_ANIME_DIR_ENE_ATK, MY_ANIME_NAME_ENE_ATK_TUME, ENE_ATK_TUME_ALL_CNT, ENE_ATK_TUME_YOKO_CNT, ENE_ATK_TUME_TATE_CNT, ENE_ATK_TUME_WIDTH, ENE_ATK_TUME_HEIGHT, ENE_ATK_TUME_SPEED, false,ENE_ATK_EFFECT_KIND);
 	if (Enemy_Atk_effect->GetIsLoad() == false) { return -1; }		//読み込み失敗
-	//追加
+	//敵攻撃エフェクト追加
 	if (Enemy_Atk_effect->Add(MY_ANIME_DIR_ENE_ATK, MY_ANIME_NAME_ENE_ATK_KIBA, ENE_ATK_KIBA_ALL_CNT, ENE_ATK_KIBA_YOKO_CNT, ENE_ATK_KIBA_TATE_CNT, ENE_ATK_KIBA_WIDTH, ENE_ATK_KIBA_HEIGHT, ENE_ATK_KIBA_SPEED, false, (int)ENE_ATK_KIBA) == false) { return -1; }	//読み込み失敗
-
+	if (Enemy_Atk_effect->Add(MY_ANIME_DIR_ENE_ATK, MY_ANIME_NAME_ENE_ATK_TAIL_BIG, ENE_ATK_TAIL_BIG_ALL_CNT, ENE_ATK_TAIL_BIG_YOKO_CNT, ENE_ATK_TAIL_BIG_TATE_CNT, ENE_ATK_TAIL_BIG_WIDTH, ENE_ATK_TAIL_BIG_HEIGHT, ENE_ATK_TAIL_BIG_SPEED, false, (int)ENE_ATK_TAIL_BIG) == false) { return -1; }	//読み込み失敗
 
 	//プレイヤー関係
 	player = new PLAYER();		//プレイヤー生成
@@ -501,6 +501,9 @@ void Battle()
 			bt_msg[(int)BT_MSG_ACT]->DrawMsg(BT_MSG_DRAW_X, BT_MSG_DRAW_Y, GetColor(255, 255, 255));	//メッセージ描画
 			if (bt_msg[(int)BT_MSG_ACT]->GetIsLastMsg())	//最後のメッセージだったら
 			{
+
+				ui->SetIsDrawUIAnime(false);		//UIのアニメーション非表示
+
 				ui->ChoiseOperation(keydown);		//バトルコマンドキー操作
 
 				if (keydown->IsKeyDownOne(KEY_INPUT_RETURN))	//エンターキーを押されたら
@@ -580,6 +583,9 @@ void Battle()
 			player->DamegeCalc(enemy[EncounteEnemyType],ui->GetChoiseCommamd());		//ダメージ計算
 
 			//▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼ メッセージ設定処理ここから ▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼
+
+			ui->SetIsDrawUIAnime(true);			//UIのアニメーション表示
+
 			//味方
 			if (ui->GetChoiseCommamd() == (int)COMMANDE_DEFENSE)	//防御を選んだ時
 			{

@@ -18,6 +18,8 @@ UI::UI()
 
 	this->ChoiseMenu = -1;					//メニュー画面での選択内容を初期化
 
+	this->IsDrawUIAnime = true;				//UIのアニメーションを描画してよい
+
 	//アニメーション画像を生成（テキストポーズ）
 	this->UiAnime = new ANIMATION(TXT_POSE_DIR, TXT_POSE_NAME, TXT_POSE_ALL_CNT, TXT_POSE_YOKO_CNT, TXT_POSE_TATE_CNT, TXT_POSE_WIDTH, TXT_POSE_HEIGHT, TXT_POSE_SPEED, true);
 
@@ -304,5 +306,23 @@ bool UI::AddUiAnime(const char *dir, const char *name, int SplitNumALL, int Spri
 //UIアニメ描画
 void UI::DrawUiAnime(int x,int y)
 {
-	this->UiAnime->DrawAnime(x, y);	//アニメーション描画
+	if (this->IsDrawUIAnime)	//描画してよい時は
+	{
+		this->UiAnime->DrawAnime(x, y);	//アニメーション描画
+	}
+
+	return;
+}
+
+//アニメーション画像を描画してよいか設定
+void UI::SetIsDrawUIAnime(bool Isdrawuianime)
+{
+	this->IsDrawUIAnime = Isdrawuianime;
+	return;
+}
+
+//アニメーション画像を描画してよいか取得
+bool UI::GetIsDrawUIAnime(void)
+{
+	return this->IsDrawUIAnime;
 }
