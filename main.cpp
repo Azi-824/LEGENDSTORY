@@ -666,13 +666,12 @@ void Battle()
 				//フェードアウトなしで描画
 				Atack_effect->DrawNormal(ATK_DRAW_X, ATK_DRAW_Y, (int)NOMAL_ATACK);	//攻撃エフェクト描画
 
-				if (bt_se->GetIsPlayed() == false)		//再生済みでなければ
+				if (bt_se->GetIsPlayed((int)BT_SE_SLASH) == false)		//再生済みでなければ
 				{
 					if (bt_se->GetIsPlay((int)BT_SE_SLASH) == false)		//再生中じゃなければ
 					{
-						bt_se->Play((int)BT_SE_SLASH);		//斬るときのSEを鳴らす
-						bt_se->SetIsPlayEnd(true);			//再生終了
-						bt_se->SetIsPlayed(true);			//再生済み
+						bt_se->Play((int)BT_SE_SLASH);						//斬るときのSEを鳴らす
+						bt_se->SetIsPlayed((int)BT_SE_SLASH,true);			//再生済み
 					}
 
 				}
@@ -818,8 +817,8 @@ void Battle()
 				{
 					if (bt_se->GetIsPlay((int)BT_SE_LEVELUP) == false)		//再生中じゃなければ
 					{
-						bt_se->Play((int)BT_SE_LEVELUP);		//レベルアップのSEを鳴らす
-						bt_se->SetIsPlayEnd(true);			//再生終了
+						bt_se->Play((int)BT_SE_LEVELUP);	//レベルアップのSEを鳴らす
+						bt_se->SetIsPlayed((int)BT_SE_SLASH,true);			//再生済み
 						player->SetLevUpMsgStartFlg(false);	//レベルアップ終了
 					}
 				}
@@ -952,8 +951,6 @@ void Chenge()
 void Init()
 {
 	ChengeDrawCount = 0;		//フェードイン用初期化
-
-	bt_se->SetIsPlayEnd(false);	//SEの再生状態リセット
 
 	if (GameSceneBefor == (int)GAME_SCENE_BATTLE)	//戦闘画面から遷移した場合
 	{

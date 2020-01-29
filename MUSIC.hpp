@@ -49,8 +49,8 @@ private:
 
 	bool IsLoad;				//読み込めたか
 	std::vector<bool> IsPlay;	//再生中か
-	bool IsPlayEnd;				//再生終了したか
-	bool IsPlayed;				//再生済みか
+
+	std::vector<bool>IsPlayed;	//再生済みか
 
 public:
 
@@ -69,13 +69,9 @@ public:
 
 	bool Add(const char*, const char*, int);	//音を追加する
 
-	void SetIsPlayEnd(bool);				//再生終了したか設定
+	void SetIsPlayed(int,bool);				//再生済みか設定
 
-	bool GetIsPlayEnd(void);				//再生終了したか取得
-
-	void SetIsPlayed(bool);					//再生済みか設定
-
-	bool GetIsPlayed(void);					//再生済みか取得
+	bool GetIsPlayed(int);					//再生済みか取得
 
 	void Reset(void);						//再生状態リセット
 

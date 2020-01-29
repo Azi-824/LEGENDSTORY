@@ -18,6 +18,7 @@ MUSIC::MUSIC(const char *dir, const char *name,int kind)
 
 	this->Handle.resize(kind);		//サイズ変更
 	this->IsPlay.resize(kind);		//サイズ変更
+	this->IsPlayed.resize(kind);	//サイズ変更
 
 	this->IsLoad = false;	//読み込めたか？
 
@@ -50,8 +51,10 @@ MUSIC::MUSIC(const char *dir, const char *name,int kind)
 
 	this->IsLoad = true;				//読み込み成功
 
-	this->IsPlayEnd = false;			//再生終了していない
-	this->IsPlayed = false;				//再生済みでない
+	for (int i = 0; i < this->IsPlayed.size(); ++i)
+	{
+		this->IsPlayed[i] = false;				//再生済みでない
+	}
 
 	return;
 
@@ -76,6 +79,10 @@ MUSIC::~MUSIC()
 	//vectorのメモリ解放を行う
 	std::vector<bool> v2;		//空のvectorを作成する
 	this->IsPlay.swap(v2);		//空と中身を入れ替える
+
+	//vectorのメモリ解放を行う
+	std::vector<bool> v3;		//空のvectorを作成する
+	this->IsPlayed.swap(v3);		//空と中身を入れ替える
 
 	return;
 }
@@ -152,36 +159,27 @@ bool MUSIC::Add(const char *dir, const char *name, int kind)
 
 }
 
-//再生終了したか設定
-void MUSIC::SetIsPlayEnd(bool isend)
-{
-	this->IsPlayEnd = isend;
-	return;
-}
-
-//再生終了したか取得
-bool MUSIC::GetIsPlayEnd(void)
-{
-	return this->IsPlayEnd;
-}
-
 //再生済みか設定
-void MUSIC::SetIsPlayed(bool Isplayed)
+void MUSIC::SetIsPlayed(int kind,bool Isplayed)
 {
-	this->IsPlayed = Isplayed;
+	this->IsPlayed[kind] = Isplayed;
 	return;
 }
 
 //再生済みか取得
-bool MUSIC::GetIsPlayed(void)
+bool MUSIC::GetIsPlayed(int kind)
 {
-	return this->IsPlayed;
+	return this->IsPlayed[kind];
 }
 
 //再生状態リセット
 void MUSIC::Reset(void)
 {
-	this->IsPlayed = false;	//再生済みではない
-	this->IsPlayEnd = false;	//再生終了していない
+
+	for (int i = 0; i < this->IsPlayed.size(); ++i)	//全ての要素
+	{
+		this->IsPlayed[i] = false;	//再生済みではない
+	}
+
 	return;
 }
