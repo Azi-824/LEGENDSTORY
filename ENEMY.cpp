@@ -192,5 +192,5 @@ bool ENEMY::GetIsLoad()
 //使用するスキルの種類を取得
 int ENEMY::GetSkil()
 {
-	return this->Skil[0];
+	return this->Skil[1];
 }

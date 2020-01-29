@@ -17,15 +17,16 @@
 引　数：int：画像の分割された縦の大きさ
 引　数：double：次の画像に変更する速さ
 引　数：bool：アニメーションをループするかどうか
+引　数：int：サイズ
 */
-EFFECT::EFFECT(const char *dir, const char *name, int SplitNumALL, int SpritNumX, int SplitNumY, int SplitWidth, int SplitHeight, double changeSpeed, bool IsLoop)
+EFFECT::EFFECT(const char *dir, const char *name, int SplitNumALL, int SpritNumX, int SplitNumY, int SplitWidth, int SplitHeight, double changeSpeed, bool IsLoop,int size)
 {
 	//メンバ変数初期化
-	this->Handle.resize(MAGIC_EFFECT_KIND);		//エフェクトの種類数でサイズ変更
-	this->Width.resize(MAGIC_EFFECT_KIND);		//エフェクトの種類数でサイズ変更
-	this->Height.resize(MAGIC_EFFECT_KIND);		//エフェクトの種類数でサイズ変更
-	this->IsAnimeLoop.resize(MAGIC_EFFECT_KIND);	//エフェクトの種類数でサイズ変更
-	this->IsAnimeStop.resize(MAGIC_EFFECT_KIND);	//エフェクトの種類数でサイズ変更
+	this->Handle.resize(size);		//エフェクトの種類数でサイズ変更
+	this->Width.resize(size);		//エフェクトの種類数でサイズ変更
+	this->Height.resize(size);		//エフェクトの種類数でサイズ変更
+	this->IsAnimeLoop.resize(size);	//エフェクトの種類数でサイズ変更
+	this->IsAnimeStop.resize(size);	//エフェクトの種類数でサイズ変更
 
 	this->Handle[0].resize(SplitNumALL);	//分割総数でサイズ変更
 	this->Handle_itr = this->Handle[0].begin();	//先頭要素を代入
