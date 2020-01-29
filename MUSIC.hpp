@@ -18,8 +18,9 @@
 #define MY_SE_NAME_SLASH	R"(\slash.mp3)"			//斬るときの音の名前
 #define MY_SE_NAME_THUNDER	R"(\thunder.mp3)"		//雷の音の名前
 
-#define MY_SE_NAME_CURSOR	R"(\cursor.wav)"		//カーソルの移動音の名前
+#define MY_SE_NAME_CURSOR	R"(\select.mp3)"		//カーソルの移動音の名前
 #define MY_SE_NAME_CANSEL	R"(\cancel.wav)"		//キャンセル音の名前
+#define MY_SE_NAME_KETTEI	R"(\kettei.mp3)"		//決定の音の名前
 
 //##################### マクロ定義：エラーメッセージ ######################
 #define MUSIC_ERROR_TITLE "MUSIC_ERROR"					//エラータイトル
@@ -28,7 +29,7 @@
 //##################### マクロ定義 ##########################
 #define BGM_KIND	1	//BGMの種類
 #define BT_SE_KIND	3	//バトルで使用するSEの種類
-#define SYS_SE_KIND	2	//システムのSEの種類
+#define SYS_SE_KIND	3	//システムのSEの種類
 
 //##################### 列挙型 #########################
 enum BGM_TYPE
@@ -46,7 +47,8 @@ enum BT_SE_TYPE
 enum SYS_SE_TYPE
 {
 	SYS_SE_CURSOR,		//カーソルの移動音
-	SYS_SE_CANSEL		//キャンセル音
+	SYS_SE_CANSEL,		//キャンセル音
+	SYS_SE_KETTEI		//決定音
 };
 
 //##################### クラス定義 ############################

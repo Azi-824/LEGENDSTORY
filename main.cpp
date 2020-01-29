@@ -123,7 +123,7 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 	sys_se->ChengePlayType(DX_PLAYTYPE_BACK);									//再生方法変更
 	//音の追加処理
 	if (sys_se->Add(MY_MUSIC_DIR_SYS_SE, MY_SE_NAME_CANSEL, (int)SYS_SE_CANSEL) == false) { return -1; }	//キャンセル音追加
-
+	if (sys_se->Add(MY_MUSIC_DIR_SYS_SE, MY_SE_NAME_KETTEI, (int)SYS_SE_KETTEI) == false) { return -1; }	//決定音追加
 
 
 	//フォント関係
@@ -379,6 +379,8 @@ void Title()
 	//▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼ 画面遷移の処理 ▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼
 	if (keydown->IsKeyDown(KEY_INPUT_RETURN))				//エンターキーを押されたら
 	{
+		sys_se->Play((int)SYS_SE_KETTEI);	//決定音を鳴らす
+
 		if (*ui->GetNowChoise() == "START")		//選択している文字列が"START"だったら
 		{
 			SceneChenge(GameSceneNow, (int)GAME_SCENE_PLAY);	//次の画面はプレイ画面
@@ -457,6 +459,8 @@ void Play()
 
 		if (keydown->IsKeyDownOne(KEY_INPUT_RETURN))	//エンターキーを押されたら
 		{
+			sys_se->Play((int)SYS_SE_KETTEI);			//決定音を鳴らす
+
 			ui->SetChoiseMenu(ui->GetNowChoise());		//選択した内容をセット
 
 		}
@@ -526,6 +530,9 @@ void Battle()
 
 				if (keydown->IsKeyDownOne(KEY_INPUT_RETURN))	//エンターキーを押されたら
 				{
+
+					sys_se->Play((int)SYS_SE_KETTEI);	//決定音を鳴らす
+
 					ui->SetBattleFlg();	//選択したコマンドを設定
 
 				}
@@ -535,6 +542,8 @@ void Battle()
 			{
 				if (keydown->IsKeyDownOne(KEY_INPUT_RETURN))		//エンターキーを押されたら
 				{
+					sys_se->Play((int)SYS_SE_KETTEI);	//決定音を鳴らす
+
 					bt_msg[(int)BT_MSG_ACT]->NextMsg();				//次のメッセージへ
 				}
 			}
@@ -652,6 +661,9 @@ void Battle()
 
 		if (keydown->IsKeyDownOne(KEY_INPUT_RETURN))		//エンターキーを押されたら
 		{
+
+			sys_se->Play((int)SYS_SE_KETTEI);	//決定音を鳴らす
+
 			if (Turn == (int)MY_TURN)		//味方のターンだったら
 			{
 				if (ui->GetChoiseCommamd() == (int)COMMANDE_ESCAPE)		//逃げるを選んだら
@@ -750,6 +762,8 @@ void Battle()
 		if (keydown->IsKeyDownOne(KEY_INPUT_RETURN))	//エンターキーを押されたら
 		{
 
+			sys_se->Play((int)SYS_SE_KETTEI);	//決定音を鳴らす
+
 			bt_se->Reset();	//SEの再生状態をリセット
 
 			if (Turn == (int)MY_TURN)			//味方のターンの時
@@ -835,6 +849,8 @@ void Battle()
 		if (keydown->IsKeyDownOne(KEY_INPUT_RETURN))		//エンターキーを押されたとき
 		{
 
+			sys_se->Play((int)SYS_SE_KETTEI);	//決定音を鳴らす
+
 			bt_msg[(int)BT_MSG_RESULT]->NextMsg();	//次のメッセージへ
 
 			if (bt_msg[(int)BT_MSG_RESULT]->GetIsLastMsg())		//最後のメッセージだったら
@@ -897,6 +913,9 @@ void End()
 	//▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼ 画面遷移の処理 ▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼
 	if (keydown->IsKeyDown(KEY_INPUT_RETURN))	//エンターキーを押された瞬間
 	{
+
+		sys_se->Play((int)SYS_SE_KETTEI);	//決定音を鳴らす
+
 		if (*ui->GetNowChoise() == "TITLE")		//選択している文字列が"TITLE"だったら
 		{
 			SceneChenge(GameSceneNow, (int)GAME_SCENE_TITLE);	//次の画面はタイトル画面
