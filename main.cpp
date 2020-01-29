@@ -45,7 +45,6 @@ ENEMY *enemy[ENEMY_KIND];			//敵
 ITEM *item[ITEM_KIND];				//アイテム
 
 MAP *mapdata_field[DRAW_MAP_KIND][MAP_DATA_KIND];		//マップデータ（フィールド）
-//MAP *mapdata_city[MAP_DATA_KIND];		//マップデータ（街）
 
 //############## グローバル変数 ##############
 int GameSceneNow = (int)GAME_SCENE_TITLE;	//現在のゲームシーン
@@ -255,6 +254,9 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 			cnt++;
 		}
 	}
+
+	//現在のマップ位置を読み込んで設定
+	if (data->LoadNowMap(&NowDrawMapKind, MapNowPos, MAPPOS_DATA_DIR, MAPPOS_DATA_NAME) == false) { return -1; }	//読み込み失敗
 	//▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲ マップデータ読み込みここまで ▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲
 
 
@@ -437,6 +439,7 @@ void Play()
 				if (Wait())			//待ち時間が過ぎたら
 				{
 					data->Save(player, PLAYER_DATA_DIR, PLAYER_DATA_NAME);		//プレイヤー情報のセーブ
+					data->SaveMap(NowDrawMapKind, MapNowPos, MAPPOS_DATA_DIR, MAPPOS_DATA_NAME);	//マップ位置のセーブ
 					player->SetIsMenu(false);		//メニュー描画終了
 				}
 
@@ -463,10 +466,6 @@ void Play()
 		{
 			Enconte();			//敵との遭遇判定
 		}
-		//else if (player->CheckDetectionMap(mapdata_field[NowDrawMapKind][MapKind[MAPPOS_Y][MAPPOS_X]]->GetRect((int)MAP_WARP)))	//街へ移動するマップだったら
-		//{
-
-		//}
 	}
 
 	//▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲ 画面遷移の処理 ▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲

@@ -254,6 +254,44 @@ bool DATA::LoadMsg(MESSAGE *msg, const char *dir, const char *name)
 
 }
 
+//読み込み（現在のマップ位置）
+bool DATA::LoadNowMap(int *nowmapdrawkind, int *nowmapkind, const char *dir, const char *name)
+{
+	std::string LoadFile;
+	LoadFile += dir;
+	LoadFile += name;
+
+	std::ifstream ifs(LoadFile.c_str());	//ファイル読み取り
+
+	if (!ifs)		//ファイルオープン失敗時
+	{
+		std::string ErrorMsg(DATA_ERROR_MSG);	//エラーメッセージ作成
+		ErrorMsg += TEXT('\n');						//改行
+		ErrorMsg += LoadFile;					//画像のパス
+
+		MessageBox(
+			NULL,
+			ErrorMsg.c_str(),	//char * を返す
+			TEXT(DATA_ERROR_TTILE),
+			MB_OK);
+
+		return false;	//読み込み失敗
+
+	}
+
+	std::string buf;
+
+	std::getline(ifs, buf, ',');			//カンマまで読み込み
+	*nowmapdrawkind = atoi(buf.c_str());	//現在の描画マップの種類
+
+	std::getline(ifs, buf, ',');			//改行まで読み込み
+	nowmapkind[0] = atoi(buf.c_str());		//現在のマップの種類
+	std::getline(ifs, buf, '\n');			//改行まで読み込み
+	nowmapkind[1] = atoi(buf.c_str());		//現在のマップの種類
+
+	return true;			//読み込み成功
+
+}
 
 //セーブ
 bool DATA::Save(PLAYER *player ,const char *dir,const char *name)
@@ -321,4 +359,38 @@ bool DATA::Save(PLAYER *player ,const char *dir,const char *name)
 	skil.swap(v);				//空と中身を入れ替える
 
 	return true;		//セーブ成功
+}
+
+//現在のマップ位置をセーブ
+bool DATA::SaveMap(int nowmapdrawkind, int nowmapkind[],const char *dir,const char *name)
+{
+	std::string LoadFile;
+	LoadFile += dir;
+	LoadFile += name;
+
+	std::ofstream ofs(LoadFile.c_str(), std::ios_base::ate);	//ファイルオープン
+
+	if (!ofs)		//ファイルオープン失敗時
+	{
+		std::string ErrorMsg(DATA_ERROR_MSG);	//エラーメッセージ作成
+		ErrorMsg += TEXT('\n');						//改行
+		ErrorMsg += LoadFile;					//画像のパス
+
+		MessageBox(
+			NULL,
+			ErrorMsg.c_str(),	//char * を返す
+			TEXT(DATA_ERROR_TTILE),
+			MB_OK);
+
+		return false;		//セーブ失敗
+
+	}
+
+	//現在のマップ位置を書き出す
+	ofs << nowmapdrawkind << ',';		//現在の描画マップの種類
+	ofs << nowmapkind[0] << ',' ;		//現在のマップの種類
+	ofs << nowmapkind[1] << std::endl;
+
+	return true;		//セーブ成功
+
 }

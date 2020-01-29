@@ -50,6 +50,7 @@ bool PLAYER::SetInit()
 	this->IsActMsg = false;		//行動メッセージ表示していない
 	this->IsBattleWin = false;	//戦闘に勝っていない
 	this->LevUpMsgStart_flg = false;	//レベルアップメッセージを表示していない
+	this->ChengeMapKind = (int) MAP_CHENGE_NONE;			//マップ切り替えなし
 
 	//描画領域作成
 	this->sikaku_draw->SetValue(this->sikaku_draw->Left,
