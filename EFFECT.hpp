@@ -25,29 +25,49 @@
 #define EFFECT_ERROR_MSG	"エフェクトが読み込めませんでした"	//エラーメッセージ
 
 //###################### マクロ定義 #################################
+//攻撃
 #define ATK_WIDTH		120	//分割する幅の大きさ
 #define ATK_HEIGHT		120	//分割する高さの大きさ
+
+//魔法
 #define MAGIC_WIDTH		880	//分割する幅の大きさ
 #define MAGIC_HEIGHT	640	//分割する高さの大きさ
+
+//敵の攻撃
 #define ENE_ATK_TUME_WIDTH	240	//分割幅
 #define ENE_ATK_TUME_HEIGHT	240	//分割高さ
 
+//攻撃
 #define ATK_YOKO_CNT	9
 #define ATK_TATE_CNT	1
+
+//魔法
 #define MAGIC_YOKO_CNT	1
 #define MAGIC_TATE_CNT	12
 #define MAGIC2_YOKO_CNT	5
 #define MAGIC2_TATE_CNT	5
+
+//敵の攻撃
 #define ENE_ATK_TUME_YOKO_CNT 5	//横分割数
 #define ENE_ATK_TUME_TATE_CNT 2	//縦分割数
 
+//攻撃
 #define ATK_ALL_CNT	ATK_YOKO_CNT * ATK_TATE_CNT
+
+//魔法
 #define MAGIC_ALL_CNT MAGIC_YOKO_CNT * MAGIC_TATE_CNT
 #define MAGIC2_ALL_CNT	MAGIC2_YOKO_CNT * MAGIC2_TATE_CNT
+
+//敵の攻撃
 #define ENE_ATK_TUME_ALL_CNT 8	//総分割数
 
+//攻撃
 #define ATK_SPEED		 0.02
+
+//魔法
 #define MAGIC_SPEED		 0.02
+
+//敵の攻撃
 #define ENE_ATK_TUME_SPEED	0.1
 
 #define ATK_DRAW_X		375
