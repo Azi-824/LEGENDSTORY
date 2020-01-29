@@ -1109,7 +1109,7 @@ void Enconte()
 				EncounteEnemyType = i;		//遭遇した敵を設定
 
 				//描画文字設定
-				Work_Str = "通りすがりの";
+				Work_Str = "バイト帰りの";
 				Work_Str += enemy[EncounteEnemyType]->GetName();		//遭遇した敵の名前取得
 				Work_Str += "が現れた！";
 				bt_msg[(int)BT_MSG_ACT]->SetMsg(Work_Str.c_str());	//文字列設定
