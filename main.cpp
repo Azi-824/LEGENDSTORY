@@ -32,6 +32,7 @@ MUSIC *se;							//SE
 
 EFFECT *Magic_effect;				//魔法エフェクト
 EFFECT *Atack_effect;				//攻撃エフェクト
+EFFECT *Enemy_Atk_effect;			//敵攻撃エフェクト
 
 FONT *font;							//フォント
 UI *ui;								//UI
@@ -133,6 +134,11 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 	//攻撃エフェクト
 	Atack_effect = new EFFECT(MY_ANIME_DIR_ATKEFECT, MY_ANIME_NAME_ATKEFECT, ATK_ALL_CNT, ATK_YOKO_CNT, ATK_TATE_CNT, ATK_WIDTH, ATK_HEIGHT, ATK_SPEED, false);
 	if (Atack_effect->GetIsLoad() == false) { return -1; }		//読み込み失敗
+
+	//敵攻撃エフェクト
+	Enemy_Atk_effect = new EFFECT(MY_ANIME_DIR_ENE_ATK, MY_ANIME_NAME_ENE_ATK_TUME, ENE_ATK_TUME_ALL_CNT, ENE_ATK_TUME_YOKO_CNT, ENE_ATK_TUME_TATE_CNT, ENE_ATK_TUME_WIDTH, ENE_ATK_TUME_HEIGHT, ENE_ATK_TUME_SPEED, false);
+	if (Enemy_Atk_effect->GetIsLoad() == false) { return -1; }		//読み込み失敗
+
 
 	//プレイヤー関係
 	player = new PLAYER();		//プレイヤー生成
@@ -633,11 +639,13 @@ void Battle()
 		{
 			if (ui->GetChoiseCommamd() == (int)COMMANDE_ATACK)	//攻撃を選んでいたら
 			{
-				Atack_effect->Draw(ATK_DRAW_X, ATK_DRAW_Y, (int)NOMAL_ATACK);	//攻撃エフェクト描画
+				//暗転率50％で描画
+				Atack_effect->Draw(ATK_DRAW_X, ATK_DRAW_Y, (int)NOMAL_ATACK,50);	//攻撃エフェクト描画
 			}
 			else if (ui->GetChoiseCommamd() == (int)COMMANDE_MAGIC)	//魔法を選んでいたら
 			{
-				Magic_effect->Draw((GAME_WIDTH / 2 - MAGIC_WIDTH / 2), (GAME_HEIGHT / 2 - MAGIC_HEIGHT / 2), player->GetChoiseSkil());	//魔法エフェクト描画
+				//暗転率50％で描画
+				Magic_effect->Draw((GAME_WIDTH / 2 - MAGIC_WIDTH / 2), (GAME_HEIGHT / 2 - MAGIC_HEIGHT / 2), player->GetChoiseSkil(),50);	//魔法エフェクト描画
 			}
 
 			if (Magic_effect->GetIsDrawEnd()||Atack_effect->GetIsDrawEnd())		//エフェクト描画が終了したら
@@ -653,9 +661,13 @@ void Battle()
 		else if (Turn = (int)ENEMY_TURN)	//敵のターンだったら
 		{
 			//敵のエフェクト表示
-			Magic_effect->Draw((GAME_WIDTH / 2 - MAGIC_WIDTH / 2), (GAME_HEIGHT / 2 - MAGIC_HEIGHT / 2), enemy[EncounteEnemyType]->GetSkil());
+			//Magic_effect->Draw((GAME_WIDTH / 2 - MAGIC_WIDTH / 2), (GAME_HEIGHT / 2 - MAGIC_HEIGHT / 2), enemy[EncounteEnemyType]->GetSkil());
 
-			if (Magic_effect->GetIsDrawEnd())		//エフェクト描画終了したら
+			Enemy_Atk_effect->Draw((GAME_WIDTH / 2 - Enemy_Atk_effect->GetWidth(enemy[EncounteEnemyType]->GetSkil()) / 2),
+				(GAME_HEIGHT / 2 - Enemy_Atk_effect->GetHeight(enemy[EncounteEnemyType]->GetSkil()) / 2),
+				enemy[EncounteEnemyType]->GetSkil());
+
+			if (Enemy_Atk_effect->GetIsDrawEnd())		//エフェクト描画終了したら
 			{
 				player->SetHP((player->GetHP()) - (player->GetRecvDamege()));		//味方にダメージを与える
 
@@ -696,7 +708,8 @@ void Battle()
 			}
 			else if (Turn == (int)ENEMY_TURN)			//敵のターンの時
 			{
-				Magic_effect->ResetIsAnime(enemy[EncounteEnemyType]->GetSkil());		//エフェクトリセット
+				Enemy_Atk_effect->ResetIsAnime(enemy[EncounteEnemyType]->GetSkil());		//エフェクトリセット
+				//Magic_effect->ResetIsAnime(enemy[EncounteEnemyType]->GetSkil());		//エフェクトリセット
 				Turn = (int)MY_TURN;				//味方のターンへ
 			}
 

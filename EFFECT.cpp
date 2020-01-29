@@ -174,7 +174,7 @@ void EFFECT::Draw(int x, int y,int type)
 	}
 
 	//フェードアウトの処理
-	double ToukaPercent = (cnt / 2) / (double)cntMax;//透過％を求める
+	double ToukaPercent = cnt / (double)cntMax;//透過％を求める
 	SetDrawBlendMode(DX_BLENDMODE_ALPHA, ToukaPercent * 255);	//透過させる
 	DrawBox(0, 0, GAME_WIDTH, GAME_HEIGHT, GetColor(0, 0, 0), TRUE);	//真っ暗な画面にする
 	SetDrawBlendMode(DX_BLENDMODE_NOBLEND, 0);	//透過をやめる
@@ -227,6 +227,86 @@ void EFFECT::Draw(int x, int y,int type)
 	return;
 
 }
+
+//描画(最大透過率を指定する)
+/*
+引数：int：Xの描画位置
+引数：int：Yの描画位置
+引数：int：描画するエフェクトの種類
+引数：int：最大透過率(0～100%)
+*/
+void EFFECT::Draw(int x, int y, int type,int maxtouka)
+{
+
+	static int cnt = 0;		//フェードアウト用
+	static int cntMax = 60;	//フェードアウト用
+	static bool flg = false;//フェードアウト終了フラグ
+
+	//60フレーム分、待つ
+	if (cnt < cntMax)
+	{
+		cnt++;	//カウントアップ
+	}
+	else
+	{
+		flg = true;	//フェードアウト処理終了
+	}
+
+	//フェードアウトの処理
+	double ToukaPercent = (cnt / ( 100 / maxtouka)) / (double)cntMax;//透過％を求める
+	SetDrawBlendMode(DX_BLENDMODE_ALPHA, ToukaPercent * 255);	//透過させる
+	DrawBox(0, 0, GAME_WIDTH, GAME_HEIGHT, GetColor(0, 0, 0), TRUE);	//真っ暗な画面にする
+	SetDrawBlendMode(DX_BLENDMODE_NOBLEND, 0);	//透過をやめる
+
+	if (flg)		//フェードアウトが終了していたら
+	{
+		if (this->IsAnimeStop[type] == false)	//アニメーションをストップさせないなら
+		{
+			DrawGraph(x, y, *this->Handle_itr, TRUE);	//イテレータ(ポインタ)を使用して描画
+		}
+		else
+		{
+			this->IsDrawEnd = true;		//描画終了
+			flg = false;	//フェードアウトフラグリセット
+			cnt = 0;		//フェードアウトカウントリセット
+		}
+
+		if (this->ChangeCnt == this->ChangeMaxCnt)	//次の画像を表示する時がきたら
+		{
+			//this->Handle.end()は、最後の要素の１個次のイテレータを返すので、-1している。
+			if (this->Handle_itr == this->Handle[type].end() - 1)	//イテレータ(ポインタ)が最後の要素のときは
+			{
+				//アニメーションをループしないなら
+				if (this->IsAnimeLoop[type] == false)
+				{
+					this->IsAnimeStop[type] = true;	//アニメーションを止める
+				}
+
+				//次回の描画に備えて、先頭の画像に戻しておく
+				this->Handle_itr = this->Handle[type].begin();	//イテレータ(ポインタ)を要素の最初に戻す
+			}
+			else
+			{
+				this->Handle_itr++;	//次のイテレータ(ポインタ)(次の画像)に移動する
+			}
+
+			this->ChangeCnt = 0;	//カウント初期化
+		}
+		else
+		{
+			this->ChangeCnt++;	//カウントアップ
+		}
+
+	}
+	else
+	{
+		this->Handle_itr = this->Handle[type].begin();		//指定されたエフェクトタイプのハンドルを代入
+	}
+
+	return;
+
+}
+
 
 //追加
 /*
