@@ -29,7 +29,7 @@ MESSAGE::~MESSAGE()
 //文字列を設定
 void MESSAGE::SetMsg(const char *msg)
 {
-
+	this->ResetFlg();					//フラグ関係リセット
 	this->Msg.clear();					//中身をクリア
 	this->Msg.push_back(msg);			//受け取った文字列を追加
 	this->Msg_itr = this->Msg.begin();	//先頭要素のアドレスを取得

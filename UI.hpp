@@ -22,18 +22,18 @@
 //ステータスウィンドウ関係
 #define STA_WIN_X		0			//ステータスウィンドウ描画開始X位置
 #define STA_WIN_Y		540			//ステータスウィンドウ描画開始Y位置
-#define STA_WIN_WIDTH	190			//ステータスウィンドウの横幅
+#define STA_WIN_WIDTH	350			//ステータスウィンドウの横幅
 #define STA_WIN_HEIGHT	100			//ステータスウィンドウの高さ
 #define STA_TXT_X		10			//ステータスの文字の描画開始X位置
 #define STA_TXT_Y		540			//ステータスの文字の描画開始Y位置
 #define STA_SPACE		20			//ステータス文字の間隔
 
 //バトルコマンド関係
-#define CMD_WIN_X		190			//バトルコマンドのウィンドウの描画開始X位置
+#define CMD_WIN_X		350			//バトルコマンドのウィンドウの描画開始X位置
 #define	CMD_WIN_Y		540			//バトルコマンドのウィンドウの描画開始Y位置
 #define CMD_WIN_WIDTH	120			//バトルコマンドのウィンドウの横幅
 #define CMD_WIN_HEIGHT	100			//バトルコマンドのウィンドウの高さ
-#define CMD_TXT_X		210			//バトルコマンドの文字の描画開始X位置
+#define CMD_TXT_X		370			//バトルコマンドの文字の描画開始X位置
 #define CMD_TXT_Y		540			//バトルコマンドの文字の描画開始Y位置
 
 //ウィンドウ関係

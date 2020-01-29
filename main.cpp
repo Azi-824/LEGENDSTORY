@@ -499,14 +499,25 @@ void Battle()
 		if (Turn == (int)MY_TURN)		//味方のターンだったら
 		{
 			bt_msg[(int)BT_MSG_ACT]->DrawMsg(BT_MSG_DRAW_X, BT_MSG_DRAW_Y, GetColor(255, 255, 255));	//メッセージ描画
-
-			ui->ChoiseOperation(keydown);		//バトルコマンドキー操作
-
-			if (keydown->IsKeyDownOne(KEY_INPUT_RETURN))	//エンターキーを押されたら
+			if (bt_msg[(int)BT_MSG_ACT]->GetIsLastMsg())	//最後のメッセージだったら
 			{
-				ui->SetBattleFlg();	//選択したコマンドを設定
+				ui->ChoiseOperation(keydown);		//バトルコマンドキー操作
+
+				if (keydown->IsKeyDownOne(KEY_INPUT_RETURN))	//エンターキーを押されたら
+				{
+					ui->SetBattleFlg();	//選択したコマンドを設定
+
+				}
 
 			}
+			else
+			{
+				if (keydown->IsKeyDownOne(KEY_INPUT_RETURN))		//エンターキーを押されたら
+				{
+					bt_msg[(int)BT_MSG_ACT]->NextMsg();				//次のメッセージへ
+				}
+			}
+
 
 			//▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼ バトルコマンド毎の処理ここから ▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼
 			switch (ui->GetChoiseCommamd())		//どのコマンドを選んだか
@@ -708,6 +719,10 @@ void Battle()
 			}
 			else if (Turn == (int)ENEMY_TURN)			//敵のターンの時
 			{
+
+				Work_Str = "どうする？";
+				bt_msg[(int)BT_MSG_ACT]->SetMsg(Work_Str.c_str());	//文字列設定
+
 				Enemy_Atk_effect->ResetIsAnime(enemy[EncounteEnemyType]->GetChoiseSkil());		//エフェクトリセット
 				Turn = (int)MY_TURN;				//味方のターンへ
 			}
@@ -1094,8 +1109,12 @@ void Enconte()
 				EncounteEnemyType = i;		//遭遇した敵を設定
 
 				//描画文字設定
-				Work_Str = "どうする？";
+				Work_Str = "通りすがりの";
+				Work_Str += enemy[EncounteEnemyType]->GetName();		//遭遇した敵の名前取得
+				Work_Str += "が現れた！";
 				bt_msg[(int)BT_MSG_ACT]->SetMsg(Work_Str.c_str());	//文字列設定
+				Work_Str = "どうする？";
+				bt_msg[(int)BT_MSG_ACT]->AddMsg(Work_Str.c_str());	//文字列設定
 
 				SceneChenge(GameSceneNow, (int)GAME_SCENE_BATTLE);	//次の画面は戦闘画面
 
