@@ -21,20 +21,20 @@
 EFFECT::EFFECT(const char *dir, const char *name, int SplitNumALL, int SpritNumX, int SplitNumY, int SplitWidth, int SplitHeight, double changeSpeed, bool IsLoop)
 {
 	//メンバ変数初期化
-	this->Handle.resize(EFFECT_KIND);		//エフェクトの種類数でサイズ変更
-	this->Width.resize(EFFECT_KIND);		//エフェクトの種類数でサイズ変更
-	this->Height.resize(EFFECT_KIND);		//エフェクトの種類数でサイズ変更
-	this->IsAnimeLoop.resize(EFFECT_KIND);	//エフェクトの種類数でサイズ変更
-	this->IsAnimeStop.resize(EFFECT_KIND);	//エフェクトの種類数でサイズ変更
+	this->Handle.resize(MAGIC_EFFECT_KIND);		//エフェクトの種類数でサイズ変更
+	this->Width.resize(MAGIC_EFFECT_KIND);		//エフェクトの種類数でサイズ変更
+	this->Height.resize(MAGIC_EFFECT_KIND);		//エフェクトの種類数でサイズ変更
+	this->IsAnimeLoop.resize(MAGIC_EFFECT_KIND);	//エフェクトの種類数でサイズ変更
+	this->IsAnimeStop.resize(MAGIC_EFFECT_KIND);	//エフェクトの種類数でサイズ変更
 
-	this->Handle[NOMAL_ATACK].resize(SplitNumALL);	//分割総数でサイズ変更
-	this->Handle_itr = this->Handle[NOMAL_ATACK].begin();	//先頭要素を代入
+	this->Handle[0].resize(SplitNumALL);	//分割総数でサイズ変更
+	this->Handle_itr = this->Handle[0].begin();	//先頭要素を代入
 
 	this->ChangeMaxCnt = (int)(changeSpeed * fps->Getvalue());	//アニメーションするフレームの最大値
 	this->ChangeCnt = 0;	//アニメーションするフレームのカウント
 
-	this->IsAnimeLoop[NOMAL_ATACK] = IsLoop;		//アニメーションはループする？
-	this->IsAnimeStop[NOMAL_ATACK] = false;		//アニメーションを動かす
+	this->IsAnimeLoop[0] = IsLoop;		//アニメーションはループする？
+	this->IsAnimeStop[0] = false;		//アニメーションを動かす
 
 	this->IsLoad = false;			//読み込めたか？
 	this->IsDrawEnd = false;		//描画終了したか?
@@ -45,7 +45,7 @@ EFFECT::EFFECT(const char *dir, const char *name, int SplitNumALL, int SpritNumX
 	LoadfilePath += name;
 
 	//画像を分割して読み込み
-	LoadDivGraph(LoadfilePath.c_str(), SplitNumALL, SpritNumX, SplitNumY, SplitWidth, SplitHeight, &this->Handle[NOMAL_ATACK][0]);
+	LoadDivGraph(LoadfilePath.c_str(), SplitNumALL, SpritNumX, SplitNumY, SplitWidth, SplitHeight, &this->Handle[0][0]);
 
 	if (this->Handle[0][0] == -1)	//画像が読み込めなかったとき
 	{
@@ -63,9 +63,9 @@ EFFECT::EFFECT(const char *dir, const char *name, int SplitNumALL, int SpritNumX
 	}
 
 	GetGraphSize(
-		this->Handle[NOMAL_ATACK][0],	//このハンドルの画像の大きさを取得
-		&this->Width[NOMAL_ATACK],		//Widthのアドレスを渡す
-		&this->Height[NOMAL_ATACK]		//Heightのアドレスを渡す
+		this->Handle[0][0],	//このハンドルの画像の大きさを取得
+		&this->Width[0],		//Widthのアドレスを渡す
+		&this->Height[0]		//Heightのアドレスを渡す
 	);
 
 	this->NextChangeSpeed = changeSpeed;	//画像を変える速さ
@@ -79,7 +79,7 @@ EFFECT::EFFECT(const char *dir, const char *name, int SplitNumALL, int SpritNumX
 //デストラクタ
 EFFECT::~EFFECT()
 {
-	for (int i = 0; i < EFFECT_KIND; ++i)
+	for (int i = 0; i < MAGIC_EFFECT_KIND; ++i)
 	{
 		DeleteGraph(this->Handle[i][0]);
 	}

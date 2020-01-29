@@ -30,7 +30,8 @@ IMAGE *map_i;//マップ画像
 MUSIC *bgm;							//BGM
 MUSIC *se;							//SE
 
-EFFECT *effect;						//エフェクト
+EFFECT *Magic_effect;				//魔法エフェクト
+EFFECT *Atack_effect;				//攻撃エフェクト
 
 FONT *font;							//フォント
 UI *ui;								//UI
@@ -123,11 +124,16 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 	if (data->LoadMsg(msg, MSG_DATA_DIR, MSG_DATA_NAME) == false) { return -1; }	//メッセージデータ読み込み
 
 	//エフェクト関係
-	effect = new EFFECT(MY_ANIME_DIR_ATKEFECT, MY_ANIME_NAME_ATKEFECT, ATK_ALL_CNT, ATK_YOKO_CNT, ATK_TATE_CNT, ATK_WIDTH, ATK_HEIGHT, ATK_SPEED, false);
-	if (effect->GetIsLoad() == false) { return -1; }		//読み込み失敗
-	if (effect->Add(MY_ANIME_DIR_MAGIC, MY_ANIME_NAME_MAGIC, MAGIC_ALL_CNT, MAGIC_YOKO_CNT, MAGIC_TATE_CNT, MAGIC_WIDTH, MAGIC_HEIGHT, MAGIC_SPEED, false, (int)MAGIC_1) == false) { return -1; }	//読み込み失敗
-	if (effect->Add(MY_ANIME_DIR_MAGIC, MY_ANIME_NAME_MAGIC2, MAGIC2_ALL_CNT, MAGIC2_YOKO_CNT, MAGIC2_TATE_CNT, MAGIC_WIDTH, MAGIC_HEIGHT, MAGIC_SPEED, false, (int)MAGIC_2) == false) { return -1; }	//読み込み失敗
+	//魔法エフェクト
+	Magic_effect = new EFFECT(MY_ANIME_DIR_MAGIC, MY_ANIME_NAME_MAGIC, MAGIC_ALL_CNT, MAGIC_YOKO_CNT, MAGIC_TATE_CNT, MAGIC_WIDTH, MAGIC_HEIGHT, MAGIC_SPEED, false);
+	if (Magic_effect->GetIsLoad() == false) { return -1; }		//読み込み失敗
+	//if (Magic_effect->Add(MY_ANIME_DIR_MAGIC, MY_ANIME_NAME_MAGIC, MAGIC_ALL_CNT, MAGIC_YOKO_CNT, MAGIC_TATE_CNT, MAGIC_WIDTH, MAGIC_HEIGHT, MAGIC_SPEED, false, (int)MAGIC_1) == false) { return -1; }	//読み込み失敗
+	if (Magic_effect->Add(MY_ANIME_DIR_MAGIC, MY_ANIME_NAME_MAGIC2, MAGIC2_ALL_CNT, MAGIC2_YOKO_CNT, MAGIC2_TATE_CNT, MAGIC_WIDTH, MAGIC_HEIGHT, MAGIC_SPEED, false, (int)MAGIC_2) == false) { return -1; }	//読み込み失敗
 	
+	//攻撃エフェクト
+	Atack_effect = new EFFECT(MY_ANIME_DIR_ATKEFECT, MY_ANIME_NAME_ATKEFECT, ATK_ALL_CNT, ATK_YOKO_CNT, ATK_TATE_CNT, ATK_WIDTH, ATK_HEIGHT, ATK_SPEED, false);
+	if (Atack_effect->GetIsLoad() == false) { return -1; }		//読み込み失敗
+
 	//プレイヤー関係
 	player = new PLAYER();		//プレイヤー生成
 	if (player->SetImage(MY_IMG_DIR_CHARCTOR, MY_IMG_NAME_PLAYER) == false) { return -1; }	//読み込み失敗
@@ -512,7 +518,7 @@ void Battle()
 
 			case (int)COMMANDE_MAGIC:		//魔法を選んだ時
 
-				player->SetChoiseSkil(1);			//使用するスキルを魔法に設定する
+				player->SetChoiseSkil((int)MAGIC_1);//使用する魔法を設定する
 				BattleStageNow = (int)DAMEGE_CALC;	//バトル状態をダメージ計算状態へ
 
 				break;
@@ -613,7 +619,7 @@ void Battle()
 
 			if (ui->GetChoiseCommamd() == (int)COMMANDE_DEFENSE)		//防御を選んだら
 			{
-				effect->SetIsDrawEnd(true);	//描画処理を飛ばすために、描画終了フラグを立てる
+				Magic_effect->SetIsDrawEnd(true);	//描画処理を飛ばすために、描画終了フラグを立てる
 			}
 			bt_msg[(int)BT_MSG_ACT]->NextMsg();	//次のメッセージへ
 			BattleStageNow = (int)DRAW_EFFECT;	//エフェクト表示状態へ
@@ -627,14 +633,14 @@ void Battle()
 		{
 			if (ui->GetChoiseCommamd() == (int)COMMANDE_ATACK)	//攻撃を選んでいたら
 			{
-				effect->Draw(ATK_DRAW_X, ATK_DRAW_Y, (int)NOMAL_ATACK);	//攻撃エフェクト描画
+				Atack_effect->Draw(ATK_DRAW_X, ATK_DRAW_Y, (int)NOMAL_ATACK);	//攻撃エフェクト描画
 			}
 			else if (ui->GetChoiseCommamd() == (int)COMMANDE_MAGIC)	//魔法を選んでいたら
 			{
-				effect->Draw((GAME_WIDTH / 2 - MAGIC_WIDTH / 2), (GAME_HEIGHT / 2 - MAGIC_HEIGHT / 2), player->GetChoiseSkil());	//魔法エフェクト描画
+				Magic_effect->Draw((GAME_WIDTH / 2 - MAGIC_WIDTH / 2), (GAME_HEIGHT / 2 - MAGIC_HEIGHT / 2), player->GetChoiseSkil());	//魔法エフェクト描画
 			}
 
-			if (effect->GetIsDrawEnd())		//エフェクト描画が終了したら
+			if (Magic_effect->GetIsDrawEnd()||Atack_effect->GetIsDrawEnd())		//エフェクト描画が終了したら
 			{
 
 				BattleStageNow = (int)DRAW_DAMEGE;		//ダメージ描画状態へ
@@ -647,9 +653,9 @@ void Battle()
 		else if (Turn = (int)ENEMY_TURN)	//敵のターンだったら
 		{
 			//敵のエフェクト表示
-			effect->Draw((GAME_WIDTH / 2 - MAGIC_WIDTH / 2), (GAME_HEIGHT / 2 - MAGIC_HEIGHT / 2), enemy[EncounteEnemyType]->GetSkil());
+			Magic_effect->Draw((GAME_WIDTH / 2 - MAGIC_WIDTH / 2), (GAME_HEIGHT / 2 - MAGIC_HEIGHT / 2), enemy[EncounteEnemyType]->GetSkil());
 
-			if (effect->GetIsDrawEnd())		//エフェクト描画終了したら
+			if (Magic_effect->GetIsDrawEnd())		//エフェクト描画終了したら
 			{
 				player->SetHP((player->GetHP()) - (player->GetRecvDamege()));		//味方にダメージを与える
 
@@ -678,11 +684,11 @@ void Battle()
 			{
 				if (ui->GetChoiseCommamd() == (int)COMMANDE_ATACK)	//攻撃を選んだ時は
 				{
-					effect->ResetIsAnime((int)NOMAL_ATACK);		//エフェクトリセット
+					Atack_effect->ResetIsAnime((int)NOMAL_ATACK);		//攻撃エフェクトリセット
 				}
 				else							//攻撃以外を選んだ時は
 				{
-					effect->ResetIsAnime(player->GetChoiseSkil());		//エフェクトリセット
+					Magic_effect->ResetIsAnime(player->GetChoiseSkil());//魔法エフェクトリセット
 				}
 
 				Turn = (int)ENEMY_TURN;				//敵のターンへ
@@ -690,7 +696,7 @@ void Battle()
 			}
 			else if (Turn == (int)ENEMY_TURN)			//敵のターンの時
 			{
-				effect->ResetIsAnime(enemy[EncounteEnemyType]->GetSkil());		//エフェクトリセット
+				Magic_effect->ResetIsAnime(enemy[EncounteEnemyType]->GetSkil());		//エフェクトリセット
 				Turn = (int)MY_TURN;				//味方のターンへ
 			}
 
@@ -1126,7 +1132,7 @@ void Delete_Class()
 	delete back;			//backを破棄
 	delete back_battle;		//back_battleを破棄
 	delete data;			//dataを破棄
-	delete effect;			//effectを破棄
+	delete Magic_effect;			//effectを破棄
 
 	delete msg;//msg破棄
 

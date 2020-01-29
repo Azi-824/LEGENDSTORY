@@ -40,19 +40,24 @@
 #define MAGIC2_ALL_CNT	MAGIC2_YOKO_CNT * MAGIC2_TATE_CNT
 
 #define ATK_SPEED		 0.02
-#define MAGIC_SPEED		 1.0
+#define MAGIC_SPEED		 0.02
 
 #define ATK_DRAW_X		375
 #define ATK_DRAW_Y		290
 
-#define EFFECT_KIND		3			//エフェクトの種類
+#define MAGIC_EFFECT_KIND		2			//魔法エフェクトの種類
+#define ATACK_EFFECT_KIND		1			//攻撃エフェクトの種類
 
 //###################### 列挙型 ##########################
-enum EFFECT_TYPE
+enum MAGIC_EFFECT_TYPE
 {
-	NOMAL_ATACK,		//通常攻撃
 	MAGIC_1,			//魔法１
 	MAGIC_2				//魔法２
+};
+
+enum ATACK_EFFECT_TYPE
+{
+	NOMAL_ATACK		//通常攻撃
 };
 
 //###################### クラス定義 ################################
