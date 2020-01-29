@@ -59,6 +59,7 @@ int BattleActMsgCntMax = 60;	//行動メッセージの表示時間
 int MapKind[MAP_DATA_TATE_KIND][MAP_DATA_YOKO_KIND];			//マップの種類
 int MapNowPos[2] = {0};											//現在のマップのX位置とY位置を格納
 int NowDrawMapKind = (int)DRAW_FILED;							//現在の描画マップの種類(最初はフィールドマップ)
+bool IsChengeDrawMap = false;									//描画するマップの種類を切り替えるか
 
 int ChengeDrawCount = 0;	//フェードアウト処理に使用
 
@@ -373,8 +374,28 @@ void Play()
 	if (player->GetChengeMapKind() != -1)		//マップの端に来た時
 	{
 		int chengekind = (int)MAP_CHENGE_NONE;	//マップ切り替えの種類
+
+		//街へ移動するときは
+		if (player->CheckDetectionMap(mapdata_field[NowDrawMapKind][MapKind[MAPPOS_Y][MAPPOS_X]]->GetRect((int)MAP_WARP)))
+		{
+			if (NowDrawMapKind == (int)DRAW_FILED)		//描画マップがフィールドだったら
+			{
+				NowDrawMapKind = (int)DRAW_CITY;		//描画マップを街へ切り替える
+			}
+			else if (NowDrawMapKind == (int)DRAW_CITY)	//描画マップが街だったら
+			{
+				NowDrawMapKind = (int)DRAW_FILED;		//描画マップをフィールドへ切り替える
+			}
+
+			IsChengeDrawMap = true;	//描画マップを切り替える
+		}
+		else		//移動しないときは
+		{
+			IsChengeDrawMap = false;	//描画マップを切り替えない
+		}
+
 		//マップの切り替え処理
-		chengekind = mapdata_field[NowDrawMapKind][MapKind[MAPPOS_Y][MAPPOS_X]]->ChengeMap(player->GetChengeMapKind(), MapNowPos);
+		chengekind = mapdata_field[NowDrawMapKind][MapKind[MAPPOS_Y][MAPPOS_X]]->ChengeMap(player->GetChengeMapKind(), MapNowPos, IsChengeDrawMap);
 
 		if (chengekind != (int)MAP_CHENGE_NONE)	//マップ切り替えを行ったときは
 		{
@@ -442,10 +463,10 @@ void Play()
 		{
 			Enconte();			//敵との遭遇判定
 		}
-		else if (player->CheckDetectionMap(mapdata_field[NowDrawMapKind][MapKind[MAPPOS_Y][MAPPOS_X]]->GetRect((int)MAP_WARP)))	//街へ移動するマップだったら
-		{
+		//else if (player->CheckDetectionMap(mapdata_field[NowDrawMapKind][MapKind[MAPPOS_Y][MAPPOS_X]]->GetRect((int)MAP_WARP)))	//街へ移動するマップだったら
+		//{
 
-		}
+		//}
 	}
 
 	//▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲ 画面遷移の処理 ▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲

@@ -194,7 +194,7 @@ public :
 
 	bool LoadCsv(const char *, const char *);	//csvデータ読み込み
 
-	int ChengeMap(int,int *);			//マップを切り替える
+	int ChengeMap(int,int *,bool);			//マップを切り替える
 
 	void Draw();		//描画
 

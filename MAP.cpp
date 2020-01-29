@@ -96,7 +96,7 @@ bool MAP::LoadCsv(const char *dir, const char *name)
 //マップを切り替える
 //引数：int	  ：マップ切り替えの種類
 //引数：int	　：現在のマップのX座標とY座標の情報
-int MAP::ChengeMap(int kind,int *mapnowpos)
+int MAP::ChengeMap(int kind,int *mapnowpos,bool Ischengedraw)
 {
 
 	switch (kind)	//マップ変更の種類
@@ -104,8 +104,14 @@ int MAP::ChengeMap(int kind,int *mapnowpos)
 
 	case (int)MAP_CHENGE_UP:	//上へ切り替えるとき、ここから
 
+		if (Ischengedraw)		//描画マップを切り替えるときは
+		{
+			return (int)MAP_CHENGE_UP;//切り替え方向、上
+		}
+
 		if ((mapnowpos[POS_Y]) > 0)	//上のマップがある場合は
 		{
+				
 			mapnowpos[POS_Y]--;	//上のマップへ
 
 			return (int)MAP_CHENGE_UP;//切り替え方向、上
@@ -115,8 +121,14 @@ int MAP::ChengeMap(int kind,int *mapnowpos)
 
 	case (int)MAP_CHENGE_DOWN:	//下へ切り替えるとき、ここから
 
+		if (Ischengedraw)		//描画マップを切り替えるときは
+		{
+			return (int)MAP_CHENGE_DOWN;	//切り替え方向、下
+		}
+
 		if ((mapnowpos[POS_Y]) < MAP_DATA_TATE_KIND - 1)	//下のマップがある場合は
 		{
+				
 			mapnowpos[POS_Y]++;	//下のマップへ
 
 			return (int)MAP_CHENGE_DOWN;	//切り替え方向、下
@@ -126,8 +138,14 @@ int MAP::ChengeMap(int kind,int *mapnowpos)
 
 	case (int)MAP_CHENGE_LEFT:	//左へ切り替えるとき、ここから
 
+		if (Ischengedraw)		//描画マップを切り替えるときは
+		{
+			return (int)MAP_CHENGE_LEFT;	//切り替え方向、左
+		}
+
 			if (mapnowpos[POS_X] - 1 >= 0)	//横にマップがある場合は
 			{
+					
 				mapnowpos[POS_X]--;	//左のマップへ
 
 				return (int)MAP_CHENGE_LEFT;	//切り替え方向、左
@@ -138,8 +156,14 @@ int MAP::ChengeMap(int kind,int *mapnowpos)
 
 	case (int)MAP_CHENGE_RIGHT:	//右へ切り替えるとき、ここから
 
+		if (Ischengedraw)		//描画マップを切り替えるときは
+		{
+			return (int)MAP_CHENGE_RIGHT;	//切り替え方向、右
+		}
+
 			if (mapnowpos[POS_X] + 1 < MAP_DATA_YOKO_KIND)	//横にマップがある場合は
 			{
+
 				mapnowpos[POS_X]++;	//右のマップへ
 
 				return (int)MAP_CHENGE_RIGHT;	//切り替え方向、右
