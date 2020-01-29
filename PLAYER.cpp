@@ -60,7 +60,7 @@ bool PLAYER::SetInit()
 	//“–‚½‚è”»’è—Ìˆæì¬
 	this->Collision->SetValue(this->sikaku_draw->Left + RECT_STAGGER,
 		this->sikaku_draw->Top,
-		this->Anime->GetWidth() - RECT_STAGGER,
+		this->Anime->GetWidth() - RECT_STAGGER * 2,
 		this->Anime->GetHeight());
 
 	return true;
@@ -823,9 +823,9 @@ void PLAYER::SetNowPos(int x, int y)
 
 	//—ÌˆæÄÝ’è
 	this->Collision->SetValue(
-		this->sikaku_draw->Left,
+		this->sikaku_draw->Left + RECT_STAGGER,
 		this->sikaku_draw->Top,
-		this->sikaku_draw->Width,
+		this->sikaku_draw->Width - RECT_STAGGER * 2,
 		this->sikaku_draw->Height);
 
 
