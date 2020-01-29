@@ -31,11 +31,9 @@
 //UŒ‚
 #define ATK_WIDTH		120	//•ªŠ„‚·‚é•‚Ì‘å‚«‚³
 #define ATK_HEIGHT		120	//•ªŠ„‚·‚é‚‚³‚Ì‘å‚«‚³
-
 //–‚–@
 #define MAGIC_WIDTH		880	//•ªŠ„‚·‚é•‚Ì‘å‚«‚³
 #define MAGIC_HEIGHT	640	//•ªŠ„‚·‚é‚‚³‚Ì‘å‚«‚³
-
 //“G‚ÌUŒ‚
 #define ENE_ATK_TUME_WIDTH	240	//•ªŠ„•
 #define ENE_ATK_TUME_HEIGHT	240	//•ªŠ„‚‚³
@@ -47,13 +45,11 @@
 //UŒ‚
 #define ATK_YOKO_CNT	9
 #define ATK_TATE_CNT	1
-
 //–‚–@
 #define MAGIC_YOKO_CNT	1
 #define MAGIC_TATE_CNT	12
 #define MAGIC2_YOKO_CNT	5
 #define MAGIC2_TATE_CNT	5
-
 //“G‚ÌUŒ‚
 #define ENE_ATK_TUME_YOKO_CNT 5	//‰¡•ªŠ„”
 #define ENE_ATK_TUME_TATE_CNT 2	//c•ªŠ„”
@@ -64,11 +60,9 @@
 //************************ ‘•ªŠ„” **************************
 //UŒ‚
 #define ATK_ALL_CNT	ATK_YOKO_CNT * ATK_TATE_CNT
-
 //–‚–@
 #define MAGIC_ALL_CNT MAGIC_YOKO_CNT * MAGIC_TATE_CNT
 #define MAGIC2_ALL_CNT	MAGIC2_YOKO_CNT * MAGIC2_TATE_CNT
-
 //“G‚ÌUŒ‚
 #define ENE_ATK_TUME_ALL_CNT 8	//‘•ªŠ„”
 #define ENE_ATK_KIBA_ALL_CNT 8	//‘•ªŠ„”
@@ -77,10 +71,8 @@
 //************************ •`‰æ‘¬“x ***************************
 //UŒ‚
 #define ATK_SPEED		 0.02
-
 //–‚–@
 #define MAGIC_SPEED		 0.02
-
 //“G‚ÌUŒ‚
 #define ENE_ATK_TUME_SPEED	0.05
 #define ENE_ATK_KIBA_SPEED	0.05
