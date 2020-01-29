@@ -662,8 +662,6 @@ void Battle()
 		else if (Turn = (int)ENEMY_TURN)	//敵のターンだったら
 		{
 			//敵のエフェクト表示
-			//Magic_effect->Draw((GAME_WIDTH / 2 - MAGIC_WIDTH / 2), (GAME_HEIGHT / 2 - MAGIC_HEIGHT / 2), enemy[EncounteEnemyType]->GetSkil());
-
 			Enemy_Atk_effect->Draw((GAME_WIDTH / 2 - Enemy_Atk_effect->GetWidth(enemy[EncounteEnemyType]->GetSkil()) / 2),
 				(GAME_HEIGHT / 2 - Enemy_Atk_effect->GetHeight(enemy[EncounteEnemyType]->GetSkil()) / 2),
 				enemy[EncounteEnemyType]->GetSkil());

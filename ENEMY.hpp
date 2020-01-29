@@ -12,7 +12,7 @@
 #include <vector>
 
 //############### マクロ定義：ファイルパス、名前 ################
-#define ENEMY_DIR		R"(.\MY_IMG\ENEMY\)"	//敵の画像のファイル
+#define ENEMY_DIR			R"(.\MY_IMG\ENEMY\)"	//敵の画像のファイル
 
 #define ENEMY_NAME_SLIME	R"(sraim.png)"			//スライムの画像の名前
 #define ENEMY_NAME_YADOKARI	R"(yadokari.png)"		//ヤドカリの画像の名前
