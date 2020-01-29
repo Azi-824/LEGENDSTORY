@@ -9,12 +9,13 @@
 #include <vector>
 
 //##################### マクロ定義：ファイルパス、名前 ###################
-#define MY_MUSIC_DIR_BGM	R"(.\MY_MUSIC\BGM)"		//BGMのファイル名
-#define MY_MUSIC_DIR_SE		R"(.\MY_MUSIC\SE)"		//SEのファイル名
+#define MY_MUSIC_DIR_BGM	R"(.\MY_MUSIC\BGM)"		  //BGMのファイル名
+#define MY_MUSIC_DIR_BT_SE	R"(.\MY_MUSIC\SE\battle)" //SEのファイル名
 
 #define MY_MUSIC_NAME_BGM	R"(\bgm_op.mp3)"		//BGMの名前
 #define MY_SE_NAME_LEVUP	R"(\levelup.mp3)"		//SE（レベルアップ）の名前
 #define MY_SE_NAME_SLASH	R"(\slash.mp3)"			//斬るときの音の名前
+#define MY_SE_NAME_THUNDER	R"(\thunder.mp3)"		//雷の音の名前
 
 //##################### マクロ定義：エラーメッセージ ######################
 #define MUSIC_ERROR_TITLE "MUSIC_ERROR"					//エラータイトル
@@ -22,7 +23,7 @@
 
 //##################### マクロ定義 ##########################
 #define BGM_KIND	1	//BGMの種類
-#define BT_SE_KIND	2	//バトルで使用するSEの種類
+#define BT_SE_KIND	3	//バトルで使用するSEの種類
 
 //##################### 列挙型 #########################
 enum BGM_TYPE
@@ -33,7 +34,8 @@ enum BGM_TYPE
 enum BT_SE_TYPE
 {
 	BT_SE_LEVELUP,		//レベルアップのSE
-	BT_SE_SLASH			//斬るときの音
+	BT_SE_SLASH,		//斬るときの音
+	BT_SE_THUNDER		//雷の音
 };
 
 //##################### クラス定義 ############################

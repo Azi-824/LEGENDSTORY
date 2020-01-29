@@ -237,6 +237,12 @@ void EFFECT::Draw(int x, int y,int type)
 */
 void EFFECT::DrawNormal(int x, int y, int type)
 {
+	static bool setflg = false;	//ハンドル設定フラグ
+	if (setflg == false)
+	{
+		this->Handle_itr = this->Handle[type].begin();		//指定されたエフェクトタイプのハンドルを代入
+		setflg = true;	//ハンドル設定済み
+	}
 
 		if (this->IsAnimeStop[type] == false)	//アニメーションをストップさせないなら
 		{
@@ -245,6 +251,7 @@ void EFFECT::DrawNormal(int x, int y, int type)
 		else
 		{
 			this->IsDrawEnd = true;		//描画終了
+			setflg = false;				//ハンドル未設定
 		}
 
 		if (this->ChangeCnt == this->ChangeMaxCnt)	//次の画像を表示する時がきたら
@@ -272,12 +279,6 @@ void EFFECT::DrawNormal(int x, int y, int type)
 		{
 			this->ChangeCnt++;	//カウントアップ
 		}
-
-	//}
-	//else
-	//{
-	//	this->Handle_itr = this->Handle[type].begin();		//指定されたエフェクトタイプのハンドルを代入
-	//}
 
 	return;
 

@@ -108,12 +108,12 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 	bgm = new MUSIC(MY_MUSIC_DIR_BGM, MY_MUSIC_NAME_BGM,BGM_KIND);		//BGMを生成
 	if (bgm->GetIsLoad() == false) { return -1; }						//読み込み失敗時
 
-	bt_se = new MUSIC(MY_MUSIC_DIR_SE, MY_SE_NAME_LEVUP, BT_SE_KIND);	//SEを生成
+	bt_se = new MUSIC(MY_MUSIC_DIR_BT_SE, MY_SE_NAME_LEVUP, BT_SE_KIND);	//SEを生成
 	if (bt_se->GetIsLoad() == false) { return -1; }						//読み込み失敗時
 	bt_se->ChengePlayType(DX_PLAYTYPE_BACK);							//再生方法変更
 	//音の追加処理
-	if (bt_se->Add(MY_MUSIC_DIR_SE, MY_SE_NAME_SLASH, (int)BT_SE_SLASH) == false) { return -1; }	//斬るときの音追加
-
+	if (bt_se->Add(MY_MUSIC_DIR_BT_SE, MY_SE_NAME_SLASH, (int)BT_SE_SLASH) == false) { return -1; }	//斬るときの音追加
+	if (bt_se->Add(MY_MUSIC_DIR_BT_SE, MY_SE_NAME_THUNDER, (int)BT_SE_THUNDER) == false) { return -1; }//雷の音追加
 
 	//フォント関係
 	font = new FONT(MY_FONT_DIR, MY_FONT_NAME, FONT_NAME);			//フォントを生成
@@ -681,6 +681,18 @@ void Battle()
 			{
 				//フェードアウトなしで描画
 				Magic_effect->DrawNormal((GAME_WIDTH / 2 - MAGIC_WIDTH / 2), (GAME_HEIGHT / 2 - MAGIC_HEIGHT / 2), player->GetChoiseSkil());	//魔法エフェクト描画
+			
+				if (bt_se->GetIsPlayed((int)BT_SE_THUNDER) == false)		//再生済みでなければ
+				{
+					if (bt_se->GetIsPlay((int)BT_SE_THUNDER) == false)		//再生中じゃなければ
+					{
+						bt_se->Play((int)BT_SE_THUNDER);						//雷のSEを鳴らす
+						bt_se->SetIsPlayed((int)BT_SE_THUNDER, true);			//再生済み
+					}
+
+				}
+
+
 			}
 
 			if (Magic_effect->GetIsDrawEnd()||Atack_effect->GetIsDrawEnd())		//エフェクト描画が終了したら
@@ -725,12 +737,13 @@ void Battle()
 		if (keydown->IsKeyDownOne(KEY_INPUT_RETURN))	//エンターキーを押されたら
 		{
 
+			bt_se->Reset();	//SEの再生状態をリセット
+
 			if (Turn == (int)MY_TURN)			//味方のターンの時
 			{
 				if (ui->GetChoiseCommamd() == (int)COMMANDE_ATACK)	//攻撃を選んだ時は
 				{
 					Atack_effect->ResetIsAnime((int)NOMAL_ATACK);		//攻撃エフェクトリセット
-					bt_se->Reset();	//SEの再生状態をリセット
 				}
 				else							//攻撃以外を選んだ時は
 				{
