@@ -29,6 +29,7 @@ IMAGE *map_i;//マップ画像
 
 MUSIC *bgm;							//BGM
 MUSIC *bt_se;						//戦闘で使用するSE
+MUSIC *sys_se;						//システムのSE
 
 EFFECT *Magic_effect;				//魔法エフェクト
 EFFECT *Atack_effect;				//攻撃エフェクト
@@ -108,12 +109,22 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 	bgm = new MUSIC(MY_MUSIC_DIR_BGM, MY_MUSIC_NAME_BGM,BGM_KIND);		//BGMを生成
 	if (bgm->GetIsLoad() == false) { return -1; }						//読み込み失敗時
 
+	//戦闘で使用するSE
 	bt_se = new MUSIC(MY_MUSIC_DIR_BT_SE, MY_SE_NAME_LEVUP, BT_SE_KIND);	//SEを生成
 	if (bt_se->GetIsLoad() == false) { return -1; }						//読み込み失敗時
 	bt_se->ChengePlayType(DX_PLAYTYPE_BACK);							//再生方法変更
 	//音の追加処理
 	if (bt_se->Add(MY_MUSIC_DIR_BT_SE, MY_SE_NAME_SLASH, (int)BT_SE_SLASH) == false) { return -1; }	//斬るときの音追加
 	if (bt_se->Add(MY_MUSIC_DIR_BT_SE, MY_SE_NAME_THUNDER, (int)BT_SE_THUNDER) == false) { return -1; }//雷の音追加
+
+	//システムで使用するSE
+	sys_se = new MUSIC(MY_MUSIC_DIR_SYS_SE, MY_SE_NAME_CURSOR, SYS_SE_KIND);	//システム用SE生成
+	if (sys_se->GetIsLoad() == false) { return -1; }							//読み込み失敗
+	sys_se->ChengePlayType(DX_PLAYTYPE_BACK);									//再生方法変更
+	//音の追加処理
+	if (sys_se->Add(MY_MUSIC_DIR_SYS_SE, MY_SE_NAME_CANSEL, (int)SYS_SE_CANSEL) == false) { return -1; }	//キャンセル音追加
+
+
 
 	//フォント関係
 	font = new FONT(MY_FONT_DIR, MY_FONT_NAME, FONT_NAME);			//フォントを生成
@@ -363,7 +374,7 @@ void Title()
 
 	Title_Draw();		//タイトル画面の描画処理
 
-	ui->ChoiseOperation(keydown);	//選択肢のキー操作
+	ui->ChoiseOperation(keydown,sys_se);	//選択肢のキー操作
 
 	//▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼ 画面遷移の処理 ▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼
 	if (keydown->IsKeyDown(KEY_INPUT_RETURN))				//エンターキーを押されたら
@@ -430,6 +441,8 @@ void Play()
 
 	if (player->GetIsMenu() == true && keydown->IsKeyDownOne(KEY_INPUT_Q))		//メニュー描画中でQキーを押された瞬間
 	{
+		sys_se->Play((int)SYS_SE_CANSEL);	//キャンセル音を鳴らす
+		sys_se->Reset();				//再生状態リセット
 		player->SetIsMenu(false);		//メニュー描画終了
 	}
 	else if (keydown->IsKeyDownOne(KEY_INPUT_Q))		//Qキーを押された瞬間
@@ -440,7 +453,7 @@ void Play()
 	//▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼ メニュー毎の処理ここから ▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼
 	if (player->GetIsMenu())			//メニュー描画中だったら
 	{
-		ui->ChoiseOperation(keydown);		//メニューウィンドウキー操作
+		ui->ChoiseOperation(keydown, sys_se);		//メニューウィンドウキー操作
 
 		if (keydown->IsKeyDownOne(KEY_INPUT_RETURN))	//エンターキーを押されたら
 		{
@@ -509,7 +522,7 @@ void Battle()
 
 				ui->SetIsDrawUIAnime(false);		//UIのアニメーション非表示
 
-				ui->ChoiseOperation(keydown);		//バトルコマンドキー操作
+				ui->ChoiseOperation(keydown, sys_se);		//バトルコマンドキー操作
 
 				if (keydown->IsKeyDownOne(KEY_INPUT_RETURN))	//エンターキーを押されたら
 				{
@@ -877,7 +890,7 @@ void End()
 
 	End_Draw();	//描画処理
 
-	ui->ChoiseOperation(keydown);	//選択肢のキー操作
+	ui->ChoiseOperation(keydown, sys_se);	//選択肢のキー操作
 
 	player->Recovery();		//回復
 
@@ -1194,7 +1207,8 @@ void Delete_Class()
 	delete keydown;			//keydownを破棄
 	delete font;			//fontを破棄
 	delete bgm;				//bgmを破棄
-	delete bt_se;				//seを破棄
+	delete bt_se;			//bt_seを破棄
+	delete sys_se;			//sys_seを破棄
 	delete player;			//playerを破棄
 	delete back;			//backを破棄
 	delete back_battle;		//back_battleを破棄

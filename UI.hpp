@@ -7,7 +7,8 @@
 #include "DxLib.h"
 #include "MENU.hpp"
 #include "PLAYER.hpp"
-//
+#include "MUSIC.hpp"
+
 //######################### マクロ定義 #####################################
 #define UI_DIR	R"(.\MY_IMG\Ui\)"	//UI画像のフォルダ名
 
@@ -106,7 +107,7 @@ public:
 	int GetUiImageHeight(int);					//ui画像の高さ取得
 
 	//選択肢関係
-	void ChoiseOperation(KEYDOWN *);			//選択肢のキー操作を行う
+	void ChoiseOperation(KEYDOWN *,MUSIC *);			//選択肢のキー操作を行う
 	std::vector<std::string>::iterator GetNowChoise();	//現在選択している要素を取得する
 	void ChoiseClear();							//選択肢の内容をクリアする
 	void NowChoiseReset();						//現在選択している内容を、最初の要素に戻す

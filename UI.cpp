@@ -256,19 +256,24 @@ int UI::GetUiImageHeight(int type)
 }
 
 //選択肢のキー操作を行う
-void UI::ChoiseOperation(KEYDOWN *keydown)
+void UI::ChoiseOperation(KEYDOWN *keydown,MUSIC *se)
 {
 	if (keydown->IsKeyDownOne(KEY_INPUT_W))		//Wキーを押されたら
 	{
 		if (this->Str_itr != this->Str.begin())	//最初の要素を選択していなければ
 		{
+			//SEの再生
+			se->Play((int)SYS_SE_CURSOR);					//カーソル移動のSEを鳴らす
 			--this->Str_itr;		//前の要素へ
+
 		}
 	}
 	else if (keydown->IsKeyDownOne(KEY_INPUT_S))	//Sキーを押されたら
 	{
 		if (this->Str_itr != this->Str.end() - 1)	//最後の要素を選択していなければ
 		{
+			//SEの再生
+			se->Play((int)SYS_SE_CURSOR);					//カーソル移動のSEを鳴らす
 			++this->Str_itr;		//次の要素へ
 		}
 	}
