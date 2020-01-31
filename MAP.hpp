@@ -127,7 +127,7 @@ enum MAP_CITY_KIND
 
 enum MAP_BOSS_KIND
 {
-	MAP_LAST_BOSS		//ラスボス
+	MAP_LAST_BOSS=131		//ラスボス
 };
 
 enum MAP_CHENGE_DIST

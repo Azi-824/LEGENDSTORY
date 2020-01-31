@@ -207,6 +207,10 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 	enemy[(int)IFRIT] = new ENEMY(ENEMY_DIR, ENEMY_NAME_IFRIT);	//イフリート作成
 	if (enemy[(int)IFRIT]->GetIsLoad() == false) { return -1; }	//読み込み失敗
 
+	enemy[(int)BOSS] = new ENEMY(ENEMY_DIR, ENEMY_NAME_BOSS);	//ボス作成
+	if (enemy[(int)BOSS]->GetIsLoad() == false) { return -1; }	//読み込み失敗
+
+
 	//敵のデータをcsvファイルから読み込み
 	if (data->LoadEnemy(enemy, ENEMY_DATA_DIR, ENEMY_DATA_NAME) == false) { return -1; }		//読み込み失敗
 	//初期設定
@@ -1299,6 +1303,26 @@ void Enconte()
 				SceneChenge(GameSceneNow, (int)GAME_SCENE_BATTLE);	//次の画面は戦闘画面
 
 			}
+		}
+		else if (Boss_flg && enemy[i]->GetEmergenceMap() == (int)MAP_LAST_BOSS)	//ラスボスだったら
+		{
+			player->SetIsKeyDown(false);			//プレイヤーの動きを止める
+
+			EncounteEnemyType = i;		//遭遇した敵を設定
+
+			//描画文字設定
+			Work_Str = "バイト帰りの";
+			Work_Str += enemy[EncounteEnemyType]->GetName();		//遭遇した敵の名前取得
+			Work_Str += "が現れた！";
+			bt_msg[(int)BT_MSG_ACT]->SetMsg(Work_Str.c_str());	//文字列設定
+			Work_Str = "どうする？";
+			bt_msg[(int)BT_MSG_ACT]->AddMsg(Work_Str.c_str());	//文字列設定
+
+			sys_se->Play((int)SYS_SE_ENCOUNT);					//敵と遭遇した音を鳴らす
+			sys_se->Reset();									//再生状態リセット
+
+			SceneChenge(GameSceneNow, (int)GAME_SCENE_BATTLE);	//次の画面は戦闘画面
+
 		}
 	}
 

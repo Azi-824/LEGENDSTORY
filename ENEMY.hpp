@@ -23,10 +23,12 @@
 #define ENEMY_NAME_HARPY	R"(harpy.png)"			//ハーピーの画像の名前
 #define ENEMY_NAME_IFRIT	R"(ifrit.png)"			//イフリートの画像の名前
 
+#define ENEMY_NAME_BOSS		R"(maou.png)"			//魔王の画像の名前
+
 //############## マクロ定義：エラーメッセージ ###################
 
 //############## マクロ定義 ###################
-#define ENEMY_KIND 8			//敵の種類
+#define ENEMY_KIND 9			//敵の種類
 
 //############## 列挙型 ########################
 enum ENEMY_TYPE
@@ -38,7 +40,8 @@ enum ENEMY_TYPE
 	GOBURIN,			//ゴブリン
 	AKUMA,				//悪魔
 	HARPY,				//ハーピー
-	IFRIT				//イフリート
+	IFRIT,				//イフリート
+	BOSS				//魔王
 };
 
 //############## クラス定義 #####################
