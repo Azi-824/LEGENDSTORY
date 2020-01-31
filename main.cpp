@@ -34,6 +34,7 @@ MUSIC *sys_se;						//システムのSE
 EFFECT *Magic_effect;				//魔法エフェクト
 EFFECT *Atack_effect;				//攻撃エフェクト
 EFFECT *Enemy_Atk_effect;			//敵攻撃エフェクト
+EFFECT *Boss_Atk_effect;			//ボス攻撃エフェクト
 
 FONT *font;							//フォント
 UI *ui;								//UI
@@ -71,6 +72,7 @@ int Turn = (int)MY_TURN;	//ターン
 
 bool GameEnd_Flg = false;	//ゲーム終了フラグ
 bool Boss_flg = false;		//ボスフラグ
+bool Clear_flg = false;		//クリアフラグ
 
 std::string Work_Str;		//作業用文字列
 
@@ -166,6 +168,13 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 	//敵攻撃エフェクト追加
 	if (Enemy_Atk_effect->Add(MY_ANIME_DIR_ENE_ATK, MY_ANIME_NAME_ENE_ATK_KIBA, ENE_ATK_KIBA_ALL_CNT, ENE_ATK_KIBA_YOKO_CNT, ENE_ATK_KIBA_TATE_CNT, ENE_ATK_KIBA_WIDTH, ENE_ATK_KIBA_HEIGHT, ENE_ATK_KIBA_SPEED, false, (int)ENE_ATK_KIBA) == false) { return -1; }	//読み込み失敗
 	if (Enemy_Atk_effect->Add(MY_ANIME_DIR_ENE_ATK, MY_ANIME_NAME_ENE_ATK_TAIL_BIG, ENE_ATK_TAIL_BIG_ALL_CNT, ENE_ATK_TAIL_BIG_YOKO_CNT, ENE_ATK_TAIL_BIG_TATE_CNT, ENE_ATK_TAIL_BIG_WIDTH, ENE_ATK_TAIL_BIG_HEIGHT, ENE_ATK_TAIL_BIG_SPEED, false, (int)ENE_ATK_TAIL_BIG) == false) { return -1; }	//読み込み失敗
+
+	//ボス攻撃エフェクト
+	Boss_Atk_effect = new EFFECT(MY_ANIME_DIR_BOSS_ATK, MY_ANIME_NAME_BOSS_ATK_LASER, BOSS_ATK_LEASER_ALL_CNT, BOSS_ATK_LEASER_YOKO_CNT, BOSS_ATK_LEASER_TATE_CNT, BOSS_ATK_LEASER_WIDTH, BOSS_ATK_LEASER_HEIGHT, BOSS_ATK_LEASER_SPEED, false, BOSS_ATK_EFFECT_KIND);
+	if (Boss_Atk_effect->GetIsLoad() == false) { return -1; }		//読み込み失敗
+	//ボス攻撃エフェクト追加
+	if (Boss_Atk_effect->Add(MY_ANIME_DIR_BOSS_ATK, MY_ANIME_NAME_BOSS_ATK_TOGE, BOSS_ATK_TOGE_ALL_CNT, BOSS_ATK_TOGE_YOKO_CNT, BOSS_ATK_TOGE_TATE_CNT, BOSS_ATK_TOGE_WIDTH, BOSS_ATK_TOGE_HEIGT, BOSS_ATK_TOGE_SPEED, false, (int)BOSS_ATK_TOGE) == false) { return -1; }	//読み込み失敗
+
 
 	//プレイヤー関係
 	player = new PLAYER();		//プレイヤー生成
@@ -815,13 +824,27 @@ void Battle()
 		}
 		else if (Turn = (int)ENEMY_TURN)	//敵のターンだったら
 		{
-			//敵のエフェクト表示
-			Enemy_Atk_effect->Draw((GAME_WIDTH / 2 - Enemy_Atk_effect->GetWidth(enemy[EncounteEnemyType]->GetChoiseSkil()) / 2),
-				(GAME_HEIGHT / 2 - Enemy_Atk_effect->GetHeight(enemy[EncounteEnemyType]->GetChoiseSkil()) / 2),
-				enemy[EncounteEnemyType]->GetChoiseSkil());
+
+			if (Boss_flg)		//ボス戦だったら
+			{
+				//ボスのエフェクト描画
+				Boss_Atk_effect->DrawNormal((GAME_WIDTH / 2 - Boss_Atk_effect->GetWidth(enemy[EncounteEnemyType]->GetChoiseSkil()) / 2),
+					(GAME_HEIGHT / 2 - Boss_Atk_effect->GetHeight(enemy[EncounteEnemyType]->GetChoiseSkil()) / 2),
+					enemy[EncounteEnemyType]->GetChoiseSkil());
+
+			}
+			else				//ボス戦じゃなければ
+			{
+				//敵のエフェクト表示
+				Enemy_Atk_effect->Draw((GAME_WIDTH / 2 - Enemy_Atk_effect->GetWidth(enemy[EncounteEnemyType]->GetChoiseSkil()) / 2),
+					(GAME_HEIGHT / 2 - Enemy_Atk_effect->GetHeight(enemy[EncounteEnemyType]->GetChoiseSkil()) / 2),
+					enemy[EncounteEnemyType]->GetChoiseSkil());
+
+			}
 
 
-			if (Enemy_Atk_effect->GetIsDrawEnd())		//エフェクト描画終了したら
+
+			if (Enemy_Atk_effect->GetIsDrawEnd()||Boss_Atk_effect->GetIsDrawEnd())		//エフェクト描画終了したら
 			{
 
 				//音の再生
@@ -883,6 +906,7 @@ void Battle()
 				bt_msg[(int)BT_MSG_ACT]->SetMsg(Work_Str.c_str());	//文字列設定
 
 				Enemy_Atk_effect->ResetIsAnime(enemy[EncounteEnemyType]->GetChoiseSkil());		//エフェクトリセット
+				Boss_Atk_effect->ResetIsAnime(enemy[EncounteEnemyType]->GetChoiseSkil());		//エフェクトリセット（ボス）
 				Turn = (int)MY_TURN;				//味方のターンへ
 			}
 
@@ -965,7 +989,15 @@ void Battle()
 				{
 					if (player->GetIsBattleWin())		//戦闘に勝利していたら
 					{
-						SceneChenge(GameSceneNow, (int)GAME_SCENE_PLAY);	//次の画面はプレイ画面
+						if (Boss_flg)					//倒したのがボスだったら
+						{
+							Clear_flg = true;			//クリアフラグを立てる
+							SceneChenge(GameSceneNow, (int)GAME_SCENE_END);	//次の画面はエンド画面
+						}
+						else							//倒したのがボス以外だったら
+						{
+							SceneChenge(GameSceneNow, (int)GAME_SCENE_PLAY);	//次の画面はプレイ画面
+						}
 					}
 					else if (player->GetIsBattleWin() == false)	//戦闘に敗北していたら
 					{
@@ -1121,6 +1153,10 @@ void Init()
 		}
 
 	}
+	else if (GameSceneBefor == (int)GAME_SCENE_END)	//エンド画面から遷移した場合
+	{
+		Clear_flg = false;				//クリアフラグリセット
+	}
 }
 
 //シーンを変更する処理
@@ -1262,6 +1298,21 @@ void End_Draw()
 {
 
 	back->Draw(GAME_LEFT, GAME_TOP, (int)END_BACK);	//背景画像描画
+
+	if (Clear_flg)		//クリアしていたら
+	{
+		int Strlen = strlen("ゲームクリア！！！");
+		int Width = GetDrawStringWidth("ゲームクリア！！！", Strlen);	//横幅取得
+
+		DrawString((GAME_WIDTH / 2) - (Width / 2), GAME_HEIGHT / 2, "ゲームクリア！！！", GetColor(255, 0, 0));		//クリア文字描画
+	}
+	else				//クリアしていなかったら
+	{
+		int Strlen = strlen("ゲームオーバー…");
+		int Width = GetDrawStringWidth("ゲームオーバー…", Strlen);	//横幅取得
+
+		DrawString((GAME_WIDTH / 2) - (Width / 2), GAME_HEIGHT / 2, "ゲームオーバー…", GetColor(255, 0, 0));		//ゲームオーバー文字描画
+	}
 
 	font->SetSize(BIG_FONTSIZE);	//フォントサイズを大きくする
 
