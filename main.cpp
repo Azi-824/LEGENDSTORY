@@ -116,6 +116,7 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 	//音の追加処理
 	if (bt_se->Add(MY_MUSIC_DIR_BT_SE, MY_SE_NAME_SLASH, (int)BT_SE_SLASH) == false) { return -1; }	//斬るときの音追加
 	if (bt_se->Add(MY_MUSIC_DIR_BT_SE, MY_SE_NAME_THUNDER, (int)BT_SE_THUNDER) == false) { return -1; }//雷の音追加
+	if (bt_se->Add(MY_MUSIC_DIR_BT_SE, MY_SE_NAME_NIGERU, (int)BT_SE_NIGERU) == false) { return -1; }//逃げるときの音追加
 
 	//システムで使用するSE
 	sys_se = new MUSIC(MY_MUSIC_DIR_SYS_SE, MY_SE_NAME_CURSOR, SYS_SE_KIND);	//システム用SE生成
@@ -125,6 +126,7 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 	if (sys_se->Add(MY_MUSIC_DIR_SYS_SE, MY_SE_NAME_CANSEL, (int)SYS_SE_CANSEL) == false) { return -1; }	//キャンセル音追加
 	if (sys_se->Add(MY_MUSIC_DIR_SYS_SE, MY_SE_NAME_KETTEI, (int)SYS_SE_KETTEI) == false) { return -1; }	//決定音追加
 	if (sys_se->Add(MY_MUSIC_DIR_SYS_SE, MY_SE_NAME_MENU, (int)SYS_SE_MENU) == false) { return -1; }		//メニューを開いた時の音追加
+	if (sys_se->Add(MY_MUSIC_DIR_SYS_SE, MY_SE_NAME_ENCOUNT, (int)SYS_SE_ENCOUNT) == false) { return -1; }	//敵と遭遇した時の音追加
 
 
 	//フォント関係
@@ -671,6 +673,8 @@ void Battle()
 			{
 				if (ui->GetChoiseCommamd() == (int)COMMANDE_ESCAPE)		//逃げるを選んだら
 				{
+					bt_se->Play((int)BT_SE_NIGERU);	//逃げるときの音を鳴らす
+					bt_se->Reset();					//再生状態リセット
 					SceneChenge(GameSceneNow, (int)GAME_SCENE_PLAY);	//次の画面はプレイ画面
 				}
 			}
@@ -1186,6 +1190,9 @@ void Enconte()
 				bt_msg[(int)BT_MSG_ACT]->SetMsg(Work_Str.c_str());	//文字列設定
 				Work_Str = "どうする？";
 				bt_msg[(int)BT_MSG_ACT]->AddMsg(Work_Str.c_str());	//文字列設定
+
+				sys_se->Play((int)SYS_SE_ENCOUNT);					//敵と遭遇した音を鳴らす
+				sys_se->Reset();									//再生状態リセット
 
 				SceneChenge(GameSceneNow, (int)GAME_SCENE_BATTLE);	//次の画面は戦闘画面
 
