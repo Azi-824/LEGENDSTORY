@@ -101,10 +101,23 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 	back->AddImage(MY_IMG_DIR_BACK, MY_IMG_NAME_BACK_END, (int)END_BACK);	//ƒGƒ“ƒh‰æ–Ê‚Ì”wŒi‰æ‘œ“Ç‚Ýž‚Ý
 	if (back->GetIsLoad() == false) { return -1; }							//“Ç‚Ýž‚ÝŽ¸”s
 
-	back_battle = new IMAGE(MY_IMG_DIR_BATTLE, MY_IMG_NAME_BATTLE_NORMAL);	//í“¬‰æ–Ê‚Ì”wŒi‰æ‘œ“Ç‚Ýž‚Ý
+	back_battle = new IMAGE(MY_IMG_DIR_BATTLE, IMG_NAME_BT_SOUGEN);	//í“¬‰æ–Ê(‘Œ´)‚Ì”wŒi‰æ‘œ“Ç‚Ýž‚Ý
 	if (back_battle->GetIsLoad() == false) { return -1; }					//“Ç‚Ýž‚ÝŽ¸”s
-	back_battle->AddImage(MY_IMG_DIR_BATTLE, MY_IMG_NAME_BATTLE_NIGHT,(int)NIGHT);		//í“¬‰æ–Êi–éj‚Ì”wŒi‰æ‘œ‚Ì“Ç‚Ýž‚Ý
+	back_battle->AddImage(MY_IMG_DIR_BATTLE, IMG_NAME_BT_FOREST,(int)BT_BACK_FOREST);		//í“¬‰æ–ÊiXj‚Ì”wŒi‰æ‘œ‚Ì“Ç‚Ýž‚Ý
 	if (back_battle->GetIsLoad() == false) { return -1; }					//“Ç‚Ýž‚ÝŽ¸”s
+	back_battle->AddImage(MY_IMG_DIR_BATTLE, IMG_NAME_BT_OCEAN, (int)BT_BACK_OCEAN);		//í“¬‰æ–ÊiŠCj‚Ì”wŒi‰æ‘œ‚Ì“Ç‚Ýž‚Ý
+	if (back_battle->GetIsLoad() == false) { return -1; }					//“Ç‚Ýž‚ÝŽ¸”s
+	back_battle->AddImage(MY_IMG_DIR_BATTLE, IMG_NAME_BT_AUTUMN, (int)BT_BACK_AUTUMN);		//í“¬‰æ–ÊiHj‚Ì”wŒi‰æ‘œ‚Ì“Ç‚Ýž‚Ý
+	if (back_battle->GetIsLoad() == false) { return -1; }					//“Ç‚Ýž‚ÝŽ¸”s
+	back_battle->AddImage(MY_IMG_DIR_BATTLE, IMG_NAME_BT_SPRING, (int)BT_BACK_SPRING);		//í“¬‰æ–Êitj‚Ì”wŒi‰æ‘œ‚Ì“Ç‚Ýž‚Ý
+	if (back_battle->GetIsLoad() == false) { return -1; }					//“Ç‚Ýž‚ÝŽ¸”s
+	back_battle->AddImage(MY_IMG_DIR_BATTLE, IMG_NAME_BT_WINTER, (int)BT_BACK_WINTER);		//í“¬‰æ–Êi“~j‚Ì”wŒi‰æ‘œ‚Ì“Ç‚Ýž‚Ý
+	if (back_battle->GetIsLoad() == false) { return -1; }					//“Ç‚Ýž‚ÝŽ¸”s
+	back_battle->AddImage(MY_IMG_DIR_BATTLE, IMG_NAME_BT_REMAINS, (int)BT_BACK_REMAINS);		//í“¬‰æ–ÊiˆâÕj‚Ì”wŒi‰æ‘œ‚Ì“Ç‚Ýž‚Ý
+	if (back_battle->GetIsLoad() == false) { return -1; }					//“Ç‚Ýž‚ÝŽ¸”s
+	back_battle->AddImage(MY_IMG_DIR_BATTLE, IMG_NAME_BT_CASTLE, (int)BT_BACK_CASTLE);		//í“¬‰æ–Êiéj‚Ì”wŒi‰æ‘œ‚Ì“Ç‚Ýž‚Ý
+	if (back_battle->GetIsLoad() == false) { return -1; }					//“Ç‚Ýž‚ÝŽ¸”s
+
 
 	setumei = new IMAGE(MY_IMG_DIR_BACK, SETUMEI_NAME);		//à–¾‰æ‘œ‚Ì“Ç‚Ýž‚Ý
 	if (setumei->GetIsLoad() == false) { return -1; }		//“Ç‚Ýž‚ÝŽ¸”s
@@ -1022,7 +1035,7 @@ void Battle()
 
 	if (keydown->IsKeyDown(KEY_INPUT_R))		//RƒL[‰Ÿ‚³‚ê‚½‚ç
 	{
-		back_battle->ChengeImage(NIGHT);		//”wŒi‰æ‘œ‚ði–éj‚É•ÏX
+		back_battle->ChengeImage(BT_BACK_FOREST);		//”wŒi‰æ‘œ‚ði–éj‚É•ÏX
 	}
 
 	return;
@@ -1277,7 +1290,7 @@ void Play_Draw()
 void Battle_Draw()
 {
 
-	back_battle->Draw(GAME_LEFT, GAME_TOP);	//”wŒi‰æ‘œ‚ð•`‰æ
+	back_battle->Draw(GAME_LEFT, GAME_TOP, MapKind[MAPPOS_Y][MAPPOS_X]);	//”wŒi‰æ‘œ‚ð•`‰æ
 
 	enemy[EncounteEnemyType]->Draw();	//“G•`‰æ
 
