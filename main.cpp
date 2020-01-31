@@ -111,6 +111,7 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 	if (bgm->Add(MY_MUSIC_DIR_BGM, MY_BGM_NAME_FIELD, (int)BGM_FIELD) == false) { return -1; }	//フィールドのBGM追加
 	if (bgm->Add(MY_MUSIC_DIR_BGM, MY_BGM_NAME_CITY, (int)BGM_CITY) == false) { return -1; }	//街のBGM追加
 	if (bgm->Add(MY_MUSIC_DIR_BGM, MY_BGM_NAME_BATTLE, (int)BGM_BATTLE) == false) { return -1; }//戦闘画面のBGM追加
+	if (bgm->Add(MY_MUSIC_DIR_BGM, MY_BGM_NAME_END, (int)BGM_END) == false) { return -1; }//エンド画面のBGM追加
 
 	//戦闘で使用するSE
 	bt_se = new MUSIC(MY_MUSIC_DIR_BT_SE, MY_SE_NAME_LEVUP, BT_SE_KIND);	//SEを生成
@@ -550,7 +551,7 @@ void Battle()
 	if (bgm->GetIsPlay((int)BGM_BATTLE) == false)	//再生中じゃないとき
 	{
 		bgm->Stop();							//全てのBGMを止める
-		bgm->Play((int)BGM_BATTLE);				//フィールドBGMを再生
+		bgm->Play((int)BGM_BATTLE);				//戦闘BGMを再生
 	}
 	//▲▲▲▲▲▲▲▲▲▲▲▲▲▲ 音の再生処理ここまで ▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲
 
@@ -961,6 +962,14 @@ void Battle()
 //エンド画面の処理
 void End()
 {
+
+	//▼▼▼▼▼▼▼▼▼▼▼▼▼▼ 音の再生処理ここから ▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼
+	if (bgm->GetIsPlay((int)BGM_END) == false)	//再生中じゃないとき
+	{
+		bgm->Stop();							//全てのBGMを止める
+		bgm->Play((int)BGM_END);				//エンドBGMを再生
+	}
+	//▲▲▲▲▲▲▲▲▲▲▲▲▲▲ 音の再生処理ここまで ▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲
 
 	End_Draw();	//描画処理
 

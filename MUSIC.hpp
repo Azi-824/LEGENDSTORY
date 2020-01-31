@@ -17,6 +17,7 @@
 #define MY_BGM_NAME_FIELD	R"(\field.mp3)"			//フィールドのBGMの名前
 #define MY_BGM_NAME_CITY	R"(\city.mp3)"			//街のBGMの名前
 #define MY_BGM_NAME_BATTLE	R"(\battle.mp3)"		//戦闘画面のBGMの名前
+#define MY_BGM_NAME_END		R"(\end.mp3)"			//エンド画面のBGMの名前
 
 #define MY_SE_NAME_LEVUP	R"(\levelup.mp3)"		//SE（レベルアップ）の名前
 #define MY_SE_NAME_SLASH	R"(\slash.mp3)"			//斬るときの音の名前
@@ -35,7 +36,7 @@
 #define MUSIC_ERROR_MSG	"音が読み込めませんでした"		//エラーメッセージ
 
 //##################### マクロ定義 ##########################
-#define BGM_KIND	4	//BGMの種類
+#define BGM_KIND	5	//BGMの種類
 #define BT_SE_KIND	5	//バトルで使用するSEの種類
 #define SYS_SE_KIND	5	//システムのSEの種類
 
@@ -45,7 +46,8 @@ enum BGM_TYPE
 	BGM_TITLE,		//タイトル画面のBGM
 	BGM_FIELD,		//フィールドのBGM
 	BGM_CITY,		//街のBGM
-	BGM_BATTLE		//戦闘画面のBGM
+	BGM_BATTLE,		//戦闘画面のBGM
+	BGM_END			//エンド画面のBGM
 };
 
 enum BT_SE_TYPE
