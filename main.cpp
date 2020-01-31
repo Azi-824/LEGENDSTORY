@@ -117,6 +117,7 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 	if (bt_se->Add(MY_MUSIC_DIR_BT_SE, MY_SE_NAME_SLASH, (int)BT_SE_SLASH) == false) { return -1; }	//斬るときの音追加
 	if (bt_se->Add(MY_MUSIC_DIR_BT_SE, MY_SE_NAME_THUNDER, (int)BT_SE_THUNDER) == false) { return -1; }//雷の音追加
 	if (bt_se->Add(MY_MUSIC_DIR_BT_SE, MY_SE_NAME_NIGERU, (int)BT_SE_NIGERU) == false) { return -1; }//逃げるときの音追加
+	if (bt_se->Add(MY_MUSIC_DIR_BT_SE, MY_SE_NAME_DAMEGE, (int)BT_SE_DAMEGE) == false) { return -1; }//ダメージ音追加
 
 	//システムで使用するSE
 	sys_se = new MUSIC(MY_MUSIC_DIR_SYS_SE, MY_SE_NAME_CURSOR, SYS_SE_KIND);	//システム用SE生成
@@ -744,8 +745,21 @@ void Battle()
 				(GAME_HEIGHT / 2 - Enemy_Atk_effect->GetHeight(enemy[EncounteEnemyType]->GetChoiseSkil()) / 2),
 				enemy[EncounteEnemyType]->GetChoiseSkil());
 
+
 			if (Enemy_Atk_effect->GetIsDrawEnd())		//エフェクト描画終了したら
 			{
+
+				//音の再生
+				if (bt_se->GetIsPlayed((int)BT_SE_DAMEGE) == false)		//再生済みでなければ
+				{
+					if (bt_se->GetIsPlay((int)BT_SE_DAMEGE) == false)		//再生中じゃなければ
+					{
+						bt_se->Play((int)BT_SE_DAMEGE);						//ダメージ野SEを鳴らす
+						bt_se->SetIsPlayed((int)BT_SE_DAMEGE, true);		//再生済み
+					}
+
+				}
+
 				player->SetHP((player->GetHP()) - (player->GetRecvDamege()));		//味方にダメージを与える
 
 				if (player->GetHP() <= 0)			//HPが0以下になったら

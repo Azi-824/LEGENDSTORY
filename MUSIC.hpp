@@ -19,6 +19,7 @@
 #define MY_SE_NAME_SLASH	R"(\slash.mp3)"			//斬るときの音の名前
 #define MY_SE_NAME_THUNDER	R"(\thunder.mp3)"		//雷の音の名前
 #define MY_SE_NAME_NIGERU	R"(\nigeru.mp3)"		//逃げるときの音の名前
+#define MY_SE_NAME_DAMEGE	R"(\damege.wav)"		//ダメージの音の名前
 
 #define MY_SE_NAME_CURSOR	R"(\select.mp3)"		//カーソルの移動音の名前
 #define MY_SE_NAME_CANSEL	R"(\cancel.wav)"		//キャンセル音の名前
@@ -32,7 +33,7 @@
 
 //##################### マクロ定義 ##########################
 #define BGM_KIND	1	//BGMの種類
-#define BT_SE_KIND	4	//バトルで使用するSEの種類
+#define BT_SE_KIND	5	//バトルで使用するSEの種類
 #define SYS_SE_KIND	5	//システムのSEの種類
 
 //##################### 列挙型 #########################
@@ -46,7 +47,8 @@ enum BT_SE_TYPE
 	BT_SE_LEVELUP,		//レベルアップのSE
 	BT_SE_SLASH,		//斬るときの音
 	BT_SE_THUNDER,		//雷の音
-	BT_SE_NIGERU		//逃げる時の音
+	BT_SE_NIGERU,		//逃げる時の音
+	BT_SE_DAMEGE		//ダメージ音
 };
 
 enum SYS_SE_TYPE
