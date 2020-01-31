@@ -13,7 +13,10 @@
 #define MY_MUSIC_DIR_BT_SE	R"(.\MY_MUSIC\SE\battle)" //戦闘のSEのファイル名
 #define MY_MUSIC_DIR_SYS_SE	R"(.\MY_MUSIC\SE\system)" //システムのSEのファイル名
 
-#define MY_MUSIC_NAME_BGM	R"(\bgm_op.mp3)"		//BGMの名前
+#define MY_BGM_NAME_TITLE	R"(\bgm_op.mp3)"		//BGMの名前
+#define MY_BGM_NAME_FIELD	R"(\field.mp3)"			//フィールドのBGMの名前
+#define MY_BGM_NAME_CITY	R"(\city.mp3)"			//街のBGMの名前
+#define MY_BGM_NAME_BATTLE	R"(\battle.mp3)"		//戦闘画面のBGMの名前
 
 #define MY_SE_NAME_LEVUP	R"(\levelup.mp3)"		//SE（レベルアップ）の名前
 #define MY_SE_NAME_SLASH	R"(\slash.mp3)"			//斬るときの音の名前
@@ -32,14 +35,17 @@
 #define MUSIC_ERROR_MSG	"音が読み込めませんでした"		//エラーメッセージ
 
 //##################### マクロ定義 ##########################
-#define BGM_KIND	1	//BGMの種類
+#define BGM_KIND	4	//BGMの種類
 #define BT_SE_KIND	5	//バトルで使用するSEの種類
 #define SYS_SE_KIND	5	//システムのSEの種類
 
 //##################### 列挙型 #########################
 enum BGM_TYPE
 {
-	TITLE_BGM		//タイトル画面のBGM
+	BGM_TITLE,		//タイトル画面のBGM
+	BGM_FIELD,		//フィールドのBGM
+	BGM_CITY,		//街のBGM
+	BGM_BATTLE		//戦闘画面のBGM
 };
 
 enum BT_SE_TYPE
@@ -91,7 +97,10 @@ public:
 
 	void Play(int);							//音を再生する
 
-	bool Add(const char*, const char*, int);	//音を追加する
+	void Stop();							//音を止める(全て)
+	void Stop(int);							//音を止める(指定されたものだけ)
+
+	bool Add(const char*, const char*, int);//音を追加する
 
 	void SetIsPlayed(int,bool);				//再生済みか設定
 

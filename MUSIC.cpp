@@ -129,6 +129,23 @@ void MUSIC::Play(int kind)
 	return;
 }
 
+//音を止める（すべて）
+void MUSIC::Stop(void)
+{
+	for (int i = 0; i < this->Handle.size(); ++i)
+	{
+		StopSoundMem(this->Handle[i]);		//音を止める
+	}
+	return;
+}
+
+//音を止める（指定されたものだけ）
+void MUSIC::Stop(int kind)
+{
+	StopSoundMem(this->Handle[kind]);
+	return;
+}
+
 //音を追加する
 bool MUSIC::Add(const char *dir, const char *name, int kind)
 {

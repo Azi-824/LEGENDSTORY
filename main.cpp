@@ -106,8 +106,11 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 	if (setumei->GetIsLoad() == false) { return -1; }		//読み込み失敗
 
 	//音関係
-	bgm = new MUSIC(MY_MUSIC_DIR_BGM, MY_MUSIC_NAME_BGM,BGM_KIND);		//BGMを生成
+	bgm = new MUSIC(MY_MUSIC_DIR_BGM, MY_BGM_NAME_TITLE,BGM_KIND);		//BGMを生成
 	if (bgm->GetIsLoad() == false) { return -1; }						//読み込み失敗時
+	if (bgm->Add(MY_MUSIC_DIR_BGM, MY_BGM_NAME_FIELD, (int)BGM_FIELD) == false) { return -1; }	//フィールドのBGM追加
+	if (bgm->Add(MY_MUSIC_DIR_BGM, MY_BGM_NAME_CITY, (int)BGM_CITY) == false) { return -1; }	//街のBGM追加
+	if (bgm->Add(MY_MUSIC_DIR_BGM, MY_BGM_NAME_BATTLE, (int)BGM_BATTLE) == false) { return -1; }//戦闘画面のBGM追加
 
 	//戦闘で使用するSE
 	bt_se = new MUSIC(MY_MUSIC_DIR_BT_SE, MY_SE_NAME_LEVUP, BT_SE_KIND);	//SEを生成
@@ -368,10 +371,11 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 void Title()
 {
 	//▼▼▼▼▼▼▼▼▼▼▼▼▼▼ 音の再生処理ここから ▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼
-	if (bgm->GetIsPlay((int)TITLE_BGM) == false)	//再生中じゃないとき
+	if (bgm->GetIsPlay((int)BGM_TITLE) == false)	//再生中じゃないとき
 	{
-		bgm->ChengeVolume(255 * 50 / 100, (int)TITLE_BGM);	//BGMの音量を50%に変更
-		bgm->Play((int)TITLE_BGM);				//BGMを再生
+		bgm->Stop();							//全てのBGMを止める
+		bgm->ChengeVolume(255 * 50 / 100, (int)BGM_TITLE);	//BGMの音量を50%に変更
+		bgm->Play((int)BGM_TITLE);				//BGMを再生
 	}
 	//▲▲▲▲▲▲▲▲▲▲▲▲▲▲ 音の再生処理ここまで ▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲
 
@@ -402,6 +406,31 @@ void Title()
 //プレイ画面の処理
 void Play()
 {
+
+	if (NowDrawMapKind == (int)DRAW_FILED)		//フィールドマップにいるときは
+	{
+		//▼▼▼▼▼▼▼▼▼▼▼▼▼▼ 音の再生処理ここから ▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼
+		if (bgm->GetIsPlay((int)BGM_FIELD) == false)	//再生中じゃないとき
+		{
+			bgm->Stop();							//全てのBGMを止める
+			bgm->Play((int)BGM_FIELD);				//フィールドBGMを再生
+		}
+		//▲▲▲▲▲▲▲▲▲▲▲▲▲▲ 音の再生処理ここまで ▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲
+
+	}
+	else if (NowDrawMapKind == (int)DRAW_CITY)	//街マップにいるときは
+	{
+		//▼▼▼▼▼▼▼▼▼▼▼▼▼▼ 音の再生処理ここから ▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼
+		if (bgm->GetIsPlay((int)BGM_CITY) == false)	//再生中じゃないとき
+		{
+			bgm->Stop();							//全てのBGMを止める
+			bgm->Play((int)BGM_CITY);				//街のBGMを再生
+		}
+		//▲▲▲▲▲▲▲▲▲▲▲▲▲▲ 音の再生処理ここまで ▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲
+
+	}
+
+
 
 	player->Operation(keydown, mapdata_field[NowDrawMapKind][MapKind[MAPPOS_Y][MAPPOS_X]]->GetRect((int)MAP_NG));	//プレイヤーキー操作
 
@@ -516,6 +545,14 @@ void Play()
 //戦闘画面の処理
 void Battle()
 {
+
+	//▼▼▼▼▼▼▼▼▼▼▼▼▼▼ 音の再生処理ここから ▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼
+	if (bgm->GetIsPlay((int)BGM_BATTLE) == false)	//再生中じゃないとき
+	{
+		bgm->Stop();							//全てのBGMを止める
+		bgm->Play((int)BGM_BATTLE);				//フィールドBGMを再生
+	}
+	//▲▲▲▲▲▲▲▲▲▲▲▲▲▲ 音の再生処理ここまで ▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲
 
 	Battle_Draw();			//描画処理
 
