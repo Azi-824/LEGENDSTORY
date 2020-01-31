@@ -1289,8 +1289,14 @@ void Play_Draw()
 //í“¬‰æ–Ê‚Ì•`‰æˆ—
 void Battle_Draw()
 {
-
-	back_battle->Draw(GAME_LEFT, GAME_TOP, MapKind[MAPPOS_Y][MAPPOS_X]);	//”wŒi‰æ‘œ‚ð•`‰æ
+	if (Boss_flg)	//ƒ{ƒXí‚ÌŽž
+	{
+		back_battle->Draw(GAME_LEFT, GAME_TOP, 0);
+	}
+	else			//ƒ{ƒXíˆÈŠO‚ÌŽž
+	{
+		back_battle->Draw(GAME_LEFT, GAME_TOP, MapKind[MAPPOS_Y][MAPPOS_X]);	//”wŒi‰æ‘œ‚ð•`‰æ
+	}
 
 	enemy[EncounteEnemyType]->Draw();	//“G•`‰æ
 
