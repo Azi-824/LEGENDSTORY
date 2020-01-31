@@ -14,6 +14,7 @@ MAP::MAP(const char *dir,const char *name)
 	this->MapOKKind[0] = (int)MAP_OK_KIND1;	//通行できるマップの種類
 	this->MapEncountKind[0] = (int)MAP_OK_KIND_ENCOUNT;	//通行できるマップの種類(敵と遭遇する)
 	this->MapWarpKind[0] = (int)MAP_WARP_CITY;			//街へ移動するマップの種類
+	this->MapMoveBossKind[0] = (int)MAP_MOVE_BOSS;			//ボスマップへ移動するマップの種類
 	this->MapNGKind[0] = (int)MAP_NG_KIND1;			//通行できないマップの種類
 
 	for (int tate = 0; tate < MAP_TATE; ++tate)
@@ -23,6 +24,7 @@ MAP::MAP(const char *dir,const char *name)
 			this->RectOK[tate][yoko] = new COLLISION();	//当たり判定の領域を作成(通行できる)
 			this->RectEncount[tate][yoko] = new COLLISION();//当たり判定の領域を作成(敵と遭遇する)
 			this->RectWarp[tate][yoko] = new COLLISION();//当たり判定の領域を作成(街へ移動する)
+			this->RectWarpBoss[tate][yoko] = new COLLISION();//当たり判定の領域を作成(ボスマップへ移動する)
 			this->RectNG[tate][yoko] = new COLLISION();	//当たり判定の領域を作成(通行できない)
 
 
@@ -30,6 +32,7 @@ MAP::MAP(const char *dir,const char *name)
 			this->RectOK[tate][yoko]->SetValue(0, 0, MAP_YOKO_SIZE, MAP_TATE_SIZE);
 			this->RectEncount[tate][yoko]->SetValue(0, 0, MAP_YOKO_SIZE, MAP_TATE_SIZE);
 			this->RectWarp[tate][yoko]->SetValue(0, 0, MAP_YOKO_SIZE, MAP_TATE_SIZE);
+			this->RectWarpBoss[tate][yoko]->SetValue(0, 0, MAP_YOKO_SIZE, MAP_TATE_SIZE);
 			this->RectNG[tate][yoko]->SetValue(0, 0, MAP_YOKO_SIZE, MAP_TATE_SIZE);
 
 		}
@@ -234,6 +237,19 @@ void MAP::CreateRect()
 					this->RectWarp[tate][yoko]->Top = tate * this->RectWarp[tate][yoko]->Height;
 					this->RectWarp[tate][yoko]->Right = (yoko + 1) * this->RectWarp[tate][yoko]->Width;
 					this->RectWarp[tate][yoko]->Bottom = (tate + 1)*this->RectWarp[tate][yoko]->Height;
+
+				}
+			}
+
+			//当たり判定の領域を作成(ボスマップへ移動する)
+			for (int cnt = 0; cnt < MAP_WARP_BOSS_KIND; ++cnt)
+			{
+				if (this->MapData[tate][yoko] == this->MapMoveBossKind[cnt])
+				{
+					this->RectWarpBoss[tate][yoko]->Left = yoko * this->RectWarpBoss[tate][yoko]->Width;
+					this->RectWarpBoss[tate][yoko]->Top = tate * this->RectWarpBoss[tate][yoko]->Height;
+					this->RectWarpBoss[tate][yoko]->Right = (yoko + 1) * this->RectWarpBoss[tate][yoko]->Width;
+					this->RectWarpBoss[tate][yoko]->Bottom = (tate + 1)*this->RectWarpBoss[tate][yoko]->Height;
 
 				}
 			}

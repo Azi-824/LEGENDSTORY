@@ -223,7 +223,7 @@ void PLAYER::SetIsDraw(bool Isdraw)
 //位置を設定
 //引数：int：X位置を相対的に指定
 //引数：int：Y位置を相対的に指定
-void PLAYER::SetPosition(int x, int y)
+void PLAYER::SetPosRelative(int x, int y)
 {
 	this->Collision->Left += x;	//X位置を設定
 	this->Collision->Top += y;	//Y位置を設定
@@ -248,6 +248,36 @@ void PLAYER::SetPosition(int x, int y)
 
 	return;
 }
+
+//位置を設定
+//引数：int：X位置を絶対値で指定
+//引数：int：Y位置を絶対値で指定
+void PLAYER::SetPosAbsolute(int x, int y)
+{
+	this->Collision->Left = x;	//X位置を設定
+	this->Collision->Top = y;	//Y位置を設定
+
+	this->sikaku_draw->Left = x;
+	this->sikaku_draw->Top = y;
+
+	//描画領域再設定
+	this->sikaku_draw->SetValue(
+		this->sikaku_draw->Left,
+		this->sikaku_draw->Top,
+		this->sikaku_draw->Width,
+		this->sikaku_draw->Height);
+
+
+	//領域再設定
+	this->Collision->SetValue(
+		this->Collision->Left,
+		this->Collision->Top,
+		this->Collision->Width,
+		this->Collision->Height);
+
+	return;
+}
+
 
 //メニュー描画中か設定
 void PLAYER::SetIsMenu(bool ismenu)
@@ -293,25 +323,25 @@ void PLAYER::SetChengePos(int kind)
 
 	case (int)MAP_CHENGE_UP:	//上へ切り替えるとき、ここから
 
-		this->SetPosition(0, GAME_HEIGHT - (this->Collision->Height + RECT_STAGGER));	//位置を修正
+		this->SetPosRelative(0, GAME_HEIGHT - (this->Collision->Height + RECT_STAGGER));	//位置を修正
 
 		break;
 
 	case (int)MAP_CHENGE_DOWN:	//下へ切り替えるとき、ここから
 
-		this->SetPosition(0, -(this->Collision->Top - RECT_STAGGER));	//位置を修正
+		this->SetPosRelative(0, -(this->Collision->Top - RECT_STAGGER));	//位置を修正
 
 		break;
 
 	case (int)MAP_CHENGE_LEFT:	//左へ切り替えるとき、ここから
 
-		this->SetPosition(GAME_WIDTH - (this->Collision->Width + RECT_STAGGER), 0);	//位置を修正
+		this->SetPosRelative(GAME_WIDTH - (this->Collision->Width + RECT_STAGGER), 0);	//位置を修正
 
 		break;
 
 	case (int)MAP_CHENGE_RIGHT:	//右へ切り替えるとき、ここから
 
-		this->SetPosition(-(this->Collision->Left - RECT_STAGGER), 0);	//位置を修正
+		this->SetPosRelative(-(this->Collision->Left - RECT_STAGGER), 0);	//位置を修正
 
 		break;
 

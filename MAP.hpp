@@ -12,9 +12,11 @@
 //###################### マクロ定義：ファイルパス、名前 ##################
 #define MY_MAP_FIELD_CSV_DIR	R"(.\MY_MAP\map_csv\field\)"	//マップcsvのファイルの場所(フィールド)
 #define MY_MAP_CITY_CSV_DIR		R"(.\MY_MAP\map_csv\city\)"		//マップのcsvファイルの場所(街)
+#define MY_MAP_BOSS_CSV_DIR		R"(.\MY_MAP\map_csv\boss\)"		//マップのcsvファイルの場所(ボス)
 
 #define IMG_DIR_MAP_FIELD		R"(.\MY_MAP\map_image\field\)"	//マップの画像ファイルの場所(フィールド)
 #define IMG_DIR_MAP_CITY		R"(.\MY_MAP\map_image\city\)"	//マップの画像ファイルの場所(街)
+#define IMG_DIR_MAP_BOSS		R"(.\MY_MAP\map_image\boss\)"	//マップの画像ファイルの場所(ボス)
 
 //フィールドマップ
 #define IMG_NAME_MAP_SOUGEN	R"(sougen.png)"			//草原の画像の名前
@@ -37,8 +39,8 @@
 #define IMG_NAME_MAP_CITY_E	 R"(city_E.png)"			//街、東の画像の名前
 #define IMG_NAME_MAP_CITY_SE R"(city_SE.png)"			//街、南東の画像の名前
 
-#define MY_MAP_TEST3		R"(test_3.png)"			//テスト用
-#define MY_MAP_TEST4		R"(test_4.png)"			//テスト用
+//ボスマップ
+#define IMG_NAME_MAP_BOSS	R"(boss.png)"				//ボスマップの画像の名前
 
 //フィールドマップ
 #define MY_MAP_SOUGEN_ATARI	R"(sougen_atari.csv)"	//草原の当たり判定
@@ -61,14 +63,15 @@
 #define MY_MAP_CITY_E_ATARI R"(city_E_atari.csv)"	//街、東の当たり判定
 #define MY_MAP_CITY_SE_ATARI R"(city_SE_atari.csv)"	//街、南東の当たり判定
 
-#define MY_MAP_TEST3_ATARI	R"(test3_atari.csv)"
-#define MY_MAP_TEST4_ATARI	R"(test4_atari.csv)"
+//ボスマップ
+#define MY_MAP_BOSS_ATARI	R"(boss_atari.csv)"		//ボスマップの当たり判定
 
 
 #define MAP_NG_KIND		1	//通行できないマップの種類
 #define MAP_OK_KIND		1	//通行できるマップの種類
 #define MAP_WARP_KIND	1	//街へ移動するマップの種類
 #define MAP_ENCOUNT_KIND 1	//敵と遭遇するマップの種類
+#define MAP_WARP_BOSS_KIND	1	//ボスマップへ移動するマップの種類
 #define DRAW_MAP_KIND	2	//描画するマップの種類
 
 //##################### マクロ定義：エラーメッセージ ####################
@@ -91,6 +94,9 @@
 #define POS_Y	1									//Y座標
 
 #define RECT_STAGGER	4	//領域をずらす量
+
+#define BOSS_PLAYER_X	430	//ボスマップのプレイヤースタート位置
+#define BOSS_PLAYER_Y	630	//ボスマップのプレイヤースタート位置
 
 //##################### 列挙型 #########################
 enum MAP_FIELD_KIND
@@ -119,6 +125,11 @@ enum MAP_CITY_KIND
 	MAP_CITY_SE				//九マップ目（南東)
 };//街マップの種類
 
+enum MAP_BOSS_KIND
+{
+	MAP_LAST_BOSS		//ラスボス
+};
+
 enum MAP_CHENGE_DIST
 {
 	MAP_CHENGE_UP,		//上のマップへ
@@ -133,7 +144,8 @@ enum MAP_NUM_KIND
 	MAP_NG,			//通行できない
 	MAP_OK,			//通行できる
 	MAP_ENCOUNT,	//通行できる(敵と遭遇する)
-	MAP_WARP		//街へ移動する
+	MAP_WARP,		//街へ移動する
+	MAP_WARP_BOSS	//ボスマップへ移動する
 };
 
 enum MAP_NG_NUM
@@ -153,6 +165,11 @@ enum MAP_ENCOOUNT_NUM
 enum MAP_WARP_CITY_NUM
 {
 	MAP_WARP_CITY = 201			//通行できる（街へ移動する）
+};
+
+enum MAP_WARP_BOSS_NUM
+{
+	MAP_MOVE_BOSS = 251			//ボスマップへ移動
 };
 
 enum DRAWMAPKIND
@@ -177,6 +194,7 @@ private:
 	COLLISION *RectOK[MAP_TATE][MAP_YOKO];		//当たり判定(通行できる)
 	COLLISION *RectEncount[MAP_TATE][MAP_YOKO];	//当たり判定(敵と遭遇する)
 	COLLISION *RectWarp[MAP_TATE][MAP_YOKO];	//当たり判定(街へワープする)
+	COLLISION *RectWarpBoss[MAP_TATE][MAP_YOKO];//当たり判定(ボスマップへワープする)
 	COLLISION *RectNG[MAP_TATE][MAP_YOKO];		//当たり判定（通行できない）
 
 	FILE *fp_map_csv;						//マップファイルのポインタ
@@ -184,6 +202,7 @@ private:
 	int MapNGKind[MAP_NG_KIND];				//通行できないマップの種類
 	int MapOKKind[MAP_OK_KIND];				//通行できるマップの種類
 	int MapWarpKind[MAP_WARP_KIND];			//街へ移動するマップの種類
+	int MapMoveBossKind[MAP_WARP_KIND];			//ボスマップへ移動するマップの種類
 	int MapEncountKind[MAP_ENCOUNT_KIND];	//敵と遭遇するマップの種類
 
 public :
@@ -227,6 +246,12 @@ public :
 		case (int)MAP_WARP:		//街へ移動する
 
 			return this->RectWarp;
+
+			break;
+
+		case (int)MAP_WARP_BOSS:	//ボスマップへ移動する
+
+			return this->RectWarpBoss;
 
 			break;
 
