@@ -15,33 +15,72 @@
 #define ENEMY_DIR			R"(.\MY_IMG\ENEMY\)"	//敵の画像のファイル
 
 #define ENEMY_NAME_SLIME	R"(sraim.png)"			//スライムの画像の名前
-#define ENEMY_NAME_YADOKARI	R"(yadokari.png)"		//ヤドカリの画像の名前
 #define ENEMY_NAME_BAT		R"(bat.png)"			//こうもりの画像の名前
-#define ENEMY_NAME_FARAO	R"(farao.png)"			//ファラオの画像の名前
 #define ENEMY_NAME_GOBURIN	R"(goburin.png)"		//ゴブリンの画像の名前
-#define ENEMY_NAME_AKUMA	R"(akuma.png)"			//悪魔の画像の名前
+
+#define ENEMY_NAME_MATANGO	R"(kinoko.png)"			//マタンゴの画像の名前
+#define ENEMY_NAME_SEED		R"(seed.png)"			//悪魔の種の画像の名前
+#define ENEMY_NAME_TREANT	R"(treant.png)"			//トレントの画像の名前
+
+#define ENEMY_NAME_YADOKARI	R"(yadokari.png)"		//ヤドカリの画像の名前
+#define ENEMY_NAME_SCORPION	R"(scorpion.png)"		//サソリの画像の名前
+#define ENEMY_NAME_OCTPUS	R"(octpus.png)"			//タコの画像の名前
+
+#define ENEMY_NAME_COBRA	R"(cobra.png)"			//コブラの画像の名前
+#define ENEMY_NAME_PUMPKIN	R"(kabocha.png)"		//パンプキンの画像の名前
+#define ENEMY_NAME_PAPILLON	R"(papillon.png)"		//パピオンの画像の名前
+
 #define ENEMY_NAME_HARPY	R"(harpy.png)"			//ハーピーの画像の名前
+#define ENEMY_NAME_FLOWER	R"(flower.png)"			//デスフラワーの画像の名前
+#define ENEMY_NAME_MANTIS	R"(mantis.png)"			//マンティスの画像の名前
+
+#define ENEMY_NAME_CRYSTAL	R"(crystal.png)"		//クリスタルの画像の名前
+#define ENEMY_NAME_ICICLE	R"(icicle.png)"			//アイシクルの画像の名前
+#define ENEMY_NAME_SNOWMAN	R"(snowman.png)"		//スノーマンの画像の名前
+
+#define ENEMY_NAME_FARAO	R"(farao.png)"			//ファラオの画像の名前
+#define ENEMY_NAME_AKUMA	R"(akuma.png)"			//悪魔の画像の名前
+#define ENEMY_NAME_BONEBEAST R"(bone-b.png)"		//ボーンビーストの画像の名前
+
 #define ENEMY_NAME_IFRIT	R"(ifrit.png)"			//イフリートの画像の名前
+#define ENEMY_NAME_GARGOYLE R"(gargoyle.png)"		//ガーゴイルの画像の名前
+#define ENEMY_NAME_PROMINENCE	R"(prominence.png)"	//プロミネンスの画像の名前
 
 #define ENEMY_NAME_BOSS		R"(maou.png)"			//魔王の画像の名前
 
 //############## マクロ定義：エラーメッセージ ###################
 
 //############## マクロ定義 ###################
-#define ENEMY_KIND 9			//敵の種類
+#define ENEMY_KIND 25			//敵の種類
 
 //############## 列挙型 ########################
 enum ENEMY_TYPE
 {
-	SLIME,				//スライム
-	YADOKARI,			//ヤドカリ
-	BAT,				//こうもり
-	FARAO,				//ファラオ
-	GOBURIN,			//ゴブリン
-	AKUMA,				//悪魔
-	HARPY,				//ハーピー
-	IFRIT,				//イフリート
-	BOSS				//魔王
+	ENE_SLIME,				//スライム
+	ENE_BAT,				//こうもり
+	ENE_GOBURIN,			//ゴブリン
+	ENE_MATANGO,			//マタンゴ
+	ENE_SEED,				//悪魔の種
+	ENE_TREANT,				//トレント
+	ENE_YADOKARI,			//ヤドカリ
+	ENE_SCORPION,			//サソリ
+	ENE_OCTPUS,				//タコ
+	ENE_COBRA,				//コブラ
+	ENE_PUMPKIN,			//パンプキン
+	ENE_PAPILLON,			//パピオン
+	ENE_HARPY,				//ハーピー
+	ENE_FLOWER,				//デスフラワー
+	ENE_MANTIS,				//マンティス
+	ENE_CRYSTAL,			//クリスタル
+	ENE_ICICLE,				//アイシクル
+	ENE_SNOWMAN,			//スノーマン
+	ENE_FARAO,				//ファラオ
+	ENE_AKUMA,				//悪魔
+	ENE_BONEBEAST,			//ボーンビースト
+	ENE_IFRIT,				//イフリート
+	ENE_GARGOYLE,			//ガーゴイル
+	ENE_PROMINENCE,			//プロミネンス
+	ENE_BOSS				//魔王
 };
 
 //############## クラス定義 #####################

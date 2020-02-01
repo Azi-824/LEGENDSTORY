@@ -205,33 +205,81 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 	if (ui->AddUiImage(UI_DIR, UI_WINDOW_NAME, (int)UI_WINDOW) == false) { return -1; }	//ウィンドウ
 
 
-	//敵関係
-	enemy[(int)SLIME] = new ENEMY(ENEMY_DIR, ENEMY_NAME_SLIME);	//スライム作成
-	if (enemy[(int)SLIME]->GetIsLoad() == false) { return -1; }	//読み込み失敗
+	//▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼ 敵関係ここから ▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼
+	enemy[(int)ENE_SLIME] = new ENEMY(ENEMY_DIR, ENEMY_NAME_SLIME);	//スライム作成
+	if (enemy[(int)ENE_SLIME]->GetIsLoad() == false) { return -1; }	//読み込み失敗
 
-	enemy[(int)YADOKARI]=new ENEMY(ENEMY_DIR, ENEMY_NAME_YADOKARI);	//ヤドカリ作成
-	if (enemy[(int)YADOKARI]->GetIsLoad() == false) { return -1; }	//読み込み失敗
+	enemy[(int)ENE_BAT] = new ENEMY(ENEMY_DIR, ENEMY_NAME_BAT);	//こうもり作成
+	if (enemy[(int)ENE_BAT]->GetIsLoad() == false) { return -1; }	//読み込み失敗
 
-	enemy[(int)BAT] = new ENEMY(ENEMY_DIR, ENEMY_NAME_BAT);	//こうもり作成
-	if (enemy[(int)BAT]->GetIsLoad() == false) { return -1; }	//読み込み失敗
+	enemy[(int)ENE_GOBURIN] = new ENEMY(ENEMY_DIR, ENEMY_NAME_GOBURIN);	//ゴブリン作成
+	if (enemy[(int)ENE_GOBURIN]->GetIsLoad() == false) { return -1; }	//読み込み失敗
 
-	enemy[(int)FARAO] = new ENEMY(ENEMY_DIR, ENEMY_NAME_FARAO);	//ファラオ作成
-	if (enemy[(int)FARAO]->GetIsLoad() == false) { return -1; }	//読み込み失敗
+	enemy[(int)ENE_MATANGO] = new ENEMY(ENEMY_DIR, ENEMY_NAME_MATANGO);	//マタンゴ作成
+	if (enemy[(int)ENE_MATANGO]->GetIsLoad() == false) { return -1; }	//読み込み失敗
 
-	enemy[(int)GOBURIN] = new ENEMY(ENEMY_DIR, ENEMY_NAME_GOBURIN);	//ゴブリン作成
-	if (enemy[(int)GOBURIN]->GetIsLoad() == false) { return -1; }	//読み込み失敗
+	enemy[(int)ENE_SEED] = new ENEMY(ENEMY_DIR, ENEMY_NAME_SEED);	//悪魔の種作成
+	if (enemy[(int)ENE_SEED]->GetIsLoad() == false) { return -1; }	//読み込み失敗
 
-	enemy[(int)AKUMA] = new ENEMY(ENEMY_DIR, ENEMY_NAME_AKUMA);	//デーモン作成
-	if (enemy[(int)AKUMA]->GetIsLoad() == false) { return -1; }	//読み込み失敗
+	enemy[(int)ENE_TREANT] = new ENEMY(ENEMY_DIR, ENEMY_NAME_TREANT);	//トレント作成
+	if (enemy[(int)ENE_TREANT]->GetIsLoad() == false) { return -1; }	//読み込み失敗
 
-	enemy[(int)HARPY] = new ENEMY(ENEMY_DIR, ENEMY_NAME_HARPY);	//ハーピー作成
-	if (enemy[(int)HARPY]->GetIsLoad() == false) { return -1; }	//読み込み失敗
+	enemy[(int)ENE_YADOKARI]=new ENEMY(ENEMY_DIR, ENEMY_NAME_YADOKARI);	//ヤドカリ作成
+	if (enemy[(int)ENE_YADOKARI]->GetIsLoad() == false) { return -1; }	//読み込み失敗
 
-	enemy[(int)IFRIT] = new ENEMY(ENEMY_DIR, ENEMY_NAME_IFRIT);	//イフリート作成
-	if (enemy[(int)IFRIT]->GetIsLoad() == false) { return -1; }	//読み込み失敗
+	enemy[(int)ENE_SCORPION] = new ENEMY(ENEMY_DIR, ENEMY_NAME_SCORPION);	//サソリ作成
+	if (enemy[(int)ENE_SCORPION]->GetIsLoad() == false) { return -1; }	//読み込み失敗
 
-	enemy[(int)BOSS] = new ENEMY(ENEMY_DIR, ENEMY_NAME_BOSS);	//ボス作成
-	if (enemy[(int)BOSS]->GetIsLoad() == false) { return -1; }	//読み込み失敗
+	enemy[(int)ENE_OCTPUS] = new ENEMY(ENEMY_DIR, ENEMY_NAME_OCTPUS);	//タコ作成
+	if (enemy[(int)ENE_OCTPUS]->GetIsLoad() == false) { return -1; }	//読み込み失敗
+
+	enemy[(int)ENE_COBRA] = new ENEMY(ENEMY_DIR, ENEMY_NAME_COBRA);		//コブラ作成
+	if (enemy[(int)ENE_COBRA]->GetIsLoad() == false) { return -1; }		//読み込み失敗
+
+	enemy[(int)ENE_PUMPKIN] = new ENEMY(ENEMY_DIR, ENEMY_NAME_PUMPKIN);	//パンプキン作成
+	if (enemy[(int)ENE_PUMPKIN]->GetIsLoad() == false) { return -1; }	//読み込み失敗
+
+	enemy[(int)ENE_PAPILLON] = new ENEMY(ENEMY_DIR, ENEMY_NAME_PAPILLON);	//パピオン作成
+	if (enemy[(int)ENE_PAPILLON]->GetIsLoad() == false) { return -1; }	//読み込み失敗
+
+	enemy[(int)ENE_HARPY] = new ENEMY(ENEMY_DIR, ENEMY_NAME_HARPY);	//ハーピー作成
+	if (enemy[(int)ENE_HARPY]->GetIsLoad() == false) { return -1; }	//読み込み失敗
+
+	enemy[(int)ENE_FLOWER] = new ENEMY(ENEMY_DIR, ENEMY_NAME_FLOWER);	//デスフラワー作成
+	if (enemy[(int)ENE_FLOWER]->GetIsLoad() == false) { return -1; }	//読み込み失敗
+
+	enemy[(int)ENE_MANTIS] = new ENEMY(ENEMY_DIR, ENEMY_NAME_MANTIS);	//マンティス作成
+	if (enemy[(int)ENE_MANTIS]->GetIsLoad() == false) { return -1; }	//読み込み失敗
+
+	enemy[(int)ENE_CRYSTAL] = new ENEMY(ENEMY_DIR, ENEMY_NAME_CRYSTAL);	//クリスタル作成
+	if (enemy[(int)ENE_CRYSTAL]->GetIsLoad() == false) { return -1; }	//読み込み失敗
+
+	enemy[(int)ENE_ICICLE] = new ENEMY(ENEMY_DIR, ENEMY_NAME_ICICLE);	//アイシクル作成
+	if (enemy[(int)ENE_ICICLE]->GetIsLoad() == false) { return -1; }	//読み込み失敗
+
+	enemy[(int)ENE_SNOWMAN] = new ENEMY(ENEMY_DIR, ENEMY_NAME_SNOWMAN);	//スノーマン作成
+	if (enemy[(int)ENE_SNOWMAN]->GetIsLoad() == false) { return -1; }	//読み込み失敗
+
+	enemy[(int)ENE_FARAO] = new ENEMY(ENEMY_DIR, ENEMY_NAME_FARAO);	//ファラオ作成
+	if (enemy[(int)ENE_FARAO]->GetIsLoad() == false) { return -1; }	//読み込み失敗
+
+	enemy[(int)ENE_AKUMA] = new ENEMY(ENEMY_DIR, ENEMY_NAME_AKUMA);	//デーモン作成
+	if (enemy[(int)ENE_AKUMA]->GetIsLoad() == false) { return -1; }	//読み込み失敗
+
+	enemy[(int)ENE_BONEBEAST] = new ENEMY(ENEMY_DIR, ENEMY_NAME_BONEBEAST);	//ボーンビースト作成
+	if (enemy[(int)ENE_BONEBEAST]->GetIsLoad() == false) { return -1; }	//読み込み失敗
+
+	enemy[(int)ENE_IFRIT] = new ENEMY(ENEMY_DIR, ENEMY_NAME_IFRIT);	//イフリート作成
+	if (enemy[(int)ENE_IFRIT]->GetIsLoad() == false) { return -1; }	//読み込み失敗
+
+	enemy[(int)ENE_GARGOYLE] = new ENEMY(ENEMY_DIR, ENEMY_NAME_GARGOYLE);	//ガーゴイル作成
+	if (enemy[(int)ENE_GARGOYLE]->GetIsLoad() == false) { return -1; }	//読み込み失敗
+
+	enemy[(int)ENE_PROMINENCE] = new ENEMY(ENEMY_DIR, ENEMY_NAME_PROMINENCE);	//プロミネンス作成
+	if (enemy[(int)ENE_PROMINENCE]->GetIsLoad() == false) { return -1; }	//読み込み失敗
+
+	enemy[(int)ENE_BOSS] = new ENEMY(ENEMY_DIR, ENEMY_NAME_BOSS);	//ボス作成
+	if (enemy[(int)ENE_BOSS]->GetIsLoad() == false) { return -1; }	//読み込み失敗
 
 
 	//敵のデータをcsvファイルから読み込み
@@ -241,6 +289,7 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 	{
 		enemy[i]->StateSetInit();				//初期設定
 	}
+	//▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲ 敵関係ここまで ▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲
 
 	//アイテム関係
 	for (int i = 0; i < ITEM_KIND; ++i)	//アイテムの種類分だけ
