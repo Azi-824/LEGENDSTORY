@@ -26,8 +26,9 @@
 #define IMG_NAME_BT_SOUGEN	R"(\battle_sougen.jpg)"			//戦闘画面（草原）の背景画像の名前
 #define IMG_NAME_BT_FOREST	R"(\battle_forest.jpg)"			//戦闘画面（森）の背景画像の名前
 #define IMG_NAME_BT_OCEAN	R"(\battle_ocean.jpg)"			//戦闘画面（海）の背景画像の名前
-#define IMG_NAME_BT_SPRING	R"(\battle_spring.jpg)"			//戦闘画面（春）の背景画像の名前
 #define IMG_NAME_BT_AUTUMN	R"(\battle_autumn.jpg)"			//戦闘画面（秋）の背景画像の名前
+#define IMG_NAME_BT_BOSS	R"(\battle_boss.jpg)"			//戦闘画面（ボス）の背景画像の名前
+#define IMG_NAME_BT_SPRING	R"(\battle_spring.jpg)"			//戦闘画面（春）の背景画像の名前
 #define IMG_NAME_BT_WINTER	R"(\battle_winter.jpg)"			//戦闘画面（冬）の背景画像の名前
 #define IMG_NAME_BT_REMAINS	R"(\battle_remains.jpg)"		//戦闘画面（遺跡）の背景画像の名前
 #define IMG_NAME_BT_CASTLE	R"(\battle_castle.jpg)"			//戦闘画面（城）の背景画像の名前
@@ -51,11 +52,11 @@ enum BATTLE_BACK
 	BT_BACK_FOREST,			//戦闘画面の背景画像（森）
 	BT_BACK_OCEAN,			//戦闘画面の背景画像（海）
 	BT_BACK_AUTUMN,			//戦闘画面の背景画像（秋）
+	BT_BACK_BOSS,			//戦闘画面の背景画像（ボス）
 	BT_BACK_SPRING,			//戦闘画面の背景画像（春）
 	BT_BACK_WINTER,			//戦闘画面の背景画像（冬）
 	BT_BACK_REMAINS,		//戦闘画面の背景画像（遺跡）
-	BT_BACK_CASTLE,			//戦闘画面の背景画像（城）
-	BT_BACK_BOSS,			//戦闘画面の背景画像（ボス）
+	BT_BACK_CASTLE			//戦闘画面の背景画像（城）
 };
 
 //########## クラスの定義 ##########

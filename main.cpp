@@ -49,7 +49,6 @@ ENEMY *enemy[ENEMY_KIND];			//敵
 ITEM *item[ITEM_KIND];				//アイテム
 
 MAP *mapdata[DRAW_MAP_KIND][MAP_DATA_KIND];		//マップデータ
-MAP *mapdata_boss;								//マップデータ（ボス）
 
 //############## グローバル変数 ##############
 int GameSceneNow = (int)GAME_SCENE_TITLE;	//現在のゲームシーン
@@ -109,11 +108,13 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 	if (back_battle->GetIsLoad() == false) { return -1; }					//読み込み失敗
 	back_battle->AddImage(MY_IMG_DIR_BATTLE, IMG_NAME_BT_AUTUMN, (int)BT_BACK_AUTUMN);		//戦闘画面（秋）の背景画像の読み込み
 	if (back_battle->GetIsLoad() == false) { return -1; }					//読み込み失敗
+	back_battle->AddImage(MY_IMG_DIR_BATTLE, IMG_NAME_BT_BOSS, (int)BT_BACK_BOSS);			//戦闘画面（ボス）の背景画像の読み込み
+	if (back_battle->GetIsLoad() == false) { return -1; }					//読み込み失敗
 	back_battle->AddImage(MY_IMG_DIR_BATTLE, IMG_NAME_BT_SPRING, (int)BT_BACK_SPRING);		//戦闘画面（春）の背景画像の読み込み
 	if (back_battle->GetIsLoad() == false) { return -1; }					//読み込み失敗
 	back_battle->AddImage(MY_IMG_DIR_BATTLE, IMG_NAME_BT_WINTER, (int)BT_BACK_WINTER);		//戦闘画面（冬）の背景画像の読み込み
 	if (back_battle->GetIsLoad() == false) { return -1; }					//読み込み失敗
-	back_battle->AddImage(MY_IMG_DIR_BATTLE, IMG_NAME_BT_REMAINS, (int)BT_BACK_REMAINS);		//戦闘画面（遺跡）の背景画像の読み込み
+	back_battle->AddImage(MY_IMG_DIR_BATTLE, IMG_NAME_BT_REMAINS, (int)BT_BACK_REMAINS);	//戦闘画面（遺跡）の背景画像の読み込み
 	if (back_battle->GetIsLoad() == false) { return -1; }					//読み込み失敗
 	back_battle->AddImage(MY_IMG_DIR_BATTLE, IMG_NAME_BT_CASTLE, (int)BT_BACK_CASTLE);		//戦闘画面（城）の背景画像の読み込み
 	if (back_battle->GetIsLoad() == false) { return -1; }					//読み込み失敗
@@ -264,8 +265,8 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 	mapdata[(int)DRAW_FILED][(int)MAP_AUTUMN] = new MAP(IMG_DIR_MAP_FIELD, IMG_NAME_MAP_AUTUMN);	//秋マップ生成
 	if (mapdata[(int)DRAW_FILED][(int)MAP_AUTUMN]->LoadCsv(MY_MAP_FIELD_CSV_DIR, MY_MAP_AUTUMN_ATARI) == false) { return -1; }	//当たり判定読み込み失敗
 
-	mapdata[(int)DRAW_FILED][(int)MAP_CITY] = new MAP(IMG_DIR_MAP_FIELD, IMG_NAME_MAP_CITY_S);	//街、下マップ生成
-	if (mapdata[(int)DRAW_FILED][(int)MAP_CITY]->LoadCsv(MY_MAP_FIELD_CSV_DIR, MY_MAP_CITY_S_ATARI) == false) { return -1; }	//当たり判定読み込み失敗
+	mapdata[(int)DRAW_FILED][(int)MAP_BOSS] = new MAP(IMG_DIR_MAP_FIELD, IMG_NAME_MAP_BOSS);	//ボスマップ生成
+	if (mapdata[(int)DRAW_FILED][(int)MAP_BOSS]->LoadCsv(MY_MAP_FIELD_CSV_DIR, MY_MAP_BOSS_ATARI) == false) { return -1; }	//当たり判定読み込み失敗
 
 	mapdata[(int)DRAW_FILED][(int)MAP_SPRING] = new MAP(IMG_DIR_MAP_FIELD, IMG_NAME_MAP_SPRING);			//春マップ生成
 	if (mapdata[(int)DRAW_FILED][(int)MAP_SPRING]->LoadCsv(MY_MAP_FIELD_CSV_DIR, MY_MAP_SPRING_ATARI) == false) { return -1; }	//当たり判定読み込み失敗
@@ -306,11 +307,6 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 
 	mapdata[(int)DRAW_CITY][(int)MAP_CITY_SE] = new MAP(IMG_DIR_MAP_CITY, IMG_NAME_MAP_CITY_SE);					//南東マップ生成
 	if (mapdata[(int)DRAW_CITY][(int)MAP_CITY_SE]->LoadCsv(MY_MAP_CITY_CSV_DIR, MY_MAP_CITY_SE_ATARI) == false) { return -1; }	//当たり判定読み込み失敗
-
-	//ボスマップ
-	mapdata_boss = new MAP(IMG_DIR_MAP_BOSS, IMG_NAME_MAP_BOSS);					//ボスマップ生成
-	if (mapdata_boss->LoadCsv(MY_MAP_BOSS_CSV_DIR, MY_MAP_BOSS_ATARI) == false) { return -1; }	//当たり判定読み込み失敗
-
 
 	//マップの種類を二次元配列で管理
 	for (int yoko = 0; yoko < MAP_DATA_YOKO_KIND; yoko++)
@@ -408,7 +404,6 @@ void Title()
 	if (bgm->GetIsPlay((int)BGM_TITLE) == false)	//再生中じゃないとき
 	{
 		bgm->Stop();							//全てのBGMを止める
-		bgm->ChengeVolume(255 * 50 / 100, (int)BGM_TITLE);	//BGMの音量を50%に変更
 		bgm->Play((int)BGM_TITLE);				//BGMを再生
 	}
 	//▲▲▲▲▲▲▲▲▲▲▲▲▲▲ 音の再生処理ここまで ▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲
@@ -464,14 +459,7 @@ void Play()
 
 	}
 
-	if (Boss_flg)	//ボスマップにいるときは
-	{
-		player->Operation(keydown, mapdata_boss->GetRect((int)MAP_NG));	//プレイヤーキー操作
-	}
-	else			//通常マップにいるときは
-	{
-		player->Operation(keydown, mapdata[NowDrawMapKind][MapKind[MAPPOS_Y][MAPPOS_X]]->GetRect((int)MAP_NG));	//プレイヤーキー操作
-	}
+	player->Operation(keydown, mapdata[NowDrawMapKind][MapKind[MAPPOS_Y][MAPPOS_X]]->GetRect((int)MAP_NG));	//プレイヤーキー操作
 
 
 	//▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼ マップ切り替え処理ここから ▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼
@@ -569,17 +557,6 @@ void Play()
 	if (player->GetIsMove())			//プレイヤーが移動中だったら
 	{
 
-		if (Boss_flg)		//ボスフラグが立っていたら
-		{
-			//ボスマップの処理
-			if (player->CheckDetectionMap(mapdata_boss->GetRect((int)MAP_ENCOUNT)))	//敵と遭遇するマップだったら
-			{
-				Enconte();			//敵との遭遇判定
-			}
-		}
-		else				//立っていなかったら
-		{
-			//通常マップの処理
 			if (player->CheckDetectionMap(mapdata[NowDrawMapKind][MapKind[MAPPOS_Y][MAPPOS_X]]->GetRect((int)MAP_ENCOUNT)))	//敵と遭遇するマップだったら
 			{
 				Enconte();			//敵との遭遇判定
@@ -589,10 +566,10 @@ void Play()
 			if (player->CheckDetectionMap(mapdata[NowDrawMapKind][MapKind[MAPPOS_Y][MAPPOS_X]]->GetRect((int)MAP_WARP_BOSS)))
 			{
 				Boss_flg = true;		//ボスフラグを立てる
+				MAPPOS_Y = BOSS_MAP_NUM_Y;	//現在のマップ位置をボスマップへ切り替え（X）
+				MAPPOS_X = BOSS_MAP_NUM_X;	//現在のマップ位置をボスマップへ切り替え（Y)
 				player->SetPosAbsolute(BOSS_PLAYER_X, BOSS_PLAYER_Y);	//プレイヤーの位置を修正
 			}
-
-		}
 
 	}
 
@@ -1201,16 +1178,7 @@ void Play_Draw()
 {
 	font->SetSize(DEFAULT_FONTSIZE);	//フォントサイズを標準に戻す
 
-	if (!Boss_flg)	//ボスフラグが立っていなければ
-	{
-		//通常マップ描画
-		mapdata[NowDrawMapKind][MapKind[MAPPOS_Y][MAPPOS_X]]->Draw();	//マップ描画
-	}
-	else									//ボスフラグが立っていたら
-	{
-		//ボスマップ描画
-		mapdata_boss->Draw();		//描画
-	}
+	mapdata[NowDrawMapKind][MapKind[MAPPOS_Y][MAPPOS_X]]->Draw();	//マップ描画
 
 	player->DrawAnime();		//アニメーション描画
 
@@ -1289,14 +1257,8 @@ void Play_Draw()
 //戦闘画面の描画処理
 void Battle_Draw()
 {
-	if (Boss_flg)	//ボス戦の時
-	{
-		back_battle->Draw(GAME_LEFT, GAME_TOP, 0);
-	}
-	else			//ボス戦以外の時
-	{
-		back_battle->Draw(GAME_LEFT, GAME_TOP, MapKind[MAPPOS_Y][MAPPOS_X]);	//背景画像を描画
-	}
+
+	back_battle->Draw(GAME_LEFT, GAME_TOP, MapKind[MAPPOS_Y][MAPPOS_X]);	//背景画像を描画
 
 	enemy[EncounteEnemyType]->Draw();	//敵描画
 
@@ -1374,26 +1336,6 @@ void Enconte()
 
 			}
 		}
-		else if (Boss_flg && enemy[i]->GetEmergenceMap() == (int)MAP_LAST_BOSS)	//ラスボスだったら
-		{
-			player->SetIsKeyDown(false);			//プレイヤーの動きを止める
-
-			EncounteEnemyType = i;		//遭遇した敵を設定
-
-			//描画文字設定
-			Work_Str = "バイト帰りの";
-			Work_Str += enemy[EncounteEnemyType]->GetName();		//遭遇した敵の名前取得
-			Work_Str += "が現れた！";
-			bt_msg[(int)BT_MSG_ACT]->SetMsg(Work_Str.c_str());	//文字列設定
-			Work_Str = "どうする？";
-			bt_msg[(int)BT_MSG_ACT]->AddMsg(Work_Str.c_str());	//文字列設定
-
-			sys_se->Play((int)SYS_SE_ENCOUNT);					//敵と遭遇した音を鳴らす
-			sys_se->Reset();									//再生状態リセット
-
-			SceneChenge(GameSceneNow, (int)GAME_SCENE_BATTLE);	//次の画面は戦闘画面
-
-		}
 	}
 
 
@@ -1438,7 +1380,7 @@ void Delete_Class()
 	delete back;			//backを破棄
 	delete back_battle;		//back_battleを破棄
 	delete data;			//dataを破棄
-	delete Magic_effect;			//effectを破棄
+	delete Magic_effect;	//effectを破棄
 
 	delete msg;//msg破棄
 

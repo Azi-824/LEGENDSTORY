@@ -98,6 +98,9 @@
 #define BOSS_PLAYER_X	430	//ボスマップのプレイヤースタート位置
 #define BOSS_PLAYER_Y	630	//ボスマップのプレイヤースタート位置
 
+#define BOSS_MAP_NUM_X	1	//ボスマップのX位置
+#define BOSS_MAP_NUM_Y	1	//ボスマップのY位置
+
 //##################### 列挙型 #########################
 enum MAP_FIELD_KIND
 {
@@ -105,7 +108,7 @@ enum MAP_FIELD_KIND
 	MAP_FOREST,				//ニマップ目(森)
 	MAP_OCEAN,				//三マップ目(海)
 	MAP_AUTUMN,				//四マップ目(秋)
-	MAP_CITY,				//五マップ目(街、南)
+	MAP_BOSS,				//五マップ目(ボス)
 	MAP_SPRING,				//六マップ目(春)
 	MAP_WINTER,				//七マップ目(冬)
 	MAP_REMAINS,			//八マップ目(遺跡)
@@ -124,11 +127,6 @@ enum MAP_CITY_KIND
 	MAP_CITY_E,				//八マップ目（東）
 	MAP_CITY_SE				//九マップ目（南東)
 };//街マップの種類
-
-enum MAP_BOSS_KIND
-{
-	MAP_LAST_BOSS=131		//ラスボス
-};
 
 enum MAP_CHENGE_DIST
 {
