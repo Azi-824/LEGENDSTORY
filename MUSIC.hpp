@@ -30,6 +30,7 @@
 #define MY_SE_NAME_KETTEI	R"(\kettei.mp3)"		//決定の音の名前
 #define MY_SE_NAME_MENU		R"(\menu.mp3)"			//メニューを開いた時の音
 #define MY_SE_NAME_ENCOUNT	R"(\encount.mp3)"		//敵と遭遇した時の音
+#define MY_SE_NAME_SAVE		R"(\save.wav)"			//セーブ音
 
 //##################### マクロ定義：エラーメッセージ ######################
 #define MUSIC_ERROR_TITLE "MUSIC_ERROR"					//エラータイトル
@@ -38,7 +39,7 @@
 //##################### マクロ定義 ##########################
 #define BGM_KIND	5	//BGMの種類
 #define BT_SE_KIND	5	//バトルで使用するSEの種類
-#define SYS_SE_KIND	5	//システムのSEの種類
+#define SYS_SE_KIND	6	//システムのSEの種類
 
 //##################### 列挙型 #########################
 enum BGM_TYPE
@@ -65,7 +66,8 @@ enum SYS_SE_TYPE
 	SYS_SE_CANSEL,		//キャンセル音
 	SYS_SE_KETTEI,		//決定音
 	SYS_SE_MENU,		//メニューを開いた時の音
-	SYS_SE_ENCOUNT		//敵と遭遇した時の音
+	SYS_SE_ENCOUNT,		//敵と遭遇した時の音
+	SYS_SE_SAVE			//セーブ音
 };
 
 //##################### クラス定義 ############################
