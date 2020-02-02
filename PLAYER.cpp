@@ -135,6 +135,10 @@ void PLAYER::SetMaxHP(int hp)
 void PLAYER::SetHP(int hp)
 {
 	this->NowHP = hp;
+	if (this->NowHP >= this->MaxHP)	//Œ»İ‚ÌHP‚ªÅ‘åHP‚æ‚è‘½‚­‚È‚Á‚½‚ç
+	{
+		this->NowHP = this->MaxHP;	//Å‘åHP‚ğ’´‚¦‚È‚¢‚æ‚¤‚É‚·‚é
+	}
 	return;
 }
 
