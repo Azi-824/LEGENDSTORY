@@ -85,6 +85,8 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 
 	SetMainWindowText(TEXT(GAME_WINDOW_NAME));					//タイトルの文字
 
+	SetWindowIconID(GAME_ICON_ID);								//ゲームのアイコン変更
+
 	if (DxLib_Init() == -1) { return -1; }						//ＤＸライブラリ初期化処理
 
 	SetDrawScreen(DX_SCREEN_BACK);								//Draw系関数は裏画面に描画

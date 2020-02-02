@@ -24,6 +24,8 @@
 
 #define GAME_FPS_SPEED					   60
 
+#define GAME_ICON_ID						333	//アイコンのID
+
 //############### 列挙型 ###############
 enum GAME_SCENE {
 	GAME_SCENE_TITLE,	//タイトル画面
