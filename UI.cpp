@@ -189,7 +189,7 @@ void UI::DrawCommand()
 void UI::DrawStateWindow(PLAYER *player)
 {
 
-	this->DrawWindow(STA_WIN_X, STA_WIN_Y,STA_WIN_WIDTH, STA_WIN_HEIGHT, GetColor(255, 0, 0));	//ウィンドウ描画
+	this->DrawWindow(STA_WIN_X, STA_WIN_Y,STA_WIN_WIDTH, STA_WIN_HEIGHT, GetColor(0, 0, 0));	//ウィンドウ描画
 	
 
 	//ステータス描画

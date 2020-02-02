@@ -515,6 +515,8 @@ void Play()
 
 	}
 
+	Play_Draw();		//描画処理
+
 	player->Operation(keydown, mapdata[NowDrawMapKind][MapKind[MAPPOS_Y][MAPPOS_X]]->GetRect((int)MAP_NG));	//プレイヤーキー操作
 
 
@@ -555,8 +557,6 @@ void Play()
 		}
 	}
 	//▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲ マップ切り替え処理ここまで ▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲
-
-	Play_Draw();		//描画処理
 
 	if (player->GetIsMenu() == true && keydown->IsKeyDownOne(KEY_INPUT_Q))		//メニュー描画中でQキーを押された瞬間
 	{
