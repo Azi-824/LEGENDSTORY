@@ -25,7 +25,7 @@ IMAGE *title;						//タイトル画像
 IMAGE *back;						//背景画像
 IMAGE *back_battle;					//戦闘画面の背景画像
 IMAGE *setumei;						//説明画像
-//IMAGE *map_i;//マップ画像
+IMAGE *boss_mapimage;				//マップに描画するボスの画像
 
 MUSIC *bgm;							//BGM
 MUSIC *bt_se;						//戦闘で使用するSE
@@ -280,6 +280,10 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 
 	enemy[(int)ENE_BOSS] = new ENEMY(ENEMY_DIR, ENEMY_NAME_BOSS);	//ボス作成
 	if (enemy[(int)ENE_BOSS]->GetIsLoad() == false) { return -1; }	//読み込み失敗
+
+
+	boss_mapimage = new IMAGE(ENEMY_DIR, ENEMY_NAME_BOSS_MAP);		//マップに描画するボスの画像を生成
+	if (boss_mapimage->GetIsLoad() == false) { return -1; }					//読み込み失敗時
 
 
 	//敵のデータをcsvファイルから読み込み
@@ -1075,11 +1079,6 @@ void Battle()
 
 	}
 
-	if (keydown->IsKeyDown(KEY_INPUT_R))		//Rキー押されたら
-	{
-		back_battle->ChengeImage(BT_BACK_FOREST);		//背景画像を（夜）に変更
-	}
-
 	return;
 }
 
@@ -1244,6 +1243,11 @@ void Play_Draw()
 	font->SetSize(DEFAULT_FONTSIZE);	//フォントサイズを標準に戻す
 
 	mapdata[NowDrawMapKind][MapKind[MAPPOS_Y][MAPPOS_X]]->Draw();	//マップ描画
+
+	if (Boss_flg)		//ボスマップにいるときは
+	{
+		boss_mapimage->Draw(BOSS_MAP_X, BOSS_MAP_Y);			//ボスキャラ描画
+	}
 
 	player->DrawAnime();		//アニメーション描画
 

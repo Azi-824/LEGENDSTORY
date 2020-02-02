@@ -47,11 +47,15 @@
 #define ENEMY_NAME_PROMINENCE	R"(prominence.png)"	//プロミネンスの画像の名前
 
 #define ENEMY_NAME_BOSS		R"(maou.png)"			//魔王の画像の名前
+#define ENEMY_NAME_BOSS_MAP	R"(maou_mapimage.png)"	//マップに描画する魔王の画像の名前
 
 //############## マクロ定義：エラーメッセージ ###################
 
 //############## マクロ定義 ###################
 #define ENEMY_KIND 25			//敵の種類
+
+#define BOSS_MAP_X	418			//ボスのマップでの描画位置X
+#define BOSS_MAP_Y	10			//ボスのマップでの描画位置Y
 
 //############## 列挙型 ########################
 enum ENEMY_TYPE
