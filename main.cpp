@@ -1459,6 +1459,7 @@ void Delete_Class()
 	delete back_battle;		//back_battle‚ğ”jŠü
 	delete data;			//data‚ğ”jŠü
 	delete Magic_effect;	//effect‚ğ”jŠü
+	delete boss_mapimage;	//boss_mapimage‚ğ”jŠü
 
 	delete msg;//msg”jŠü
 
