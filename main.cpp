@@ -1271,8 +1271,17 @@ void Play_Draw()
 			case (int)MENU_STATUS:	//ステータスを選んだ時の処理ここから
 
 				//ステータス描画
-				DrawFormatString(GAME_LEFT, GAME_TOP, GetColor(255, 255, 255), "%s\nHP %d/%d\nMP %d/%d\nATK %d\nDEF %d\nSPD %d",
-					player->GetName(), player->GetHP(), player->GetMaxHP(), player->GetMP(), player->GetMaxMP(), player->GetATK(), player->GetDEF(), player->GetSPD());
+				DrawFormatString(GAME_LEFT, GAME_TOP, GetColor(255, 255, 255), "%s\n経験値：%d/%d\nHP %d/%d\nMP %d/%d\nATK %d\nDEF %d\nSPD %d",
+					player->GetName(),		//名前
+					player->GetEXP(),		//現在の経験値
+					player->GetMaxEXP(),	//最大経験値
+					player->GetHP(),		//HP
+					player->GetMaxHP(),		//最大HP
+					player->GetMP(),		//MP
+					player->GetMaxMP(),		//最大MP
+					player->GetATK(),		//攻撃力
+					player->GetDEF(),		//防御力
+					player->GetSPD());		//スピード
 
 				break;				//ステータスを選んだ時の処理ここまで
 
