@@ -189,11 +189,11 @@ void UI::DrawCommand()
 void UI::DrawStateWindow(PLAYER *player)
 {
 
-	this->DrawWindow(STA_WIN_X, STA_WIN_Y,STA_WIN_WIDTH, STA_WIN_HEIGHT, GetColor(0, 0, 0));	//ウィンドウ描画
+	this->DrawWindow(STA_WIN_X, STA_WIN_Y,STA_WIN_WIDTH, STA_WIN_HEIGHT, GetColor(0, 0, 255));	//ウィンドウ描画
 	
 
 	//ステータス描画
-	DrawFormatString(STA_TXT_X, STA_TXT_Y, GetColor(255, 255, 255), "%s Lv:%d HP:%d MP:%d",player->GetName(), player->GetLevel(), player->GetHP(), player->GetMP());
+	DrawFormatString(STA_TXT_X, STA_TXT_Y, GetColor(255,255,255), "%s Lv:%d HP:%d MP:%d",player->GetName(), player->GetLevel(), player->GetHP(), player->GetMP());
 	DrawFormatString(STA_TXT_X, STA_TXT_Y + STA_SPACE, GetColor(255, 255, 255), "%s Lv:%d HP:%d MP:%d", player->GetName(), player->GetLevel(), player->GetHP(), player->GetMP());
 	DrawFormatString(STA_TXT_X, STA_TXT_Y + STA_SPACE * 2, GetColor(255, 255, 255), "%s Lv:%d HP:%d MP:%d", player->GetName(), player->GetLevel(), player->GetHP(), player->GetMP());
 	DrawFormatString(STA_TXT_X, STA_TXT_Y + STA_SPACE * 3, GetColor(255, 255, 255), "%s Lv:%d HP:%d MP:%d", player->GetName(), player->GetLevel(), player->GetHP(), player->GetMP());

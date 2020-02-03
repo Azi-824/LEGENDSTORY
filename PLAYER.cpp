@@ -618,7 +618,7 @@ void PLAYER::Operation(KEYDOWN *keydown, COLLISION *map[][MAP_YOKO])
 }
 
 //•`‰æ
-void PLAYER::DrawAnime()
+void PLAYER::DrawWalk()
 {
 	if (this->IsDraw)		//•`‰æ‚µ‚Ä‚æ‚¢Žž
 	{

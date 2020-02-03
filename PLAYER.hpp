@@ -151,7 +151,7 @@ public:
 	bool GetIsKeyDown();		//キー入力があるか取得
 	int GetChengeMapKind();		//切り替えるマップの種類を取得
 
-	void DrawAnime();			//描画
+	void DrawWalk();			//描画
 
 	void Operation(KEYDOWN *, COLLISION *[][MAP_YOKO]);	//操作
 

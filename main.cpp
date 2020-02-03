@@ -1253,7 +1253,7 @@ void Play_Draw()
 		boss_mapimage->Draw(BOSS_MAP_X, BOSS_MAP_Y);			//ボスキャラ描画
 	}
 
-	player->DrawAnime();		//アニメーション描画
+	player->DrawWalk();		//プレイヤー描画
 
 	static int Player_X = 0, Player_Y = 0;	//プレイヤーのX位置とY位置
 
