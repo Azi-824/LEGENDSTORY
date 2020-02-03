@@ -35,6 +35,8 @@ UI::~UI()
 	delete this->menuwindow;	//menuwindow”jŠü
 	delete this->UiImage;		//Ui”jŠü
 	delete this->UiAnime;		//uianime”jŠü
+	delete this->MenuSelect;	//menuselect”jŠü
+	delete this->BattleCommand;	//battlecommand”jŠü
 
 	//vector‚Ìƒƒ‚ƒŠ‰ğ•ú‚ğs‚¤
 	std::vector<std::string> v;			//‹ó‚Ìvector‚ğì¬‚·‚é
