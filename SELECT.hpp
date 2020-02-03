@@ -60,9 +60,10 @@ public:
 
 	~SELECT();		//デストラクタ
 
-	void SelectOperation(KEYDOWN *,MUSIC *);	//選択肢のキー操作
+	bool SelectOperation(KEYDOWN *,MUSIC *);	//選択肢のキー操作
 
 	std::vector<std::string>::iterator GetNowSelect();		//現在選択中の要素を取得
+	int GetSelectNum(void);					//選択した要素の要素番号を取得する
 
 	void SelectClear();						//選択肢の内容を消去する
 	void NowSelectReset();					//現在選択中の要素を最初に戻す

@@ -54,7 +54,7 @@ MAP *mapdata[DRAW_MAP_KIND][MAP_DATA_KIND];		//マップデータ
 //選択肢関係
 SELECT *Title_select;	//タイトル画面の選択肢
 SELECT *End_select;		//エンド画面の選択肢
-SELECT *bt_skil_list;	//スキルの選択肢
+SELECT *bt_magic_list;	//スキルの選択肢
 
 //############## グローバル変数 ##############
 int GameSceneNow = (int)GAME_SCENE_TITLE;	//現在のゲームシーン
@@ -385,7 +385,7 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 	//選択肢関係
 	Title_select = new SELECT("START", "END");			//タイトル画面の選択肢生成
 	End_select = new SELECT("TITLE", "PLAY", "END");	//エンド画面の選択肢生成
-	bt_skil_list = new SELECT("aiu", "abd");			//スキルの選択肢生成
+	bt_magic_list = new SELECT("魔法１", "魔法２");		//スキルの選択肢生成
 
 	//▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲ 読み込み処理 ▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲
 
@@ -474,13 +474,9 @@ void Title()
 
 	Title_Draw();		//タイトル画面の描画処理
 
-	Title_select->SelectOperation(keydown, sys_se);		//選択肢のキー操作
-
-	//▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼ 画面遷移の処理 ▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼
-	if (keydown->IsKeyDown(KEY_INPUT_RETURN))				//エンターキーを押されたら
+	//選択肢のキー操作
+	if (Title_select->SelectOperation(keydown, sys_se))		//エンターキーを押されたら
 	{
-		sys_se->Play((int)SYS_SE_KETTEI);	//決定音を鳴らす
-
 		if (*Title_select->GetNowSelect() == "START")		//選択している文字列が"START"だったら
 		{
 			SceneChenge(GameSceneNow, (int)GAME_SCENE_PLAY);	//次の画面はプレイ画面
@@ -489,8 +485,8 @@ void Title()
 		{
 			GameEnd_Flg = true;	//ゲーム終了
 		}
+
 	}
-	//▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲ 画面遷移の処理 ▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲
 
 	return;
 }
@@ -581,14 +577,10 @@ void Play()
 	if (player->GetIsMenu())			//メニュー描画中だったら
 	{
 
-		ui->SelectOperation(keydown, sys_se, (int)UI_SELECT_MENU);	//メニューウィンドウキー操作
-
-		if (keydown->IsKeyDownOne(KEY_INPUT_RETURN))	//エンターキーを押されたら
+		//メニューウィンドウキー操作
+		if (ui->SelectOperation(keydown, sys_se, (int)UI_SELECT_MENU))		//エンターキーを押されたとき
 		{
-			sys_se->Play((int)SYS_SE_KETTEI);			//決定音を鳴らす
-
 			ui->SetChoiseMenu(ui->GetNowSelect((int)UI_SELECT_MENU));		//選択した内容をセット
-
 		}
 
 		if (ui->GetIsChoise())	//選択していたら
@@ -670,19 +662,18 @@ void Battle()
 
 				ui->SetIsDrawUIAnime(false);		//UIのアニメーション非表示
 
-				ui->SelectOperation(keydown, sys_se, 1);	//バトルコマンドキー操作
-
-				if (keydown->IsKeyDownOne(KEY_INPUT_RETURN))	//エンターキーを押されたら
+				if (ui->GetChoiseCommamd() == COMMAND_NONE)	//コマンドを選択していないときは
 				{
-
-					sys_se->Play((int)SYS_SE_KETTEI);	//決定音を鳴らす
-
-					ui->SetBattleFlg();	//選択したコマンドを設定
+					//バトルコマンドキー操作
+					if (ui->SelectOperation(keydown, sys_se, (int)UI_SELECT_BATTLE_CMD))	//エンターキーを押されたら
+					{
+						ui->SetBattleFlg();	//選択したコマンドを設定
+					}
 
 				}
 
 			}
-			else
+			else				//メッセージが残っていれば
 			{
 				if (keydown->IsKeyDownOne(KEY_INPUT_RETURN))		//エンターキーを押されたら
 				{
@@ -710,8 +701,13 @@ void Battle()
 
 			case (int)COMMANDE_MAGIC:		//魔法を選んだ時
 
-				player->SetChoiseSkil((int)MAGIC_1);//使用する魔法を設定する
-				BattleStageNow = (int)DAMEGE_CALC;	//バトル状態をダメージ計算状態へ
+				ui->DrawWindow(MGC_WIN_X, MGC_WIN_Y, MGC_WIN_WIDTH, MGC_WIN_HEIGHT);	//ウィンドウ描画
+				bt_magic_list->Draw(MGC_TXT_X, MGC_TXT_Y,(int)SELECT_TRIANGLE_MINI);		//魔法一覧を描画
+				if (bt_magic_list->SelectOperation(keydown, sys_se))		//エンターキーを押されたときは
+				{
+					player->SetChoiseSkil(bt_magic_list->GetSelectNum());	//選択した内容を使用する魔法として設定する
+					BattleStageNow = (int)DAMEGE_CALC;	//バトル状態をダメージ計算状態へ
+				}
 
 				break;
 
@@ -1106,18 +1102,9 @@ void End()
 
 	End_Draw();	//描画処理
 
-	//ui->ChoiseOperation(keydown, sys_se);	//選択肢のキー操作
-
-	End_select->SelectOperation(keydown, sys_se);	//選択肢のキー操作
-
-	player->Recovery();		//回復
-
-	//▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼ 画面遷移の処理 ▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼
-	if (keydown->IsKeyDown(KEY_INPUT_RETURN))	//エンターキーを押された瞬間
+	//選択肢のキー操作
+	if (End_select->SelectOperation(keydown, sys_se))		//エンターキーを押されたら
 	{
-
-		sys_se->Play((int)SYS_SE_KETTEI);	//決定音を鳴らす
-
 		if (*End_select->GetNowSelect() == "TITLE")		//選択している文字列が"TITLE"だったら
 		{
 			SceneChenge(GameSceneNow, (int)GAME_SCENE_TITLE);	//次の画面はタイトル画面
@@ -1130,8 +1117,10 @@ void End()
 		{
 			GameEnd_Flg = true;	//ゲーム終了
 		}
+
 	}
-	//▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲ 画面遷移の処理 ▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲
+
+	player->Recovery();		//回復
 
 	return;
 }
@@ -1476,6 +1465,8 @@ void Delete_Class()
 	delete data;			//dataを破棄
 	delete Magic_effect;	//effectを破棄
 	delete boss_mapimage;	//boss_mapimageを破棄
+	delete Title_select;	//title_select破棄
+	delete End_select;		//end_select破棄
 
 	delete msg;//msg破棄
 

@@ -34,6 +34,14 @@
 #define CMD_TXT_X		370			//バトルコマンドの文字の描画開始X位置
 #define CMD_TXT_Y		540			//バトルコマンドの文字の描画開始Y位置
 
+//魔法一覧関係
+#define MGC_WIN_X		470			//魔法一覧のウィンドウの描画開始X位置
+#define MGC_WIN_Y		540			//魔法一覧のウィンドウの描画開始Y位置
+#define MGC_WIN_WIDTH	100			//魔法一覧のウィンドウの横幅
+#define MGC_WIN_HEIGHT	100			//魔法一覧のウィンドウの高さ
+#define MGC_TXT_X		485			//魔法一覧の文字の描画開始X位置
+#define MGC_TXT_Y		540			//魔法一覧の文字の描画開始Y位置
+
 //ウィンドウ関係
 #define BT_WINDOW_X		0			//バトル画面のウィンドウの描画開始X位置
 #define BT_WINDOW_Y		390			//バトル画面のウィンドウの描画開始Y位置
@@ -100,7 +108,6 @@ public:
 
 	//ステータスウィンドウ関連
 	void DrawStateWindow(PLAYER *);				//ステータスウィンドウ描画
-
 	void DrawWindow(int, int, int, int);				//ウィンドウを描画する
 	void DrawWindow(int,int,int,int,unsigned int);		//ウィンドウを描画する(色指定)
 
@@ -111,7 +118,7 @@ public:
 	int GetUiImageHeight(int);					//ui画像の高さ取得
 
 	//選択肢関係
-	void SelectOperation(KEYDOWN *, MUSIC *, int);			//指定された選択肢のキー操作を行う
+	bool SelectOperation(KEYDOWN *, MUSIC *, int);			//指定された選択肢のキー操作を行う
 	std::vector<std::string>::iterator GetNowSelect(int);	//指定された選択肢の現在選択している要素を取得する
 	void SelectClear(int);									//指定された選択肢の内容をクリアする
 	void NowSelectReset(int);								//指定された選択肢の現在選択している内容を、最初の要素に戻す

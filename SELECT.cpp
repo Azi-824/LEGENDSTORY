@@ -23,7 +23,11 @@ SELECT::~SELECT()
 }
 
 //選択肢のキー操作
-void SELECT::SelectOperation(KEYDOWN *keydown,MUSIC *se)
+/*
+戻り値：エンターキーを押されたら:true
+戻り値：エンターキー押されていなければ:false
+*/
+bool SELECT::SelectOperation(KEYDOWN *keydown,MUSIC *se)
 {
 	if (keydown->IsKeyDownOne(KEY_INPUT_W))		//Wキーを押されたら
 	{
@@ -44,7 +48,14 @@ void SELECT::SelectOperation(KEYDOWN *keydown,MUSIC *se)
 			++this->Str_itr;		//次の要素へ
 		}
 	}
-	return;
+	else if (keydown->IsKeyDownOne(KEY_INPUT_RETURN))	//エンターキーを押されたら
+	{
+		//SEの再生
+		se->Play((int)SYS_SE_KETTEI);		//決定の効果音を鳴らす
+		keydown->KeyDownUpdate();			//キー入力の状態をリセット
+		return true;						
+	}
+	return false;
 
 }
 
@@ -52,6 +63,18 @@ void SELECT::SelectOperation(KEYDOWN *keydown,MUSIC *se)
 std::vector<std::string>::iterator SELECT::GetNowSelect()
 {
 	return this->Str_itr;
+}
+
+//選択した要素の要素番号を取得する
+int SELECT::GetSelectNum(void)
+{
+	for (int i = 0; i < this->Str.size(); ++i)
+	{
+		if (*this->Str_itr == this->Str[i])		//選択している要素番号と、一致したら
+		{
+			return i;		//現在の要素番号を返す
+		}
+	}
 }
 
 //選択肢の内容を消去

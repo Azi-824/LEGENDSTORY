@@ -136,7 +136,7 @@ bool UI::GetIsChoise(void)
 //バトルコマンドで使用する要素を初期化する
 void UI::BattleInit()
 {
-	this->BattleCommadType = -1;	//選択したコマンド内容リセット
+	this->BattleCommadType = (int)COMMAND_NONE;	//選択したコマンド内容リセット
 }
 
 //戦闘画面で選んだコマンドを設定する
@@ -185,7 +185,7 @@ void UI::DrawCommand()
 	this->DrawWindow(CMD_WIN_X, CMD_WIN_Y, CMD_WIN_WIDTH, CMD_WIN_HEIGHT);	//ウィンドウ描画
 
 	//選択肢描画
-	this->BattleCommand->Draw(CMD_TXT_X, CMD_TXT_Y, 1);
+	this->BattleCommand->Draw(CMD_TXT_X, CMD_TXT_Y, (int)UI_SELECT_BATTLE_CMD);
 
 	return;
 }
@@ -261,20 +261,36 @@ int UI::GetUiImageHeight(int type)
 }
 
 //指定された選択肢のキー操作を行う
-void UI::SelectOperation(KEYDOWN *keydown, MUSIC *se, int kind)
+bool UI::SelectOperation(KEYDOWN *keydown, MUSIC *se, int kind)
 {
 	switch (kind)
 	{
 
 	case (int)UI_SELECT_MENU:		//メニュー画面
 
-		this->MenuSelect->SelectOperation(keydown, se);	//メニュー画面キー操作
+		//メニュー画面キー操作
+		if (this->MenuSelect->SelectOperation(keydown, se))		//エンターキーを押されたら
+		{
+			return true;
+		}
+		else													//押されていなければ
+		{
+			return false;
+		}
 
 		break;
 
 	case (int)UI_SELECT_BATTLE_CMD:		//バトルコマンド
 
-		this->BattleCommand->SelectOperation(keydown, se);	//バトルコマンドのキー操作
+		//バトルコマンドのキー操作
+		if (this->BattleCommand->SelectOperation(keydown, se))	//エンターキーを押されたら
+		{
+			return true;
+		}
+		else													//押されていなければ
+		{
+			return false;
+		}
 
 		break;
 
@@ -282,7 +298,7 @@ void UI::SelectOperation(KEYDOWN *keydown, MUSIC *se, int kind)
 		break;
 	}
 
-	return;
+	return false;
 }
 
 //指定された選択肢の現在選択している要素を取得する
