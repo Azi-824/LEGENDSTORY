@@ -7,7 +7,6 @@
 #include "DxLib.h"
 #include "MENU.hpp"
 #include "PLAYER.hpp"
-#include "MUSIC.hpp"
 #include "SELECT.hpp"
 
 //######################### É}ÉNÉçíËã` #####################################
