@@ -385,7 +385,7 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 	//選択肢関係
 	Title_select = new SELECT("START", "END");			//タイトル画面の選択肢生成
 	End_select = new SELECT("TITLE", "PLAY", "END");	//エンド画面の選択肢生成
-	bt_magic_list = new SELECT("魔法１", "魔法２");		//スキルの選択肢生成
+	bt_magic_list = new SELECT("空からレーザードドドドン", "円盤から電撃");		//スキルの選択肢生成
 
 	//▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲ 読み込み処理 ▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲
 
