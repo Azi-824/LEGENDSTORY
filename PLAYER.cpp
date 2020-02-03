@@ -787,6 +787,8 @@ void PLAYER::DamegeCalc(ENEMY *enemy,int choiecommand)
 
 	case(int)COMMANDE_ITEM:				//アイテムを選んだ時の処理ここから
 
+		this->SendDamege = 0;		//与えるダメージ0
+
 		break;					//アイテムを選んだ時の処理ここまで
 
 	default:

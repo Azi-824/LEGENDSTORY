@@ -16,6 +16,7 @@
 #include "EFFECT.hpp"
 #include "MSG.hpp"
 #include "ITEM.hpp"
+#include "SELECT.hpp"
 
 //########## グローバルオブジェクト ##########
 FPS *fps = new FPS(GAME_FPS_SPEED);							//FPSクラスのオブジェクトを生成
@@ -49,6 +50,11 @@ ENEMY *enemy[ENEMY_KIND];			//敵
 ITEM *item[ITEM_KIND];				//アイテム
 
 MAP *mapdata[DRAW_MAP_KIND][MAP_DATA_KIND];		//マップデータ
+
+//選択肢関係
+SELECT *Title_select;	//タイトル画面の選択肢
+SELECT *End_select;		//エンド画面の選択肢
+SELECT *bt_skil_list;	//スキルの選択肢
 
 //############## グローバル変数 ##############
 int GameSceneNow = (int)GAME_SCENE_TITLE;	//現在のゲームシーン
@@ -204,9 +210,6 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 
 	//UI関係
 	ui = new UI();		//UI作成
-	if (ui->AddUiImage(UI_DIR, UI_TRIANGLE_MINI_NAME, (int)UI_TRIANGLE_MINI) == false) { return -1; }	//横向き三角（ミニ）の画像の追加
-	if (ui->AddUiImage(UI_DIR, UI_WINDOW_NAME, (int)UI_WINDOW) == false) { return -1; }	//ウィンドウ
-
 
 	//▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼ 敵関係ここから ▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼
 	enemy[(int)ENE_SLIME] = new ENEMY(ENEMY_DIR, ENEMY_NAME_SLIME);	//スライム作成
@@ -379,6 +382,10 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 	if (data->LoadNowMap(&NowDrawMapKind, MapNowPos, MAPPOS_DATA_DIR, MAPPOS_DATA_NAME) == false) { return -1; }	//読み込み失敗
 	//▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲ マップデータ読み込みここまで ▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲
 
+	//選択肢関係
+	Title_select = new SELECT("START", "END");			//タイトル画面の選択肢生成
+	End_select = new SELECT("TITLE", "PLAY", "END");	//エンド画面の選択肢生成
+	bt_skil_list = new SELECT("aiu", "abd");			//スキルの選択肢生成
 
 	//▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲ 読み込み処理 ▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲
 
@@ -467,14 +474,14 @@ void Title()
 
 	Title_Draw();		//タイトル画面の描画処理
 
-	ui->ChoiseOperation(keydown,sys_se);	//選択肢のキー操作
+	Title_select->SelectOperation(keydown, sys_se);		//選択肢のキー操作
 
 	//▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼ 画面遷移の処理 ▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼
 	if (keydown->IsKeyDown(KEY_INPUT_RETURN))				//エンターキーを押されたら
 	{
 		sys_se->Play((int)SYS_SE_KETTEI);	//決定音を鳴らす
 
-		if (*ui->GetNowChoise() == "START")		//選択している文字列が"START"だったら
+		if (*Title_select->GetNowSelect() == "START")		//選択している文字列が"START"だったら
 		{
 			SceneChenge(GameSceneNow, (int)GAME_SCENE_PLAY);	//次の画面はプレイ画面
 		}
@@ -518,7 +525,6 @@ void Play()
 	Play_Draw();		//描画処理
 
 	player->Operation(keydown, mapdata[NowDrawMapKind][MapKind[MAPPOS_Y][MAPPOS_X]]->GetRect((int)MAP_NG));	//プレイヤーキー操作
-
 
 	//▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼ マップ切り替え処理ここから ▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼
 	if (player->GetChengeMapKind() != -1)		//マップの端に来た時
@@ -574,13 +580,14 @@ void Play()
 	//▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼ メニュー毎の処理ここから ▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼
 	if (player->GetIsMenu())			//メニュー描画中だったら
 	{
-		ui->ChoiseOperation(keydown, sys_se);		//メニューウィンドウキー操作
+
+		ui->SelectOperation(keydown, sys_se, (int)UI_SELECT_MENU);	//メニューウィンドウキー操作
 
 		if (keydown->IsKeyDownOne(KEY_INPUT_RETURN))	//エンターキーを押されたら
 		{
 			sys_se->Play((int)SYS_SE_KETTEI);			//決定音を鳴らす
 
-			ui->SetChoiseMenu(ui->GetNowChoise());		//選択した内容をセット
+			ui->SetChoiseMenu(ui->GetNowSelect((int)UI_SELECT_MENU));		//選択した内容をセット
 
 		}
 
@@ -663,7 +670,7 @@ void Battle()
 
 				ui->SetIsDrawUIAnime(false);		//UIのアニメーション非表示
 
-				ui->ChoiseOperation(keydown, sys_se);		//バトルコマンドキー操作
+				ui->SelectOperation(keydown, sys_se, 1);	//バトルコマンドキー操作
 
 				if (keydown->IsKeyDownOne(KEY_INPUT_RETURN))	//エンターキーを押されたら
 				{
@@ -710,7 +717,6 @@ void Battle()
 
 			case (int)COMMANDE_ITEM:			//アイテムを選んだ時
 
-				//ui->BattleInit();	//バトルコマンドリセット
 				BattleStageNow = (int)DAMEGE_CALC;	//バトル状態をダメージ計算状態へ
 
 				break;
@@ -790,7 +796,7 @@ void Battle()
 
 			BattleStageNow = (int)ACT_MSG;	//行動メッセージ表示状態へ
 
-			ui->NowChoiseReset();		//選択を最初の要素へ戻す
+			ui->NowSelectReset((int)UI_SELECT_BATTLE_CMD);		//選択を最初の要素へ戻す
 
 		}
 		else if (Turn = (int)ENEMY_TURN)	//敵のターンだったら
@@ -1100,7 +1106,9 @@ void End()
 
 	End_Draw();	//描画処理
 
-	ui->ChoiseOperation(keydown, sys_se);	//選択肢のキー操作
+	//ui->ChoiseOperation(keydown, sys_se);	//選択肢のキー操作
+
+	End_select->SelectOperation(keydown, sys_se);	//選択肢のキー操作
 
 	player->Recovery();		//回復
 
@@ -1110,11 +1118,11 @@ void End()
 
 		sys_se->Play((int)SYS_SE_KETTEI);	//決定音を鳴らす
 
-		if (*ui->GetNowChoise() == "TITLE")		//選択している文字列が"TITLE"だったら
+		if (*End_select->GetNowSelect() == "TITLE")		//選択している文字列が"TITLE"だったら
 		{
 			SceneChenge(GameSceneNow, (int)GAME_SCENE_TITLE);	//次の画面はタイトル画面
 		}
-		else if (*ui->GetNowChoise() == "PLAY")	//プレイを選択したら
+		else if (*End_select->GetNowSelect() == "PLAY")	//プレイを選択したら
 		{
 			SceneChenge(GameSceneNow, (int)GAME_SCENE_PLAY);	//次の画面はプレイ画面
 		}
@@ -1178,7 +1186,7 @@ void Chenge()
 	{
 		GameSceneNow = GameSceneNext;	//次の画面にする
 		Init();							//初期化
-		ui->ChoiseClear();				//選択肢の内容をクリアする
+		//ui->SelectClear();				//選択肢の内容をクリアする
 	}
 
 
@@ -1196,6 +1204,8 @@ void Init()
 		enemy[EncounteEnemyType]->StateSetInit();		//遭遇した敵初期化
 
 		ui->BattleInit();			//バトルコマンド初期化
+
+		ui->NowSelectReset((int)UI_SELECT_BATTLE_CMD);		//選択を最初の要素へ戻す
 
 		bt_se->Reset();				//SEの再生状態をリセット
 
@@ -1235,7 +1245,7 @@ void Title_Draw()
 
 	font->SetSize(BIG_FONTSIZE);		//フォントサイズを大きくする
 
-	ui->ChoiseDraw(GAME_WIDTH / 2 , DEFAULT_TEXT_Y,(int)UI_TRIANGLE,true,GetColor(255,255,255),"START", "END");	//選択肢描画
+	Title_select->DrawCenter(GAME_WIDTH / 2, DEFAULT_TEXT_Y,0);	//選択肢描画
 	
 	return;
 
@@ -1346,7 +1356,7 @@ void Battle_Draw()
 
 	ui->DrawStateWindow(player);		//ステータスウィンドウ描画
 
-	ui->DrawCommand();						//バトルコマンド描画
+	ui->DrawCommand();					//バトルコマンド描画
 
 	ui->DrawUiImage(BT_WINDOW_X, BT_WINDOW_Y, (int)UI_WINDOW);	//メッセージウィンドウ描画
 
@@ -1379,7 +1389,9 @@ void End_Draw()
 
 	font->SetSize(BIG_FONTSIZE);	//フォントサイズを大きくする
 
-	ui->ChoiseDraw(GAME_WIDTH / 2, TXT_Y_3, (int)UI_TRIANGLE,true ,GetColor(0,0,0),"TITLE","PLAY", "END");	//選択肢描画
+	//ui->ChoiseDraw(GAME_WIDTH / 2, TXT_Y_3, (int)UI_TRIANGLE,true ,GetColor(0,0,0),"TITLE","PLAY", "END");	//選択肢描画
+
+	End_select->Draw(GAME_WIDTH / 2, TXT_Y_3, 0);		//選択肢描画
 
 	return;
 

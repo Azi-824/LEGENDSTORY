@@ -10,9 +10,12 @@
 UI::UI()
 {
 
-	this->UiImage = new IMAGE(UI_DIR, UI_TRIANGLENAME);	//uiの画像作成
+	this->UiImage = new IMAGE(UI_DIR, UI_WINDOW_NAME);	//uiの画像作成
 
 	this->menuwindow = new MENU();			//メニューウィンドウ作成
+
+	this->MenuSelect = new SELECT("ステータス", "アイテム", "装備", "操作説明", "セーブ");	//メニューの選択肢生成
+	this->BattleCommand = new SELECT("こうげき", "ぼうぎょ", "まほう", "アイテム", "にげる");	//バトルコマンドの選択肢生成
 
 	this->BattleCommadType = -1;			//選択したバトルコマンドの種類を初期化
 
@@ -48,28 +51,26 @@ void UI::DrawMenu(int x,int y)
 	if (x <= MENU_WINDOW_CHENGE_POSX && y >= MENU_WINDOW_CHENGE_POSY)	//左上にいるときは
 	{
 		//プレイヤーの右上にメニューウィンドウを表示
-		this->DrawWindow(x + MENU_WINDOW_RELATIVE_X - this->UiImage->GetWidth((int)UI_TRIANGLE_MINI), y + (-MENU_WINDOW_RELATIVE_Y), MENU_WINDOW_WIDTH, MENU_WINDOW_HEIGHT);	//ウィンドウ描画
-		this->ChoiseDraw(x + MENU_WINDOW_RELATIVE_X, y + (-MENU_WINDOW_RELATIVE_Y),(int)UI_TRIANGLE_MINI,false ,GetColor(255,255,255),"ステータス", "アイテム", "装備", "操作説明","セーブ");
-
+		this->DrawWindow(x + MENU_WINDOW_RELATIVE_X - TRIANGLE_MINI_SIZE, y + (-MENU_WINDOW_RELATIVE_Y), MENU_WINDOW_WIDTH, MENU_WINDOW_HEIGHT);	//ウィンドウ描画
+		this->MenuSelect->Draw(x + MENU_WINDOW_RELATIVE_X, y + (-MENU_WINDOW_RELATIVE_Y), 1);
 	}
 	else if (x <= MENU_WINDOW_CHENGE_POSX && y <= MENU_WINDOW_CHENGE_POSY)	//左側にいるときは
 	{
 		//プレイヤーの右下にメニューウィンドウを表示
-		this->DrawWindow((x + MENU_WINDOW_RELATIVE_X) - this->UiImage->GetWidth((int)UI_TRIANGLE_MINI), y + MENU_WINDOW_RELATIVE_Y, MENU_WINDOW_WIDTH, MENU_WINDOW_HEIGHT);	//ウィンドウ描画
-		this->ChoiseDraw(x + MENU_WINDOW_RELATIVE_X, y + MENU_WINDOW_RELATIVE_Y, (int)UI_TRIANGLE_MINI,false, GetColor(255, 255, 255), "ステータス", "アイテム", "装備", "操作説明", "セーブ");
+		this->DrawWindow((x + MENU_WINDOW_RELATIVE_X) - TRIANGLE_MINI_SIZE, y + MENU_WINDOW_RELATIVE_Y, MENU_WINDOW_WIDTH, MENU_WINDOW_HEIGHT);	//ウィンドウ描画
+		this->MenuSelect->Draw(x + MENU_WINDOW_RELATIVE_X, y + MENU_WINDOW_RELATIVE_Y, 1);
 	}
 	else if (x >= MENU_WINDOW_CHENGE_POSX && y <= MENU_WINDOW_CHENGE_POSY)	//上側にいるときは
 	{
 		//プレイヤーの左下にメニューウィンドウを表示
-		this->DrawWindow(x + (-MENU_WINDOW_RELATIVE_X) - this->UiImage->GetWidth((int)UI_TRIANGLE_MINI), y + MENU_WINDOW_RELATIVE_Y, MENU_WINDOW_WIDTH, MENU_WINDOW_HEIGHT);	//ウィンドウ描画
-		this->ChoiseDraw(x + (-MENU_WINDOW_RELATIVE_X), y + MENU_WINDOW_RELATIVE_Y, (int)UI_TRIANGLE_MINI, false, GetColor(255, 255, 255), "ステータス", "アイテム", "装備", "操作説明", "セーブ");
-
+		this->DrawWindow(x + (-MENU_WINDOW_RELATIVE_X) - TRIANGLE_MINI_SIZE, y + MENU_WINDOW_RELATIVE_Y, MENU_WINDOW_WIDTH, MENU_WINDOW_HEIGHT);	//ウィンドウ描画
+		this->MenuSelect->Draw(x + (-MENU_WINDOW_RELATIVE_X), y + MENU_WINDOW_RELATIVE_Y, 1);
 	}
 	else			//それ以外の時は
 	{
 		//プレイヤーの左上にメニューウィンドウを表示
-		this->DrawWindow(x + (-MENU_WINDOW_RELATIVE_X) - this->UiImage->GetWidth((int)UI_TRIANGLE_MINI), y + (-MENU_WINDOW_RELATIVE_Y), MENU_WINDOW_WIDTH, MENU_WINDOW_HEIGHT);	//ウィンドウ描画
-		this->ChoiseDraw(x + (-MENU_WINDOW_RELATIVE_X), y + (-MENU_WINDOW_RELATIVE_Y), (int)UI_TRIANGLE_MINI, false, GetColor(255, 255, 255), "ステータス", "アイテム", "装備", "操作説明", "セーブ");
+		this->DrawWindow(x + (-MENU_WINDOW_RELATIVE_X) - TRIANGLE_MINI_SIZE, y + (-MENU_WINDOW_RELATIVE_Y), MENU_WINDOW_WIDTH, MENU_WINDOW_HEIGHT);	//ウィンドウ描画
+		this->MenuSelect->Draw(x + (-MENU_WINDOW_RELATIVE_X), y + (-MENU_WINDOW_RELATIVE_Y), 1);
 	}
 
 	return;
@@ -119,7 +120,8 @@ int UI::GetChoiseMenu()
 void UI::ResetMenu()
 {
 	this->ChoiseMenu = -1;		//選択内容をリセット
-	this->Str_itr = this->Str.begin();	//先頭要素へ
+	//this->Str_itr = this->Str.begin();	//先頭要素へ
+	this->NowSelectReset((int)UI_SELECT_MENU);	//選択している要素をリセット
 	this->menuwindow->Reset();	//選択内容リセット
 }
 
@@ -139,7 +141,8 @@ void UI::BattleInit()
 void UI::SetBattleFlg()
 {
 
-	auto choise_itr = this->Str_itr;
+	auto choise_itr = this->BattleCommand->GetNowSelect();
+
 	if (*choise_itr == "こうげき")			//攻撃を選んだ場合
 	{
 		this->BattleCommadType = COMMANDE_ATACK;	//攻撃
@@ -180,7 +183,7 @@ void UI::DrawCommand()
 	this->DrawWindow(CMD_WIN_X, CMD_WIN_Y, CMD_WIN_WIDTH, CMD_WIN_HEIGHT);	//ウィンドウ描画
 
 	//選択肢描画
-	this->ChoiseDraw(CMD_TXT_X, CMD_TXT_Y, (int)UI_TRIANGLE_MINI, false, GetColor(255, 255, 255), "こうげき", "ぼうぎょ", "まほう", "アイテム", "にげる");
+	this->BattleCommand->Draw(CMD_TXT_X, CMD_TXT_Y, 1);
 
 	return;
 }
@@ -255,49 +258,103 @@ int UI::GetUiImageHeight(int type)
 	return this->UiImage->GetHeight(type);
 }
 
-//選択肢のキー操作を行う
-void UI::ChoiseOperation(KEYDOWN *keydown,MUSIC *se)
+//指定された選択肢のキー操作を行う
+void UI::SelectOperation(KEYDOWN *keydown, MUSIC *se, int kind)
 {
-	if (keydown->IsKeyDownOne(KEY_INPUT_W))		//Wキーを押されたら
+	switch (kind)
 	{
-		if (this->Str_itr != this->Str.begin())	//最初の要素を選択していなければ
-		{
-			//SEの再生
-			se->Play((int)SYS_SE_CURSOR);					//カーソル移動のSEを鳴らす
-			--this->Str_itr;		//前の要素へ
 
-		}
+	case (int)UI_SELECT_MENU:		//メニュー画面
+
+		this->MenuSelect->SelectOperation(keydown, se);	//メニュー画面キー操作
+
+		break;
+
+	case (int)UI_SELECT_BATTLE_CMD:		//バトルコマンド
+
+		this->BattleCommand->SelectOperation(keydown, se);	//バトルコマンドのキー操作
+
+		break;
+
+	default:
+		break;
 	}
-	else if (keydown->IsKeyDownOne(KEY_INPUT_S))	//Sキーを押されたら
-	{
-		if (this->Str_itr != this->Str.end() - 1)	//最後の要素を選択していなければ
-		{
-			//SEの再生
-			se->Play((int)SYS_SE_CURSOR);					//カーソル移動のSEを鳴らす
-			++this->Str_itr;		//次の要素へ
-		}
-	}
+
 	return;
 }
 
-//現在選択している要素を取得する
-std::vector<std::string>::iterator UI::GetNowChoise()
+//指定された選択肢の現在選択している要素を取得する
+std::vector<std::string>::iterator UI::GetNowSelect(int kind)
 {
-	return this->Str_itr;
+	switch (kind)
+	{
+
+	case (int)UI_SELECT_MENU:			//メニュー画面の時
+
+		return this->MenuSelect->GetNowSelect();
+
+		break;
+
+	case (int)UI_SELECT_BATTLE_CMD:			//バトルコマンドの時
+
+		return this->BattleCommand->GetNowSelect();
+
+		break;
+
+	default:
+		break;
+	}
 }
 
 //選択肢の内容をクリアする
-void UI::ChoiseClear(void)
+void UI::SelectClear(int kind)
 {
-	this->Str.clear();
-	this->Str_itr = this->Str.begin();
+
+	switch (kind)
+	{
+
+	case (int)UI_SELECT_MENU:			//メニュー画面の時
+
+		this->MenuSelect->SelectClear();	//選択肢削除
+
+		break;
+
+	case (int)UI_SELECT_BATTLE_CMD:			//バトルコマンドの時
+
+		return this->BattleCommand->SelectClear();	//選択肢削除
+
+		break;
+
+	default:
+		break;
+	}
+
+
 	return;
 }
 
 //現在選択している内容を最初の要素に戻す
-void UI::NowChoiseReset(void)
+void UI::NowSelectReset(int kind)
 {
-	this->Str_itr = this->Str.begin();
+	switch (kind)
+	{
+
+	case (int)UI_SELECT_MENU:			//メニュー画面の時
+
+		this->MenuSelect->NowSelectReset();	//選択肢削除
+
+		break;
+
+	case (int)UI_SELECT_BATTLE_CMD:			//バトルコマンドの時
+
+		return this->BattleCommand->NowSelectReset();	//選択肢削除
+
+		break;
+
+	default:
+		break;
+	}
+
 	return;
 }
 
