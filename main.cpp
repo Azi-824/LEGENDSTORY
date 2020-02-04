@@ -17,6 +17,7 @@
 #include "MSG.hpp"
 #include "ITEM.hpp"
 #include "SELECT.hpp"
+#include "LIST.hpp"
 
 //########## グローバルオブジェクト ##########
 FPS *fps = new FPS(GAME_FPS_SPEED);							//FPSクラスのオブジェクトを生成
@@ -55,6 +56,9 @@ MAP *mapdata[DRAW_MAP_KIND][MAP_DATA_KIND];		//マップデータ
 SELECT *Title_select;	//タイトル画面の選択肢
 SELECT *End_select;		//エンド画面の選択肢
 SELECT *bt_magic_list;	//スキルの選択肢
+
+//一覧関係
+LIST *mgc_list;			//魔法一覧
 
 //############## グローバル変数 ##############
 int GameSceneNow = (int)GAME_SCENE_TITLE;	//現在のゲームシーン
@@ -382,10 +386,16 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 	if (data->LoadNowMap(&NowDrawMapKind, MapNowPos, MAPPOS_DATA_DIR, MAPPOS_DATA_NAME) == false) { return -1; }	//読み込み失敗
 	//▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲ マップデータ読み込みここまで ▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲
 
+	//一覧関係
+	mgc_list = new LIST(LIST_DIR, MGC_LIST_NAME);			//魔法一覧を生成
+	if (mgc_list->GetIsLoad() == false) { return -1; }		//読み込み失敗
+
+
 	//選択肢関係
 	Title_select = new SELECT("START", "END");			//タイトル画面の選択肢生成
 	End_select = new SELECT("TITLE", "PLAY", "END");	//エンド画面の選択肢生成
-	bt_magic_list = new SELECT("空からレーザードドドドン", "円盤から電撃");		//スキルの選択肢生成
+	bt_magic_list = new SELECT(mgc_list->GetName((int)MAGIC_1), mgc_list->GetName((int)MAGIC_2));		//スキルの選択肢生成
+
 
 	//▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲ 読み込み処理 ▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲
 
@@ -880,6 +890,11 @@ void Battle()
 
 			if (Magic_effect->GetIsDrawEnd()||Atack_effect->GetIsDrawEnd())		//エフェクト描画が終了したら
 			{
+
+				if (ui->GetChoiseCommamd() == (int)COMMANDE_MAGIC)	//魔法を選んでいたら
+				{
+					player->SetMP(player->GetMP() - mgc_list->GetCost(player->GetChoiseSkil()));		//使った魔法に応じたMPを減らす
+				}
 
 				BattleStageNow = (int)DRAW_DAMEGE;		//ダメージ描画状態へ
 

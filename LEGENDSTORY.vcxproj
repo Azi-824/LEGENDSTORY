@@ -162,6 +162,7 @@
     <ClCompile Include="IMAGE.cpp" />
     <ClCompile Include="ITEM.cpp" />
     <ClCompile Include="KEYDOWN.cpp" />
+    <ClCompile Include="LIST.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="MAP.cpp" />
     <ClCompile Include="MENU.cpp" />
@@ -184,6 +185,7 @@
     <ClInclude Include="IMAGE.hpp" />
     <ClInclude Include="ITEM.hpp" />
     <ClInclude Include="KEYDOWN.hpp" />
+    <ClInclude Include="LIST.hpp" />
     <ClInclude Include="main.hpp" />
     <ClInclude Include="MAP.hpp" />
     <ClInclude Include="MENU.hpp" />
