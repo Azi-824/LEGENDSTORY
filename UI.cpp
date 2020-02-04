@@ -194,11 +194,11 @@ void UI::DrawCommand()
 void UI::DrawStateWindow(PLAYER *player)
 {
 
-	this->DrawWindow(STA_WIN_X, STA_WIN_Y,STA_WIN_WIDTH, STA_WIN_HEIGHT, GetColor(0, 0, 255));	//ウィンドウ描画
+	this->DrawWindow(STA_WIN_X, STA_WIN_Y,STA_WIN_WIDTH, STA_WIN_HEIGHT, GetColor(255, 255, 0));	//ウィンドウ描画
 	
 
 	//ステータス描画
-	DrawFormatString(STA_TXT_X, STA_TXT_Y, GetColor(255,255,255), "%s\nLv:%d\nHP:%d\nMP:%d\n",player->GetName(), player->GetLevel(), player->GetHP(), player->GetMP());
+	DrawFormatString(STA_TXT_X, STA_TXT_Y, GetColor(0,0,0), "%s\nLv:%d\nHP:%d\nMP:%d\n",player->GetName(), player->GetLevel(), player->GetHP(), player->GetMP());
 	DrawBox(STA_HP_BAR_X, STA_HP_BAR_Y, STA_HP_BAR_X + STA_HP_BAR_WIDTH, STA_HP_BAR_Y + STA_HP_BAR_HEIGHT, GetColor(0, 255, 0), FALSE);	//HPバー枠線描画
 	static double hp_percent = 0.0;//HP割合
 	static double hp_now = 0.0, hp_max = 0.0;	//現在のHPと最大HP
@@ -208,6 +208,17 @@ void UI::DrawStateWindow(PLAYER *player)
 	hp_percent = hp_now / hp_max;//HPの割合計算
 	draw_hp = STA_HP_BAR_WIDTH * hp_percent;		//描画するHP量計算
 	DrawBox(STA_HP_BAR_X, STA_HP_BAR_Y, STA_HP_BAR_X + draw_hp, STA_HP_BAR_Y + STA_HP_BAR_HEIGHT, GetColor(0, 255, 0), TRUE);	//HP描画
+
+	DrawBox(STA_MP_BAR_X, STA_MP_BAR_Y, STA_MP_BAR_X + STA_MP_BAR_WIDTH, STA_MP_BAR_Y + STA_MP_BAR_HEIGHT, GetColor(0, 0, 255), FALSE);	//HPバー枠線描画
+	static double mp_percent = 0.0;//MP割合
+	static double mp_now = 0.0, mp_max = 0.0;	//現在のMPと最大MP
+	static int draw_mp = 0;		//描画HP
+	mp_now = player->GetMP();	//現在のMP
+	mp_max = player->GetMaxMP();//最大のMP
+	mp_percent = mp_now / mp_max;//MPの割合計算
+	draw_mp = STA_MP_BAR_WIDTH * mp_percent;		//描画するMP量計算
+	DrawBox(STA_MP_BAR_X, STA_MP_BAR_Y, STA_MP_BAR_X + draw_mp, STA_MP_BAR_Y + STA_MP_BAR_HEIGHT, GetColor(0, 0, 255), TRUE);	//HP描画
+
 
 }
 
