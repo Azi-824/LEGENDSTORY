@@ -1148,6 +1148,8 @@ void End()
 			GameEnd_Flg = true;	//ゲーム終了
 		}
 
+		End_select->NowSelectReset();	//選択状態リセット
+
 	}
 
 	player->Recovery();		//回復
@@ -1397,6 +1399,13 @@ void End_Draw()
 		int Width = GetDrawStringWidth("ゲームクリア！！！", Strlen);	//横幅取得
 
 		DrawString((GAME_WIDTH / 2) - (Width / 2), GAME_HEIGHT / 2, "ゲームクリア！！！", GetColor(255, 0, 0));		//クリア文字描画
+
+		MAPPOS_Y = AF_CLEAR_MAP_NUM_Y;	//現在のマップ位置をボスマップの前へ切り替え（X）
+		MAPPOS_X = AF_CLEAR_MAP_NUM_X;	//現在のマップ位置をボスマップの前へ切り替え（Y)
+		player->SetPosAbsolute(PLAYER_AF_CLEAR_POS_X, PLAYRT_AF_CLEAR_POS_Y);	//プレイヤーの位置を修正
+		Boss_flg = false;	//ボスフラグリセット
+
+
 	}
 	else				//クリアしていなかったら
 	{

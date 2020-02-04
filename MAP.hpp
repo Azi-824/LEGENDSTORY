@@ -101,6 +101,9 @@
 #define BOSS_MAP_NUM_X	1	//ボスマップのX位置
 #define BOSS_MAP_NUM_Y	1	//ボスマップのY位置
 
+#define	AF_CLEAR_MAP_NUM_X	2	//クリア後のマップX位置
+#define AF_CLEAR_MAP_NUM_Y	2	//クリア後のマップY位置
+
 //##################### 列挙型 #########################
 enum MAP_FIELD_KIND
 {

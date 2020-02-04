@@ -24,6 +24,8 @@
 
 #define DIST_KIND	4				//移動方向の種類
 
+#define PLAYER_AF_CLEAR_POS_X		720	//クリア後のプレイヤーの位置
+#define PLAYRT_AF_CLEAR_POS_Y		300	//クリア後のプレイヤーの位置
 
 //################# 列挙型 ######################
 enum COMMANDTYPE
