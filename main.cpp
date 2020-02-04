@@ -714,7 +714,12 @@ void Battle()
 
 				ui->DrawWindow(MGC_WIN_X, MGC_WIN_Y, GAME_WIDTH - MGC_WIN_X, MGC_WIN_HEIGHT);	//ウィンドウ描画
 				bt_magic_list->Draw(MGC_TXT_X, MGC_TXT_Y,(int)SELECT_TRIANGLE_MINI);		//魔法一覧を描画
-				if (bt_magic_list->SelectOperation(keydown, sys_se))		//エンターキーを押されたときは
+
+				if (keydown->IsKeyDownOne(KEY_INPUT_BACK))			//バックスペースキーを押されたら
+				{
+					ui->BattleInit();	//コマンド選択リセット
+				}
+				else if (bt_magic_list->SelectOperation(keydown, sys_se))		//エンターキーを押されたときは
 				{
 					//選んだ魔法の消費MPが残っているMPより多かったら(魔法が使えない処理)
 					if (player->GetMP() < mgc_list->GetCost(bt_magic_list->GetSelectNum()))
