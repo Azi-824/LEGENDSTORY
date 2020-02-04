@@ -194,11 +194,11 @@ void UI::DrawCommand()
 void UI::DrawStateWindow(PLAYER *player)
 {
 
-	this->DrawWindow(STA_WIN_X, STA_WIN_Y,STA_WIN_WIDTH, STA_WIN_HEIGHT, GetColor(255, 255, 0));	//ウィンドウ描画
+	this->DrawWindow(STA_WIN_X, STA_WIN_Y,STA_WIN_WIDTH, STA_WIN_HEIGHT);	//ウィンドウ描画
 	
 
 	//ステータス描画
-	DrawFormatString(STA_TXT_X, STA_TXT_Y, GetColor(0,0,0), "%s\nLv:%d\nHP:%d\nMP:%d\n",player->GetName(), player->GetLevel(), player->GetHP(), player->GetMP());
+	DrawFormatString(STA_TXT_X, STA_TXT_Y, GetColor(255,255,255), "%s\nLv:%d\nHP:%d\nMP:%d\n",player->GetName(), player->GetLevel(), player->GetHP(), player->GetMP());
 	DrawBox(STA_HP_BAR_X, STA_HP_BAR_Y, STA_HP_BAR_X + STA_HP_BAR_WIDTH, STA_HP_BAR_Y + STA_HP_BAR_HEIGHT, GetColor(0, 255, 0), FALSE);	//HPバー枠線描画
 	static double hp_percent = 0.0;//HP割合
 	static double hp_now = 0.0, hp_max = 0.0;	//現在のHPと最大HP
@@ -231,6 +231,9 @@ void UI::DrawWindow(int x, int y, int width, int height)
 
 	SetDrawBlendMode(DX_BLENDMODE_NOBLEND, 0);				//描画モードを通常に戻す
 
+	this->DrawWindowFrame(x, y, width, height);				//ウィンドウの枠を描画
+
+	return;
 }
 
 //ウィンドウを描画する(色指定)
@@ -242,6 +245,16 @@ void UI::DrawWindow(int x,int y,int width,int height,unsigned int color)
 
 	SetDrawBlendMode(DX_BLENDMODE_NOBLEND, 0);				//描画モードを通常に戻す
 
+	this->DrawWindowFrame(x, y, width, height);				//ウィンドウの枠を描画
+
+	return;
+}
+
+//ウィンドウの枠を描画する
+void UI::DrawWindowFrame(int x, int y, int width, int height)
+{
+	DrawBox(x, y, x + width, y + height, GetColor(255, 255, 255), FALSE);	//塗りつぶしなしで四角形を描画
+	return;
 }
 
 //ui画像を描画する

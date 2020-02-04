@@ -118,6 +118,7 @@ public:
 	void DrawStateWindow(PLAYER *);				//ステータスウィンドウ描画
 	void DrawWindow(int, int, int, int);				//ウィンドウを描画する
 	void DrawWindow(int,int,int,int,unsigned int);		//ウィンドウを描画する(色指定)
+	void DrawWindowFrame(int, int, int, int);			//ウィンドウの枠を描画する
 
 	//UI画像関係
 	void DrawUiImage(int, int,int);				//UIの画像を描画する

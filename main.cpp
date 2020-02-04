@@ -701,7 +701,7 @@ void Battle()
 
 			case (int)COMMANDE_MAGIC:		//魔法を選んだ時
 
-				ui->DrawWindow(MGC_WIN_X, MGC_WIN_Y, MGC_WIN_WIDTH, MGC_WIN_HEIGHT);	//ウィンドウ描画
+				ui->DrawWindow(MGC_WIN_X, MGC_WIN_Y, GAME_WIDTH - MGC_WIN_X, MGC_WIN_HEIGHT);	//ウィンドウ描画
 				bt_magic_list->Draw(MGC_TXT_X, MGC_TXT_Y,(int)SELECT_TRIANGLE_MINI);		//魔法一覧を描画
 				if (bt_magic_list->SelectOperation(keydown, sys_se))		//エンターキーを押されたときは
 				{
