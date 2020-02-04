@@ -24,6 +24,10 @@
 #define STA_TXT_X		10			//ステータスの文字の描画開始X位置
 #define STA_TXT_Y		540			//ステータスの文字の描画開始Y位置
 #define STA_SPACE		20			//ステータス文字の間隔
+#define STA_HP_BAR_X	90			//HPバーの描画開始X位置
+#define	STA_HP_BAR_Y	590			//HPバーの描画開始Y位置
+#define	STA_HP_BAR_WIDTH 100		//HPバーの描画幅
+#define STA_HP_BAR_HEIGHT 15		//HPバーの描画高さ
 
 //バトルコマンド関係
 #define CMD_WIN_X		350			//バトルコマンドのウィンドウの描画開始X位置

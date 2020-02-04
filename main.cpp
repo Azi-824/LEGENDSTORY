@@ -706,6 +706,7 @@ void Battle()
 				if (bt_magic_list->SelectOperation(keydown, sys_se))		//エンターキーを押されたときは
 				{
 					player->SetChoiseSkil(bt_magic_list->GetSelectNum());	//選択した内容を使用する魔法として設定する
+					bt_magic_list->NowSelectReset();						//選択要素を先頭に戻す
 					BattleStageNow = (int)DAMEGE_CALC;	//バトル状態をダメージ計算状態へ
 				}
 
@@ -1378,9 +1379,7 @@ void End_Draw()
 
 	font->SetSize(BIG_FONTSIZE);	//フォントサイズを大きくする
 
-	//ui->ChoiseDraw(GAME_WIDTH / 2, TXT_Y_3, (int)UI_TRIANGLE,true ,GetColor(0,0,0),"TITLE","PLAY", "END");	//選択肢描画
-
-	End_select->Draw(GAME_WIDTH / 2, TXT_Y_3, 0);		//選択肢描画
+	End_select->DrawCenter(GAME_WIDTH / 2, TXT_Y_3, 0,GetColor(0,0,0));		//選択肢描画
 
 	return;
 
