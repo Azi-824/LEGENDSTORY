@@ -163,6 +163,7 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 	if (sys_se->Add(MY_MUSIC_DIR_SYS_SE, MY_SE_NAME_MENU, (int)SYS_SE_MENU) == false) { return -1; }		//メニューを開いた時の音追加
 	if (sys_se->Add(MY_MUSIC_DIR_SYS_SE, MY_SE_NAME_ENCOUNT, (int)SYS_SE_ENCOUNT) == false) { return -1; }	//敵と遭遇した時の音追加
 	if (sys_se->Add(MY_MUSIC_DIR_SYS_SE, MY_SE_NAME_SAVE, (int)SYS_SE_SAVE) == false) { return -1; }	//セーブの音追加
+	if (sys_se->Add(MY_MUSIC_DIR_SYS_SE, MY_SE_NAME_BLIP, (int)SYS_SE_BLIP) == false) { return -1; }	//選択できないときの音追加
 
 
 	//フォント関係
@@ -715,9 +716,17 @@ void Battle()
 				bt_magic_list->Draw(MGC_TXT_X, MGC_TXT_Y,(int)SELECT_TRIANGLE_MINI);		//魔法一覧を描画
 				if (bt_magic_list->SelectOperation(keydown, sys_se))		//エンターキーを押されたときは
 				{
-					player->SetChoiseSkil(bt_magic_list->GetSelectNum());	//選択した内容を使用する魔法として設定する
-					bt_magic_list->NowSelectReset();						//選択要素を先頭に戻す
-					BattleStageNow = (int)DAMEGE_CALC;	//バトル状態をダメージ計算状態へ
+					//選んだ魔法の消費MPが残っているMPより多かったら(魔法が使えない処理)
+					if (player->GetMP() < mgc_list->GetCost(bt_magic_list->GetSelectNum()))
+					{
+						sys_se->Play((int)SYS_SE_BLIP);			//選択できない時の音を鳴らす
+					}
+					else		//選んだ魔法が使えた時は
+					{
+						player->SetChoiseSkil(bt_magic_list->GetSelectNum());	//選択した内容を使用する魔法として設定する
+						bt_magic_list->NowSelectReset();						//選択要素を先頭に戻す
+						BattleStageNow = (int)DAMEGE_CALC;	//バトル状態をダメージ計算状態へ
+					}
 				}
 
 				break;
