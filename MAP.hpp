@@ -96,7 +96,7 @@
 #define RECT_STAGGER	4	//領域をずらす量
 
 #define BOSS_PLAYER_X	430	//ボスマップのプレイヤースタート位置
-#define BOSS_PLAYER_Y	630	//ボスマップのプレイヤースタート位置
+#define BOSS_PLAYER_Y	600	//ボスマップのプレイヤースタート位置
 
 #define BOSS_MAP_NUM_X	1	//ボスマップのX位置
 #define BOSS_MAP_NUM_Y	1	//ボスマップのY位置
