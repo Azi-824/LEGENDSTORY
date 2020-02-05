@@ -1446,7 +1446,7 @@ void Enconte()
 				EncounteEnemyType = i;		//‘˜‹ö‚µ‚½“G‚ğİ’è
 
 				//•`‰æ•¶šİ’è
-				switch (GetRand(ENCOUNT_TXT_KIND))
+				switch (GetRand(ENCOUNT_TXT_KIND-1))
 				{
 
 				case (int)ENCOUNT_TXT_PATARN1:
