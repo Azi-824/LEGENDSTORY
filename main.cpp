@@ -1446,7 +1446,33 @@ void Enconte()
 				EncounteEnemyType = i;		//遭遇した敵を設定
 
 				//描画文字設定
-				Work_Str = "バイト帰りの";
+				switch (GetRand(ENCOUNT_TXT_KIND))
+				{
+
+				case (int)ENCOUNT_TXT_PATARN1:
+
+					Work_Str = "バイト帰りの";
+
+					break;
+
+				case (int)ENCOUNT_TXT_PATARN2:
+
+					Work_Str = "肥満体の";
+
+					break;
+
+				case (int)ENCOUNT_TXT_PATARN3:
+
+					Work_Str = "疲れ果てた";
+
+					break;
+						
+				default:
+					break;
+				}
+
+				//Work_Str = "バイト帰りの";
+
 				Work_Str += enemy[EncounteEnemyType]->GetName();		//遭遇した敵の名前取得
 				Work_Str += "が現れた！";
 				bt_msg[(int)BT_MSG_ACT]->SetMsg(Work_Str.c_str());	//文字列設定

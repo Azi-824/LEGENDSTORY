@@ -26,6 +26,8 @@
 
 #define GAME_ICON_ID						333	//アイコンのID
 
+#define ENCOUNT_TXT_KIND	3
+
 //############### 列挙型 ###############
 enum GAME_SCENE {
 	GAME_SCENE_TITLE,	//タイトル画面
@@ -49,6 +51,13 @@ enum TURN
 {
 	MY_TURN,		//味方のターン
 	ENEMY_TURN		//敵のターン
+};
+
+enum ENCOUNT_TXT_TYPE
+{
+	ENCOUNT_TXT_PATARN1,	//遭遇した時のテキスト種類1個め
+	ENCOUNT_TXT_PATARN2,	//遭遇した時のテキスト種類2個め
+	ENCOUNT_TXT_PATARN3		//遭遇した時のテキスト種類3個め
 };
 
 //############## プロトタイプ宣言 #############
