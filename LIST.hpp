@@ -27,6 +27,8 @@ private:
 	std::vector<int> Cost;				//消費MP
 	std::vector < std::string> Name;	//技名
 
+	int Size;							//リストの要素数
+
 	bool IsLoad;						//読み込めたか
 
 public:	
@@ -38,6 +40,8 @@ public:
 	int GetCost(int);					//消費MP取得
 	const char * GetName(int);			//技名取得
 	bool GetIsLoad(void);				//読み込めたか
+
+	int GetListSize(void);				//リストの要素数を取得
 
 
 };

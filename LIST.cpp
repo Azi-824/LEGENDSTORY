@@ -52,6 +52,8 @@ LIST::LIST(const char *dir, const char *name)
 
 	}
 
+	this->Size = this->Cost.size();	//リストの要素数を設定
+
 	this->IsLoad = true;	//読み込み成功
 
 	return;
@@ -88,4 +90,10 @@ int LIST::GetCost(int kind)
 bool LIST::GetIsLoad(void)
 {
 	return this->IsLoad;
+}
+
+//リストの要素数を取得
+int LIST::GetListSize(void)
+{
+	return this->Size;
 }

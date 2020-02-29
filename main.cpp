@@ -399,7 +399,26 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 	//選択肢関係
 	Title_select = new SELECT("START", "END");			//タイトル画面の選択肢生成
 	End_select = new SELECT("TITLE", "PLAY", "END");	//エンド画面の選択肢生成
-	bt_magic_list = new SELECT(mgc_list->GetName((int)MAGIC_1), mgc_list->GetName((int)MAGIC_2));		//スキルの選択肢生成
+
+	//*********************************** 魔法の選択肢を魔法一覧から設定、ここから *****************************************
+	std::vector<std::string> w;	//作業用
+	w.resize(mgc_list->GetListSize());	//作業用変数のサイズ変更
+
+	//魔法一覧から、戦闘画面で使用するための、魔法の選択肢を作成
+	for (int i = 0; i < mgc_list->GetListSize(); ++i)			//魔法の種類分ループさせる
+	{
+		w[i] = std::to_string(mgc_list->GetCost(i));	//消費MPを文字列に設定
+		w[i] += "MP:";									//文字設定
+		w[i] += mgc_list->GetName(i);					//魔法名設定
+
+	}
+
+	bt_magic_list = new SELECT(w[(int)MAGIC_1], w[(int)MAGIC_2]);		//スキルの選択肢生成
+
+	//作業用の変数を開放する
+	std::vector<std::string> v;			//空のvectorを作成する
+	w.swap(v);							//空と中身を入れ替える
+	//*********************************** 魔法の選択肢を魔法一覧から設定、ここまで *****************************************
 
 
 	//▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲ 読み込み処理 ▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲
