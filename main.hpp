@@ -79,5 +79,6 @@ void End_Draw();			//エンド画面の描画処理
 void Enconte();				//敵との遭遇処理
 bool Wait();				//待つ処理
 void Delete_Class();		//クラスを削除する処理
+bool LoadGameData();	//ゲームで使用するデータ等を読み込む処理
 
 //########## クラスの定義 ##########

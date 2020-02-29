@@ -103,325 +103,8 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 
 	SetDrawScreen(DX_SCREEN_BACK);								//Draw系関数は裏画面に描画
 
-	//▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼ 読み込み処理 ▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼
-
-	//画像関係
-	title = new IMAGE(MY_IMG_DIR_TITLE, MY_ING_NAME_TITLE);			//タイトル画像を生成
-	if (title->GetIsLoad() == false) { return -1; }					//読み込み失敗時
-
-	back = new IMAGE(MY_IMG_DIR_BACK, MY_IMG_NAME_BACK_TITLE);			//背景画像を生成
-	if (back->GetIsLoad() == false) { return -1; }					//読み込み失敗時
-	back->AddImage(MY_IMG_DIR_BACK, MY_IMG_NAME_BACK_END, (int)END_BACK);	//エンド画面の背景画像読み込み
-	if (back->GetIsLoad() == false) { return -1; }							//読み込み失敗
-
-	back_battle = new IMAGE(MY_IMG_DIR_BATTLE, IMG_NAME_BT_SOUGEN);	//戦闘画面(草原)の背景画像読み込み
-	if (back_battle->GetIsLoad() == false) { return -1; }					//読み込み失敗
-	back_battle->AddImage(MY_IMG_DIR_BATTLE, IMG_NAME_BT_FOREST,(int)BT_BACK_FOREST);		//戦闘画面（森）の背景画像の読み込み
-	if (back_battle->GetIsLoad() == false) { return -1; }					//読み込み失敗
-	back_battle->AddImage(MY_IMG_DIR_BATTLE, IMG_NAME_BT_OCEAN, (int)BT_BACK_OCEAN);		//戦闘画面（海）の背景画像の読み込み
-	if (back_battle->GetIsLoad() == false) { return -1; }					//読み込み失敗
-	back_battle->AddImage(MY_IMG_DIR_BATTLE, IMG_NAME_BT_AUTUMN, (int)BT_BACK_AUTUMN);		//戦闘画面（秋）の背景画像の読み込み
-	if (back_battle->GetIsLoad() == false) { return -1; }					//読み込み失敗
-	back_battle->AddImage(MY_IMG_DIR_BATTLE, IMG_NAME_BT_BOSS, (int)BT_BACK_BOSS);			//戦闘画面（ボス）の背景画像の読み込み
-	if (back_battle->GetIsLoad() == false) { return -1; }					//読み込み失敗
-	back_battle->AddImage(MY_IMG_DIR_BATTLE, IMG_NAME_BT_SPRING, (int)BT_BACK_SPRING);		//戦闘画面（春）の背景画像の読み込み
-	if (back_battle->GetIsLoad() == false) { return -1; }					//読み込み失敗
-	back_battle->AddImage(MY_IMG_DIR_BATTLE, IMG_NAME_BT_WINTER, (int)BT_BACK_WINTER);		//戦闘画面（冬）の背景画像の読み込み
-	if (back_battle->GetIsLoad() == false) { return -1; }					//読み込み失敗
-	back_battle->AddImage(MY_IMG_DIR_BATTLE, IMG_NAME_BT_REMAINS, (int)BT_BACK_REMAINS);	//戦闘画面（遺跡）の背景画像の読み込み
-	if (back_battle->GetIsLoad() == false) { return -1; }					//読み込み失敗
-	back_battle->AddImage(MY_IMG_DIR_BATTLE, IMG_NAME_BT_CASTLE, (int)BT_BACK_CASTLE);		//戦闘画面（城）の背景画像の読み込み
-	if (back_battle->GetIsLoad() == false) { return -1; }					//読み込み失敗
-
-
-	setumei = new IMAGE(MY_IMG_DIR_BACK, SETUMEI_NAME);		//説明画像の読み込み
-	if (setumei->GetIsLoad() == false) { return -1; }		//読み込み失敗
-
-	//音関係
-	bgm = new MUSIC(MY_MUSIC_DIR_BGM, MY_BGM_NAME_TITLE,BGM_KIND);		//BGMを生成
-	if (bgm->GetIsLoad() == false) { return -1; }						//読み込み失敗時
-	if (bgm->Add(MY_MUSIC_DIR_BGM, MY_BGM_NAME_FIELD, (int)BGM_FIELD) == false) { return -1; }	//フィールドのBGM追加
-	if (bgm->Add(MY_MUSIC_DIR_BGM, MY_BGM_NAME_CITY, (int)BGM_CITY) == false) { return -1; }	//街のBGM追加
-	if (bgm->Add(MY_MUSIC_DIR_BGM, MY_BGM_NAME_BATTLE, (int)BGM_BATTLE) == false) { return -1; }//戦闘画面のBGM追加
-	if (bgm->Add(MY_MUSIC_DIR_BGM, MY_BGM_NAME_END, (int)BGM_END) == false) { return -1; }//エンド画面のBGM追加
-
-	//戦闘で使用するSE
-	bt_se = new MUSIC(MY_MUSIC_DIR_BT_SE, MY_SE_NAME_LEVUP, BT_SE_KIND);	//SEを生成
-	if (bt_se->GetIsLoad() == false) { return -1; }						//読み込み失敗時
-	bt_se->ChengePlayType(DX_PLAYTYPE_BACK);							//再生方法変更
-	//音の追加処理
-	if (bt_se->Add(MY_MUSIC_DIR_BT_SE, MY_SE_NAME_SLASH, (int)BT_SE_SLASH) == false) { return -1; }	//斬るときの音追加
-	if (bt_se->Add(MY_MUSIC_DIR_BT_SE, MY_SE_NAME_THUNDER, (int)BT_SE_THUNDER) == false) { return -1; }//雷の音追加
-	if (bt_se->Add(MY_MUSIC_DIR_BT_SE, MY_SE_NAME_NIGERU, (int)BT_SE_NIGERU) == false) { return -1; }//逃げるときの音追加
-	if (bt_se->Add(MY_MUSIC_DIR_BT_SE, MY_SE_NAME_DAMEGE, (int)BT_SE_DAMEGE) == false) { return -1; }//ダメージ音追加
-
-	//システムで使用するSE
-	sys_se = new MUSIC(MY_MUSIC_DIR_SYS_SE, MY_SE_NAME_CURSOR, SYS_SE_KIND);	//システム用SE生成
-	if (sys_se->GetIsLoad() == false) { return -1; }							//読み込み失敗
-	sys_se->ChengePlayType(DX_PLAYTYPE_BACK);									//再生方法変更
-	//音の追加処理
-	if (sys_se->Add(MY_MUSIC_DIR_SYS_SE, MY_SE_NAME_CANSEL, (int)SYS_SE_CANSEL) == false) { return -1; }	//キャンセル音追加
-	if (sys_se->Add(MY_MUSIC_DIR_SYS_SE, MY_SE_NAME_KETTEI, (int)SYS_SE_KETTEI) == false) { return -1; }	//決定音追加
-	if (sys_se->Add(MY_MUSIC_DIR_SYS_SE, MY_SE_NAME_MENU, (int)SYS_SE_MENU) == false) { return -1; }		//メニューを開いた時の音追加
-	if (sys_se->Add(MY_MUSIC_DIR_SYS_SE, MY_SE_NAME_ENCOUNT, (int)SYS_SE_ENCOUNT) == false) { return -1; }	//敵と遭遇した時の音追加
-	if (sys_se->Add(MY_MUSIC_DIR_SYS_SE, MY_SE_NAME_SAVE, (int)SYS_SE_SAVE) == false) { return -1; }	//セーブの音追加
-	if (sys_se->Add(MY_MUSIC_DIR_SYS_SE, MY_SE_NAME_BLIP, (int)SYS_SE_BLIP) == false) { return -1; }	//選択できないときの音追加
-
-
-	//フォント関係
-	font = new FONT(MY_FONT_DIR, MY_FONT_NAME, FONT_NAME);			//フォントを生成
-	if (font->GetIsLoad() == false) { return -1; }					//読み込み失敗時
-
-	data = new DATA();		//データ
-
-	//メッセージ関係
-	for (int cnt = 0; cnt < BT_MSG_KIND; ++cnt)
-	{
-		bt_msg[cnt] = new MESSAGE();	//メッセージ作成
-	}
-	msg = new MESSAGE();	//メッセージ作成
-	if (data->LoadMsg(msg, MSG_DATA_DIR, MSG_DATA_NAME) == false) { return -1; }	//メッセージデータ読み込み
-
-	//エフェクト関係
-	//魔法エフェクト
-	Magic_effect = new EFFECT(MY_ANIME_DIR_MAGIC, MY_ANIME_NAME_MAGIC, MAGIC_ALL_CNT, MAGIC_YOKO_CNT, MAGIC_TATE_CNT, MAGIC_WIDTH, MAGIC_HEIGHT, MAGIC_SPEED, false, MAGIC_EFFECT_KIND);
-	if (Magic_effect->GetIsLoad() == false) { return -1; }		//読み込み失敗
-	if (Magic_effect->Add(MY_ANIME_DIR_MAGIC, MY_ANIME_NAME_MAGIC2, MAGIC2_ALL_CNT, MAGIC2_YOKO_CNT, MAGIC2_TATE_CNT, MAGIC_WIDTH, MAGIC_HEIGHT, MAGIC_SPEED, false, (int)MAGIC_2) == false) { return -1; }	//読み込み失敗
-	
-	//攻撃エフェクト
-	Atack_effect = new EFFECT(MY_ANIME_DIR_ATKEFECT, MY_ANIME_NAME_ATKEFECT, ATK_ALL_CNT, ATK_YOKO_CNT, ATK_TATE_CNT, ATK_WIDTH, ATK_HEIGHT, ATK_SPEED, false, ATACK_EFFECT_KIND);
-	if (Atack_effect->GetIsLoad() == false) { return -1; }		//読み込み失敗
-
-	//敵攻撃エフェクト
-	Enemy_Atk_effect = new EFFECT(MY_ANIME_DIR_ENE_ATK, MY_ANIME_NAME_ENE_ATK_TUME, ENE_ATK_TUME_ALL_CNT, ENE_ATK_TUME_YOKO_CNT, ENE_ATK_TUME_TATE_CNT, ENE_ATK_TUME_WIDTH, ENE_ATK_TUME_HEIGHT, ENE_ATK_TUME_SPEED, false,ENE_ATK_EFFECT_KIND);
-	if (Enemy_Atk_effect->GetIsLoad() == false) { return -1; }		//読み込み失敗
-	//敵攻撃エフェクト追加
-	if (Enemy_Atk_effect->Add(MY_ANIME_DIR_ENE_ATK, MY_ANIME_NAME_ENE_ATK_KIBA, ENE_ATK_KIBA_ALL_CNT, ENE_ATK_KIBA_YOKO_CNT, ENE_ATK_KIBA_TATE_CNT, ENE_ATK_KIBA_WIDTH, ENE_ATK_KIBA_HEIGHT, ENE_ATK_KIBA_SPEED, false, (int)ENE_ATK_KIBA) == false) { return -1; }	//読み込み失敗
-	if (Enemy_Atk_effect->Add(MY_ANIME_DIR_ENE_ATK, MY_ANIME_NAME_ENE_ATK_TAIL_BIG, ENE_ATK_TAIL_BIG_ALL_CNT, ENE_ATK_TAIL_BIG_YOKO_CNT, ENE_ATK_TAIL_BIG_TATE_CNT, ENE_ATK_TAIL_BIG_WIDTH, ENE_ATK_TAIL_BIG_HEIGHT, ENE_ATK_TAIL_BIG_SPEED, false, (int)ENE_ATK_TAIL_BIG) == false) { return -1; }	//読み込み失敗
-
-	//ボス攻撃エフェクト
-	Boss_Atk_effect = new EFFECT(MY_ANIME_DIR_BOSS_ATK, MY_ANIME_NAME_BOSS_ATK_LASER, BOSS_ATK_LEASER_ALL_CNT, BOSS_ATK_LEASER_YOKO_CNT, BOSS_ATK_LEASER_TATE_CNT, BOSS_ATK_LEASER_WIDTH, BOSS_ATK_LEASER_HEIGHT, BOSS_ATK_LEASER_SPEED, false, BOSS_ATK_EFFECT_KIND);
-	if (Boss_Atk_effect->GetIsLoad() == false) { return -1; }		//読み込み失敗
-	//ボス攻撃エフェクト追加
-	if (Boss_Atk_effect->Add(MY_ANIME_DIR_BOSS_ATK, MY_ANIME_NAME_BOSS_ATK_TOGE, BOSS_ATK_TOGE_ALL_CNT, BOSS_ATK_TOGE_YOKO_CNT, BOSS_ATK_TOGE_TATE_CNT, BOSS_ATK_TOGE_WIDTH, BOSS_ATK_TOGE_HEIGT, BOSS_ATK_TOGE_SPEED, false, (int)BOSS_ATK_TOGE) == false) { return -1; }	//読み込み失敗
-
-
-	//プレイヤー関係
-	player = new PLAYER();		//プレイヤー生成
-	if (player->SetImage(MY_IMG_DIR_CHARCTOR, MY_IMG_NAME_PLAYER) == false) { return -1; }	//読み込み失敗
-	if (player->SetAnime(MY_ANIME_DIR_PLAYER, MY_ANIME_NAME_PLAYER, PLAYER_ALL_CNT, PLAYER_YOKO_CNT, PLAYER_TATE_CNT, PLAYER_WIDTH, PLAYER_HEIGHT, PLAYER_ANI_SPEED, true) == false) { return -1; } //読み込み失敗
-	
-	//プレイヤーのデータをcsvファイルから読み込み
-	//if (data->LoadPlayer(player, PLAYER_DATA_DIR, PLAYER_DATA_NAME) == false) { return -1; }	//読み込み失敗
-	//プレイヤーの初期データver
-	if (data->LoadPlayer(player, PLAYER_DATA_DIR, PLATER_DATA_INIT_NAME) == false) { return -1; }	//読み込み失敗
-	player->SetInit();	//初期設定
-
-	//UI関係
-	ui = new UI();		//UI作成
-
-	//▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼ 敵関係ここから ▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼
-	enemy[(int)ENE_SLIME] = new ENEMY(ENEMY_DIR, ENEMY_NAME_SLIME);	//スライム作成
-	if (enemy[(int)ENE_SLIME]->GetIsLoad() == false) { return -1; }	//読み込み失敗
-
-	enemy[(int)ENE_BAT] = new ENEMY(ENEMY_DIR, ENEMY_NAME_BAT);	//こうもり作成
-	if (enemy[(int)ENE_BAT]->GetIsLoad() == false) { return -1; }	//読み込み失敗
-
-	enemy[(int)ENE_GOBURIN] = new ENEMY(ENEMY_DIR, ENEMY_NAME_GOBURIN);	//ゴブリン作成
-	if (enemy[(int)ENE_GOBURIN]->GetIsLoad() == false) { return -1; }	//読み込み失敗
-
-	enemy[(int)ENE_MATANGO] = new ENEMY(ENEMY_DIR, ENEMY_NAME_MATANGO);	//マタンゴ作成
-	if (enemy[(int)ENE_MATANGO]->GetIsLoad() == false) { return -1; }	//読み込み失敗
-
-	enemy[(int)ENE_SEED] = new ENEMY(ENEMY_DIR, ENEMY_NAME_SEED);	//悪魔の種作成
-	if (enemy[(int)ENE_SEED]->GetIsLoad() == false) { return -1; }	//読み込み失敗
-
-	enemy[(int)ENE_TREANT] = new ENEMY(ENEMY_DIR, ENEMY_NAME_TREANT);	//トレント作成
-	if (enemy[(int)ENE_TREANT]->GetIsLoad() == false) { return -1; }	//読み込み失敗
-
-	enemy[(int)ENE_YADOKARI]=new ENEMY(ENEMY_DIR, ENEMY_NAME_YADOKARI);	//ヤドカリ作成
-	if (enemy[(int)ENE_YADOKARI]->GetIsLoad() == false) { return -1; }	//読み込み失敗
-
-	enemy[(int)ENE_SCORPION] = new ENEMY(ENEMY_DIR, ENEMY_NAME_SCORPION);	//サソリ作成
-	if (enemy[(int)ENE_SCORPION]->GetIsLoad() == false) { return -1; }	//読み込み失敗
-
-	enemy[(int)ENE_OCTPUS] = new ENEMY(ENEMY_DIR, ENEMY_NAME_OCTPUS);	//タコ作成
-	if (enemy[(int)ENE_OCTPUS]->GetIsLoad() == false) { return -1; }	//読み込み失敗
-
-	enemy[(int)ENE_COBRA] = new ENEMY(ENEMY_DIR, ENEMY_NAME_COBRA);		//コブラ作成
-	if (enemy[(int)ENE_COBRA]->GetIsLoad() == false) { return -1; }		//読み込み失敗
-
-	enemy[(int)ENE_PUMPKIN] = new ENEMY(ENEMY_DIR, ENEMY_NAME_PUMPKIN);	//パンプキン作成
-	if (enemy[(int)ENE_PUMPKIN]->GetIsLoad() == false) { return -1; }	//読み込み失敗
-
-	enemy[(int)ENE_PAPILLON] = new ENEMY(ENEMY_DIR, ENEMY_NAME_PAPILLON);	//パピオン作成
-	if (enemy[(int)ENE_PAPILLON]->GetIsLoad() == false) { return -1; }	//読み込み失敗
-
-	enemy[(int)ENE_HARPY] = new ENEMY(ENEMY_DIR, ENEMY_NAME_HARPY);	//ハーピー作成
-	if (enemy[(int)ENE_HARPY]->GetIsLoad() == false) { return -1; }	//読み込み失敗
-
-	enemy[(int)ENE_FLOWER] = new ENEMY(ENEMY_DIR, ENEMY_NAME_FLOWER);	//デスフラワー作成
-	if (enemy[(int)ENE_FLOWER]->GetIsLoad() == false) { return -1; }	//読み込み失敗
-
-	enemy[(int)ENE_MANTIS] = new ENEMY(ENEMY_DIR, ENEMY_NAME_MANTIS);	//マンティス作成
-	if (enemy[(int)ENE_MANTIS]->GetIsLoad() == false) { return -1; }	//読み込み失敗
-
-	enemy[(int)ENE_CRYSTAL] = new ENEMY(ENEMY_DIR, ENEMY_NAME_CRYSTAL);	//クリスタル作成
-	if (enemy[(int)ENE_CRYSTAL]->GetIsLoad() == false) { return -1; }	//読み込み失敗
-
-	enemy[(int)ENE_ICICLE] = new ENEMY(ENEMY_DIR, ENEMY_NAME_ICICLE);	//アイシクル作成
-	if (enemy[(int)ENE_ICICLE]->GetIsLoad() == false) { return -1; }	//読み込み失敗
-
-	enemy[(int)ENE_SNOWMAN] = new ENEMY(ENEMY_DIR, ENEMY_NAME_SNOWMAN);	//スノーマン作成
-	if (enemy[(int)ENE_SNOWMAN]->GetIsLoad() == false) { return -1; }	//読み込み失敗
-
-	enemy[(int)ENE_FARAO] = new ENEMY(ENEMY_DIR, ENEMY_NAME_FARAO);	//ファラオ作成
-	if (enemy[(int)ENE_FARAO]->GetIsLoad() == false) { return -1; }	//読み込み失敗
-
-	enemy[(int)ENE_AKUMA] = new ENEMY(ENEMY_DIR, ENEMY_NAME_AKUMA);	//デーモン作成
-	if (enemy[(int)ENE_AKUMA]->GetIsLoad() == false) { return -1; }	//読み込み失敗
-
-	enemy[(int)ENE_BONEBEAST] = new ENEMY(ENEMY_DIR, ENEMY_NAME_BONEBEAST);	//ボーンビースト作成
-	if (enemy[(int)ENE_BONEBEAST]->GetIsLoad() == false) { return -1; }	//読み込み失敗
-
-	enemy[(int)ENE_IFRIT] = new ENEMY(ENEMY_DIR, ENEMY_NAME_IFRIT);	//イフリート作成
-	if (enemy[(int)ENE_IFRIT]->GetIsLoad() == false) { return -1; }	//読み込み失敗
-
-	enemy[(int)ENE_GARGOYLE] = new ENEMY(ENEMY_DIR, ENEMY_NAME_GARGOYLE);	//ガーゴイル作成
-	if (enemy[(int)ENE_GARGOYLE]->GetIsLoad() == false) { return -1; }	//読み込み失敗
-
-	enemy[(int)ENE_PROMINENCE] = new ENEMY(ENEMY_DIR, ENEMY_NAME_PROMINENCE);	//プロミネンス作成
-	if (enemy[(int)ENE_PROMINENCE]->GetIsLoad() == false) { return -1; }	//読み込み失敗
-
-	enemy[(int)ENE_BOSS] = new ENEMY(ENEMY_DIR, ENEMY_NAME_BOSS);	//ボス作成
-	if (enemy[(int)ENE_BOSS]->GetIsLoad() == false) { return -1; }	//読み込み失敗
-
-
-	boss_mapimage = new IMAGE(ENEMY_DIR, ENEMY_NAME_BOSS_MAP);		//マップに描画するボスの画像を生成
-	if (boss_mapimage->GetIsLoad() == false) { return -1; }					//読み込み失敗時
-
-
-	//敵のデータをcsvファイルから読み込み
-	if (data->LoadEnemy(enemy, ENEMY_DATA_DIR, ENEMY_DATA_NAME) == false) { return -1; }		//読み込み失敗
-	//初期設定
-	for (int i = 0; i < ENEMY_KIND; ++i)		//敵の数だけ初期設定
-	{
-		enemy[i]->StateSetInit();				//初期設定
-	}
-	//▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲ 敵関係ここまで ▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲
-
-	//アイテム関係
-	for (int i = 0; i < ITEM_KIND; ++i)	//アイテムの種類分だけ
-	{
-		item[i] = new ITEM();			//アイテム作成
-	}
-	//アイテムデータをcsvファイルから読み込み
-	if (data->LoadItem(item, ITEM_DATA_DIR, ITEM_DATA_NAME) == false) { return -1; }		//読み込み失敗
-
-	//マップ関係
-	//▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼ マップデータ読み込み開始 ▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼
-	//フィールドマップ読み込み
-	mapdata[(int)DRAW_FILED][(int)MAP_SOUGEN] = new MAP(IMG_DIR_MAP_FIELD, IMG_NAME_MAP_SOUGEN);	//草原マップ生成
-	if (mapdata[(int)DRAW_FILED][(int)MAP_SOUGEN]->LoadCsv(MY_MAP_FIELD_CSV_DIR, MY_MAP_SOUGEN_ATARI) == false) { return -1; }	//当たり判定読み込み失敗
-
-	mapdata[(int)DRAW_FILED][(int)MAP_FOREST] = new MAP(IMG_DIR_MAP_FIELD, IMG_NAME_MAP_FOREST);	//森マップ生成
-	if (mapdata[(int)DRAW_FILED][(int)MAP_FOREST]->LoadCsv(MY_MAP_FIELD_CSV_DIR, MY_MAP_FOREST_ATARI) == false) { return -1; }	//当たり判定読み込み失敗
-
-	mapdata[(int)DRAW_FILED][(int)MAP_OCEAN] = new MAP(IMG_DIR_MAP_FIELD, IMG_NAME_MAP_OCEAN);		//海マップ生成
-	if (mapdata[(int)DRAW_FILED][(int)MAP_OCEAN]->LoadCsv(MY_MAP_FIELD_CSV_DIR, MY_MAP_OCEAN_ATARI) == false) { return -1; }	//当たり判定読み込み失敗
-
-	mapdata[(int)DRAW_FILED][(int)MAP_AUTUMN] = new MAP(IMG_DIR_MAP_FIELD, IMG_NAME_MAP_AUTUMN);	//秋マップ生成
-	if (mapdata[(int)DRAW_FILED][(int)MAP_AUTUMN]->LoadCsv(MY_MAP_FIELD_CSV_DIR, MY_MAP_AUTUMN_ATARI) == false) { return -1; }	//当たり判定読み込み失敗
-
-	mapdata[(int)DRAW_FILED][(int)MAP_BOSS] = new MAP(IMG_DIR_MAP_FIELD, IMG_NAME_MAP_BOSS);	//ボスマップ生成
-	if (mapdata[(int)DRAW_FILED][(int)MAP_BOSS]->LoadCsv(MY_MAP_FIELD_CSV_DIR, MY_MAP_BOSS_ATARI) == false) { return -1; }	//当たり判定読み込み失敗
-
-	mapdata[(int)DRAW_FILED][(int)MAP_SPRING] = new MAP(IMG_DIR_MAP_FIELD, IMG_NAME_MAP_SPRING);			//春マップ生成
-	if (mapdata[(int)DRAW_FILED][(int)MAP_SPRING]->LoadCsv(MY_MAP_FIELD_CSV_DIR, MY_MAP_SPRING_ATARI) == false) { return -1; }	//当たり判定読み込み失敗
-
-	mapdata[(int)DRAW_FILED][(int)MAP_WINTER] = new MAP(IMG_DIR_MAP_FIELD, IMG_NAME_MAP_WINTER);			//冬マップ生成
-	if (mapdata[(int)DRAW_FILED][(int)MAP_WINTER]->LoadCsv(MY_MAP_FIELD_CSV_DIR, MY_MAP_WINTER_ATARI) == false) { return -1; }	//当たり判定読み込み失敗
-
-	mapdata[(int)DRAW_FILED][(int)MAP_REMAINS] = new MAP(IMG_DIR_MAP_FIELD, IMG_NAME_MAP_REMAINS);					//遺跡マップ生成
-	if (mapdata[(int)DRAW_FILED][(int)MAP_REMAINS]->LoadCsv(MY_MAP_FIELD_CSV_DIR, MY_MAP_REMAINS_ATARI) == false) { return -1; }	//当たり判定読み込み失敗
-
-	mapdata[(int)DRAW_FILED][(int)MAP_CASTLE] = new MAP(IMG_DIR_MAP_FIELD, IMG_NAME_MAP_CASTLE);					//魔王城マップ生成
-	if (mapdata[(int)DRAW_FILED][(int)MAP_CASTLE]->LoadCsv(MY_MAP_FIELD_CSV_DIR, MY_MAP_CASTLE_ATARI) == false) { return -1; }	//当たり判定読み込み失敗
-
-	//街マップ読み込み
-	mapdata[(int)DRAW_CITY][(int)MAP_CITY_NW] = new MAP(IMG_DIR_MAP_CITY, IMG_NAME_MAP_CITY_NW);	//北西マップ生成
-	if (mapdata[(int)DRAW_CITY][(int)MAP_CITY_NW]->LoadCsv(MY_MAP_CITY_CSV_DIR, MY_MAP_CITY_NW_ATARI) == false) { return -1; }	//当たり判定読み込み失敗
-
-	mapdata[(int)DRAW_CITY][(int)MAP_CITY_W] = new MAP(IMG_DIR_MAP_CITY, IMG_NAME_MAP_CITY_W);	//西マップ生成
-	if (mapdata[(int)DRAW_CITY][(int)MAP_CITY_W]->LoadCsv(MY_MAP_CITY_CSV_DIR, MY_MAP_CITY_W_ATARI) == false) { return -1; }	//当たり判定読み込み失敗
-
-	mapdata[(int)DRAW_CITY][(int)MAP_CITY_SW] = new MAP(IMG_DIR_MAP_CITY, IMG_NAME_MAP_CITY_SW);		//南西マップ生成
-	if (mapdata[(int)DRAW_CITY][(int)MAP_CITY_SW]->LoadCsv(MY_MAP_CITY_CSV_DIR, MY_MAP_CITY_SW_ATARI) == false) { return -1; }	//当たり判定読み込み失敗
-
-	mapdata[(int)DRAW_CITY][(int)MAP_CITY_N] = new MAP(IMG_DIR_MAP_CITY, IMG_NAME_MAP_CITY_N);	//北マップ生成
-	if (mapdata[(int)DRAW_CITY][(int)MAP_CITY_N]->LoadCsv(MY_MAP_CITY_CSV_DIR, MY_MAP_CITY_N_ATARI) == false) { return -1; }	//当たり判定読み込み失敗
-
-	mapdata[(int)DRAW_CITY][(int)MAP_CITY_CNETER] = new MAP(IMG_DIR_MAP_CITY, IMG_NAME_MAP_CITY_CENTER);	//中央マップ生成
-	if (mapdata[(int)DRAW_CITY][(int)MAP_CITY_CNETER]->LoadCsv(MY_MAP_CITY_CSV_DIR, MY_MAP_CITY_CENTER_ATARI) == false) { return -1; }	//当たり判定読み込み失敗
-
-	mapdata[(int)DRAW_CITY][(int)MAP_CITY_S] = new MAP(IMG_DIR_MAP_CITY, IMG_NAME_MAP_CITY_S);			//南マップ生成
-	if (mapdata[(int)DRAW_CITY][(int)MAP_CITY_S]->LoadCsv(MY_MAP_CITY_CSV_DIR, MY_MAP_CITY_S_ATARI) == false) { return -1; }	//当たり判定読み込み失敗
-
-	mapdata[(int)DRAW_CITY][(int)MAP_CITY_NE] = new MAP(IMG_DIR_MAP_CITY, IMG_NAME_MAP_CITY_NE);			//北東マップ生成
-	if (mapdata[(int)DRAW_CITY][(int)MAP_CITY_NE]->LoadCsv(MY_MAP_CITY_CSV_DIR, MY_MAP_CITY_NE_ATARI) == false) { return -1; }	//当たり判定読み込み失敗
-
-	mapdata[(int)DRAW_CITY][(int)MAP_CITY_E] = new MAP(IMG_DIR_MAP_CITY, IMG_NAME_MAP_CITY_E);					//東マップ生成
-	if (mapdata[(int)DRAW_CITY][(int)MAP_CITY_E]->LoadCsv(MY_MAP_CITY_CSV_DIR, MY_MAP_CITY_E_ATARI) == false) { return -1; }	//当たり判定読み込み失敗
-
-	mapdata[(int)DRAW_CITY][(int)MAP_CITY_SE] = new MAP(IMG_DIR_MAP_CITY, IMG_NAME_MAP_CITY_SE);					//南東マップ生成
-	if (mapdata[(int)DRAW_CITY][(int)MAP_CITY_SE]->LoadCsv(MY_MAP_CITY_CSV_DIR, MY_MAP_CITY_SE_ATARI) == false) { return -1; }	//当たり判定読み込み失敗
-
-	//マップの種類を二次元配列で管理
-	for (int yoko = 0; yoko < MAP_DATA_YOKO_KIND; yoko++)
-	{
-		static int cnt = 0;
-		for (int tate = 0; tate < MAP_DATA_TATE_KIND; tate++)
-		{
-			MapKind[tate][yoko] = cnt;
-			cnt++;
-		}
-	}
-
-	//現在のマップ位置を読み込んで設定
-	if (data->LoadNowMap(&NowDrawMapKind, MapNowPos, MAPPOS_DATA_DIR, MAPPOS_DATA_NAME) == false) { return -1; }	//読み込み失敗
-	//▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲ マップデータ読み込みここまで ▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲
-
-	//一覧関係
-	mgc_list = new LIST(LIST_DIR, MGC_LIST_NAME);			//魔法一覧を生成
-	if (mgc_list->GetIsLoad() == false) { return -1; }		//読み込み失敗
-
-
-	//選択肢関係
-	Title_select = new SELECT("START", "END");			//タイトル画面の選択肢生成
-	End_select = new SELECT("TITLE", "PLAY", "END");	//エンド画面の選択肢生成
-
-	//*********************************** 魔法の選択肢を魔法一覧から設定、ここから *****************************************
-	std::vector<std::string> w;	//作業用
-	w.resize(mgc_list->GetListSize());	//作業用変数のサイズ変更
-
-	//魔法一覧から、戦闘画面で使用するための、魔法の選択肢を作成
-	for (int i = 0; i < mgc_list->GetListSize(); ++i)			//魔法の種類分ループさせる
-	{
-		w[i] = std::to_string(mgc_list->GetCost(i));	//消費MPを文字列に設定
-		w[i] += "MP:";									//文字設定
-		w[i] += mgc_list->GetName(i);					//魔法名設定
-
-	}
-
-	bt_magic_list = new SELECT(w[(int)MAGIC_1], w[(int)MAGIC_2]);		//スキルの選択肢生成
-
-	//作業用の変数を開放する
-	std::vector<std::string> v;			//空のvectorを作成する
-	w.swap(v);							//空と中身を入れ替える
-	//*********************************** 魔法の選択肢を魔法一覧から設定、ここまで *****************************************
-
-
-	//▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲ 読み込み処理 ▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲
+	//ゲームデータ読み込み
+	if (LoadGameData() == false) { return -1; }		//読み込み失敗時、強制終了
 
 	while (TRUE)	//無限ループ
 	{
@@ -1585,5 +1268,327 @@ void Delete_Class()
 	}
 
 	return;
+
+}
+
+//ゲーム内で使用するデータ等を読み込む処理
+bool LoadGameData()
+{
+
+	//画像関係
+	title = new IMAGE(MY_IMG_DIR_TITLE, MY_ING_NAME_TITLE);			//タイトル画像を生成
+	if (title->GetIsLoad() == false) { return false; }				//読み込み失敗時
+
+	back = new IMAGE(MY_IMG_DIR_BACK, MY_IMG_NAME_BACK_TITLE);			//背景画像を生成
+	if (back->GetIsLoad() == false) { return false; }					//読み込み失敗時
+	back->AddImage(MY_IMG_DIR_BACK, MY_IMG_NAME_BACK_END, (int)END_BACK);	//エンド画面の背景画像読み込み
+	if (back->GetIsLoad() == false) { return false; }							//読み込み失敗
+
+	back_battle = new IMAGE(MY_IMG_DIR_BATTLE, IMG_NAME_BT_SOUGEN);	//戦闘画面(草原)の背景画像読み込み
+	if (back_battle->GetIsLoad() == false) { return false; }					//読み込み失敗
+	back_battle->AddImage(MY_IMG_DIR_BATTLE, IMG_NAME_BT_FOREST, (int)BT_BACK_FOREST);		//戦闘画面（森）の背景画像の読み込み
+	if (back_battle->GetIsLoad() == false) { return false; }					//読み込み失敗
+	back_battle->AddImage(MY_IMG_DIR_BATTLE, IMG_NAME_BT_OCEAN, (int)BT_BACK_OCEAN);		//戦闘画面（海）の背景画像の読み込み
+	if (back_battle->GetIsLoad() == false) { return false; }					//読み込み失敗
+	back_battle->AddImage(MY_IMG_DIR_BATTLE, IMG_NAME_BT_AUTUMN, (int)BT_BACK_AUTUMN);		//戦闘画面（秋）の背景画像の読み込み
+	if (back_battle->GetIsLoad() == false) { return false; }					//読み込み失敗
+	back_battle->AddImage(MY_IMG_DIR_BATTLE, IMG_NAME_BT_BOSS, (int)BT_BACK_BOSS);			//戦闘画面（ボス）の背景画像の読み込み
+	if (back_battle->GetIsLoad() == false) { return false; }					//読み込み失敗
+	back_battle->AddImage(MY_IMG_DIR_BATTLE, IMG_NAME_BT_SPRING, (int)BT_BACK_SPRING);		//戦闘画面（春）の背景画像の読み込み
+	if (back_battle->GetIsLoad() == false) { return false; }					//読み込み失敗
+	back_battle->AddImage(MY_IMG_DIR_BATTLE, IMG_NAME_BT_WINTER, (int)BT_BACK_WINTER);		//戦闘画面（冬）の背景画像の読み込み
+	if (back_battle->GetIsLoad() == false) { return false; }					//読み込み失敗
+	back_battle->AddImage(MY_IMG_DIR_BATTLE, IMG_NAME_BT_REMAINS, (int)BT_BACK_REMAINS);	//戦闘画面（遺跡）の背景画像の読み込み
+	if (back_battle->GetIsLoad() == false) { return false; }					//読み込み失敗
+	back_battle->AddImage(MY_IMG_DIR_BATTLE, IMG_NAME_BT_CASTLE, (int)BT_BACK_CASTLE);		//戦闘画面（城）の背景画像の読み込み
+	if (back_battle->GetIsLoad() == false) { return false; }					//読み込み失敗
+
+
+	setumei = new IMAGE(MY_IMG_DIR_BACK, SETUMEI_NAME);		//説明画像の読み込み
+	if (setumei->GetIsLoad() == false) { return false; }		//読み込み失敗
+
+	//音関係
+	bgm = new MUSIC(MY_MUSIC_DIR_BGM, MY_BGM_NAME_TITLE, BGM_KIND);		//BGMを生成
+	if (bgm->GetIsLoad() == false) { return false; }						//読み込み失敗時
+	if (bgm->Add(MY_MUSIC_DIR_BGM, MY_BGM_NAME_FIELD, (int)BGM_FIELD) == false) { return false; }	//フィールドのBGM追加
+	if (bgm->Add(MY_MUSIC_DIR_BGM, MY_BGM_NAME_CITY, (int)BGM_CITY) == false) { return false; }	//街のBGM追加
+	if (bgm->Add(MY_MUSIC_DIR_BGM, MY_BGM_NAME_BATTLE, (int)BGM_BATTLE) == false) { return false; }//戦闘画面のBGM追加
+	if (bgm->Add(MY_MUSIC_DIR_BGM, MY_BGM_NAME_END, (int)BGM_END) == false) { return false; }//エンド画面のBGM追加
+
+	//戦闘で使用するSE
+	bt_se = new MUSIC(MY_MUSIC_DIR_BT_SE, MY_SE_NAME_LEVUP, BT_SE_KIND);	//SEを生成
+	if (bt_se->GetIsLoad() == false) { return false; }						//読み込み失敗時
+	bt_se->ChengePlayType(DX_PLAYTYPE_BACK);							//再生方法変更
+	//音の追加処理
+	if (bt_se->Add(MY_MUSIC_DIR_BT_SE, MY_SE_NAME_SLASH, (int)BT_SE_SLASH) == false) { return false; }	//斬るときの音追加
+	if (bt_se->Add(MY_MUSIC_DIR_BT_SE, MY_SE_NAME_THUNDER, (int)BT_SE_THUNDER) == false) { return false; }//雷の音追加
+	if (bt_se->Add(MY_MUSIC_DIR_BT_SE, MY_SE_NAME_NIGERU, (int)BT_SE_NIGERU) == false) { return false; }//逃げるときの音追加
+	if (bt_se->Add(MY_MUSIC_DIR_BT_SE, MY_SE_NAME_DAMEGE, (int)BT_SE_DAMEGE) == false) { return false; }//ダメージ音追加
+
+	//システムで使用するSE
+	sys_se = new MUSIC(MY_MUSIC_DIR_SYS_SE, MY_SE_NAME_CURSOR, SYS_SE_KIND);	//システム用SE生成
+	if (sys_se->GetIsLoad() == false) { return false; }							//読み込み失敗
+	sys_se->ChengePlayType(DX_PLAYTYPE_BACK);									//再生方法変更
+	//音の追加処理
+	if (sys_se->Add(MY_MUSIC_DIR_SYS_SE, MY_SE_NAME_CANSEL, (int)SYS_SE_CANSEL) == false) { return false; }	//キャンセル音追加
+	if (sys_se->Add(MY_MUSIC_DIR_SYS_SE, MY_SE_NAME_KETTEI, (int)SYS_SE_KETTEI) == false) { return false; }	//決定音追加
+	if (sys_se->Add(MY_MUSIC_DIR_SYS_SE, MY_SE_NAME_MENU, (int)SYS_SE_MENU) == false) { return false; }		//メニューを開いた時の音追加
+	if (sys_se->Add(MY_MUSIC_DIR_SYS_SE, MY_SE_NAME_ENCOUNT, (int)SYS_SE_ENCOUNT) == false) { return false; }	//敵と遭遇した時の音追加
+	if (sys_se->Add(MY_MUSIC_DIR_SYS_SE, MY_SE_NAME_SAVE, (int)SYS_SE_SAVE) == false) { return false; }	//セーブの音追加
+	if (sys_se->Add(MY_MUSIC_DIR_SYS_SE, MY_SE_NAME_BLIP, (int)SYS_SE_BLIP) == false) { return false; }	//選択できないときの音追加
+
+
+	//フォント関係
+	font = new FONT(MY_FONT_DIR, MY_FONT_NAME, FONT_NAME);			//フォントを生成
+	if (font->GetIsLoad() == false) { return false; }					//読み込み失敗時
+
+	data = new DATA();		//データ
+
+	//メッセージ関係
+	for (int cnt = 0; cnt < BT_MSG_KIND; ++cnt)
+	{
+		bt_msg[cnt] = new MESSAGE();	//メッセージ作成
+	}
+	msg = new MESSAGE();	//メッセージ作成
+	if (data->LoadMsg(msg, MSG_DATA_DIR, MSG_DATA_NAME) == false) { return false; }	//メッセージデータ読み込み
+
+	//エフェクト関係
+	//魔法エフェクト
+	Magic_effect = new EFFECT(MY_ANIME_DIR_MAGIC, MY_ANIME_NAME_MAGIC, MAGIC_ALL_CNT, MAGIC_YOKO_CNT, MAGIC_TATE_CNT, MAGIC_WIDTH, MAGIC_HEIGHT, MAGIC_SPEED, false, MAGIC_EFFECT_KIND);
+	if (Magic_effect->GetIsLoad() == false) { return false; }		//読み込み失敗
+	if (Magic_effect->Add(MY_ANIME_DIR_MAGIC, MY_ANIME_NAME_MAGIC2, MAGIC2_ALL_CNT, MAGIC2_YOKO_CNT, MAGIC2_TATE_CNT, MAGIC_WIDTH, MAGIC_HEIGHT, MAGIC_SPEED, false, (int)MAGIC_2) == false) { return false; }	//読み込み失敗
+
+	//攻撃エフェクト
+	Atack_effect = new EFFECT(MY_ANIME_DIR_ATKEFECT, MY_ANIME_NAME_ATKEFECT, ATK_ALL_CNT, ATK_YOKO_CNT, ATK_TATE_CNT, ATK_WIDTH, ATK_HEIGHT, ATK_SPEED, false, ATACK_EFFECT_KIND);
+	if (Atack_effect->GetIsLoad() == false) { return false; }		//読み込み失敗
+
+	//敵攻撃エフェクト
+	Enemy_Atk_effect = new EFFECT(MY_ANIME_DIR_ENE_ATK, MY_ANIME_NAME_ENE_ATK_TUME, ENE_ATK_TUME_ALL_CNT, ENE_ATK_TUME_YOKO_CNT, ENE_ATK_TUME_TATE_CNT, ENE_ATK_TUME_WIDTH, ENE_ATK_TUME_HEIGHT, ENE_ATK_TUME_SPEED, false, ENE_ATK_EFFECT_KIND);
+	if (Enemy_Atk_effect->GetIsLoad() == false) { return false; }		//読み込み失敗
+	//敵攻撃エフェクト追加
+	if (Enemy_Atk_effect->Add(MY_ANIME_DIR_ENE_ATK, MY_ANIME_NAME_ENE_ATK_KIBA, ENE_ATK_KIBA_ALL_CNT, ENE_ATK_KIBA_YOKO_CNT, ENE_ATK_KIBA_TATE_CNT, ENE_ATK_KIBA_WIDTH, ENE_ATK_KIBA_HEIGHT, ENE_ATK_KIBA_SPEED, false, (int)ENE_ATK_KIBA) == false) { return false; }	//読み込み失敗
+	if (Enemy_Atk_effect->Add(MY_ANIME_DIR_ENE_ATK, MY_ANIME_NAME_ENE_ATK_TAIL_BIG, ENE_ATK_TAIL_BIG_ALL_CNT, ENE_ATK_TAIL_BIG_YOKO_CNT, ENE_ATK_TAIL_BIG_TATE_CNT, ENE_ATK_TAIL_BIG_WIDTH, ENE_ATK_TAIL_BIG_HEIGHT, ENE_ATK_TAIL_BIG_SPEED, false, (int)ENE_ATK_TAIL_BIG) == false) { return false; }	//読み込み失敗
+
+	//ボス攻撃エフェクト
+	Boss_Atk_effect = new EFFECT(MY_ANIME_DIR_BOSS_ATK, MY_ANIME_NAME_BOSS_ATK_LASER, BOSS_ATK_LEASER_ALL_CNT, BOSS_ATK_LEASER_YOKO_CNT, BOSS_ATK_LEASER_TATE_CNT, BOSS_ATK_LEASER_WIDTH, BOSS_ATK_LEASER_HEIGHT, BOSS_ATK_LEASER_SPEED, false, BOSS_ATK_EFFECT_KIND);
+	if (Boss_Atk_effect->GetIsLoad() == false) { return false; }		//読み込み失敗
+	//ボス攻撃エフェクト追加
+	if (Boss_Atk_effect->Add(MY_ANIME_DIR_BOSS_ATK, MY_ANIME_NAME_BOSS_ATK_TOGE, BOSS_ATK_TOGE_ALL_CNT, BOSS_ATK_TOGE_YOKO_CNT, BOSS_ATK_TOGE_TATE_CNT, BOSS_ATK_TOGE_WIDTH, BOSS_ATK_TOGE_HEIGT, BOSS_ATK_TOGE_SPEED, false, (int)BOSS_ATK_TOGE) == false) { return false; }	//読み込み失敗
+
+
+	//プレイヤー関係
+	player = new PLAYER();		//プレイヤー生成
+	if (player->SetImage(MY_IMG_DIR_CHARCTOR, MY_IMG_NAME_PLAYER) == false) { return false; }	//読み込み失敗
+	if (player->SetAnime(MY_ANIME_DIR_PLAYER, MY_ANIME_NAME_PLAYER, PLAYER_ALL_CNT, PLAYER_YOKO_CNT, PLAYER_TATE_CNT, PLAYER_WIDTH, PLAYER_HEIGHT, PLAYER_ANI_SPEED, true) == false) { return false; } //読み込み失敗
+
+	//プレイヤーのデータをcsvファイルから読み込み
+	//if (data->LoadPlayer(player, PLAYER_DATA_DIR, PLAYER_DATA_NAME) == false) { return false; }	//読み込み失敗
+	//プレイヤーの初期データver
+	if (data->LoadPlayer(player, PLAYER_DATA_DIR, PLATER_DATA_INIT_NAME) == false) { return false; }	//読み込み失敗
+	player->SetInit();	//初期設定
+
+	//UI関係
+	ui = new UI();		//UI作成
+
+	//▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼ 敵関係ここから ▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼
+	enemy[(int)ENE_SLIME] = new ENEMY(ENEMY_DIR, ENEMY_NAME_SLIME);	//スライム作成
+	if (enemy[(int)ENE_SLIME]->GetIsLoad() == false) { return false; }	//読み込み失敗
+
+	enemy[(int)ENE_BAT] = new ENEMY(ENEMY_DIR, ENEMY_NAME_BAT);	//こうもり作成
+	if (enemy[(int)ENE_BAT]->GetIsLoad() == false) { return false; }	//読み込み失敗
+
+	enemy[(int)ENE_GOBURIN] = new ENEMY(ENEMY_DIR, ENEMY_NAME_GOBURIN);	//ゴブリン作成
+	if (enemy[(int)ENE_GOBURIN]->GetIsLoad() == false) { return false; }	//読み込み失敗
+
+	enemy[(int)ENE_MATANGO] = new ENEMY(ENEMY_DIR, ENEMY_NAME_MATANGO);	//マタンゴ作成
+	if (enemy[(int)ENE_MATANGO]->GetIsLoad() == false) { return false; }	//読み込み失敗
+
+	enemy[(int)ENE_SEED] = new ENEMY(ENEMY_DIR, ENEMY_NAME_SEED);	//悪魔の種作成
+	if (enemy[(int)ENE_SEED]->GetIsLoad() == false) { return false; }	//読み込み失敗
+
+	enemy[(int)ENE_TREANT] = new ENEMY(ENEMY_DIR, ENEMY_NAME_TREANT);	//トレント作成
+	if (enemy[(int)ENE_TREANT]->GetIsLoad() == false) { return false; }	//読み込み失敗
+
+	enemy[(int)ENE_YADOKARI] = new ENEMY(ENEMY_DIR, ENEMY_NAME_YADOKARI);	//ヤドカリ作成
+	if (enemy[(int)ENE_YADOKARI]->GetIsLoad() == false) { return false; }	//読み込み失敗
+
+	enemy[(int)ENE_SCORPION] = new ENEMY(ENEMY_DIR, ENEMY_NAME_SCORPION);	//サソリ作成
+	if (enemy[(int)ENE_SCORPION]->GetIsLoad() == false) { return false; }	//読み込み失敗
+
+	enemy[(int)ENE_OCTPUS] = new ENEMY(ENEMY_DIR, ENEMY_NAME_OCTPUS);	//タコ作成
+	if (enemy[(int)ENE_OCTPUS]->GetIsLoad() == false) { return false; }	//読み込み失敗
+
+	enemy[(int)ENE_COBRA] = new ENEMY(ENEMY_DIR, ENEMY_NAME_COBRA);		//コブラ作成
+	if (enemy[(int)ENE_COBRA]->GetIsLoad() == false) { return false; }		//読み込み失敗
+
+	enemy[(int)ENE_PUMPKIN] = new ENEMY(ENEMY_DIR, ENEMY_NAME_PUMPKIN);	//パンプキン作成
+	if (enemy[(int)ENE_PUMPKIN]->GetIsLoad() == false) { return false; }	//読み込み失敗
+
+	enemy[(int)ENE_PAPILLON] = new ENEMY(ENEMY_DIR, ENEMY_NAME_PAPILLON);	//パピオン作成
+	if (enemy[(int)ENE_PAPILLON]->GetIsLoad() == false) { return false; }	//読み込み失敗
+
+	enemy[(int)ENE_HARPY] = new ENEMY(ENEMY_DIR, ENEMY_NAME_HARPY);	//ハーピー作成
+	if (enemy[(int)ENE_HARPY]->GetIsLoad() == false) { return false; }	//読み込み失敗
+
+	enemy[(int)ENE_FLOWER] = new ENEMY(ENEMY_DIR, ENEMY_NAME_FLOWER);	//デスフラワー作成
+	if (enemy[(int)ENE_FLOWER]->GetIsLoad() == false) { return false; }	//読み込み失敗
+
+	enemy[(int)ENE_MANTIS] = new ENEMY(ENEMY_DIR, ENEMY_NAME_MANTIS);	//マンティス作成
+	if (enemy[(int)ENE_MANTIS]->GetIsLoad() == false) { return false; }	//読み込み失敗
+
+	enemy[(int)ENE_CRYSTAL] = new ENEMY(ENEMY_DIR, ENEMY_NAME_CRYSTAL);	//クリスタル作成
+	if (enemy[(int)ENE_CRYSTAL]->GetIsLoad() == false) { return false; }	//読み込み失敗
+
+	enemy[(int)ENE_ICICLE] = new ENEMY(ENEMY_DIR, ENEMY_NAME_ICICLE);	//アイシクル作成
+	if (enemy[(int)ENE_ICICLE]->GetIsLoad() == false) { return false; }	//読み込み失敗
+
+	enemy[(int)ENE_SNOWMAN] = new ENEMY(ENEMY_DIR, ENEMY_NAME_SNOWMAN);	//スノーマン作成
+	if (enemy[(int)ENE_SNOWMAN]->GetIsLoad() == false) { return false; }	//読み込み失敗
+
+	enemy[(int)ENE_FARAO] = new ENEMY(ENEMY_DIR, ENEMY_NAME_FARAO);	//ファラオ作成
+	if (enemy[(int)ENE_FARAO]->GetIsLoad() == false) { return false; }	//読み込み失敗
+
+	enemy[(int)ENE_AKUMA] = new ENEMY(ENEMY_DIR, ENEMY_NAME_AKUMA);	//デーモン作成
+	if (enemy[(int)ENE_AKUMA]->GetIsLoad() == false) { return false; }	//読み込み失敗
+
+	enemy[(int)ENE_BONEBEAST] = new ENEMY(ENEMY_DIR, ENEMY_NAME_BONEBEAST);	//ボーンビースト作成
+	if (enemy[(int)ENE_BONEBEAST]->GetIsLoad() == false) { return false; }	//読み込み失敗
+
+	enemy[(int)ENE_IFRIT] = new ENEMY(ENEMY_DIR, ENEMY_NAME_IFRIT);	//イフリート作成
+	if (enemy[(int)ENE_IFRIT]->GetIsLoad() == false) { return false; }	//読み込み失敗
+
+	enemy[(int)ENE_GARGOYLE] = new ENEMY(ENEMY_DIR, ENEMY_NAME_GARGOYLE);	//ガーゴイル作成
+	if (enemy[(int)ENE_GARGOYLE]->GetIsLoad() == false) { return false; }	//読み込み失敗
+
+	enemy[(int)ENE_PROMINENCE] = new ENEMY(ENEMY_DIR, ENEMY_NAME_PROMINENCE);	//プロミネンス作成
+	if (enemy[(int)ENE_PROMINENCE]->GetIsLoad() == false) { return false; }	//読み込み失敗
+
+	enemy[(int)ENE_BOSS] = new ENEMY(ENEMY_DIR, ENEMY_NAME_BOSS);	//ボス作成
+	if (enemy[(int)ENE_BOSS]->GetIsLoad() == false) { return false; }	//読み込み失敗
+
+
+	boss_mapimage = new IMAGE(ENEMY_DIR, ENEMY_NAME_BOSS_MAP);		//マップに描画するボスの画像を生成
+	if (boss_mapimage->GetIsLoad() == false) { return false; }					//読み込み失敗時
+
+	//敵のデータをcsvファイルから読み込み
+	if (data->LoadEnemy(enemy, ENEMY_DATA_DIR, ENEMY_DATA_NAME) == false) { return false; }		//読み込み失敗
+	//初期設定
+	for (int i = 0; i < ENEMY_KIND; ++i)		//敵の数だけ初期設定
+	{
+		enemy[i]->StateSetInit();				//初期設定
+	}
+	//▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲ 敵関係ここまで ▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲
+
+
+	//アイテム関係
+	for (int i = 0; i < ITEM_KIND; ++i)	//アイテムの種類分だけ
+	{
+		item[i] = new ITEM();			//アイテム作成
+	}
+	//アイテムデータをcsvファイルから読み込み
+	if (data->LoadItem(item, ITEM_DATA_DIR, ITEM_DATA_NAME) == false) { return false; }		//読み込み失敗
+
+	//▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼ マップデータ読み込み開始 ▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼
+	//フィールドマップ読み込み
+	mapdata[(int)DRAW_FILED][(int)MAP_SOUGEN] = new MAP(IMG_DIR_MAP_FIELD, IMG_NAME_MAP_SOUGEN);	//草原マップ生成
+	if (mapdata[(int)DRAW_FILED][(int)MAP_SOUGEN]->LoadCsv(MY_MAP_FIELD_CSV_DIR, MY_MAP_SOUGEN_ATARI) == false) { return false; }	//当たり判定読み込み失敗
+
+	mapdata[(int)DRAW_FILED][(int)MAP_FOREST] = new MAP(IMG_DIR_MAP_FIELD, IMG_NAME_MAP_FOREST);	//森マップ生成
+	if (mapdata[(int)DRAW_FILED][(int)MAP_FOREST]->LoadCsv(MY_MAP_FIELD_CSV_DIR, MY_MAP_FOREST_ATARI) == false) { return false; }	//当たり判定読み込み失敗
+
+	mapdata[(int)DRAW_FILED][(int)MAP_OCEAN] = new MAP(IMG_DIR_MAP_FIELD, IMG_NAME_MAP_OCEAN);		//海マップ生成
+	if (mapdata[(int)DRAW_FILED][(int)MAP_OCEAN]->LoadCsv(MY_MAP_FIELD_CSV_DIR, MY_MAP_OCEAN_ATARI) == false) { return false; }	//当たり判定読み込み失敗
+
+	mapdata[(int)DRAW_FILED][(int)MAP_AUTUMN] = new MAP(IMG_DIR_MAP_FIELD, IMG_NAME_MAP_AUTUMN);	//秋マップ生成
+	if (mapdata[(int)DRAW_FILED][(int)MAP_AUTUMN]->LoadCsv(MY_MAP_FIELD_CSV_DIR, MY_MAP_AUTUMN_ATARI) == false) { return false; }	//当たり判定読み込み失敗
+
+	mapdata[(int)DRAW_FILED][(int)MAP_BOSS] = new MAP(IMG_DIR_MAP_FIELD, IMG_NAME_MAP_BOSS);	//ボスマップ生成
+	if (mapdata[(int)DRAW_FILED][(int)MAP_BOSS]->LoadCsv(MY_MAP_FIELD_CSV_DIR, MY_MAP_BOSS_ATARI) == false) { return false; }	//当たり判定読み込み失敗
+
+	mapdata[(int)DRAW_FILED][(int)MAP_SPRING] = new MAP(IMG_DIR_MAP_FIELD, IMG_NAME_MAP_SPRING);			//春マップ生成
+	if (mapdata[(int)DRAW_FILED][(int)MAP_SPRING]->LoadCsv(MY_MAP_FIELD_CSV_DIR, MY_MAP_SPRING_ATARI) == false) { return false; }	//当たり判定読み込み失敗
+
+	mapdata[(int)DRAW_FILED][(int)MAP_WINTER] = new MAP(IMG_DIR_MAP_FIELD, IMG_NAME_MAP_WINTER);			//冬マップ生成
+	if (mapdata[(int)DRAW_FILED][(int)MAP_WINTER]->LoadCsv(MY_MAP_FIELD_CSV_DIR, MY_MAP_WINTER_ATARI) == false) { return false; }	//当たり判定読み込み失敗
+
+	mapdata[(int)DRAW_FILED][(int)MAP_REMAINS] = new MAP(IMG_DIR_MAP_FIELD, IMG_NAME_MAP_REMAINS);					//遺跡マップ生成
+	if (mapdata[(int)DRAW_FILED][(int)MAP_REMAINS]->LoadCsv(MY_MAP_FIELD_CSV_DIR, MY_MAP_REMAINS_ATARI) == false) { return false; }	//当たり判定読み込み失敗
+
+	mapdata[(int)DRAW_FILED][(int)MAP_CASTLE] = new MAP(IMG_DIR_MAP_FIELD, IMG_NAME_MAP_CASTLE);					//魔王城マップ生成
+	if (mapdata[(int)DRAW_FILED][(int)MAP_CASTLE]->LoadCsv(MY_MAP_FIELD_CSV_DIR, MY_MAP_CASTLE_ATARI) == false) { return false; }	//当たり判定読み込み失敗
+
+	//街マップ読み込み
+	mapdata[(int)DRAW_CITY][(int)MAP_CITY_NW] = new MAP(IMG_DIR_MAP_CITY, IMG_NAME_MAP_CITY_NW);	//北西マップ生成
+	if (mapdata[(int)DRAW_CITY][(int)MAP_CITY_NW]->LoadCsv(MY_MAP_CITY_CSV_DIR, MY_MAP_CITY_NW_ATARI) == false) { return false; }	//当たり判定読み込み失敗
+
+	mapdata[(int)DRAW_CITY][(int)MAP_CITY_W] = new MAP(IMG_DIR_MAP_CITY, IMG_NAME_MAP_CITY_W);	//西マップ生成
+	if (mapdata[(int)DRAW_CITY][(int)MAP_CITY_W]->LoadCsv(MY_MAP_CITY_CSV_DIR, MY_MAP_CITY_W_ATARI) == false) { return false; }	//当たり判定読み込み失敗
+
+	mapdata[(int)DRAW_CITY][(int)MAP_CITY_SW] = new MAP(IMG_DIR_MAP_CITY, IMG_NAME_MAP_CITY_SW);		//南西マップ生成
+	if (mapdata[(int)DRAW_CITY][(int)MAP_CITY_SW]->LoadCsv(MY_MAP_CITY_CSV_DIR, MY_MAP_CITY_SW_ATARI) == false) { return false; }	//当たり判定読み込み失敗
+
+	mapdata[(int)DRAW_CITY][(int)MAP_CITY_N] = new MAP(IMG_DIR_MAP_CITY, IMG_NAME_MAP_CITY_N);	//北マップ生成
+	if (mapdata[(int)DRAW_CITY][(int)MAP_CITY_N]->LoadCsv(MY_MAP_CITY_CSV_DIR, MY_MAP_CITY_N_ATARI) == false) { return false; }	//当たり判定読み込み失敗
+
+	mapdata[(int)DRAW_CITY][(int)MAP_CITY_CNETER] = new MAP(IMG_DIR_MAP_CITY, IMG_NAME_MAP_CITY_CENTER);	//中央マップ生成
+	if (mapdata[(int)DRAW_CITY][(int)MAP_CITY_CNETER]->LoadCsv(MY_MAP_CITY_CSV_DIR, MY_MAP_CITY_CENTER_ATARI) == false) { return false; }	//当たり判定読み込み失敗
+
+	mapdata[(int)DRAW_CITY][(int)MAP_CITY_S] = new MAP(IMG_DIR_MAP_CITY, IMG_NAME_MAP_CITY_S);			//南マップ生成
+	if (mapdata[(int)DRAW_CITY][(int)MAP_CITY_S]->LoadCsv(MY_MAP_CITY_CSV_DIR, MY_MAP_CITY_S_ATARI) == false) { return false; }	//当たり判定読み込み失敗
+
+	mapdata[(int)DRAW_CITY][(int)MAP_CITY_NE] = new MAP(IMG_DIR_MAP_CITY, IMG_NAME_MAP_CITY_NE);			//北東マップ生成
+	if (mapdata[(int)DRAW_CITY][(int)MAP_CITY_NE]->LoadCsv(MY_MAP_CITY_CSV_DIR, MY_MAP_CITY_NE_ATARI) == false) { return false; }	//当たり判定読み込み失敗
+
+	mapdata[(int)DRAW_CITY][(int)MAP_CITY_E] = new MAP(IMG_DIR_MAP_CITY, IMG_NAME_MAP_CITY_E);					//東マップ生成
+	if (mapdata[(int)DRAW_CITY][(int)MAP_CITY_E]->LoadCsv(MY_MAP_CITY_CSV_DIR, MY_MAP_CITY_E_ATARI) == false) { return false; }	//当たり判定読み込み失敗
+
+	mapdata[(int)DRAW_CITY][(int)MAP_CITY_SE] = new MAP(IMG_DIR_MAP_CITY, IMG_NAME_MAP_CITY_SE);					//南東マップ生成
+	if (mapdata[(int)DRAW_CITY][(int)MAP_CITY_SE]->LoadCsv(MY_MAP_CITY_CSV_DIR, MY_MAP_CITY_SE_ATARI) == false) { return false; }	//当たり判定読み込み失敗
+
+	//マップの種類を二次元配列で管理
+	for (int yoko = 0; yoko < MAP_DATA_YOKO_KIND; yoko++)
+	{
+		static int cnt = 0;
+		for (int tate = 0; tate < MAP_DATA_TATE_KIND; tate++)
+		{
+			MapKind[tate][yoko] = cnt;
+			cnt++;
+		}
+	}
+
+	//現在のマップ位置を読み込んで設定
+	if (data->LoadNowMap(&NowDrawMapKind, MapNowPos, MAPPOS_DATA_DIR, MAPPOS_DATA_NAME) == false) { return false; }	//読み込み失敗
+	//▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲ マップデータ読み込みここまで ▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲
+
+	//一覧関係
+	mgc_list = new LIST(LIST_DIR, MGC_LIST_NAME);			//魔法一覧を生成
+	if (mgc_list->GetIsLoad() == false) { return false; }		//読み込み失敗
+
+
+	//選択肢関係
+	Title_select = new SELECT("START", "END");			//タイトル画面の選択肢生成
+	End_select = new SELECT("TITLE", "PLAY", "END");	//エンド画面の選択肢生成
+
+	//*********************************** 魔法の選択肢を魔法一覧から設定、ここから *****************************************
+	std::vector<std::string> w;	//作業用
+	w.resize(mgc_list->GetListSize());	//作業用変数のサイズ変更
+
+	//魔法一覧から、戦闘画面で使用するための、魔法の選択肢を作成
+	for (int i = 0; i < mgc_list->GetListSize(); ++i)			//魔法の種類分ループさせる
+	{
+		w[i] = std::to_string(mgc_list->GetCost(i));	//消費MPを文字列に設定
+		w[i] += "MP:";									//文字設定
+		w[i] += mgc_list->GetName(i);					//魔法名設定
+
+	}
+
+	bt_magic_list = new SELECT(w[(int)MAGIC_1], w[(int)MAGIC_2]);		//スキルの選択肢生成
+
+	//作業用の変数を開放する
+	std::vector<std::string> v;			//空のvectorを作成する
+	w.swap(v);							//空と中身を入れ替える
+	//*********************************** 魔法の選択肢を魔法一覧から設定、ここまで *****************************************
+
+	return true;		//全ての読み込みに成功
 
 }
