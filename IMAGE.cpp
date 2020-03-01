@@ -54,11 +54,11 @@ IMAGE::IMAGE(const char *dir,const char *name)
 	this->FilePath = LoadfilePath;		//画像のパスを設定
 	this->FileName = name;				//画像の名前を設定
 
-	GetGraphSize(
-		*this->Handle_itr,	//このハンドルの画像の大きさを取得
-		this->Width.data(),		//Widthのアドレスを渡す
-		this->Height.data()		//Heightのアドレスを渡す
-	);
+	//GetGraphSize(
+	//	*this->Handle_itr,	//このハンドルの画像の大きさを取得
+	//	this->Width.data(),		//Widthのアドレスを渡す
+	//	this->Height.data()		//Heightのアドレスを渡す
+	//);
 
 	this->Width_itr = this->Width.begin();		//横幅の先頭アドレス
 	this->Height_itr = this->Height.begin();	//高さの先頭アドレス
@@ -196,14 +196,11 @@ bool IMAGE::AddImage(const char *dir, const char *name,int type)
 	//	this->Height.data()		//Heightのアドレスを渡す
 	//);
 
-	GetGraphSize(
-		*this->Handle_itr,	//このハンドルの画像の大きさを取得
-		&this->Width[type],		//Widthのアドレスを渡す
-		&this->Height[type]		//Heightのアドレスを渡す
-	);
-
-
-
+	//GetGraphSize(
+	//	*this->Handle_itr,	//このハンドルの画像の大きさを取得
+	//	&this->Width[type],		//Widthのアドレスを渡す
+	//	&this->Height[type]		//Heightのアドレスを渡す
+	//);
 
 	this->IsLoad = true;		//読み込めた
 

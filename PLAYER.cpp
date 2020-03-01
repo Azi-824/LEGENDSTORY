@@ -52,6 +52,8 @@ bool PLAYER::SetInit()
 	this->LevUpMsgStart_flg = false;	//レベルアップメッセージを表示していない
 	this->ChengeMapKind = (int) MAP_CHENGE_NONE;			//マップ切り替えなし
 
+	this->Anime->SetSize();			//画像のサイズ設定
+
 	//描画領域作成
 	this->sikaku_draw->SetValue(this->sikaku_draw->Left,
 		this->sikaku_draw->Top,

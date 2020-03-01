@@ -63,12 +63,6 @@ EFFECT::EFFECT(const char *dir, const char *name, int SplitNumALL, int SpritNumX
 		return;
 	}
 
-	GetGraphSize(
-		this->Handle[0][0],	//このハンドルの画像の大きさを取得
-		&this->Width[0],		//Widthのアドレスを渡す
-		&this->Height[0]		//Heightのアドレスを渡す
-	);
-
 	this->NextChangeSpeed = changeSpeed;	//画像を変える速さ
 
 	this->IsLoad = true;		//読み込めた
@@ -328,12 +322,16 @@ bool EFFECT::Add(const char *dir, const char *name, int SplitNumALL, int SpritNu
 		return false;		//読み込み失敗
 	}
 
-	GetGraphSize(
-		this->Handle[type][0],	//このハンドルの画像の大きさを取得
-		&this->Width[type],		//Widthのアドレスを渡す
-		&this->Height[type]		//Heightのアドレスを渡す
-	);
-
 	return true;		//読み込めた
 
+}
+
+//サイズ設定
+void EFFECT::SetSize(void)
+{
+	//エフェクトの数だけループさせる
+	for (int i = 0; i < this->Handle.size(); ++i)
+	{
+		GetGraphSize(this->Handle[i][0], &this->Width[i], &this->Height[i]);	//サイズ取得
+	}
 }

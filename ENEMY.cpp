@@ -36,11 +36,7 @@ ENEMY::ENEMY(const char *dir,const char *name)
 		this->IsLoad = false;
 	}
 
-	this->SetInit();	//初期設定
-
 	this->SetKeyOperation(false);	//キーボードで操作不可
-
-	this->SetImagePos(GAME_WIDTH / 2 - this->GetWidth() / 2, GAME_HEIGHT / 2 - this->GetHeight() / 2);	//位置調整(画面中央)
 
 	return;
 }

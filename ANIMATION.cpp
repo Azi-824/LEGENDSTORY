@@ -66,11 +66,11 @@ ANIMATION::ANIMATION(const char *dir, const char *name, int SplitNumALL, int Spr
 	this->FilePath = LoadfilePath;		//画像のパスを設定
 	this->FileName = name;				//画像の名前を設定
 
-	GetGraphSize(
-		this->Handle[0][0],	//このハンドルの画像の大きさを取得
-		&this->Width[0],		//Widthのアドレスを渡す
-		&this->Height[0]		//Heightのアドレスを渡す
-	);
+	//GetGraphSize(
+	//	this->Handle[0][0],	//このハンドルの画像の大きさを取得
+	//	&this->Width[0],		//Widthのアドレスを渡す
+	//	&this->Height[0]		//Heightのアドレスを渡す
+	//);
 
 	this->NextChangeSpeed.push_back(changeSpeed);
 
@@ -275,11 +275,11 @@ bool ANIMATION::Add(const char *dir, const char *name, int SplitNumALL, int Spri
 		return false;		//読み込み失敗
 	}
 
-	GetGraphSize(
-		this->Handle[type][0],	//このハンドルの画像の大きさを取得
-		&this->Width[0],		//Widthのアドレスを渡す
-		&this->Height[0]		//Heightのアドレスを渡す
-	);
+	//GetGraphSize(
+	//	this->Handle[type][0],	//このハンドルの画像の大きさを取得
+	//	&this->Width[0],		//Widthのアドレスを渡す
+	//	&this->Height[0]		//Heightのアドレスを渡す
+	//);
 
 	return true;		//読み込めた
 

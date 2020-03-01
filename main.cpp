@@ -208,7 +208,23 @@ void Load()
 		Title_select->SetSize();	//タイトル画面の選択肢の画像サイズ設定
 		End_select->SetSize();		//エンド画面の選択肢の画像サイズ設定
 		bt_magic_list->SetSize();	//戦闘画面の魔法一覧の画像サイズ設定
+		Magic_effect->SetSize();	//魔法エフェクトのサイズ設定
+		Atack_effect->SetSize();	//攻撃エフェクトのサイズ設定
+		Enemy_Atk_effect->SetSize();//敵攻撃エフェクトのサイズ設定
+		Boss_Atk_effect->SetSize();	//ボス攻撃エフェクトのサイズ設定
 		//******************** サイズ設定処理ここまで **************************
+
+
+		//******************** 初期設定ここから ***************************
+		player->SetInit();	//プレイヤーの初期設定
+
+		//敵の初期設定
+		for (int i = 0; i < ENEMY_KIND; ++i)		//敵の数だけ初期設定
+		{
+			enemy[i]->SetInit();					//初期設定
+			enemy[i]->StateSetInit();				//ステータス初期設定
+		}
+		//******************** 初期設定ここまで ***************************
 
 		IsLoad = true;	//読み込み完了
 	}
@@ -1377,7 +1393,7 @@ bool LoadGameData()
 	//戦闘で使用するSE
 	bt_se = new MUSIC(MY_MUSIC_DIR_BT_SE, MY_SE_NAME_LEVUP, BT_SE_KIND);	//SEを生成
 	if (bt_se->GetIsLoad() == false) { return false; }						//読み込み失敗時
-	bt_se->ChengePlayType(DX_PLAYTYPE_BACK);							//再生方法変更
+	bt_se->ChengePlayType(DX_PLAYTYPE_BACK);								//再生方法変更
 	//音の追加処理
 	if (bt_se->Add(MY_MUSIC_DIR_BT_SE, MY_SE_NAME_SLASH, (int)BT_SE_SLASH) == false) { return false; }	//斬るときの音追加
 	if (bt_se->Add(MY_MUSIC_DIR_BT_SE, MY_SE_NAME_THUNDER, (int)BT_SE_THUNDER) == false) { return false; }//雷の音追加
@@ -1440,7 +1456,6 @@ bool LoadGameData()
 	//if (data->LoadPlayer(player, PLAYER_DATA_DIR, PLAYER_DATA_NAME) == false) { return false; }	//読み込み失敗
 	//プレイヤーの初期データver
 	if (data->LoadPlayer(player, PLAYER_DATA_DIR, PLATER_DATA_INIT_NAME) == false) { return false; }	//読み込み失敗
-	player->SetInit();	//初期設定
 
 	//UI関係
 	ui = new UI();		//UI作成
@@ -1527,11 +1542,6 @@ bool LoadGameData()
 
 	//敵のデータをcsvファイルから読み込み
 	if (data->LoadEnemy(enemy, ENEMY_DATA_DIR, ENEMY_DATA_NAME) == false) { return false; }		//読み込み失敗
-	//初期設定
-	for (int i = 0; i < ENEMY_KIND; ++i)		//敵の数だけ初期設定
-	{
-		enemy[i]->StateSetInit();				//初期設定
-	}
 	//▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲ 敵関係ここまで ▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲
 
 

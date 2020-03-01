@@ -210,15 +210,20 @@ void CHARACTOR::Operation(KEYDOWN *keydown)
 //初期化設定
 bool CHARACTOR::SetInit()
 {
+
+	this->image->SetSize();		//画像サイズ設定
+
 	this->collision = new COLLISION();		//当たり判定の領域を作成
-	this->collision->SetValue(GAME_LEFT, GAME_TOP, this->image->GetWidth(0), this->image->GetHeight(0));	//当たり判定の領域を設定
+	this->collision->SetValue(GAME_LEFT, GAME_TOP, this->image->GetWidth(), this->image->GetHeight());	//当たり判定の領域を設定
 
 	this->sikaku_draw = new SIKAKU();		//描画領域を作成
-	this->sikaku_draw->SetValue(GAME_LEFT, GAME_TOP, this->image->GetWidth(0), this->image->GetHeight(0));	//当たり判定の領域を設定
+	this->sikaku_draw->SetValue(GAME_LEFT, GAME_TOP, this->image->GetWidth(), this->image->GetHeight());	//当たり判定の領域を設定
 
 	this->IsArive = true;	//生きている
 	this->IsDraw = true;	//描画してよい
 	this->IsKeyOperation = true;	//キーボード操作できる
+
+	this->SetImagePos(GAME_WIDTH / 2 - this->GetWidth() / 2, GAME_HEIGHT / 2 - this->GetHeight() / 2);	//位置調整(画面中央)
 
 	return true;
 
@@ -235,5 +240,3 @@ void CHARACTOR::Draw()
 		}
 	}
 }
-
-

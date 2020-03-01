@@ -183,4 +183,6 @@ public:
 
 	bool Add(const char *, const char *, int, int, int, int, int, double, bool, int);	//エフェクト追加
 
+	void SetSize();				//サイズ設定
+
 };

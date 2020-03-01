@@ -20,7 +20,7 @@ class CHARACTOR
 private:
 	IMAGE *image;				//‰æ‘œ
 	COLLISION *collision;		//“–‚½‚è”»’è‚Ì—Ìˆæ
-	SIKAKU *sikaku_draw;			//ƒLƒƒƒ‰‚Ì•`‰æ‚·‚é—Ìˆæ
+	SIKAKU *sikaku_draw;		//ƒLƒƒƒ‰‚Ì•`‰æ‚·‚é—Ìˆæ
 
 	int Speed;					//ˆÚ“®‘¬“x
 
