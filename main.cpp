@@ -83,7 +83,7 @@ bool GameEnd_Flg = false;	//ゲーム終了フラグ
 bool Boss_flg = false;		//ボスフラグ
 bool Clear_flg = false;		//クリアフラグ
 
-static bool IsLoad = false;	//読み込み完了フラグ
+bool IsLoad = false;		//読み込み完了フラグ
 
 std::string Work_Str;		//作業用文字列
 
@@ -109,16 +109,6 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 
 	//ゲームデータ読み込み開始(非同期)
 	if (LoadGameData() == false) { return -1; }		//読み込み失敗時、強制終了
-
-	//while (TRUE)	//無限ループ
-	//{
-	//	//ゲーム内のメイン処理
-	//	if (GameMainLoop() == false)
-	//	{
-	//		break;	//強制終了
-	//	}
-
-	//}
 
 	//ゲームのメインループ
 	while (GameMainLoop())	
