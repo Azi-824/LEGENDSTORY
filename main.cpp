@@ -110,74 +110,23 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 	//ゲームデータ読み込み開始(非同期)
 	if (LoadGameData() == false) { return -1; }		//読み込み失敗時、強制終了
 
-	while (TRUE)	//無限ループ
+	//while (TRUE)	//無限ループ
+	//{
+	//	//ゲーム内のメイン処理
+	//	if (GameMainLoop() == false)
+	//	{
+	//		break;	//強制終了
+	//	}
+
+	//}
+
+	//ゲームのメインループ
+	while (GameMainLoop())	
 	{
-		if (ProcessMessage() != 0) { break; }	//メッセージ処理の結果がエラーのとき、強制終了
-
-		if (ClearDrawScreen() != 0) { break; }	//画面を消去できなかったとき、強制終了
-
-		keydown->KeyDownUpdate();	//キーの入力状態を更新する
-
-		fps->Update();				//FPSの処理[更新]
-
-		if (IsLoad == false)		//読み込みが終了していなければ
-		{
-			Load();					//ロード画面の処理
-		}
-		else						//読み込みが終了していれば
-		{
-			//▼▼▼▼▼ゲームのシーンここから▼▼▼▼▼
-			switch (GameSceneNow)
-			{
-			case (int)GAME_SCENE_TITLE:		//タイトル画面だったら
-
-				Title();					//タイトル画面の処理
-
-				break;
-
-			case (int)GAME_SCENE_PLAY:		//プレイ画面だったら
-
-				Play();						//プレイ画面の処理
-
-				break;
-
-			case (int)GAME_SCENE_BATTLE:	//戦闘画面だったら
-
-				Battle();					//戦闘画面の処理
-
-				break;
-
-			case (int)GAME_SCENE_END:		//エンド画面だったら
-
-				End();						//エンド画面の処理
-
-				break;
-
-			case (int)GAME_SCENE_CHENGE:	//シーン遷移画面だったら
-
-				Chenge();					//シーン遷移画面の処理
-
-				break;
-
-			default:
-				break;
-
-			}
-			//▲▲▲▲▲ゲームのシーンここまで▲▲▲▲▲
-
-		}
-
-		if (GameEnd_Flg)		//ゲーム終了フラグが立っていたら
-		{
-			break;				//ループを抜け、ゲーム終了
-		}
-
-
-		//fps->Draw(0, 0);			//FPSの処理[描画]
-
-		ScreenFlip();				//モニタのリフレッシュレートの速さで裏画面を再描画
-
-		fps->Wait();				//FPSの処理[待つ]
+		/*
+		ループ内で異常が発生するまで無限ループ
+		ゲーム終了やエラー等が発生したらループ終了
+		*/
 	}
 
 	Delete_Class();			//使用したクラスを破棄
@@ -1677,5 +1626,79 @@ void SetSize()
 	Boss_Atk_effect->SetSize();	//ボス攻撃エフェクトのサイズ設定
 
 	return;
+
+}
+
+//無限ループ内のゲーム処理
+bool GameMainLoop()
+{
+	if (ProcessMessage() != 0) { return false; }	//メッセージ処理の結果がエラーのとき、強制終了
+
+	if (ClearDrawScreen() != 0) { return false; }	//画面を消去できなかったとき、強制終了
+
+	keydown->KeyDownUpdate();	//キーの入力状態を更新する
+
+	fps->Update();				//FPSの処理[更新]
+
+	if (IsLoad == false)		//読み込みが終了していなければ
+	{
+		Load();					//ロード画面の処理
+	}
+	else						//読み込みが終了していれば
+	{
+		//▼▼▼▼▼ゲームのシーンここから▼▼▼▼▼
+		switch (GameSceneNow)
+		{
+		case (int)GAME_SCENE_TITLE:		//タイトル画面だったら
+
+			Title();					//タイトル画面の処理
+
+			break;
+
+		case (int)GAME_SCENE_PLAY:		//プレイ画面だったら
+
+			Play();						//プレイ画面の処理
+
+			break;
+
+		case (int)GAME_SCENE_BATTLE:	//戦闘画面だったら
+
+			Battle();					//戦闘画面の処理
+
+			break;
+
+		case (int)GAME_SCENE_END:		//エンド画面だったら
+
+			End();						//エンド画面の処理
+
+			break;
+
+		case (int)GAME_SCENE_CHENGE:	//シーン遷移画面だったら
+
+			Chenge();					//シーン遷移画面の処理
+
+			break;
+
+		default:
+			break;
+
+		}
+		//▲▲▲▲▲ゲームのシーンここまで▲▲▲▲▲
+
+	}
+
+	if (GameEnd_Flg)		//ゲーム終了フラグが立っていたら
+	{
+		return false;				//ループを抜け、ゲーム終了
+	}
+
+
+	//fps->Draw(0, 0);			//FPSの処理[描画]
+
+	ScreenFlip();				//モニタのリフレッシュレートの速さで裏画面を再描画
+
+	fps->Wait();				//FPSの処理[待つ]
+
+	return true;				//正常
 
 }

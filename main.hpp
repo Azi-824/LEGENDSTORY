@@ -84,5 +84,6 @@ void Delete_Class();		//クラスを削除する処理
 bool LoadGameData();		//ゲームで使用するデータ等を読み込む処理
 void SetGameInit();			//ゲームの初期設定を行う処理
 void SetSize();				//画像等のサイズ設定を行う処理
+bool GameMainLoop();		//無限ループ内のゲーム処理
 
 //########## クラスの定義 ##########
