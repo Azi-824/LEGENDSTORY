@@ -138,4 +138,6 @@ public:
 	void SetIsDrawUIAnime(bool);		//アニメーション画像を描画してよいか設定
 	bool GetIsDrawUIAnime(void);		//アニメーション画像を描画してよいか取得
 
+	void SetSize(void);					//画像サイズを設定する
+
 };

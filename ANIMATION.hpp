@@ -91,5 +91,7 @@ public:
 
 	bool Add(const char *, const char *, int, int, int, int, int, double, bool, int = 0);	//アニメーション追加
 
+	void SetSize(void);				//サイズを設定する
+
 };
 

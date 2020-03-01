@@ -86,6 +86,8 @@ public:
 
 	std::string GetFileName(void);	//名前を取得
 
+	void SetSize(void);				//サイズをセット
+
 	int GetWidth(int);				//幅を取得
 	int GetHeight(int);				//高さを取得
 

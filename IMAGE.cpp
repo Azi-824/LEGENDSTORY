@@ -97,6 +97,17 @@ std::string IMAGE::GetFileName(void)
 	return this->FileName;
 }
 
+//サイズを設定する
+void IMAGE::SetSize(void)
+{
+	//画像の数だけループする
+	for (int i = 0; i < this->Handle.size(); ++i)
+	{
+		GetGraphSize(this->Handle[i], &this->Width[i], &this->Height[i]);	//画像サイズ取得
+	}
+	return;
+}
+
 //幅を取得
 int IMAGE::GetWidth(int kind)
 {

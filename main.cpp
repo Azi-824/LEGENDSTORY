@@ -83,6 +83,8 @@ bool GameEnd_Flg = false;	//ゲーム終了フラグ
 bool Boss_flg = false;		//ボスフラグ
 bool Clear_flg = false;		//クリアフラグ
 
+static bool IsLoad = false;	//読み込み完了フラグ
+
 std::string Work_Str;		//作業用文字列
 
 //########## プログラムで最初に実行される関数 ##########
@@ -103,7 +105,9 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 
 	SetDrawScreen(DX_SCREEN_BACK);								//Draw系関数は裏画面に描画
 
-	//ゲームデータ読み込み
+	SetUseASyncLoadFlag(TRUE);									//非同期読み込みに設定
+
+	//ゲームデータ読み込み開始(非同期)
 	if (LoadGameData() == false) { return -1; }		//読み込み失敗時、強制終了
 
 	while (TRUE)	//無限ループ
@@ -116,52 +120,58 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 
 		fps->Update();				//FPSの処理[更新]
 
+		if (IsLoad == false)		//読み込みが終了していなければ
+		{
+			Load();					//ロード画面の処理
+		}
+		else						//読み込みが終了していれば
+		{
+			//▼▼▼▼▼ゲームのシーンここから▼▼▼▼▼
+			switch (GameSceneNow)
+			{
+			case (int)GAME_SCENE_TITLE:		//タイトル画面だったら
+
+				Title();					//タイトル画面の処理
+
+				break;
+
+			case (int)GAME_SCENE_PLAY:		//プレイ画面だったら
+
+				Play();						//プレイ画面の処理
+
+				break;
+
+			case (int)GAME_SCENE_BATTLE:	//戦闘画面だったら
+
+				Battle();					//戦闘画面の処理
+
+				break;
+
+			case (int)GAME_SCENE_END:		//エンド画面だったら
+
+				End();						//エンド画面の処理
+
+				break;
+
+			case (int)GAME_SCENE_CHENGE:	//シーン遷移画面だったら
+
+				Chenge();					//シーン遷移画面の処理
+
+				break;
+
+			default:
+				break;
+
+			}
+			//▲▲▲▲▲ゲームのシーンここまで▲▲▲▲▲
+
+		}
+
 		if (GameEnd_Flg)		//ゲーム終了フラグが立っていたら
 		{
 			break;				//ループを抜け、ゲーム終了
 		}
 
-		//▼▼▼▼▼ゲームのシーンここから▼▼▼▼▼
-
-		switch (GameSceneNow)
-		{
-		case (int)GAME_SCENE_TITLE:		//タイトル画面だったら
-			
-			Title();					//タイトル画面の処理
-
-			break;
-
-		case (int)GAME_SCENE_PLAY:		//プレイ画面だったら
-
-			Play();						//プレイ画面の処理
-
-			break;
-
-		case (int)GAME_SCENE_BATTLE:	//戦闘画面だったら
-
-			Battle();					//戦闘画面の処理
-
-			break;
-
-		case (int)GAME_SCENE_END:		//エンド画面だったら
-
-			End();						//エンド画面の処理
-
-			break;
-
-		case (int)GAME_SCENE_CHENGE:	//シーン遷移画面だったら
-
-			Chenge();					//シーン遷移画面の処理
-
-			break;
-
-		default:
-			break;
-
-		}
-
-
-		//▲▲▲▲▲ゲームのシーンここまで▲▲▲▲▲
 
 		//fps->Draw(0, 0);			//FPSの処理[描画]
 
@@ -175,6 +185,36 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 	DxLib_End();			//ＤＸライブラリ使用の終了処理
 
 	return 0;
+}
+
+//ロード画面の処理
+void Load()
+{
+	if (GetASyncLoadNum() != 0)			//非同期で読み込んでいる処理が終わっていない時は
+	{
+		Load_Draw();		//ロード画面の描画処理
+	}
+	else								//非同期で読み込んでいる処理が終わった時は
+	{
+		SetUseASyncLoadFlag(FALSE);				//同期読み込みに設定
+
+		//******************** サイズ設定処理ここから **************************
+		title->SetSize();			//タイトル画像のサイズ設定
+		back->SetSize();			//背景画像のサイズ設定
+		back_battle->SetSize();		//戦闘画面の画像サイズ設定
+		setumei->SetSize();			//説明画像のサイズ設定
+		boss_mapimage->SetSize();	//ボスのマップでの画像サイズ設定
+		ui->SetSize();				//UI画像のサイズ設定
+		Title_select->SetSize();	//タイトル画面の選択肢の画像サイズ設定
+		End_select->SetSize();		//エンド画面の選択肢の画像サイズ設定
+		bt_magic_list->SetSize();	//戦闘画面の魔法一覧の画像サイズ設定
+		//******************** サイズ設定処理ここまで **************************
+
+		IsLoad = true;	//読み込み完了
+	}
+
+	return;
+
 }
 
 //タイトル画面の処理
@@ -963,12 +1003,27 @@ void SceneChenge(int beforscene, int nextscene)
 	return;
 }
 
+//ロード画面の描画処理
+void Load_Draw()
+{
+	std::string LoadMessage = "Now Loading・・・";				//ロード画面に描画する文字
+	static int Width = 0;										//横幅
+	static int Strlen = 0;										//文字数
+
+	Strlen = strlen(LoadMessage.c_str());						//文字数取得
+	Width = GetDrawStringWidth(LoadMessage.c_str(), Strlen);	//横幅取得
+
+	DrawFormatString((GAME_WIDTH / 2) - (Width / 2), GAME_HEIGHT / 2, GetColor(255, 255, 255),"%s",LoadMessage.c_str());	//ロード文字描画
+
+	return;
+}
+
 //タイトル画面の描画処理
 void Title_Draw()
 {
 	back->Draw(GAME_LEFT, GAME_TOP,(int)TITLE_BACK);	//背景画像描画
 
-	title->Draw(GAME_LEFT, GAME_HEIGHT / 2 - title->GetHeight(0) / 2);		//画面中央にタイトル描画
+	title->Draw(GAME_LEFT, GAME_HEIGHT / 2 - title->GetHeight() / 2);		//画面中央にタイトル描画
 
 	font->SetSize(BIG_FONTSIZE);		//フォントサイズを大きくする
 
@@ -1275,6 +1330,10 @@ void Delete_Class()
 bool LoadGameData()
 {
 
+	//フォント関係
+	font = new FONT(MY_FONT_DIR, MY_FONT_NAME, FONT_NAME);			//フォントを生成
+	if (font->GetIsLoad() == false) { return false; }				//読み込み失敗時
+
 	//画像関係
 	title = new IMAGE(MY_IMG_DIR_TITLE, MY_ING_NAME_TITLE);			//タイトル画像を生成
 	if (title->GetIsLoad() == false) { return false; }				//読み込み失敗時
@@ -1337,10 +1396,6 @@ bool LoadGameData()
 	if (sys_se->Add(MY_MUSIC_DIR_SYS_SE, MY_SE_NAME_SAVE, (int)SYS_SE_SAVE) == false) { return false; }	//セーブの音追加
 	if (sys_se->Add(MY_MUSIC_DIR_SYS_SE, MY_SE_NAME_BLIP, (int)SYS_SE_BLIP) == false) { return false; }	//選択できないときの音追加
 
-
-	//フォント関係
-	font = new FONT(MY_FONT_DIR, MY_FONT_NAME, FONT_NAME);			//フォントを生成
-	if (font->GetIsLoad() == false) { return false; }					//読み込み失敗時
 
 	data = new DATA();		//データ
 

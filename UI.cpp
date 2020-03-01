@@ -436,3 +436,14 @@ bool UI::GetIsDrawUIAnime(void)
 {
 	return this->IsDrawUIAnime;
 }
+
+//画像サイズを設定する
+void UI::SetSize(void)
+{
+	this->UiImage->SetSize();		//UI画像サイズ設定
+	this->UiAnime->SetSize();		//Uiアニメーション画像サイズ設定
+	this->MenuSelect->SetSize();	//メニュー画面の選択肢のサイズ設定
+	this->BattleCommand->SetSize();	//戦闘画面の選択肢のサイズ設定
+	
+	return;
+}

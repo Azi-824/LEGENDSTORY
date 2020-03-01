@@ -71,6 +71,8 @@ public:
 	void Draw(int, int,int ,unsigned int color = GetColor(255, 255, 255));		//選択肢の内容を描画する
 	void DrawCenter(int, int,int , unsigned int color = GetColor(255, 255, 255));	//選択肢の内容を中央に描画する
 
+	void SetSize(void);						//画像サイズ設定
+
 
 	//選択肢の内容を変更する
 	//引数：Args：描画文字列

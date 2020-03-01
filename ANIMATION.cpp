@@ -284,3 +284,14 @@ bool ANIMATION::Add(const char *dir, const char *name, int SplitNumALL, int Spri
 	return true;		//読み込めた
 
 }
+
+//サイズを設定する
+void ANIMATION::SetSize(void)
+{
+	for (int i = 0; i < this->Handle.size(); ++i)
+	{
+		GetGraphSize(this->Handle[i][0], &this->Width[i], &this->Height[i]);		//画像サイズ取得
+	}
+
+	return;
+}

@@ -184,3 +184,11 @@ void SELECT::DrawCenter(int x, int y,int kind, unsigned int color)
 	}
 
 }
+
+//画像サイズを設定
+void SELECT::SetSize(void)
+{
+	this->image_ui->SetSize();	//イメージ画像のサイズ設定
+
+	return;
+}
