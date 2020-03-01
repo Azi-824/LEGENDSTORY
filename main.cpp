@@ -192,41 +192,16 @@ void Load()
 {
 	if (GetASyncLoadNum() != 0)			//非同期で読み込んでいる処理が終わっていない時は
 	{
-		Load_Draw();		//ロード画面の描画処理
+		Load_Draw();					//ロード画面の描画処理
 	}
 	else								//非同期で読み込んでいる処理が終わった時は
 	{
-		SetUseASyncLoadFlag(FALSE);				//同期読み込みに設定
 
-		//******************** サイズ設定処理ここから **************************
-		title->SetSize();			//タイトル画像のサイズ設定
-		back->SetSize();			//背景画像のサイズ設定
-		back_battle->SetSize();		//戦闘画面の画像サイズ設定
-		setumei->SetSize();			//説明画像のサイズ設定
-		boss_mapimage->SetSize();	//ボスのマップでの画像サイズ設定
-		ui->SetSize();				//UI画像のサイズ設定
-		Title_select->SetSize();	//タイトル画面の選択肢の画像サイズ設定
-		End_select->SetSize();		//エンド画面の選択肢の画像サイズ設定
-		bt_magic_list->SetSize();	//戦闘画面の魔法一覧の画像サイズ設定
-		Magic_effect->SetSize();	//魔法エフェクトのサイズ設定
-		Atack_effect->SetSize();	//攻撃エフェクトのサイズ設定
-		Enemy_Atk_effect->SetSize();//敵攻撃エフェクトのサイズ設定
-		Boss_Atk_effect->SetSize();	//ボス攻撃エフェクトのサイズ設定
-		//******************** サイズ設定処理ここまで **************************
+		SetUseASyncLoadFlag(FALSE);		//同期読み込みに設定
 
+		SetGameInit();					//ゲームの初期設定
 
-		//******************** 初期設定ここから ***************************
-		player->SetInit();	//プレイヤーの初期設定
-
-		//敵の初期設定
-		for (int i = 0; i < ENEMY_KIND; ++i)		//敵の数だけ初期設定
-		{
-			enemy[i]->SetInit();					//初期設定
-			enemy[i]->StateSetInit();				//ステータス初期設定
-		}
-		//******************** 初期設定ここまで ***************************
-
-		IsLoad = true;	//読み込み完了
+		IsLoad = true;					//読み込み完了
 	}
 
 	return;
@@ -1655,5 +1630,52 @@ bool LoadGameData()
 	//*********************************** 魔法の選択肢を魔法一覧から設定、ここまで *****************************************
 
 	return true;		//全ての読み込みに成功
+
+}
+
+//ゲームの初期設定を行う処理
+void SetGameInit()
+{
+
+	SetSize();		//ゲーム内で使用する画像などのサイズを設定
+
+	//******************** 初期設定ここから ***************************
+	player->SetInit();	//プレイヤーの初期設定
+
+	//敵の初期設定
+	for (int i = 0; i < ENEMY_KIND; ++i)		//敵の数だけ初期設定
+	{
+		enemy[i]->SetInit();					//初期設定
+		enemy[i]->StateSetInit();				//ステータス初期設定
+	}
+	//******************** 初期設定ここまで ***************************
+
+}
+
+//ゲームで使用する画像などのサイズを設定する処理
+void SetSize()
+{
+	//画像関係
+	title->SetSize();			//タイトル画像のサイズ設定
+	back->SetSize();			//背景画像のサイズ設定
+	back_battle->SetSize();		//戦闘画面の画像サイズ設定
+	setumei->SetSize();			//説明画像のサイズ設定
+	boss_mapimage->SetSize();	//ボスのマップでの画像サイズ設定
+
+	//UI関係
+	ui->SetSize();				//UI画像のサイズ設定
+
+	//選択肢関係
+	Title_select->SetSize();	//タイトル画面の選択肢の画像サイズ設定
+	End_select->SetSize();		//エンド画面の選択肢の画像サイズ設定
+	bt_magic_list->SetSize();	//戦闘画面の魔法一覧の画像サイズ設定
+
+	//エフェクト関係
+	Magic_effect->SetSize();	//魔法エフェクトのサイズ設定
+	Atack_effect->SetSize();	//攻撃エフェクトのサイズ設定
+	Enemy_Atk_effect->SetSize();//敵攻撃エフェクトのサイズ設定
+	Boss_Atk_effect->SetSize();	//ボス攻撃エフェクトのサイズ設定
+
+	return;
 
 }
