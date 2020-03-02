@@ -66,8 +66,6 @@ int GameSceneBefor;							//前のゲームシーン
 int GameSceneNext;							//次のゲームシーン
 
 int BattleStageNow = (int)WAIT_ACT;	//バトルシーンの現在の状態
-int BattleActMsgCnt = 0;		//行動メッセージカウント
-int BattleActMsgCntMax = 60;	//行動メッセージの表示時間
 
 int MapKind[MAP_DATA_TATE_KIND][MAP_DATA_YOKO_KIND];			//マップの種類
 int MapNowPos[2] = {0};											//現在のマップのX位置とY位置を格納
@@ -1188,9 +1186,8 @@ void Enconte()
 bool Wait()
 {
 	static int WaitCnt = 0;		//カウント用
-	static int WaitCntMax = 60;	//待つ最大値
 
-	if (WaitCnt == WaitCntMax)		//待つ時間が過ぎたら
+	if (WaitCnt == GAME_WAITCNT_MAX)		//待つ時間が過ぎたら
 	{
 		WaitCnt = 0;	//カウントリセット
 		return true;

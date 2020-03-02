@@ -24,7 +24,9 @@
 
 #define GAME_FPS_SPEED					   60
 
-#define GAME_ICON_ID						333	//アイコンのID
+#define GAME_WAITCNT_MAX				   60	//待ち時間のカウントマックス値
+
+#define GAME_ICON_ID					   333	//アイコンのID
 
 #define ENCOUNT_TXT_KIND	3
 
