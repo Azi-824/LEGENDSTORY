@@ -342,6 +342,7 @@ void Battle()
 		if (Turn == (int)MY_TURN)		//味方のターンだったら
 		{
 			bt_msg[(int)BT_MSG_ACT]->DrawMsg(BT_MSG_DRAW_X, BT_MSG_DRAW_Y, GetColor(255, 255, 255));	//メッセージ描画
+
 			if (bt_msg[(int)BT_MSG_ACT]->GetIsLastMsg())	//最後のメッセージだったら
 			{
 
