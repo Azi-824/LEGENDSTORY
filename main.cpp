@@ -42,7 +42,7 @@ FONT *font;							//フォント
 UI *ui;								//UI
 DATA *data;							//データ
 MESSAGE *bt_msg[BT_MSG_KIND];		//戦闘画面のメッセージ
-MESSAGE *msg;		//メッセージ
+//MESSAGE *msg;		//メッセージ
 
 PLAYER *player;						//主人公
 
@@ -1219,7 +1219,7 @@ void Delete_Class()
 	delete Title_select;	//title_select破棄
 	delete End_select;		//end_select破棄
 
-	delete msg;//msg破棄
+	//delete msg;//msg破棄
 
 	//メッセージの削除
 	for (int i = 0; i < BT_MSG_KIND; ++i)
@@ -1331,8 +1331,8 @@ bool LoadGameData()
 	{
 		bt_msg[cnt] = new MESSAGE();	//メッセージ作成
 	}
-	msg = new MESSAGE();	//メッセージ作成
-	if (data->LoadMsg(msg, MSG_DATA_DIR, MSG_DATA_NAME) == false) { return false; }	//メッセージデータ読み込み
+	//msg = new MESSAGE();	//メッセージ作成
+	//if (data->LoadMsg(msg, MSG_DATA_DIR, MSG_DATA_NAME) == false) { return false; }	//メッセージデータ読み込み
 
 	//エフェクト関係
 	//魔法エフェクト
