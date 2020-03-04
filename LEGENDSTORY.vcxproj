@@ -194,6 +194,7 @@
     <ClInclude Include="PLAYER.hpp" />
     <ClInclude Include="SELECT.hpp" />
     <ClInclude Include="SIKAKU.hpp" />
+    <ClInclude Include="SOUBI.h" />
     <ClInclude Include="UI.hpp" />
   </ItemGroup>
   <ItemGroup>
