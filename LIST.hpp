@@ -12,9 +12,6 @@
 //################ マクロ定義 #########################
 #define LIST_DIR		R"(.\MY_DATA\List\)"			//リストのディレクトリ名
 
-#define MGC_LIST_NAME	R"(magic_list.csv)"				//魔法一覧のcsvデータの名前
-
-
 //############## マクロ定義：エラーメッセージ ###################
 #define LIST_ERROR_TTILE	"LIST_ERROR"						//エラータイトル
 #define LIST_ERROR_MSG		"リストが読み込めませんでした"		//エラーメッセージ
@@ -24,8 +21,9 @@ class LIST
 {
 private:
 
-	std::vector<int> Cost;				//消費MP
-	std::vector < std::string> Name;	//技名
+	std::vector <std::string> Name;		//技名
+
+	std::vector<int> CodeNum;			//コード番号
 
 	int Size;							//リストの要素数
 
@@ -33,15 +31,19 @@ private:
 
 public:	
 
-	LIST(const char *,const char *);	//コンストラクタ
-	
+	LIST();								//コンストラクタ
 	~LIST();							//デストラクタ
 
-	int GetCost(int);					//消費MP取得
+	//セッタ
+	void SetName(std::string);		//名前設定
+	void SetCodeNum(int);			//コード番号設定
+	void SetSize();						//リストの要素数設定
+	void SetIsLoad(bool);				//読み込めたか設定
+
+	//ゲッタ
 	const char * GetName(int);			//技名取得
 	bool GetIsLoad(void);				//読み込めたか
-
 	int GetListSize(void);				//リストの要素数を取得
-
+	int GetCodeNum(int);				//コード番号取得
 
 };
