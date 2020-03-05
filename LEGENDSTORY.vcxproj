@@ -157,6 +157,7 @@
     <ClCompile Include="DATA.cpp" />
     <ClCompile Include="EFFECT.cpp" />
     <ClCompile Include="ENEMY.cpp" />
+    <ClCompile Include="EQUIPMENT.cpp" />
     <ClCompile Include="FONT.cpp" />
     <ClCompile Include="FPS.cpp" />
     <ClCompile Include="IMAGE.cpp" />
@@ -194,7 +195,7 @@
     <ClInclude Include="PLAYER.hpp" />
     <ClInclude Include="SELECT.hpp" />
     <ClInclude Include="SIKAKU.hpp" />
-    <ClInclude Include="SOUBI.h" />
+    <ClInclude Include="EQUIPMENT.h" />
     <ClInclude Include="UI.hpp" />
   </ItemGroup>
   <ItemGroup>
