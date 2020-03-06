@@ -18,6 +18,7 @@
 #include "ITEM.hpp"
 #include "SELECT.hpp"
 #include "LIST_MGC.hpp"
+#include "LIST_WEAPON.hpp"
 
 //########## グローバルオブジェクト ##########
 FPS *fps = new FPS(GAME_FPS_SPEED);							//FPSクラスのオブジェクトを生成
@@ -58,7 +59,8 @@ SELECT *End_select;		//エンド画面の選択肢
 SELECT *bt_magic_list;	//スキルの選択肢
 
 //一覧関係
-LIST_MGC *mgc_list;		//魔法一覧
+LIST_MGC *mgc_list;			//魔法一覧
+LIST_WEAPON *weapon_list;	//武器一覧
 
 //############## グローバル変数 ##############
 int GameSceneNow = (int)GAME_SCENE_TITLE;	//現在のゲームシーン
@@ -1219,7 +1221,8 @@ void Delete_Class()
 	delete boss_mapimage;	//boss_mapimageを破棄
 	delete Title_select;	//title_select破棄
 	delete End_select;		//end_select破棄
-	delete mgc_list;		//mgc_list2を破棄
+	delete mgc_list;		//mgc_listを破棄
+	delete weapon_list;		//weapon_listを破棄
 
 	//delete msg;//msg破棄
 
@@ -1541,6 +1544,9 @@ bool LoadGameData()
 	//一覧関係
 	mgc_list = new LIST_MGC(LIST_DIR, MGC_LIST_NAME);		//魔法一覧を生成
 	if (mgc_list->GetIsLoad() == false) { return false; }	//読み込み失敗
+
+	weapon_list = new LIST_WEAPON(LIST_DIR, WEAPON_LIST_NAME);	//武器一覧を生成
+	if (weapon_list->GetIsLoad() == false) { return false; }	//読み込み失敗
 
 
 	//選択肢関係

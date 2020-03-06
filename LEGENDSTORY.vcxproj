@@ -164,6 +164,7 @@
     <ClCompile Include="ITEM.cpp" />
     <ClCompile Include="KEYDOWN.cpp" />
     <ClCompile Include="LIST.cpp" />
+    <ClCompile Include="LIST_WEAPON.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="MAP.cpp" />
     <ClCompile Include="MENU.cpp" />

@@ -7,7 +7,6 @@
 #include "DxLib.h"
 #include "ANIMATION.hpp"
 #include "CHARACTOR.hpp"
-#include "COLLISION.hpp"
 #include "ENEMY.hpp"
 #include "MAP.hpp"
 
