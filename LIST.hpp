@@ -21,7 +21,7 @@ class LIST
 {
 private:
 
-	std::vector <std::string> Name;		//技名
+	std::vector <std::string> Name;		//名前
 
 	std::vector<int> CodeNum;			//コード番号
 
@@ -35,8 +35,8 @@ public:
 	~LIST();							//デストラクタ
 
 	//セッタ
-	void SetName(std::string);		//名前設定
-	void SetCodeNum(int);			//コード番号設定
+	void SetName(std::string);			//名前設定
+	void SetCodeNum(int);				//コード番号設定
 	void SetSize();						//リストの要素数設定
 	void SetIsLoad(bool);				//読み込めたか設定
 
