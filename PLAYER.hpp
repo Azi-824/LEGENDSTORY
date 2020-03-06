@@ -189,5 +189,6 @@ public:
 
 	//‘•”õŠÖŒW
 	void AddWeapon(int, int);		//•Ší‚ğ’Ç‰Á‚·‚é
+	WEAPON * GetWeaponInfo();		//•Ší‚Ìî•ñ‚ğæ“¾
 
 };

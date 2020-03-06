@@ -992,3 +992,9 @@ void PLAYER::AddWeapon(int codenum, int equipatk)
 
 }
 
+//•Ší‚Ìî•ñ‚ðŽæ“¾
+WEAPON * PLAYER::GetWeaponInfo(void)
+{
+	return this->Weapon;
+}
+

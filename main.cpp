@@ -992,6 +992,11 @@ void Play_Draw()
 
 			ui->DrawWindow(GAME_LEFT, GAME_TOP, GAME_WIDTH, GAME_HEIGHT);	//ウィンドウ描画
 
+			/*
+			修正必要？
+			*/
+			auto weapon = player->GetWeaponInfo();	//武器情報取得
+
 			switch (ui->GetChoiseMenu())		//選んだ内容ごとに処理を分ける
 			{
 
@@ -1024,8 +1029,13 @@ void Play_Draw()
 
 			case (int)MENU_SOUBI:	//装備を選んだ時の処理ここから
 
+
 				//装備描画処理
-				DrawString(0, 0, "装備描画", GetColor(255, 255, 255));	//文字描画
+				for (int cnt = 0; cnt < weapon->GetSize(); ++cnt)		//持っている武器の種類分ループする
+				{
+					//装備描画処理
+					DrawFormatString(GAME_LEFT, cnt*MENU_SPACE, GetColor(255, 255, 255), "%s %d個\n", weapon_list->GetName(weapon->GetCodeNum(cnt)), weapon->GetPossessionNum(cnt));
+				}
 
 				break;				//装備を選んだ時の処理ここまで
 
@@ -1050,6 +1060,9 @@ void Play_Draw()
 			default:
 				break;
 			}
+
+			//delete weapon;	//weapon破棄
+
 
 		}
 	}
