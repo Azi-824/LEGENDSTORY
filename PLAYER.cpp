@@ -14,16 +14,19 @@ PLAYER::PLAYER()
 
 	this->sikaku_draw = new SIKAKU();		//描画領域を作成
 
+	this->Weapon = new EQUIPMENT();			//武器を生成
+
 	return;
 }
 
 //デストラクタ
 PLAYER::~PLAYER()
 {
-	delete this->Anime;
-	delete this->Collision;
-	delete this->Ilast;
-	delete this->sikaku_draw;
+	delete this->Anime;				//Animeを破棄
+	delete this->Collision;			//Collisionを破棄
+	delete this->Ilast;				//Ilastを破棄
+	delete this->sikaku_draw;		//sikaku_drawを破棄
+	delete this->Weapon;			//Weaponを破棄
 
 	//vectorのメモリ解放を行う
 	std::vector<int> v;			//空のvectorを作成する
@@ -178,6 +181,20 @@ void PLAYER::SetSPD(int spd)
 	return;
 }
 
+//装備攻撃力設定
+void PLAYER::SetEquipAtk(int equipatk)
+{
+	this->EquipAtk = equipatk;	//装備攻撃力設定
+	return;
+}
+
+//装備防御力設定
+void PLAYER::SetEquipDef(int equipdef)
+{
+	this->EquipDef = equipdef;	//装備防御力設定
+	return;
+}
+
 //スキル一覧を設定
 void PLAYER::SetSkil(int skil)
 {
@@ -283,7 +300,6 @@ void PLAYER::SetPosAbsolute(int x, int y)
 
 	return;
 }
-
 
 //メニュー描画中か設定
 void PLAYER::SetIsMenu(bool ismenu)
@@ -423,6 +439,18 @@ int PLAYER::GetDEF(void)
 int PLAYER::GetSPD(void)
 {
 	return this->SPD;
+}
+
+//装備攻撃力取得
+int PLAYER::GetEquipAtk(void)
+{
+	return this->EquipAtk;	//装備攻撃力取得
+}
+
+//装備防御力取得
+int PLAYER::GetEquipDef(void)
+{
+	return this->EquipDef;	//装備防御力取得
 }
 
 //使用するスキルを取得
