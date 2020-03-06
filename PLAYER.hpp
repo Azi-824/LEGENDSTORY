@@ -9,7 +9,7 @@
 #include "CHARACTOR.hpp"
 #include "ENEMY.hpp"
 #include "MAP.hpp"
-#include "EQUIPMENT.hpp"
+#include "WEAPON.hpp"
 
 //################# マクロ定義 #######################
 #define EXP_INCREASE_VALUE	5		//経験値の最大値の増え幅
@@ -47,7 +47,7 @@ private:
 	COLLISION *Collision;	//当たり判定
 	SIKAKU *sikaku_draw;	//描画領域
 	CHARACTOR *Ilast;		//立ち絵
-	EQUIPMENT *Weapon;		//武器
+	WEAPON *Weapon;			//武器
 
 	std::string Name;		//キャラの名前
 
@@ -186,5 +186,8 @@ public:
 	bool CheckDetectionMap(COLLISION *[][MAP_YOKO]);				//マップとの当たり判定をする(当たった場所を取得しない)
 
 	void Recovery(void);			//回復させる
+
+	//装備関係
+	void AddWeapon(int, int);		//武器を追加する
 
 };

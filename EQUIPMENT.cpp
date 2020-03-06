@@ -45,6 +45,13 @@ void EQUIPMENT::SetEquipFlg(int kind, bool equipflg)
 	return;
 }
 
+//要素数設定
+void EQUIPMENT::SetSize()
+{
+	this->Size = this->CodeNum.size();	//サイズ設定
+	return;
+}
+
 //コード番号取得
 int EQUIPMENT::GetCodeNum(int kind)
 {
@@ -61,6 +68,12 @@ int EQUIPMENT::GetPossessionNum(int kind)
 bool EQUIPMENT::GetEquipFlg(int kind)
 {
 	return this->EquipFlg[kind];
+}
+
+//要素数取得
+int EQUIPMENT::GetSize()
+{
+	return this->Size;
 }
 
 //装備追加

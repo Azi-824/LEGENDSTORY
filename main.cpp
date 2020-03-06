@@ -1594,6 +1594,13 @@ void SetGameInit()
 	}
 	//******************** 初期設定ここまで ***************************
 
+	//プレイヤーの武器を追加
+	//後に変更
+	for (int i = 0; i < weapon_list->GetListSize(); ++i)
+	{
+		player->AddWeapon(weapon_list->GetCodeNum(i), weapon_list->GetPower(i));	//武器追加
+	}
+
 }
 
 //ゲームで使用する画像などのサイズを設定する処理

@@ -175,6 +175,7 @@
     <ClCompile Include="SELECT.cpp" />
     <ClCompile Include="SIKAKU.cpp" />
     <ClCompile Include="UI.cpp" />
+    <ClCompile Include="WEAPON.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="ANIMATION.hpp" />
@@ -201,6 +202,7 @@
     <ClInclude Include="EQUIPMENT.hpp" />
     <ClInclude Include="UI.hpp" />
     <ClInclude Include="LIST_WEAPON.hpp" />
+    <ClInclude Include="WEAPON.hpp" />
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="Resource.rc" />

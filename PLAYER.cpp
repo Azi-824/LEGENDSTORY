@@ -14,7 +14,7 @@ PLAYER::PLAYER()
 
 	this->sikaku_draw = new SIKAKU();		//•`‰æ—Ìˆæ‚ğì¬
 
-	this->Weapon = new EQUIPMENT();			//•Ší‚ğ¶¬
+	this->Weapon = new WEAPON();			//•Ší‚ğ¶¬
 
 	return;
 }
@@ -954,5 +954,41 @@ void PLAYER::Recovery(void)
 	this->IsArive = true;		//¶‚«‚Ä‚¢‚é
 
 	return;
+}
+
+//•Ší‚ğ’Ç‰Á‚·‚é
+void PLAYER::AddWeapon(int codenum, int equipatk)
+{
+
+	bool hold_flg = false;	//•Ší‚Ì“o˜^‚ªÏ‚ñ‚Å‚¢‚é‚©”»’è
+
+	if (this->Weapon->GetSize() == 0)			//•Ší‚ğˆêí—Ş‚à‚Á‚Ä‚¢‚È‚¢‚Æ‚«
+	{
+		hold_flg = false;	//•Ší‚Ì“o˜^‚ğ‚µ‚Ä‚¢‚È‚¢
+	}
+
+	for (int i = 0; i < this->Weapon->GetSize(); ++i)	//“o˜^‚³‚ê‚Ä‚¢‚é•Ší‚Ìí—Ş•ªƒ‹[ƒv‚·‚é
+	{
+		if (this->Weapon->GetCodeNum(i) == codenum)	//•Ší‚Ì“o˜^‚ª‚³‚ê‚Ä‚¢‚éê‡
+		{
+			hold_flg = true;	//•Ší‚Ì“o˜^‚ªÏ‚ñ‚Å‚¢‚é
+			break;				//ŒJ‚è•Ô‚µ‚ğ”²‚¯‚é
+		}
+		else										//•Ší‚Ì“o˜^‚ª‚³‚ê‚Ä‚¢‚È‚¢ê‡
+		{
+			hold_flg = false;	//•Ší‚Ì“o˜^‚ªÏ‚ñ‚Å‚¢‚È‚¢
+		}
+	}
+
+	if (hold_flg == false)		//•Ší‚Ì“o˜^‚ªÏ‚ñ‚Å‚¢‚È‚¢ê‡
+	{
+		//•Ší‚Ì“o˜^ˆ—
+		this->Weapon->Add(codenum);		//•Ší“o˜^
+		this->Weapon->SetAtk(equipatk);	//UŒ‚—Í“o˜^
+		this->Weapon->SetSize();		//—v‘f”İ’è
+	}
+
+	return;
+
 }
 
