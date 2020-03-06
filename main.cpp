@@ -17,8 +17,7 @@
 #include "MSG.hpp"
 #include "ITEM.hpp"
 #include "SELECT.hpp"
-#include "LIST.hpp"
-#include "MGCLIST.hpp"
+#include "LIST_MGC.hpp"
 
 //########## グローバルオブジェクト ##########
 FPS *fps = new FPS(GAME_FPS_SPEED);							//FPSクラスのオブジェクトを生成
@@ -59,7 +58,7 @@ SELECT *End_select;		//エンド画面の選択肢
 SELECT *bt_magic_list;	//スキルの選択肢
 
 //一覧関係
-MGCLIST *mgc_list;		//魔法一覧
+LIST_MGC *mgc_list;		//魔法一覧
 
 //############## グローバル変数 ##############
 int GameSceneNow = (int)GAME_SCENE_TITLE;	//現在のゲームシーン
@@ -1540,7 +1539,7 @@ bool LoadGameData()
 	//▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲ マップデータ読み込みここまで ▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲
 
 	//一覧関係
-	mgc_list = new MGCLIST(LIST_DIR, MGC_LIST_NAME);		//魔法一覧を生成
+	mgc_list = new LIST_MGC(LIST_DIR, MGC_LIST_NAME);		//魔法一覧を生成
 	if (mgc_list->GetIsLoad() == false) { return false; }	//読み込み失敗
 
 

@@ -167,7 +167,7 @@
     <ClCompile Include="main.cpp" />
     <ClCompile Include="MAP.cpp" />
     <ClCompile Include="MENU.cpp" />
-    <ClCompile Include="MGCLIST.cpp" />
+    <ClCompile Include="LIST_MGC.cpp" />
     <ClCompile Include="MSG.cpp" />
     <ClCompile Include="MUSIC.cpp" />
     <ClCompile Include="PLAYER.cpp" />
@@ -191,14 +191,15 @@
     <ClInclude Include="main.hpp" />
     <ClInclude Include="MAP.hpp" />
     <ClInclude Include="MENU.hpp" />
-    <ClInclude Include="MGCLIST.hpp" />
+    <ClInclude Include="LIST_MGC.hpp" />
     <ClInclude Include="MSG.hpp" />
     <ClInclude Include="MUSIC.hpp" />
     <ClInclude Include="PLAYER.hpp" />
     <ClInclude Include="SELECT.hpp" />
     <ClInclude Include="SIKAKU.hpp" />
-    <ClInclude Include="EQUIPMENT.h" />
+    <ClInclude Include="EQUIPMENT.hpp" />
     <ClInclude Include="UI.hpp" />
+    <ClInclude Include="LIST_WEAPON.hpp" />
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="Resource.rc" />

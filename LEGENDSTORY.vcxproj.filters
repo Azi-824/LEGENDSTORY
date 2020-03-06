@@ -81,7 +81,7 @@
     <ClCompile Include="EQUIPMENT.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
-    <ClCompile Include="MGCLIST.cpp">
+    <ClCompile Include="LIST_MGC.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
   </ItemGroup>
@@ -149,10 +149,13 @@
     <ClInclude Include="LIST.hpp">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
-    <ClInclude Include="EQUIPMENT.h">
+    <ClInclude Include="LIST_WEAPON.hpp">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
-    <ClInclude Include="MGCLIST.hpp">
+    <ClInclude Include="EQUIPMENT.hpp">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="LIST_MGC.hpp">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
   </ItemGroup>

@@ -11,7 +11,7 @@
 #define MGC_LIST_NAME	R"(magic_list.csv)"				//魔法一覧のcsvデータの名前
 
 //################ クラス定義 #####################
-class MGCLIST : public LIST			//リストクラスを継承
+class LIST_MGC : public LIST			//リストクラスを継承
 {
 private:
 
@@ -19,8 +19,8 @@ private:
 
 public:
 
-	MGCLIST(const char *,const char *);			//コンストラクタ
-	~MGCLIST();									//デストラクタ
+	LIST_MGC(const char *,const char *);			//コンストラクタ
+	~LIST_MGC();									//デストラクタ
 
 	//セッタ
 

@@ -2,7 +2,7 @@
 //魔法リストのクラス
 
 //################ ヘッダファイル読み込み #################
-#include "MGCLIST.hpp"
+#include "LIST_MGC.hpp"
 
 //################ クラス定義 ####################
 
@@ -11,7 +11,7 @@
 引数：const char *：読み込むデータのディレクトリ
 引数：const char *：読み込むデータの名前
 */
-MGCLIST::MGCLIST(const char *dir, const char *name)
+LIST_MGC::LIST_MGC(const char *dir, const char *name)
 {
 	std::string LoadFile;
 	LoadFile += dir;
@@ -67,7 +67,7 @@ MGCLIST::MGCLIST(const char *dir, const char *name)
 }
 
 //デストラクタ
-MGCLIST::~MGCLIST()
+LIST_MGC::~LIST_MGC()
 {
 	//vectorのメモリ解放を行う
 	std::vector<int> v;			//空のvectorを作成する
@@ -75,7 +75,7 @@ MGCLIST::~MGCLIST()
 }
 
 //消費MP取得
-int MGCLIST::GetCost(int kind)
+int LIST_MGC::GetCost(int kind)
 {
 	return this->Cost[kind];
 }
