@@ -189,6 +189,8 @@ public:
 
 	//装備関係
 	void AddWeapon(int, int);		//武器を追加する
-	WEAPON * GetWeaponInfo();		//武器の情報を取得
+	int GetWeaponCode(int);			//武器コード番号を取得する
+	int GetWeaponPossession(int);	//武器の所持数を取得する
+	int GetWeaponSize();			//所持している武器の数（種類）を取得する
 
 };

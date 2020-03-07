@@ -996,9 +996,20 @@ void PLAYER::AddWeapon(int codenum, int equipatk)
 
 }
 
-//武器の情報を取得
-WEAPON * PLAYER::GetWeaponInfo(void)
+//武器コード番号を取得する
+int PLAYER::GetWeaponCode(int kind)
 {
-	return this->Weapon;
+	return this->Weapon->GetCodeNum(kind);	//武器コード番号取得
 }
 
+//武器の所持数を取得する
+int PLAYER::GetWeaponPossession(int kind)
+{
+	return this->Weapon->GetPossessionNum(kind);	//武器の所持数を取得
+}
+
+//所持している武器の数（種類）を取得する
+int PLAYER::GetWeaponSize()
+{
+	return this->Weapon->GetSize();
+}
