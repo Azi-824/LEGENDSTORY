@@ -985,7 +985,7 @@ void Title_Draw()
 
 	font->SetSize(BIG_FONTSIZE);		//フォントサイズを大きくする
 
-	Title_select->DrawCenter(GAME_WIDTH / 2, DEFAULT_TEXT_Y,0);	//選択肢描画
+	Title_select->DrawCenter(GAME_WIDTH / 2, DEFAULT_TEXT_Y,(int)SELECT_TRIANGLE);	//選択肢描画
 	
 	return;
 
@@ -1051,9 +1051,8 @@ void Play_Draw()
 
 			case (int)MENU_SOUBI:	//装備を選んだ時の処理ここから
 
-
 				//装備描画処理
-				posseion_weapon->Draw(GAME_LEFT, GAME_TOP, (int)SELECT_TRIANGLE_MINI);	//装備描画
+				posseion_weapon->Draw(MENU_START_X, MENU_START_Y, (int)SELECT_TRIANGLE_MINI);	//装備描画
 
 				break;				//装備を選んだ時の処理ここまで
 
@@ -1651,6 +1650,7 @@ void SetSize()
 	Title_select->SetSize();	//タイトル画面の選択肢の画像サイズ設定
 	End_select->SetSize();		//エンド画面の選択肢の画像サイズ設定
 	bt_magic_list->SetSize();	//戦闘画面の魔法一覧の画像サイズ設定
+	posseion_weapon->SetSize();	//所持している武器の選択肢の画像サイズ設定
 
 	//エフェクト関係
 	Magic_effect->SetSize();	//魔法エフェクトのサイズ設定

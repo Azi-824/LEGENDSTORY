@@ -18,6 +18,9 @@
 #define MENU_WINDOW_CHENGE_POSX	100		//メニューウィンドウを左右どちらに表示するか判断するときのX位置
 #define MENU_WINDOW_CHENGE_POSY	85		//メニューウィンドウを左右どちらに表示するか判断するときのY位置
 
+#define MENU_START_X	20				//選んだメニュー毎の内容の描画開始X位置
+#define MENU_START_Y	5				//選んだメニュー毎の内容の描画開始Y位置
+
 //######################### 列挙型 ###############################
 enum MENU_COMMAND
 {
