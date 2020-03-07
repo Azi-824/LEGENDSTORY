@@ -1034,7 +1034,9 @@ void Play_Draw()
 				for (int cnt = 0; cnt < weapon->GetSize(); ++cnt)		//‚Á‚Ä‚¢‚é•Ší‚Ìí—Ş•ªƒ‹[ƒv‚·‚é
 				{
 					//‘•”õ•`‰æˆ—
-					DrawFormatString(GAME_LEFT, cnt*MENU_SPACE, GetColor(255, 255, 255), "%s %dŒÂ\n", weapon_list->GetName(weapon->GetCodeNum(cnt)), weapon->GetPossessionNum(cnt));
+					DrawFormatString(GAME_LEFT, cnt*MENU_SPACE, GetColor(255, 255, 255), "%s %dŒÂ\n",
+						weapon_list->GetName(weapon->GetCodeNum(cnt)), 
+						weapon->GetPossessionNum(weapon->GetCodeNum(cnt)));
 				}
 
 				break;				//‘•”õ‚ğ‘I‚ñ‚¾‚Ìˆ—‚±‚±‚Ü‚Å

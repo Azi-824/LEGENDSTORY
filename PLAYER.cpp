@@ -987,6 +987,10 @@ void PLAYER::AddWeapon(int codenum, int equipatk)
 		this->Weapon->SetAtk(equipatk);	//UŒ‚—Í“o˜^
 		this->Weapon->SetSize();		//—v‘f”İ’è
 	}
+	else						//•Ší‚Ì“o˜^‚ªÏ‚ñ‚Å‚¢‚éê‡
+	{
+		this->Weapon->AddPossession(codenum);	//Š”‘‰Á
+	}
 
 	return;
 

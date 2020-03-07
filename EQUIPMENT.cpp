@@ -80,8 +80,26 @@ int EQUIPMENT::GetSize()
 void EQUIPMENT::Add(int codenum)
 {
 	this->CodeNum.push_back(codenum);		//コード番号追加
-	this->PossessionNum.push_back(1);		//装備所持数を追加
-	this->EquipFlg.push_back(false);		//追加した装備の装備状態を設定
+
+	//要素0にコード番号0を入れるために+1している
+	if (this->PossessionNum.size() < codenum + 1)	//コード番号が要素数より少ない場合
+	{
+		this->PossessionNum.resize(codenum + 1);	//要素サイズを変更
+		this->EquipFlg.resize(codenum + 1);			//要素サイズを変更
+	}
+
+	//要素数にコード番号を指定して登録
+	this->PossessionNum[codenum] = 1;		//装備所持数を追加
+	this->EquipFlg[codenum] = false;		//追加した装備の装備状態を設定
+
+	this->Size = this->CodeNum.size();		//サイズ設定
 	
+	return;
+}
+
+//装備所持数増加処理
+void EQUIPMENT::AddPossession(int kind)
+{
+	this->PossessionNum[kind]++;	//増加
 	return;
 }

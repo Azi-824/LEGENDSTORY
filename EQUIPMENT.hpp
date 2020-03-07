@@ -44,5 +44,6 @@ public:
 	//const char * GetDescription(int);		//à–¾•¶æ“¾
 
 	void Add(int);							//‘•”õî•ñ’Ç‰Á
+	void AddPossession(int);				//‘•”õŠ”‘‰Áˆ—
 
 };
