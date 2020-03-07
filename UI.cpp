@@ -38,11 +38,6 @@ UI::~UI()
 	delete this->MenuSelect;	//menuselect破棄
 	delete this->BattleCommand;	//battlecommand破棄
 
-	//vectorのメモリ解放を行う
-	std::vector<std::string> v;			//空のvectorを作成する
-	this->Str.swap(v);					//空と中身を入れ替える
-
-
 	return;
 }
 
@@ -122,9 +117,10 @@ int UI::GetChoiseMenu()
 void UI::ResetMenu()
 {
 	this->ChoiseMenu = -1;		//選択内容をリセット
-	//this->Str_itr = this->Str.begin();	//先頭要素へ
 	this->NowSelectReset((int)UI_SELECT_MENU);	//選択している要素をリセット
+	this->MenuSelect->SetSelectFlg(false);		//選択していない
 	this->menuwindow->Reset();	//選択内容リセット
+
 }
 
 //選択されているか取得
@@ -137,6 +133,7 @@ bool UI::GetIsChoise(void)
 void UI::BattleInit()
 {
 	this->BattleCommadType = (int)COMMAND_NONE;	//選択したコマンド内容リセット
+	this->BattleCommand->SetSelectFlg(false);	//選択していない状態へ
 }
 
 //戦闘画面で選んだコマンドを設定する
@@ -291,36 +288,20 @@ int UI::GetUiImageHeight(int type)
 }
 
 //指定された選択肢のキー操作を行う
-bool UI::SelectOperation(KEYDOWN *keydown, MUSIC *se, int kind)
+void UI::SelectOperation(KEYDOWN *keydown, MUSIC *se, int kind)
 {
 	switch (kind)
 	{
 
 	case (int)UI_SELECT_MENU:		//メニュー画面
 
-		//メニュー画面キー操作
-		if (this->MenuSelect->SelectOperation(keydown, se))		//エンターキーを押されたら
-		{
-			return true;
-		}
-		else													//押されていなければ
-		{
-			return false;
-		}
+		this->MenuSelect->SelectOperation(keydown, se);			//メニュー画面キー操作
 
 		break;
 
 	case (int)UI_SELECT_BATTLE_CMD:		//バトルコマンド
 
-		//バトルコマンドのキー操作
-		if (this->BattleCommand->SelectOperation(keydown, se))	//エンターキーを押されたら
-		{
-			return true;
-		}
-		else													//押されていなければ
-		{
-			return false;
-		}
+		this->BattleCommand->SelectOperation(keydown, se);		//バトルコマンドのキー操作
 
 		break;
 
@@ -328,7 +309,7 @@ bool UI::SelectOperation(KEYDOWN *keydown, MUSIC *se, int kind)
 		break;
 	}
 
-	return false;
+	return;
 }
 
 //指定された選択肢の現在選択している要素を取得する
@@ -395,7 +376,7 @@ void UI::NowSelectReset(int kind)
 
 	case (int)UI_SELECT_BATTLE_CMD:			//バトルコマンドの時
 
-		return this->BattleCommand->NowSelectReset();	//選択肢削除
+		this->BattleCommand->NowSelectReset();	//選択肢削除
 
 		break;
 
@@ -404,6 +385,30 @@ void UI::NowSelectReset(int kind)
 	}
 
 	return;
+}
+
+//選択されたか取得
+bool UI::GetSelectFlg(int kind)
+{
+	switch (kind)
+	{
+
+	case (int)UI_SELECT_MENU:			//メニュー画面の時
+
+		return this->MenuSelect->GetSelectFlg();	//選択されたか取得
+
+		break;
+
+	case (int)UI_SELECT_BATTLE_CMD:			//バトルコマンドの時
+
+		return this->BattleCommand->GetSelectFlg();	//選択されたか取得
+
+		break;
+
+	default:
+		break;
+	}
+
 }
 
 //アニメーション画像追加

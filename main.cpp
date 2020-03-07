@@ -163,8 +163,9 @@ void Title()
 
 	Title_Draw();		//タイトル画面の描画処理
 
-	//選択肢のキー操作
-	if (Title_select->SelectOperation(keydown, sys_se))		//エンターキーを押されたら
+	Title_select->SelectOperation(keydown, sys_se);		//選択肢のキー操作
+
+	if (Title_select->GetSelectFlg())		//選択されたら
 	{
 		if (*Title_select->GetNowSelect() == "START")		//選択している文字列が"START"だったら
 		{
@@ -294,14 +295,14 @@ void Play()
 						work += std::to_string(player->GetWeaponPossession(player->GetWeaponCode(i)));	//所持数
 						work += "個";																	//個数表示
 
-						posseion_weapon->Add(work.c_str());								//選択肢追加
+						posseion_weapon->Add(work.c_str());		//選択肢追加
 					}
 
 					player->SetWeaponAddFlg(false);				//武器の追加なし
 
 				}
-				//武器の選択キー操作
-				posseion_weapon->SelectOperation(keydown, sys_se);
+				
+				posseion_weapon->SelectOperation(keydown, sys_se);	//武器の選択キー操作
 
 				if (posseion_weapon->GetSelectFlg())				//選択されたら
 				{
@@ -326,15 +327,12 @@ void Play()
 
 						//****************************** ここから、選択肢のリセット処理 *******************************
 						Yes_No->SetIsKeyOpe(false);				//はい、いいえの選択肢を操作不可能に
-
 						Yes_No->SetSelectFlg(false);			//はい、いいえを選択していない状態へ
+						Yes_No->NowSelectReset();				//はい、いいえの選択状態リセット
 
 						posseion_weapon->SetSelectFlg(false);	//武器を選択していない状態へ
-
 						posseion_weapon->SetIsKeyOpe(true);		//武器の選択肢操作可能に
-
 						posseion_weapon->NowSelectReset();		//武器の選択状態リセット
-						Yes_No->NowSelectReset();				//はい、いいえの選択状態リセット
 
 					}
 
@@ -342,10 +340,11 @@ void Play()
 			}
 
 		}
-		else											//選択をしていなかったら
+		else			//選択をしていなかったら
 		{
-			//メニューウィンドウキー操作
-			if (ui->SelectOperation(keydown, sys_se, (int)UI_SELECT_MENU))		//エンターキーを押されたとき
+			ui->SelectOperation(keydown, sys_se, (int)UI_SELECT_MENU);			//メニューウィンドウキー操作
+
+			if (ui->GetSelectFlg((int)UI_SELECT_MENU))							//選択された時
 			{
 				ui->SetChoiseMenu(ui->GetNowSelect((int)UI_SELECT_MENU));		//選択した内容をセット
 			}
@@ -418,8 +417,9 @@ void Battle()
 
 				if (ui->GetChoiseCommamd() == COMMAND_NONE)	//コマンドを選択していないときは
 				{
-					//バトルコマンドキー操作
-					if (ui->SelectOperation(keydown, sys_se, (int)UI_SELECT_BATTLE_CMD))	//エンターキーを押されたら
+					ui->SelectOperation(keydown, sys_se, (int)UI_SELECT_BATTLE_CMD);	//バトルコマンドキー操作
+
+					if (ui->GetSelectFlg((int)UI_SELECT_BATTLE_CMD))	//選択されたら
 					{
 						ui->SetBattleFlg();	//選択したコマンドを設定
 					}
@@ -431,7 +431,7 @@ void Battle()
 			{
 				if (keydown->IsKeyDownOne(KEY_INPUT_RETURN))		//エンターキーを押されたら
 				{
-					sys_se->Play((int)SYS_SE_KETTEI);	//決定音を鳴らす
+					sys_se->Play((int)SYS_SE_KETTEI);				//決定音を鳴らす
 
 					bt_msg[(int)BT_MSG_ACT]->NextMsg();				//次のメッセージへ
 				}
@@ -456,13 +456,15 @@ void Battle()
 			case (int)COMMANDE_MAGIC:		//魔法を選んだ時
 
 				ui->DrawWindow(MGC_WIN_X, MGC_WIN_Y, GAME_WIDTH - MGC_WIN_X, MGC_WIN_HEIGHT);	//ウィンドウ描画
-				bt_magic_list->Draw(MGC_TXT_X, MGC_TXT_Y,(int)SELECT_TRIANGLE_MINI);		//魔法一覧を描画
+				bt_magic_list->Draw(MGC_TXT_X, MGC_TXT_Y,(int)SELECT_TRIANGLE_MINI);			//魔法一覧を描画
+
+				bt_magic_list->SelectOperation(keydown, sys_se);	//魔法一覧のキー操作
 
 				if (keydown->IsKeyDownOne(KEY_INPUT_BACK))			//バックスペースキーを押されたら
 				{
 					ui->BattleInit();	//コマンド選択リセット
 				}
-				else if (bt_magic_list->SelectOperation(keydown, sys_se))		//エンターキーを押されたときは
+				else if (bt_magic_list->GetSelectFlg())		//選択された時は
 				{
 					//選んだ魔法の消費MPが残っているMPより多かったら(魔法が使えない処理)
 					if (player->GetMP() < mgc_list->GetCost(bt_magic_list->GetSelectNum()))
@@ -473,6 +475,7 @@ void Battle()
 					{
 						player->SetChoiseSkil(bt_magic_list->GetSelectNum());	//選択した内容を使用する魔法として設定する
 						bt_magic_list->NowSelectReset();						//選択要素を先頭に戻す
+						bt_magic_list->SetSelectFlg(false);						//選択してない状態へ
 						BattleStageNow = (int)DAMEGE_CALC;	//バトル状態をダメージ計算状態へ
 					}
 				}
@@ -875,8 +878,9 @@ void End()
 
 	End_Draw();	//描画処理
 
-	//選択肢のキー操作
-	if (End_select->SelectOperation(keydown, sys_se))		//エンターキーを押されたら
+	End_select->SelectOperation(keydown, sys_se);		//選択肢のキー操作
+
+	if (End_select->GetSelectFlg())						//選択されたら
 	{
 		if (*End_select->GetNowSelect() == "TITLE")		//選択している文字列が"TITLE"だったら
 		{

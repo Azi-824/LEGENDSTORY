@@ -90,9 +90,6 @@ private:
 
 	int ChoiseMenu;					//メニュー画面で選択した内容
 
-	std::vector<std::string> Str;	//文字列格納用
-	std::vector<std::string>::iterator Str_itr;	//イテレータ
-
 	bool IsDrawUIAnime;				//UIのアニメーションを描画してよいか
 
 public:
@@ -127,10 +124,11 @@ public:
 	int GetUiImageHeight(int);					//ui画像の高さ取得
 
 	//選択肢関係
-	bool SelectOperation(KEYDOWN *, MUSIC *, int);			//指定された選択肢のキー操作を行う
+	void SelectOperation(KEYDOWN *, MUSIC *, int);			//指定された選択肢のキー操作を行う
 	std::vector<std::string>::iterator GetNowSelect(int);	//指定された選択肢の現在選択している要素を取得する
 	void SelectClear(int);									//指定された選択肢の内容をクリアする
 	void NowSelectReset(int);								//指定された選択肢の現在選択している内容を、最初の要素に戻す
+	bool GetSelectFlg(int);									//指定された選択肢が選択されたか取得
 
 	//アニメーション関係
 	bool AddUiAnime(const char *, const char *, int, int, int, int, int, double, bool);	//アニメーション画像を追加する

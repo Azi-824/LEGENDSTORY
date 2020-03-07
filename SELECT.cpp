@@ -27,7 +27,7 @@ SELECT::~SELECT()
 戻り値：エンターキーを押されたら:true
 戻り値：エンターキー押されていなければ:false
 */
-bool SELECT::SelectOperation(KEYDOWN *keydown,MUSIC *se)
+void SELECT::SelectOperation(KEYDOWN *keydown,MUSIC *se)
 {
 
 	if (this->IsKeyOpe)		//キー操作可能なら
@@ -59,12 +59,11 @@ bool SELECT::SelectOperation(KEYDOWN *keydown,MUSIC *se)
 
 			this->SelectFlg = true;				//選択された
 
-			return true;
 		}
 
 	}
 
-	return false;
+	return;
 
 }
 
