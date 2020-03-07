@@ -52,6 +52,13 @@ void EQUIPMENT::SetSize()
 	return;
 }
 
+//武器を追加したか設定
+void EQUIPMENT::SetAddFlg(bool addflg)
+{
+	this->AddFlg = addflg;
+	return;
+}
+
 //コード番号取得
 int EQUIPMENT::GetCodeNum(int kind)
 {
@@ -76,6 +83,12 @@ int EQUIPMENT::GetSize()
 	return this->Size;
 }
 
+//装備を追加したかどうか取得
+bool EQUIPMENT::GetAddFlg(void)
+{
+	return this->AddFlg;
+}
+
 //装備追加
 void EQUIPMENT::Add(int codenum)
 {
@@ -93,6 +106,8 @@ void EQUIPMENT::Add(int codenum)
 	this->EquipFlg[codenum] = false;		//追加した装備の装備状態を設定
 
 	this->Size = this->CodeNum.size();		//サイズ設定
+
+	this->AddFlg = true;					//装備追加フラグ
 	
 	return;
 }

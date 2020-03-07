@@ -57,6 +57,7 @@ MAP *mapdata[DRAW_MAP_KIND][MAP_DATA_KIND];		//マップデータ
 SELECT *Title_select;	//タイトル画面の選択肢
 SELECT *End_select;		//エンド画面の選択肢
 SELECT *bt_magic_list;	//スキルの選択肢
+SELECT *posseion_weapon;//所持している武器の選択肢
 
 //一覧関係
 LIST_MGC *mgc_list;			//魔法一覧
@@ -264,12 +265,6 @@ void Play()
 	if (player->GetIsMenu())			//メニュー描画中だったら
 	{
 
-		//メニューウィンドウキー操作
-		if (ui->SelectOperation(keydown, sys_se, (int)UI_SELECT_MENU))		//エンターキーを押されたとき
-		{
-			ui->SetChoiseMenu(ui->GetNowSelect((int)UI_SELECT_MENU));		//選択した内容をセット
-		}
-
 		if (ui->GetIsChoise())	//選択していたら
 		{
 			if (ui->GetChoiseMenu() == (int)MENU_SAVE)	//セーブを選んだ時
@@ -282,6 +277,38 @@ void Play()
 					player->SetIsMenu(false);		//メニュー描画終了
 				}
 
+			}
+			else if (ui->GetChoiseMenu() == (int)MENU_SOUBI)	//装備を選んだ時
+			{
+				if (player->GetWeaponAddFlg())		//装備が追加されていた場合
+				{
+					//選択肢の内容を更新する
+					std::string work;	//作業用
+					posseion_weapon->SelectClear();		//ダミー選択肢をクリア
+
+					for (int i = 0; i < player->GetWeaponSize(); ++i)			//所持している武器の種類分ループ
+					{
+						work = weapon_list->GetName(player->GetWeaponCode(i));							//名前
+						work += "  ";																	//空白
+						work += std::to_string(player->GetWeaponPossession(player->GetWeaponCode(i)));	//所持数
+						work += "個";																	//個数表示
+
+						posseion_weapon->Add(work.c_str());								//選択肢追加
+					}
+
+					player->SetWeaponAddFlg(false);				//武器の追加なし
+
+				}
+				posseion_weapon->SelectOperation(keydown, sys_se);	//武器の選択キー操作
+			}
+
+		}
+		else											//選択をしていなかったら
+		{
+			//メニューウィンドウキー操作
+			if (ui->SelectOperation(keydown, sys_se, (int)UI_SELECT_MENU))		//エンターキーを押されたとき
+			{
+				ui->SetChoiseMenu(ui->GetNowSelect((int)UI_SELECT_MENU));		//選択した内容をセット
 			}
 
 		}
@@ -1026,13 +1053,7 @@ void Play_Draw()
 
 
 				//装備描画処理
-				for (int cnt = 0; cnt < player->GetWeaponSize(); ++cnt)		//持っている武器の種類分ループする
-				{
-					//装備描画処理
-					DrawFormatString(GAME_LEFT, cnt*MENU_SPACE, GetColor(255, 255, 255), "%s %d個\n",
-						weapon_list->GetName(player->GetWeaponCode(cnt)),			//名前を、武器のコード番号をもとに一覧から取得
-						player->GetWeaponPossession(player->GetWeaponCode(cnt)));	//所持数を、武器のコード番号をもとに取得
-				}
+				posseion_weapon->Draw(GAME_LEFT, GAME_TOP, (int)SELECT_TRIANGLE_MINI);	//装備描画
 
 				break;				//装備を選んだ時の処理ここまで
 
@@ -1230,6 +1251,7 @@ void Delete_Class()
 	delete End_select;		//end_select破棄
 	delete mgc_list;		//mgc_listを破棄
 	delete weapon_list;		//weapon_listを破棄
+	delete posseion_weapon;	//possession_weaponを破棄
 
 	//delete msg;//msg破棄
 
@@ -1559,6 +1581,8 @@ bool LoadGameData()
 	//選択肢関係
 	Title_select = new SELECT("START", "END");			//タイトル画面の選択肢生成
 	End_select = new SELECT("TITLE", "PLAY", "END");	//エンド画面の選択肢生成
+
+	posseion_weapon = new SELECT("dummy","dummy");		//所持している武器の選択肢を生成(中身はダミー)
 
 	//*********************************** 魔法の選択肢を魔法一覧から設定、ここから *****************************************
 	std::vector<std::string> w;	//作業用

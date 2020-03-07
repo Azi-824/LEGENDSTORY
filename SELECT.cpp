@@ -192,3 +192,11 @@ void SELECT::SetSize(void)
 
 	return;
 }
+
+//選択肢の内容を追加
+void SELECT::Add(const char *str)
+{
+	this->Str.push_back(str);	//選択肢追加
+	this->Str_itr = this->Str.begin();	//最初の要素を選択状態へ
+	return;
+}

@@ -72,6 +72,7 @@ public:
 	void DrawCenter(int, int,int , unsigned int color = GetColor(255, 255, 255));	//選択肢の内容を中央に描画する
 
 	void SetSize(void);						//画像サイズ設定
+	void Add(const char *);					//選択肢の内容を追加
 
 
 	//選択肢の内容を変更する

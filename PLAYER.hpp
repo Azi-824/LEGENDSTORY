@@ -192,5 +192,7 @@ public:
 	int GetWeaponCode(int);			//武器コード番号を取得する
 	int GetWeaponPossession(int);	//武器の所持数を取得する
 	int GetWeaponSize();			//所持している武器の数（種類）を取得する
+	bool GetWeaponAddFlg();			//装備を追加したかどうか取得
 
+	void SetWeaponAddFlg(bool);		//装備を追加したかどうか設定
 };

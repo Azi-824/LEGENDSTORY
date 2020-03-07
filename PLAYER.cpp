@@ -1013,3 +1013,16 @@ int PLAYER::GetWeaponSize()
 {
 	return this->Weapon->GetSize();
 }
+
+//‘•”õ‚ğ’Ç‰Á‚µ‚½‚©‚Ç‚¤‚©æ“¾
+bool PLAYER::GetWeaponAddFlg()
+{
+	return this->Weapon->GetAddFlg();
+}
+
+//‘•”õ‚ğ’Ç‰Á‚µ‚½‚©‚Ç‚¤‚©İ’è
+void PLAYER::SetWeaponAddFlg(bool addflg)
+{
+	this->Weapon->SetAddFlg(addflg);
+	return;
+}
