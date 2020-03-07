@@ -315,12 +315,17 @@ void Play()
 
 					if (Yes_No->GetSelectFlg())					//選択されたら
 					{
-						Yes_No->SetIsKeyOpe(false);				//はい、いいえの選択肢を操作不可能に
+						if (*Yes_No->GetNowSelect() == "はい")		//はい、を選択されていたら
+						{
+							//武器の装備処理
+							//選択した武器の要素番号を取得し
+							//武器装備処理の引数として渡す
+							player->EquipWeapon(posseion_weapon->GetSelectNum());	//武器を装備する
 
-						//武器の装備処理
-						//選択した武器の要素番号を取得し
-						//武器装備処理の引数として渡す
-						player->EquipWeapon(posseion_weapon->GetSelectNum());	//武器を装備する
+						}
+
+						//****************************** ここから、選択肢のリセット処理 *******************************
+						Yes_No->SetIsKeyOpe(false);				//はい、いいえの選択肢を操作不可能に
 
 						Yes_No->SetSelectFlg(false);			//はい、いいえを選択していない状態へ
 
