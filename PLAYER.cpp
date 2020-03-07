@@ -50,8 +50,6 @@ bool PLAYER::SetInit()
 	//装備関係
 	this->EquipAtk = 0;		//装備攻撃力0
 	this->EquipDef = 0;		//装備防御力0
-	this->EquipWeapon_flg = false;	//武器装備していない
-	this->EquipArmor_flg = false;	//防具装備していない
 	this->Equip_WeaponCode = -1;	//装備している武器のコード番号
 	this->Equip_ArmorCode = -1;		//装備している防具のコード番号
 
@@ -1036,7 +1034,7 @@ void PLAYER::EquipWeapon(int element)
 
 	this->EquipAtk = this->Weapon->GetAtk(this->Equip_WeaponCode);	//装備コードを基に、装備の攻撃力を取得
 
-	this->EquipWeapon_flg = true;		//武器を装備している
+	this->Weapon->SetEquipFlg(this->Equip_WeaponCode, true);	//武器を装備している
 
 	return;
 

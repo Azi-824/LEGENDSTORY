@@ -65,8 +65,6 @@ private:
 
 	int EquipAtk;			//‘•”õ‚ÌUŒ‚—Í
 	int EquipDef;			//‘•”õ‚Ì–hŒä—Í
-	bool EquipWeapon_flg;	//•Ší‚ğ‘•”õ‚µ‚Ä‚¢‚é‚©
-	bool EquipArmor_flg;	//–h‹ï‚ğ‘•”õ‚µ‚Ä‚¢‚é‚©
 	int Equip_WeaponCode;	//‘•”õ‚µ‚Ä‚¢‚é•Ší‚ÌƒR[ƒh”Ô†‚ğŠi”[‚µ‚Ä‚¨‚­
 	int Equip_ArmorCode;	//‘•”õ‚µ‚Ä‚¢‚é–h‹ï‚ÌƒR[ƒh”Ô†‚ğŠi”[‚µ‚Ä‚¨‚­
 
