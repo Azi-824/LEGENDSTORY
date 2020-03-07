@@ -47,6 +47,14 @@ bool PLAYER::SetInit()
 	this->SendDamege = 0;	//与えるダメージ0
 	this->RecvDamege = 0;	//受けるダメージ0
 
+	//装備関係
+	this->EquipAtk = 0;		//装備攻撃力0
+	this->EquipDef = 0;		//装備防御力0
+	this->EquipWeapon_flg = false;	//武器装備していない
+	this->EquipArmor_flg = false;	//防具装備していない
+	this->Equip_WeaponCode = -1;	//装備している武器のコード番号
+	this->Equip_ArmorCode = -1;		//装備している防具のコード番号
+
 	this->Ilast->SetInit();	//画像初期設定
 	this->IsKeyDown = false;//キーボード押されていない
 	this->IsMenu = false;	//メニューウィンドウ描画されていない
@@ -181,19 +189,19 @@ void PLAYER::SetSPD(int spd)
 	return;
 }
 
-//装備攻撃力設定
-void PLAYER::SetEquipAtk(int equipatk)
-{
-	this->EquipAtk = equipatk;	//装備攻撃力設定
-	return;
-}
-
-//装備防御力設定
-void PLAYER::SetEquipDef(int equipdef)
-{
-	this->EquipDef = equipdef;	//装備防御力設定
-	return;
-}
+////装備攻撃力設定
+//void PLAYER::SetEquipAtk(int equipatk)
+//{
+//	this->EquipAtk = equipatk;	//装備攻撃力設定
+//	return;
+//}
+//
+////装備防御力設定
+//void PLAYER::SetEquipDef(int equipdef)
+//{
+//	this->EquipDef = equipdef;	//装備防御力設定
+//	return;
+//}
 
 //スキル一覧を設定
 void PLAYER::SetSkil(int skil)
@@ -321,13 +329,6 @@ void PLAYER::SetLevUpMsgStartFlg(bool start_flg)
 	this->LevUpMsgStart_flg = start_flg;
 	return;
 }
-
-//ストップするか設定
-//void PLAYER::SetChengeMapKind(int chengekind)
-//{
-//	this->ChengeMapKind = chengekind;
-//	return;
-//}
 
 //マップ切り替えの種類リセット
 void PLAYER::ResetChengeMapKind(void)
@@ -1025,4 +1026,18 @@ void PLAYER::SetWeaponAddFlg(bool addflg)
 {
 	this->Weapon->SetAddFlg(addflg);
 	return;
+}
+
+//武器を装備する
+void PLAYER::EquipWeapon(int element)
+{
+
+	this->Equip_WeaponCode = this->Weapon->GetCodeNum(element);	//装備のコード番号を取得
+
+	this->EquipAtk = this->Weapon->GetAtk(this->Equip_WeaponCode);	//装備コードを基に、装備の攻撃力を取得
+
+	this->EquipWeapon_flg = true;		//武器を装備している
+
+	return;
+
 }

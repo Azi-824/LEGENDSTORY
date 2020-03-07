@@ -65,6 +65,10 @@ private:
 
 	int EquipAtk;			//装備の攻撃力
 	int EquipDef;			//装備の防御力
+	bool EquipWeapon_flg;	//武器を装備しているか
+	bool EquipArmor_flg;	//防具を装備しているか
+	int Equip_WeaponCode;	//装備している武器のコード番号を格納しておく
+	int Equip_ArmorCode;	//装備している防具のコード番号を格納しておく
 
 	std::vector<int> Skil;	//スキル一覧
 	int ChoiseSkil;			//使用するスキル
@@ -108,8 +112,8 @@ public:
 	void SetATK(int);		//攻撃力設定
 	void SetDEF(int);		//防御力設定
 	void SetSPD(int);		//速度設定
-	void SetEquipAtk(int);	//装備攻撃力設定
-	void SetEquipDef(int);	//装備防御力
+	//void SetEquipAtk(int);	//装備攻撃力設定
+	//void SetEquipDef(int);	//装備防御力
 
 	void SetSkil(int);		//スキル一覧を設定
 	void SetChoiseSkil(int);//使用するスキル設定
@@ -124,7 +128,6 @@ public:
 	void SetIsMenu(bool);		//メニュー描画中か設定
 	void SetIsBattleWin(bool);	//戦闘に勝ったか設定
 	void SetLevUpMsgStartFlg(bool);	//レベルアップメッセージスタートのフラグを設定
-	//void SetChengeMapKind(int);		//切り替えるマップの種類を設定
 	void ResetChengeMapKind(void);		//切り替えるマップの種類をリセット
 	void SetChengePos(int);				//マップ切り替えをしたときにプレイヤーの位置を設定
 
@@ -193,6 +196,7 @@ public:
 	int GetWeaponPossession(int);	//武器の所持数を取得する
 	int GetWeaponSize();			//所持している武器の数（種類）を取得する
 	bool GetWeaponAddFlg();			//装備を追加したかどうか取得
-
 	void SetWeaponAddFlg(bool);		//装備を追加したかどうか設定
+	void EquipWeapon(int);			//武器を装備する
+
 };

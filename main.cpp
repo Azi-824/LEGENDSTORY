@@ -285,7 +285,7 @@ void Play()
 				{
 					//選択肢の内容を更新する
 					std::string work;	//作業用
-					posseion_weapon->SelectClear();		//ダミー選択肢をクリア
+					posseion_weapon->SelectClear();		//選択肢をクリア
 
 					for (int i = 0; i < player->GetWeaponSize(); ++i)			//所持している武器の種類分ループ
 					{
@@ -318,13 +318,18 @@ void Play()
 						Yes_No->SetIsKeyOpe(false);				//はい、いいえの選択肢を操作不可能に
 
 						//武器の装備処理
-
+						//選択した武器の要素番号を取得し
+						//武器装備処理の引数として渡す
+						player->EquipWeapon(posseion_weapon->GetSelectNum());	//武器を装備する
 
 						Yes_No->SetSelectFlg(false);			//はい、いいえを選択していない状態へ
 
 						posseion_weapon->SetSelectFlg(false);	//武器を選択していない状態へ
 
 						posseion_weapon->SetIsKeyOpe(true);		//武器の選択肢操作可能に
+
+						posseion_weapon->NowSelectReset();		//武器の選択状態リセット
+						Yes_No->NowSelectReset();				//はい、いいえの選択状態リセット
 
 					}
 
