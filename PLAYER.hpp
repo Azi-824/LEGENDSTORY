@@ -198,4 +198,6 @@ public:
 	void SetWeaponAddFlg(bool);		//‘•”õ‚ğ’Ç‰Á‚µ‚½‚©‚Ç‚¤‚©İ’è
 	void EquipWeapon(int);			//•Ší‚ğ‘•”õ‚·‚é
 
+	//–h‹ïŠÖŒW‚Ìˆ—’Ç‰Á‚©‚ç
+
 };
