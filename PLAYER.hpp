@@ -10,6 +10,7 @@
 #include "ENEMY.hpp"
 #include "MAP.hpp"
 #include "WEAPON.hpp"
+#include "ARMOR.hpp"
 
 //################# マクロ定義 #######################
 #define EXP_INCREASE_VALUE	5		//経験値の最大値の増え幅
@@ -47,7 +48,9 @@ private:
 	COLLISION *Collision;	//当たり判定
 	SIKAKU *sikaku_draw;	//描画領域
 	CHARACTOR *Ilast;		//立ち絵
+
 	WEAPON *Weapon;			//武器
+	ARMOR *Armor;			//防具
 
 	std::string Name;		//キャラの名前
 
@@ -110,8 +113,6 @@ public:
 	void SetATK(int);		//攻撃力設定
 	void SetDEF(int);		//防御力設定
 	void SetSPD(int);		//速度設定
-	//void SetEquipAtk(int);	//装備攻撃力設定
-	//void SetEquipDef(int);	//装備防御力
 
 	void SetSkil(int);		//スキル一覧を設定
 	void SetChoiseSkil(int);//使用するスキル設定

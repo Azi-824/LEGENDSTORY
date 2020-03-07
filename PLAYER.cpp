@@ -15,6 +15,7 @@ PLAYER::PLAYER()
 	this->sikaku_draw = new SIKAKU();		//•`‰æ—Ìˆæ‚ğì¬
 
 	this->Weapon = new WEAPON();			//•Ší‚ğ¶¬
+	this->Armor = new ARMOR();				//–h‹ï‚ğ¶¬
 
 	return;
 }
@@ -186,20 +187,6 @@ void PLAYER::SetSPD(int spd)
 	this->SPD = spd;
 	return;
 }
-
-////‘•”õUŒ‚—Íİ’è
-//void PLAYER::SetEquipAtk(int equipatk)
-//{
-//	this->EquipAtk = equipatk;	//‘•”õUŒ‚—Íİ’è
-//	return;
-//}
-//
-////‘•”õ–hŒä—Íİ’è
-//void PLAYER::SetEquipDef(int equipdef)
-//{
-//	this->EquipDef = equipdef;	//‘•”õ–hŒä—Íİ’è
-//	return;
-//}
 
 //ƒXƒLƒ‹ˆê——‚ğİ’è
 void PLAYER::SetSkil(int skil)

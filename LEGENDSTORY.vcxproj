@@ -152,6 +152,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="ANIMATION.cpp" />
+    <ClCompile Include="AROMOR.cpp" />
     <ClCompile Include="CHARACTOR.cpp" />
     <ClCompile Include="COLLISION.cpp" />
     <ClCompile Include="DATA.cpp" />
@@ -164,6 +165,7 @@
     <ClCompile Include="ITEM.cpp" />
     <ClCompile Include="KEYDOWN.cpp" />
     <ClCompile Include="LIST.cpp" />
+    <ClCompile Include="LIST_ARMOR.cpp" />
     <ClCompile Include="LIST_WEAPON.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="MAP.cpp" />
@@ -179,6 +181,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="ANIMATION.hpp" />
+    <ClInclude Include="ARMOR.hpp" />
     <ClInclude Include="CHARACTOR.hpp" />
     <ClInclude Include="COLLISION.hpp" />
     <ClInclude Include="DATA.hpp" />
@@ -190,6 +193,7 @@
     <ClInclude Include="ITEM.hpp" />
     <ClInclude Include="KEYDOWN.hpp" />
     <ClInclude Include="LIST.hpp" />
+    <ClInclude Include="LIST_ARMOR.hpp" />
     <ClInclude Include="main.hpp" />
     <ClInclude Include="MAP.hpp" />
     <ClInclude Include="MENU.hpp" />

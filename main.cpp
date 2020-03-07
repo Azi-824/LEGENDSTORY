@@ -19,6 +19,7 @@
 #include "SELECT.hpp"
 #include "LIST_MGC.hpp"
 #include "LIST_WEAPON.hpp"
+#include "LIST_ARMOR.hpp"
 
 //########## グローバルオブジェクト ##########
 FPS *fps = new FPS(GAME_FPS_SPEED);							//FPSクラスのオブジェクトを生成
@@ -63,6 +64,7 @@ SELECT *posseion_weapon;//所持している武器の選択肢
 //一覧関係
 LIST_MGC *mgc_list;			//魔法一覧
 LIST_WEAPON *weapon_list;	//武器一覧
+LIST_ARMOR *armor_list;		//防具一覧
 
 //############## グローバル変数 ##############
 int GameSceneNow = (int)GAME_SCENE_TITLE;	//現在のゲームシーン
@@ -1295,6 +1297,7 @@ void Delete_Class()
 	delete weapon_list;		//weapon_listを破棄
 	delete posseion_weapon;	//possession_weaponを破棄
 	delete Yes_No;			//Yes_Noを破棄
+	delete armor_list;		//armor_listを破棄
 
 	//delete msg;//msg破棄
 
@@ -1619,6 +1622,9 @@ bool LoadGameData()
 
 	weapon_list = new LIST_WEAPON(LIST_DIR, WEAPON_LIST_NAME);	//武器一覧を生成
 	if (weapon_list->GetIsLoad() == false) { return false; }	//読み込み失敗
+
+	armor_list = new LIST_ARMOR(LIST_DIR, ARMOR_LIST_NAME);		//防具一覧を生成
+	if (armor_list->GetIsLoad() == false) { return false; }		//読み込み失敗
 
 
 	//選択肢関係
