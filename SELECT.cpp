@@ -29,32 +29,41 @@ SELECT::~SELECT()
 */
 bool SELECT::SelectOperation(KEYDOWN *keydown,MUSIC *se)
 {
-	if (keydown->IsKeyDownOne(KEY_INPUT_W))		//Wキーを押されたら
-	{
-		if (this->Str_itr != this->Str.begin())	//最初の要素を選択していなければ
-		{
-			//SEの再生
-			se->Play((int)SYS_SE_CURSOR);					//カーソル移動のSEを鳴らす
-			--this->Str_itr;		//前の要素へ
 
-		}
-	}
-	else if (keydown->IsKeyDownOne(KEY_INPUT_S))	//Sキーを押されたら
+	if (this->IsKeyOpe)		//キー操作可能なら
 	{
-		if (this->Str_itr != this->Str.end() - 1)	//最後の要素を選択していなければ
+		if (keydown->IsKeyDownOne(KEY_INPUT_W))		//Wキーを押されたら
+		{
+			if (this->Str_itr != this->Str.begin())	//最初の要素を選択していなければ
+			{
+				//SEの再生
+				se->Play((int)SYS_SE_CURSOR);					//カーソル移動のSEを鳴らす
+				--this->Str_itr;		//前の要素へ
+
+			}
+		}
+		else if (keydown->IsKeyDownOne(KEY_INPUT_S))	//Sキーを押されたら
+		{
+			if (this->Str_itr != this->Str.end() - 1)	//最後の要素を選択していなければ
+			{
+				//SEの再生
+				se->Play((int)SYS_SE_CURSOR);					//カーソル移動のSEを鳴らす
+				++this->Str_itr;		//次の要素へ
+			}
+		}
+		else if (keydown->IsKeyDownOne(KEY_INPUT_RETURN))	//エンターキーを押されたら
 		{
 			//SEの再生
-			se->Play((int)SYS_SE_CURSOR);					//カーソル移動のSEを鳴らす
-			++this->Str_itr;		//次の要素へ
+			se->Play((int)SYS_SE_KETTEI);		//決定の効果音を鳴らす
+			keydown->KeyDownUpdate();			//キー入力の状態をリセット
+
+			this->SelectFlg = true;				//選択された
+
+			return true;
 		}
+
 	}
-	else if (keydown->IsKeyDownOne(KEY_INPUT_RETURN))	//エンターキーを押されたら
-	{
-		//SEの再生
-		se->Play((int)SYS_SE_KETTEI);		//決定の効果音を鳴らす
-		keydown->KeyDownUpdate();			//キー入力の状態をリセット
-		return true;						
-	}
+
 	return false;
 
 }
@@ -199,4 +208,30 @@ void SELECT::Add(const char *str)
 	this->Str.push_back(str);	//選択肢追加
 	this->Str_itr = this->Str.begin();	//最初の要素を選択状態へ
 	return;
+}
+
+//キー操作可能か設定
+void SELECT::SetIsKeyOpe(bool iskeyope)
+{
+	this->IsKeyOpe = iskeyope;
+	return;
+}
+
+//キー操作可能か取得
+bool SELECT::GetIsKeyOpe(void)
+{
+	return this->IsKeyOpe;
+}
+
+//選択したか設定
+void SELECT::SetSelectFlg(bool selectflg)
+{
+	this->SelectFlg = selectflg;
+	return;
+}
+
+//選択したか取得
+bool SELECT::GetSelectFlg(void)
+{
+	return this->SelectFlg;
 }

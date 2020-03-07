@@ -39,6 +39,9 @@ private:
 
 	IMAGE *image_ui;	//UI画像
 
+	bool IsKeyOpe;		//キー操作可能か
+	bool SelectFlg;		//選択したか
+
 public:
 
 	//コンストラクタ
@@ -54,6 +57,10 @@ public:
 
 		this->Str = { args... };			//展開
 		this->Str_itr = this->Str.begin();	//先頭要素
+
+		this->IsKeyOpe = true;				//キー操作可能
+		this->SelectFlg = false;			//選択されていない
+
 		return;
 	}
 		
@@ -73,6 +80,12 @@ public:
 
 	void SetSize(void);						//画像サイズ設定
 	void Add(const char *);					//選択肢の内容を追加
+
+	void SetIsKeyOpe(bool);					//キー操作可能か設定する
+	bool GetIsKeyOpe(void);					//キー操作可能か取得する
+
+	void SetSelectFlg(bool);				//選択したか設定
+	bool GetSelectFlg(void);				//選択したか取得
 
 
 	//選択肢の内容を変更する

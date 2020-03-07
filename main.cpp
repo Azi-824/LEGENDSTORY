@@ -54,6 +54,7 @@ ITEM *item[ITEM_KIND];				//アイテム
 MAP *mapdata[DRAW_MAP_KIND][MAP_DATA_KIND];		//マップデータ
 
 //選択肢関係
+SELECT *Yes_No;			//はい、か、いいえの選択肢
 SELECT *Title_select;	//タイトル画面の選択肢
 SELECT *End_select;		//エンド画面の選択肢
 SELECT *bt_magic_list;	//スキルの選択肢
@@ -299,7 +300,35 @@ void Play()
 					player->SetWeaponAddFlg(false);				//武器の追加なし
 
 				}
-				posseion_weapon->SelectOperation(keydown, sys_se);	//武器の選択キー操作
+				//武器の選択キー操作
+				posseion_weapon->SelectOperation(keydown, sys_se);
+
+				if (posseion_weapon->GetSelectFlg())				//選択されたら
+				{
+					posseion_weapon->SetIsKeyOpe(false);		//武器の選択はできないように設定
+
+					Yes_No->SetIsKeyOpe(true);					//はい、いいえの選択肢の操作可能に
+
+					Yes_No->DrawCenter(GAME_WIDTH / 2, GAME_HEIGHT / 2, (int)SELECT_TRIANGLE_MINI);	//はい、いいえの選択肢描画
+
+					Yes_No->SelectOperation(keydown, sys_se);	//はい、いいえのキー操作
+
+					if (Yes_No->GetSelectFlg())					//選択されたら
+					{
+						Yes_No->SetIsKeyOpe(false);				//はい、いいえの選択肢を操作不可能に
+
+						//武器の装備処理
+
+
+						Yes_No->SetSelectFlg(false);			//はい、いいえを選択していない状態へ
+
+						posseion_weapon->SetSelectFlg(false);	//武器を選択していない状態へ
+
+						posseion_weapon->SetIsKeyOpe(true);		//武器の選択肢操作可能に
+
+					}
+
+				}
 			}
 
 		}
@@ -1251,6 +1280,7 @@ void Delete_Class()
 	delete mgc_list;		//mgc_listを破棄
 	delete weapon_list;		//weapon_listを破棄
 	delete posseion_weapon;	//possession_weaponを破棄
+	delete Yes_No;			//Yes_Noを破棄
 
 	//delete msg;//msg破棄
 
@@ -1578,6 +1608,7 @@ bool LoadGameData()
 
 
 	//選択肢関係
+	Yes_No = new SELECT("はい", "いいえ");				//はい、いいえの選択肢生成
 	Title_select = new SELECT("START", "END");			//タイトル画面の選択肢生成
 	End_select = new SELECT("TITLE", "PLAY", "END");	//エンド画面の選択肢生成
 
@@ -1647,6 +1678,7 @@ void SetSize()
 	ui->SetSize();				//UI画像のサイズ設定
 
 	//選択肢関係
+	Yes_No->SetSize();			//はい、いいえの選択肢の画像サイズ設定
 	Title_select->SetSize();	//タイトル画面の選択肢の画像サイズ設定
 	End_select->SetSize();		//エンド画面の選択肢の画像サイズ設定
 	bt_magic_list->SetSize();	//戦闘画面の魔法一覧の画像サイズ設定
