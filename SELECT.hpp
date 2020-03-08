@@ -41,6 +41,8 @@ private:
 
 	bool IsKeyOpe;		//キー操作可能か
 	bool SelectFlg;		//選択したか
+	bool IsDrawImage;	//UI画像を描画してよいか
+	bool Side_Mode;		//横向き描画か
 
 public:
 
@@ -60,6 +62,8 @@ public:
 
 		this->IsKeyOpe = true;				//キー操作可能
 		this->SelectFlg = false;			//選択されていない
+		this->IsDrawImage = true;			//UI画像描画してよい
+		this->Side_Mode = false;			//縦向きに選択肢を並べる
 
 		return;
 	}
@@ -68,8 +72,12 @@ public:
 	選択肢の内容を設定せずにオブジェクトの生成のみを行う
 	最初からキー操作可能かどうか設定できる
 	デフォルトはキー操作可能
+	UI画像を描画するか設定できる
+	デフォルトは描画できる
+	選択肢を横に並べるか、縦に並べるか設定できる
+	デフォルトは立て向きに並べる
 	*/
-	SELECT(bool iskeyope = true);			//コンストラクタのオーバーロード
+	SELECT(bool iskeyope = true,bool Isdraw=true,bool side=false);			//コンストラクタのオーバーロード
 
 	~SELECT();		//デストラクタ
 
@@ -81,7 +89,8 @@ public:
 	void SelectClear();						//選択肢の内容を消去する
 	void NowSelectReset();					//現在選択中の要素を最初に戻す
 
-	void Draw(int, int,int ,unsigned int color = GetColor(255, 255, 255));		//選択肢の内容を描画する
+	void Draw(int, int,int ,unsigned int color = GetColor(255, 255, 255));			//選択肢の内容を描画する
+	//void DrawSide(int, int, int, unsigned int color = GetColor(255, 255, 255));		//選択肢の内容を描画する(横向き)
 	void DrawCenter(int, int,int , unsigned int color = GetColor(255, 255, 255));	//選択肢の内容を中央に描画する
 
 	void SetSize(void);						//画像サイズ設定
@@ -92,6 +101,12 @@ public:
 
 	void SetSelectFlg(bool);				//選択したか設定
 	bool GetSelectFlg(void);				//選択したか取得
+
+	void SetIsDrawImage(bool);				//UI画像を描画してよいか設定
+	bool GetIsDrawImage(void);				//UI画像を描画してよいか取得
+
+	void SetSideMode(bool);					//選択肢を横向きに並べるか設定
+	bool GetSideMode(void);					//選択肢を横向きに並べるか取得
 
 
 	//選択肢の内容を変更する

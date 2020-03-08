@@ -61,6 +61,7 @@ SELECT *End_select;		//エンド画面の選択肢
 SELECT *bt_magic_list;	//スキルの選択肢
 SELECT *possession_weapon;	//所持している武器の選択肢
 SELECT *possession_armor;	//所持している防具の選択肢
+SELECT *Equip_select;		//装備画面の選択肢
 
 //一覧関係
 LIST_MGC *mgc_list;			//魔法一覧
@@ -1140,8 +1141,10 @@ void Play_Draw()
 			case (int)MENU_SOUBI:	//装備を選んだ時の処理ここから
 
 				//装備描画処理
-				possession_weapon->Draw(MENU_START_X, MENU_START_Y, (int)SELECT_TRIANGLE_MINI);			//武器描画
-				possession_armor->Draw(MENU_START_X + 300, MENU_START_Y, (int)SELECT_TRIANGLE_MINI);	//防具描画
+				//Equip_select->DrawSide(MENU_START_X, MENU_START_Y, (int)SELECT_TRIANGLE_MINI);			//装備選択描画
+				Equip_select->Draw(MENU_START_X, MENU_START_Y, (int)SELECT_TRIANGLE_MINI);				//装備選択描画
+				possession_weapon->Draw(MENU_START_X, MENU_START_Y+20, (int)SELECT_TRIANGLE_MINI);		//武器描画
+				possession_armor->Draw(MENU_START_X + 300, MENU_START_Y+20, (int)SELECT_TRIANGLE_MINI);	//防具描画
 
 				break;				//装備を選んだ時の処理ここまで
 
@@ -1343,6 +1346,7 @@ void Delete_Class()
 	delete possession_armor;	//possession_armorを破棄
 	delete Yes_No;			//Yes_Noを破棄
 	delete armor_list;		//armor_listを破棄
+	delete Equip_select;	//Equip_selectを破棄
 
 	//delete msg;//msg破棄
 
@@ -1680,6 +1684,9 @@ bool LoadGameData()
 	possession_weapon = new SELECT();			//所持している武器の選択肢を生成
 	possession_armor = new SELECT(false);		//所持している防具の選択肢を生成(最初はキー操作不可)
 
+	Equip_select = new SELECT("武器", "防具");	//装備画面の選択肢を生成
+	Equip_select->SetSideMode(true);			//選択肢を横向きに並べる
+
 	//*********************************** 魔法の選択肢を魔法一覧から設定、ここから *****************************************
 	std::vector<std::string> w;	//作業用
 	w.resize(mgc_list->GetListSize());	//作業用変数のサイズ変更
@@ -1729,6 +1736,40 @@ void SetGameInit()
 		player->AddArmor(armor_list->GetCodeNum(i), armor_list->GetDefense(i));		//防具追加
 	}
 
+
+
+	//選択肢の内容を更新する
+	//武器
+	std::string work;	//作業用
+
+	for (int i = 0; i < player->GetWeaponSize(); ++i)			//所持している武器の種類分ループ
+	{
+		work = weapon_list->GetName(player->GetWeaponCode(i));							//名前
+		work += "  ";																	//空白
+		work += std::to_string(player->GetWeaponPossession(player->GetWeaponCode(i)));	//所持数
+		work += "個";																	//個数表示
+
+		possession_weapon->Add(work.c_str());		//武器の選択肢追加
+
+	}
+
+	player->SetWeaponAddFlg(false);				//武器の追加なし
+
+	//防具
+	for (int i = 0; i < player->GetArmorSize(); ++i)			//所持している防具の種類分ループ
+	{
+		work = armor_list->GetName(player->GetArmorCode(i));							//名前
+		work += "  ";																	//空白
+		work += std::to_string(player->GetArmorPossession(player->GetArmorCode(i)));	//所持数
+		work += "個";																	//個数表示
+
+		possession_armor->Add(work.c_str());		//選択肢追加
+	}
+
+	player->SetArmorAddFlg(false);				//防具の追加なし
+
+	//後から変更
+
 }
 
 //ゲームで使用する画像などのサイズを設定する処理
@@ -1751,6 +1792,7 @@ void SetSize()
 	bt_magic_list->SetSize();	//戦闘画面の魔法一覧の画像サイズ設定
 	possession_weapon->SetSize();	//所持している武器の選択肢の画像サイズ設定
 	possession_armor->SetSize();	//所持している防具の選択肢の画像サイズ設定
+	Equip_select->SetSize();		//装備画面の選択肢の画像サイズ設定
 
 	//エフェクト関係
 	Magic_effect->SetSize();	//魔法エフェクトのサイズ設定

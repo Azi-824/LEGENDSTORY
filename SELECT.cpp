@@ -12,14 +12,20 @@
 選択肢の内容を設定せずにオブジェクトの生成のみを行う
 最初からキー操作可能かどうか設定できる
 デフォルトはキー操作可能
+UI画像を描画するか設定できる
+デフォルトは描画可能
+選択肢を横に並べるか、縦に並べるか設定できる
+デフォルトは立て向きに並べる
 */
-SELECT::SELECT(bool iskeyope)
+SELECT::SELECT(bool iskeyope,bool Isdraw,bool side)
 {
 	this->image_ui = new IMAGE(SELECT_DIR, SELECT_TRIANGLENAME);	//UI画像生成
 	this->image_ui->AddImage(SELECT_DIR, SELECT_TRIANGLE_MINI_NAME, 1);	//UI画像追加
 
 	this->IsKeyOpe = iskeyope;			//キー操作可能か
 	this->SelectFlg = false;			//選択されていない
+	this->IsDrawImage = Isdraw;			//UI画像を描画してよいか
+	this->Side_Mode = side;				//横向きに選択肢を並べるか
 
 	return;
 
@@ -45,26 +51,58 @@ void SELECT::SelectOperation(KEYDOWN *keydown,MUSIC *se)
 
 	if (this->IsKeyOpe)		//キー操作可能なら
 	{
-		if (keydown->IsKeyDownOne(KEY_INPUT_W))		//Wキーを押されたら
-		{
-			if (this->Str_itr != this->Str.begin())	//最初の要素を選択していなければ
-			{
-				//SEの再生
-				se->Play((int)SYS_SE_CURSOR);					//カーソル移動のSEを鳴らす
-				--this->Str_itr;		//前の要素へ
 
-			}
-		}
-		else if (keydown->IsKeyDownOne(KEY_INPUT_S))	//Sキーを押されたら
+		if (this->Side_Mode)	//横向きに選択肢が並んでいる場合は
 		{
-			if (this->Str_itr != this->Str.end() - 1)	//最後の要素を選択していなければ
+			//A、Dキーで操作
+			if (keydown->IsKeyDownOne(KEY_INPUT_A))		//Aキーを押されたら
 			{
-				//SEの再生
-				se->Play((int)SYS_SE_CURSOR);					//カーソル移動のSEを鳴らす
-				++this->Str_itr;		//次の要素へ
+				if (this->Str_itr != this->Str.begin())	//最初の要素を選択していなければ
+				{
+					//SEの再生
+					se->Play((int)SYS_SE_CURSOR);					//カーソル移動のSEを鳴らす
+					--this->Str_itr;		//前の要素へ
+
+				}
 			}
+			else if (keydown->IsKeyDownOne(KEY_INPUT_D))	//Dキーを押されたら
+			{
+				if (this->Str_itr != this->Str.end() - 1)	//最後の要素を選択していなければ
+				{
+					//SEの再生
+					se->Play((int)SYS_SE_CURSOR);					//カーソル移動のSEを鳴らす
+					++this->Str_itr;		//次の要素へ
+				}
+			}
+
+
 		}
-		else if (keydown->IsKeyDownOne(KEY_INPUT_RETURN))	//エンターキーを押されたら
+		else					//縦向きに選択肢が並んでいる場合は
+		{
+			//W、Sキーで操作
+			if (keydown->IsKeyDownOne(KEY_INPUT_W))		//Wキーを押されたら
+			{
+				if (this->Str_itr != this->Str.begin())	//最初の要素を選択していなければ
+				{
+					//SEの再生
+					se->Play((int)SYS_SE_CURSOR);					//カーソル移動のSEを鳴らす
+					--this->Str_itr;		//前の要素へ
+
+				}
+			}
+			else if (keydown->IsKeyDownOne(KEY_INPUT_S))	//Sキーを押されたら
+			{
+				if (this->Str_itr != this->Str.end() - 1)	//最後の要素を選択していなければ
+				{
+					//SEの再生
+					se->Play((int)SYS_SE_CURSOR);					//カーソル移動のSEを鳴らす
+					++this->Str_itr;		//次の要素へ
+				}
+			}
+
+		}
+
+		if (keydown->IsKeyDownOne(KEY_INPUT_RETURN))	//エンターキーを押されたら
 		{
 			//SEの再生
 			se->Play((int)SYS_SE_KETTEI);		//決定の効果音を鳴らす
@@ -121,32 +159,148 @@ void SELECT::NowSelectReset(void)
 */
 void SELECT::Draw(int x, int y,int kind,unsigned int color)
 {
-	static int Height = GetFontSize();	//高さ取得
 
-	for (int i = 0; i < this->Str.size(); ++i)
+	//***************************** サイズ取得処理 *******************************
+	static int Height = 0;		//高さ取得
+	static int Strlen = 0;		//文字列の長さ取得用
+	static int Width = 0;		//文字列の幅取得用
+
+	std::string MaxStr;	//最も長い文字列
+
+	MaxStr = this->Str[0].c_str();	//最も長い文字列に最初の文字列をセット
+
+	for (int i = 0; i < (int)this->Str.size(); i++)
 	{
-		if (*this->Str_itr == this->Str[i])			//選択中の要素だったら
+		if (MaxStr < this->Str[i].c_str())	//現在の最大文字列よりも大きければ
 		{
-
-			if (kind == (int)SELECT_TRIANGLE)	//通常サイズの場合
-			{
-				this->image_ui->Draw(x - this->image_ui->GetWidth(kind), y + i * Height + IMAGE_SPACE, kind);		//横向き三角描画
-			}
-			else							//ミニサイズの場合
-			{
-				this->image_ui->Draw(x - this->image_ui->GetWidth(kind), y + i * Height + IMAGE_MINI_SPACE, kind);	//横向き三角描画
-			}
-
-
-			DrawFormatString(x, y + i * Height, color, "%s", this->Str[i].c_str());	//選択肢描画
-		}
-		else
-		{
-			DrawFormatString(x, y + i * Height, color, "%s", this->Str[i].c_str());	//選択肢描画
+			MaxStr = this->Str[i].c_str();	//最大文字列を更新
 		}
 	}
 
+	//文字列の長さを取得
+	Strlen = strlen(MaxStr.c_str());
+
+	Width = GetDrawStringWidth(MaxStr.c_str(), Strlen);	//横幅取得
+
+	Height = GetFontSize();		//高さ取得
+
+
+	if (this->Side_Mode)		//横向きに選択肢を並べている場合
+	{
+		//******************************** 描画処理 ***************************************
+		for (int i = 0; i < this->Str.size(); ++i)
+		{
+			if (*this->Str_itr == this->Str[i])			//選択中の要素だったら
+			{
+
+				if (kind == (int)SELECT_TRIANGLE)	//通常サイズの場合
+				{
+					this->image_ui->Draw((x + i * Width) - this->image_ui->GetWidth(kind), y + IMAGE_SPACE, kind);		//横向き三角描画
+				}
+				else							//ミニサイズの場合
+				{
+					this->image_ui->Draw((x + i * Width) - this->image_ui->GetWidth(kind), y + IMAGE_MINI_SPACE, kind);	//横向き三角描画
+				}
+
+
+				DrawFormatString(x + i * Width, y, color, "%s", this->Str[i].c_str());	//選択肢描画
+			}
+			else
+			{
+				DrawFormatString(x + i * Width, y, color, "%s", this->Str[i].c_str());	//選択肢描画
+			}
+		}
+
+	}
+	else						//立て向きに選択肢を並んでいる場合
+	{
+		for (int i = 0; i < this->Str.size(); ++i)
+		{
+			if (*this->Str_itr == this->Str[i])			//選択中の要素だったら
+			{
+
+				if (kind == (int)SELECT_TRIANGLE)	//通常サイズの場合
+				{
+					this->image_ui->Draw(x - this->image_ui->GetWidth(kind), y + i * Height + IMAGE_SPACE, kind);		//横向き三角描画
+				}
+				else							//ミニサイズの場合
+				{
+					this->image_ui->Draw(x - this->image_ui->GetWidth(kind), y + i * Height + IMAGE_MINI_SPACE, kind);	//横向き三角描画
+				}
+
+
+				DrawFormatString(x, y + i * Height, color, "%s", this->Str[i].c_str());	//選択肢描画
+			}
+			else
+			{
+				DrawFormatString(x, y + i * Height, color, "%s", this->Str[i].c_str());	//選択肢描画
+			}
+		}
+
+	}
+
+
 }
+
+//選択肢の内容を描画する(横向き)
+/*
+引数：int：描画X位置
+引数：int：描画Y位置
+引数：unsigned int：描画色:デフォルトは白色
+*/
+//void SELECT::DrawSide(int x, int y, int kind, unsigned int color)
+//{
+//	//***************************** サイズ取得処理 *******************************
+//	static int Height = 0;		//高さ取得
+//	static int Strlen = 0;		//文字列の長さ取得用
+//	static int Width = 0;		//文字列の幅取得用
+//
+//	std::string MaxStr;	//最も長い文字列
+//
+//	MaxStr = this->Str[0].c_str();	//最も長い文字列に最初の文字列をセット
+//
+//	for (int i = 0; i < (int)this->Str.size(); i++)
+//	{
+//		if (MaxStr < this->Str[i].c_str())	//現在の最大文字列よりも大きければ
+//		{
+//			MaxStr = this->Str[i].c_str();	//最大文字列を更新
+//		}
+//	}
+//
+//	//文字列の長さを取得
+//	Strlen = strlen(MaxStr.c_str());
+//
+//	Width = GetDrawStringWidth(MaxStr.c_str(), Strlen);	//横幅取得
+//
+//	Height = GetFontSize();		//高さ取得
+//
+//
+//	//******************************** 描画処理 ***************************************
+//	for (int i = 0; i < this->Str.size(); ++i)
+//	{
+//		if (*this->Str_itr == this->Str[i])			//選択中の要素だったら
+//		{
+//
+//			if (kind == (int)SELECT_TRIANGLE)	//通常サイズの場合
+//			{
+//				this->image_ui->Draw((x + i * Width) - this->image_ui->GetWidth(kind), y + IMAGE_SPACE, kind);		//横向き三角描画
+//			}
+//			else							//ミニサイズの場合
+//			{
+//				this->image_ui->Draw((x + i * Width) - this->image_ui->GetWidth(kind), y + IMAGE_MINI_SPACE, kind);	//横向き三角描画
+//			}
+//
+//
+//			DrawFormatString(x + i * Width, y, color, "%s", this->Str[i].c_str());	//選択肢描画
+//		}
+//		else
+//		{
+//			DrawFormatString(x + i * Width, y, color, "%s", this->Str[i].c_str());	//選択肢描画
+//		}
+//	}
+//
+//}
+
 
 //選択肢の内容を中央に描画する
 /*
@@ -246,4 +400,30 @@ void SELECT::SetSelectFlg(bool selectflg)
 bool SELECT::GetSelectFlg(void)
 {
 	return this->SelectFlg;
+}
+
+//UI画像を描画してよいか設定
+void SELECT::SetIsDrawImage(bool isdraw)
+{
+	this->IsDrawImage = isdraw;
+	return;
+}
+
+//UI画像を描画してよいか取得
+bool SELECT::GetIsDrawImage(void)
+{
+	return this->IsDrawImage;
+}
+
+//選択肢を横向きに並べるか設定
+void SELECT::SetSideMode(bool side)
+{
+	this->Side_Mode = side;
+	return;
+}
+
+//選択肢を横向きに並べるか取得
+bool SELECT::GetSideMode(void)
+{
+	return this->Side_Mode;
 }
