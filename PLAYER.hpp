@@ -189,7 +189,7 @@ public:
 
 	void Recovery(void);			//‰ñ•œ‚³‚¹‚é
 
-	//‘•”õŠÖŒW
+	//•ŠíŠÖŒW
 	void AddWeapon(int, int);		//•Ší‚ğ’Ç‰Á‚·‚é
 	int GetWeaponCode(int);			//•ŠíƒR[ƒh”Ô†‚ğæ“¾‚·‚é
 	int GetWeaponPossession(int);	//•Ší‚ÌŠ”‚ğæ“¾‚·‚é
@@ -198,6 +198,14 @@ public:
 	void SetWeaponAddFlg(bool);		//‘•”õ‚ğ’Ç‰Á‚µ‚½‚©‚Ç‚¤‚©İ’è
 	void EquipWeapon(int);			//•Ší‚ğ‘•”õ‚·‚é
 
-	//–h‹ïŠÖŒW‚Ìˆ—’Ç‰Á‚©‚ç
+	//–h‹ïŠÖŒW
+	void AddArmor(int, int);		//–h‹ï‚ğ’Ç‰Á‚·‚é
+	int GetArmorCode(int);			//–h‹ïƒR[ƒh”Ô†‚ğæ“¾‚·‚é
+	int GetArmorPossession(int);	//–h‹ï‚ÌŠ”‚ğæ“¾‚·‚é
+	int GetArmorSize();				//Š‚µ‚Ä‚¢‚é–h‹ï‚Ì”ií—Şj‚ğæ“¾‚·‚é
+	bool GetArmorAddFlg();			//–h‹ï‚ğ’Ç‰Á‚µ‚½‚©‚Ç‚¤‚©æ“¾
+	void SetArmorAddFlg(bool);		//–h‹ï‚ğ’Ç‰Á‚µ‚½‚©‚Ç‚¤‚©İ’è
+	void EquipArmor(int);			//–h‹ï‚ğ‘•”õ‚·‚é
+
 
 };

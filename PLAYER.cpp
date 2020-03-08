@@ -1038,3 +1038,89 @@ void PLAYER::EquipWeapon(int element)
 	return;
 
 }
+
+//–h‹ï‚ğ’Ç‰Á‚·‚é
+void PLAYER::AddArmor(int codenum, int equipdef)
+{
+
+	bool hold_flg = false;	//–h‹ï‚Ì“o˜^‚ªÏ‚ñ‚Å‚¢‚é‚©”»’è
+
+	if (this->Armor->GetSize() == 0)			//–h‹ï‚ğˆêí—Ş‚à‚Á‚Ä‚¢‚È‚¢‚Æ‚«
+	{
+		hold_flg = false;	//–h‹ï‚Ì“o˜^‚ğ‚µ‚Ä‚¢‚È‚¢
+	}
+
+	for (int i = 0; i < this->Armor->GetSize(); ++i)	//“o˜^‚³‚ê‚Ä‚¢‚é–h‹ï‚Ìí—Ş•ªƒ‹[ƒv‚·‚é
+	{
+		if (this->Armor->GetCodeNum(i) == codenum)	//–h‹ï‚Ì“o˜^‚ª‚³‚ê‚Ä‚¢‚éê‡
+		{
+			hold_flg = true;	//–h‹ï‚Ì“o˜^‚ªÏ‚ñ‚Å‚¢‚é
+			break;				//ŒJ‚è•Ô‚µ‚ğ”²‚¯‚é
+		}
+		else					//–h‹ï‚Ì“o˜^‚ª‚³‚ê‚Ä‚¢‚È‚¢ê‡
+		{
+			hold_flg = false;	//–h‹ï‚Ì“o˜^‚ªÏ‚ñ‚Å‚¢‚È‚¢
+		}
+	}
+
+	if (hold_flg == false)		//–h‹ï‚Ì“o˜^‚ªÏ‚ñ‚Å‚¢‚È‚¢ê‡
+	{
+		//–h‹ï‚Ì“o˜^ˆ—
+		this->Armor->Add(codenum);		//–h‹ï“o˜^
+		this->Armor->SetDef(equipdef);	//–hŒä—Í“o˜^
+		this->Armor->SetSize();			//—v‘f”İ’è
+	}
+	else						//–h‹ï‚Ì“o˜^‚ªÏ‚ñ‚Å‚¢‚éê‡
+	{
+		this->Armor->AddPossession(codenum);	//Š”‘‰Á
+	}
+
+	return;
+
+}
+
+//–h‹ïƒR[ƒh”Ô†‚ğæ“¾‚·‚é
+int PLAYER::GetArmorCode(int kind)
+{
+	return this->Armor->GetCodeNum(kind);	//–h‹ïƒR[ƒh”Ô†æ“¾
+}
+
+//–h‹ï‚ÌŠ”‚ğæ“¾‚·‚é
+int PLAYER::GetArmorPossession(int kind)
+{
+	return this->Armor->GetPossessionNum(kind);	//–h‹ï‚ÌŠ”‚ğæ“¾
+}
+
+//Š‚µ‚Ä‚¢‚é–h‹ï‚Ì”ií—Şj‚ğæ“¾‚·‚é
+int PLAYER::GetArmorSize()
+{
+	return this->Armor->GetSize();
+}
+
+//–h‹ï‚ğ’Ç‰Á‚µ‚½‚©‚Ç‚¤‚©æ“¾
+bool PLAYER::GetArmorAddFlg()
+{
+	return this->Armor->GetAddFlg();
+}
+
+//–h‹ï‚ğ’Ç‰Á‚µ‚½‚©‚Ç‚¤‚©İ’è
+void PLAYER::SetArmorAddFlg(bool addflg)
+{
+	this->Armor->SetAddFlg(addflg);
+	return;
+}
+
+//–h‹ï‚ğ‘•”õ‚·‚é
+void PLAYER::EquipArmor(int element)
+{
+
+	this->Equip_ArmorCode = this->Armor->GetCodeNum(element);	//‘•”õ‚ÌƒR[ƒh”Ô†‚ğæ“¾
+
+	this->EquipDef = this->Armor->GetDef(this->Equip_ArmorCode);	//‘•”õƒR[ƒh‚ğŠî‚ÉA‘•”õ‚Ì–hŒä—Í‚ğæ“¾
+
+	this->Armor->SetEquipFlg(this->Equip_ArmorCode, true);	//–h‹ï‚ğ‘•”õ‚µ‚Ä‚¢‚é
+
+	return;
+
+}
+

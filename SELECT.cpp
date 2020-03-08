@@ -7,6 +7,23 @@
 
 //###################### クラス定義 ##########################
 
+//コンストラクタのオーバーロード
+/*
+選択肢の内容を設定せずにオブジェクトの生成のみを行う
+最初からキー操作可能かどうか設定できる
+デフォルトはキー操作可能
+*/
+SELECT::SELECT(bool iskeyope)
+{
+	this->image_ui = new IMAGE(SELECT_DIR, SELECT_TRIANGLENAME);	//UI画像生成
+	this->image_ui->AddImage(SELECT_DIR, SELECT_TRIANGLE_MINI_NAME, 1);	//UI画像追加
+
+	this->IsKeyOpe = iskeyope;			//キー操作可能か
+	this->SelectFlg = false;			//選択されていない
+
+	return;
+
+}
 
 //デストラクタ
 SELECT::~SELECT()
@@ -23,10 +40,6 @@ SELECT::~SELECT()
 }
 
 //選択肢のキー操作
-/*
-戻り値：エンターキーを押されたら:true
-戻り値：エンターキー押されていなければ:false
-*/
 void SELECT::SelectOperation(KEYDOWN *keydown,MUSIC *se)
 {
 
