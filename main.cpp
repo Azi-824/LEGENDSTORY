@@ -1106,7 +1106,7 @@ void Play_Draw()
 		if (ui->GetIsChoise())	//選択したら
 		{
 
-			ui->DrawWindow(GAME_LEFT, GAME_TOP, GAME_WIDTH, GAME_HEIGHT);	//ウィンドウ描画
+			ui->DrawWindow(MENU_WINDOW_X, MENU_WINDOW_Y, MENU_WINDOW_WIDTH, MENU_WINDOW_HEIGHT);	//ウィンドウ描画
 
 			switch (ui->GetChoiseMenu())		//選んだ内容ごとに処理を分ける
 			{
@@ -1114,7 +1114,7 @@ void Play_Draw()
 			case (int)MENU_STATUS:	//ステータスを選んだ時の処理ここから
 
 				//ステータス描画
-				DrawFormatString(GAME_LEFT, GAME_TOP, GetColor(255, 255, 255), "%s\n経験値：%d/%d\nHP %d/%d\nMP %d/%d\nATK %d\nDEF %d\nSPD %d",
+				DrawFormatString(MENU_TEXT_X, MENU_TEXT_Y, GetColor(255, 255, 255), "%s\n経験値：%d/%d\nHP %d/%d\nMP %d/%d\nATK %d\nDEF %d\nSPD %d",
 					player->GetName(),		//名前
 					player->GetEXP(),		//現在の経験値
 					player->GetMaxEXP(),	//最大経験値
@@ -1133,7 +1133,7 @@ void Play_Draw()
 				//アイテム描画処理
 				for (int cnt = 0; cnt < ITEM_KIND; ++cnt)
 				{
-					DrawFormatString(GAME_LEFT, cnt * MENU_SPACE, GetColor(255, 255, 255), "%s %s\n", item[cnt]->GetName(), item[cnt]->GetDescription());
+					DrawFormatString(MENU_TEXT_X, MENU_TEXT_Y + cnt * MENU_SPACE, GetColor(255, 255, 255), "%s %s\n", item[cnt]->GetName(), item[cnt]->GetDescription());
 				}
 
 				break;				//アイテムを選んだときの処理ここまで
@@ -1142,9 +1142,9 @@ void Play_Draw()
 
 				//装備描画処理
 				//Equip_select->DrawSide(MENU_START_X, MENU_START_Y, (int)SELECT_TRIANGLE_MINI);			//装備選択描画
-				Equip_select->Draw(MENU_START_X, MENU_START_Y, (int)SELECT_TRIANGLE_MINI);				//装備選択描画
-				possession_weapon->Draw(MENU_START_X, MENU_START_Y+20, (int)SELECT_TRIANGLE_MINI);		//武器描画
-				possession_armor->Draw(MENU_START_X + 300, MENU_START_Y+20, (int)SELECT_TRIANGLE_MINI);	//防具描画
+				Equip_select->Draw(MENU_TEXT_X, MENU_TEXT_Y, (int)SELECT_TRIANGLE_MINI);				//装備選択描画
+				possession_weapon->Draw(MENU_TEXT_X, MENU_TEXT_Y+20, (int)SELECT_TRIANGLE_MINI);		//武器描画
+				possession_armor->Draw(MENU_TEXT_X + 300, MENU_TEXT_Y+20, (int)SELECT_TRIANGLE_MINI);	//防具描画
 
 				break;				//装備を選んだ時の処理ここまで
 
@@ -1162,7 +1162,7 @@ void Play_Draw()
 			case (int)MENU_SAVE:	//セーブを選んだ時の処理ここから
 
 				//セーブ時の描画処理
-				DrawString(0, 0, "セーブ中です。", GetColor(255, 255, 255));	//文字描画
+				DrawString(MENU_TEXT_X, MENU_TEXT_Y, "セーブ中です。", GetColor(255, 255, 255));	//文字描画
 
 				break;				//セーブを選んだ時の処理ここまで
 
