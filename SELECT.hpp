@@ -22,6 +22,8 @@
 
 #define TRIANGLE_MINI_SIZE	14	//横向き三角（ミニ）のサイズ
 
+#define SELECT_SIDE_SPACE	300	//選択肢を横向きに並べたときの間隔
+
 //##################### 列挙型 #############################
 enum SELECT_IMAGE_TYPE
 {
@@ -70,14 +72,8 @@ public:
 	
 	/*
 	選択肢の内容を設定せずにオブジェクトの生成のみを行う
-	最初からキー操作可能かどうか設定できる
-	デフォルトはキー操作可能
-	UI画像を描画するか設定できる
-	デフォルトは描画できる
-	選択肢を横に並べるか、縦に並べるか設定できる
-	デフォルトは立て向きに並べる
 	*/
-	SELECT(bool iskeyope = true,bool Isdraw=true,bool side=false);			//コンストラクタのオーバーロード
+	SELECT();			//コンストラクタのオーバーロード
 
 	~SELECT();		//デストラクタ
 
@@ -89,7 +85,7 @@ public:
 	void SelectClear();						//選択肢の内容を消去する
 	void NowSelectReset();					//現在選択中の要素を最初に戻す
 
-	void Draw(int, int,int ,unsigned int color = GetColor(255, 255, 255));			//選択肢の内容を描画する
+	void Draw(int, int,int ,unsigned int color = GetColor(255, 255, 255),int side_space= SELECT_SIDE_SPACE);			//選択肢の内容を描画する
 	//void DrawSide(int, int, int, unsigned int color = GetColor(255, 255, 255));		//選択肢の内容を描画する(横向き)
 	void DrawCenter(int, int,int , unsigned int color = GetColor(255, 255, 255));	//選択肢の内容を中央に描画する
 

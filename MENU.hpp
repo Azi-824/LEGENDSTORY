@@ -11,6 +11,7 @@
 //######################### マクロ定義 ###########################
 #define MENU_SPACE	30			//文字と文字の間隔
 
+//メニュー一覧
 #define MENU_LIST_WINDOW_RELATIVE_X	100	//メニューウィンドウ(一覧)の相対位置(X)
 #define MENU_LIST_WINDOW_RELATIVE_Y	100	//メニューウィンドウ(一覧)の相対位置(Y)
 #define MENU_LIST_WINDOW_WIDTH	150		//メニューウィンド(一覧)の幅
@@ -18,6 +19,7 @@
 #define MENU_WINDOW_CHENGE_POSX	100		//メニューウィンドウ(一覧)を左右どちらに表示するか判断するときのX位置
 #define MENU_WINDOW_CHENGE_POSY	85		//メニューウィンドウ(一覧)を左右どちらに表示するか判断するときのY位置
 
+//メニュー毎
 #define MENU_WINDOW_X	200				//選んだメニュー毎のウィンドウの描画開始X位置
 #define MENU_WINDOW_Y	50				//選んだメニュー毎のウィンドウの描画開始Y位置
 #define MENU_TEXT_X		220				//選んだメニュー毎の内容の描画開始X位置

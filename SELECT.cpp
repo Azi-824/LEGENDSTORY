@@ -10,22 +10,16 @@
 //コンストラクタのオーバーロード
 /*
 選択肢の内容を設定せずにオブジェクトの生成のみを行う
-最初からキー操作可能かどうか設定できる
-デフォルトはキー操作可能
-UI画像を描画するか設定できる
-デフォルトは描画可能
-選択肢を横に並べるか、縦に並べるか設定できる
-デフォルトは立て向きに並べる
 */
-SELECT::SELECT(bool iskeyope,bool Isdraw,bool side)
+SELECT::SELECT()
 {
 	this->image_ui = new IMAGE(SELECT_DIR, SELECT_TRIANGLENAME);	//UI画像生成
 	this->image_ui->AddImage(SELECT_DIR, SELECT_TRIANGLE_MINI_NAME, 1);	//UI画像追加
 
-	this->IsKeyOpe = iskeyope;			//キー操作可能か
-	this->SelectFlg = false;			//選択されていない
-	this->IsDrawImage = Isdraw;			//UI画像を描画してよいか
-	this->Side_Mode = side;				//横向きに選択肢を並べるか
+	this->IsKeyOpe = true;			//キー操作可能
+	this->SelectFlg = false;		//選択されていない
+	this->IsDrawImage = true;		//UI画像を描画してよい
+	this->Side_Mode = false;		//横向きに選択肢を並べない
 
 	return;
 
@@ -157,7 +151,7 @@ void SELECT::NowSelectReset(void)
 引数：int：描画Y位置
 引数：unsigned int：描画色:デフォルトは白色
 */
-void SELECT::Draw(int x, int y,int kind,unsigned int color)
+void SELECT::Draw(int x, int y,int kind,unsigned int color,int side_select)
 {
 
 	//***************************** サイズ取得処理 *******************************
@@ -195,19 +189,19 @@ void SELECT::Draw(int x, int y,int kind,unsigned int color)
 
 				if (kind == (int)SELECT_TRIANGLE)	//通常サイズの場合
 				{
-					this->image_ui->Draw((x + i * Width) - this->image_ui->GetWidth(kind), y + IMAGE_SPACE, kind);		//横向き三角描画
+					this->image_ui->Draw((x + i * side_select) - this->image_ui->GetWidth(kind), y + IMAGE_SPACE, kind);		//横向き三角描画
 				}
 				else							//ミニサイズの場合
 				{
-					this->image_ui->Draw((x + i * Width) - this->image_ui->GetWidth(kind), y + IMAGE_MINI_SPACE, kind);	//横向き三角描画
+					this->image_ui->Draw((x + i * side_select) - this->image_ui->GetWidth(kind), y + IMAGE_MINI_SPACE, kind);	//横向き三角描画
 				}
 
 
-				DrawFormatString(x + i * Width, y, color, "%s", this->Str[i].c_str());	//選択肢描画
+				DrawFormatString(x + i * side_select, y, color, "%s", this->Str[i].c_str());	//選択肢描画
 			}
 			else
 			{
-				DrawFormatString(x + i * Width, y, color, "%s", this->Str[i].c_str());	//選択肢描画
+				DrawFormatString(x + i * side_select, y, color, "%s", this->Str[i].c_str());	//選択肢描画
 			}
 		}
 
