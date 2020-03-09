@@ -187,15 +187,18 @@ void SELECT::Draw(int x, int y,int kind,unsigned int color,int side_select)
 			if (*this->Str_itr == this->Str[i])			//選択中の要素だったら
 			{
 
-				if (kind == (int)SELECT_TRIANGLE)	//通常サイズの場合
+				if (this->IsDrawImage)	//表示してよければ
 				{
-					this->image_ui->Draw((x + i * side_select) - this->image_ui->GetWidth(kind), y + IMAGE_SPACE, kind);		//横向き三角描画
-				}
-				else							//ミニサイズの場合
-				{
-					this->image_ui->Draw((x + i * side_select) - this->image_ui->GetWidth(kind), y + IMAGE_MINI_SPACE, kind);	//横向き三角描画
-				}
+					if (kind == (int)SELECT_TRIANGLE)	//通常サイズの場合
+					{
+						this->image_ui->Draw((x + i * side_select) - this->image_ui->GetWidth(kind), y + IMAGE_SPACE, kind);		//横向き三角描画
+					}
+					else							//ミニサイズの場合
+					{
+						this->image_ui->Draw((x + i * side_select) - this->image_ui->GetWidth(kind), y + IMAGE_MINI_SPACE, kind);	//横向き三角描画
+					}
 
+				}
 
 				DrawFormatString(x + i * side_select, y, color, "%s", this->Str[i].c_str());	//選択肢描画
 			}
@@ -212,14 +215,16 @@ void SELECT::Draw(int x, int y,int kind,unsigned int color,int side_select)
 		{
 			if (*this->Str_itr == this->Str[i])			//選択中の要素だったら
 			{
-
-				if (kind == (int)SELECT_TRIANGLE)	//通常サイズの場合
+				if (this->IsDrawImage)		//表示してよければ
 				{
-					this->image_ui->Draw(x - this->image_ui->GetWidth(kind), y + i * Height + IMAGE_SPACE, kind);		//横向き三角描画
-				}
-				else							//ミニサイズの場合
-				{
-					this->image_ui->Draw(x - this->image_ui->GetWidth(kind), y + i * Height + IMAGE_MINI_SPACE, kind);	//横向き三角描画
+					if (kind == (int)SELECT_TRIANGLE)	//通常サイズの場合
+					{
+						this->image_ui->Draw(x - this->image_ui->GetWidth(kind), y + i * Height + IMAGE_SPACE, kind);		//横向き三角描画
+					}
+					else							//ミニサイズの場合
+					{
+						this->image_ui->Draw(x - this->image_ui->GetWidth(kind), y + i * Height + IMAGE_MINI_SPACE, kind);	//横向き三角描画
+					}
 				}
 
 
