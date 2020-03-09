@@ -86,7 +86,6 @@ public:
 	void NowSelectReset();					//現在選択中の要素を最初に戻す
 
 	void Draw(int, int,int ,unsigned int color = GetColor(255, 255, 255),int side_space= SELECT_SIDE_SPACE);			//選択肢の内容を描画する
-	//void DrawSide(int, int, int, unsigned int color = GetColor(255, 255, 255));		//選択肢の内容を描画する(横向き)
 	void DrawCenter(int, int,int , unsigned int color = GetColor(255, 255, 255));	//選択肢の内容を中央に描画する
 
 	void SetSize(void);						//画像サイズ設定
