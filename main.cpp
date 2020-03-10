@@ -1236,7 +1236,7 @@ void Play_Draw()
 
 				if (Menu_Equip_dir == (int)MENU_EQUIP_SELECT_DECISION)		//選択肢の段階が、はい、いいえの段階だったら
 				{
-					Yes_No->DrawCenter(GAME_WIDTH / 2, GAME_HEIGHT / 2, (int)SELECT_TRIANGLE_MINI);	//はい、いいえの選択肢描画
+					Yes_No->DrawCenter(MENU_WINDOW_X + MENU_WINDOW_WIDTH / 2, MENU_WINDOW_Y + MENU_WINDOW_HEIGHT / 2, (int)SELECT_TRIANGLE_MINI);	//はい、いいえの選択肢描画
 				}
 
 				break;				//装備を選んだ時の処理ここまで
