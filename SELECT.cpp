@@ -21,6 +21,9 @@ SELECT::SELECT()
 	this->IsDrawImage = true;		//UI画像を描画してよい
 	this->Side_Mode = false;		//横向きに選択肢を並べない
 
+	this->DefIsKeyOpe = true;		//デフォルトはキー操作可能
+	this->DefIsDrawImage = true;	//デフォルトはUI表示
+
 	return;
 
 }
@@ -365,4 +368,22 @@ void SELECT::SetSideMode(bool side)
 bool SELECT::GetSideMode(void)
 {
 	return this->Side_Mode;
+}
+
+//デフォルトの状態を設定
+void SELECT::SetDefault(bool defiskey, bool defisdraw)
+{
+	this->DefIsKeyOpe = defiskey;		//キー操作可能か、デフォルト値
+	this->DefIsDrawImage = defisdraw;	//UI画像描画してよいか、デフォルト値
+	return;
+}
+
+//デフォルトの値に戻す
+void SELECT::Default(void)
+{
+	this->IsKeyOpe = this->DefIsKeyOpe;			//キー操作をデフォルトの状態へ
+	this->IsDrawImage = this->DefIsDrawImage;	//UI表示をデフォルトの状態へ
+	this->SelectFlg = false;					//選択していない
+	this->NowSelectReset();						//現在の選択をリセット
+	return;
 }

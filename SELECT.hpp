@@ -46,6 +46,10 @@ private:
 	bool IsDrawImage;	//UI画像を描画してよいか
 	bool Side_Mode;		//横向き描画か
 
+	bool DefIsKeyOpe;		//キー操作可能か、デフォルト値
+	bool DefIsDrawImage;	//UI画像を描画してよいか、デフォルト値
+
+
 public:
 
 	//コンストラクタ
@@ -66,6 +70,9 @@ public:
 		this->SelectFlg = false;			//選択されていない
 		this->IsDrawImage = true;			//UI画像描画してよい
 		this->Side_Mode = false;			//縦向きに選択肢を並べる
+
+		this->DefIsKeyOpe = true;		//デフォルトはキー操作可能
+		this->DefIsDrawImage = true;	//デフォルトはUI表示
 
 		return;
 	}
@@ -102,6 +109,9 @@ public:
 
 	void SetSideMode(bool);					//選択肢を横向きに並べるか設定
 	bool GetSideMode(void);					//選択肢を横向きに並べるか取得
+
+	void SetDefault(bool, bool);			//デフォルトの状態を設定
+	void Default();							//デフォルトの状態に戻す
 
 
 	//選択肢の内容を変更する

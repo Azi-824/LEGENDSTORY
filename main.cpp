@@ -447,25 +447,10 @@ void Play()
 	else			//メニュー描画終了してたら
 	{
 		//****************************** ここから、選択肢のリセット処理 *******************************
-		Yes_No->SetIsKeyOpe(false);				//はい、いいえの選択肢を操作不可能に
-		Yes_No->SetSelectFlg(false);			//はい、いいえを選択していない状態へ
-		Yes_No->NowSelectReset();				//はい、いいえの選択状態リセット
-
-		possession_weapon->SetSelectFlg(false);		//武器を選択していない状態へ
-		possession_weapon->SetIsKeyOpe(true);		//武器の選択肢操作可能に
-		possession_weapon->NowSelectReset();		//武器の選択状態リセット
-		possession_weapon->SetIsDrawImage(false);	//武器の選択肢UI非表示
-
-		possession_armor->SetSelectFlg(false);		//防具を選択していない状態へ
-		possession_armor->SetIsKeyOpe(false);		//防具の選択肢操作不可能に
-		possession_armor->NowSelectReset();			//防具の選択状態リセット
-		possession_armor->SetIsDrawImage(false);	//防具の選択肢UI非表示
-
-		Equip_select->SetSelectFlg(false);			//武器、防具選択していない
-		Equip_select->SetIsKeyOpe(true);			//武器、防具キー操作可能
-		Equip_select->NowSelectReset();				//武器、防具の選択状態リセット
-		Equip_select->SetIsDrawImage(true);			//武器、防具のUI表示
-
+		Yes_No->Default();					//はい、いいえの選択肢をデフォルトの状態に戻す
+		possession_weapon->Default();		//武器の選択肢をデフォルトの状態に戻す
+		possession_armor->Default();		//防具の選択肢をデフォルトの状態に戻す
+		Equip_select->Default();			//武器、防具の選択肢をデフォルトの状態に戻す
 
 		ui->ResetMenu();	//メニュー関係のリセット
 	}
@@ -1745,16 +1730,23 @@ bool LoadGameData()
 
 	//選択肢関係
 	Yes_No = new SELECT("はい", "いいえ");				//はい、いいえの選択肢生成
+	Yes_No->SetDefault(false, true);					//デフォルトではキー操作不可、UI表示に設定
+	Yes_No->Default();									//デフォルトで設定
+
 	Title_select = new SELECT("START", "END");			//タイトル画面の選択肢生成
 	End_select = new SELECT("TITLE", "PLAY", "END");	//エンド画面の選択肢生成
 
 	possession_weapon = new SELECT();			//所持している武器の選択肢を生成
-	possession_weapon->SetIsKeyOpe(false);		//武器の選択肢(最初はキー操作不可)
-	possession_weapon->SetIsDrawImage(false);	//武器の選択肢UI非表示
+	possession_weapon->SetDefault(false, false);//デフォルトはキー操作不可、UI非表示に設定
+	possession_weapon->Default();				//デフォルトで設定
+	//possession_weapon->SetIsKeyOpe(false);		//武器の選択肢(最初はキー操作不可)
+	//possession_weapon->SetIsDrawImage(false);	//武器の選択肢UI非表示
 
 	possession_armor = new SELECT();			//所持している防具の選択肢を生成
-	possession_armor->SetIsKeyOpe(false);		//防具の選択肢(最初はキー操作不可)
-	possession_armor->SetIsDrawImage(false);	//防具の選択肢UI非表示
+	possession_armor->SetDefault(false, false);//デフォルトはキー操作不可、UI非表示に設定
+	possession_armor->Default();				//デフォルトで設定
+	//possession_armor->SetIsKeyOpe(false);		//防具の選択肢(最初はキー操作不可)
+	//possession_armor->SetIsDrawImage(false);	//防具の選択肢UI非表示
 
 	Equip_select = new SELECT("武器", "防具");	//装備画面の選択肢を生成
 	Equip_select->SetSideMode(true);			//選択肢を横向きに並べる
