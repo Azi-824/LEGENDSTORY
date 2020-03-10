@@ -372,7 +372,6 @@ void Play()
 
 							Menu_Equip_dir = (int)MENU_EQUIP_SELECT_DECISION;	//選択肢の段階を次へ
 
-							//Yes_No->SetIsKeyOpe(true);					//はい、いいえの選択肢の操作可能に
 						}
 
 						break;	//武器を選んだときここまで
@@ -400,7 +399,6 @@ void Play()
 							possession_armor->SetIsDrawImage(false);//防具の選択肢UI非表示
 							Menu_Equip_dir = (int)MENU_EQUIP_SELECT_DECISION;	//選択肢の段階を次へ
 
-							//Yes_No->SetIsKeyOpe(true);				//はい、いいえの選択肢の操作可能に
 						}
 
 
@@ -417,8 +415,6 @@ void Play()
 
 					Yes_No->SetIsKeyOpe(true);					//はい、いいえの選択肢の操作可能に
 					Yes_No->SelectOperation(keydown, sys_se);	//はい、いいえの選択肢のキー操作
-
-					Yes_No->DrawCenter(GAME_WIDTH / 2, GAME_HEIGHT / 2, (int)SELECT_TRIANGLE_MINI);	//はい、いいえの選択肢描画
 
 					if (Yes_No->GetSelectFlg())					//装備するか選択したら
 					{
@@ -1234,10 +1230,14 @@ void Play_Draw()
 			case (int)MENU_SOUBI:	//装備を選んだ時の処理ここから
 
 				//装備描画処理
-				//Equip_select->DrawSide(MENU_START_X, MENU_START_Y, (int)SELECT_TRIANGLE_MINI);			//装備選択描画
 				Equip_select->Draw(MENU_TEXT_X, MENU_TEXT_Y, (int)SELECT_TRIANGLE_MINI);				//装備選択描画
 				possession_weapon->Draw(MENU_TEXT_X, MENU_TEXT_Y+20, (int)SELECT_TRIANGLE_MINI);		//武器描画
 				possession_armor->Draw(MENU_TEXT_X + 300, MENU_TEXT_Y+20, (int)SELECT_TRIANGLE_MINI);	//防具描画
+
+				if (Menu_Equip_dir == (int)MENU_EQUIP_SELECT_DECISION)		//選択肢の段階が、はい、いいえの段階だったら
+				{
+					Yes_No->DrawCenter(GAME_WIDTH / 2, GAME_HEIGHT / 2, (int)SELECT_TRIANGLE_MINI);	//はい、いいえの選択肢描画
+				}
 
 				break;				//装備を選んだ時の処理ここまで
 
