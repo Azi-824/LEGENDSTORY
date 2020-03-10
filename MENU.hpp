@@ -38,6 +38,13 @@ enum MENU_COMMAND
 	MENU_SAVE			//セーブ
 };
 
+enum MENU_EQUIP_DIR
+{
+	MENU_EQUIP_SELECT_KIND,		//武器か防具かを選択する段階
+	MENU_EQUIP_SELECT_EQUIP,	//装備する武器、もしくは防具を選択する段階
+	MENU_EQUIP_SELECT_DECISION	//装備するか選択する段階（はい、か、いいえ）
+};
+
 //######################### クラス定義 ###########################
 class MENU
 {

@@ -45,6 +45,7 @@ private:
 	bool SelectFlg;		//選択したか
 	bool IsDrawImage;	//UI画像を描画してよいか
 	bool Side_Mode;		//横向き描画か
+	bool BackFlg;		//戻るを選んだか
 
 	bool DefIsKeyOpe;		//キー操作可能か、デフォルト値
 	bool DefIsDrawImage;	//UI画像を描画してよいか、デフォルト値
@@ -112,6 +113,9 @@ public:
 
 	void SetDefault(bool, bool);			//デフォルトの状態を設定
 	void Default();							//デフォルトの状態に戻す
+
+	void SetBackFlg(bool);					//戻るを選択したか設定
+	bool GetBackFlg(void);					//戻るを選択したか取得
 
 
 	//選択肢の内容を変更する

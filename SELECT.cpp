@@ -108,6 +108,14 @@ void SELECT::SelectOperation(KEYDOWN *keydown,MUSIC *se)
 			this->SelectFlg = true;				//選択された
 
 		}
+		else if (keydown->IsKeyDownOne(KEY_INPUT_BACK))	//バックスペースキーを押されたら
+		{
+			//SEの再生
+			se->Play((int)SYS_SE_KETTEI);		//決定の効果音を鳴らす
+			keydown->KeyDownUpdate();			//キー入力の状態をリセット
+
+			this->BackFlg = true;				//戻る選択をした
+		}
 
 	}
 
@@ -384,6 +392,20 @@ void SELECT::Default(void)
 	this->IsKeyOpe = this->DefIsKeyOpe;			//キー操作をデフォルトの状態へ
 	this->IsDrawImage = this->DefIsDrawImage;	//UI表示をデフォルトの状態へ
 	this->SelectFlg = false;					//選択していない
+	this->BackFlg = false;						//戻かどうかをリセット
 	this->NowSelectReset();						//現在の選択をリセット
 	return;
+}
+
+//戻るを選択したか設定
+void SELECT::SetBackFlg(bool back_flg)
+{
+	this->BackFlg = back_flg;	
+	return;
+}
+
+//戻る選択をしたか取得
+bool SELECT::GetBackFlg(void)
+{
+	return this->BackFlg;
 }
