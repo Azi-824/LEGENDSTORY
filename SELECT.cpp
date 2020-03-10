@@ -392,7 +392,7 @@ void SELECT::Default(void)
 	this->IsKeyOpe = this->DefIsKeyOpe;			//キー操作をデフォルトの状態へ
 	this->IsDrawImage = this->DefIsDrawImage;	//UI表示をデフォルトの状態へ
 	this->SelectFlg = false;					//選択していない
-	this->BackFlg = false;						//戻かどうかをリセット
+	this->BackFlg = false;						//戻すかどうかをリセット
 	this->NowSelectReset();						//現在の選択をリセット
 	return;
 }
