@@ -11,6 +11,7 @@
 #include "MAP.hpp"
 #include "WEAPON.hpp"
 #include "ARMOR.hpp"
+#include "ITEM.hpp"
 
 //################# マクロ定義 #######################
 #define EXP_INCREASE_VALUE	5		//経験値の最大値の増え幅
@@ -51,6 +52,8 @@ private:
 
 	WEAPON *Weapon;			//武器
 	ARMOR *Armor;			//防具
+
+	ITEM *Item;				//アイテム
 
 	std::string Name;		//キャラの名前
 

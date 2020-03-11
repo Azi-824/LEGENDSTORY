@@ -17,6 +17,8 @@ PLAYER::PLAYER()
 	this->Weapon = new WEAPON();			//•Ší‚ğ¶¬
 	this->Armor = new ARMOR();				//–h‹ï‚ğ¶¬
 
+	this->Item = new ITEM();				//ƒAƒCƒeƒ€‚ğ¶¬
+
 	return;
 }
 
@@ -28,6 +30,8 @@ PLAYER::~PLAYER()
 	delete this->Ilast;				//Ilast‚ğ”jŠü
 	delete this->sikaku_draw;		//sikaku_draw‚ğ”jŠü
 	delete this->Weapon;			//Weapon‚ğ”jŠü
+	delete this->Armor;				//Armor‚ğ”jŠü
+	delete this->Item;				//Item‚ğ”jŠü
 
 	//vector‚Ìƒƒ‚ƒŠ‰ğ•ú‚ğs‚¤
 	std::vector<int> v;			//‹ó‚Ìvector‚ğì¬‚·‚é

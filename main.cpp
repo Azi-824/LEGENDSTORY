@@ -51,7 +51,7 @@ PLAYER *player;						//主人公
 
 ENEMY *enemy[ENEMY_KIND];			//敵
 
-ITEM *item[ITEM_KIND];				//アイテム
+//ITEM *item[ITEM_KIND];				//アイテム
 
 MAP *mapdata[DRAW_MAP_KIND][MAP_DATA_KIND];		//マップデータ
 
@@ -1228,10 +1228,10 @@ void Play_Draw()
 			case (int)MENU_ITEM:	//アイテムを選んだ時の処理ここから
 
 				//アイテム描画処理
-				for (int cnt = 0; cnt < ITEM_KIND; ++cnt)
-				{
-					DrawFormatString(MENU_TEXT_X, MENU_TEXT_Y + cnt * MENU_SPACE, GetColor(255, 255, 255), "%s %s\n", item[cnt]->GetName(), item[cnt]->GetDescription());
-				}
+				//for (int cnt = 0; cnt < ITEM_KIND; ++cnt)
+				//{
+				//	DrawFormatString(MENU_TEXT_X, MENU_TEXT_Y + cnt * MENU_SPACE, GetColor(255, 255, 255), "%s %s\n", item[cnt]->GetName(), item[cnt]->GetDescription());
+				//}
 
 				break;				//アイテムを選んだときの処理ここまで
 
@@ -1474,10 +1474,10 @@ void Delete_Class()
 	}
 
 	//アイテムの削除
-	for (int i = 0; i < ITEM_KIND; ++i)	//アイテムの種類分
-	{
-		delete item[i];				//itemを破棄
-	}
+	//for (int i = 0; i < ITEM_KIND; ++i)	//アイテムの種類分
+	//{
+	//	delete item[i];				//itemを破棄
+	//}
 
 	return;
 
@@ -1687,12 +1687,12 @@ bool LoadGameData()
 
 
 	//アイテム関係
-	for (int i = 0; i < ITEM_KIND; ++i)	//アイテムの種類分だけ
-	{
-		item[i] = new ITEM();			//アイテム作成
-	}
-	//アイテムデータをcsvファイルから読み込み
-	if (data->LoadItem(item, ITEM_DATA_DIR, ITEM_DATA_NAME) == false) { return false; }		//読み込み失敗
+	//for (int i = 0; i < ITEM_KIND; ++i)	//アイテムの種類分だけ
+	//{
+	//	item[i] = new ITEM();			//アイテム作成
+	//}
+	////アイテムデータをcsvファイルから読み込み
+	//if (data->LoadItem(item, ITEM_DATA_DIR, ITEM_DATA_NAME) == false) { return false; }		//読み込み失敗
 
 	//▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼ マップデータ読み込み開始 ▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼
 	//フィールドマップ読み込み
@@ -1776,6 +1776,9 @@ bool LoadGameData()
 	armor_list = new LIST_ARMOR(LIST_DIR, ARMOR_LIST_NAME);		//防具一覧を生成
 	if (armor_list->GetIsLoad() == false) { return false; }		//読み込み失敗
 
+	item_list = new LIST_ITEM(LIST_DIR, ITEM_LIST_NAME);		//アイテム一覧を生成
+	if (item_list->GetIsLoad() == false) { return false; }		//読み込み失敗
+
 
 	//選択肢関係
 	Yes_No = new SELECT("はい", "いいえ");				//はい、いいえの選択肢生成
@@ -1788,14 +1791,10 @@ bool LoadGameData()
 	possession_weapon = new SELECT();			//所持している武器の選択肢を生成
 	possession_weapon->SetDefault(false, false);//デフォルトはキー操作不可、UI非表示に設定
 	possession_weapon->Default();				//デフォルトで設定
-	//possession_weapon->SetIsKeyOpe(false);		//武器の選択肢(最初はキー操作不可)
-	//possession_weapon->SetIsDrawImage(false);	//武器の選択肢UI非表示
 
 	possession_armor = new SELECT();			//所持している防具の選択肢を生成
 	possession_armor->SetDefault(false, false);//デフォルトはキー操作不可、UI非表示に設定
 	possession_armor->Default();				//デフォルトで設定
-	//possession_armor->SetIsKeyOpe(false);		//防具の選択肢(最初はキー操作不可)
-	//possession_armor->SetIsDrawImage(false);	//防具の選択肢UI非表示
 
 	Equip_select = new SELECT("武器", "防具");	//装備画面の選択肢を生成
 	Equip_select->SetSideMode(true);			//選択肢を横向きに並べる
