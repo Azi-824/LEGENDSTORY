@@ -89,7 +89,7 @@ void UI::SetChoiseMenu(std::vector<std::string>::iterator itr)
 	}
 	else if (*itr == "‘•”õ")			//‘•”õ‚ğ‘I‚ñ‚¾ê‡
 	{
-		this->ChoiseMenu = (int)MENU_SOUBI;		//‘•”õ
+		this->ChoiseMenu = (int)MENU_EQUIPMENT;		//‘•”õ
 		//return;
 	}
 	else if (*itr == "‘€ìà–¾")			//‘€ìà–¾‚ğ‘I‚ñ‚¾ê‡

@@ -286,7 +286,7 @@ void Play()
 				}
 
 			}
-			else if (ui->GetChoiseMenu() == (int)MENU_SOUBI)	//装備を選んだ時
+			else if (ui->GetChoiseMenu() == (int)MENU_EQUIPMENT)	//装備を選んだ時
 			{
 				if (player->GetWeaponAddFlg())		//武器が追加されていた場合
 				{
@@ -335,6 +335,12 @@ void Play()
 				case (int)MENU_EQUIP_SELECT_KIND:		//武器か防具か選択する段階
 
 					Equip_select->SelectOperation(keydown, sys_se);	//武器か防具かの選択肢のキー操作
+
+					if (Equip_select->GetBackFlg())		//戻る選択をしたら
+					{
+						ui->ResetMenu();				//メニュー選択に戻る
+						Equip_select->Default();		//武器防具の選択肢をデフォルトに
+					}
 
 					if (Equip_select->GetSelectFlg())	//武器か防具かを選択したら
 					{
@@ -1227,7 +1233,7 @@ void Play_Draw()
 
 				break;				//アイテムを選んだときの処理ここまで
 
-			case (int)MENU_SOUBI:	//装備を選んだ時の処理ここから
+			case (int)MENU_EQUIPMENT:	//装備を選んだ時の処理ここから
 
 				//装備描画処理
 				Equip_select->Draw(MENU_TEXT_X, MENU_TEXT_IND_Y, (int)SELECT_TRIANGLE_MINI);				//装備選択描画

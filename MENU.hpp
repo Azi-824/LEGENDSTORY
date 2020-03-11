@@ -34,7 +34,7 @@ enum MENU_COMMAND
 {
 	MENU_STATUS,		//ステータス
 	MENU_ITEM,			//アイテム
-	MENU_SOUBI,			//装備
+	MENU_EQUIPMENT,		//装備
 	MENU_SETUMEI,		//操作説明
 	MENU_SAVE			//セーブ
 };
