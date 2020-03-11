@@ -15,31 +15,65 @@ ITEM::ITEM()
 //デストラクタ
 ITEM::~ITEM()
 {
+
+	//vectorのメモリ解放を行う
+	std::vector<int> v;			//空のvectorを作成する
+	this->Code.swap(v);			//空と中身を入れ替える
+
+	//vectorのメモリ解放を行う
+	std::vector<int> v2;		//空のvectorを作成する
+	this->Possession.swap(v2);	//空と中身を入れ替える
+
+
+	//vectorのメモリ解放を行う
+	std::vector<int> v3;			//空のvectorを作成する
+	this->Recovery.swap(v3);		//空と中身を入れ替える
+
 	return;
 }
 
-//名前設定
-void ITEM::SetName(const char *name)
+//アイテムコード設定
+void ITEM::SetCode(int code)
 {
-	this->Name = name;
+	this->Code.push_back(code);
 	return;
 }
 
-//説明文設定
-void ITEM::SetDescription(const char *desc)
+//所持数増加
+void ITEM::IncreasePossession(int kind)
 {
-	this->Description = desc;
+	this->Possession[kind]++;
 	return;
 }
 
-//名前取得
-const char * ITEM::GetName(void)
+//所持数減少
+void ITEM::DecreasePossession(int kind)
 {
-	return this->Name.c_str();
+	this->Possession[kind]--;
+	return;
 }
 
-//説明文取得
-const char * ITEM::GetDescription(void)
+//回復量設定
+void ITEM::SetRecovery(int recovery)
 {
-	return this->Description.c_str();
+	this->Recovery.push_back(recovery);
+	return;
+}
+
+//アイテムコード取得
+int ITEM::GetCode(int kind)
+{
+	return this->Code[kind];
+}
+
+//所持数取得
+int ITEM::GetPossession(int code)
+{
+	return this->Possession[code];
+}
+
+//回復量取得
+int ITEM::GetRecovery(int code)
+{
+	return this->Recovery[code];
 }

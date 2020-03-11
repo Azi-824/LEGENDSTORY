@@ -18,9 +18,9 @@ class ITEM
 {
 private:
 
-	std::string Name;				//アイテム名
-
-	std::string Description;		//アイテムの説明文
+	std::vector<int> Code;			//アイテムコード
+	std::vector<int> Possession;	//所持数
+	std::vector<int> Recovery;		//回復量
 
 public:
 
@@ -28,12 +28,15 @@ public:
 
 	~ITEM();			//デストラクタ
 
-	void SetName(const char *);				//アイテム名設定
+	//セッタ
+	void SetCode(int);				//アイテムコード設定
+	void IncreasePossession(int);	//所持数増加
+	void DecreasePossession(int);	//所持数減少
+	void SetRecovery(int);			//回復量設定
 
-	void SetDescription(const char *);		//説明文を設定
-
-	const char * GetName(void);				//名前取得
-
-	const char * GetDescription(void);		//説明文取得
+	//ゲッタ
+	int GetCode(int);				//アイテムコード取得
+	int GetPossession(int);			//所持数取得
+	int GetRecovery(int);			//回復量設定
 
 };

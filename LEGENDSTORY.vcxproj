@@ -166,6 +166,7 @@
     <ClCompile Include="KEYDOWN.cpp" />
     <ClCompile Include="LIST.cpp" />
     <ClCompile Include="LIST_ARMOR.cpp" />
+    <ClCompile Include="LIST_ITEM.cpp" />
     <ClCompile Include="LIST_WEAPON.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="MAP.cpp" />
@@ -194,6 +195,7 @@
     <ClInclude Include="KEYDOWN.hpp" />
     <ClInclude Include="LIST.hpp" />
     <ClInclude Include="LIST_ARMOR.hpp" />
+    <ClInclude Include="LIST_ITEM.hpp" />
     <ClInclude Include="main.hpp" />
     <ClInclude Include="MAP.hpp" />
     <ClInclude Include="MENU.hpp" />

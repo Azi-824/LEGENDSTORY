@@ -20,6 +20,7 @@
 #include "LIST_MGC.hpp"
 #include "LIST_WEAPON.hpp"
 #include "LIST_ARMOR.hpp"
+#include "LIST_ITEM.hpp"
 
 //########## グローバルオブジェクト ##########
 FPS *fps = new FPS(GAME_FPS_SPEED);							//FPSクラスのオブジェクトを生成
@@ -67,6 +68,7 @@ SELECT *Equip_select;		//装備画面の選択肢
 LIST_MGC *mgc_list;			//魔法一覧
 LIST_WEAPON *weapon_list;	//武器一覧
 LIST_ARMOR *armor_list;		//防具一覧
+LIST_ITEM *item_list;		//アイテム一覧
 
 //############## グローバル変数 ##############
 int GameSceneNow = (int)GAME_SCENE_TITLE;	//現在のゲームシーン
