@@ -1230,9 +1230,9 @@ void Play_Draw()
 			case (int)MENU_SOUBI:	//装備を選んだ時の処理ここから
 
 				//装備描画処理
-				Equip_select->Draw(MENU_TEXT_X, MENU_TEXT_Y, (int)SELECT_TRIANGLE_MINI);				//装備選択描画
-				possession_weapon->Draw(MENU_TEXT_X, MENU_TEXT_Y+20, (int)SELECT_TRIANGLE_MINI);		//武器描画
-				possession_armor->Draw(MENU_TEXT_X + 300, MENU_TEXT_Y+20, (int)SELECT_TRIANGLE_MINI);	//防具描画
+				Equip_select->Draw(MENU_TEXT_X, MENU_TEXT_IND_Y, (int)SELECT_TRIANGLE_MINI);				//装備選択描画
+				possession_weapon->Draw(MENU_TEXT_X, MENU_TEXT_Y, (int)SELECT_TRIANGLE_MINI);		//武器描画
+				possession_armor->Draw(MENU_TEXT_X + (MENU_WINDOW_WIDTH / 2), MENU_TEXT_Y, (int)SELECT_TRIANGLE_MINI);	//防具描画
 
 				if (Menu_Equip_dir == (int)MENU_EQUIP_SELECT_DECISION)		//選択肢の段階が、はい、いいえの段階だったら
 				{
