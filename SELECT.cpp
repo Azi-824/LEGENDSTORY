@@ -379,7 +379,7 @@ bool SELECT::GetSideMode(void)
 }
 
 //デフォルトの状態を設定
-void SELECT::SetDefault(bool defiskey, bool defisdraw)
+void SELECT::ChengeDefault(bool defiskey, bool defisdraw)
 {
 	this->DefIsKeyOpe = defiskey;		//キー操作可能か、デフォルト値
 	this->DefIsDrawImage = defisdraw;	//UI画像描画してよいか、デフォルト値

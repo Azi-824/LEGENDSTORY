@@ -111,7 +111,7 @@ public:
 	void SetSideMode(bool);					//選択肢を横向きに並べるか設定
 	bool GetSideMode(void);					//選択肢を横向きに並べるか取得
 
-	void SetDefault(bool, bool);			//デフォルトの状態を設定
+	void ChengeDefault(bool, bool);			//デフォルトの状態を設定
 	void Default();							//デフォルトの状態に戻す
 
 	void SetBackFlg(bool);					//戻るを選択したか設定

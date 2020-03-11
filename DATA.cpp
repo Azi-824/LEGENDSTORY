@@ -168,51 +168,6 @@ bool DATA::LoadEnemy(ENEMY *enemy[],const char *dir,const char *name)
 
 }
 
-//読み込み（アイテムデータ）
-//bool DATA::LoadItem(ITEM *item[], const char *dir, const char *name)
-//{
-//	std::string LoadFile;
-//	LoadFile += dir;
-//	LoadFile += name;
-//
-//	std::ifstream ifs(LoadFile.c_str());	//ファイル読み取り
-//
-//	if (!ifs)		//ファイルオープン失敗時
-//	{
-//		std::string ErrorMsg(DATA_ERROR_MSG);	//エラーメッセージ作成
-//		ErrorMsg += TEXT('\n');						//改行
-//		ErrorMsg += LoadFile;					//画像のパス
-//
-//		MessageBox(
-//			NULL,
-//			ErrorMsg.c_str(),	//char * を返す
-//			TEXT(DATA_ERROR_TTILE),
-//			MB_OK);
-//
-//		return false;	//読み込み失敗
-//
-//	}
-//
-//
-//	std::string buf;
-//	//1行目を読み込んで飛ばす（1行目は説明文のため）
-//	std::getline(ifs, buf);	//1行読み込み
-//
-//	for (int i = 0; i < ITEM_KIND; ++i)				//アイテムの種類分読み込み
-//	{
-//
-//		std::getline(ifs, buf, ',');			//カンマまで読み込み
-//		item[i]->SetName(buf.c_str());			//名前読み込み
-//
-//		std::getline(ifs, buf, '\n');			//最後は改行まで読み込み
-//		item[i]->SetDescription(buf.c_str());	//説明文読み込み
-//
-//	}
-//
-//	return true;	//読み込み成功
-//
-//}
-
 //読み込み（メッセージデータ）
 bool DATA::LoadMsg(MESSAGE *msg, const char *dir, const char *name)
 {

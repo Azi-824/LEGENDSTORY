@@ -36,6 +36,7 @@ ITEM::~ITEM()
 void ITEM::SetCode(int code)
 {
 	this->Code.push_back(code);
+	this->Possession.push_back(1);	//所持数を初期値で設定
 	return;
 }
 
@@ -60,6 +61,13 @@ void ITEM::SetRecovery(int recovery)
 	return;
 }
 
+//追加したか設定
+void ITEM::SetAddFlg(bool add_flg)
+{
+	this->Add_flg = add_flg;
+	return;
+}
+
 //アイテムコード取得
 int ITEM::GetCode(int kind)
 {
@@ -76,4 +84,16 @@ int ITEM::GetPossession(int code)
 int ITEM::GetRecovery(int code)
 {
 	return this->Recovery[code];
+}
+
+//要素数を取得
+int ITEM::GetSize(void)
+{
+	return this->Code.size();
+}
+
+//追加したか取得
+bool ITEM::GetAddFlg(void)
+{
+	return this->Add_flg;
 }

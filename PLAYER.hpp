@@ -210,5 +210,15 @@ public:
 	void SetArmorAddFlg(bool);		//防具を追加したかどうか設定
 	void EquipArmor(int);			//防具を装備する
 
+	//アイテム関係
+	void AddItem(int, int);			//アイテム追加
+	int GetItemCode(int);			//アイテムコード取得
+	int GetItemPossession(int);		//アイテムの所持数を取得する
+	int GetItemRecovery(int);		//アイテムの回復量取得
+	int GetItemSize();				//所持しているアイテムの種類数を取得
+	bool GetItemAddFlg();			//アイテムを追加したか取得
+	void SetItemAddFlg(bool);		//アイテムを追加したか設定
+
+
 
 };

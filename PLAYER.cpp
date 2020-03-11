@@ -1128,3 +1128,71 @@ void PLAYER::EquipArmor(int element)
 
 }
 
+//アイテム追加
+void PLAYER::AddItem(int code, int recovery)
+{
+	bool entry_flg = false;	//登録していない
+
+	for (int i = 0; i < this->Item->GetSize(); ++i)
+	{
+		if (this->Item->GetCode(i) == code)	//アイテムが登録されている場合
+		{
+			entry_flg = true;	//登録済み
+			break;				//ループを抜ける
+		}
+		else
+		{
+			entry_flg = false;	//未登録
+		}
+	}
+
+	if (entry_flg)		//登録済みの場合
+	{
+		this->Item->IncreasePossession(code);	//所持数を増やす
+	}
+	else				//未登録の場合
+	{
+		this->Item->SetCode(code);	//アイテムコード登録
+		this->Item->SetRecovery(recovery);	//回復量設定
+	}
+
+	return;
+
+}
+
+//アイテムコード取得
+int PLAYER::GetItemCode(int code)
+{
+	return this->Item->GetCode(code);
+}
+
+//アイテムの所持数を取得
+int PLAYER::GetItemPossession(int code)
+{
+	return this->Item->GetPossession(code);
+}
+
+//アイテムの回復量取得
+int PLAYER::GetItemRecovery(int code)
+{
+	return this->Item->GetRecovery(code);
+}
+
+//所持しているアイテムの種類数を取得
+int PLAYER::GetItemSize(void)
+{
+	return this->Item->GetSize();
+}
+
+//アイテムを追加したか取得
+bool PLAYER::GetItemAddFlg()
+{
+	return this->Item->GetAddFlg();
+}
+
+//アイテムを追加したか設定
+void PLAYER::SetItemAddFlg(bool add_flg)
+{
+	this->Item->SetAddFlg(add_flg);
+	return;	
+}

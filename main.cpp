@@ -51,8 +51,6 @@ PLAYER *player;						//主人公
 
 ENEMY *enemy[ENEMY_KIND];			//敵
 
-//ITEM *item[ITEM_KIND];				//アイテム
-
 MAP *mapdata[DRAW_MAP_KIND][MAP_DATA_KIND];		//マップデータ
 
 //選択肢関係
@@ -63,6 +61,7 @@ SELECT *bt_magic_list;	//スキルの選択肢
 SELECT *possession_weapon;	//所持している武器の選択肢
 SELECT *possession_armor;	//所持している防具の選択肢
 SELECT *Equip_select;		//装備画面の選択肢
+SELECT *Item_select;		//アイテム画面の選択肢
 
 //一覧関係
 LIST_MGC *mgc_list;			//魔法一覧
@@ -277,20 +276,24 @@ void Play()
 
 		if (ui->GetIsChoise())	//選択していたら
 		{
-			if (ui->GetChoiseMenu() == (int)MENU_SAVE)	//セーブを選んだ時
-			{
-				if (Wait())			//待ち時間が過ぎたら
-				{
-					data->Save(player, PLAYER_DATA_DIR, PLAYER_DATA_NAME);		//プレイヤー情報のセーブ
-					data->SaveMap(NowDrawMapKind, MapNowPos, MAPPOS_DATA_DIR, MAPPOS_DATA_NAME);	//マップ位置のセーブ
-					sys_se->Play((int)SYS_SE_SAVE);		//セーブ音を鳴らす
-					player->SetIsMenu(false);		//メニュー描画終了
-				}
 
-			}
-			else if (ui->GetChoiseMenu() == (int)MENU_EQUIPMENT)	//装備を選んだ時
+			switch (ui->GetChoiseMenu())	//選択した内容毎
 			{
-				if (player->GetWeaponAddFlg())		//武器が追加されていた場合
+
+			case (int)MENU_STATUS:		//ステータスを選んだとき
+
+				break;	//ステータスを選んだときここまで
+
+			case (int)MENU_ITEM:		//アイテムを選んだとき
+
+				Item_select->SelectOperation(keydown, sys_se);	//アイテムの選択肢キー操作
+
+				break;	//アイテムを選んだときここまで
+
+			case (int)MENU_EQUIPMENT:	//装備を選んだとき
+
+				//武器が追加されていた場合
+				if (player->GetWeaponAddFlg())		
 				{
 					//選択肢の内容を更新する
 					std::string work;	//作業用
@@ -310,7 +313,8 @@ void Play()
 
 				}
 
-				if (player->GetArmorAddFlg())		//防具が追加されていた場合
+				//防具が追加されていた場合
+				if (player->GetArmorAddFlg())		
 				{
 					//選択肢の内容を更新する
 					std::string work;	//作業用
@@ -473,6 +477,26 @@ void Play()
 					break;
 				}
 
+				break;	//装備を選んだときここまで
+
+			case (int)MENU_SETUMEI:		//説明を選んだとき
+
+				break;	//説明を選んだときここまで
+
+			case (int)MENU_SAVE:		//セーブを選んだとき
+
+				if (Wait())			//待ち時間が過ぎたら
+				{
+					data->Save(player, PLAYER_DATA_DIR, PLAYER_DATA_NAME);		//プレイヤー情報のセーブ
+					data->SaveMap(NowDrawMapKind, MapNowPos, MAPPOS_DATA_DIR, MAPPOS_DATA_NAME);	//マップ位置のセーブ
+					sys_se->Play((int)SYS_SE_SAVE);		//セーブ音を鳴らす
+					player->SetIsMenu(false);		//メニュー描画終了
+				}
+
+				break;	//セーブを選んだときここまで
+
+			default:
+				break;
 			}
 
 		}
@@ -1228,10 +1252,7 @@ void Play_Draw()
 			case (int)MENU_ITEM:	//アイテムを選んだ時の処理ここから
 
 				//アイテム描画処理
-				//for (int cnt = 0; cnt < ITEM_KIND; ++cnt)
-				//{
-				//	DrawFormatString(MENU_TEXT_X, MENU_TEXT_Y + cnt * MENU_SPACE, GetColor(255, 255, 255), "%s %s\n", item[cnt]->GetName(), item[cnt]->GetDescription());
-				//}
+				Item_select->Draw(MENU_TEXT_X, MENU_TEXT_IND_Y, (int)SELECT_TRIANGLE_MINI);		//アイテム描画
 
 				break;				//アイテムを選んだときの処理ここまで
 
@@ -1448,6 +1469,7 @@ void Delete_Class()
 	delete Yes_No;			//Yes_Noを破棄
 	delete armor_list;		//armor_listを破棄
 	delete Equip_select;	//Equip_selectを破棄
+	delete Item_select;		//Item_selectを破棄
 
 	//delete msg;//msg破棄
 
@@ -1472,13 +1494,6 @@ void Delete_Class()
 	{
 		delete enemy[i];			//enemyを破棄
 	}
-
-	//アイテムの削除
-	//for (int i = 0; i < ITEM_KIND; ++i)	//アイテムの種類分
-	//{
-	//	delete item[i];				//itemを破棄
-	//}
-
 	return;
 
 }
@@ -1686,14 +1701,6 @@ bool LoadGameData()
 	//▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲ 敵関係ここまで ▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲
 
 
-	//アイテム関係
-	//for (int i = 0; i < ITEM_KIND; ++i)	//アイテムの種類分だけ
-	//{
-	//	item[i] = new ITEM();			//アイテム作成
-	//}
-	////アイテムデータをcsvファイルから読み込み
-	//if (data->LoadItem(item, ITEM_DATA_DIR, ITEM_DATA_NAME) == false) { return false; }		//読み込み失敗
-
 	//▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼ マップデータ読み込み開始 ▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼
 	//フィールドマップ読み込み
 	mapdata[(int)DRAW_FILED][(int)MAP_SOUGEN] = new MAP(IMG_DIR_MAP_FIELD, IMG_NAME_MAP_SOUGEN);	//草原マップ生成
@@ -1782,22 +1789,24 @@ bool LoadGameData()
 
 	//選択肢関係
 	Yes_No = new SELECT("はい", "いいえ");				//はい、いいえの選択肢生成
-	Yes_No->SetDefault(false, true);					//デフォルトではキー操作不可、UI表示に設定
+	Yes_No->ChengeDefault(false, true);					//デフォルトではキー操作不可、UI表示に設定
 	Yes_No->Default();									//デフォルトで設定
 
 	Title_select = new SELECT("START", "END");			//タイトル画面の選択肢生成
 	End_select = new SELECT("TITLE", "PLAY", "END");	//エンド画面の選択肢生成
 
 	possession_weapon = new SELECT();			//所持している武器の選択肢を生成
-	possession_weapon->SetDefault(false, false);//デフォルトはキー操作不可、UI非表示に設定
+	possession_weapon->ChengeDefault(false, false);//デフォルトはキー操作不可、UI非表示に設定
 	possession_weapon->Default();				//デフォルトで設定
 
 	possession_armor = new SELECT();			//所持している防具の選択肢を生成
-	possession_armor->SetDefault(false, false);//デフォルトはキー操作不可、UI非表示に設定
+	possession_armor->ChengeDefault(false, false);//デフォルトはキー操作不可、UI非表示に設定
 	possession_armor->Default();				//デフォルトで設定
 
 	Equip_select = new SELECT("武器", "防具");	//装備画面の選択肢を生成
 	Equip_select->SetSideMode(true);			//選択肢を横向きに並べる
+
+	Item_select = new SELECT();					//アイテム画面の選択肢を生成
 
 	//*********************************** 魔法の選択肢を魔法一覧から設定、ここから *****************************************
 	std::vector<std::string> w;	//作業用
@@ -1847,6 +1856,11 @@ void SetGameInit()
 		player->AddWeapon(weapon_list->GetCodeNum(i), weapon_list->GetPower(i));	//武器追加
 		player->AddArmor(armor_list->GetCodeNum(i), armor_list->GetDefense(i));		//防具追加
 	}
+	//プレイヤーのアイテムを追加
+	for (int i = 0; i < item_list->GetListSize(); ++i)
+	{
+		player->AddItem(item_list->GetCodeNum(i), item_list->GetRecovery(i));		//アイテム追加
+	}
 
 
 
@@ -1880,6 +1894,22 @@ void SetGameInit()
 
 	player->SetArmorAddFlg(false);				//防具の追加なし
 
+	//アイテム
+	for (int i = 0; i < player->GetItemSize(); ++i)
+	{
+		work = item_list->GetName(player->GetItemCode(i));		//名前
+		work += "  ";											//空白
+		work += std::to_string(player->GetItemPossession(i));	//所持数
+		work += "個";											//個数表示
+		work += "  ";											//空白
+		work += item_list->GetDescription(player->GetItemCode(i));	//説明文
+
+		Item_select->Add(work.c_str());		//選択肢追加
+
+	}
+
+	player->SetItemAddFlg(false);			//アイテムの追加なし
+
 	//後から変更
 
 }
@@ -1905,6 +1935,7 @@ void SetSize()
 	possession_weapon->SetSize();	//所持している武器の選択肢の画像サイズ設定
 	possession_armor->SetSize();	//所持している防具の選択肢の画像サイズ設定
 	Equip_select->SetSize();		//装備画面の選択肢の画像サイズ設定
+	Item_select->SetSize();			//アイテム画面の選択肢の画像サイズ設定
 
 	//エフェクト関係
 	Magic_effect->SetSize();	//魔法エフェクトのサイズ設定
