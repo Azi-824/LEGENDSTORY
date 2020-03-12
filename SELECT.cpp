@@ -430,3 +430,23 @@ void SELECT::AddText(int element, std::string add_text)
 	this->Str[element] += add_text;
 	return;
 }
+
+//指定された要素の文字と文字の間に空白を入れ、揃える
+//void SELECT::SetTextSpace(int element, int w_cnt)
+//{
+//	static int Strlen = 0;	//文字数
+//	static int LoopMax = 0;	//繰り返す回数
+//	
+//	Strlen = strlen(this->Str[element].c_str());	//指定された選択肢の現在の文字数を取得
+//	LoopMax = w_cnt - Strlen;						//指定された文字数から、現在の文字数を引いて、空白の数を計算する
+//
+//	for (int cnt = 0; cnt < LoopMax; ++cnt)		//指定された文字数になるまで繰り返す
+//	{
+//		this->Str[element] += " ";	//空白を追加
+//	}
+//
+//	//this->Str[element] += std::left << std::setw(4);
+//
+//	return;
+//
+//}

@@ -1905,6 +1905,7 @@ void SetGameInit()
 	{
 
 		Item_select->AddSelect(item_list->GetName(player->GetItemCode(i)));		//新しい選択肢を追加し、名前を渡す
+		//Item_select->SetTextSpace(i, MENU_ITEM_NAME_AREA);						//文字列と文字列の間に空白を入れる
 		Item_select->InsertSpace(i);											//文字列と文字列の間に空白を入れる
 		Item_select->AddText(i, std::to_string(player->GetItemPossession(i)));	//選択肢の内容に、所持数を追加する
 		Item_select->AddText(i, "個");											//"個"を選択肢の内容に追加する

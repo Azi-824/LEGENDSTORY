@@ -24,6 +24,8 @@
 
 #define SELECT_SIDE_SPACE	300	//選択肢を横向きに並べたときの間隔
 
+#define MENU_ITEM_NAME_AREA	15	//アイテム画面のアイテム名の表示される領域(15文字分)
+
 //##################### 列挙型 #############################
 enum SELECT_IMAGE_TYPE
 {
@@ -120,6 +122,7 @@ public:
 
 	void InsertSpace(int);				//空白を挿入する処理
 	void AddText(int,std::string);		//指定された要素の文字列に文字を加える
+	//void SetTextSpace(int, int);		//指定された要素の文字と文字の間に空白を入れ、揃える
 
 
 	//選択肢の内容を変更する
