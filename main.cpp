@@ -58,10 +58,10 @@ SELECT *Yes_No;			//はい、か、いいえの選択肢
 SELECT *Title_select;	//タイトル画面の選択肢
 SELECT *End_select;		//エンド画面の選択肢
 SELECT *bt_magic_list;	//スキルの選択肢
-SELECT *possession_weapon;	//所持している武器の選択肢
-SELECT *possession_armor;	//所持している防具の選択肢
+//SELECT *possession_weapon;	//所持している武器の選択肢
+//SELECT *possession_armor;	//所持している防具の選択肢
 SELECT *Equip_select;		//装備画面の選択肢
-SELECT *Item_select;		//アイテム画面の選択肢
+//SELECT *Item_select;		//アイテム画面の選択肢
 
 //一覧関係
 LIST_MGC *mgc_list;			//魔法一覧
@@ -286,13 +286,22 @@ void Play()
 
 			case (int)MENU_ITEM:		//アイテムを選んだとき
 
-				Item_select->SelectOperation(keydown, sys_se);	//アイテムの選択肢キー操作
+				//Item_select->SelectOperation(keydown, sys_se);	//アイテムの選択肢キー操作
 
-				if (Item_select->GetBackFlg())		//戻る選択をしたとき
+				//if (Item_select->GetBackFlg())		//戻る選択をしたとき
+				//{
+				//	Item_select->Default();			//アイテムの選択肢をデフォルト状態に
+				//	ui->ResetMenu();				//メニュー選択に戻る
+				//}
+
+				ui->ItemSelect->SelectOperation(keydown, sys_se);	//アイテムの選択肢キー操作
+
+				if (ui->ItemSelect->GetBackFlg())		//戻る選択をしたとき
 				{
-					Item_select->Default();			//アイテムの選択肢をデフォルト状態に
-					ui->ResetMenu();				//メニュー選択に戻る
+					ui->ItemSelect->Default();			//アイテムの選択肢をデフォルト状態に
+					ui->ResetMenu();					//メニュー選択に戻る
 				}
+
 
 				break;	//アイテムを選んだときここまで
 
@@ -302,17 +311,22 @@ void Play()
 				if (player->GetWeaponAddFlg())		
 				{
 					//選択肢の内容を更新する
-					std::string work;	//作業用
-					possession_weapon->SelectClear();		//選択肢をクリア
+					//std::string work;	//作業用
+					//possession_weapon->SelectClear();		//選択肢をクリア
+
+					ui->WeaponSelect->SelectClear();		//選択肢をクリア
 
 					for (int i = 0; i < player->GetWeaponSize(); ++i)			//所持している武器の種類分ループ
 					{
-						work = weapon_list->GetName(player->GetWeaponCode(i));							//名前
-						work += "  ";																	//空白
-						work += std::to_string(player->GetWeaponPossession(player->GetWeaponCode(i)));	//所持数
-						work += "個";																	//個数表示
+						//work = weapon_list->GetName(player->GetWeaponCode(i));							//名前
+						//work += "  ";																	//空白
+						//work += std::to_string(player->GetWeaponPossession(player->GetWeaponCode(i)));	//所持数
+						//work += "個";																	//個数表示
 
-						possession_weapon->AddSelect(work.c_str());		//選択肢追加
+						//possession_weapon->AddSelect(work.c_str());		//選択肢追加
+
+						ui->WeaponSelect->AddSelect(weapon_list->GetName(player->GetWeaponCode(i)));	//新しい選択肢を追加し、名前を渡す
+
 					}
 
 					player->SetWeaponAddFlg(false);				//武器の追加なし
@@ -323,17 +337,22 @@ void Play()
 				if (player->GetArmorAddFlg())		
 				{
 					//選択肢の内容を更新する
-					std::string work;	//作業用
-					possession_armor->SelectClear();		//選択肢をクリア
+					//std::string work;	//作業用
+					//possession_armor->SelectClear();		//選択肢をクリア
+
+					ui->ArmorSelect->SelectClear();			//選択肢をクリア
 
 					for (int i = 0; i < player->GetArmorSize(); ++i)			//所持している防具の種類分ループ
 					{
-						work = armor_list->GetName(player->GetArmorCode(i));							//名前
-						work += "  ";																	//空白
-						work += std::to_string(player->GetArmorPossession(player->GetArmorCode(i)));	//所持数
-						work += "個";																	//個数表示
+						//work = armor_list->GetName(player->GetArmorCode(i));							//名前
+						//work += "  ";																	//空白
+						//work += std::to_string(player->GetArmorPossession(player->GetArmorCode(i)));	//所持数
+						//work += "個";																	//個数表示
 
-						possession_armor->AddSelect(work.c_str());		//選択肢追加
+						//possession_armor->AddSelect(work.c_str());		//選択肢追加
+
+						ui->ArmorSelect->AddSelect(armor_list->GetName(player->GetArmorCode(i)));	//新しい選択肢を追加し、名前を渡す
+
 					}
 
 					player->SetArmorAddFlg(false);				//防具の追加なし
@@ -370,54 +389,104 @@ void Play()
 
 					case 0:		//武器を選んだとき
 
-						possession_weapon->SetIsKeyOpe(true);					//武器の選択肢、キー操作可能
-						possession_weapon->SetIsDrawImage(true);				//武器の選択UI表示
-						possession_weapon->SelectOperation(keydown, sys_se);	//武器の選択キー操作
+						//possession_weapon->SetIsKeyOpe(true);					//武器の選択肢、キー操作可能
+						//possession_weapon->SetIsDrawImage(true);				//武器の選択UI表示
+						//possession_weapon->SelectOperation(keydown, sys_se);	//武器の選択キー操作
+
+						ui->WeaponSelect->SetIsKeyOpe(true);					//武器の選択肢、キー操作可能
+						ui->WeaponSelect->SetIsDrawImage(true);					//武器の選択UI表示
+						ui->WeaponSelect->SelectOperation(keydown, sys_se);		//武器の選択キー操作
+
 
 						//************* 戻る選択をした時の処理 *****************
-						if (possession_weapon->GetBackFlg())	//戻る選択をしたら
+						//if (possession_weapon->GetBackFlg())	//戻る選択をしたら
+						//{
+						//	possession_weapon->Default();		//武器の選択肢、デフォルト値へ
+						//	Equip_select->Default();			//武器、防具の選択を可能へ
+						//	Menu_Equip_dir = (int)MENU_EQUIP_SELECT_KIND;	//選択肢の段階を前へ
+						//}
+
+						////************** 装備する武器選択後の処理 ******************
+						//if (possession_weapon->GetSelectFlg())		//装備する武器を選んだら
+						//{
+						//	possession_weapon->SetIsKeyOpe(false);		//武器の選択はできないように設定
+						//	possession_weapon->SetIsDrawImage(false);	//防具の選択肢UI非表示
+
+						//	Menu_Equip_dir = (int)MENU_EQUIP_SELECT_DECISION;	//選択肢の段階を次へ
+
+						//}
+
+						//************* 戻る選択をした時の処理 *****************
+						if (ui->WeaponSelect->GetBackFlg())	//戻る選択をしたら
 						{
-							possession_weapon->Default();		//武器の選択肢、デフォルト値へ
+							ui->WeaponSelect->Default();		//武器の選択肢、デフォルト値へ
 							Equip_select->Default();			//武器、防具の選択を可能へ
 							Menu_Equip_dir = (int)MENU_EQUIP_SELECT_KIND;	//選択肢の段階を前へ
 						}
 
 						//************** 装備する武器選択後の処理 ******************
-						if (possession_weapon->GetSelectFlg())		//装備する武器を選んだら
+						if (ui->WeaponSelect->GetSelectFlg())		//装備する武器を選んだら
 						{
-							possession_weapon->SetIsKeyOpe(false);		//武器の選択はできないように設定
-							possession_weapon->SetIsDrawImage(false);	//防具の選択肢UI非表示
+							ui->WeaponSelect->SetIsKeyOpe(false);		//武器の選択はできないように設定
+							ui->WeaponSelect->SetIsDrawImage(false);	//防具の選択肢UI非表示
 
 							Menu_Equip_dir = (int)MENU_EQUIP_SELECT_DECISION;	//選択肢の段階を次へ
 
 						}
 
+
+
 						break;	//武器を選んだときここまで
 
 					case 1:		//防具を選んだとき
 
-						possession_armor->SetIsKeyOpe(true);				//防具の選択肢、キー操作可能
-						possession_armor->SetIsDrawImage(true);				//防具の選択UI表示
-						possession_armor->SelectOperation(keydown, sys_se);	//防具の選択キー操作
+						//possession_armor->SetIsKeyOpe(true);				//防具の選択肢、キー操作可能
+						//possession_armor->SetIsDrawImage(true);				//防具の選択UI表示
+						//possession_armor->SelectOperation(keydown, sys_se);	//防具の選択キー操作
+
+						////************* 戻る選択をした時の処理 *****************
+						////修正点あり
+						//if (possession_armor->GetBackFlg())	//戻る選択をしたら
+						//{
+						//	possession_armor->Default();		//防具の選択肢、デフォルト値へ
+						//	Equip_select->Default();			//武器、防具の選択を可能へ
+						//	Menu_Equip_dir = (int)MENU_EQUIP_SELECT_KIND;	//選択肢の段階を前へ
+						//}
+
+
+						////************** 装備する防具選択後の処理 ******************
+						//if (possession_armor->GetSelectFlg())		//装備する防具を選んだら
+						//{
+						//	possession_armor->SetIsKeyOpe(false);	//防具の選択はできないように設定
+						//	possession_armor->SetIsDrawImage(false);//防具の選択肢UI非表示
+						//	Menu_Equip_dir = (int)MENU_EQUIP_SELECT_DECISION;	//選択肢の段階を次へ
+
+						//}
+
+						ui->ArmorSelect->SetIsKeyOpe(true);					//防具の選択肢、キー操作可能
+						ui->ArmorSelect->SetIsDrawImage(true);				//防具の選択UI表示
+						ui->ArmorSelect->SelectOperation(keydown, sys_se);	//防具の選択キー操作
 
 						//************* 戻る選択をした時の処理 *****************
 						//修正点あり
-						if (possession_armor->GetBackFlg())	//戻る選択をしたら
+						if (ui->ArmorSelect->GetBackFlg())	//戻る選択をしたら
 						{
-							possession_armor->Default();		//防具の選択肢、デフォルト値へ
+							ui->ArmorSelect->Default();		//防具の選択肢、デフォルト値へ
 							Equip_select->Default();			//武器、防具の選択を可能へ
 							Menu_Equip_dir = (int)MENU_EQUIP_SELECT_KIND;	//選択肢の段階を前へ
 						}
 
 
 						//************** 装備する防具選択後の処理 ******************
-						if (possession_armor->GetSelectFlg())		//装備する防具を選んだら
+						if (ui->ArmorSelect->GetSelectFlg())		//装備する防具を選んだら
 						{
-							possession_armor->SetIsKeyOpe(false);	//防具の選択はできないように設定
-							possession_armor->SetIsDrawImage(false);//防具の選択肢UI非表示
+							ui->ArmorSelect->SetIsKeyOpe(false);	//防具の選択はできないように設定
+							ui->ArmorSelect->SetIsDrawImage(false);//防具の選択肢UI非表示
 							Menu_Equip_dir = (int)MENU_EQUIP_SELECT_DECISION;	//選択肢の段階を次へ
 
 						}
+
+
 
 
 						break;	//防具を選んだとき
@@ -447,7 +516,10 @@ void Play()
 								//武器の装備処理
 								//選択した武器の要素番号を取得し
 								//武器装備処理の引数として渡す
-								player->EquipWeapon(possession_weapon->GetSelectNum());	//武器を装備する
+								//player->EquipWeapon(possession_weapon->GetSelectNum());	//武器を装備する
+
+								player->EquipWeapon(ui->WeaponSelect->GetSelectNum());	//武器を装備する
+
 
 								break;
 
@@ -457,7 +529,9 @@ void Play()
 								//防具の装備処理
 								//選択した防具の要素番号を取得し
 								//防具装備処理の引数として渡す
-								player->EquipArmor(possession_weapon->GetSelectNum());	//防具を装備する
+								//player->EquipArmor(possession_weapon->GetSelectNum());	//防具を装備する
+
+								player->EquipArmor(ui->ArmorSelect->GetSelectNum());	//防具を装備する
 
 								break;
 
@@ -468,9 +542,13 @@ void Play()
 
 						}
 
-						possession_armor->Default();	//防具の選択肢デフォルトへ
-						possession_weapon->Default();	//武器の選択肢デフォルトへ
+						//possession_armor->Default();	//防具の選択肢デフォルトへ
+						//possession_weapon->Default();	//武器の選択肢デフォルトへ
 						Yes_No->Default();				//はい、いいえの選択肢デフォルトへ
+
+						ui->ArmorSelect->Default();	//防具の選択肢デフォルトへ
+						ui->WeaponSelect->Default();//武器の選択肢デフォルトへ
+
 
 						Menu_Equip_dir = (int)MENU_EQUIP_SELECT_EQUIP;	//選択肢の段階を一つ前へ
 
@@ -522,8 +600,12 @@ void Play()
 	{
 		//****************************** ここから、選択肢のリセット処理 *******************************
 		Yes_No->Default();					//はい、いいえの選択肢をデフォルトの状態に戻す
-		possession_weapon->Default();		//武器の選択肢をデフォルトの状態に戻す
-		possession_armor->Default();		//防具の選択肢をデフォルトの状態に戻す
+		//possession_weapon->Default();		//武器の選択肢をデフォルトの状態に戻す
+		//possession_armor->Default();		//防具の選択肢をデフォルトの状態に戻す
+
+		ui->WeaponSelect->Default();	//武器の選択肢をデフォルトへ
+		ui->ArmorSelect->Default();		//防具の選択肢をデフォルトへ
+
 		Equip_select->Default();			//武器、防具の選択肢をデフォルトの状態に戻す
 		Menu_Equip_dir = (int)MENU_EQUIP_SELECT_KIND;	//選択肢の段階を最初へ
 
@@ -1259,20 +1341,25 @@ void Play_Draw()
 
 				//アイテム描画処理
 
-				Item_select->Draw(MENU_TEXT_X, MENU_TEXT_TOP_Y, (int)SELECT_TRIANGLE_MINI);		//アイテム描画
+				//Item_select->Draw(MENU_TEXT_X, MENU_TEXT_TOP_Y, (int)SELECT_TRIANGLE_MINI);		//アイテム描画
+
+				ui->DrawItemSelect(MENU_TEXT_X, MENU_TEXT_TOP_Y, player->GetItemPossession());	//アイテム描画
 
 				break;				//アイテムを選んだときの処理ここまで
 
 			case (int)MENU_EQUIPMENT:	//装備を選んだ時の処理ここから
 
 				//装備描画処理
-				Equip_select->Draw(MENU_TEXT_X, MENU_TEXT_TOP_Y, (int)SELECT_TRIANGLE_MINI);				//装備選択描画
-				possession_weapon->Draw(MENU_TEXT_X, MENU_TEXT_Y, (int)SELECT_TRIANGLE_MINI);		//武器描画
-				possession_armor->Draw(MENU_TEXT_X + (MENU_WINDOW_WIDTH / 2), MENU_TEXT_Y, (int)SELECT_TRIANGLE_MINI);	//防具描画
+				Equip_select->Draw(MENU_TEXT_X, MENU_TEXT_TOP_Y);				//装備選択描画
+				//possession_weapon->Draw(MENU_TEXT_X, MENU_TEXT_Y, (int)SELECT_TRIANGLE_MINI);		//武器描画
+				//possession_armor->Draw(MENU_TEXT_X + (MENU_WINDOW_WIDTH / 2), MENU_TEXT_Y, (int)SELECT_TRIANGLE_MINI);	//防具描画
+
+				ui->WeaponSelect->Draw(MENU_TEXT_X, MENU_TEXT_Y);							//武器の選択肢描画
+				ui->ArmorSelect->Draw(MENU_TEXT_X + (MENU_WINDOW_WIDTH / 2), MENU_TEXT_Y);	//防具の選択肢描画
 
 				if (Menu_Equip_dir == (int)MENU_EQUIP_SELECT_DECISION)		//選択肢の段階が、はい、いいえの段階だったら
 				{
-					Yes_No->DrawCenter(MENU_WINDOW_X + MENU_WINDOW_WIDTH / 2, MENU_WINDOW_Y + MENU_WINDOW_HEIGHT / 2, (int)SELECT_TRIANGLE_MINI);	//はい、いいえの選択肢描画
+					Yes_No->DrawCenter(MENU_WINDOW_X + MENU_WINDOW_WIDTH / 2, MENU_WINDOW_Y + MENU_WINDOW_HEIGHT / 2);	//はい、いいえの選択肢描画
 				}
 
 				break;				//装備を選んだ時の処理ここまで
@@ -1471,12 +1558,12 @@ void Delete_Class()
 	delete End_select;		//end_select破棄
 	delete mgc_list;		//mgc_listを破棄
 	delete weapon_list;		//weapon_listを破棄
-	delete possession_weapon;	//possession_weaponを破棄
-	delete possession_armor;	//possession_armorを破棄
+	//delete possession_weapon;	//possession_weaponを破棄
+	//delete possession_armor;	//possession_armorを破棄
 	delete Yes_No;			//Yes_Noを破棄
 	delete armor_list;		//armor_listを破棄
 	delete Equip_select;	//Equip_selectを破棄
-	delete Item_select;		//Item_selectを破棄
+	//delete Item_select;		//Item_selectを破棄
 
 	//delete msg;//msg破棄
 
@@ -1802,18 +1889,24 @@ bool LoadGameData()
 	Title_select = new SELECT("START", "END");			//タイトル画面の選択肢生成
 	End_select = new SELECT("TITLE", "PLAY", "END");	//エンド画面の選択肢生成
 
-	possession_weapon = new SELECT();			//所持している武器の選択肢を生成
-	possession_weapon->ChengeDefault(false, false);//デフォルトはキー操作不可、UI非表示に設定
-	possession_weapon->Default();				//デフォルトで設定
+	//possession_weapon = new SELECT();			//所持している武器の選択肢を生成
+	//possession_weapon->ChengeDefault(false, false);//デフォルトはキー操作不可、UI非表示に設定
+	//possession_weapon->Default();				//デフォルトで設定
 
-	possession_armor = new SELECT();			//所持している防具の選択肢を生成
-	possession_armor->ChengeDefault(false, false);//デフォルトはキー操作不可、UI非表示に設定
-	possession_armor->Default();				//デフォルトで設定
+	ui->WeaponSelect->ChengeDefault(false, false);	//デフォルト値を変更（キー操作不可、UI非表示）
+	ui->WeaponSelect->Default();					//デフォルト値に設定
+
+	//possession_armor = new SELECT();			//所持している防具の選択肢を生成
+	//possession_armor->ChengeDefault(false, false);//デフォルトはキー操作不可、UI非表示に設定
+	//possession_armor->Default();				//デフォルトで設定
+
+	ui->ArmorSelect->ChengeDefault(false, false);	//デフォルト値を変更（キー操作不可、UI非表示）
+	ui->ArmorSelect->Default();						//デフォルト値に設定
 
 	Equip_select = new SELECT("武器", "防具");	//装備画面の選択肢を生成
 	Equip_select->SetSideMode(true);			//選択肢を横向きに並べる
 
-	Item_select = new SELECT();					//アイテム画面の選択肢を生成
+	//Item_select = new SELECT();					//アイテム画面の選択肢を生成
 
 	//*********************************** 魔法の選択肢を魔法一覧から設定、ここから *****************************************
 	std::vector<std::string> w;	//作業用
@@ -1878,10 +1971,12 @@ void SetGameInit()
 	for (int i = 0; i < player->GetWeaponSize(); ++i)			//所持している武器の種類分ループ
 	{
 
-		possession_weapon->AddSelect(weapon_list->GetName(player->GetWeaponCode(i)));							//新しい選択肢を追加し、名前を渡す
-		possession_weapon->InsertSpace(i);																		//文字列と文字列の間に空白を入れる
-		possession_weapon->AddText(i, std::to_string(player->GetWeaponPossession(player->GetWeaponCode(i))));	//選択肢の内容に、所持数を追加する
-		possession_weapon->AddText(i, "個");																	//"個"を選択肢の内容に追加する
+		//possession_weapon->AddSelect(weapon_list->GetName(player->GetWeaponCode(i)));							//新しい選択肢を追加し、名前を渡す
+		//possession_weapon->InsertSpace(i);																		//文字列と文字列の間に空白を入れる
+		//possession_weapon->AddText(i, std::to_string(player->GetWeaponPossession(player->GetWeaponCode(i))));	//選択肢の内容に、所持数を追加する
+		//possession_weapon->AddText(i, "個");																	//"個"を選択肢の内容に追加する
+
+		ui->WeaponSelect->AddSelect(weapon_list->GetName(player->GetWeaponCode(i)));	//新しい選択肢を追加し、名前を渡す
 
 	}
 
@@ -1891,10 +1986,12 @@ void SetGameInit()
 	for (int i = 0; i < player->GetArmorSize(); ++i)			//所持している防具の種類分ループ
 	{
 
-		possession_armor->AddSelect(armor_list->GetName(player->GetArmorCode(i)));							//新しい選択肢を追加し、名前を渡す
-		possession_armor->InsertSpace(i);																	//文字列と文字列の間に空白を入れる
-		possession_armor->AddText(i, std::to_string(player->GetArmorPossession(player->GetArmorCode(i))));	//選択肢の内容に、所持数を追加する
-		possession_armor->AddText(i, "個");																	//"個"を選択肢の内容に追加する
+		//possession_armor->AddSelect(armor_list->GetName(player->GetArmorCode(i)));							//新しい選択肢を追加し、名前を渡す
+		//possession_armor->InsertSpace(i);																	//文字列と文字列の間に空白を入れる
+		//possession_armor->AddText(i, std::to_string(player->GetArmorPossession(player->GetArmorCode(i))));	//選択肢の内容に、所持数を追加する
+		//possession_armor->AddText(i, "個");																	//"個"を選択肢の内容に追加する
+
+		ui->ArmorSelect->AddSelect(armor_list->GetName(player->GetArmorCode(i)));		//新しい選択肢を追加し、名前を渡す
 
 	}
 
@@ -1904,11 +2001,13 @@ void SetGameInit()
 	for (int i = 0; i < player->GetItemSize(); ++i)
 	{
 
-		Item_select->AddSelect(item_list->GetName(player->GetItemCode(i)));		//新しい選択肢を追加し、名前を渡す
-		//Item_select->SetTextSpace(i, MENU_ITEM_NAME_AREA);						//文字列と文字列の間に空白を入れる
-		Item_select->InsertSpace(i);											//文字列と文字列の間に空白を入れる
-		Item_select->AddText(i, std::to_string(player->GetItemPossession(i)));	//選択肢の内容に、所持数を追加する
-		Item_select->AddText(i, "個");											//"個"を選択肢の内容に追加する
+		//Item_select->AddSelect(item_list->GetName(player->GetItemCode(i)));		//新しい選択肢を追加し、名前を渡す
+		////Item_select->SetTextSpace(i, MENU_ITEM_NAME_AREA);						//文字列と文字列の間に空白を入れる
+		//Item_select->InsertSpace(i);											//文字列と文字列の間に空白を入れる
+		//Item_select->AddText(i, std::to_string(player->GetItemPossession(i)));	//選択肢の内容に、所持数を追加する
+		//Item_select->AddText(i, "個");											//"個"を選択肢の内容に追加する
+
+		ui->ItemSelect->AddSelect(item_list->GetName(player->GetItemCode(i)));		//新しい選択肢を追加し、名前を渡す
 
 	}
 
@@ -1936,10 +2035,14 @@ void SetSize()
 	Title_select->SetSize();	//タイトル画面の選択肢の画像サイズ設定
 	End_select->SetSize();		//エンド画面の選択肢の画像サイズ設定
 	bt_magic_list->SetSize();	//戦闘画面の魔法一覧の画像サイズ設定
-	possession_weapon->SetSize();	//所持している武器の選択肢の画像サイズ設定
-	possession_armor->SetSize();	//所持している防具の選択肢の画像サイズ設定
+	//possession_weapon->SetSize();	//所持している武器の選択肢の画像サイズ設定
+	//possession_armor->SetSize();	//所持している防具の選択肢の画像サイズ設定
 	Equip_select->SetSize();		//装備画面の選択肢の画像サイズ設定
-	Item_select->SetSize();			//アイテム画面の選択肢の画像サイズ設定
+	//Item_select->SetSize();			//アイテム画面の選択肢の画像サイズ設定
+	
+	ui->ItemSelect->SetSize();
+	ui->ArmorSelect->SetSize();
+	ui->WeaponSelect->SetSize();
 
 	//エフェクト関係
 	Magic_effect->SetSize();	//魔法エフェクトのサイズ設定

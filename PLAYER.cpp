@@ -1172,6 +1172,12 @@ int PLAYER::GetItemPossession(int code)
 	return this->Item->GetPossession(code);
 }
 
+//アイテムの所持数を取得(全てのデータ)
+std::vector<int> PLAYER::GetItemPossession(void)
+{
+	return this->Item->GetPossession();
+}
+
 //アイテムの回復量取得
 int PLAYER::GetItemRecovery(int code)
 {

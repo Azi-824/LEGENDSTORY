@@ -17,6 +17,10 @@ UI::UI()
 	this->MenuSelect = new SELECT("ステータス", "アイテム", "装備", "操作説明", "セーブ");	//メニューの選択肢生成
 	this->BattleCommand = new SELECT("こうげき", "ぼうぎょ", "まほう", "アイテム", "にげる");	//バトルコマンドの選択肢生成
 
+	this->ItemSelect = new SELECT();	//アイテムの選択肢を生成
+	this->WeaponSelect = new SELECT();	//武器の選択肢を生成
+	this->ArmorSelect = new SELECT();	//防具の選択肢を生成
+
 	this->BattleCommadType = -1;			//選択したバトルコマンドの種類を初期化
 
 	this->ChoiseMenu = -1;					//メニュー画面での選択内容を初期化
@@ -37,6 +41,9 @@ UI::~UI()
 	delete this->UiAnime;		//uianime破棄
 	delete this->MenuSelect;	//menuselect破棄
 	delete this->BattleCommand;	//battlecommand破棄
+	delete this->ItemSelect;	//ItemSelect破棄
+	delete this->WeaponSelect;	//WeaponSelect破棄
+	delete this->ArmorSelect;	//ArmorSelect破棄
 
 	return;
 }
@@ -451,4 +458,22 @@ void UI::SetSize(void)
 	this->BattleCommand->SetSize();	//戦闘画面の選択肢のサイズ設定
 	
 	return;
+}
+
+//アイテムの選択肢を描画する
+void UI::DrawItemSelect(int x, int y, std::vector<int> item_possession)
+{
+	this->ItemSelect->Draw(x, y);	//アイテムの選択肢描画
+
+	static int Height = 0;	//高さ
+
+	Height = GetFontSize();	//高さ取得
+
+	for (int i = 0; i < item_possession.size(); ++i)	//アイテムの種類数分繰り返す
+	{
+		DrawFormatString(x + MENU_ITEM_NAME_SPACE, y + i * Height, GetColor(255, 255, 255), "%d個", item_possession[i]);	//所持しているアイテムの数を描画
+	}
+
+	return;
+
 }

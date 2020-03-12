@@ -97,3 +97,9 @@ bool ITEM::GetAddFlg(void)
 {
 	return this->Add_flg;
 }
+
+//Š”æ“¾
+std::vector<int> ITEM::GetPossession(void)
+{
+	return this->Possession;
+}

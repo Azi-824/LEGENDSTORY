@@ -214,6 +214,7 @@ public:
 	void AddItem(int, int);			//アイテム追加
 	int GetItemCode(int);			//アイテムコード取得
 	int GetItemPossession(int);		//アイテムの所持数を取得する
+	std::vector<int> GetItemPossession(void);	//アイテムの所持数を取得(全てのデータ)
 	int GetItemRecovery(int);		//アイテムの回復量取得
 	int GetItemSize();				//所持しているアイテムの種類数を取得
 	bool GetItemAddFlg();			//アイテムを追加したか取得

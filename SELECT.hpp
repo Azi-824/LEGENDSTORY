@@ -24,7 +24,8 @@
 
 #define SELECT_SIDE_SPACE	300	//選択肢を横向きに並べたときの間隔
 
-#define MENU_ITEM_NAME_AREA	15	//アイテム画面のアイテム名の表示される領域(15文字分)
+//#define MENU_ITEM_NAME_AREA	15	//アイテム画面のアイテム名の表示される領域(15文字分)
+#define MENU_ITEM_NAME_SPACE	200	 //アイテム画面の名前と所持数の表示間隔
 
 //##################### 列挙型 #############################
 enum SELECT_IMAGE_TYPE
@@ -96,8 +97,8 @@ public:
 	void SelectClear();						//選択肢の内容を消去する
 	void NowSelectReset();					//現在選択中の要素を最初に戻す
 
-	void Draw(int, int,int ,unsigned int color = GetColor(255, 255, 255),int side_space= SELECT_SIDE_SPACE);			//選択肢の内容を描画する
-	void DrawCenter(int, int,int , unsigned int color = GetColor(255, 255, 255));	//選択肢の内容を中央に描画する
+	void Draw(int, int,int = (int)SELECT_TRIANGLE_MINI,unsigned int color = GetColor(255, 255, 255),int side_space= SELECT_SIDE_SPACE);			//選択肢の内容を描画する
+	void DrawCenter(int, int,int = (int)SELECT_TRIANGLE_MINI, unsigned int color = GetColor(255, 255, 255));									//選択肢の内容を中央に描画する
 
 	void SetSize(void);						//画像サイズ設定
 	void AddSelect(const char *);			//選択肢の内容を追加

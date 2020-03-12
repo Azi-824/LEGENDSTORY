@@ -94,6 +94,10 @@ private:
 
 public:
 
+	SELECT *ItemSelect;			//アイテムの選択肢
+	SELECT *WeaponSelect;		//武器の選択肢
+	SELECT *ArmorSelect;		//防具の選択肢
+
 	UI();					//コンストラクタ
 
 	~UI();					//デストラクタ
@@ -137,5 +141,8 @@ public:
 	bool GetIsDrawUIAnime(void);		//アニメーション画像を描画してよいか取得
 
 	void SetSize(void);					//画像サイズを設定する
+
+	//アイテム関係
+	void DrawItemSelect(int, int, std::vector<int>);	//アイテムの選択肢を描画する
 
 };

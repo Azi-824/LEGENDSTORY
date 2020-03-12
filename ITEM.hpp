@@ -43,5 +43,6 @@ public:
 	int GetRecovery(int);			//‰ñ•œ—Êİ’è
 	int GetSize();					//—v‘f”‚ğæ“¾
 	bool GetAddFlg(void);			//’Ç‰Á‚µ‚½‚©æ“¾
+	std::vector<int> GetPossession();	//Š”æ“¾(‘S‚Ä)
 
 };
