@@ -24,9 +24,6 @@
 
 #define SELECT_SIDE_SPACE	300	//選択肢を横向きに並べたときの間隔
 
-//#define MENU_ITEM_NAME_AREA	15	//アイテム画面のアイテム名の表示される領域(15文字分)
-#define MENU_ITEM_NAME_SPACE	200	 //アイテム画面の名前と所持数の表示間隔
-
 //##################### 列挙型 #############################
 enum SELECT_IMAGE_TYPE
 {

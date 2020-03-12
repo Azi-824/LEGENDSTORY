@@ -196,6 +196,7 @@ public:
 	void AddWeapon(int, int);		//武器を追加する
 	int GetWeaponCode(int);			//武器コード番号を取得する
 	int GetWeaponPossession(int);	//武器の所持数を取得する
+	std::vector<int> GetWeaponPossession();	//武器の所持数を取得する（すべて）
 	int GetWeaponSize();			//所持している武器の数（種類）を取得する
 	bool GetWeaponAddFlg();			//装備を追加したかどうか取得
 	void SetWeaponAddFlg(bool);		//装備を追加したかどうか設定
@@ -205,6 +206,7 @@ public:
 	void AddArmor(int, int);		//防具を追加する
 	int GetArmorCode(int);			//防具コード番号を取得する
 	int GetArmorPossession(int);	//防具の所持数を取得する
+	std::vector<int> GetArmorPossession();	//防具の所持数を取得する（すべて）
 	int GetArmorSize();				//所持している防具の数（種類）を取得する
 	bool GetArmorAddFlg();			//防具を追加したかどうか取得
 	void SetArmorAddFlg(bool);		//防具を追加したかどうか設定

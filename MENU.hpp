@@ -28,6 +28,9 @@
 #define MENU_WINDOW_WIDTH	600			//選んだメニュー毎のウィンドウの横幅
 #define MENU_WINDOW_HEIGHT	500			//選んだメニュー毎のウィンドウの高さ
 
+#define MENU_ITEM_NAME_SPACE	200	//アイテム画面の名前と所持数の表示間隔
+#define MENU_EQUIP_NAME_SPACE	200	//装備画面の名前と所持数の表示間隔
+
 
 //######################### 列挙型 ###############################
 enum MENU_COMMAND

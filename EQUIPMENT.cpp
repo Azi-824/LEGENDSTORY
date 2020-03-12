@@ -71,6 +71,12 @@ int EQUIPMENT::GetPossessionNum(int kind)
 	return this->PossessionNum[kind];
 }
 
+//‘•”õŠ”æ“¾
+std::vector<int> EQUIPMENT::GetPossessionNum(void)
+{
+	return this->PossessionNum;	
+}
+
 //‘•”õƒtƒ‰ƒOæ“¾
 bool EQUIPMENT::GetEquipFlg(int kind)
 {

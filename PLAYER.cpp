@@ -1010,6 +1010,12 @@ int PLAYER::GetWeaponPossession(int kind)
 	return this->Weapon->GetPossessionNum(kind);	//武器の所持数を取得
 }
 
+//武器の所持数を取得する（すべて）
+std::vector<int> PLAYER::GetWeaponPossession(void)
+{
+	return this->Weapon->GetPossessionNum();
+}
+
 //所持している武器の数（種類）を取得する
 int PLAYER::GetWeaponSize()
 {
@@ -1093,6 +1099,12 @@ int PLAYER::GetArmorCode(int kind)
 int PLAYER::GetArmorPossession(int kind)
 {
 	return this->Armor->GetPossessionNum(kind);	//防具の所持数を取得
+}
+
+//防具の所持数を取得する（すべて）
+std::vector<int> PLAYER::GetArmorPossession(void)
+{
+	return this->Armor->GetPossessionNum();
 }
 
 //所持している防具の数（種類）を取得する

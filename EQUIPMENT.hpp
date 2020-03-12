@@ -35,9 +35,10 @@ public:
 	//ゲッタ
 	int GetCodeNum(int);					//コード番号取得
 	int GetPossessionNum(int);				//装備所持数取得
+	std::vector<int> GetPossessionNum();	//装備所持数取得（すべて）
 	bool GetEquipFlg(int);					//装備しているか取得
 	int GetSize();							//要素数取得
-	bool GetAddFlg();						//武器を追加したか取得
+	bool GetAddFlg();						//装備を追加したか取得
 
 	void Add(int);							//装備情報追加
 	void AddPossession(int);				//装備所持数増加処理

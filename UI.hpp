@@ -145,4 +145,7 @@ public:
 	//アイテム関係
 	void DrawItemSelect(int, int, std::vector<int>);	//アイテムの選択肢を描画する
 
+	//装備関係
+	void DrawMenuEquip(int, int, std::vector<int>, std::vector<int>);	//メニュー画面の装備描画処理
+
 };

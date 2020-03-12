@@ -1254,8 +1254,8 @@ void Play_Draw()
 
 				//装備描画処理
 				Equip_select->Draw(MENU_TEXT_X, MENU_TEXT_TOP_Y);				//装備選択描画
-				ui->WeaponSelect->Draw(MENU_TEXT_X, MENU_TEXT_Y);							//武器の選択肢描画
-				ui->ArmorSelect->Draw(MENU_TEXT_X + (MENU_WINDOW_WIDTH / 2), MENU_TEXT_Y);	//防具の選択肢描画
+
+				ui->DrawMenuEquip(MENU_TEXT_X, MENU_TEXT_Y, player->GetWeaponPossession(), player->GetArmorPossession());	//装備描画処理
 
 				if (Menu_Equip_dir == (int)MENU_EQUIP_SELECT_DECISION)		//選択肢の段階が、はい、いいえの段階だったら
 				{
