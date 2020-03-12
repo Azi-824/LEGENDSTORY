@@ -169,6 +169,7 @@ void SELECT::Draw(int x, int y,int kind,unsigned int color,int side_select)
 	//***************************** サイズ取得処理 *******************************
 	static int Height = 0;		//高さ取得
 	static int Strlen = 0;		//文字列の長さ取得用
+	static int MaxStrlen = 0;	//最も長い文字列の長さ
 	static int Width = 0;		//文字列の幅取得用
 
 	std::string MaxStr;	//最も長い文字列
@@ -177,19 +178,21 @@ void SELECT::Draw(int x, int y,int kind,unsigned int color,int side_select)
 
 	for (int i = 0; i < (int)this->Str.size(); i++)
 	{
-		if (MaxStr < this->Str[i].c_str())	//現在の最大文字列よりも大きければ
+		Strlen = strlen(this->Str[i].c_str());	//文字列の長さ取得
+
+		if (MaxStrlen < Strlen)	//最大文字列よりも長ければ
 		{
-			MaxStr = this->Str[i].c_str();	//最大文字列を更新
+			MaxStrlen = Strlen;	//最大文字列を更新
+			MaxStr = this->Str[i].c_str();	//最大文字列を更
+
 		}
+
 	}
 
-	//文字列の長さを取得
-	Strlen = strlen(MaxStr.c_str());
-
-	Width = GetDrawStringWidth(MaxStr.c_str(), Strlen);	//横幅取得
+	
+	Width = GetDrawStringWidth(MaxStr.c_str(), MaxStrlen);	//横幅取得
 
 	Height = GetFontSize();		//高さ取得
-
 
 	if (this->Side_Mode)		//横向きに選択肢を並べている場合
 	{
@@ -262,9 +265,10 @@ void SELECT::Draw(int x, int y,int kind,unsigned int color,int side_select)
 void SELECT::DrawCenter(int x, int y,int kind, unsigned int color)
 {
 
+	static int Height = 0;		//高さ取得
 	static int Strlen = 0;		//文字列の長さ取得用
+	static int MaxStrlen = 0;	//最も長い文字列の長さ
 	static int Width = 0;		//文字列の幅取得用
-	static int Height = 0;		//文字列の高さ取得用
 
 	std::string MaxStr;	//最も長い文字列
 
@@ -272,16 +276,18 @@ void SELECT::DrawCenter(int x, int y,int kind, unsigned int color)
 
 	for (int i = 0; i < (int)this->Str.size(); i++)
 	{
-		if (MaxStr < this->Str[i].c_str())	//現在の最大文字列よりも大きければ
+		Strlen = strlen(this->Str[i].c_str());	//文字列の長さ取得
+
+		if (MaxStrlen < Strlen)	//最大文字列よりも長ければ
 		{
-			MaxStr = this->Str[i].c_str();	//最大文字列を更新
+			MaxStrlen = Strlen;	//最大文字列を更新
+			MaxStr = this->Str[i].c_str();	//最大文字列を更
+
 		}
+
 	}
 
-	//文字列の長さを取得
-	Strlen = strlen(MaxStr.c_str());
-
-	Width = GetDrawStringWidth(MaxStr.c_str(), Strlen);	//横幅取得
+	Width = GetDrawStringWidth(MaxStr.c_str(), MaxStrlen);	//横幅取得
 
 	x -= (Width / 2);	//文字の幅の半分を引いて、真ん中に描画する
 
