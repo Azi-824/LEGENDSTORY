@@ -326,7 +326,7 @@ void SELECT::SetSize(void)
 }
 
 //選択肢の内容を追加
-void SELECT::Add(const char *str)
+void SELECT::AddSelect(const char *str)
 {
 	this->Str.push_back(str);	//選択肢追加
 	this->Str_itr = this->Str.begin();	//最初の要素を選択状態へ
@@ -415,4 +415,18 @@ void SELECT::SetBackFlg(bool back_flg)
 bool SELECT::GetBackFlg(void)
 {
 	return this->BackFlg;
+}
+
+//指定された要素に空白を入れる
+void SELECT::InsertSpace(int element)
+{
+	this->Str[element] += " ";	//空白を追加
+	return;
+}
+
+//指定された要素の文字列に文字を加える
+void SELECT::AddText(int element, std::string add_text)
+{
+	this->Str[element] += add_text;
+	return;
 }

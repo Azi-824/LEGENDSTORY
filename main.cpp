@@ -312,7 +312,7 @@ void Play()
 						work += std::to_string(player->GetWeaponPossession(player->GetWeaponCode(i)));	//所持数
 						work += "個";																	//個数表示
 
-						possession_weapon->Add(work.c_str());		//選択肢追加
+						possession_weapon->AddSelect(work.c_str());		//選択肢追加
 					}
 
 					player->SetWeaponAddFlg(false);				//武器の追加なし
@@ -333,7 +333,7 @@ void Play()
 						work += std::to_string(player->GetArmorPossession(player->GetArmorCode(i)));	//所持数
 						work += "個";																	//個数表示
 
-						possession_armor->Add(work.c_str());		//選択肢追加
+						possession_armor->AddSelect(work.c_str());		//選択肢追加
 					}
 
 					player->SetArmorAddFlg(false);				//防具の追加なし
@@ -1258,6 +1258,7 @@ void Play_Draw()
 			case (int)MENU_ITEM:	//アイテムを選んだ時の処理ここから
 
 				//アイテム描画処理
+
 				Item_select->Draw(MENU_TEXT_X, MENU_TEXT_TOP_Y, (int)SELECT_TRIANGLE_MINI);		//アイテム描画
 
 				break;				//アイテムを選んだときの処理ここまで
@@ -1876,12 +1877,11 @@ void SetGameInit()
 
 	for (int i = 0; i < player->GetWeaponSize(); ++i)			//所持している武器の種類分ループ
 	{
-		work = weapon_list->GetName(player->GetWeaponCode(i));							//名前
-		work += "  ";																	//空白
-		work += std::to_string(player->GetWeaponPossession(player->GetWeaponCode(i)));	//所持数
-		work += "個";																	//個数表示
 
-		possession_weapon->Add(work.c_str());		//武器の選択肢追加
+		possession_weapon->AddSelect(weapon_list->GetName(player->GetWeaponCode(i)));							//新しい選択肢を追加し、名前を渡す
+		possession_weapon->InsertSpace(i);																		//文字列と文字列の間に空白を入れる
+		possession_weapon->AddText(i, std::to_string(player->GetWeaponPossession(player->GetWeaponCode(i))));	//選択肢の内容に、所持数を追加する
+		possession_weapon->AddText(i, "個");																	//"個"を選択肢の内容に追加する
 
 	}
 
@@ -1890,12 +1890,12 @@ void SetGameInit()
 	//防具
 	for (int i = 0; i < player->GetArmorSize(); ++i)			//所持している防具の種類分ループ
 	{
-		work = armor_list->GetName(player->GetArmorCode(i));							//名前
-		work += "  ";																	//空白
-		work += std::to_string(player->GetArmorPossession(player->GetArmorCode(i)));	//所持数
-		work += "個";																	//個数表示
 
-		possession_armor->Add(work.c_str());		//選択肢追加
+		possession_armor->AddSelect(armor_list->GetName(player->GetArmorCode(i)));							//新しい選択肢を追加し、名前を渡す
+		possession_armor->InsertSpace(i);																	//文字列と文字列の間に空白を入れる
+		possession_armor->AddText(i, std::to_string(player->GetArmorPossession(player->GetArmorCode(i))));	//選択肢の内容に、所持数を追加する
+		possession_armor->AddText(i, "個");																	//"個"を選択肢の内容に追加する
+
 	}
 
 	player->SetArmorAddFlg(false);				//防具の追加なし
@@ -1903,14 +1903,11 @@ void SetGameInit()
 	//アイテム
 	for (int i = 0; i < player->GetItemSize(); ++i)
 	{
-		work = item_list->GetName(player->GetItemCode(i));		//名前
-		work += "  ";											//空白
-		work += std::to_string(player->GetItemPossession(i));	//所持数
-		work += "個";											//個数表示
-		//work += "  ";											//空白
-		//work += item_list->GetDescription(player->GetItemCode(i));	//説明文
 
-		Item_select->Add(work.c_str());		//選択肢追加
+		Item_select->AddSelect(item_list->GetName(player->GetItemCode(i)));		//新しい選択肢を追加し、名前を渡す
+		Item_select->InsertSpace(i);											//文字列と文字列の間に空白を入れる
+		Item_select->AddText(i, std::to_string(player->GetItemPossession(i)));	//選択肢の内容に、所持数を追加する
+		Item_select->AddText(i, "個");											//"個"を選択肢の内容に追加する
 
 	}
 

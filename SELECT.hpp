@@ -98,7 +98,7 @@ public:
 	void DrawCenter(int, int,int , unsigned int color = GetColor(255, 255, 255));	//選択肢の内容を中央に描画する
 
 	void SetSize(void);						//画像サイズ設定
-	void Add(const char *);					//選択肢の内容を追加
+	void AddSelect(const char *);			//選択肢の内容を追加
 
 	void SetIsKeyOpe(bool);					//キー操作可能か設定する
 	bool GetIsKeyOpe(void);					//キー操作可能か取得する
@@ -117,6 +117,9 @@ public:
 
 	void SetBackFlg(bool);					//戻るを選択したか設定
 	bool GetBackFlg(void);					//戻るを選択したか取得
+
+	void InsertSpace(int);				//空白を挿入する処理
+	void AddText(int,std::string);		//指定された要素の文字列に文字を加える
 
 
 	//選択肢の内容を変更する
