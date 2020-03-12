@@ -297,32 +297,32 @@ void Play()
 			case (int)MENU_EQUIPMENT:	//装備を選んだとき
 
 				//武器が追加されていた場合
-				if (player->GetWeaponAddFlg())		
+				if (player->GetBelongingsAddFlg((int)BELONGINGS_WEAPON))		
 				{
 					//選択肢の内容を更新する
 					ui->WeaponSelect->SelectClear();		//選択肢をクリア
 
-					for (int i = 0; i < player->GetWeaponSize(); ++i)			//所持している武器の種類分ループ
+					for (int i = 0; i < player->GetBelongingsSize((int)BELONGINGS_WEAPON); ++i)			//所持している武器の種類分ループ
 					{
-						ui->WeaponSelect->AddSelect(weapon_list->GetName(player->GetWeaponCode(i)));	//新しい選択肢を追加し、名前を渡す
+						ui->WeaponSelect->AddSelect(weapon_list->GetName(player->GetBelongingsCode((int)BELONGINGS_WEAPON,i)));	//新しい選択肢を追加し、名前を渡す
 					}
 
-					player->SetWeaponAddFlg(false);				//武器の追加なし
+					player->SetBelongingsAddFlg((int)BELONGINGS_WEAPON,false);				//武器の追加なし
 
 				}
 
 				//防具が追加されていた場合
-				if (player->GetArmorAddFlg())		
+				if (player->GetBelongingsAddFlg((int)BELONGINGS_ARMOR))
 				{
 					//選択肢の内容を更新する
 					ui->ArmorSelect->SelectClear();			//選択肢をクリア
 
-					for (int i = 0; i < player->GetArmorSize(); ++i)			//所持している防具の種類分ループ
+					for (int i = 0; i < player->GetBelongingsSize((int)BELONGINGS_ARMOR); ++i)			//所持している防具の種類分ループ
 					{
-						ui->ArmorSelect->AddSelect(armor_list->GetName(player->GetArmorCode(i)));	//新しい選択肢を追加し、名前を渡す
+						ui->ArmorSelect->AddSelect(armor_list->GetName(player->GetBelongingsCode((int)BELONGINGS_ARMOR,i)));	//新しい選択肢を追加し、名前を渡す
 					}
 
-					player->SetArmorAddFlg(false);				//防具の追加なし
+					player->SetBelongingsAddFlg((int)BELONGINGS_ARMOR,false);				//防具の追加なし
 
 				}
 
@@ -1246,7 +1246,7 @@ void Play_Draw()
 
 				//アイテム描画処理
 
-				ui->DrawItemSelect(MENU_TEXT_X, MENU_TEXT_TOP_Y, player->GetItemPossession());	//アイテム描画
+				ui->DrawItemSelect(MENU_TEXT_X, MENU_TEXT_TOP_Y, player->GetBelongingsPossession((int)BELONGINGS_ITEM));	//アイテム描画
 
 				break;				//アイテムを選んだときの処理ここまで
 
@@ -1255,7 +1255,7 @@ void Play_Draw()
 				//装備描画処理
 				Equip_select->Draw(MENU_TEXT_X, MENU_TEXT_TOP_Y);				//装備選択描画
 
-				ui->DrawMenuEquip(MENU_TEXT_X, MENU_TEXT_Y, player->GetWeaponPossession(), player->GetArmorPossession());	//装備描画処理
+				ui->DrawMenuEquip(MENU_TEXT_X, MENU_TEXT_Y, player->GetBelongingsPossession((int)BELONGINGS_WEAPON), player->GetBelongingsPossession((int)BELONGINGS_ARMOR));	//装備描画処理
 
 				if (Menu_Equip_dir == (int)MENU_EQUIP_SELECT_DECISION)		//選択肢の段階が、はい、いいえの段階だったら
 				{
@@ -1841,13 +1841,13 @@ void SetGameInit()
 	//後に変更
 	for (int i = 0; i < weapon_list->GetListSize(); ++i)
 	{
-		player->AddWeapon(weapon_list->GetCodeNum(i), weapon_list->GetPower(i));	//武器追加
-		player->AddArmor(armor_list->GetCodeNum(i), armor_list->GetDefense(i));		//防具追加
+		player->BelongingsAdd((int)BELONGINGS_WEAPON,weapon_list->GetCodeNum(i), weapon_list->GetPower(i));	//武器追加
+		player->BelongingsAdd((int)BELONGINGS_ARMOR,armor_list->GetCodeNum(i), armor_list->GetDefense(i));	//防具追加
 	}
 	//プレイヤーのアイテムを追加
 	for (int i = 0; i < item_list->GetListSize(); ++i)
 	{
-		player->AddItem(item_list->GetCodeNum(i), item_list->GetRecovery(i));		//アイテム追加
+		player->BelongingsAdd((int)BELONGINGS_ITEM,item_list->GetCodeNum(i), item_list->GetRecovery(i));		//アイテム追加
 	}
 
 
@@ -1856,28 +1856,28 @@ void SetGameInit()
 	//武器
 	std::string work;	//作業用
 
-	for (int i = 0; i < player->GetWeaponSize(); ++i)			//所持している武器の種類分ループ
+	for (int i = 0; i < player->GetBelongingsSize((int)BELONGINGS_WEAPON); ++i)			//所持している武器の種類分ループ
 	{
-		ui->WeaponSelect->AddSelect(weapon_list->GetName(player->GetWeaponCode(i)));	//新しい選択肢を追加し、名前を渡す
+		ui->WeaponSelect->AddSelect(weapon_list->GetName(player->GetBelongingsCode((int)BELONGINGS_WEAPON,i)));	//新しい選択肢を追加し、名前を渡す
 	}
 
-	player->SetWeaponAddFlg(false);				//武器の追加なし
+	player->SetBelongingsAddFlg((int)BELONGINGS_WEAPON,false);				//武器の追加なし
 
 	//防具
-	for (int i = 0; i < player->GetArmorSize(); ++i)			//所持している防具の種類分ループ
+	for (int i = 0; i < player->GetBelongingsSize((int)BELONGINGS_ARMOR); ++i)			//所持している防具の種類分ループ
 	{
-		ui->ArmorSelect->AddSelect(armor_list->GetName(player->GetArmorCode(i)));		//新しい選択肢を追加し、名前を渡す
+		ui->ArmorSelect->AddSelect(armor_list->GetName(player->GetBelongingsCode((int)BELONGINGS_ARMOR,i)));		//新しい選択肢を追加し、名前を渡す
 	}
 
-	player->SetArmorAddFlg(false);				//防具の追加なし
+	player->SetBelongingsAddFlg((int)BELONGINGS_ARMOR,false);				//防具の追加なし
 
 	//アイテム
-	for (int i = 0; i < player->GetItemSize(); ++i)
+	for (int i = 0; i < player->GetBelongingsSize((int)BELONGINGS_ITEM); ++i)
 	{
-		ui->ItemSelect->AddSelect(item_list->GetName(player->GetItemCode(i)));		//新しい選択肢を追加し、名前を渡す
+		ui->ItemSelect->AddSelect(item_list->GetName(player->GetBelongingsCode((int)BELONGINGS_ITEM,i)));		//新しい選択肢を追加し、名前を渡す
 	}
 
-	player->SetItemAddFlg(false);			//アイテムの追加なし
+	player->SetBelongingsAddFlg((int)BELONGINGS_ITEM,false);			//アイテムの追加なし
 
 	//後から変更
 

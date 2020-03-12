@@ -40,6 +40,13 @@ enum COMMANDTYPE
 	COMMAND_NONE=-1		//コマンドを選んでいない
 };	//選択したコマンドの種類
 
+enum BELONGINGS
+{
+	BELONGINGS_WEAPON,		//武器
+	BELONGINGS_ARMOR,		//防具
+	BELONGINGS_ITEM			//アイテム
+};
+
 //################# クラス定義 ##################
 class PLAYER
 {
@@ -52,7 +59,6 @@ private:
 
 	WEAPON *Weapon;			//武器
 	ARMOR *Armor;			//防具
-
 	ITEM *Item;				//アイテム
 
 	std::string Name;		//キャラの名前
@@ -193,35 +199,18 @@ public:
 	void Recovery(void);			//回復させる
 
 	//武器関係
-	void AddWeapon(int, int);		//武器を追加する
-	int GetWeaponCode(int);			//武器コード番号を取得する
-	int GetWeaponPossession(int);	//武器の所持数を取得する
-	std::vector<int> GetWeaponPossession();	//武器の所持数を取得する（すべて）
-	int GetWeaponSize();			//所持している武器の数（種類）を取得する
-	bool GetWeaponAddFlg();			//装備を追加したかどうか取得
-	void SetWeaponAddFlg(bool);		//装備を追加したかどうか設定
 	void EquipWeapon(int);			//武器を装備する
 
-	//防具関係
-	void AddArmor(int, int);		//防具を追加する
-	int GetArmorCode(int);			//防具コード番号を取得する
-	int GetArmorPossession(int);	//防具の所持数を取得する
-	std::vector<int> GetArmorPossession();	//防具の所持数を取得する（すべて）
-	int GetArmorSize();				//所持している防具の数（種類）を取得する
-	bool GetArmorAddFlg();			//防具を追加したかどうか取得
-	void SetArmorAddFlg(bool);		//防具を追加したかどうか設定
+	////防具関係
 	void EquipArmor(int);			//防具を装備する
 
-	//アイテム関係
-	void AddItem(int, int);			//アイテム追加
-	int GetItemCode(int);			//アイテムコード取得
-	int GetItemPossession(int);		//アイテムの所持数を取得する
-	std::vector<int> GetItemPossession(void);	//アイテムの所持数を取得(全てのデータ)
-	int GetItemRecovery(int);		//アイテムの回復量取得
-	int GetItemSize();				//所持しているアイテムの種類数を取得
-	bool GetItemAddFlg();			//アイテムを追加したか取得
-	void SetItemAddFlg(bool);		//アイテムを追加したか設定
-
-
+	//メニュー画面で描画する持ち物関係
+	void BelongingsAdd(int, int, int);				//指定された持ち物を追加
+	int GetBelongingsCode(int,int);					//指定された持ち物のコード取得
+	int GetBelongingsPossession(int,int);			//指定された持ち物の所持数を取得する
+	std::vector<int> GetBelongingsPossession(int);	//指定された持ち物の所持数を取得(全てのデータ)
+	int GetBelongingsSize(int);						//指定された持ち物の持っている種類数を取得
+	bool GetBelongingsAddFlg(int);					//指定された持ち物を追加したか取得
+	void SetBelongingsAddFlg(int,bool);				//指定された持ち物を追加したか設定
 
 };

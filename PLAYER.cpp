@@ -958,83 +958,6 @@ void PLAYER::Recovery(void)
 	return;
 }
 
-//武器を追加する
-void PLAYER::AddWeapon(int codenum, int equipatk)
-{
-
-	bool hold_flg = false;	//武器の登録が済んでいるか判定
-
-	if (this->Weapon->GetSize() == 0)			//武器を一種類も持っていないとき
-	{
-		hold_flg = false;	//武器の登録をしていない
-	}
-
-	for (int i = 0; i < this->Weapon->GetSize(); ++i)	//登録されている武器の種類分ループする
-	{
-		if (this->Weapon->GetCodeNum(i) == codenum)	//武器の登録がされている場合
-		{
-			hold_flg = true;	//武器の登録が済んでいる
-			break;				//繰り返しを抜ける
-		}
-		else										//武器の登録がされていない場合
-		{
-			hold_flg = false;	//武器の登録が済んでいない
-		}
-	}
-
-	if (hold_flg == false)		//武器の登録が済んでいない場合
-	{
-		//武器の登録処理
-		this->Weapon->Add(codenum);		//武器登録
-		this->Weapon->SetAtk(equipatk);	//攻撃力登録
-		this->Weapon->SetSize();		//要素数設定
-	}
-	else						//武器の登録が済んでいる場合
-	{
-		this->Weapon->AddPossession(codenum);	//所持数増加
-	}
-
-	return;
-
-}
-
-//武器コード番号を取得する
-int PLAYER::GetWeaponCode(int kind)
-{
-	return this->Weapon->GetCodeNum(kind);	//武器コード番号取得
-}
-
-//武器の所持数を取得する
-int PLAYER::GetWeaponPossession(int kind)
-{
-	return this->Weapon->GetPossessionNum(kind);	//武器の所持数を取得
-}
-
-//武器の所持数を取得する（すべて）
-std::vector<int> PLAYER::GetWeaponPossession(void)
-{
-	return this->Weapon->GetPossessionNum();
-}
-
-//所持している武器の数（種類）を取得する
-int PLAYER::GetWeaponSize()
-{
-	return this->Weapon->GetSize();
-}
-
-//装備を追加したかどうか取得
-bool PLAYER::GetWeaponAddFlg()
-{
-	return this->Weapon->GetAddFlg();
-}
-
-//装備を追加したかどうか設定
-void PLAYER::SetWeaponAddFlg(bool addflg)
-{
-	this->Weapon->SetAddFlg(addflg);
-	return;
-}
-
 //武器を装備する
 void PLAYER::EquipWeapon(int element)
 {
@@ -1047,83 +970,6 @@ void PLAYER::EquipWeapon(int element)
 
 	return;
 
-}
-
-//防具を追加する
-void PLAYER::AddArmor(int codenum, int equipdef)
-{
-
-	bool hold_flg = false;	//防具の登録が済んでいるか判定
-
-	if (this->Armor->GetSize() == 0)			//防具を一種類も持っていないとき
-	{
-		hold_flg = false;	//防具の登録をしていない
-	}
-
-	for (int i = 0; i < this->Armor->GetSize(); ++i)	//登録されている防具の種類分ループする
-	{
-		if (this->Armor->GetCodeNum(i) == codenum)	//防具の登録がされている場合
-		{
-			hold_flg = true;	//防具の登録が済んでいる
-			break;				//繰り返しを抜ける
-		}
-		else					//防具の登録がされていない場合
-		{
-			hold_flg = false;	//防具の登録が済んでいない
-		}
-	}
-
-	if (hold_flg == false)		//防具の登録が済んでいない場合
-	{
-		//防具の登録処理
-		this->Armor->Add(codenum);		//防具登録
-		this->Armor->SetDef(equipdef);	//防御力登録
-		this->Armor->SetSize();			//要素数設定
-	}
-	else						//防具の登録が済んでいる場合
-	{
-		this->Armor->AddPossession(codenum);	//所持数増加
-	}
-
-	return;
-
-}
-
-//防具コード番号を取得する
-int PLAYER::GetArmorCode(int kind)
-{
-	return this->Armor->GetCodeNum(kind);	//防具コード番号取得
-}
-
-//防具の所持数を取得する
-int PLAYER::GetArmorPossession(int kind)
-{
-	return this->Armor->GetPossessionNum(kind);	//防具の所持数を取得
-}
-
-//防具の所持数を取得する（すべて）
-std::vector<int> PLAYER::GetArmorPossession(void)
-{
-	return this->Armor->GetPossessionNum();
-}
-
-//所持している防具の数（種類）を取得する
-int PLAYER::GetArmorSize()
-{
-	return this->Armor->GetSize();
-}
-
-//防具を追加したかどうか取得
-bool PLAYER::GetArmorAddFlg()
-{
-	return this->Armor->GetAddFlg();
-}
-
-//防具を追加したかどうか設定
-void PLAYER::SetArmorAddFlg(bool addflg)
-{
-	this->Armor->SetAddFlg(addflg);
-	return;
 }
 
 //防具を装備する
@@ -1140,77 +986,297 @@ void PLAYER::EquipArmor(int element)
 
 }
 
-//アイテム追加
-void PLAYER::AddItem(int code, int recovery)
+//指定された持ち物を追加する
+void PLAYER::BelongingsAdd(int type, int code, int value)
 {
+
 	bool entry_flg = false;	//登録していない
 
-	for (int i = 0; i < this->Item->GetSize(); ++i)
+	switch (type)
 	{
-		if (this->Item->GetCode(i) == code)	//アイテムが登録されている場合
-		{
-			entry_flg = true;	//登録済み
-			break;				//ループを抜ける
-		}
-		else
-		{
-			entry_flg = false;	//未登録
-		}
-	}
 
-	if (entry_flg)		//登録済みの場合
-	{
-		this->Item->IncreasePossession(code);	//所持数を増やす
-	}
-	else				//未登録の場合
-	{
-		this->Item->SetCode(code);	//アイテムコード登録
-		this->Item->SetRecovery(recovery);	//回復量設定
+	case (int)BELONGINGS_WEAPON:	//武器の場合
+
+		for (int i = 0; i < this->Weapon->GetSize(); ++i)	//登録されている武器の種類分ループする
+		{
+			if (this->Weapon->GetCodeNum(i) == code)	//武器の登録がされている場合
+			{
+				entry_flg = true;	//武器の登録が済んでいる
+				break;				//繰り返しを抜ける
+			}
+			else										//武器の登録がされていない場合
+			{
+				entry_flg = false;	//武器の登録が済んでいない
+			}
+		}
+
+		if (entry_flg == false)		//武器の登録が済んでいない場合
+		{
+			//武器の登録処理
+			this->Weapon->Add(code);		//武器登録
+			this->Weapon->SetAtk(value);	//攻撃力登録
+			this->Weapon->SetSize();		//要素数設定
+		}
+		else						//武器の登録が済んでいる場合
+		{
+			this->Weapon->AddPossession(code);	//所持数増加
+		}
+
+
+		break;	//武器の場合ここまで
+
+	case (int)BELONGINGS_ARMOR:		//防具の場合
+
+		for (int i = 0; i < this->Armor->GetSize(); ++i)	//登録されている防具の種類分ループする
+		{
+			if (this->Armor->GetCodeNum(i) == code)	//防具の登録がされている場合
+			{
+				entry_flg = true;	//防具の登録が済んでいる
+				break;				//繰り返しを抜ける
+			}
+			else		//防具の登録がされていない場合
+			{
+				entry_flg = false;	//防具の登録が済んでいない
+			}
+		}
+
+		if (entry_flg == false)		//防具の登録が済んでいない場合
+		{
+			//防具の登録処理
+			this->Armor->Add(code);		//防御登録
+			this->Armor->SetDef(value);	//防御登録
+			this->Armor->SetSize();		//要素数設定
+		}
+		else						//防具の登録が済んでいる場合
+		{
+			this->Armor->AddPossession(code);	//所持数増加
+		}
+
+
+		break;	//防具の場合ここまで
+
+	case (int)BELONGINGS_ITEM:		//アイテムの場合
+
+		for (int i = 0; i < this->Item->GetSize(); ++i)
+		{
+			if (this->Item->GetCode(i) == code)	//アイテムが登録されている場合
+			{
+				entry_flg = true;	//登録済み
+				break;				//ループを抜ける
+			}
+			else
+			{
+				entry_flg = false;	//未登録
+			}
+		}
+
+		if (entry_flg)		//登録済みの場合
+		{
+			this->Item->IncreasePossession(code);	//所持数を増やす
+		}
+		else				//未登録の場合
+		{
+			this->Item->SetCode(code);		//アイテムコード登録
+			this->Item->SetRecovery(value);	//回復量設定
+		}
+
+
+		break;	//アイテムの場合ここまで
+
+	default:
+		break;
 	}
 
 	return;
 
+
 }
 
-//アイテムコード取得
-int PLAYER::GetItemCode(int code)
+//指定された持ち物のコードを取得する
+int PLAYER::GetBelongingsCode(int type, int kind)
 {
-	return this->Item->GetCode(code);
+	switch (type)
+	{
+
+	case (int)BELONGINGS_WEAPON:	//武器の場合
+
+		return this->Weapon->GetCodeNum(kind);	//武器コード取得
+
+		break;	//武器の場合ここまで
+
+	case (int)BELONGINGS_ARMOR:		//防具の場合
+
+		return this->Armor->GetCodeNum(kind);	//防具コード取得
+
+		break;	//防具の場合ここまで
+
+	case (int)BELONGINGS_ITEM:		//アイテムの場合
+
+		return this->Item->GetCode(kind);	//アイテムコード取得
+
+		break;	//アイテムの場合ここまで
+
+	default:
+		break;
+	}
+
+	return -1;
+
 }
 
-//アイテムの所持数を取得
-int PLAYER::GetItemPossession(int code)
+//指定された持ち物の所持数を取得する
+int PLAYER::GetBelongingsPossession(int type, int kind)
 {
-	return this->Item->GetPossession(code);
+	switch (type)
+	{
+
+	case (int)BELONGINGS_WEAPON:	//武器の場合
+
+		return this->Weapon->GetPossessionNum(kind);	//指定された武器の所持数取得
+
+		break;	//武器の場合ここまで
+
+	case (int)BELONGINGS_ARMOR:		//防具の場合
+
+		return this->Armor->GetPossessionNum(kind);		//指定された防具の所持数取得
+
+		break;	//防具の場合ここまで
+
+	case (int)BELONGINGS_ITEM:		//アイテムの場合
+
+		return this->Item->GetPossession(kind);			//指定されたアイテムの所持数取得
+
+		break;	//アイテムの場合ここまで
+
+	default:
+		break;
+	}
+
+	return -1;	
+
 }
 
-//アイテムの所持数を取得(全てのデータ)
-std::vector<int> PLAYER::GetItemPossession(void)
+//指定された持ち物の所持数を取得（すべて）
+std::vector<int> PLAYER::GetBelongingsPossession(int type)
 {
-	return this->Item->GetPossession();
+	switch (type)
+	{
+
+	case (int)BELONGINGS_WEAPON:	//武器の場合
+
+		return this->Weapon->GetPossessionNum();	//武器の所持数取得（すべて）
+
+		break;	//武器の場合ここまで
+
+	case (int)BELONGINGS_ARMOR:		//防具の場合
+
+		return this->Armor->GetPossessionNum();		//防具の所持数取得（すべて）
+
+		break;	//防具の場合ここまで
+
+	case (int)BELONGINGS_ITEM:		//アイテムの場合
+
+		return this->Item->GetPossession();			//アイテムの所持数取得（すべて）
+
+		break;	//アイテムの場合ここまで
+
+	default:
+		break;
+	}
+
+
 }
 
-//アイテムの回復量取得
-int PLAYER::GetItemRecovery(int code)
+//指定された持ち物の種類数を取得
+int PLAYER::GetBelongingsSize(int type)
 {
-	return this->Item->GetRecovery(code);
+	switch (type)
+	{
+
+	case (int)BELONGINGS_WEAPON:	//武器の場合
+
+		return this->Weapon->GetSize();	//武器のサイズ取得
+
+		break;	//武器の場合ここまで
+
+	case (int)BELONGINGS_ARMOR:		//防具の場合
+
+		return this->Armor->GetSize();	//防具のサイズ取得
+
+		break;	//防具の場合ここまで
+
+	case (int)BELONGINGS_ITEM:		//アイテムの場合
+
+		return this->Item->GetSize();	//アイテムのサイズ取得
+
+		break;	//アイテムの場合ここまで
+
+	default:
+		break;
+	}
+
+	return -1;
+
 }
 
-//所持しているアイテムの種類数を取得
-int PLAYER::GetItemSize(void)
+//指定された持ち物を追加したか取得
+bool PLAYER::GetBelongingsAddFlg(int type)
 {
-	return this->Item->GetSize();
+	switch (type)
+	{
+
+	case (int)BELONGINGS_WEAPON:	//武器の場合
+
+		return this->Weapon->GetAddFlg();	//武器を追加したか取得
+
+		break;	//武器の場合ここまで
+
+	case (int)BELONGINGS_ARMOR:		//防具の場合
+
+		return this->Armor->GetAddFlg();	//防具を追加したか取得
+
+		break;	//防具の場合ここまで
+
+	case (int)BELONGINGS_ITEM:		//アイテムの場合
+
+		return this->Item->GetAddFlg();		//アイテムを追加したか取得
+
+		break;	//アイテムの場合ここまで
+
+	default:
+		break;
+	}
+
 }
 
-//アイテムを追加したか取得
-bool PLAYER::GetItemAddFlg()
+//指定された持ち物を追加したか設定
+void PLAYER::SetBelongingsAddFlg(int type, bool add_flg)
 {
-	return this->Item->GetAddFlg();
-}
+	switch (type)
+	{
 
-//アイテムを追加したか設定
-void PLAYER::SetItemAddFlg(bool add_flg)
-{
-	this->Item->SetAddFlg(add_flg);
-	return;	
+	case (int)BELONGINGS_WEAPON:	//武器の場合
+
+		this->Weapon->SetAddFlg(add_flg);	//武器を追加したか設定
+
+		break;	//武器の場合ここまで
+
+	case (int)BELONGINGS_ARMOR:		//防具の場合
+
+		this->Armor->SetAddFlg(add_flg);	//防具を追加したか設定
+
+		break;	//防具の場合ここまで
+
+	case (int)BELONGINGS_ITEM:		//アイテムの場合
+
+		this->Item->SetAddFlg(add_flg);		//アイテムを追加したか設定
+
+		break;	//アイテムの場合ここまで
+
+	default:
+		break;
+	}
+
+	return;
+
 }
