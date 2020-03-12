@@ -170,7 +170,6 @@
     <ClCompile Include="LIST_WEAPON.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="MAP.cpp" />
-    <ClCompile Include="MENU.cpp" />
     <ClCompile Include="LIST_MGC.cpp" />
     <ClCompile Include="MSG.cpp" />
     <ClCompile Include="MUSIC.cpp" />
@@ -198,7 +197,6 @@
     <ClInclude Include="LIST_ITEM.hpp" />
     <ClInclude Include="main.hpp" />
     <ClInclude Include="MAP.hpp" />
-    <ClInclude Include="MENU.hpp" />
     <ClInclude Include="LIST_MGC.hpp" />
     <ClInclude Include="MSG.hpp" />
     <ClInclude Include="MUSIC.hpp" />

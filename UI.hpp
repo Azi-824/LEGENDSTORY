@@ -5,7 +5,7 @@
 
 //######################### ヘッダファイル読み込み #############################
 #include "DxLib.h"
-#include "MENU.hpp"
+//#include "MENU.hpp"
 #include "PLAYER.hpp"
 #include "SELECT.hpp"
 
@@ -33,6 +33,25 @@
 #define	STA_MP_BAR_WIDTH 100		//MPバーの描画幅
 #define STA_MP_BAR_HEIGHT 15		//MPバーの描画高さ
 
+//メニュー一覧
+#define MENU_LIST_WINDOW_RELATIVE_X	100	//メニューウィンドウ(一覧)の相対位置(X)
+#define MENU_LIST_WINDOW_RELATIVE_Y	100	//メニューウィンドウ(一覧)の相対位置(Y)
+#define MENU_LIST_WINDOW_WIDTH	150		//メニューウィンド(一覧)の幅
+#define MENU_LIST_WINDOW_HEIGHT	180		//メニューウィンド(一覧)の高さ
+#define MENU_WINDOW_CHENGE_POSX	100		//メニューウィンドウ(一覧)を左右どちらに表示するか判断するときのX位置
+#define MENU_WINDOW_CHENGE_POSY	85		//メニューウィンドウ(一覧)を左右どちらに表示するか判断するときのY位置
+
+//メニュー毎
+#define MENU_WINDOW_X	200				//選んだメニュー毎のウィンドウの描画開始X位置
+#define MENU_WINDOW_Y	50				//選んだメニュー毎のウィンドウの描画開始Y位置
+#define MENU_TEXT_X		220				//選んだメニュー毎の内容の描画開始X位置
+#define MENU_TEXT_Y		85				//選んだメニュー毎の内容の描画開始Y位置
+#define MENU_TEXT_TOP_Y	55				//選んだメニュー毎の先頭要素の描画開始Y位置
+#define MENU_WINDOW_WIDTH	600			//選んだメニュー毎のウィンドウの横幅
+#define MENU_WINDOW_HEIGHT	500			//選んだメニュー毎のウィンドウの高さ
+
+#define MENU_ITEM_NAME_SPACE	200		//アイテム画面の名前と所持数の表示間隔
+#define MENU_EQUIP_NAME_SPACE	200		//装備画面の名前と所持数の表示間隔
 
 //バトルコマンド関係
 #define CMD_WIN_X		350			//バトルコマンドのウィンドウの描画開始X位置
@@ -72,19 +91,33 @@ enum UI_SELECT_TYPE
 	UI_SELECT_BATTLE_CMD	//バトルコマンドの選択肢
 };
 
+enum MENU_COMMAND
+{
+	MENU_STATUS,		//ステータス
+	MENU_ITEM,			//アイテム
+	MENU_EQUIPMENT,		//装備
+	MENU_SETUMEI,		//操作説明
+	MENU_SAVE			//セーブ
+};
+
+enum MENU_EQUIP_DIR
+{
+	MENU_EQUIP_SELECT_KIND,		//武器か防具かを選択する段階
+	MENU_EQUIP_SELECT_EQUIP,	//装備する武器、もしくは防具を選択する段階
+	MENU_EQUIP_SELECT_DECISION	//装備するか選択する段階（はい、か、いいえ）
+};
+
+
 //######################### クラス定義 #####################################
 class UI
 {
 private:
 
-	MENU *menuwindow;				//メニューウィンドウ
+	//MENU *menuwindow;				//メニューウィンドウ
 
 	IMAGE *UiImage;					//uiの画像
 
 	ANIMATION *UiAnime;				//uiのアニメーション
-
-	SELECT *MenuSelect;				//メニューの選択肢
-	SELECT *BattleCommand;			//バトルコマンドの選択肢
 
 	int BattleCommadType;			//選択したバトルコマンドの種類
 
@@ -94,6 +127,8 @@ private:
 
 public:
 
+	SELECT *MenuSelect;			//メニューの選択肢
+	SELECT *BattleCommand;		//バトルコマンドの選択肢
 	SELECT *ItemSelect;			//アイテムの選択肢
 	SELECT *WeaponSelect;		//武器の選択肢
 	SELECT *ArmorSelect;		//防具の選択肢
@@ -104,10 +139,10 @@ public:
 
 	//メニューウィンドウ関連
 	void DrawMenu(int ,int);				//メニューウィンドウ描画
-	void SetChoiseMenu(std::vector<std::string>::iterator);	//メニューで選んだ内容を設定する
-	int GetChoiseMenu();				//メニュー画面での選択内容を取得
+	//void SetChoiseMenu(std::vector<std::string>::iterator);	//メニューで選んだ内容を設定する
+	//int GetChoiseMenu();				//メニュー画面での選択内容を取得
 	void ResetMenu();					//メニュー関係のメンバーをリセット
-	bool GetIsChoise(void);				//選択されているか取得
+	//bool GetIsChoise(void);				//選択されているか取得
 
 	//バトルコマンド関連
 	void SetBattleFlg();				//戦闘画面で選んだコマンドのフラグを設定する

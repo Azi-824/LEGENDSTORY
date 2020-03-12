@@ -12,8 +12,6 @@ UI::UI()
 
 	this->UiImage = new IMAGE(UI_DIR, UI_WINDOW_NAME);	//uiの画像作成
 
-	this->menuwindow = new MENU();			//メニューウィンドウ作成
-
 	this->MenuSelect = new SELECT("ステータス", "アイテム", "装備", "操作説明", "セーブ");	//メニューの選択肢生成
 	this->BattleCommand = new SELECT("こうげき", "ぼうぎょ", "まほう", "アイテム", "にげる");	//バトルコマンドの選択肢生成
 
@@ -36,7 +34,6 @@ UI::UI()
 //デストラクタ
 UI::~UI()
 {
-	delete this->menuwindow;	//menuwindow破棄
 	delete this->UiImage;		//Ui破棄
 	delete this->UiAnime;		//uianime破棄
 	delete this->MenuSelect;	//menuselect破棄
@@ -80,60 +77,13 @@ void UI::DrawMenu(int x,int y)
 	return;
 }
 
-//メニューで選んだ内容を設定
-void UI::SetChoiseMenu(std::vector<std::string>::iterator itr)
-{
-
-	if (*itr == "ステータス")		//ステータスを選んだ場合
-	{
-		this->ChoiseMenu = (int)MENU_STATUS;	//ステータス
-		//return;
-	}
-	else if (*itr == "アイテム")	//アイテムを選んだ場合
-	{
-		this->ChoiseMenu = (int)MENU_ITEM;		//アイテム
-		//return;
-	}
-	else if (*itr == "装備")			//装備を選んだ場合
-	{
-		this->ChoiseMenu = (int)MENU_EQUIPMENT;		//装備
-		//return;
-	}
-	else if (*itr == "操作説明")			//操作説明を選んだ場合
-	{
-		this->ChoiseMenu = (int)MENU_SETUMEI;	//操作説明
-	}
-	else if (*itr == "セーブ")			//セーブを選んだ場合
-	{
-		this->ChoiseMenu = (int)MENU_SAVE;		//セーブ
-		//return;
-	}
-
-	this->menuwindow->SetIsChoise(true);
-		
-	return;
-}
-
-//メニュー画面での選択内容を取得
-int UI::GetChoiseMenu()
-{
-	return this->ChoiseMenu;
-}
-
 //メニュー関係のメンバーをリセット
 void UI::ResetMenu()
 {
 	this->ChoiseMenu = -1;		//選択内容をリセット
 	this->NowSelectReset((int)UI_SELECT_MENU);	//選択している要素をリセット
 	this->MenuSelect->SetSelectFlg(false);		//選択していない
-	this->menuwindow->Reset();	//選択内容リセット
 
-}
-
-//選択されているか取得
-bool UI::GetIsChoise(void)
-{
-	return this->menuwindow->GetIsChoise();
 }
 
 //バトルコマンドで使用する要素を初期化する

@@ -270,11 +270,10 @@ void Play()
 	//▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼ メニュー毎の処理ここから ▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼
 	if (player->GetIsMenu())			//メニュー描画中だったら
 	{
-
-		if (ui->GetIsChoise())	//選択していたら
+		if (ui->MenuSelect->GetSelectFlg())	//選択していたら
 		{
 
-			switch (ui->GetChoiseMenu())	//選択した内容毎
+			switch (ui->MenuSelect->GetSelectNum())	//選択した内容毎
 			{
 
 			case (int)MENU_STATUS:		//ステータスを選んだとき
@@ -297,17 +296,17 @@ void Play()
 			case (int)MENU_EQUIPMENT:	//装備を選んだとき
 
 				//武器が追加されていた場合
-				if (player->GetBelongingsAddFlg((int)BELONGINGS_WEAPON))		
+				if (player->GetBelongingsAddFlg((int)BELONGINGS_WEAPON))
 				{
 					//選択肢の内容を更新する
 					ui->WeaponSelect->SelectClear();		//選択肢をクリア
 
 					for (int i = 0; i < player->GetBelongingsSize((int)BELONGINGS_WEAPON); ++i)			//所持している武器の種類分ループ
 					{
-						ui->WeaponSelect->AddSelect(weapon_list->GetName(player->GetBelongingsCode((int)BELONGINGS_WEAPON,i)));	//新しい選択肢を追加し、名前を渡す
+						ui->WeaponSelect->AddSelect(weapon_list->GetName(player->GetBelongingsCode((int)BELONGINGS_WEAPON, i)));	//新しい選択肢を追加し、名前を渡す
 					}
 
-					player->SetBelongingsAddFlg((int)BELONGINGS_WEAPON,false);				//武器の追加なし
+					player->SetBelongingsAddFlg((int)BELONGINGS_WEAPON, false);				//武器の追加なし
 
 				}
 
@@ -319,10 +318,10 @@ void Play()
 
 					for (int i = 0; i < player->GetBelongingsSize((int)BELONGINGS_ARMOR); ++i)			//所持している防具の種類分ループ
 					{
-						ui->ArmorSelect->AddSelect(armor_list->GetName(player->GetBelongingsCode((int)BELONGINGS_ARMOR,i)));	//新しい選択肢を追加し、名前を渡す
+						ui->ArmorSelect->AddSelect(armor_list->GetName(player->GetBelongingsCode((int)BELONGINGS_ARMOR, i)));	//新しい選択肢を追加し、名前を渡す
 					}
 
-					player->SetBelongingsAddFlg((int)BELONGINGS_ARMOR,false);				//防具の追加なし
+					player->SetBelongingsAddFlg((int)BELONGINGS_ARMOR, false);				//防具の追加なし
 
 				}
 
@@ -496,26 +495,22 @@ void Play()
 		else			//選択をしていなかったら
 		{
 			ui->SelectOperation(keydown, sys_se, (int)UI_SELECT_MENU);			//メニューウィンドウキー操作
-
-			if (ui->GetSelectFlg((int)UI_SELECT_MENU))							//選択された時
-			{
-				ui->SetChoiseMenu(ui->GetNowSelect((int)UI_SELECT_MENU));		//選択した内容をセット
-			}
-
 		}
 
 	}
 	else			//メニュー描画終了してたら
 	{
-		//****************************** ここから、選択肢のリセット処理 *******************************
-		Yes_No->Default();					//はい、いいえの選択肢をデフォルトの状態に戻す
-		ui->WeaponSelect->Default();	//武器の選択肢をデフォルトへ
-		ui->ArmorSelect->Default();		//防具の選択肢をデフォルトへ
-		Equip_select->Default();			//武器、防具の選択肢をデフォルトの状態に戻す
-		Menu_Equip_dir = (int)MENU_EQUIP_SELECT_KIND;	//選択肢の段階を最初へ
+	//****************************** ここから、選択肢のリセット処理 *******************************
+	Yes_No->Default();					//はい、いいえの選択肢をデフォルトの状態に戻す
+	ui->WeaponSelect->Default();	//武器の選択肢をデフォルトへ
+	ui->ArmorSelect->Default();		//防具の選択肢をデフォルトへ
+	Equip_select->Default();			//武器、防具の選択肢をデフォルトの状態に戻す
+	Menu_Equip_dir = (int)MENU_EQUIP_SELECT_KIND;	//選択肢の段階を最初へ
 
-		ui->ResetMenu();	//メニュー関係のリセット
+	ui->ResetMenu();	//メニュー関係のリセット
 	}
+
+
 	//▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲ メニュー毎の処理ここまで ▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲
 
 
@@ -1217,12 +1212,12 @@ void Play_Draw()
 	{
 		ui->DrawMenu(Player_X,Player_Y);	//メニューウィンドウ描画
 
-		if (ui->GetIsChoise())	//選択したら
+		if (ui->MenuSelect->GetSelectFlg())	//選択したら
 		{
 
 			ui->DrawWindow(MENU_WINDOW_X, MENU_WINDOW_Y, MENU_WINDOW_WIDTH, MENU_WINDOW_HEIGHT);	//ウィンドウ描画
 
-			switch (ui->GetChoiseMenu())		//選んだ内容ごとに処理を分ける
+			switch (ui->MenuSelect->GetSelectNum())		//選んだ内容ごとに処理を分ける
 			{
 
 			case (int)MENU_STATUS:	//ステータスを選んだ時の処理ここから
