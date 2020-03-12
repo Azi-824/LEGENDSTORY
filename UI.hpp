@@ -13,8 +13,6 @@
 
 #define UI_WINDOW_NAME	R"(window.png)"		//ウィンドウの名前
 
-#define STR_SPACE		100			//文字列間の空白
-
 //ステータスウィンドウ関係
 #define STA_WIN_X		0			//ステータスウィンドウ描画開始X位置
 #define STA_WIN_Y		540			//ステータスウィンドウ描画開始Y位置
