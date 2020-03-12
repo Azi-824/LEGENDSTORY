@@ -19,10 +19,6 @@ UI::UI()
 	this->WeaponSelect = new SELECT();	//武器の選択肢を生成
 	this->ArmorSelect = new SELECT();	//防具の選択肢を生成
 
-	this->BattleCommadType = -1;			//選択したバトルコマンドの種類を初期化
-
-	this->ChoiseMenu = -1;					//メニュー画面での選択内容を初期化
-
 	this->IsDrawUIAnime = true;				//UIのアニメーションを描画してよい
 
 	//アニメーション画像を生成（テキストポーズ）
@@ -80,57 +76,16 @@ void UI::DrawMenu(int x,int y)
 //メニュー関係のメンバーをリセット
 void UI::ResetMenu()
 {
-	this->ChoiseMenu = -1;		//選択内容をリセット
-	this->NowSelectReset((int)UI_SELECT_MENU);	//選択している要素をリセット
 	this->MenuSelect->SetSelectFlg(false);		//選択していない
+	this->MenuSelect->NowSelectReset();			//選択している内容をリセット
 
 }
 
 //バトルコマンドで使用する要素を初期化する
 void UI::BattleInit()
 {
-	this->BattleCommadType = (int)COMMAND_NONE;	//選択したコマンド内容リセット
+	this->BattleCommand->NowSelectReset();	//コマンドの選択をリセット
 	this->BattleCommand->SetSelectFlg(false);	//選択していない状態へ
-}
-
-//戦闘画面で選んだコマンドを設定する
-void UI::SetBattleFlg()
-{
-
-	auto choise_itr = this->BattleCommand->GetNowSelect();
-
-	if (*choise_itr == "こうげき")			//攻撃を選んだ場合
-	{
-		this->BattleCommadType = COMMANDE_ATACK;	//攻撃
-		return;
-	}
-	else if (*choise_itr == "ぼうぎょ")		//防御を選んだ場合
-	{
-		this->BattleCommadType = COMMANDE_DEFENSE;	//防御
-		return;
-	}
-	else if (*choise_itr == "まほう")			//魔法を選んだ場合
-	{
-		this->BattleCommadType = COMMANDE_MAGIC;	//魔法
-		return;
-	}
-	else if (*choise_itr == "アイテム")		//アイテムを選んだ場合
-	{
-		this->BattleCommadType = COMMANDE_ITEM;	//アイテム
-		return;
-	}
-	else if (*choise_itr == "にげる")			//逃げるを選んだ場合
-	{
-		this->BattleCommadType = COMMANDE_ESCAPE;	//逃げる
-		return;
-	}
-	return;
-}
-
-//選択したコマンドの種類を取得
-int UI::GetChoiseCommamd()
-{
-	return this->BattleCommadType;
 }
 
 //バトルコマンド描画
@@ -244,130 +199,6 @@ int UI::GetUiImageHeight(int type)
 	return this->UiImage->GetHeight(type);
 }
 
-//指定された選択肢のキー操作を行う
-void UI::SelectOperation(KEYDOWN *keydown, MUSIC *se, int kind)
-{
-	switch (kind)
-	{
-
-	case (int)UI_SELECT_MENU:		//メニュー画面
-
-		this->MenuSelect->SelectOperation(keydown, se);			//メニュー画面キー操作
-
-		break;
-
-	case (int)UI_SELECT_BATTLE_CMD:		//バトルコマンド
-
-		this->BattleCommand->SelectOperation(keydown, se);		//バトルコマンドのキー操作
-
-		break;
-
-	default:
-		break;
-	}
-
-	return;
-}
-
-//指定された選択肢の現在選択している要素を取得する
-std::vector<std::string>::iterator UI::GetNowSelect(int kind)
-{
-	switch (kind)
-	{
-
-	case (int)UI_SELECT_MENU:			//メニュー画面の時
-
-		return this->MenuSelect->GetNowSelect();
-
-		break;
-
-	case (int)UI_SELECT_BATTLE_CMD:			//バトルコマンドの時
-
-		return this->BattleCommand->GetNowSelect();
-
-		break;
-
-	default:
-		break;
-	}
-}
-
-//選択肢の内容をクリアする
-void UI::SelectClear(int kind)
-{
-
-	switch (kind)
-	{
-
-	case (int)UI_SELECT_MENU:			//メニュー画面の時
-
-		this->MenuSelect->SelectClear();	//選択肢削除
-
-		break;
-
-	case (int)UI_SELECT_BATTLE_CMD:			//バトルコマンドの時
-
-		return this->BattleCommand->SelectClear();	//選択肢削除
-
-		break;
-
-	default:
-		break;
-	}
-
-
-	return;
-}
-
-//現在選択している内容を最初の要素に戻す
-void UI::NowSelectReset(int kind)
-{
-	switch (kind)
-	{
-
-	case (int)UI_SELECT_MENU:			//メニュー画面の時
-
-		this->MenuSelect->NowSelectReset();	//選択肢削除
-
-		break;
-
-	case (int)UI_SELECT_BATTLE_CMD:			//バトルコマンドの時
-
-		this->BattleCommand->NowSelectReset();	//選択肢削除
-
-		break;
-
-	default:
-		break;
-	}
-
-	return;
-}
-
-//選択されたか取得
-bool UI::GetSelectFlg(int kind)
-{
-	switch (kind)
-	{
-
-	case (int)UI_SELECT_MENU:			//メニュー画面の時
-
-		return this->MenuSelect->GetSelectFlg();	//選択されたか取得
-
-		break;
-
-	case (int)UI_SELECT_BATTLE_CMD:			//バトルコマンドの時
-
-		return this->BattleCommand->GetSelectFlg();	//選択されたか取得
-
-		break;
-
-	default:
-		break;
-	}
-
-}
-
 //アニメーション画像追加
 bool UI::AddUiAnime(const char *dir, const char *name, int SplitNumALL, int SpritNumX, int SplitNumY, int SplitWidth, int SplitHeight, double changeSpeed, bool IsLoop)
 {
@@ -406,6 +237,9 @@ void UI::SetSize(void)
 	this->UiAnime->SetSize();		//Uiアニメーション画像サイズ設定
 	this->MenuSelect->SetSize();	//メニュー画面の選択肢のサイズ設定
 	this->BattleCommand->SetSize();	//戦闘画面の選択肢のサイズ設定
+	this->WeaponSelect->SetSize();	//武器の選択肢のサイズ設定
+	this->ArmorSelect->SetSize();	//防具の選択肢のサイズ設定
+	this->ItemSelect->SetSize();	//アイテムの選択肢のサイズ設定
 	
 	return;
 }

@@ -5,7 +5,6 @@
 
 //######################### ヘッダファイル読み込み #############################
 #include "DxLib.h"
-//#include "MENU.hpp"
 #include "PLAYER.hpp"
 #include "SELECT.hpp"
 
@@ -107,21 +106,14 @@ enum MENU_EQUIP_DIR
 	MENU_EQUIP_SELECT_DECISION	//装備するか選択する段階（はい、か、いいえ）
 };
 
-
 //######################### クラス定義 #####################################
 class UI
 {
 private:
 
-	//MENU *menuwindow;				//メニューウィンドウ
-
 	IMAGE *UiImage;					//uiの画像
 
 	ANIMATION *UiAnime;				//uiのアニメーション
-
-	int BattleCommadType;			//選択したバトルコマンドの種類
-
-	int ChoiseMenu;					//メニュー画面で選択した内容
 
 	bool IsDrawUIAnime;				//UIのアニメーションを描画してよいか
 
@@ -139,14 +131,9 @@ public:
 
 	//メニューウィンドウ関連
 	void DrawMenu(int ,int);				//メニューウィンドウ描画
-	//void SetChoiseMenu(std::vector<std::string>::iterator);	//メニューで選んだ内容を設定する
-	//int GetChoiseMenu();				//メニュー画面での選択内容を取得
 	void ResetMenu();					//メニュー関係のメンバーをリセット
-	//bool GetIsChoise(void);				//選択されているか取得
 
 	//バトルコマンド関連
-	void SetBattleFlg();				//戦闘画面で選んだコマンドのフラグを設定する
-	int GetChoiseCommamd();				//選択したコマンドの種類を取得
 	void DrawCommand();					//バトルコマンド描画
 	void BattleInit();					//バトルコマンドで使用する要素を初期化する
 
@@ -161,13 +148,6 @@ public:
 	bool AddUiImage(const char *, const char *,int);//ui画像を追加する
 	int GetUiImageWidth(int);					//ui画像の横幅取得
 	int GetUiImageHeight(int);					//ui画像の高さ取得
-
-	//選択肢関係
-	void SelectOperation(KEYDOWN *, MUSIC *, int);			//指定された選択肢のキー操作を行う
-	std::vector<std::string>::iterator GetNowSelect(int);	//指定された選択肢の現在選択している要素を取得する
-	void SelectClear(int);									//指定された選択肢の内容をクリアする
-	void NowSelectReset(int);								//指定された選択肢の現在選択している内容を、最初の要素に戻す
-	bool GetSelectFlg(int);									//指定された選択肢が選択されたか取得
 
 	//アニメーション関係
 	bool AddUiAnime(const char *, const char *, int, int, int, int, int, double, bool);	//アニメーション画像を追加する

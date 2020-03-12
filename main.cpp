@@ -494,7 +494,7 @@ void Play()
 		}
 		else			//選択をしていなかったら
 		{
-			ui->SelectOperation(keydown, sys_se, (int)UI_SELECT_MENU);			//メニューウィンドウキー操作
+			ui->MenuSelect->SelectOperation(keydown, sys_se);			//メニューウィンドウキー操作
 		}
 
 	}
@@ -508,6 +508,7 @@ void Play()
 	Menu_Equip_dir = (int)MENU_EQUIP_SELECT_KIND;	//選択肢の段階を最初へ
 
 	ui->ResetMenu();	//メニュー関係のリセット
+
 	}
 
 
@@ -570,15 +571,9 @@ void Battle()
 
 				ui->SetIsDrawUIAnime(false);		//UIのアニメーション非表示
 
-				if (ui->GetChoiseCommamd() == COMMAND_NONE)	//コマンドを選択していないときは
+				if (!ui->BattleCommand->GetSelectFlg())	//コマンドを選択していないときは
 				{
-					ui->SelectOperation(keydown, sys_se, (int)UI_SELECT_BATTLE_CMD);	//バトルコマンドキー操作
-
-					if (ui->GetSelectFlg((int)UI_SELECT_BATTLE_CMD))	//選択されたら
-					{
-						ui->SetBattleFlg();	//選択したコマンドを設定
-					}
-
+					ui->BattleCommand->SelectOperation(keydown, sys_se);	//バトルコマンドキー操作
 				}
 
 			}
@@ -593,69 +588,75 @@ void Battle()
 			}
 
 
-			//▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼ バトルコマンド毎の処理ここから ▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼
-			switch (ui->GetChoiseCommamd())		//どのコマンドを選んだか
+			if (ui->BattleCommand->GetSelectFlg())	//コマンドを選択したら
 			{
-			case (int)COMMANDE_ATACK:					//攻撃を選んだ時
-
-				BattleStageNow = (int)DAMEGE_CALC;	//バトル状態をダメージ計算状態へ
-
-				break;
-
-			case (int)COMMANDE_DEFENSE:		//防御を選んだ時
-
-				BattleStageNow = (int)DAMEGE_CALC;	//バトル状態をダメージ計算状態へ
-
-				break;
-
-			case (int)COMMANDE_MAGIC:		//魔法を選んだ時
-
-				ui->DrawWindow(MGC_WIN_X, MGC_WIN_Y, GAME_WIDTH - MGC_WIN_X, MGC_WIN_HEIGHT);	//ウィンドウ描画
-				bt_magic_list->Draw(MGC_TXT_X, MGC_TXT_Y,(int)SELECT_TRIANGLE_MINI);			//魔法一覧を描画
-
-				bt_magic_list->SelectOperation(keydown, sys_se);	//魔法一覧のキー操作
-
-				if (keydown->IsKeyDownOne(KEY_INPUT_BACK))			//バックスペースキーを押されたら
+				//▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼ バトルコマンド毎の処理ここから ▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼
+				switch (ui->BattleCommand->GetSelectNum())		//どのコマンドを選んだか
 				{
-					ui->BattleInit();	//コマンド選択リセット
-				}
-				else if (bt_magic_list->GetSelectFlg())		//選択された時は
-				{
-					//選んだ魔法の消費MPが残っているMPより多かったら(魔法が使えない処理)
-					if (player->GetMP() < mgc_list->GetCost(bt_magic_list->GetSelectNum()))
+				case (int)COMMANDE_ATACK:					//攻撃を選んだ時
+
+					BattleStageNow = (int)DAMEGE_CALC;	//バトル状態をダメージ計算状態へ
+
+					break;
+
+				case (int)COMMANDE_DEFENSE:		//防御を選んだ時
+
+					BattleStageNow = (int)DAMEGE_CALC;	//バトル状態をダメージ計算状態へ
+
+					break;
+
+				case (int)COMMANDE_MAGIC:		//魔法を選んだ時
+
+					ui->DrawWindow(MGC_WIN_X, MGC_WIN_Y, GAME_WIDTH - MGC_WIN_X, MGC_WIN_HEIGHT);	//ウィンドウ描画
+					bt_magic_list->Draw(MGC_TXT_X, MGC_TXT_Y, (int)SELECT_TRIANGLE_MINI);			//魔法一覧を描画
+
+					bt_magic_list->SelectOperation(keydown, sys_se);	//魔法一覧のキー操作
+
+					if (bt_magic_list->GetBackFlg())		//戻る選択(バックスペースキーを押されたら)
 					{
-						sys_se->Play((int)SYS_SE_BLIP);			//選択できない時の音を鳴らす
+						ui->BattleCommand->SetSelectFlg(false);	//選択していない
+						bt_magic_list->SetBackFlg(false);		//戻る選択リセット
+						bt_magic_list->NowSelectReset();		//現在の選択リセット
 					}
-					else		//選んだ魔法が使えた時は
+					else if (bt_magic_list->GetSelectFlg())		//選択された時は
 					{
-						player->SetChoiseSkil(bt_magic_list->GetSelectNum());	//選択した内容を使用する魔法として設定する
-						bt_magic_list->NowSelectReset();						//選択要素を先頭に戻す
-						bt_magic_list->SetSelectFlg(false);						//選択してない状態へ
-						BattleStageNow = (int)DAMEGE_CALC;	//バトル状態をダメージ計算状態へ
+						//選んだ魔法の消費MPが残っているMPより多かったら(魔法が使えない処理)
+						if (player->GetMP() < mgc_list->GetCost(bt_magic_list->GetSelectNum()))
+						{
+							sys_se->Play((int)SYS_SE_BLIP);			//選択できない時の音を鳴らす
+						}
+						else		//選んだ魔法が使えた時は
+						{
+							player->SetChoiseSkil(bt_magic_list->GetSelectNum());	//選択した内容を使用する魔法として設定する
+							bt_magic_list->NowSelectReset();						//選択要素を先頭に戻す
+							bt_magic_list->SetSelectFlg(false);						//選択してない状態へ
+							BattleStageNow = (int)DAMEGE_CALC;	//バトル状態をダメージ計算状態へ
+						}
 					}
+
+					break;
+
+				case (int)COMMANDE_ITEM:			//アイテムを選んだ時
+
+					BattleStageNow = (int)DAMEGE_CALC;	//バトル状態をダメージ計算状態へ
+
+					break;
+
+				case (int)COMMANDE_ESCAPE:		//逃げるを選んだ時
+
+					Work_Str = "上手く逃げ切れた！";
+					bt_msg[(int)BT_MSG_ACT]->SetMsg(Work_Str.c_str());	//文字列設定
+
+					BattleStageNow = (int)ACT_MSG;	//メッセージ描画状態
+
+					break;
+
+				default:
+					break;
 				}
+				//▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲ バトルコマンド毎の処理ここまで ▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲
 
-				break;
-
-			case (int)COMMANDE_ITEM:			//アイテムを選んだ時
-
-				BattleStageNow = (int)DAMEGE_CALC;	//バトル状態をダメージ計算状態へ
-
-				break;
-
-			case (int)COMMANDE_ESCAPE:		//逃げるを選んだ時
-
-				Work_Str = "上手く逃げ切れた！";
-				bt_msg[(int)BT_MSG_ACT]->SetMsg(Work_Str.c_str());	//文字列設定
-
-				BattleStageNow = (int)ACT_MSG;	//メッセージ描画状態
-				
-				break;
-
-			default:
-				break;
 			}
-			//▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲ バトルコマンド毎の処理ここまで ▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲
 
 		} 
 		else if (Turn = (int)ENEMY_TURN)	//敵のターンだったら
@@ -673,14 +674,14 @@ void Battle()
 
 		if (Turn == (int)MY_TURN)		//味方のターンだったら
 		{
-			player->DamegeCalc(enemy[EncounteEnemyType],ui->GetChoiseCommamd());		//ダメージ計算
+			player->DamegeCalc(enemy[EncounteEnemyType],ui->BattleCommand->GetSelectNum());		//ダメージ計算
 
 			//▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼ メッセージ設定処理ここから ▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼
 
 			ui->SetIsDrawUIAnime(true);			//UIのアニメーション表示
 
 			//味方
-			if (ui->GetChoiseCommamd() == (int)COMMANDE_DEFENSE)	//防御を選んだ時
+			if (ui->BattleCommand->GetSelectNum() == (int)COMMANDE_DEFENSE)	//防御を選んだ時
 			{
 				Work_Str = player->GetName();					//味方の名前取得
 				Work_Str += "は防御している！";
@@ -688,7 +689,7 @@ void Battle()
 				Work_Str = "防御に集中している！";
 				bt_msg[(int)BT_MSG_ACT]->AddMsg(Work_Str.c_str());	//文字列設定
 			}
-			else if (ui->GetChoiseCommamd() == (int)COMMANDE_ITEM)	//アイテムを選んだ時
+			else if (ui->BattleCommand->GetSelectNum() == (int)COMMANDE_ITEM)	//アイテムを選んだ時
 			{
 				Work_Str = player->GetName();					//味方の名前取得
 				Work_Str += "は薬草を持っていた！";
@@ -718,8 +719,6 @@ void Battle()
 
 			BattleStageNow = (int)ACT_MSG;	//行動メッセージ表示状態へ
 
-			ui->NowSelectReset((int)UI_SELECT_BATTLE_CMD);		//選択を最初の要素へ戻す
-
 		}
 		else if (Turn = (int)ENEMY_TURN)	//敵のターンだったら
 		{
@@ -741,7 +740,7 @@ void Battle()
 
 			if (Turn == (int)MY_TURN)		//味方のターンだったら
 			{
-				if (ui->GetChoiseCommamd() == (int)COMMANDE_ESCAPE)		//逃げるを選んだら
+				if (ui->BattleCommand->GetSelectNum() == (int)COMMANDE_ESCAPE)		//逃げるを選んだら
 				{
 					bt_se->Play((int)BT_SE_NIGERU);	//逃げるときの音を鳴らす
 					bt_se->Reset();					//再生状態リセット
@@ -759,7 +758,7 @@ void Battle()
 
 		if (Turn == (int)MY_TURN)		//味方のターンだったら
 		{
-			if (ui->GetChoiseCommamd() == (int)COMMANDE_ATACK)	//攻撃を選んでいたら
+			if (ui->BattleCommand->GetSelectNum() == (int)COMMANDE_ATACK)	//攻撃を選んでいたら
 			{
 				//フェードアウトなしで描画
 				Atack_effect->DrawNormal(ATK_DRAW_X, ATK_DRAW_Y, (int)NOMAL_ATACK);	//攻撃エフェクト描画
@@ -775,7 +774,7 @@ void Battle()
 				}
 
 			}
-			else if (ui->GetChoiseCommamd() == (int)COMMANDE_MAGIC)	//魔法を選んでいたら
+			else if (ui->BattleCommand->GetSelectNum() == (int)COMMANDE_MAGIC)	//魔法を選んでいたら
 			{
 				//フェードアウトなしで描画
 				Magic_effect->DrawNormal((GAME_WIDTH / 2 - MAGIC_WIDTH / 2), (GAME_HEIGHT / 2 - MAGIC_HEIGHT / 2), player->GetChoiseSkil());	//魔法エフェクト描画
@@ -794,7 +793,7 @@ void Battle()
 			}
 			else				//それ以外だったら
 			{
-				if (ui->GetChoiseCommamd() == (int)COMMANDE_ITEM)		//アイテムを選んでいたら
+				if (ui->BattleCommand->GetSelectNum() == (int)COMMANDE_ITEM)		//アイテムを選んでいたら
 				{
 					player->SetHP(player->GetHP()+ ITME_YAKUSOU_RECOVERY_AMOUNT);		//体力回復	
 				}
@@ -806,7 +805,7 @@ void Battle()
 			if (Magic_effect->GetIsDrawEnd()||Atack_effect->GetIsDrawEnd())		//エフェクト描画が終了したら
 			{
 
-				if (ui->GetChoiseCommamd() == (int)COMMANDE_MAGIC)	//魔法を選んでいたら
+				if (ui->BattleCommand->GetSelectNum() == (int)COMMANDE_MAGIC)	//魔法を選んでいたら
 				{
 					player->SetMP(player->GetMP() - mgc_list->GetCost(player->GetChoiseSkil()));		//使った魔法に応じたMPを減らす
 				}
@@ -883,7 +882,7 @@ void Battle()
 
 			if (Turn == (int)MY_TURN)			//味方のターンの時
 			{
-				if (ui->GetChoiseCommamd() == (int)COMMANDE_ATACK)	//攻撃を選んだ時は
+				if (ui->BattleCommand->GetSelectNum() == (int)COMMANDE_ATACK)	//攻撃を選んだ時は
 				{
 					Atack_effect->ResetIsAnime((int)NOMAL_ATACK);		//攻撃エフェクトリセット
 				}
@@ -1127,8 +1126,6 @@ void Init()
 		enemy[EncounteEnemyType]->StateSetInit();		//遭遇した敵初期化
 
 		ui->BattleInit();			//バトルコマンド初期化
-
-		ui->NowSelectReset((int)UI_SELECT_BATTLE_CMD);		//選択を最初の要素へ戻す
 
 		bt_se->Reset();				//SEの再生状態をリセット
 
@@ -1898,10 +1895,6 @@ void SetSize()
 	bt_magic_list->SetSize();	//戦闘画面の魔法一覧の画像サイズ設定
 	Equip_select->SetSize();		//装備画面の選択肢の画像サイズ設定
 	
-	ui->ItemSelect->SetSize();
-	ui->ArmorSelect->SetSize();
-	ui->WeaponSelect->SetSize();
-
 	//エフェクト関係
 	Magic_effect->SetSize();	//魔法エフェクトのサイズ設定
 	Atack_effect->SetSize();	//攻撃エフェクトのサイズ設定

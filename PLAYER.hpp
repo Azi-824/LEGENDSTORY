@@ -37,7 +37,7 @@ enum COMMANDTYPE
 	COMMANDE_MAGIC,		//魔法
 	COMMANDE_ITEM,		//アイテム
 	COMMANDE_ESCAPE,	//逃げる
-	COMMAND_NONE=-1		//コマンドを選んでいない
+	COMMAND_NONE = -1		//コマンドを選んでいない
 };	//選択したコマンドの種類
 
 enum BELONGINGS
