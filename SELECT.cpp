@@ -20,6 +20,7 @@ SELECT::SELECT()
 	this->SelectFlg = false;		//選択されていない
 	this->IsDrawImage = true;		//UI画像を描画してよい
 	this->Side_Mode = false;		//横向きに選択肢を並べない
+	this->BackFlg = false;				//戻る選択はされていない
 
 	this->DefIsKeyOpe = true;		//デフォルトはキー操作可能
 	this->DefIsDrawImage = true;	//デフォルトはUI表示

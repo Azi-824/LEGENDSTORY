@@ -23,8 +23,8 @@
 #define MENU_WINDOW_X	200				//選んだメニュー毎のウィンドウの描画開始X位置
 #define MENU_WINDOW_Y	50				//選んだメニュー毎のウィンドウの描画開始Y位置
 #define MENU_TEXT_X		220				//選んだメニュー毎の内容の描画開始X位置
-#define MENU_TEXT_Y		75				//選んだメニュー毎の内容の描画開始Y位置
-#define MENU_TEXT_IND_Y	55				//選んだメニュー毎の目次描画開始Y位置
+#define MENU_TEXT_Y		85				//選んだメニュー毎の内容の描画開始Y位置
+#define MENU_TEXT_TOP_Y	55				//選んだメニュー毎の先頭要素の描画開始Y位置
 #define MENU_WINDOW_WIDTH	600			//選んだメニュー毎のウィンドウの横幅
 #define MENU_WINDOW_HEIGHT	500			//選んだメニュー毎のウィンドウの高さ
 

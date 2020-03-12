@@ -288,6 +288,12 @@ void Play()
 
 				Item_select->SelectOperation(keydown, sys_se);	//アイテムの選択肢キー操作
 
+				if (Item_select->GetBackFlg())		//戻る選択をしたとき
+				{
+					Item_select->Default();			//アイテムの選択肢をデフォルト状態に
+					ui->ResetMenu();				//メニュー選択に戻る
+				}
+
 				break;	//アイテムを選んだときここまで
 
 			case (int)MENU_EQUIPMENT:	//装備を選んだとき
@@ -1252,14 +1258,14 @@ void Play_Draw()
 			case (int)MENU_ITEM:	//アイテムを選んだ時の処理ここから
 
 				//アイテム描画処理
-				Item_select->Draw(MENU_TEXT_X, MENU_TEXT_IND_Y, (int)SELECT_TRIANGLE_MINI);		//アイテム描画
+				Item_select->Draw(MENU_TEXT_X, MENU_TEXT_TOP_Y, (int)SELECT_TRIANGLE_MINI);		//アイテム描画
 
 				break;				//アイテムを選んだときの処理ここまで
 
 			case (int)MENU_EQUIPMENT:	//装備を選んだ時の処理ここから
 
 				//装備描画処理
-				Equip_select->Draw(MENU_TEXT_X, MENU_TEXT_IND_Y, (int)SELECT_TRIANGLE_MINI);				//装備選択描画
+				Equip_select->Draw(MENU_TEXT_X, MENU_TEXT_TOP_Y, (int)SELECT_TRIANGLE_MINI);				//装備選択描画
 				possession_weapon->Draw(MENU_TEXT_X, MENU_TEXT_Y, (int)SELECT_TRIANGLE_MINI);		//武器描画
 				possession_armor->Draw(MENU_TEXT_X + (MENU_WINDOW_WIDTH / 2), MENU_TEXT_Y, (int)SELECT_TRIANGLE_MINI);	//防具描画
 
@@ -1901,8 +1907,8 @@ void SetGameInit()
 		work += "  ";											//空白
 		work += std::to_string(player->GetItemPossession(i));	//所持数
 		work += "個";											//個数表示
-		work += "  ";											//空白
-		work += item_list->GetDescription(player->GetItemCode(i));	//説明文
+		//work += "  ";											//空白
+		//work += item_list->GetDescription(player->GetItemCode(i));	//説明文
 
 		Item_select->Add(work.c_str());		//選択肢追加
 
