@@ -1874,26 +1874,35 @@ void SetGameInit()
 
 	for (int i = 0; i < player->GetBelongingsSize((int)BELONGINGS_WEAPON); ++i)			//所持している武器の種類分ループ
 	{
-		ui->WeaponSelect->AddSelect(weapon_list->GetName(player->GetBelongingsCode((int)BELONGINGS_WEAPON,i)));	//新しい選択肢を追加し、名前を渡す
+		if (player->GetBelongingsIsDraw((int)BELONGINGS_WEAPON, i))	//武器を持っている場合
+		{
+			ui->WeaponSelect->AddSelect(weapon_list->GetName(player->GetBelongingsCode((int)BELONGINGS_WEAPON, i)));	//新しい選択肢を追加し、名前を渡す
+		}
 	}
 
-	player->SetBelongingsChengeFlg((int)BELONGINGS_WEAPON,false);				//武器の追加なし
+	player->SetBelongingsChengeFlg((int)BELONGINGS_WEAPON,false);				//武器の変更なし
 
 	//防具
 	for (int i = 0; i < player->GetBelongingsSize((int)BELONGINGS_ARMOR); ++i)			//所持している防具の種類分ループ
 	{
-		ui->ArmorSelect->AddSelect(armor_list->GetName(player->GetBelongingsCode((int)BELONGINGS_ARMOR,i)));		//新しい選択肢を追加し、名前を渡す
+		if (player->GetBelongingsIsDraw((int)BELONGINGS_ARMOR, i))		//防具を持っている場合
+		{
+			ui->ArmorSelect->AddSelect(armor_list->GetName(player->GetBelongingsCode((int)BELONGINGS_ARMOR, i)));		//新しい選択肢を追加し、名前を渡す
+		}
 	}
 
-	player->SetBelongingsChengeFlg((int)BELONGINGS_ARMOR,false);				//防具の追加なし
+	player->SetBelongingsChengeFlg((int)BELONGINGS_ARMOR,false);				//防具の変更なし
 
 	//アイテム
 	for (int i = 0; i < player->GetBelongingsSize((int)BELONGINGS_ITEM); ++i)
 	{
-		ui->ItemSelect->AddSelect(item_list->GetName(player->GetBelongingsCode((int)BELONGINGS_ITEM,i)));		//新しい選択肢を追加し、名前を渡す
+		if (player->GetBelongingsIsDraw((int)BELONGINGS_ITEM,i))	//アイテムを持っている場合
+		{
+			ui->ItemSelect->AddSelect(item_list->GetName(player->GetBelongingsCode((int)BELONGINGS_ITEM, i)));		//新しい選択肢を追加し、名前を渡す
+		}
 	}
 
-	player->SetBelongingsChengeFlg((int)BELONGINGS_ITEM,false);			//アイテムの追加なし
+	player->SetBelongingsChengeFlg((int)BELONGINGS_ITEM,false);			//アイテムの変更なし
 
 	//後から変更
 

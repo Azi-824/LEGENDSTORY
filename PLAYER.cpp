@@ -1019,7 +1019,7 @@ void PLAYER::BelongingsAdd(int type, int code, int value)
 		}
 		else						//武器の登録が済んでいる場合
 		{
-			this->Weapon->AddPossession(code);	//所持数増加
+			this->Weapon->IncreasePossession(code);	//所持数増加
 		}
 
 
@@ -1049,7 +1049,7 @@ void PLAYER::BelongingsAdd(int type, int code, int value)
 		}
 		else						//防具の登録が済んでいる場合
 		{
-			this->Armor->AddPossession(code);	//所持数増加
+			this->Armor->IncreasePossession(code);	//所持数増加
 		}
 
 
@@ -1278,6 +1278,36 @@ void PLAYER::SetBelongingsChengeFlg(int type, bool add_flg)
 	}
 
 	return;
+
+}
+
+//指定された持ち物の描画してよいかを取得する
+bool PLAYER::GetBelongingsIsDraw(int type, int kind)
+{
+	switch (type)
+	{
+
+	case (int)BELONGINGS_WEAPON:	//武器の場合
+
+		return this->Weapon->GetIsDraw(kind);	//指定された武器が描画できるか取得
+
+		break;	//武器の場合ここまで
+
+	case (int)BELONGINGS_ARMOR:		//防具の場合
+
+		return this->Armor->GetIsDraw(kind);	//指定された防具が描画できるか取得
+
+		break;	//防具の場合ここまで
+
+	case (int)BELONGINGS_ITEM:		//アイテムの場合
+
+		return this->Item->GetIsDraw(kind);		//指定されたアイテムが描画できるか取得
+
+		break;	//アイテムの場合ここまで
+
+	default:
+		break;
+	}
 
 }
 

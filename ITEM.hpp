@@ -20,7 +20,9 @@ private:
 	std::vector<int> Possession;	//所持数
 	std::vector<int> Recovery;		//回復量
 
-	bool Chenge_flg;					//追加したかどうか
+	std::vector<bool> IsDraw;		//描画してよいか
+
+	bool Chenge_flg;				//追加したかどうか
 
 public:
 
@@ -34,6 +36,7 @@ public:
 	void DecreasePossession(int);	//所持数減少
 	void SetRecovery(int);			//回復量設定
 	void SetChengeFlg(bool);		//変更したか設定
+	//void SetIsDraw(int, bool);		//描画してよいか設定
 
 	//ゲッタ
 	int GetCode(int);				//アイテムコード取得
@@ -42,5 +45,6 @@ public:
 	int GetSize();					//要素数を取得
 	bool GetChengeFlg(void);		//変更したか取得
 	std::vector<int> GetPossession();	//所持数取得(全て)
+	bool GetIsDraw(int);			//描画してよいか取得
 
 };

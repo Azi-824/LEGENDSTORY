@@ -29,6 +29,10 @@ ITEM::~ITEM()
 	std::vector<int> v3;			//空のvectorを作成する
 	this->Recovery.swap(v3);		//空と中身を入れ替える
 
+	//vectorのメモリ解放を行う
+	std::vector<bool> v4;			//空のvectorを作成する
+	this->IsDraw.swap(v4);			//空と中身を入れ替える
+
 	return;
 }
 
@@ -37,6 +41,7 @@ void ITEM::SetCode(int code)
 {
 	this->Code.push_back(code);
 	this->Possession.push_back(1);	//所持数を初期値で設定
+	this->IsDraw.push_back(true);	//描画してよいか設定（描画してよい）
 	return;
 }
 
@@ -51,6 +56,10 @@ void ITEM::IncreasePossession(int kind)
 void ITEM::DecreasePossession(int kind)
 {
 	this->Possession[kind]--;
+	if (this->Possession[kind] <= 0)	//所持数が0以下になったら
+	{
+		this->IsDraw[kind] = false;		//描画してはいけない
+	}
 	return;
 }
 
@@ -67,6 +76,13 @@ void ITEM::SetChengeFlg(bool add_flg)
 	this->Chenge_flg = add_flg;
 	return;
 }
+
+//描画してよいか設定
+//void ITEM::SetIsDraw(int kind, bool Isdraw)
+//{
+//	this->IsDraw[kind] = Isdraw;
+//	return;
+//}
 
 //アイテムコード取得
 int ITEM::GetCode(int kind)
@@ -102,4 +118,10 @@ bool ITEM::GetChengeFlg(void)
 std::vector<int> ITEM::GetPossession(void)
 {
 	return this->Possession;
+}
+
+//描画してよいか取得
+bool ITEM::GetIsDraw(int kind)
+{
+	return this->IsDraw[kind];
 }

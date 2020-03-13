@@ -212,6 +212,7 @@ public:
 	int GetBelongingsSize(int);						//指定された持ち物の持っている種類数を取得
 	bool GetBelongingsChengeFlg(int);				//指定された持ち物を追加したか取得
 	void SetBelongingsChengeFlg(int,bool);			//指定された持ち物を追加したか設定
+	bool GetBelongingsIsDraw(int, int);				//指定された持ち物の描画してよいかを取得する
 
 	//アイテム関係
 	void UseItem(int);	//アイテム使用処理
