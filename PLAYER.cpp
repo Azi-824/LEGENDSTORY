@@ -1220,26 +1220,26 @@ int PLAYER::GetBelongingsSize(int type)
 }
 
 //指定された持ち物を追加したか取得
-bool PLAYER::GetBelongingsAddFlg(int type)
+bool PLAYER::GetBelongingsChengeFlg(int type)
 {
 	switch (type)
 	{
 
 	case (int)BELONGINGS_WEAPON:	//武器の場合
 
-		return this->Weapon->GetAddFlg();	//武器を追加したか取得
+		return this->Weapon->GetChengeFlg();	//武器を追加したか取得
 
 		break;	//武器の場合ここまで
 
 	case (int)BELONGINGS_ARMOR:		//防具の場合
 
-		return this->Armor->GetAddFlg();	//防具を追加したか取得
+		return this->Armor->GetChengeFlg();	//防具を追加したか取得
 
 		break;	//防具の場合ここまで
 
 	case (int)BELONGINGS_ITEM:		//アイテムの場合
 
-		return this->Item->GetAddFlg();		//アイテムを追加したか取得
+		return this->Item->GetChengeFlg();		//アイテムを追加したか取得
 
 		break;	//アイテムの場合ここまで
 
@@ -1250,26 +1250,26 @@ bool PLAYER::GetBelongingsAddFlg(int type)
 }
 
 //指定された持ち物を追加したか設定
-void PLAYER::SetBelongingsAddFlg(int type, bool add_flg)
+void PLAYER::SetBelongingsChengeFlg(int type, bool add_flg)
 {
 	switch (type)
 	{
 
 	case (int)BELONGINGS_WEAPON:	//武器の場合
 
-		this->Weapon->SetAddFlg(add_flg);	//武器を追加したか設定
+		this->Weapon->SetChengeFlg(add_flg);	//武器を追加したか設定
 
 		break;	//武器の場合ここまで
 
 	case (int)BELONGINGS_ARMOR:		//防具の場合
 
-		this->Armor->SetAddFlg(add_flg);	//防具を追加したか設定
+		this->Armor->SetChengeFlg(add_flg);	//防具を追加したか設定
 
 		break;	//防具の場合ここまで
 
 	case (int)BELONGINGS_ITEM:		//アイテムの場合
 
-		this->Item->SetAddFlg(add_flg);		//アイテムを追加したか設定
+		this->Item->SetChengeFlg(add_flg);		//アイテムを追加したか設定
 
 		break;	//アイテムの場合ここまで
 

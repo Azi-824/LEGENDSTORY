@@ -19,7 +19,7 @@ private:
 	std::vector<int> PossessionNum;			//装備の所持数
 	std::vector<bool> EquipFlg;				//装備しているかどうか
 	int Size;								//要素数
-	bool AddFlg;							//武器を追加したかどうか
+	bool Chenge_flg;						//装備を変更したかどうか
 
 public:
 
@@ -30,7 +30,7 @@ public:
 	void SetPossessionNum(int,int);			//装備所持数設定
 	void SetEquipFlg(int, bool);			//装備しているかどうか設定
 	void SetSize();							//要素数設定
-	void SetAddFlg(bool);					//武器を追加したか設定
+	void SetChengeFlg(bool);				//装備を変更したか設定
 
 	//ゲッタ
 	int GetCodeNum(int);					//コード番号取得
@@ -38,7 +38,7 @@ public:
 	std::vector<int> GetPossessionNum();	//装備所持数取得（すべて）
 	bool GetEquipFlg(int);					//装備しているか取得
 	int GetSize();							//要素数取得
-	bool GetAddFlg();						//装備を追加したか取得
+	bool GetChengeFlg();					//装備を変更したか取得
 
 	void Add(int);							//装備情報追加
 	void AddPossession(int);				//装備所持数増加処理

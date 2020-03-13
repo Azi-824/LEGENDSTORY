@@ -210,8 +210,8 @@ public:
 	int GetBelongingsPossession(int,int);			//指定された持ち物の所持数を取得する
 	std::vector<int> GetBelongingsPossession(int);	//指定された持ち物の所持数を取得(全てのデータ)
 	int GetBelongingsSize(int);						//指定された持ち物の持っている種類数を取得
-	bool GetBelongingsAddFlg(int);					//指定された持ち物を追加したか取得
-	void SetBelongingsAddFlg(int,bool);				//指定された持ち物を追加したか設定
+	bool GetBelongingsChengeFlg(int);				//指定された持ち物を追加したか取得
+	void SetBelongingsChengeFlg(int,bool);			//指定された持ち物を追加したか設定
 
 	//アイテム関係
 	void UseItem(int);	//アイテム使用処理

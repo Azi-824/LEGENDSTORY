@@ -62,9 +62,9 @@ void ITEM::SetRecovery(int recovery)
 }
 
 //’Ç‰Á‚µ‚½‚©İ’è
-void ITEM::SetAddFlg(bool add_flg)
+void ITEM::SetChengeFlg(bool add_flg)
 {
-	this->Add_flg = add_flg;
+	this->Chenge_flg = add_flg;
 	return;
 }
 
@@ -93,9 +93,9 @@ int ITEM::GetSize(void)
 }
 
 //’Ç‰Á‚µ‚½‚©æ“¾
-bool ITEM::GetAddFlg(void)
+bool ITEM::GetChengeFlg(void)
 {
-	return this->Add_flg;
+	return this->Chenge_flg;
 }
 
 //Š”æ“¾

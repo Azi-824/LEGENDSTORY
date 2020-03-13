@@ -53,9 +53,9 @@ void EQUIPMENT::SetSize()
 }
 
 //武器を追加したか設定
-void EQUIPMENT::SetAddFlg(bool addflg)
+void EQUIPMENT::SetChengeFlg(bool addflg)
 {
-	this->AddFlg = addflg;
+	this->Chenge_flg = addflg;
 	return;
 }
 
@@ -90,9 +90,9 @@ int EQUIPMENT::GetSize()
 }
 
 //装備を追加したかどうか取得
-bool EQUIPMENT::GetAddFlg(void)
+bool EQUIPMENT::GetChengeFlg(void)
 {
-	return this->AddFlg;
+	return this->Chenge_flg;
 }
 
 //装備追加
@@ -113,7 +113,7 @@ void EQUIPMENT::Add(int codenum)
 
 	this->Size = this->CodeNum.size();		//サイズ設定
 
-	this->AddFlg = true;					//装備追加フラグ
+	this->Chenge_flg = true;					//装備追加フラグ
 	
 	return;
 }

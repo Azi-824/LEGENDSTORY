@@ -315,7 +315,7 @@ void Play()
 			case (int)MENU_EQUIPMENT:	//装備を選んだとき
 
 				//武器が追加されていた場合
-				if (player->GetBelongingsAddFlg((int)BELONGINGS_WEAPON))
+				if (player->GetBelongingsChengeFlg((int)BELONGINGS_WEAPON))
 				{
 					//選択肢の内容を更新する
 					ui->WeaponSelect->SelectClear();		//選択肢をクリア
@@ -325,12 +325,12 @@ void Play()
 						ui->WeaponSelect->AddSelect(weapon_list->GetName(player->GetBelongingsCode((int)BELONGINGS_WEAPON, i)));	//新しい選択肢を追加し、名前を渡す
 					}
 
-					player->SetBelongingsAddFlg((int)BELONGINGS_WEAPON, false);				//武器の追加なし
+					player->SetBelongingsChengeFlg((int)BELONGINGS_WEAPON, false);				//武器の追加なし
 
 				}
 
 				//防具が追加されていた場合
-				if (player->GetBelongingsAddFlg((int)BELONGINGS_ARMOR))
+				if (player->GetBelongingsChengeFlg((int)BELONGINGS_ARMOR))
 				{
 					//選択肢の内容を更新する
 					ui->ArmorSelect->SelectClear();			//選択肢をクリア
@@ -340,7 +340,7 @@ void Play()
 						ui->ArmorSelect->AddSelect(armor_list->GetName(player->GetBelongingsCode((int)BELONGINGS_ARMOR, i)));	//新しい選択肢を追加し、名前を渡す
 					}
 
-					player->SetBelongingsAddFlg((int)BELONGINGS_ARMOR, false);				//防具の追加なし
+					player->SetBelongingsChengeFlg((int)BELONGINGS_ARMOR, false);				//防具の追加なし
 
 				}
 
@@ -1877,7 +1877,7 @@ void SetGameInit()
 		ui->WeaponSelect->AddSelect(weapon_list->GetName(player->GetBelongingsCode((int)BELONGINGS_WEAPON,i)));	//新しい選択肢を追加し、名前を渡す
 	}
 
-	player->SetBelongingsAddFlg((int)BELONGINGS_WEAPON,false);				//武器の追加なし
+	player->SetBelongingsChengeFlg((int)BELONGINGS_WEAPON,false);				//武器の追加なし
 
 	//防具
 	for (int i = 0; i < player->GetBelongingsSize((int)BELONGINGS_ARMOR); ++i)			//所持している防具の種類分ループ
@@ -1885,7 +1885,7 @@ void SetGameInit()
 		ui->ArmorSelect->AddSelect(armor_list->GetName(player->GetBelongingsCode((int)BELONGINGS_ARMOR,i)));		//新しい選択肢を追加し、名前を渡す
 	}
 
-	player->SetBelongingsAddFlg((int)BELONGINGS_ARMOR,false);				//防具の追加なし
+	player->SetBelongingsChengeFlg((int)BELONGINGS_ARMOR,false);				//防具の追加なし
 
 	//アイテム
 	for (int i = 0; i < player->GetBelongingsSize((int)BELONGINGS_ITEM); ++i)
@@ -1893,7 +1893,7 @@ void SetGameInit()
 		ui->ItemSelect->AddSelect(item_list->GetName(player->GetBelongingsCode((int)BELONGINGS_ITEM,i)));		//新しい選択肢を追加し、名前を渡す
 	}
 
-	player->SetBelongingsAddFlg((int)BELONGINGS_ITEM,false);			//アイテムの追加なし
+	player->SetBelongingsChengeFlg((int)BELONGINGS_ITEM,false);			//アイテムの追加なし
 
 	//後から変更
 
