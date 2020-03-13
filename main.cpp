@@ -290,6 +290,24 @@ void Play()
 					ui->ResetMenu();					//メニュー選択に戻る
 				}
 
+				if (ui->ItemSelect->GetSelectFlg())		//アイテムを選んだら
+				{
+					ui->ItemSelect->SetIsKeyOpe(false);	//アイテムの選択肢キー操作不可
+					Yes_No->SetIsKeyOpe(true);			//はい、いいえの選択肢キー操作可能
+
+					Yes_No->SelectOperation(keydown, sys_se);	//はい、いいえの選択肢キー操作
+					if (Yes_No->GetSelectFlg())		//はいかいいえを選択したら
+					{
+						if (*Yes_No->GetNowSelect() == "はい")	//はいを選んだとき
+						{
+							//アイテム使用処理
+						}
+						Yes_No->Default();			//はい、いいえの選択肢デフォルトへ
+						ui->ItemSelect->Default();	//アイテムの選択肢デフォルトへ
+					}
+
+				}
+
 
 				break;	//アイテムを選んだときここまで
 
@@ -1239,6 +1257,11 @@ void Play_Draw()
 				//アイテム描画処理
 
 				ui->DrawItemSelect(MENU_TEXT_X, MENU_TEXT_TOP_Y, player->GetBelongingsPossession((int)BELONGINGS_ITEM));	//アイテム描画
+
+				if (ui->ItemSelect->GetSelectFlg())		//アイテムを選択したら
+				{
+					Yes_No->DrawCenter(MENU_WINDOW_X + MENU_WINDOW_WIDTH / 2, MENU_WINDOW_Y + MENU_WINDOW_HEIGHT / 2);	//はい、いいえの選択肢描画
+				}
 
 				break;				//アイテムを選んだときの処理ここまで
 
