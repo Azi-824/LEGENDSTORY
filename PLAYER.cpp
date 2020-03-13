@@ -1280,3 +1280,19 @@ void PLAYER::SetBelongingsAddFlg(int type, bool add_flg)
 	return;
 
 }
+
+//アイテム使用処理
+void PLAYER::UseItem(int kind)
+{
+
+	this->NowHP += this->Item->GetRecovery(kind);	//回復量を取得し、現在のHPに加える
+
+	if (this->NowHP > this->MaxHP)	//最大HPより多くなったら
+	{
+		this->NowHP = this->MaxHP;	//現在のHPを最大HPと同じにする
+	}
+
+	this->Item->DecreasePossession(kind);	//アイテムの所持数を減らす
+
+	return;
+}

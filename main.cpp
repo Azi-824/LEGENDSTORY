@@ -301,6 +301,7 @@ void Play()
 						if (*Yes_No->GetNowSelect() == "はい")	//はいを選んだとき
 						{
 							//アイテム使用処理
+							player->UseItem(ui->ItemSelect->GetSelectNum());	//選択したアイテムを使用
 						}
 						Yes_No->Default();			//はい、いいえの選択肢デフォルトへ
 						ui->ItemSelect->Default();	//アイテムの選択肢デフォルトへ
@@ -1615,9 +1616,9 @@ bool LoadGameData()
 	if (player->SetAnime(MY_ANIME_DIR_PLAYER, MY_ANIME_NAME_PLAYER, PLAYER_ALL_CNT, PLAYER_YOKO_CNT, PLAYER_TATE_CNT, PLAYER_WIDTH, PLAYER_HEIGHT, PLAYER_ANI_SPEED, true) == false) { return false; } //読み込み失敗
 
 	//プレイヤーのデータをcsvファイルから読み込み
-	//if (data->LoadPlayer(player, PLAYER_DATA_DIR, PLAYER_DATA_NAME) == false) { return false; }	//読み込み失敗
+	if (data->LoadPlayer(player, PLAYER_DATA_DIR, PLAYER_DATA_NAME) == false) { return false; }	//読み込み失敗
 	//プレイヤーの初期データver
-	if (data->LoadPlayer(player, PLAYER_DATA_DIR, PLATER_DATA_INIT_NAME) == false) { return false; }	//読み込み失敗
+	//if (data->LoadPlayer(player, PLAYER_DATA_DIR, PLATER_DATA_INIT_NAME) == false) { return false; }	//読み込み失敗
 
 	//UI関係
 	ui = new UI();		//UI作成

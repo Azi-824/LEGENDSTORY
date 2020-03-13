@@ -213,4 +213,7 @@ public:
 	bool GetBelongingsAddFlg(int);					//指定された持ち物を追加したか取得
 	void SetBelongingsAddFlg(int,bool);				//指定された持ち物を追加したか設定
 
+	//アイテム関係
+	void UseItem(int);	//アイテム使用処理
+
 };
