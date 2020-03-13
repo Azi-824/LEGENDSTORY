@@ -250,12 +250,21 @@ void UI::DrawItemSelect(int x, int y, std::vector<int> item_possession)
 	this->ItemSelect->Draw(x, y);	//アイテムの選択肢描画
 
 	static int Height = 0;	//高さ
+	int Cnt = 0;			//カウント用
 
 	Height = GetFontSize();	//高さ取得
 
 	for (int i = 0; i < item_possession.size(); ++i)	//アイテムの種類数分繰り返す
 	{
-		DrawFormatString(x + MENU_ITEM_NAME_SPACE, y + i * Height, GetColor(255, 255, 255), "%d個", item_possession[i]);	//所持しているアイテムの数を描画
+
+		if (item_possession[i] != 0)	//所持数が0個じゃなければ
+		{
+			DrawFormatString(x + MENU_ITEM_NAME_SPACE, y + Cnt * Height, GetColor(255, 255, 255), "%d個", item_possession[i]);	//所持しているアイテムの数を描画
+
+			++Cnt;	//カウントアップ
+
+		}
+
 	}
 
 	return;

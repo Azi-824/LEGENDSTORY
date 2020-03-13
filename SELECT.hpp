@@ -121,6 +121,7 @@ public:
 	void InsertSpace(int);				//空白を挿入する処理
 	void AddText(int,std::string);		//指定された要素の文字列に文字を加える
 	//void SetTextSpace(int, int);		//指定された要素の文字と文字の間に空白を入れ、揃える
+	int GetSelectKind(void);			//選択肢の数を取得
 
 
 	//選択肢の内容を変更する

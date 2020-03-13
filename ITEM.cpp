@@ -39,6 +39,7 @@ ITEM::~ITEM()
 //アイテムコード設定
 void ITEM::SetCode(int code)
 {
+	
 	this->Code.push_back(code);
 	this->Possession.push_back(1);	//所持数を初期値で設定
 	this->IsDraw.push_back(true);	//描画してよいか設定（描画してよい）
@@ -48,18 +49,22 @@ void ITEM::SetCode(int code)
 //所持数増加
 void ITEM::IncreasePossession(int kind)
 {
-	this->Possession[kind]++;
+	this->Possession[kind]++;	//所持数を増やす
+	this->Chenge_flg = true;	//変更あり
 	return;
 }
 
 //所持数減少
 void ITEM::DecreasePossession(int kind)
 {
-	this->Possession[kind]--;
+	this->Possession[kind]--;			//所持数を減らす
 	if (this->Possession[kind] <= 0)	//所持数が0以下になったら
 	{
 		this->IsDraw[kind] = false;		//描画してはいけない
+		this->Possession[kind] = 0;		//0個より少なくしない
 	}
+
+	this->Chenge_flg = true;			//変更あり
 	return;
 }
 

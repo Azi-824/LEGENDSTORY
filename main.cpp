@@ -282,39 +282,69 @@ void Play()
 
 			case (int)MENU_ITEM:		//アイテムを選んだとき
 
-				ui->ItemSelect->SelectOperation(keydown, sys_se);	//アイテムの選択肢キー操作
-
-				if (ui->ItemSelect->GetBackFlg())		//戻る選択をしたとき
+				//******************************** 描画内容更新処理ここから ***********************************************
+				if (player->GetBelongingsChengeFlg((int)BELONGINGS_ITEM))	//アイテムの変更があった場合
 				{
-					ui->ItemSelect->Default();			//アイテムの選択肢をデフォルト状態に
-					ui->ResetMenu();					//メニュー選択に戻る
-				}
+					//描画内容の更新処理
+					ui->ItemSelect->SelectClear();		//現在の選択肢をクリア
 
-				if (ui->ItemSelect->GetSelectFlg())		//アイテムを選んだら
-				{
-					ui->ItemSelect->SetIsKeyOpe(false);	//アイテムの選択肢キー操作不可
-					Yes_No->SetIsKeyOpe(true);			//はい、いいえの選択肢キー操作可能
-
-					Yes_No->SelectOperation(keydown, sys_se);	//はい、いいえの選択肢キー操作
-					if (Yes_No->GetSelectFlg())		//はいかいいえを選択したら
+					for (int i = 0; i < player->GetBelongingsSize((int)BELONGINGS_ITEM); ++i)
 					{
-						if (*Yes_No->GetNowSelect() == "はい")	//はいを選んだとき
+						if (player->GetBelongingsIsDraw((int)BELONGINGS_ITEM, i))	//アイテムを持っている場合
 						{
-							//アイテム使用処理
-							player->UseItem(ui->ItemSelect->GetSelectNum());	//選択したアイテムを使用
+							ui->ItemSelect->AddSelect(item_list->GetName(player->GetBelongingsCode((int)BELONGINGS_ITEM, i)));		//新しい選択肢を追加し、名前を渡す
 						}
-						Yes_No->Default();			//はい、いいえの選択肢デフォルトへ
-						ui->ItemSelect->Default();	//アイテムの選択肢デフォルトへ
+					}
+
+					player->SetBelongingsChengeFlg((int)BELONGINGS_ITEM, false);			//アイテムの変更なし
+
+				}
+				//********************************** 描画内容更新処理ここまで **********************************************
+
+				if (ui->ItemSelect->GetSelectKind() != 0)	//アイテムを一種類以上持っていた場合
+				{
+					ui->ItemSelect->SelectOperation(keydown, sys_se);	//アイテムの選択肢キー操作
+
+					if (ui->ItemSelect->GetBackFlg())		//戻る選択をしたとき
+					{
+						ui->ItemSelect->Default();			//アイテムの選択肢をデフォルト状態に
+						ui->ResetMenu();					//メニュー選択に戻る
+					}
+
+					if (ui->ItemSelect->GetSelectFlg())		//アイテムを選んだら
+					{
+						ui->ItemSelect->SetIsKeyOpe(false);	//アイテムの選択肢キー操作不可
+						Yes_No->SetIsKeyOpe(true);			//はい、いいえの選択肢キー操作可能
+
+						Yes_No->SelectOperation(keydown, sys_se);	//はい、いいえの選択肢キー操作
+						if (Yes_No->GetSelectFlg())		//はいかいいえを選択したら
+						{
+							if (*Yes_No->GetNowSelect() == "はい")	//はいを選んだとき
+							{
+								//アイテム使用処理
+								int use_item_code = 0;		//使用したアイテムのコード番号を入れる変数
+								for (int i = 0; i < item_list->GetListSize(); ++i)		//アイテム一覧の分繰り返す
+								{
+									if (*ui->ItemSelect->GetNowSelect() == item_list->GetName(i))	//選択したアイテム名と一致したら
+									{
+										use_item_code = item_list->GetCodeNum(i);	//そのコード番号を取得する
+									}
+								}
+								player->UseItem(use_item_code);	//選択したアイテムを使用
+							}
+							Yes_No->Default();			//はい、いいえの選択肢デフォルトへ
+							ui->ItemSelect->Default();	//アイテムの選択肢デフォルトへ
+						}
+
 					}
 
 				}
-
 
 				break;	//アイテムを選んだときここまで
 
 			case (int)MENU_EQUIPMENT:	//装備を選んだとき
 
-				//武器が追加されていた場合
+				//武器が変更されていた場合
 				if (player->GetBelongingsChengeFlg((int)BELONGINGS_WEAPON))
 				{
 					//選択肢の内容を更新する
@@ -322,14 +352,17 @@ void Play()
 
 					for (int i = 0; i < player->GetBelongingsSize((int)BELONGINGS_WEAPON); ++i)			//所持している武器の種類分ループ
 					{
-						ui->WeaponSelect->AddSelect(weapon_list->GetName(player->GetBelongingsCode((int)BELONGINGS_WEAPON, i)));	//新しい選択肢を追加し、名前を渡す
+						if (player->GetBelongingsIsDraw((int)BELONGINGS_WEAPON, i))	//描画してよい時は
+						{
+							ui->WeaponSelect->AddSelect(weapon_list->GetName(player->GetBelongingsCode((int)BELONGINGS_WEAPON, i)));	//新しい選択肢を追加し、名前を渡す
+						}
 					}
 
-					player->SetBelongingsChengeFlg((int)BELONGINGS_WEAPON, false);				//武器の追加なし
+					player->SetBelongingsChengeFlg((int)BELONGINGS_WEAPON, false);				//武器の変更なし
 
 				}
 
-				//防具が追加されていた場合
+				//防具が変更されていた場合
 				if (player->GetBelongingsChengeFlg((int)BELONGINGS_ARMOR))
 				{
 					//選択肢の内容を更新する
@@ -337,10 +370,13 @@ void Play()
 
 					for (int i = 0; i < player->GetBelongingsSize((int)BELONGINGS_ARMOR); ++i)			//所持している防具の種類分ループ
 					{
-						ui->ArmorSelect->AddSelect(armor_list->GetName(player->GetBelongingsCode((int)BELONGINGS_ARMOR, i)));	//新しい選択肢を追加し、名前を渡す
+						if (player->GetBelongingsIsDraw((int)BELONGINGS_ARMOR, i))	//描画してよい時は
+						{
+							ui->ArmorSelect->AddSelect(armor_list->GetName(player->GetBelongingsCode((int)BELONGINGS_ARMOR, i)));	//新しい選択肢を追加し、名前を渡す
+						}
 					}
 
-					player->SetBelongingsChengeFlg((int)BELONGINGS_ARMOR, false);				//防具の追加なし
+					player->SetBelongingsChengeFlg((int)BELONGINGS_ARMOR, false);				//防具の変更なし
 
 				}
 
@@ -1256,12 +1292,15 @@ void Play_Draw()
 			case (int)MENU_ITEM:	//アイテムを選んだ時の処理ここから
 
 				//アイテム描画処理
-
-				ui->DrawItemSelect(MENU_TEXT_X, MENU_TEXT_TOP_Y, player->GetBelongingsPossession((int)BELONGINGS_ITEM));	//アイテム描画
-
-				if (ui->ItemSelect->GetSelectFlg())		//アイテムを選択したら
+				if (ui->ItemSelect->GetSelectKind() != 0)	//アイテムを一種類以上持っていたら
 				{
-					Yes_No->DrawCenter(MENU_WINDOW_X + MENU_WINDOW_WIDTH / 2, MENU_WINDOW_Y + MENU_WINDOW_HEIGHT / 2);	//はい、いいえの選択肢描画
+					ui->DrawItemSelect(MENU_TEXT_X, MENU_TEXT_TOP_Y, player->GetBelongingsPossession((int)BELONGINGS_ITEM));	//アイテム描画
+
+					if (ui->ItemSelect->GetSelectFlg())		//アイテムを選択したら
+					{
+						Yes_No->DrawCenter(MENU_WINDOW_X + MENU_WINDOW_WIDTH / 2, MENU_WINDOW_Y + MENU_WINDOW_HEIGHT / 2);	//はい、いいえの選択肢描画
+					}
+
 				}
 
 				break;				//アイテムを選んだときの処理ここまで
@@ -1870,7 +1909,6 @@ void SetGameInit()
 
 	//選択肢の内容を更新する
 	//武器
-	std::string work;	//作業用
 
 	for (int i = 0; i < player->GetBelongingsSize((int)BELONGINGS_WEAPON); ++i)			//所持している武器の種類分ループ
 	{

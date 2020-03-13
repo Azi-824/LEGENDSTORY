@@ -450,3 +450,9 @@ void SELECT::AddText(int element, std::string add_text)
 //	return;
 //
 //}
+
+//‘I‘ðŽˆ‚Ì”‚ðŽæ“¾
+int SELECT::GetSelectKind(void)
+{
+	return this->Str.size();
+}
