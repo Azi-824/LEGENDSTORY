@@ -605,8 +605,8 @@ void Battle()
 
 				case (int)COMMANDE_MAGIC:		//魔法を選んだ時
 
-					ui->DrawWindow(MGC_WIN_X, MGC_WIN_Y, GAME_WIDTH - MGC_WIN_X, MGC_WIN_HEIGHT);	//ウィンドウ描画
-					bt_magic_list->Draw(MGC_TXT_X, MGC_TXT_Y, (int)SELECT_TRIANGLE_MINI);			//魔法一覧を描画
+					ui->DrawWindow(BT_LIST_WIN_X, BT_LIST_WIN_Y, GAME_WIDTH - BT_LIST_WIN_X, BT_LIST_WIN_HEIGHT);	//ウィンドウ描画
+					bt_magic_list->Draw(BT_LIST_TXT_X, BT_LIST_TXT_Y, (int)SELECT_TRIANGLE_MINI);			//魔法一覧を描画
 
 					bt_magic_list->SelectOperation(keydown, sys_se);	//魔法一覧のキー操作
 
@@ -636,7 +636,15 @@ void Battle()
 
 				case (int)COMMANDE_ITEM:			//アイテムを選んだ時
 
-					BattleStageNow = (int)DAMEGE_CALC;	//バトル状態をダメージ計算状態へ
+					ui->DrawWindow(BT_LIST_WIN_X, BT_LIST_WIN_Y, GAME_WIDTH - BT_LIST_WIN_X, BT_LIST_WIN_HEIGHT);	//ウィンドウ描画
+					ui->ItemSelect->Draw(BT_LIST_TXT_X, BT_LIST_TXT_Y);		//アイテム一覧描画
+
+					ui->ItemSelect->SelectOperation(keydown, sys_se);	//アイテム選択肢キー操作
+
+					if (ui->ItemSelect->GetSelectFlg())	//アイテムを選択したら
+					{
+						BattleStageNow = (int)DAMEGE_CALC;	//バトル状態をダメージ計算状態へ
+					}
 
 					break;
 

@@ -61,13 +61,13 @@
 #define CMD_TXT_X		370			//バトルコマンドの文字の描画開始X位置
 #define CMD_TXT_Y		540			//バトルコマンドの文字の描画開始Y位置
 
-//魔法一覧関係
-#define MGC_WIN_X		470			//魔法一覧のウィンドウの描画開始X位置
-#define MGC_WIN_Y		540			//魔法一覧のウィンドウの描画開始Y位置
-#define MGC_WIN_WIDTH	100			//魔法一覧のウィンドウの横幅
-#define MGC_WIN_HEIGHT	100			//魔法一覧のウィンドウの高さ
-#define MGC_TXT_X		485			//魔法一覧の文字の描画開始X位置
-#define MGC_TXT_Y		540			//魔法一覧の文字の描画開始Y位置
+//一覧関係
+#define BT_LIST_WIN_X		470		//魔法一覧のウィンドウの描画開始X位置
+#define BT_LIST_WIN_Y		540		//魔法一覧のウィンドウの描画開始Y位置
+#define BT_LIST_WIN_WIDTH	100		//魔法一覧のウィンドウの横幅
+#define BT_LIST_WIN_HEIGHT	100		//魔法一覧のウィンドウの高さ
+#define BT_LIST_TXT_X		485		//魔法一覧の文字の描画開始X位置
+#define BT_LIST_TXT_Y		540		//魔法一覧の文字の描画開始Y位置
 
 //ウィンドウ関係
 #define BT_WINDOW_X		0			//バトル画面のウィンドウの描画開始X位置
