@@ -636,14 +636,36 @@ void Battle()
 
 				case (int)COMMANDE_ITEM:			//アイテムを選んだ時
 
+					ui->SelectUpdate(player->GetItemClass(), item_list);	//選択肢更新
+
 					ui->DrawWindow(BT_LIST_WIN_X, BT_LIST_WIN_Y, GAME_WIDTH - BT_LIST_WIN_X, BT_LIST_WIN_HEIGHT);	//ウィンドウ描画
-					ui->ItemSelect->Draw(BT_LIST_TXT_X, BT_LIST_TXT_Y);		//アイテム一覧描画
 
-					ui->ItemSelect->SelectOperation(keydown, sys_se);	//アイテム選択肢キー操作
-
-					if (ui->ItemSelect->GetSelectFlg())	//アイテムを選択したら
+					if (ui->ItemSelect->GetSelectKind() != 0)	//アイテムを持っていたら
 					{
-						BattleStageNow = (int)DAMEGE_CALC;	//バトル状態をダメージ計算状態へ
+
+						ui->DrawItemSelect(BT_LIST_TXT_X, BT_LIST_TXT_Y, player->GetBelongingsPossession((int)BELONGINGS_ITEM));	//持っているアイテムを描画
+
+						ui->ItemSelect->SelectOperation(keydown, sys_se);	//アイテム選択肢キー操作
+
+						if (ui->ItemSelect->GetSelectFlg())	//アイテムを選択したら
+						{
+							BattleStageNow = (int)DAMEGE_CALC;	//バトル状態をダメージ計算状態へ
+						}
+
+						if (ui->ItemSelect->GetBackFlg())	//戻る選択をしたら
+						{
+							ui->BattleCommand->SetSelectFlg(false);	//選択していない
+							ui->ItemSelect->SetBackFlg(false);		//戻る選択リセット
+							ui->ItemSelect->NowSelectReset();		//現在の選択リセット
+						}
+
+					}
+					else		//アイテムを持っていなかったら
+					{
+						if (keydown->IsKeyDownOne(KEY_INPUT_BACK))	//バックスペースキーを押されたら
+						{
+							ui->BattleCommand->SetSelectFlg(false);	//コマンドを選択していない
+						}
 					}
 
 					break;
@@ -697,10 +719,12 @@ void Battle()
 			}
 			else if (ui->BattleCommand->GetSelectNum() == (int)COMMANDE_ITEM)	//アイテムを選んだ時
 			{
-				Work_Str = player->GetName();					//味方の名前取得
-				Work_Str += "は薬草を持っていた！";
+				Work_Str = item_list->GetName(ui->ItemSelect->GetSelectCode());	//アイテム名取得
+				Work_Str += "を使用した";
 				bt_msg[(int)BT_MSG_ACT]->SetMsg(Work_Str.c_str());	//文字列設定
-				Work_Str = "HPが30回復した！";
+				Work_Str = "HPが";
+				Work_Str += std::to_string(item_list->GetRecovery(ui->ItemSelect->GetSelectCode()));	//回復量取得
+				Work_Str += "回復した!";
 				bt_msg[(int)BT_MSG_ACT]->AddMsg(Work_Str.c_str());	//文字列設定
 
 			}
@@ -801,11 +825,15 @@ void Battle()
 			{
 				if (ui->BattleCommand->GetSelectNum() == (int)COMMANDE_ITEM)		//アイテムを選んでいたら
 				{
-					player->SetHP(player->GetHP()+ ITME_YAKUSOU_RECOVERY_AMOUNT);		//体力回復	
+					player->UseItem(ui->ItemSelect->GetSelectCode());	//アイテム使用
+					ui->ItemSelect->NowSelectReset();					//アイテムの選択をリセット
+					ui->ItemSelect->SetSelectFlg(false);				//選択していない状態へ
 				}
-				BattleStageNow = (int)DRAW_DAMEGE;		//ダメージ描画状態へ
 
 				enemy[EncounteEnemyType]->SetHP((enemy[EncounteEnemyType]->GetHP() - player->GetSendDamege()));	//ダメージを与える
+
+				BattleStageNow = (int)DRAW_DAMEGE;		//ダメージ描画状態へ
+
 			}
 
 			if (Magic_effect->GetIsDrawEnd()||Atack_effect->GetIsDrawEnd())		//エフェクト描画が終了したら
@@ -816,9 +844,9 @@ void Battle()
 					player->SetMP(player->GetMP() - mgc_list->GetCost(player->GetChoiseSkil()));		//使った魔法に応じたMPを減らす
 				}
 
-				BattleStageNow = (int)DRAW_DAMEGE;		//ダメージ描画状態へ
-
 				enemy[EncounteEnemyType]->SetHP((enemy[EncounteEnemyType]->GetHP() - player->GetSendDamege()));	//ダメージを与える
+
+				BattleStageNow = (int)DRAW_DAMEGE;		//ダメージ描画状態へ
 
 			}
 
