@@ -962,7 +962,7 @@ void PLAYER::Recovery(void)
 void PLAYER::EquipWeapon(int element)
 {
 
-	this->Equip_WeaponCode = this->Weapon->GetCodeNum(element);	//装備のコード番号を取得
+	this->Equip_WeaponCode = this->Weapon->GetCode(element);	//装備のコード番号を取得
 
 	this->EquipAtk = this->Weapon->GetAtk(this->Equip_WeaponCode);	//装備コードを基に、装備の攻撃力を取得
 
@@ -972,11 +972,17 @@ void PLAYER::EquipWeapon(int element)
 
 }
 
+//武器クラスを取得
+WEAPON * PLAYER::GetWeaponClass(void)
+{
+	return this->Weapon;
+}
+
 //防具を装備する
 void PLAYER::EquipArmor(int element)
 {
 
-	this->Equip_ArmorCode = this->Armor->GetCodeNum(element);	//装備のコード番号を取得
+	this->Equip_ArmorCode = this->Armor->GetCode(element);	//装備のコード番号を取得
 
 	this->EquipDef = this->Armor->GetDef(this->Equip_ArmorCode);	//装備コードを基に、装備の防御力を取得
 
@@ -984,6 +990,12 @@ void PLAYER::EquipArmor(int element)
 
 	return;
 
+}
+
+//防具クラスを取得
+ARMOR * PLAYER::GetArmorClass(void)
+{
+	return this->Armor;
 }
 
 //指定された持ち物を追加する
@@ -999,7 +1011,7 @@ void PLAYER::BelongingsAdd(int type, int code, int value)
 
 		for (int i = 0; i < this->Weapon->GetSize(); ++i)	//登録されている武器の種類分ループする
 		{
-			if (this->Weapon->GetCodeNum(i) == code)	//武器の登録がされている場合
+			if (this->Weapon->GetCode(i) == code)	//武器の登録がされている場合
 			{
 				entry_flg = true;	//武器の登録が済んでいる
 				break;				//繰り返しを抜ける
@@ -1029,7 +1041,7 @@ void PLAYER::BelongingsAdd(int type, int code, int value)
 
 		for (int i = 0; i < this->Armor->GetSize(); ++i)	//登録されている防具の種類分ループする
 		{
-			if (this->Armor->GetCodeNum(i) == code)	//防具の登録がされている場合
+			if (this->Armor->GetCode(i) == code)	//防具の登録がされている場合
 			{
 				entry_flg = true;	//防具の登録が済んでいる
 				break;				//繰り返しを抜ける
@@ -1100,13 +1112,13 @@ int PLAYER::GetBelongingsCode(int type, int kind)
 
 	case (int)BELONGINGS_WEAPON:	//武器の場合
 
-		return this->Weapon->GetCodeNum(kind);	//武器コード取得
+		return this->Weapon->GetCode(kind);	//武器コード取得
 
 		break;	//武器の場合ここまで
 
 	case (int)BELONGINGS_ARMOR:		//防具の場合
 
-		return this->Armor->GetCodeNum(kind);	//防具コード取得
+		return this->Armor->GetCode(kind);	//防具コード取得
 
 		break;	//防具の場合ここまで
 
@@ -1325,4 +1337,10 @@ void PLAYER::UseItem(int kind)
 	this->Item->DecreasePossession(kind);	//アイテムの所持数を減らす
 
 	return;
+}
+
+//アイテムクラスを取得
+ITEM * PLAYER::GetItemClass(void)
+{
+	return this->Item;
 }

@@ -303,3 +303,76 @@ void UI::DrawMenuEquip(int x, int y, std::vector<int> wpn_possession, std::vecto
 	return;
 
 }
+
+//選択肢の内容を更新する処理(アイテム)
+void UI::SelectUpdate(ITEM *item, LIST_ITEM *item_list)
+{
+
+	if (item->GetChengeFlg())	//変更があったら
+	{
+		this->ItemSelect->SelectClear();	//現在の選択肢クリア
+
+		for (int i = 0; i < item->GetSize(); ++i)	//持っているアイテムの種類分繰り返す
+		{
+			if (item->GetIsDraw(i))	//アイテムを持っている場合
+			{
+				this->ItemSelect->AddSelect(item_list->GetName(item->GetCode(i)), item->GetCode(i));	//新しい選択肢を追加し、名前とアイテムコードを渡す
+			}
+		}
+
+		item->SetChengeFlg(false);	//変更なし
+
+	}
+
+	return;
+
+}
+
+//選択肢の内容を更新する処理(武器)
+void UI::SelectUpdate(WEAPON *weapon, LIST_WEAPON *weapon_list)
+{
+
+	if (weapon->GetChengeFlg())	//変更があったら
+	{
+		this->WeaponSelect->SelectClear();	//現在の選択肢クリア
+
+		for (int i = 0; i < weapon->GetSize(); ++i)	//持っている武器の種類分繰り返す
+		{
+			if (weapon->GetIsDraw(i))	//武器を持っている場合
+			{
+				this->WeaponSelect->AddSelect(weapon_list->GetName(weapon->GetCode(i)), weapon->GetCode(i));	//新しい選択肢を追加し、名前とアイテムコードを渡す
+			}
+		}
+
+		weapon->SetChengeFlg(false);	//変更なし
+
+	}
+
+	return;
+
+}
+
+//選択肢の内容を更新する処理(防具)
+void UI::SelectUpdate(ARMOR *armor, LIST_ARMOR *armor_list)
+{
+
+	if (armor->GetChengeFlg())	//変更があったら
+	{
+		this->ArmorSelect->SelectClear();	//現在の選択肢クリア
+
+		for (int i = 0; i < armor->GetSize(); ++i)	//持っている防具の種類分繰り返す
+		{
+			if (armor->GetIsDraw(i))	//防具を持っている場合
+			{
+				this->ArmorSelect->AddSelect(armor_list->GetName(armor->GetCode(i)), armor->GetCode(i));	//新しい選択肢を追加し、名前とアイテムコードを渡す
+			}
+		}
+
+		armor->SetChengeFlg(false);	//変更なし
+
+	}
+
+	return;
+
+}
+

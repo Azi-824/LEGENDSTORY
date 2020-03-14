@@ -7,6 +7,9 @@
 #include "DxLib.h"
 #include "PLAYER.hpp"
 #include "SELECT.hpp"
+#include "LIST_ITEM.hpp"
+#include "LIST_ARMOR.hpp"
+#include "LIST_WEAPON.hpp"
 
 //######################### マクロ定義 #####################################
 #define UI_DIR	R"(.\MY_IMG\Ui\)"	//UI画像のフォルダ名
@@ -162,5 +165,10 @@ public:
 
 	//装備関係
 	void DrawMenuEquip(int, int, std::vector<int>, std::vector<int>);	//メニュー画面の装備描画処理
+
+	//選択肢関係
+	void SelectUpdate(ITEM *, LIST_ITEM *);		//選択肢の内容を更新する処理(アイテム)
+	void SelectUpdate(WEAPON *, LIST_WEAPON *);	//武器
+	void SelectUpdate(ARMOR *, LIST_ARMOR *);	//防具
 
 };

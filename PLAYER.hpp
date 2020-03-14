@@ -200,9 +200,11 @@ public:
 
 	//武器関係
 	void EquipWeapon(int);			//武器を装備する
+	WEAPON * GetWeaponClass();		//武器クラスを取得
 
 	////防具関係
 	void EquipArmor(int);			//防具を装備する
+	ARMOR * GetArmorClass();		//防具クラスを取得
 
 	//メニュー画面で描画する持ち物関係
 	void BelongingsAdd(int, int, int);				//指定された持ち物を追加
@@ -216,5 +218,6 @@ public:
 
 	//アイテム関係
 	void UseItem(int);	//アイテム使用処理
+	ITEM * GetItemClass();	//アイテムクラスを取得
 
 };

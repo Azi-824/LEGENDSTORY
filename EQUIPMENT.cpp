@@ -84,7 +84,7 @@ void EQUIPMENT::SetChengeFlg(bool addflg)
 }
 
 //ƒR[ƒh”Ô†Žæ“¾
-int EQUIPMENT::GetCodeNum(int kind)
+int EQUIPMENT::GetCode(int kind)
 {
 	return this->CodeNum[kind];
 }

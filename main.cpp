@@ -280,25 +280,8 @@ void Play()
 
 			case (int)MENU_ITEM:		//アイテムを選んだとき
 
-				//******************************** 描画内容更新処理ここから ***********************************************
-				if (player->GetBelongingsChengeFlg((int)BELONGINGS_ITEM))	//アイテムの変更があった場合
-				{
 					//描画内容の更新処理
-					ui->ItemSelect->SelectClear();		//現在の選択肢をクリア
-
-					for (int i = 0; i < player->GetBelongingsSize((int)BELONGINGS_ITEM); ++i)
-					{
-						if (player->GetBelongingsIsDraw((int)BELONGINGS_ITEM, i))	//アイテムを持っている場合
-						{
-							ui->ItemSelect->AddSelect(item_list->GetName(player->GetBelongingsCode((int)BELONGINGS_ITEM, i)),
-								player->GetBelongingsCode((int)BELONGINGS_ITEM,i));		//新しい選択肢を追加し、名前とアイテムコードを渡す
-						}
-					}
-
-					player->SetBelongingsChengeFlg((int)BELONGINGS_ITEM, false);			//アイテムの変更なし
-
-				}
-				//********************************** 描画内容更新処理ここまで **********************************************
+					ui->SelectUpdate(player->GetItemClass(), item_list);	//アイテムの選択肢の内容更新
 
 				if (ui->ItemSelect->GetSelectKind() != 0)	//アイテムを一種類以上持っていた場合
 				{
@@ -336,43 +319,9 @@ void Play()
 
 			case (int)MENU_EQUIPMENT:	//装備を選んだとき
 
-				//武器が変更されていた場合
-				if (player->GetBelongingsChengeFlg((int)BELONGINGS_WEAPON))
-				{
-					//選択肢の内容を更新する
-					ui->WeaponSelect->SelectClear();		//選択肢をクリア
+				ui->SelectUpdate(player->GetWeaponClass(), weapon_list);	//武器の選択肢の内容を更新
 
-					for (int i = 0; i < player->GetBelongingsSize((int)BELONGINGS_WEAPON); ++i)			//所持している武器の種類分ループ
-					{
-						if (player->GetBelongingsIsDraw((int)BELONGINGS_WEAPON, i))	//描画してよい時は
-						{
-							ui->WeaponSelect->AddSelect(weapon_list->GetName(player->GetBelongingsCode((int)BELONGINGS_WEAPON, i)),
-								player->GetBelongingsCode((int)BELONGINGS_WEAPON,i));	//新しい選択肢を追加し、名前と武器コードを渡す
-						}
-					}
-
-					player->SetBelongingsChengeFlg((int)BELONGINGS_WEAPON, false);				//武器の変更なし
-
-				}
-
-				//防具が変更されていた場合
-				if (player->GetBelongingsChengeFlg((int)BELONGINGS_ARMOR))
-				{
-					//選択肢の内容を更新する
-					ui->ArmorSelect->SelectClear();			//選択肢をクリア
-
-					for (int i = 0; i < player->GetBelongingsSize((int)BELONGINGS_ARMOR); ++i)			//所持している防具の種類分ループ
-					{
-						if (player->GetBelongingsIsDraw((int)BELONGINGS_ARMOR, i))	//描画してよい時は
-						{
-							ui->ArmorSelect->AddSelect(armor_list->GetName(player->GetBelongingsCode((int)BELONGINGS_ARMOR, i)),
-								player->GetBelongingsCode((int)BELONGINGS_ARMOR, i));	//新しい選択肢を追加し、名前と防具コードを渡す
-						}
-					}
-
-					player->SetBelongingsChengeFlg((int)BELONGINGS_ARMOR, false);				//防具の変更なし
-
-				}
+				ui->SelectUpdate(player->GetArmorClass(), armor_list);		//防具の選択肢の内容を更新
 
 				//****************** 選択肢の段階ごとで処理を分ける *************************
 				switch (Menu_Equip_dir)		//選択肢の段階
@@ -502,7 +451,7 @@ void Play()
 
 						}
 
-						ui->Yes_No->Default();				//はい、いいえの選択肢デフォルトへ
+						ui->Yes_No->Default();		//はい、いいえの選択肢デフォルトへ
 						ui->ArmorSelect->Default();	//防具の選択肢デフォルトへ
 						ui->WeaponSelect->Default();//武器の選択肢デフォルトへ
 
@@ -1891,44 +1840,9 @@ void SetGameInit()
 	}
 
 
-
-	//選択肢の内容を更新する
-	//武器
-
-	for (int i = 0; i < player->GetBelongingsSize((int)BELONGINGS_WEAPON); ++i)			//所持している武器の種類分ループ
-	{
-		if (player->GetBelongingsIsDraw((int)BELONGINGS_WEAPON, i))	//武器を持っている場合
-		{
-			ui->WeaponSelect->AddSelect(weapon_list->GetName(player->GetBelongingsCode((int)BELONGINGS_WEAPON, i)),
-				player->GetBelongingsCode((int)BELONGINGS_WEAPON, i));	//新しい選択肢を追加し、名前と武器コードを渡す
-		}
-	}
-
-	player->SetBelongingsChengeFlg((int)BELONGINGS_WEAPON,false);				//武器の変更なし
-
-	//防具
-	for (int i = 0; i < player->GetBelongingsSize((int)BELONGINGS_ARMOR); ++i)			//所持している防具の種類分ループ
-	{
-		if (player->GetBelongingsIsDraw((int)BELONGINGS_ARMOR, i))		//防具を持っている場合
-		{
-			ui->ArmorSelect->AddSelect(armor_list->GetName(player->GetBelongingsCode((int)BELONGINGS_ARMOR, i)),
-				player->GetBelongingsCode((int)BELONGINGS_ARMOR, i));		//新しい選択肢を追加し、名前と防具コードを渡す
-		}
-	}
-
-	player->SetBelongingsChengeFlg((int)BELONGINGS_ARMOR,false);				//防具の変更なし
-
-	//アイテム
-	for (int i = 0; i < player->GetBelongingsSize((int)BELONGINGS_ITEM); ++i)
-	{
-		if (player->GetBelongingsIsDraw((int)BELONGINGS_ITEM,i))	//アイテムを持っている場合
-		{
-			ui->ItemSelect->AddSelect(item_list->GetName(player->GetBelongingsCode((int)BELONGINGS_ITEM, i)),
-				player->GetBelongingsCode((int)BELONGINGS_ITEM,i));		//新しい選択肢を追加し、名前とアイテムコードを渡す
-		}
-	}
-
-	player->SetBelongingsChengeFlg((int)BELONGINGS_ITEM,false);			//アイテムの変更なし
+	ui->SelectUpdate(player->GetWeaponClass(), weapon_list);	//武器の選択肢更新
+	ui->SelectUpdate(player->GetArmorClass(), armor_list);		//防具の選択肢更新
+	ui->SelectUpdate(player->GetItemClass(), item_list);		//アイテムの選択肢更新
 
 	//後から変更
 

@@ -36,7 +36,7 @@ public:
 	void SetChengeFlg(bool);				//装備を変更したか設定
 
 	//ゲッタ
-	int GetCodeNum(int);					//コード番号取得
+	int GetCode(int);					//コード番号取得
 	int GetPossessionNum(int);				//装備所持数取得
 	std::vector<int> GetPossessionNum();	//装備所持数取得（すべて）
 	bool GetEquipFlg(int);					//装備しているか取得
