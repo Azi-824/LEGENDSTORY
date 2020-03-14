@@ -82,8 +82,14 @@ void UI::DrawMenu(int x,int y)
 //メニュー関係のメンバーをリセット
 void UI::ResetMenu()
 {
-	this->MenuSelect->SetSelectFlg(false);		//選択していない
-	this->MenuSelect->NowSelectReset();			//選択している内容をリセット
+	this->MenuSelect->SetSelectFlg(false);	//選択していない
+	this->MenuSelect->NowSelectReset();		//選択している内容をリセット
+
+	this->Yes_No->Default();				//はい、いいえの選択肢をデフォルトの状態に戻す
+	this->WeaponSelect->Default();			//武器の選択肢をデフォルトへ
+	this->ArmorSelect->Default();			//防具の選択肢をデフォルトへ
+	this->EquipSelect->Default();			//武器、防具の選択肢をデフォルトの状態に戻す
+
 
 }
 

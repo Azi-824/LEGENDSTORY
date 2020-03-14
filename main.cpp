@@ -294,7 +294,6 @@ void Play()
 			case (int)MENU_EQUIPMENT:	//装備を選んだとき
 
 				ui->SelectUpdate(player->GetWeaponClass(), weapon_list);	//武器の選択肢の内容を更新
-
 				ui->SelectUpdate(player->GetArmorClass(), armor_list);		//防具の選択肢の内容を更新
 
 				//****************** 選択肢の段階ごとで処理を分ける *************************
@@ -472,11 +471,7 @@ void Play()
 	}
 	else			//メニュー描画終了してたら
 	{
-	//****************************** ここから、選択肢のリセット処理 *******************************
-	ui->Yes_No->Default();					//はい、いいえの選択肢をデフォルトの状態に戻す
-	ui->WeaponSelect->Default();	//武器の選択肢をデフォルトへ
-	ui->ArmorSelect->Default();		//防具の選択肢をデフォルトへ
-	ui->EquipSelect->Default();			//武器、防具の選択肢をデフォルトの状態に戻す
+	//****************************** ここから、リセット処理 *******************************
 	Menu_Equip_dir = (int)MENU_EQUIP_SELECT_KIND;	//選択肢の段階を最初へ
 
 	ui->ResetMenu();	//メニュー関係のリセット
