@@ -39,6 +39,10 @@ SELECT::~SELECT()
 	std::vector<std::string> v;			//空のvectorを作成する
 	this->Str.swap(v);					//空と中身を入れ替える
 
+	//vectorのメモリ解放を行う
+	std::vector<int> v2;			//空のvectorを作成する
+	this->Code.swap(v2);			//空と中身を入れ替える
+
 	return;
 
 }
@@ -147,6 +151,7 @@ void SELECT::SelectClear()
 {
 	this->Str.clear();
 	this->Str_itr = this->Str.begin();
+	this->Code.clear();
 	return;
 }
 
@@ -326,10 +331,11 @@ void SELECT::SetSize(void)
 }
 
 //選択肢の内容を追加
-void SELECT::AddSelect(const char *str)
+void SELECT::AddSelect(const char *str,int code)
 {
 	this->Str.push_back(str);	//選択肢追加
 	this->Str_itr = this->Str.begin();	//最初の要素を選択状態へ
+	this->Code.push_back(code);			//コード番号追加
 	return;
 }
 
@@ -455,4 +461,10 @@ void SELECT::AddText(int element, std::string add_text)
 int SELECT::GetSelectKind(void)
 {
 	return this->Str.size();
+}
+
+//選ばれた選択肢のコード番号を取得する
+int SELECT::GetSelectCode(void)
+{
+	return this->Code[this->GetSelectNum()];	//選ばれた選択肢のコード番号を取得
 }

@@ -292,7 +292,8 @@ void Play()
 					{
 						if (player->GetBelongingsIsDraw((int)BELONGINGS_ITEM, i))	//アイテムを持っている場合
 						{
-							ui->ItemSelect->AddSelect(item_list->GetName(player->GetBelongingsCode((int)BELONGINGS_ITEM, i)));		//新しい選択肢を追加し、名前を渡す
+							ui->ItemSelect->AddSelect(item_list->GetName(player->GetBelongingsCode((int)BELONGINGS_ITEM, i)),
+								player->GetBelongingsCode((int)BELONGINGS_ITEM,i));		//新しい選択肢を追加し、名前とアイテムコードを渡す
 						}
 					}
 
@@ -322,15 +323,8 @@ void Play()
 							if (*Yes_No->GetNowSelect() == "はい")	//はいを選んだとき
 							{
 								//アイテム使用処理
-								int use_item_code = 0;		//使用したアイテムのコード番号を入れる変数
-								for (int i = 0; i < item_list->GetListSize(); ++i)		//アイテム一覧の分繰り返す
-								{
-									if (*ui->ItemSelect->GetNowSelect() == item_list->GetName(i))	//選択したアイテム名と一致したら
-									{
-										use_item_code = item_list->GetCodeNum(i);	//そのコード番号を取得する
-									}
-								}
-								player->UseItem(use_item_code);	//選択したアイテムを使用
+								player->UseItem(ui->ItemSelect->GetSelectCode());	//アイテムを使用
+
 							}
 							Yes_No->Default();			//はい、いいえの選択肢デフォルトへ
 							ui->ItemSelect->Default();	//アイテムの選択肢デフォルトへ
@@ -354,7 +348,8 @@ void Play()
 					{
 						if (player->GetBelongingsIsDraw((int)BELONGINGS_WEAPON, i))	//描画してよい時は
 						{
-							ui->WeaponSelect->AddSelect(weapon_list->GetName(player->GetBelongingsCode((int)BELONGINGS_WEAPON, i)));	//新しい選択肢を追加し、名前を渡す
+							ui->WeaponSelect->AddSelect(weapon_list->GetName(player->GetBelongingsCode((int)BELONGINGS_WEAPON, i)),
+								player->GetBelongingsCode((int)BELONGINGS_WEAPON,i));	//新しい選択肢を追加し、名前と武器コードを渡す
 						}
 					}
 
@@ -372,7 +367,8 @@ void Play()
 					{
 						if (player->GetBelongingsIsDraw((int)BELONGINGS_ARMOR, i))	//描画してよい時は
 						{
-							ui->ArmorSelect->AddSelect(armor_list->GetName(player->GetBelongingsCode((int)BELONGINGS_ARMOR, i)));	//新しい選択肢を追加し、名前を渡す
+							ui->ArmorSelect->AddSelect(armor_list->GetName(player->GetBelongingsCode((int)BELONGINGS_ARMOR, i)),
+								player->GetBelongingsCode((int)BELONGINGS_ARMOR, i));	//新しい選択肢を追加し、名前と防具コードを渡す
 						}
 					}
 
@@ -1914,7 +1910,8 @@ void SetGameInit()
 	{
 		if (player->GetBelongingsIsDraw((int)BELONGINGS_WEAPON, i))	//武器を持っている場合
 		{
-			ui->WeaponSelect->AddSelect(weapon_list->GetName(player->GetBelongingsCode((int)BELONGINGS_WEAPON, i)));	//新しい選択肢を追加し、名前を渡す
+			ui->WeaponSelect->AddSelect(weapon_list->GetName(player->GetBelongingsCode((int)BELONGINGS_WEAPON, i)),
+				player->GetBelongingsCode((int)BELONGINGS_WEAPON, i));	//新しい選択肢を追加し、名前と武器コードを渡す
 		}
 	}
 
@@ -1925,7 +1922,8 @@ void SetGameInit()
 	{
 		if (player->GetBelongingsIsDraw((int)BELONGINGS_ARMOR, i))		//防具を持っている場合
 		{
-			ui->ArmorSelect->AddSelect(armor_list->GetName(player->GetBelongingsCode((int)BELONGINGS_ARMOR, i)));		//新しい選択肢を追加し、名前を渡す
+			ui->ArmorSelect->AddSelect(armor_list->GetName(player->GetBelongingsCode((int)BELONGINGS_ARMOR, i)),
+				player->GetBelongingsCode((int)BELONGINGS_ARMOR, i));		//新しい選択肢を追加し、名前と防具コードを渡す
 		}
 	}
 
@@ -1936,7 +1934,8 @@ void SetGameInit()
 	{
 		if (player->GetBelongingsIsDraw((int)BELONGINGS_ITEM,i))	//アイテムを持っている場合
 		{
-			ui->ItemSelect->AddSelect(item_list->GetName(player->GetBelongingsCode((int)BELONGINGS_ITEM, i)));		//新しい選択肢を追加し、名前を渡す
+			ui->ItemSelect->AddSelect(item_list->GetName(player->GetBelongingsCode((int)BELONGINGS_ITEM, i)),
+				player->GetBelongingsCode((int)BELONGINGS_ITEM,i));		//新しい選択肢を追加し、名前とアイテムコードを渡す
 		}
 	}
 

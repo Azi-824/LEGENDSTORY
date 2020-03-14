@@ -39,6 +39,8 @@ private:
 	std::vector<std::string> Str;				//文字列格納用
 	std::vector<std::string>::iterator Str_itr;	//イテレータ
 
+	std::vector<int> Code;		//装備やアイテムのコード番号
+
 	IMAGE *image_ui;	//UI画像
 
 	bool IsKeyOpe;		//キー操作可能か
@@ -98,7 +100,7 @@ public:
 	void DrawCenter(int, int,int = (int)SELECT_TRIANGLE_MINI, unsigned int color = GetColor(255, 255, 255));									//選択肢の内容を中央に描画する
 
 	void SetSize(void);						//画像サイズ設定
-	void AddSelect(const char *);			//選択肢の内容を追加
+	void AddSelect(const char *, int code = -1);//選択肢の内容を追加
 
 	void SetIsKeyOpe(bool);					//キー操作可能か設定する
 	bool GetIsKeyOpe(void);					//キー操作可能か取得する
@@ -122,6 +124,7 @@ public:
 	void AddText(int,std::string);		//指定された要素の文字列に文字を加える
 	//void SetTextSpace(int, int);		//指定された要素の文字と文字の間に空白を入れ、揃える
 	int GetSelectKind(void);			//選択肢の数を取得
+	int GetSelectCode(void);			//選ばれた選択肢のコード番号を取得
 
 
 	//選択肢の内容を変更する
