@@ -279,6 +279,43 @@ void UI::DrawItemSelect(int x, int y, std::vector<int> item_possession)
 
 }
 
+//メニューのアイテム画面の処理
+bool UI::MenuSelectItem(KEYDOWN *keydown,MUSIC *sys_se)
+{
+	if (this->ItemSelect->GetSelectKind() != 0)	//アイテムを一種類以上持っていた場合
+	{
+		this->ItemSelect->SelectOperation(keydown, sys_se);	//アイテムの選択肢キー操作
+
+		if (this->ItemSelect->GetBackFlg())		//戻る選択をしたとき
+		{
+			this->ItemSelect->Default();			//アイテムの選択肢をデフォルト状態に
+			this->ResetMenu();					//メニュー選択に戻る
+		}
+
+		if (this->ItemSelect->GetSelectFlg())		//アイテムを選んだら
+		{
+			this->ItemSelect->SetIsKeyOpe(false);	//アイテムの選択肢キー操作不可
+			this->Yes_No->SetIsKeyOpe(true);			//はい、いいえの選択肢キー操作可能
+
+			this->Yes_No->SelectOperation(keydown, sys_se);	//はい、いいえの選択肢キー操作
+			if (this->Yes_No->GetSelectFlg())		//はいかいいえを選択したら
+			{
+				if (this->Yes_No->GetSelectNum() == (int)SELECT_YES)	//はいを選んだとき
+				{
+					return true;	//アイテムを選択した
+				}
+				this->Yes_No->Default();			//はい、いいえの選択肢デフォルトへ
+				this->ItemSelect->Default();	//アイテムの選択肢デフォルトへ
+			}
+
+		}
+
+	}
+
+	return false;	//アイテムを選択していない
+
+}
+
 //メニュー画面の装備描画処理
 void UI::DrawMenuEquip(int x, int y, std::vector<int> wpn_possession, std::vector<int> amr_possession)
 {

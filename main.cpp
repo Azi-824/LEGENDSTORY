@@ -280,40 +280,14 @@ void Play()
 
 			case (int)MENU_ITEM:		//アイテムを選んだとき
 
-					//描画内容の更新処理
 					ui->SelectUpdate(player->GetItemClass(), item_list);	//アイテムの選択肢の内容更新
 
-				if (ui->ItemSelect->GetSelectKind() != 0)	//アイテムを一種類以上持っていた場合
-				{
-					ui->ItemSelect->SelectOperation(keydown, sys_se);	//アイテムの選択肢キー操作
-
-					if (ui->ItemSelect->GetBackFlg())		//戻る選択をしたとき
+					if (ui->MenuSelectItem(keydown, sys_se))	//アイテムを選んだ場合
 					{
-						ui->ItemSelect->Default();			//アイテムの選択肢をデフォルト状態に
-						ui->ResetMenu();					//メニュー選択に戻る
+						player->UseItem(ui->ItemSelect->GetSelectCode());	//アイテムを使用
+						ui->Yes_No->Default();		//はい、いいえの選択肢デフォルトへ
+						ui->ItemSelect->Default();	//アイテムの選択肢デフォルトへ
 					}
-
-					if (ui->ItemSelect->GetSelectFlg())		//アイテムを選んだら
-					{
-						ui->ItemSelect->SetIsKeyOpe(false);	//アイテムの選択肢キー操作不可
-						ui->Yes_No->SetIsKeyOpe(true);			//はい、いいえの選択肢キー操作可能
-
-						ui->Yes_No->SelectOperation(keydown, sys_se);	//はい、いいえの選択肢キー操作
-						if (ui->Yes_No->GetSelectFlg())		//はいかいいえを選択したら
-						{
-							if (ui->Yes_No->GetSelectNum()==(int)SELECT_YES)	//はいを選んだとき
-							{
-								//アイテム使用処理
-								player->UseItem(ui->ItemSelect->GetSelectCode());	//アイテムを使用
-
-							}
-							ui->Yes_No->Default();			//はい、いいえの選択肢デフォルトへ
-							ui->ItemSelect->Default();	//アイテムの選択肢デフォルトへ
-						}
-
-					}
-
-				}
 
 				break;	//アイテムを選んだときここまで
 
