@@ -318,7 +318,7 @@ void Play()
 						ui->Yes_No->SelectOperation(keydown, sys_se);	//はい、いいえの選択肢キー操作
 						if (ui->Yes_No->GetSelectFlg())		//はいかいいえを選択したら
 						{
-							if (*ui->Yes_No->GetNowSelect() == "はい")	//はいを選んだとき
+							if (ui->Yes_No->GetSelectNum()==(int)SELECT_YES)	//はいを選んだとき
 							{
 								//アイテム使用処理
 								player->UseItem(ui->ItemSelect->GetSelectCode());	//アイテムを使用
@@ -469,7 +469,7 @@ void Play()
 
 					if (ui->Yes_No->GetSelectFlg())					//装備するか選択したら
 					{
-						if (*ui->Yes_No->GetNowSelect() == "はい")		//はい、を選択したら
+						if (ui->Yes_No->GetSelectNum()==(int)SELECT_YES)		//はい、を選択したら
 						{
 
 							switch (ui->EquipSelect->GetSelectNum())	//武器、防具のどちらを選択したか

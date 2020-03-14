@@ -31,6 +31,12 @@ enum SELECT_IMAGE_TYPE
 	SELECT_TRIANGLE_MINI	//横向き三角（ミニ）の画像
 };
 
+enum SELECT_YES_NO
+{
+	SELECT_YES,		//はい
+	SELECT_NO		//いいえ
+};
+
 //###################### クラス定義 ###########################
 class SELECT
 {
