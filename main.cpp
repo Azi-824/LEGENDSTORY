@@ -54,11 +54,9 @@ ENEMY *enemy[ENEMY_KIND];			//敵
 MAP *mapdata[DRAW_MAP_KIND][MAP_DATA_KIND];		//マップデータ
 
 //選択肢関係
-SELECT *Yes_No;			//はい、か、いいえの選択肢
 SELECT *Title_select;	//タイトル画面の選択肢
 SELECT *End_select;		//エンド画面の選択肢
 SELECT *bt_magic_list;	//スキルの選択肢
-SELECT *Equip_select;	//装備画面の選択肢
 
 //一覧関係
 LIST_MGC *mgc_list;			//魔法一覧
@@ -315,18 +313,18 @@ void Play()
 					if (ui->ItemSelect->GetSelectFlg())		//アイテムを選んだら
 					{
 						ui->ItemSelect->SetIsKeyOpe(false);	//アイテムの選択肢キー操作不可
-						Yes_No->SetIsKeyOpe(true);			//はい、いいえの選択肢キー操作可能
+						ui->Yes_No->SetIsKeyOpe(true);			//はい、いいえの選択肢キー操作可能
 
-						Yes_No->SelectOperation(keydown, sys_se);	//はい、いいえの選択肢キー操作
-						if (Yes_No->GetSelectFlg())		//はいかいいえを選択したら
+						ui->Yes_No->SelectOperation(keydown, sys_se);	//はい、いいえの選択肢キー操作
+						if (ui->Yes_No->GetSelectFlg())		//はいかいいえを選択したら
 						{
-							if (*Yes_No->GetNowSelect() == "はい")	//はいを選んだとき
+							if (*ui->Yes_No->GetNowSelect() == "はい")	//はいを選んだとき
 							{
 								//アイテム使用処理
 								player->UseItem(ui->ItemSelect->GetSelectCode());	//アイテムを使用
 
 							}
-							Yes_No->Default();			//はい、いいえの選択肢デフォルトへ
+							ui->Yes_No->Default();			//はい、いいえの選択肢デフォルトへ
 							ui->ItemSelect->Default();	//アイテムの選択肢デフォルトへ
 						}
 
@@ -382,18 +380,18 @@ void Play()
 
 				case (int)MENU_EQUIP_SELECT_KIND:		//武器か防具か選択する段階
 
-					Equip_select->SelectOperation(keydown, sys_se);	//武器か防具かの選択肢のキー操作
+					ui->EquipSelect->SelectOperation(keydown, sys_se);	//武器か防具かの選択肢のキー操作
 
-					if (Equip_select->GetBackFlg())		//戻る選択をしたら
+					if (ui->EquipSelect->GetBackFlg())		//戻る選択をしたら
 					{
 						ui->ResetMenu();				//メニュー選択に戻る
-						Equip_select->Default();		//武器防具の選択肢をデフォルトに
+						ui->EquipSelect->Default();		//武器防具の選択肢をデフォルトに
 					}
 
-					if (Equip_select->GetSelectFlg())	//武器か防具かを選択したら
+					if (ui->EquipSelect->GetSelectFlg())	//武器か防具かを選択したら
 					{
-						Equip_select->SetIsKeyOpe(false);	//武器防具の選択肢のキー操作不可
-						Equip_select->SetIsDrawImage(false);//UI非表示
+						ui->EquipSelect->SetIsKeyOpe(false);	//武器防具の選択肢のキー操作不可
+						ui->EquipSelect->SetIsDrawImage(false);//UI非表示
 						Menu_Equip_dir = (int)MENU_EQUIP_SELECT_EQUIP;	//選択肢の段階を次へ
 					}
 
@@ -401,7 +399,7 @@ void Play()
 
 				case (int)MENU_EQUIP_SELECT_EQUIP:		//装備する武器、もしくは防具を選択する段階
 
-					switch (Equip_select->GetSelectNum())		//武器か、防具かどちらを選んだか
+					switch (ui->EquipSelect->GetSelectNum())		//武器か、防具かどちらを選んだか
 					{
 
 					case 0:		//武器を選んだとき
@@ -414,7 +412,7 @@ void Play()
 						if (ui->WeaponSelect->GetBackFlg())	//戻る選択をしたら
 						{
 							ui->WeaponSelect->Default();		//武器の選択肢、デフォルト値へ
-							Equip_select->Default();			//武器、防具の選択を可能へ
+							ui->EquipSelect->Default();			//武器、防具の選択を可能へ
 							Menu_Equip_dir = (int)MENU_EQUIP_SELECT_KIND;	//選択肢の段階を前へ
 						}
 
@@ -441,7 +439,7 @@ void Play()
 						if (ui->ArmorSelect->GetBackFlg())	//戻る選択をしたら
 						{
 							ui->ArmorSelect->Default();		//防具の選択肢、デフォルト値へ
-							Equip_select->Default();			//武器、防具の選択を可能へ
+							ui->EquipSelect->Default();			//武器、防具の選択を可能へ
 							Menu_Equip_dir = (int)MENU_EQUIP_SELECT_KIND;	//選択肢の段階を前へ
 						}
 
@@ -466,15 +464,15 @@ void Play()
 
 				case (int)MENU_EQUIP_SELECT_DECISION:	//装備するか決定する段階(はい、いいえ)
 
-					Yes_No->SetIsKeyOpe(true);					//はい、いいえの選択肢の操作可能に
-					Yes_No->SelectOperation(keydown, sys_se);	//はい、いいえの選択肢のキー操作
+					ui->Yes_No->SetIsKeyOpe(true);					//はい、いいえの選択肢の操作可能に
+					ui->Yes_No->SelectOperation(keydown, sys_se);	//はい、いいえの選択肢のキー操作
 
-					if (Yes_No->GetSelectFlg())					//装備するか選択したら
+					if (ui->Yes_No->GetSelectFlg())					//装備するか選択したら
 					{
-						if (*Yes_No->GetNowSelect() == "はい")		//はい、を選択したら
+						if (*ui->Yes_No->GetNowSelect() == "はい")		//はい、を選択したら
 						{
 
-							switch (Equip_select->GetSelectNum())	//武器、防具のどちらを選択したか
+							switch (ui->EquipSelect->GetSelectNum())	//武器、防具のどちらを選択したか
 							{
 
 							case 0:		//武器を選択した場合
@@ -504,7 +502,7 @@ void Play()
 
 						}
 
-						Yes_No->Default();				//はい、いいえの選択肢デフォルトへ
+						ui->Yes_No->Default();				//はい、いいえの選択肢デフォルトへ
 						ui->ArmorSelect->Default();	//防具の選択肢デフォルトへ
 						ui->WeaponSelect->Default();//武器の選択肢デフォルトへ
 
@@ -552,10 +550,10 @@ void Play()
 	else			//メニュー描画終了してたら
 	{
 	//****************************** ここから、選択肢のリセット処理 *******************************
-	Yes_No->Default();					//はい、いいえの選択肢をデフォルトの状態に戻す
+	ui->Yes_No->Default();					//はい、いいえの選択肢をデフォルトの状態に戻す
 	ui->WeaponSelect->Default();	//武器の選択肢をデフォルトへ
 	ui->ArmorSelect->Default();		//防具の選択肢をデフォルトへ
-	Equip_select->Default();			//武器、防具の選択肢をデフォルトの状態に戻す
+	ui->EquipSelect->Default();			//武器、防具の選択肢をデフォルトの状態に戻す
 	Menu_Equip_dir = (int)MENU_EQUIP_SELECT_KIND;	//選択肢の段階を最初へ
 
 	ui->ResetMenu();	//メニュー関係のリセット
@@ -1294,7 +1292,7 @@ void Play_Draw()
 
 					if (ui->ItemSelect->GetSelectFlg())		//アイテムを選択したら
 					{
-						Yes_No->DrawCenter(MENU_WINDOW_X + MENU_WINDOW_WIDTH / 2, MENU_WINDOW_Y + MENU_WINDOW_HEIGHT / 2);	//はい、いいえの選択肢描画
+						ui->Yes_No->DrawCenter(MENU_WINDOW_X + MENU_WINDOW_WIDTH / 2, MENU_WINDOW_Y + MENU_WINDOW_HEIGHT / 2);	//はい、いいえの選択肢描画
 					}
 
 				}
@@ -1304,13 +1302,13 @@ void Play_Draw()
 			case (int)MENU_EQUIPMENT:	//装備を選んだ時の処理ここから
 
 				//装備描画処理
-				Equip_select->Draw(MENU_TEXT_X, MENU_TEXT_TOP_Y);				//装備選択描画
+				ui->EquipSelect->Draw(MENU_TEXT_X, MENU_TEXT_TOP_Y);				//装備選択描画
 
 				ui->DrawMenuEquip(MENU_TEXT_X, MENU_TEXT_Y, player->GetBelongingsPossession((int)BELONGINGS_WEAPON), player->GetBelongingsPossession((int)BELONGINGS_ARMOR));	//装備描画処理
 
 				if (Menu_Equip_dir == (int)MENU_EQUIP_SELECT_DECISION)		//選択肢の段階が、はい、いいえの段階だったら
 				{
-					Yes_No->DrawCenter(MENU_WINDOW_X + MENU_WINDOW_WIDTH / 2, MENU_WINDOW_Y + MENU_WINDOW_HEIGHT / 2);	//はい、いいえの選択肢描画
+					ui->Yes_No->DrawCenter(MENU_WINDOW_X + MENU_WINDOW_WIDTH / 2, MENU_WINDOW_Y + MENU_WINDOW_HEIGHT / 2);	//はい、いいえの選択肢描画
 				}
 
 				break;				//装備を選んだ時の処理ここまで
@@ -1509,9 +1507,7 @@ void Delete_Class()
 	delete End_select;		//end_select破棄
 	delete mgc_list;		//mgc_listを破棄
 	delete weapon_list;		//weapon_listを破棄
-	delete Yes_No;			//Yes_Noを破棄
 	delete armor_list;		//armor_listを破棄
-	delete Equip_select;	//Equip_selectを破棄
 
 	//delete msg;//msg破棄
 
@@ -1830,10 +1826,6 @@ bool LoadGameData()
 
 
 	//選択肢関係
-	Yes_No = new SELECT("はい", "いいえ");				//はい、いいえの選択肢生成
-	Yes_No->ChengeDefault(false, true);					//デフォルトではキー操作不可、UI表示に設定
-	Yes_No->Default();									//デフォルトで設定
-
 	Title_select = new SELECT("START", "END");			//タイトル画面の選択肢生成
 	End_select = new SELECT("TITLE", "PLAY", "END");	//エンド画面の選択肢生成
 
@@ -1843,9 +1835,6 @@ bool LoadGameData()
 	//防具の選択肢
 	ui->ArmorSelect->ChengeDefault(false, false);	//デフォルト値を変更（キー操作不可、UI非表示）
 	ui->ArmorSelect->Default();						//デフォルト値に設定
-
-	Equip_select = new SELECT("武器", "防具");	//装備画面の選択肢を生成
-	Equip_select->SetSideMode(true);			//選択肢を横向きに並べる
 
 	//*********************************** 魔法の選択肢を魔法一覧から設定、ここから *****************************************
 	std::vector<std::string> w;	//作業用
@@ -1959,11 +1948,9 @@ void SetSize()
 	ui->SetSize();				//UI画像のサイズ設定
 
 	//選択肢関係
-	Yes_No->SetSize();			//はい、いいえの選択肢の画像サイズ設定
 	Title_select->SetSize();	//タイトル画面の選択肢の画像サイズ設定
 	End_select->SetSize();		//エンド画面の選択肢の画像サイズ設定
 	bt_magic_list->SetSize();	//戦闘画面の魔法一覧の画像サイズ設定
-	Equip_select->SetSize();		//装備画面の選択肢の画像サイズ設定
 	
 	//エフェクト関係
 	Magic_effect->SetSize();	//魔法エフェクトのサイズ設定

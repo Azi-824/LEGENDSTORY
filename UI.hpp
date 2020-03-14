@@ -122,6 +122,8 @@ public:
 	SELECT *ItemSelect;			//アイテムの選択肢
 	SELECT *WeaponSelect;		//武器の選択肢
 	SELECT *ArmorSelect;		//防具の選択肢
+	SELECT *Yes_No;				//はい、いいえの選択肢
+	SELECT *EquipSelect;		//武器か防具かの選択肢
 
 	UI();					//コンストラクタ
 

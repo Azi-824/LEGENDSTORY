@@ -18,6 +18,10 @@ UI::UI()
 	this->ItemSelect = new SELECT();	//アイテムの選択肢を生成
 	this->WeaponSelect = new SELECT();	//武器の選択肢を生成
 	this->ArmorSelect = new SELECT();	//防具の選択肢を生成
+	this->Yes_No = new SELECT("はい", "いいえ");	//はい、いいえの選択肢を生成
+	this->EquipSelect = new SELECT("武器", "防具");	//武器、防具の選択肢を生成
+
+	this->EquipSelect->SetSideMode(true);		//選択肢を横向きに並べる
 
 	this->IsDrawUIAnime = true;				//UIのアニメーションを描画してよい
 
@@ -37,6 +41,8 @@ UI::~UI()
 	delete this->ItemSelect;	//ItemSelect破棄
 	delete this->WeaponSelect;	//WeaponSelect破棄
 	delete this->ArmorSelect;	//ArmorSelect破棄
+	delete this->Yes_No;		//Yes_No破棄
+	delete this->EquipSelect;	//EquipSelect破棄
 
 	return;
 }
@@ -240,6 +246,8 @@ void UI::SetSize(void)
 	this->WeaponSelect->SetSize();	//武器の選択肢のサイズ設定
 	this->ArmorSelect->SetSize();	//防具の選択肢のサイズ設定
 	this->ItemSelect->SetSize();	//アイテムの選択肢のサイズ設定
+	this->Yes_No->SetSize();		//はい、いいえの選択肢のサイズ設定
+	this->EquipSelect->SetSize();	//武器防具の選択肢のサイズ設定
 	
 	return;
 }
