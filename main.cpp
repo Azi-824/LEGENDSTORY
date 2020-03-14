@@ -282,7 +282,7 @@ void Play()
 
 					ui->SelectUpdate(player->GetItemClass(), item_list);	//アイテムの選択肢の内容更新
 
-					if (ui->MenuSelectItem(keydown, sys_se))	//アイテムを選んだ場合
+					if (ui->MenuSelectItem(keydown, sys_se))	//アイテムを選択した場合
 					{
 						player->UseItem(ui->ItemSelect->GetSelectCode());	//アイテムを使用
 						ui->Yes_No->Default();		//はい、いいえの選択肢デフォルトへ
@@ -471,7 +471,7 @@ void Play()
 	}
 	else			//メニュー描画終了してたら
 	{
-	//****************************** ここから、リセット処理 *******************************
+	//****************************** リセット処理 *******************************
 	Menu_Equip_dir = (int)MENU_EQUIP_SELECT_KIND;	//選択肢の段階を最初へ
 
 	ui->ResetMenu();	//メニュー関係のリセット
