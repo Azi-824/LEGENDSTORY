@@ -978,6 +978,13 @@ WEAPON * PLAYER::GetWeaponClass(void)
 	return this->Weapon;
 }
 
+//•Ší‚ÌUŒ‚—Í‚ğİ’è
+void PLAYER::SetWeaponAtk(int atk)
+{
+	this->Weapon->SetAtk(atk);
+	return;
+}
+
 //–h‹ï‚ğ‘•”õ‚·‚é
 void PLAYER::EquipArmor(int element)
 {
@@ -996,6 +1003,13 @@ void PLAYER::EquipArmor(int element)
 ARMOR * PLAYER::GetArmorClass(void)
 {
 	return this->Armor;
+}
+
+//–h‹ï‚Ì–hŒä—Íİ’è
+void PLAYER::SetArmorDef(int def)
+{
+	this->Armor->SetDef(def);
+	return;
 }
 
 //w’è‚³‚ê‚½‚¿•¨‚ğ’Ç‰Á‚·‚é

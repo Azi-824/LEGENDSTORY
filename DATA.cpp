@@ -101,7 +101,10 @@ bool DATA::LoadPlayer(PLAYER *player,const char *dir,const char *name)
 		player->SetSkil(atoi(buf.c_str()));	//スキル読み込み
 	}
 
-	auto item = player->GetItemClass();	//アイテムクラス取得
+	/*
+	確認ポイント
+	*/
+	ITEM *item = player->GetItemClass();	//アイテムクラス取得
 	std::getline(ifs, buf, ',');	//カンマまで読み込み
 	size = atoi(buf.c_str());		//アイテム数読み込み
 
@@ -116,6 +119,37 @@ bool DATA::LoadPlayer(PLAYER *player,const char *dir,const char *name)
 
 		item->AddItem(code, posse);	//アイテム追加
 	}
+
+	WEAPON *weapon = player->GetWeaponClass();	//武器クラス取得
+	std::getline(ifs, buf, ',');		//カンマまで読み込み
+	size = atoi(buf.c_str());			//武器数読み込み
+
+	for (int i = 0; i < size; ++i)	//武器数分繰り返し
+	{
+		std::getline(ifs, buf, ',');		//カンマまで読み込み
+		code = atoi(buf.c_str());			//武器コード読み込み
+		std::getline(ifs, buf, ',');		//カンマまで読み込み
+		posse = atoi(buf.c_str());			//所持数読み込み
+
+		weapon->LoadData(code, posse);	//読み込んだデータを設定
+
+	}
+
+	ARMOR *armor = player->GetArmorClass();	//防具クラス取得
+	std::getline(ifs, buf, ',');		//カンマまで読み込み
+	size = atoi(buf.c_str());			//防具数読み込み
+
+	for (int i = 0; i < size; ++i)	//防具数分繰り返し
+	{
+		std::getline(ifs, buf, ',');		//カンマまで読み込み
+		code = atoi(buf.c_str());			//防具コード読み込み
+		std::getline(ifs, buf, ',');		//カンマまで読み込み
+		posse = atoi(buf.c_str());			//所持数読み込み
+
+		armor->LoadData(code, posse);	//読み込んだデータを設定
+
+	}
+
 
 	return true;	//読み込み成功
 }
@@ -335,7 +369,7 @@ bool DATA::Save(PLAYER *player ,const char *dir,const char *name)
 	std::vector<int> v;			//空のvectorを作成する
 	skil.swap(v);				//空と中身を入れ替える
 
-	auto item = player->GetItemClass();	//アイテムクラス取得
+	ITEM *item = player->GetItemClass();	//アイテムクラス取得
 	int size = item->GetSize();			//登録しているアイテムの数を取得
 
 	ofs << size << ',';	//アイテム数書き込み
@@ -345,6 +379,28 @@ bool DATA::Save(PLAYER *player ,const char *dir,const char *name)
 		ofs << item->GetCode(i) << ',';			//アイテムコード書き出し
 		ofs << item->GetPossession(i) << ',';	//所持数書き出し
 
+	}
+
+	WEAPON *weapon = player->GetWeaponClass();	//武器クラス取得
+	size = weapon->GetSize();	//武器の数を取得
+
+	ofs << size << ',';	//武器数書き出し
+
+	for (int i = 0; i < size; ++i)//武器の数分繰り返す
+	{
+		ofs << weapon->GetCode(i) << ',';	//武器コード書き出し
+		ofs << weapon->GetPossessionNum(i) << ',';	//所持数書き出し
+	}
+
+	ARMOR *armor = player->GetArmorClass();	//防具クラス取得
+	size = armor->GetSize();	//防具数取得
+
+	ofs << size << ',';	//防具数書き出し
+
+	for (int i = 0; i < size; ++i)	//防具数分繰り返す
+	{
+		ofs << armor->GetCode(i) << ',';	//防具コード書き出し
+		ofs << armor->GetPossessionNum(i) << ',';	//所持数書き出し
 	}
 
 	return true;		//セーブ成功

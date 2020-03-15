@@ -1714,19 +1714,21 @@ void SetGameInit()
 	}
 	//******************** 初期設定ここまで ***************************
 
-	//プレイヤーの武器を追加
 	//後に変更
-	for (int i = 0; i < weapon_list->GetListSize(); ++i)
-	{
-		player->BelongingsAdd((int)BELONGINGS_WEAPON,weapon_list->GetCodeNum(i), weapon_list->GetPower(i));	//武器追加
-		player->BelongingsAdd((int)BELONGINGS_ARMOR,armor_list->GetCodeNum(i), armor_list->GetDefense(i));	//防具追加
-	}
-	//プレイヤーのアイテムを追加
-	//for (int i = 0; i < item_list->GetListSize(); ++i)
-	//{
-	//	player->BelongingsAdd((int)BELONGINGS_ITEM,item_list->GetCodeNum(i), item_list->GetRecovery(i));		//アイテム追加
-	//}
 
+	//武器の攻撃力取得処理
+	for (int i = 0; i < player->GetBelongingsSize((int)BELONGINGS_WEAPON); ++i)	//武器数分繰り返し
+	{
+		player->SetWeaponAtk(weapon_list->GetPower(player->GetBelongingsCode((int)BELONGINGS_WEAPON, i)));	//武器攻撃力設定
+	}
+
+	//防具の防御力取得処理
+	for (int i = 0; i < player->GetBelongingsSize((int)BELONGINGS_ARMOR); ++i)	//防具数分繰り返し
+	{
+		player->SetArmorDef(armor_list->GetDefense(player->GetBelongingsCode((int)BELONGINGS_ARMOR, i)));	//防具防御力設定
+	}
+
+	//アイテムの回復量取得処理
 	for (int i = 0; i < player->GetBelongingsSize((int)BELONGINGS_ITEM); ++i)	//アイテム数分繰り返し
 	{
 		player->SetItemRecovery(item_list->GetRecovery(player->GetBelongingsCode((int)BELONGINGS_ITEM, i)));	//回復量設定

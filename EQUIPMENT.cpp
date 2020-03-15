@@ -120,12 +120,12 @@ bool EQUIPMENT::GetChengeFlg(void)
 }
 
 //装備追加
-void EQUIPMENT::Add(int codenum)
+void EQUIPMENT::Add(int code)
 {
 	//指定されたコードが既に登録されているか判定
 	for (int i = 0; i < this->CodeNum.size(); ++i)	//コード番号の数分繰り返す
 	{
-		if (this->CodeNum[i] == codenum)	//追加されたコードがすでに登録されている場合
+		if (this->CodeNum[i] == code)	//追加されたコードがすでに登録されている場合
 		{
 			this->PossessionNum[i]++;		//所持数を増加
 			this->IsDraw[i] = true;			//描画してよい
@@ -135,7 +135,7 @@ void EQUIPMENT::Add(int codenum)
 	}
 
 	//コードが登録されていなかった場合
-	this->CodeNum.push_back(codenum);	//コード番号追加
+	this->CodeNum.push_back(code);	//コード番号追加
 	this->PossessionNum.push_back(1);	//所持数を追加（最初は1つ）
 	this->EquipFlg.push_back(false);	//装備状態設定（最初は装備していない状態）
 	this->Size = this->CodeNum.size();	//要素数設定
@@ -151,6 +151,29 @@ void EQUIPMENT::Add(int codenum)
 //	this->PossessionNum[kind]++;	//増加
 //	return;
 //}
+
+//装備情報を読み込み
+void EQUIPMENT::LoadData(int code, int posse)
+{
+	this->CodeNum.push_back(code);			//コード番号追加
+	this->PossessionNum.push_back(posse);	//所持数追加
+
+	if (posse == 0)	//所持数0個だったら
+	{
+		this->IsDraw.push_back(false);	//描画してはいけない
+	}
+	else			//0個じゃなければ
+	{
+		this->IsDraw.push_back(true);	//描画してよい
+	}
+
+	this->EquipFlg.push_back(false);	//装備していない
+	this->Size = this->CodeNum.size();	//要素数設定
+	this->Chenge_flg = true;	//変更あり
+
+	return;
+
+}
 
 //描画してよいか取得
 bool EQUIPMENT::GetIsDraw(int kind)

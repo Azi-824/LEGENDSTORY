@@ -201,10 +201,12 @@ public:
 	//•ŠíŠÖŒW
 	void EquipWeapon(int);			//•Ší‚ğ‘•”õ‚·‚é
 	WEAPON * GetWeaponClass();		//•ŠíƒNƒ‰ƒX‚ğæ“¾
+	void SetWeaponAtk(int);			//•Ší‚ÌUŒ‚—Íİ’è
 
 	////–h‹ïŠÖŒW
 	void EquipArmor(int);			//–h‹ï‚ğ‘•”õ‚·‚é
 	ARMOR * GetArmorClass();		//–h‹ïƒNƒ‰ƒX‚ğæ“¾
+	void SetArmorDef(int);			//–h‹ï‚Ì–hŒä—Íİ’è
 
 	//ƒƒjƒ…[‰æ–Ê‚Å•`‰æ‚·‚é‚¿•¨ŠÖŒW
 	void BelongingsAdd(int, int, int);				//w’è‚³‚ê‚½‚¿•¨‚ğ’Ç‰Á

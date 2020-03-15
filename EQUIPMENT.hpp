@@ -45,6 +45,7 @@ public:
 
 	void Add(int);							//‘•”õî•ñ’Ç‰Á
 	//void AddPossession(int);				//‘•”õŠ”‘‰Áˆ—
+	void LoadData(int, int);				//‘•”õî•ñ‚ğ“Ç‚İ‚İ
 
 	bool GetIsDraw(int);					//•`‰æ‚µ‚Ä‚æ‚¢‚©æ“¾
 
