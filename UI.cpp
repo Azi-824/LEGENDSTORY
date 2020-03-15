@@ -115,7 +115,7 @@ void UI::DrawCommand()
 	this->DrawWindow(CMD_WIN_X, CMD_WIN_Y, CMD_WIN_WIDTH, CMD_WIN_HEIGHT);	//ウィンドウ描画
 
 	//選択肢描画
-	this->BattleCommand->Draw(CMD_TXT_X, CMD_TXT_Y, (int)UI_SELECT_BATTLE_CMD);
+	this->BattleCommand->Draw(CMD_TXT_X, CMD_TXT_Y);
 
 	return;
 }

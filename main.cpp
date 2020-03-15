@@ -87,8 +87,6 @@ bool Clear_flg = false;		//クリアフラグ
 
 bool IsLoad = false;		//読み込み完了フラグ
 
-int Menu_Equip_dir = (int)MENU_EQUIP_SELECT_KIND;	//装備画面の選択の段階を管理する変数
-
 std::string Work_Str;		//作業用文字列
 
 //########## プログラムで最初に実行される関数 ##########
@@ -358,7 +356,6 @@ void Play()
 	else			//メニュー描画終了してたら
 	{
 	//****************************** リセット処理 *******************************
-	Menu_Equip_dir = (int)MENU_EQUIP_SELECT_KIND;	//装備画面の選択肢の段階を最初へ
 
 	ui->ResetMenu();	//メニュー関係のリセット
 

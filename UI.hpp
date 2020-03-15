@@ -85,12 +85,6 @@ enum UI_IMAGE_TYPE
 	UI_WINDOW			//ウィンドウ
 };
 
-enum UI_SELECT_TYPE
-{
-	UI_SELECT_MENU,			//メニューの選択肢
-	UI_SELECT_BATTLE_CMD	//バトルコマンドの選択肢
-};
-
 enum MENU_COMMAND
 {
 	MENU_STATUS,		//ステータス
