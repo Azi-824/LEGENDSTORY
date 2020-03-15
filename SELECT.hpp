@@ -24,6 +24,8 @@
 
 #define SELECT_SIDE_SPACE	300	//選択肢を横向きに並べたときの間隔
 
+#define SELECT_NONE		-1		//選択をしていない状態
+
 //##################### 列挙型 #############################
 enum SELECT_IMAGE_TYPE
 {
@@ -35,6 +37,12 @@ enum SELECT_YES_NO
 {
 	SELECT_YES,		//はい
 	SELECT_NO		//いいえ
+};
+
+enum SELCT_EQUIP
+{
+	SELECT_EQUIP_WEAPON,	//武器
+	SELECT_EQUIP_ARMOR		//防具
 };
 
 //###################### クラス定義 ###########################

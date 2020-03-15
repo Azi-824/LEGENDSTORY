@@ -359,7 +359,6 @@ void UI::DrawMenuEquip(int x, int y, std::vector<int> wpn_possession, std::vecto
 //メニューの装備画面の処理
 int UI::MenuSelectEquip(KEYDOWN *keydown, MUSIC *sys_se)
 {
-	//static int Menu_Equip_dir = (MENU_EQUIP_SELECT_KIND);	//装備画面の選択の段階を管理する変数
 
 	switch (this->Menu_Equip_dir)		//選択肢の段階
 	{
@@ -388,7 +387,7 @@ int UI::MenuSelectEquip(KEYDOWN *keydown, MUSIC *sys_se)
 		switch (this->EquipSelect->GetSelectNum())		//武器か、防具かどちらを選んだか
 		{
 
-		case 0:		//武器を選んだとき
+		case (int)SELECT_EQUIP_WEAPON:		//武器を選んだとき
 
 			this->WeaponSelect->SetIsKeyOpe(true);					//武器の選択肢、キー操作可能
 			this->WeaponSelect->SetIsDrawImage(true);					//武器の選択UI表示
@@ -414,7 +413,7 @@ int UI::MenuSelectEquip(KEYDOWN *keydown, MUSIC *sys_se)
 
 			break;	//武器を選んだときここまで
 
-		case 1:		//防具を選んだとき
+		case (int)SELECT_EQUIP_ARMOR:		//防具を選んだとき
 
 			this->ArmorSelect->SetIsKeyOpe(true);					//防具の選択肢、キー操作可能
 			this->ArmorSelect->SetIsDrawImage(true);				//防具の選択UI表示
@@ -477,7 +476,7 @@ int UI::MenuSelectEquip(KEYDOWN *keydown, MUSIC *sys_se)
 		break;
 	}
 
-	return -1;	//装備するものを選ばなかった場合-1を返す
+	return SELECT_NONE;	//装備するものを選ばなかった場合-1を返す
 
 }
 

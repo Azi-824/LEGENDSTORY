@@ -301,7 +301,7 @@ void Play()
 				switch (ui->MenuSelectEquip(keydown,sys_se))	//武器、防具のどちらを選択したか
 				{
 
-				case 0:	//武器を選択した場合
+				case (int)SELECT_EQUIP_WEAPON:	//武器を選択した場合
 
 					//武器の装備処理
 					//選択した武器の要素番号を取得し
@@ -312,7 +312,7 @@ void Play()
 
 					break;	//武器を選択した場合ここまで
 
-				case 1:	//防具を選択した場合
+				case (int)SELECT_EQUIP_ARMOR:	//防具を選択した場合
 
 					//防具の装備処理
 					//選択した防具の要素番号を取得し
