@@ -118,6 +118,8 @@ private:
 
 	bool IsDrawUIAnime;				//UIのアニメーションを描画してよいか
 
+	int Menu_Equip_dir;				//装備画面の選択の段階を管理する変数
+
 public:
 
 	SELECT *MenuSelect;			//メニューの選択肢
@@ -133,8 +135,9 @@ public:
 	~UI();					//デストラクタ
 
 	//メニューウィンドウ関連
-	void DrawMenu(int ,int);				//メニューウィンドウ描画
+	void DrawMenu(int ,int);			//メニューウィンドウ描画
 	void ResetMenu();					//メニュー関係のメンバーをリセット
+	int GetMenuEquipDir(void);			//メニューの装備画面の選択肢の段階を取得
 
 	//バトルコマンド関連
 	void DrawCommand();					//バトルコマンド描画
@@ -167,6 +170,7 @@ public:
 
 	//装備関係
 	void DrawMenuEquip(int, int, std::vector<int>, std::vector<int>);	//メニュー画面の装備描画処理
+	int MenuSelectEquip(KEYDOWN *, MUSIC *);							//メニューの装備画面の処理
 
 	//選択肢関係
 	void SelectUpdate(ITEM *, LIST_ITEM *);		//選択肢の内容を更新する処理(アイテム)

@@ -282,6 +282,7 @@ void Play()
 
 					ui->SelectUpdate(player->GetItemClass(), item_list);	//アイテムの選択肢の内容更新
 
+					//アイテム画面の処理
 					if (ui->MenuSelectItem(keydown, sys_se))	//アイテムを選択した場合
 					{
 						player->UseItem(ui->ItemSelect->GetSelectCode());	//アイテムを使用
@@ -296,145 +297,30 @@ void Play()
 				ui->SelectUpdate(player->GetWeaponClass(), weapon_list);	//武器の選択肢の内容を更新
 				ui->SelectUpdate(player->GetArmorClass(), armor_list);		//防具の選択肢の内容を更新
 
-				//****************** 選択肢の段階ごとで処理を分ける *************************
-				switch (Menu_Equip_dir)		//選択肢の段階
+				//装備画面の処理
+				switch (ui->MenuSelectEquip(keydown,sys_se))	//武器、防具のどちらを選択したか
 				{
 
-				case (int)MENU_EQUIP_SELECT_KIND:		//武器か防具か選択する段階
+				case 0:	//武器を選択した場合
 
-					ui->EquipSelect->SelectOperation(keydown, sys_se);	//武器か防具かの選択肢のキー操作
-
-					if (ui->EquipSelect->GetBackFlg())		//戻る選択をしたら
-					{
-						ui->ResetMenu();				//メニュー選択に戻る
-						ui->EquipSelect->Default();		//武器防具の選択肢をデフォルトに
-					}
-
-					if (ui->EquipSelect->GetSelectFlg())	//武器か防具かを選択したら
-					{
-						ui->EquipSelect->SetIsKeyOpe(false);	//武器防具の選択肢のキー操作不可
-						ui->EquipSelect->SetIsDrawImage(false);//UI非表示
-						Menu_Equip_dir = (int)MENU_EQUIP_SELECT_EQUIP;	//選択肢の段階を次へ
-					}
-
-					break;	//武器か防具か選択する段階ここまで
-
-				case (int)MENU_EQUIP_SELECT_EQUIP:		//装備する武器、もしくは防具を選択する段階
-
-					switch (ui->EquipSelect->GetSelectNum())		//武器か、防具かどちらを選んだか
-					{
-
-					case 0:		//武器を選んだとき
-
-						ui->WeaponSelect->SetIsKeyOpe(true);					//武器の選択肢、キー操作可能
-						ui->WeaponSelect->SetIsDrawImage(true);					//武器の選択UI表示
-						ui->WeaponSelect->SelectOperation(keydown, sys_se);		//武器の選択キー操作
-
-						//************* 戻る選択をした時の処理 *****************
-						if (ui->WeaponSelect->GetBackFlg())	//戻る選択をしたら
-						{
-							ui->WeaponSelect->Default();		//武器の選択肢、デフォルト値へ
-							ui->EquipSelect->Default();			//武器、防具の選択を可能へ
-							Menu_Equip_dir = (int)MENU_EQUIP_SELECT_KIND;	//選択肢の段階を前へ
-						}
-
-						//************** 装備する武器選択後の処理 ******************
-						if (ui->WeaponSelect->GetSelectFlg())		//装備する武器を選んだら
-						{
-							ui->WeaponSelect->SetIsKeyOpe(false);		//武器の選択はできないように設定
-							ui->WeaponSelect->SetIsDrawImage(false);	//防具の選択肢UI非表示
-
-							Menu_Equip_dir = (int)MENU_EQUIP_SELECT_DECISION;	//選択肢の段階を次へ
-
-						}
-
-						break;	//武器を選んだときここまで
-
-					case 1:		//防具を選んだとき
-
-						ui->ArmorSelect->SetIsKeyOpe(true);					//防具の選択肢、キー操作可能
-						ui->ArmorSelect->SetIsDrawImage(true);				//防具の選択UI表示
-						ui->ArmorSelect->SelectOperation(keydown, sys_se);	//防具の選択キー操作
-
-						//************* 戻る選択をした時の処理 *****************
-						//修正点あり
-						if (ui->ArmorSelect->GetBackFlg())	//戻る選択をしたら
-						{
-							ui->ArmorSelect->Default();		//防具の選択肢、デフォルト値へ
-							ui->EquipSelect->Default();			//武器、防具の選択を可能へ
-							Menu_Equip_dir = (int)MENU_EQUIP_SELECT_KIND;	//選択肢の段階を前へ
-						}
+					//武器の装備処理
+					//選択した武器の要素番号を取得し
+					//武器装備処理の引数として渡す
+					player->EquipWeapon(ui->WeaponSelect->GetSelectNum());	//武器を装備する
+					ui->WeaponSelect->Default();//武器の選択肢デフォルトへ
 
 
-						//************** 装備する防具選択後の処理 ******************
-						if (ui->ArmorSelect->GetSelectFlg())		//装備する防具を選んだら
-						{
-							ui->ArmorSelect->SetIsKeyOpe(false);	//防具の選択はできないように設定
-							ui->ArmorSelect->SetIsDrawImage(false);//防具の選択肢UI非表示
-							Menu_Equip_dir = (int)MENU_EQUIP_SELECT_DECISION;	//選択肢の段階を次へ
+					break;	//武器を選択した場合ここまで
 
-						}
+				case 1:	//防具を選択した場合
 
-						break;	//防具を選んだとき
+					//防具の装備処理
+					//選択した防具の要素番号を取得し
+					//防具装備処理の引数として渡す
+					player->EquipArmor(ui->ArmorSelect->GetSelectNum());	//防具を装備する
+					ui->ArmorSelect->Default();	//防具の選択肢デフォルトへ
 
-					default:
-						break;
-					}
-
-
-					break;	//装備する武器、もしくは防具を選択する段階ここまで
-
-				case (int)MENU_EQUIP_SELECT_DECISION:	//装備するか決定する段階(はい、いいえ)
-
-					ui->Yes_No->SetIsKeyOpe(true);					//はい、いいえの選択肢の操作可能に
-					ui->Yes_No->SelectOperation(keydown, sys_se);	//はい、いいえの選択肢のキー操作
-
-					if (ui->Yes_No->GetSelectFlg())					//装備するか選択したら
-					{
-						if (ui->Yes_No->GetSelectNum()==(int)SELECT_YES)		//はい、を選択したら
-						{
-
-							switch (ui->EquipSelect->GetSelectNum())	//武器、防具のどちらを選択したか
-							{
-
-							case 0:		//武器を選択した場合
-
-								//武器の装備処理
-								//選択した武器の要素番号を取得し
-								//武器装備処理の引数として渡す
-								player->EquipWeapon(ui->WeaponSelect->GetSelectNum());	//武器を装備する
-
-
-								break;
-
-							case 1:		//防具を選択した場合
-
-
-								//防具の装備処理
-								//選択した防具の要素番号を取得し
-								//防具装備処理の引数として渡す
-								player->EquipArmor(ui->ArmorSelect->GetSelectNum());	//防具を装備する
-
-								break;
-
-							default:
-								break;
-							}
-
-
-						}
-
-						ui->Yes_No->Default();		//はい、いいえの選択肢デフォルトへ
-						ui->ArmorSelect->Default();	//防具の選択肢デフォルトへ
-						ui->WeaponSelect->Default();//武器の選択肢デフォルトへ
-
-
-						Menu_Equip_dir = (int)MENU_EQUIP_SELECT_EQUIP;	//選択肢の段階を一つ前へ
-
-					}
-
-
-					break;	//装備するか決定する段階(はい、いいえ)ここまで
+					break;	//防具を選択した場合ここまで
 
 				default:
 					break;
@@ -472,7 +358,7 @@ void Play()
 	else			//メニュー描画終了してたら
 	{
 	//****************************** リセット処理 *******************************
-	Menu_Equip_dir = (int)MENU_EQUIP_SELECT_KIND;	//選択肢の段階を最初へ
+	Menu_Equip_dir = (int)MENU_EQUIP_SELECT_KIND;	//装備画面の選択肢の段階を最初へ
 
 	ui->ResetMenu();	//メニュー関係のリセット
 
@@ -1260,7 +1146,7 @@ void Play_Draw()
 
 				ui->DrawMenuEquip(MENU_TEXT_X, MENU_TEXT_Y, player->GetBelongingsPossession((int)BELONGINGS_WEAPON), player->GetBelongingsPossession((int)BELONGINGS_ARMOR));	//装備描画処理
 
-				if (Menu_Equip_dir == (int)MENU_EQUIP_SELECT_DECISION)		//選択肢の段階が、はい、いいえの段階だったら
+				if (ui->GetMenuEquipDir() == (int)MENU_EQUIP_SELECT_DECISION)		//選択肢の段階が、はい、いいえの段階だったら
 				{
 					ui->Yes_No->DrawCenter(MENU_WINDOW_X + MENU_WINDOW_WIDTH / 2, MENU_WINDOW_Y + MENU_WINDOW_HEIGHT / 2);	//はい、いいえの選択肢描画
 				}

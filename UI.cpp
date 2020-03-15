@@ -25,6 +25,8 @@ UI::UI()
 
 	this->IsDrawUIAnime = true;				//UIのアニメーションを描画してよい
 
+	this->Menu_Equip_dir = (MENU_EQUIP_SELECT_KIND);//装備画面の選択肢の段階を最初へ
+
 	//アニメーション画像を生成（テキストポーズ）
 	this->UiAnime = new ANIMATION(TXT_POSE_DIR, TXT_POSE_NAME, TXT_POSE_ALL_CNT, TXT_POSE_YOKO_CNT, TXT_POSE_TATE_CNT, TXT_POSE_WIDTH, TXT_POSE_HEIGHT, TXT_POSE_SPEED, true);
 
@@ -90,7 +92,14 @@ void UI::ResetMenu()
 	this->ArmorSelect->Default();			//防具の選択肢をデフォルトへ
 	this->EquipSelect->Default();			//武器、防具の選択肢をデフォルトの状態に戻す
 
+	this->Menu_Equip_dir = (MENU_EQUIP_SELECT_KIND);//装備画面の選択肢の段階を最初へ
 
+}
+
+//メニューの装備画面の選択肢の段階を取得
+int UI::GetMenuEquipDir(void)
+{
+	return this->Menu_Equip_dir;
 }
 
 //バトルコマンドで使用する要素を初期化する
@@ -344,6 +353,131 @@ void UI::DrawMenuEquip(int x, int y, std::vector<int> wpn_possession, std::vecto
 	}
 
 	return;
+
+}
+
+//メニューの装備画面の処理
+int UI::MenuSelectEquip(KEYDOWN *keydown, MUSIC *sys_se)
+{
+	//static int Menu_Equip_dir = (MENU_EQUIP_SELECT_KIND);	//装備画面の選択の段階を管理する変数
+
+	switch (this->Menu_Equip_dir)		//選択肢の段階
+	{
+
+	case (int)MENU_EQUIP_SELECT_KIND:		//武器か防具か選択する段階
+
+		this->EquipSelect->SelectOperation(keydown, sys_se);	//武器か防具かの選択肢のキー操作
+
+		if (this->EquipSelect->GetBackFlg())		//戻る選択をしたら
+		{
+			this->ResetMenu();				//メニュー選択に戻る
+			this->EquipSelect->Default();		//武器防具の選択肢をデフォルトに
+		}
+
+		if (this->EquipSelect->GetSelectFlg())	//武器か防具かを選択したら
+		{
+			this->EquipSelect->SetIsKeyOpe(false);	//武器防具の選択肢のキー操作不可
+			this->EquipSelect->SetIsDrawImage(false);//UI非表示
+			this->Menu_Equip_dir = (int)MENU_EQUIP_SELECT_EQUIP;	//選択肢の段階を次へ
+		}
+
+		break;	//武器か防具か選択する段階ここまで
+
+	case (int)MENU_EQUIP_SELECT_EQUIP:		//装備する武器、もしくは防具を選択する段階
+
+		switch (this->EquipSelect->GetSelectNum())		//武器か、防具かどちらを選んだか
+		{
+
+		case 0:		//武器を選んだとき
+
+			this->WeaponSelect->SetIsKeyOpe(true);					//武器の選択肢、キー操作可能
+			this->WeaponSelect->SetIsDrawImage(true);					//武器の選択UI表示
+			this->WeaponSelect->SelectOperation(keydown, sys_se);		//武器の選択キー操作
+
+			//************* 戻る選択をした時の処理 *****************
+			if (this->WeaponSelect->GetBackFlg())	//戻る選択をしたら
+			{
+				this->WeaponSelect->Default();		//武器の選択肢、デフォルト値へ
+				this->EquipSelect->Default();			//武器、防具の選択を可能へ
+				this->Menu_Equip_dir = (int)MENU_EQUIP_SELECT_KIND;	//選択肢の段階を前へ
+			}
+
+			//************** 装備する武器選択後の処理 ******************
+			if (this->WeaponSelect->GetSelectFlg())		//装備する武器を選んだら
+			{
+				this->WeaponSelect->SetIsKeyOpe(false);		//武器の選択はできないように設定
+				this->WeaponSelect->SetIsDrawImage(false);	//防具の選択肢UI非表示
+
+				this->Menu_Equip_dir = (int)MENU_EQUIP_SELECT_DECISION;	//選択肢の段階を次へ
+
+			}
+
+			break;	//武器を選んだときここまで
+
+		case 1:		//防具を選んだとき
+
+			this->ArmorSelect->SetIsKeyOpe(true);					//防具の選択肢、キー操作可能
+			this->ArmorSelect->SetIsDrawImage(true);				//防具の選択UI表示
+			this->ArmorSelect->SelectOperation(keydown, sys_se);	//防具の選択キー操作
+
+			//************* 戻る選択をした時の処理 *****************
+			//修正点あり
+			if (this->ArmorSelect->GetBackFlg())	//戻る選択をしたら
+			{
+				this->ArmorSelect->Default();		//防具の選択肢、デフォルト値へ
+				this->EquipSelect->Default();			//武器、防具の選択を可能へ
+				this->Menu_Equip_dir = (int)MENU_EQUIP_SELECT_KIND;	//選択肢の段階を前へ
+			}
+
+
+			//************** 装備する防具選択後の処理 ******************
+			if (this->ArmorSelect->GetSelectFlg())		//装備する防具を選んだら
+			{
+				this->ArmorSelect->SetIsKeyOpe(false);	//防具の選択はできないように設定
+				this->ArmorSelect->SetIsDrawImage(false);//防具の選択肢UI非表示
+				this->Menu_Equip_dir = (int)MENU_EQUIP_SELECT_DECISION;	//選択肢の段階を次へ
+
+			}
+
+			break;	//防具を選んだとき
+
+		default:
+			break;
+		}
+
+
+		break;	//装備する武器、もしくは防具を選択する段階ここまで
+
+	case (int)MENU_EQUIP_SELECT_DECISION:	//装備するか決定する段階(はい、いいえ)
+
+		this->Yes_No->SetIsKeyOpe(true);					//はい、いいえの選択肢の操作可能に
+		this->Yes_No->SelectOperation(keydown, sys_se);	//はい、いいえの選択肢のキー操作
+
+		if (this->Yes_No->GetSelectFlg())					//装備するか選択したら
+		{
+			if (this->Yes_No->GetSelectNum() == (int)SELECT_YES)		//はい、を選択したら
+			{
+				this->Menu_Equip_dir = (int)MENU_EQUIP_SELECT_EQUIP;	//選択肢の段階を一つ前へ
+				this->Yes_No->Default();								//はい、いいえの選択肢デフォルトへ
+
+				return this->EquipSelect->GetSelectNum();	//武器、防具のどちらを選択したかを返す
+			}
+
+			this->Yes_No->Default();								//はい、いいえの選択肢デフォルトへ
+			this->ArmorSelect->Default();							//防具の選択肢デフォルトへ
+			this->WeaponSelect->Default();							//武器の選択肢デフォルトへ
+			this->Menu_Equip_dir = (int)MENU_EQUIP_SELECT_EQUIP;	//選択肢の段階を一つ前へ
+
+		}
+
+
+		break;	//装備するか決定する段階(はい、いいえ)ここまで
+
+	default:
+		break;
+	}
+
+	return -1;	//装備するものを選ばなかった場合-1を返す
 
 }
 
