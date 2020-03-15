@@ -91,11 +91,31 @@ bool DATA::LoadPlayer(PLAYER *player,const char *dir,const char *name)
 	y = atoi(buf.c_str());			//Y位置格納
 	player->SetNowPos(x, y);		//現在位置設定
 
+	static int size = 0;	//要素数を入れる変数
 	std::getline(ifs, buf, ',');	//カンマまで読み込み
-	player->SetSkil(atoi(buf.c_str()));	//Skil1読み込み
+	size = atoi(buf.c_str());	//スキルの数を取得
 
-	std::getline(ifs, buf, '\n');	//最後は改行まで読み込み
-	player->SetSkil(atoi(buf.c_str()));	//Skil2読み込み
+	for (int i = 0; i < size; ++i)	//スキルの数だけ繰り返し
+	{
+		std::getline(ifs, buf, ',');	//カンマで読み込み
+		player->SetSkil(atoi(buf.c_str()));	//スキル読み込み
+	}
+
+	auto item = player->GetItemClass();	//アイテムクラス取得
+	std::getline(ifs, buf, ',');	//カンマまで読み込み
+	size = atoi(buf.c_str());		//アイテム数読み込み
+
+	static int code = 0, posse = 0;	//コード番号と所持数
+
+	for (int i = 0; i < size; ++i)	//アイテム数だけ繰り返し
+	{
+		std::getline(ifs, buf, ',');	//カンマまで読み込み
+		code=(atoi(buf.c_str()));		//アイテムコード読み込み
+		std::getline(ifs, buf, ',');	//カンマまで読み込み
+		posse=(atoi(buf.c_str()));		//所持数設定
+
+		item->AddItem(code, posse);	//アイテム追加
+	}
 
 	return true;	//読み込み成功
 }
@@ -294,24 +314,38 @@ bool DATA::Save(PLAYER *player ,const char *dir,const char *name)
 
 	std::vector<int> skil = player->GetSkil();	//スキル一覧を取得
 
+	ofs << skil.size() << ',';	//スキル数書き込み
+
 	for (int i = 0; i < skil.size(); ++i)		//スキルの数分書き込む
 	{
 
-		ofs << skil[i];					//スキル書き込み
+		ofs << skil[i] << ',';					//スキル書き込み
 
-		if (i != skil.size() - 1)		//最後の要素じゃないときは
-		{
-			ofs << ',';			//カンマで区切る
-		}
-		else					//最後の要素の時は
-		{
-			ofs << std::endl;	//改行
-		}
+		//if (i != skil.size() - 1)		//最後の要素じゃないときは
+		//{
+		//	ofs << ',';			//カンマで区切る
+		//}
+		//else					//最後の要素の時は
+		//{
+		//	ofs << std::endl;	//改行
+		//}
 	}
 
 	//vectorのメモリ解放を行う
 	std::vector<int> v;			//空のvectorを作成する
 	skil.swap(v);				//空と中身を入れ替える
+
+	auto item = player->GetItemClass();	//アイテムクラス取得
+	int size = item->GetSize();			//登録しているアイテムの数を取得
+
+	ofs << size << ',';	//アイテム数書き込み
+
+	for (int i = 0; i < size; ++i)	//登録してあるアイテムの数分繰り返す
+	{
+		ofs << item->GetCode(i) << ',';			//アイテムコード書き出し
+		ofs << item->GetPossession(i) << ',';	//所持数書き出し
+
+	}
 
 	return true;		//セーブ成功
 }

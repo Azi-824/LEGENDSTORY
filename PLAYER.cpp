@@ -1344,3 +1344,9 @@ ITEM * PLAYER::GetItemClass(void)
 {
 	return this->Item;
 }
+
+//ƒAƒCƒeƒ€‚Ì‰ñ•œ—Ê‚ðÝ’è
+void PLAYER::SetItemRecovery(int recovery)
+{
+	this->Item->SetRecovery(recovery);
+}

@@ -219,5 +219,6 @@ public:
 	//アイテム関係
 	void UseItem(int);	//アイテム使用処理
 	ITEM * GetItemClass();	//アイテムクラスを取得
+	void SetItemRecovery(int);	//アイテムの回復量設定
 
 };

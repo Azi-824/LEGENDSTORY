@@ -41,7 +41,6 @@ void ITEM::SetCode(int code)
 {
 	
 	this->Code.push_back(code);
-	this->Possession.push_back(1);	//所持数を初期値で設定
 	this->IsDraw.push_back(true);	//描画してよいか設定（描画してよい）
 	return;
 }
@@ -65,6 +64,13 @@ void ITEM::DecreasePossession(int kind)
 	}
 
 	this->Chenge_flg = true;			//変更あり
+	return;
+}
+
+//所持数設定
+void ITEM::SetPossession(int possession)
+{
+	this->Possession.push_back(possession);
 	return;
 }
 
@@ -129,4 +135,25 @@ std::vector<int> ITEM::GetPossession(void)
 bool ITEM::GetIsDraw(int kind)
 {
 	return this->IsDraw[kind];
+}
+
+//アイテムを追加
+void ITEM::AddItem(int code, int possession)
+{
+	this->Code.push_back(code);					//コード追加
+	this->Possession.push_back(possession);		//所持数追加
+
+	if (possession == 0)	//所持数が0だったら
+	{
+		this->IsDraw.push_back(false);	//描画してはいけない
+	}
+	else					//0じゃなければ
+	{
+		this->IsDraw.push_back(true);	//描画してよい
+	}
+
+	this->Chenge_flg = true;	//変更あり
+
+	return;
+
 }

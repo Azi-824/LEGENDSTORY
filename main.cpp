@@ -1722,9 +1722,14 @@ void SetGameInit()
 		player->BelongingsAdd((int)BELONGINGS_ARMOR,armor_list->GetCodeNum(i), armor_list->GetDefense(i));	//防具追加
 	}
 	//プレイヤーのアイテムを追加
-	for (int i = 0; i < item_list->GetListSize(); ++i)
+	//for (int i = 0; i < item_list->GetListSize(); ++i)
+	//{
+	//	player->BelongingsAdd((int)BELONGINGS_ITEM,item_list->GetCodeNum(i), item_list->GetRecovery(i));		//アイテム追加
+	//}
+
+	for (int i = 0; i < player->GetBelongingsSize((int)BELONGINGS_ITEM); ++i)	//アイテム数分繰り返し
 	{
-		player->BelongingsAdd((int)BELONGINGS_ITEM,item_list->GetCodeNum(i), item_list->GetRecovery(i));		//アイテム追加
+		player->SetItemRecovery(item_list->GetRecovery(player->GetBelongingsCode((int)BELONGINGS_ITEM, i)));	//回復量設定
 	}
 
 
