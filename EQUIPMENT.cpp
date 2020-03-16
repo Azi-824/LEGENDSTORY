@@ -17,11 +17,11 @@ EQUIPMENT::~EQUIPMENT()
 {
 	//vectorのメモリ解放を行う
 	std::vector<int> v;			//空のvectorを作成する
-	this->CodeNum.swap(v);		//空と中身を入れ替える
+	this->Code.swap(v);		//空と中身を入れ替える
 
 	//vectorのメモリ解放を行う
 	std::vector<int> v2;			//空のvectorを作成する
-	this->PossessionNum.swap(v2);	//空と中身を入れ替える
+	this->Possession.swap(v2);	//空と中身を入れ替える
 
 	//vectorのメモリ解放を行う
 	std::vector<bool> v3;			//空のvectorを作成する
@@ -46,15 +46,15 @@ EQUIPMENT::~EQUIPMENT()
 //所持数増加
 void EQUIPMENT::IncreasePossession(int kind)
 {
-	this->PossessionNum[kind]++;
+	this->Possession[kind]++;
 	return;
 }
 
 //所持数減少
 void EQUIPMENT::DecreasePossession(int kind)
 {
-	this->PossessionNum[kind]--;
-	if (this->PossessionNum[kind] <= 0)	//所持数が0以下になったら
+	this->Possession[kind]--;
+	if (this->Possession[kind] <= 0)	//所持数が0以下になったら
 	{
 		this->IsDraw[kind] = false;		//描画してはいけない
 	}
@@ -72,7 +72,7 @@ void EQUIPMENT::SetEquipFlg(int kind, bool equipflg)
 //要素数設定
 void EQUIPMENT::SetSize()
 {
-	this->Size = this->CodeNum.size();	//サイズ設定
+	this->Size = this->Code.size();	//サイズ設定
 	return;
 }
 
@@ -86,19 +86,19 @@ void EQUIPMENT::SetChengeFlg(bool addflg)
 //コード番号取得
 int EQUIPMENT::GetCode(int kind)
 {
-	return this->CodeNum[kind];
+	return this->Code[kind];
 }
 
 //装備所持数取得
-int EQUIPMENT::GetPossessionNum(int kind)
+int EQUIPMENT::GetPossession(int kind)
 {
-	return this->PossessionNum[kind];
+	return this->Possession[kind];
 }
 
 //装備所持数取得
-std::vector<int> EQUIPMENT::GetPossessionNum(void)
+std::vector<int> EQUIPMENT::GetPossession(void)
 {
-	return this->PossessionNum;	
+	return this->Possession;	
 }
 
 //装備フラグ取得
@@ -123,11 +123,11 @@ bool EQUIPMENT::GetChengeFlg(void)
 void EQUIPMENT::Add(int code)
 {
 	//指定されたコードが既に登録されているか判定
-	for (int i = 0; i < this->CodeNum.size(); ++i)	//コード番号の数分繰り返す
+	for (int i = 0; i < this->Code.size(); ++i)	//コード番号の数分繰り返す
 	{
-		if (this->CodeNum[i] == code)	//追加されたコードがすでに登録されている場合
+		if (this->Code[i] == code)	//追加されたコードがすでに登録されている場合
 		{
-			this->PossessionNum[i]++;		//所持数を増加
+			this->Possession[i]++;		//所持数を増加
 			this->IsDraw[i] = true;			//描画してよい
 			this->Chenge_flg = true;		//装備変更フラグ
 			return;							//追加処理終了
@@ -135,28 +135,21 @@ void EQUIPMENT::Add(int code)
 	}
 
 	//コードが登録されていなかった場合
-	this->CodeNum.push_back(code);		//コード番号追加
-	this->PossessionNum.push_back(1);	//所持数を追加（最初は1つ）
+	this->Code.push_back(code);		//コード番号追加
+	this->Possession.push_back(1);	//所持数を追加（最初は1つ）
 	this->EquipFlg.push_back(false);	//装備状態設定（最初は装備していない状態）
-	this->Size = this->CodeNum.size();	//要素数設定
+	this->Size = this->Code.size();	//要素数設定
 	this->IsDraw.push_back(true);		//描画してよい
 	this->Chenge_flg = true;			//装備変更フラグ
 
 	return;
 }
 
-//装備所持数増加処理
-//void EQUIPMENT::AddPossession(int kind)
-//{
-//	this->PossessionNum[kind]++;	//増加
-//	return;
-//}
-
 //装備情報を読み込み
 void EQUIPMENT::LoadData(int code, int posse)
 {
-	this->CodeNum.push_back(code);			//コード番号追加
-	this->PossessionNum.push_back(posse);	//所持数追加
+	this->Code.push_back(code);			//コード番号追加
+	this->Possession.push_back(posse);	//所持数追加
 
 	if (posse == 0)	//所持数0個だったら
 	{
@@ -168,7 +161,7 @@ void EQUIPMENT::LoadData(int code, int posse)
 	}
 
 	this->EquipFlg.push_back(false);	//装備していない
-	this->Size = this->CodeNum.size();	//要素数設定
+	this->Size = this->Code.size();	//要素数設定
 	this->Chenge_flg = true;	//変更あり
 
 	return;

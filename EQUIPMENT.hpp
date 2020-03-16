@@ -15,8 +15,8 @@ class EQUIPMENT
 {
 private:
 
-	std::vector<int> CodeNum;				//コード番号
-	std::vector<int> PossessionNum;			//装備の所持数
+	std::vector<int> Code;					//コード番号
+	std::vector<int> Possession;			//装備の所持数
 	std::vector<bool> EquipFlg;				//装備しているかどうか
 	std::vector<bool> IsDraw;				//描画してよいか
 	int Size;								//要素数
@@ -36,15 +36,14 @@ public:
 	void SetChengeFlg(bool);				//装備を変更したか設定
 
 	//ゲッタ
-	int GetCode(int);					//コード番号取得
-	int GetPossessionNum(int);				//装備所持数取得
-	std::vector<int> GetPossessionNum();	//装備所持数取得（すべて）
+	int GetCode(int);						//コード番号取得
+	int GetPossession(int);					//装備所持数取得
+	std::vector<int> GetPossession();		//装備所持数取得（すべて）
 	bool GetEquipFlg(int);					//装備しているか取得
 	int GetSize();							//要素数取得
 	bool GetChengeFlg();					//装備を変更したか取得
 
 	void Add(int);							//装備情報追加
-	//void AddPossession(int);				//装備所持数増加処理
 	void LoadData(int, int);				//装備情報を読み込み
 
 	bool GetIsDraw(int);					//描画してよいか取得

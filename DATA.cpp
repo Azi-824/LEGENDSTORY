@@ -395,7 +395,7 @@ bool DATA::Save(PLAYER *player ,const char *dir,const char *name)
 	for (int i = 0; i < size; ++i)//武器の数分繰り返す
 	{
 		ofs << weapon->GetCode(i) << ',';	//武器コード書き出し
-		ofs << weapon->GetPossessionNum(i) << ',';	//所持数書き出し
+		ofs << weapon->GetPossession(i) << ',';	//所持数書き出し
 	}
 
 	//**************************** 防具データ読み込み ******************************
@@ -407,7 +407,7 @@ bool DATA::Save(PLAYER *player ,const char *dir,const char *name)
 	for (int i = 0; i < size; ++i)	//防具数分繰り返す
 	{
 		ofs << armor->GetCode(i) << ',';	//防具コード書き出し
-		ofs << armor->GetPossessionNum(i) << ',';	//所持数書き出し
+		ofs << armor->GetPossession(i) << ',';	//所持数書き出し
 	}
 
 	return true;		//セーブ成功

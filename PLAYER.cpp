@@ -1158,13 +1158,13 @@ int PLAYER::GetBelongingsPossession(int type, int kind)
 
 	case (int)BELONGINGS_WEAPON:	//武器の場合
 
-		return this->Weapon->GetPossessionNum(kind);	//指定された武器の所持数取得
+		return this->Weapon->GetPossession(kind);	//指定された武器の所持数取得
 
 		break;	//武器の場合ここまで
 
 	case (int)BELONGINGS_ARMOR:		//防具の場合
 
-		return this->Armor->GetPossessionNum(kind);		//指定された防具の所持数取得
+		return this->Armor->GetPossession(kind);		//指定された防具の所持数取得
 
 		break;	//防具の場合ここまで
 
@@ -1190,13 +1190,13 @@ std::vector<int> PLAYER::GetBelongingsPossession(int type)
 
 	case (int)BELONGINGS_WEAPON:	//武器の場合
 
-		return this->Weapon->GetPossessionNum();	//武器の所持数取得（すべて）
+		return this->Weapon->GetPossession();	//武器の所持数取得（すべて）
 
 		break;	//武器の場合ここまで
 
 	case (int)BELONGINGS_ARMOR:		//防具の場合
 
-		return this->Armor->GetPossessionNum();		//防具の所持数取得（すべて）
+		return this->Armor->GetPossession();		//防具の所持数取得（すべて）
 
 		break;	//防具の場合ここまで
 
