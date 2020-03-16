@@ -209,14 +209,10 @@ public:
 	void SetArmorDef(int);			//防具の防御力設定
 
 	//メニュー画面で描画する持ち物関係
-	void BelongingsAdd(int, int, int);				//指定された持ち物を追加
+	//void BelongingsAdd(int, int, int);				//指定された持ち物を追加
 	int GetBelongingsCode(int,int);					//指定された持ち物のコード取得
-	int GetBelongingsPossession(int,int);			//指定された持ち物の所持数を取得する
 	std::vector<int> GetBelongingsPossession(int);	//指定された持ち物の所持数を取得(全てのデータ)
 	int GetBelongingsSize(int);						//指定された持ち物の持っている種類数を取得
-	bool GetBelongingsChengeFlg(int);				//指定された持ち物を追加したか取得
-	void SetBelongingsChengeFlg(int,bool);			//指定された持ち物を追加したか設定
-	bool GetBelongingsIsDraw(int, int);				//指定された持ち物の描画してよいかを取得する
 
 	//アイテム関係
 	void UseItem(int);	//アイテム使用処理

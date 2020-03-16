@@ -54,7 +54,6 @@ void EQUIPMENT::DecreasePossession(int kind)
 	return;
 }
 
-
 //‘•”õƒtƒ‰ƒOİ’è
 void EQUIPMENT::SetEquipFlg(int kind, bool equipflg)
 {

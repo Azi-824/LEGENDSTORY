@@ -1013,40 +1013,40 @@ void PLAYER::SetArmorDef(int def)
 }
 
 //指定された持ち物を追加する
-void PLAYER::BelongingsAdd(int type, int code, int value)
-{
-
-	switch (type)
-	{
-
-	case (int)BELONGINGS_WEAPON:	//武器の場合
-
-		this->Weapon->Add(code);		//武器登録
-		this->Weapon->SetAtk(value);	//攻撃力登録
-
-		break;	//武器の場合ここまで
-
-	case (int)BELONGINGS_ARMOR:		//防具の場合
-
-		this->Armor->Add(code);	//防具登録
-		this->Armor->SetDef(value);	//防御力設定
-
-		break;	//防具の場合ここまで
-
-	case (int)BELONGINGS_ITEM:		//アイテムの場合
-
-		this->Item->AddItem(code, value);	//アイテム追加
-
-		break;	//アイテムの場合ここまで
-
-	default:
-		break;
-	}
-
-	return;
-
-
-}
+//void PLAYER::BelongingsAdd(int type, int code, int value)
+//{
+//
+//	switch (type)
+//	{
+//
+//	case (int)BELONGINGS_WEAPON:	//武器の場合
+//
+//		this->Weapon->Add(code);		//武器登録
+//		this->Weapon->SetAtk(value);	//攻撃力登録
+//
+//		break;	//武器の場合ここまで
+//
+//	case (int)BELONGINGS_ARMOR:		//防具の場合
+//
+//		this->Armor->Add(code);	//防具登録
+//		this->Armor->SetDef(value);	//防御力設定
+//
+//		break;	//防具の場合ここまで
+//
+//	case (int)BELONGINGS_ITEM:		//アイテムの場合
+//
+//		this->Item->AddItem(code, value);	//アイテム追加
+//
+//		break;	//アイテムの場合ここまで
+//
+//	default:
+//		break;
+//	}
+//
+//	return;
+//
+//
+//}
 
 //指定された持ち物のコードを取得する
 int PLAYER::GetBelongingsCode(int type, int kind)
@@ -1077,38 +1077,6 @@ int PLAYER::GetBelongingsCode(int type, int kind)
 	}
 
 	return -1;
-
-}
-
-//指定された持ち物の所持数を取得する
-int PLAYER::GetBelongingsPossession(int type, int kind)
-{
-	switch (type)
-	{
-
-	case (int)BELONGINGS_WEAPON:	//武器の場合
-
-		return this->Weapon->GetPossession(kind);	//指定された武器の所持数取得
-
-		break;	//武器の場合ここまで
-
-	case (int)BELONGINGS_ARMOR:		//防具の場合
-
-		return this->Armor->GetPossession(kind);		//指定された防具の所持数取得
-
-		break;	//防具の場合ここまで
-
-	case (int)BELONGINGS_ITEM:		//アイテムの場合
-
-		return this->Item->GetPossession(kind);			//指定されたアイテムの所持数取得
-
-		break;	//アイテムの場合ここまで
-
-	default:
-		break;
-	}
-
-	return -1;	
 
 }
 
@@ -1172,98 +1140,6 @@ int PLAYER::GetBelongingsSize(int type)
 	}
 
 	return -1;
-
-}
-
-//指定された持ち物を追加したか取得
-bool PLAYER::GetBelongingsChengeFlg(int type)
-{
-	switch (type)
-	{
-
-	case (int)BELONGINGS_WEAPON:	//武器の場合
-
-		return this->Weapon->GetChengeFlg();	//武器を追加したか取得
-
-		break;	//武器の場合ここまで
-
-	case (int)BELONGINGS_ARMOR:		//防具の場合
-
-		return this->Armor->GetChengeFlg();	//防具を追加したか取得
-
-		break;	//防具の場合ここまで
-
-	case (int)BELONGINGS_ITEM:		//アイテムの場合
-
-		return this->Item->GetChengeFlg();		//アイテムを追加したか取得
-
-		break;	//アイテムの場合ここまで
-
-	default:
-		break;
-	}
-
-}
-
-//指定された持ち物を追加したか設定
-void PLAYER::SetBelongingsChengeFlg(int type, bool add_flg)
-{
-	switch (type)
-	{
-
-	case (int)BELONGINGS_WEAPON:	//武器の場合
-
-		this->Weapon->SetChengeFlg(add_flg);	//武器を追加したか設定
-
-		break;	//武器の場合ここまで
-
-	case (int)BELONGINGS_ARMOR:		//防具の場合
-
-		this->Armor->SetChengeFlg(add_flg);	//防具を追加したか設定
-
-		break;	//防具の場合ここまで
-
-	case (int)BELONGINGS_ITEM:		//アイテムの場合
-
-		this->Item->SetChengeFlg(add_flg);		//アイテムを追加したか設定
-
-		break;	//アイテムの場合ここまで
-
-	default:
-		break;
-	}
-
-	return;
-
-}
-
-//指定された持ち物の描画してよいかを取得する
-bool PLAYER::GetBelongingsIsDraw(int type, int kind)
-{
-	switch (type)
-	{
-
-	case (int)BELONGINGS_WEAPON:	//武器の場合
-
-		return this->Weapon->GetIsDraw(kind);	//指定された武器が描画できるか取得
-
-		break;	//武器の場合ここまで
-
-	case (int)BELONGINGS_ARMOR:		//防具の場合
-
-		return this->Armor->GetIsDraw(kind);	//指定された防具が描画できるか取得
-
-		break;	//防具の場合ここまで
-
-	case (int)BELONGINGS_ITEM:		//アイテムの場合
-
-		return this->Item->GetIsDraw(kind);		//指定されたアイテムが描画できるか取得
-
-		break;	//アイテムの場合ここまで
-
-	default:
-		break;
-	}
 
 }
 
