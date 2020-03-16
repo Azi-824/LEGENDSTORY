@@ -37,7 +37,8 @@ public:
 	void SetPossession(int);		//所持数設定
 	void SetRecovery(int);			//回復量設定
 	void SetChengeFlg(bool);		//変更したか設定
-	void AddItem(int, int possession=1);//アイテムを追加
+	void AddItem(int);				//アイテムを追加
+	void LoadData(int, int);		//セーブデータを読み込み
 
 	//ゲッタ
 	int GetCode(int);				//アイテムコード取得

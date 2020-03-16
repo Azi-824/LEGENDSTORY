@@ -135,7 +135,7 @@ void EQUIPMENT::Add(int code)
 	}
 
 	//コードが登録されていなかった場合
-	this->CodeNum.push_back(code);	//コード番号追加
+	this->CodeNum.push_back(code);		//コード番号追加
 	this->PossessionNum.push_back(1);	//所持数を追加（最初は1つ）
 	this->EquipFlg.push_back(false);	//装備状態設定（最初は装備していない状態）
 	this->Size = this->CodeNum.size();	//要素数設定

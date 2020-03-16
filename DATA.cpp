@@ -101,6 +101,8 @@ bool DATA::LoadPlayer(PLAYER *player,const char *dir,const char *name)
 		player->SetSkil(atoi(buf.c_str()));	//スキル読み込み
 	}
 
+
+	//******************* アイテムデータ読み込み ************************
 	/*
 	確認ポイント
 	*/
@@ -117,9 +119,10 @@ bool DATA::LoadPlayer(PLAYER *player,const char *dir,const char *name)
 		std::getline(ifs, buf, ',');	//カンマまで読み込み
 		posse=(atoi(buf.c_str()));		//所持数設定
 
-		item->AddItem(code, posse);	//アイテム追加
+		item->LoadData(code, posse);	//読み込んだアイテムデータを設定
 	}
 
+	//************************ 武器データ読み込み ****************************
 	WEAPON *weapon = player->GetWeaponClass();	//武器クラス取得
 	std::getline(ifs, buf, ',');		//カンマまで読み込み
 	size = atoi(buf.c_str());			//武器数読み込み
@@ -135,6 +138,7 @@ bool DATA::LoadPlayer(PLAYER *player,const char *dir,const char *name)
 
 	}
 
+	//*********************** 防具データ読み込み ****************************
 	ARMOR *armor = player->GetArmorClass();	//防具クラス取得
 	std::getline(ifs, buf, ',');		//カンマまで読み込み
 	size = atoi(buf.c_str());			//防具数読み込み
@@ -369,6 +373,7 @@ bool DATA::Save(PLAYER *player ,const char *dir,const char *name)
 	std::vector<int> v;			//空のvectorを作成する
 	skil.swap(v);				//空と中身を入れ替える
 
+	//************************* アイテムデータ書き込み *******************************
 	ITEM *item = player->GetItemClass();	//アイテムクラス取得
 	int size = item->GetSize();			//登録しているアイテムの数を取得
 
@@ -381,6 +386,7 @@ bool DATA::Save(PLAYER *player ,const char *dir,const char *name)
 
 	}
 
+	//************************* 武器データ読み込み *********************************
 	WEAPON *weapon = player->GetWeaponClass();	//武器クラス取得
 	size = weapon->GetSize();	//武器の数を取得
 
@@ -392,6 +398,7 @@ bool DATA::Save(PLAYER *player ,const char *dir,const char *name)
 		ofs << weapon->GetPossessionNum(i) << ',';	//所持数書き出し
 	}
 
+	//**************************** 防具データ読み込み ******************************
 	ARMOR *armor = player->GetArmorClass();	//防具クラス取得
 	size = armor->GetSize();	//防具数取得
 
