@@ -138,7 +138,7 @@ bool ITEM::GetIsDraw(int kind)
 }
 
 //アイテムを追加
-void ITEM::AddItem(int code)
+void ITEM::AddItem(int code,int recovery)
 {
 
 	//指定されたコードが既に登録されているか判定
@@ -156,6 +156,7 @@ void ITEM::AddItem(int code)
 	//コードが登録されていなかった場合
 	this->Code.push_back(code);			//コード追加
 	this->Possession.push_back(1);		//所持数追加
+	this->Recovery.push_back(recovery);	//回復量追加
 	this->IsDraw.push_back(true);		//描画してよい
 	this->Chenge_flg = true;			//変更あり
 

@@ -723,7 +723,7 @@ void PLAYER::DamegeCalc(ENEMY *enemy,int choiecommand)
 	case(int)COMMANDE_ATACK:				//UŒ‚‚ğ‘I‚ñ‚¾‚Ìˆ—‚±‚±‚©‚ç
 
 		//¥¥¥¥¥¥¥¥¥¥¥¥¥¥¥¥¥¥¥ –¡•û‚ÌUŒ‚ˆ—‚±‚±‚©‚ç ¥¥¥¥¥¥¥¥¥¥¥¥¥¥¥¥¥¥¥¥¥¥
-		if (this->ATK > enemy->GetDEF())	//©•ª‚ÌUŒ‚—Í‚ª“G‚Ì–hŒä—Í‚æ‚èã‚¾‚Á‚½‚ç
+		if ((this->ATK + this->EquipAtk) > enemy->GetDEF())	//©•ª‚ÌUŒ‚—Í‚ª“G‚Ì–hŒä—Í‚æ‚èã‚¾‚Á‚½‚ç
 		{
 			this->SendDamege = (this->ATK + this->EquipAtk) - enemy->GetDEF();		//ƒ_ƒ[ƒW—Ê‚ğŒvZ ©•ªUŒ‚—Í(UŒ‚+‘•”õUŒ‚) - “G–hŒä—Í‚Ìƒ_ƒ[ƒW‚ğ—^‚¦‚é
 		}
@@ -736,7 +736,7 @@ void PLAYER::DamegeCalc(ENEMY *enemy,int choiecommand)
 
 
 		//¥¥¥¥¥¥¥¥¥¥¥¥¥¥¥¥¥¥¥ “G‚ÌUŒ‚ˆ—‚±‚±‚©‚ç ¥¥¥¥¥¥¥¥¥¥¥¥¥¥¥¥¥¥¥¥¥¥
-		if (enemy->GetATK() > this->DEF)		//“G‚ÌUŒ‚—Í‚ª©•ª‚Ì–hŒä—Í‚æ‚èã‚¾‚Á‚½‚ç
+		if (enemy->GetATK() > (this->DEF + this->EquipDef))		//“G‚ÌUŒ‚—Í‚ª©•ª‚Ì–hŒä—Í‚æ‚èã‚¾‚Á‚½‚ç
 		{
 			this->RecvDamege = enemy->GetATK() - (this->DEF + this->EquipDef);	//“GUŒ‚—Í - ©•ª–hŒä—Í(–hŒä+‘•”õ–hŒä)‚Ìƒ_ƒ[ƒW‚ğ—^‚¦‚é
 		}
@@ -760,7 +760,7 @@ void PLAYER::DamegeCalc(ENEMY *enemy,int choiecommand)
 		//¥¥¥¥¥¥¥¥¥¥¥¥¥¥¥¥¥¥¥ “G‚ÌUŒ‚ˆ—‚±‚±‚©‚ç ¥¥¥¥¥¥¥¥¥¥¥¥¥¥¥¥¥¥¥¥¥¥
 
 		//–hŒä—Í‚ğ‹­‰»‚µ‚Äƒ_ƒ[ƒWŒvZ
-		if (enemy->GetATK() > (this->DEF * DEF_BOOST))		//“G‚ÌUŒ‚—Í‚ª©•ª‚Ì–hŒä—Í‚æ‚èã‚¾‚Á‚½‚ç
+		if (enemy->GetATK() > ((this->DEF + this->EquipDef) * DEF_BOOST))		//“G‚ÌUŒ‚—Í‚ª©•ª‚Ì–hŒä—Í‚æ‚èã‚¾‚Á‚½‚ç
 		{
 			this->RecvDamege = enemy->GetATK() - ((this->DEF + this->EquipDef) * DEF_BOOST);	//“GUŒ‚—Í - ©•ª–hŒä—Í(–hŒä+‘•”õ–hŒä)‚Ìƒ_ƒ[ƒW‚ğ—^‚¦‚é
 		}
@@ -779,7 +779,7 @@ void PLAYER::DamegeCalc(ENEMY *enemy,int choiecommand)
 
 		//©•ª‚ÌUŒ‚—Í‚ğ‹­‰»‚µ‚Äƒ_ƒ[ƒWŒvZ
 		//–‚–@UŒ‚—Í‚ğ’Ç‰Á‚µ‚ÄA’ÊíUŒ‚‚Æ•ª‚¯‚é—\’è
-		if ((this->ATK * ATK_BOOST) > enemy->GetDEF())	//©•ª‚ÌUŒ‚—Í‚ª“G‚Ì–hŒä—Í‚æ‚èã‚¾‚Á‚½‚ç
+		if (((this->ATK + this->EquipAtk)* ATK_BOOST) > enemy->GetDEF())	//©•ª‚ÌUŒ‚—Í‚ª“G‚Ì–hŒä—Í‚æ‚èã‚¾‚Á‚½‚ç
 		{
 			this->SendDamege = ((this->ATK + this->EquipAtk) * ATK_BOOST) - enemy->GetDEF();		//ƒ_ƒ[ƒW—Ê‚ğŒvZ ©•ªUŒ‚—Í(UŒ‚+‘•”õUŒ‚) - “G–hŒä—Í‚Ìƒ_ƒ[ƒW‚ğ—^‚¦‚é
 		}
@@ -792,7 +792,7 @@ void PLAYER::DamegeCalc(ENEMY *enemy,int choiecommand)
 
 
 		//¥¥¥¥¥¥¥¥¥¥¥¥¥¥¥¥¥¥¥ “G‚ÌUŒ‚ˆ—‚±‚±‚©‚ç ¥¥¥¥¥¥¥¥¥¥¥¥¥¥¥¥¥¥¥¥¥¥
-		if (enemy->GetATK() > this->DEF)		//“G‚ÌUŒ‚—Í‚ª©•ª‚Ì–hŒä—Í‚æ‚èã‚¾‚Á‚½‚ç
+		if (enemy->GetATK() > (this->DEF + this->EquipDef))		//“G‚ÌUŒ‚—Í‚ª©•ª‚Ì–hŒä—Í‚æ‚èã‚¾‚Á‚½‚ç
 		{
 			this->RecvDamege = enemy->GetATK() - (this->DEF + this->EquipDef);	//“GUŒ‚—Í - ©•ª–hŒä—Í(–hŒä+‘•”õ–hŒä)‚Ìƒ_ƒ[ƒW‚ğ—^‚¦‚é
 		}
@@ -810,7 +810,7 @@ void PLAYER::DamegeCalc(ENEMY *enemy,int choiecommand)
 		this->SendDamege = 0;		//—^‚¦‚éƒ_ƒ[ƒW0
 
 		//¥¥¥¥¥¥¥¥¥¥¥¥¥¥¥¥¥¥¥ “G‚ÌUŒ‚ˆ—‚±‚±‚©‚ç ¥¥¥¥¥¥¥¥¥¥¥¥¥¥¥¥¥¥¥¥¥¥
-		if (enemy->GetATK() > this->DEF)		//“G‚ÌUŒ‚—Í‚ª©•ª‚Ì–hŒä—Í‚æ‚èã‚¾‚Á‚½‚ç
+		if (enemy->GetATK() > (this->DEF + this->EquipDef))		//“G‚ÌUŒ‚—Í‚ª©•ª‚Ì–hŒä—Í‚æ‚èã‚¾‚Á‚½‚ç
 		{
 			this->RecvDamege = enemy->GetATK() - (this->DEF + this->EquipDef);	//“GUŒ‚—Í - ©•ª–hŒä—Í(–hŒä+‘•”õ–hŒä)‚Ìƒ_ƒ[ƒW‚ğ—^‚¦‚é
 		}
@@ -1016,96 +1016,26 @@ void PLAYER::SetArmorDef(int def)
 void PLAYER::BelongingsAdd(int type, int code, int value)
 {
 
-	bool entry_flg = false;	//“o˜^‚µ‚Ä‚¢‚È‚¢
-
 	switch (type)
 	{
 
 	case (int)BELONGINGS_WEAPON:	//•Ší‚Ìê‡
 
-		for (int i = 0; i < this->Weapon->GetSize(); ++i)	//“o˜^‚³‚ê‚Ä‚¢‚é•Ší‚Ìí—Ş•ªƒ‹[ƒv‚·‚é
-		{
-			if (this->Weapon->GetCode(i) == code)	//•Ší‚Ì“o˜^‚ª‚³‚ê‚Ä‚¢‚éê‡
-			{
-				entry_flg = true;	//•Ší‚Ì“o˜^‚ªÏ‚ñ‚Å‚¢‚é
-				break;				//ŒJ‚è•Ô‚µ‚ğ”²‚¯‚é
-			}
-			else										//•Ší‚Ì“o˜^‚ª‚³‚ê‚Ä‚¢‚È‚¢ê‡
-			{
-				entry_flg = false;	//•Ší‚Ì“o˜^‚ªÏ‚ñ‚Å‚¢‚È‚¢
-			}
-		}
-
-		if (entry_flg == false)		//•Ší‚Ì“o˜^‚ªÏ‚ñ‚Å‚¢‚È‚¢ê‡
-		{
-			//•Ší‚Ì“o˜^ˆ—
-			this->Weapon->Add(code);		//•Ší“o˜^
-			this->Weapon->SetAtk(value);	//UŒ‚—Í“o˜^
-			this->Weapon->SetSize();		//—v‘f”İ’è
-		}
-		else						//•Ší‚Ì“o˜^‚ªÏ‚ñ‚Å‚¢‚éê‡
-		{
-			this->Weapon->IncreasePossession(code);	//Š”‘‰Á
-		}
-
+		this->Weapon->Add(code);		//•Ší“o˜^
+		this->Weapon->SetAtk(value);	//UŒ‚—Í“o˜^
 
 		break;	//•Ší‚Ìê‡‚±‚±‚Ü‚Å
 
 	case (int)BELONGINGS_ARMOR:		//–h‹ï‚Ìê‡
 
-		for (int i = 0; i < this->Armor->GetSize(); ++i)	//“o˜^‚³‚ê‚Ä‚¢‚é–h‹ï‚Ìí—Ş•ªƒ‹[ƒv‚·‚é
-		{
-			if (this->Armor->GetCode(i) == code)	//–h‹ï‚Ì“o˜^‚ª‚³‚ê‚Ä‚¢‚éê‡
-			{
-				entry_flg = true;	//–h‹ï‚Ì“o˜^‚ªÏ‚ñ‚Å‚¢‚é
-				break;				//ŒJ‚è•Ô‚µ‚ğ”²‚¯‚é
-			}
-			else		//–h‹ï‚Ì“o˜^‚ª‚³‚ê‚Ä‚¢‚È‚¢ê‡
-			{
-				entry_flg = false;	//–h‹ï‚Ì“o˜^‚ªÏ‚ñ‚Å‚¢‚È‚¢
-			}
-		}
-
-		if (entry_flg == false)		//–h‹ï‚Ì“o˜^‚ªÏ‚ñ‚Å‚¢‚È‚¢ê‡
-		{
-			//–h‹ï‚Ì“o˜^ˆ—
-			this->Armor->Add(code);		//–hŒä“o˜^
-			this->Armor->SetDef(value);	//–hŒä“o˜^
-			this->Armor->SetSize();		//—v‘f”İ’è
-		}
-		else						//–h‹ï‚Ì“o˜^‚ªÏ‚ñ‚Å‚¢‚éê‡
-		{
-			this->Armor->IncreasePossession(code);	//Š”‘‰Á
-		}
-
+		this->Armor->Add(code);	//–h‹ï“o˜^
+		this->Armor->SetDef(value);	//–hŒä—Íİ’è
 
 		break;	//–h‹ï‚Ìê‡‚±‚±‚Ü‚Å
 
 	case (int)BELONGINGS_ITEM:		//ƒAƒCƒeƒ€‚Ìê‡
 
-		for (int i = 0; i < this->Item->GetSize(); ++i)
-		{
-			if (this->Item->GetCode(i) == code)	//ƒAƒCƒeƒ€‚ª“o˜^‚³‚ê‚Ä‚¢‚éê‡
-			{
-				entry_flg = true;	//“o˜^Ï‚İ
-				break;				//ƒ‹[ƒv‚ğ”²‚¯‚é
-			}
-			else
-			{
-				entry_flg = false;	//–¢“o˜^
-			}
-		}
-
-		if (entry_flg)		//“o˜^Ï‚İ‚Ìê‡
-		{
-			this->Item->IncreasePossession(code);	//Š”‚ğ‘‚â‚·
-		}
-		else				//–¢“o˜^‚Ìê‡
-		{
-			this->Item->SetCode(code);		//ƒAƒCƒeƒ€ƒR[ƒh“o˜^
-			this->Item->SetRecovery(value);	//‰ñ•œ—Êİ’è
-		}
-
+		this->Item->AddItem(code, value);	//ƒAƒCƒeƒ€’Ç‰Á
 
 		break;	//ƒAƒCƒeƒ€‚Ìê‡‚±‚±‚Ü‚Å
 
