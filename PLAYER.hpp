@@ -210,9 +210,7 @@ public:
 
 	//メニュー画面で描画する持ち物関係
 	void BelongingsAdd(int, int, int);				//指定された持ち物を追加
-	int GetBelongingsCode(int,int);					//指定された持ち物のコード取得
 	std::vector<int> GetBelongingsPossession(int);	//指定された持ち物の所持数を取得(全てのデータ)
-	int GetBelongingsSize(int);						//指定された持ち物の持っている種類数を取得
 
 	//アイテム関係
 	void UseItem(int);						//アイテム使用処理

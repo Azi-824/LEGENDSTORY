@@ -1056,38 +1056,6 @@ void PLAYER::BelongingsAdd(int type, int code, int value)
 
 }
 
-//指定された持ち物のコードを取得する
-int PLAYER::GetBelongingsCode(int type, int kind)
-{
-	switch (type)
-	{
-
-	case (int)BELONGINGS_WEAPON:	//武器の場合
-
-		return this->Weapon->GetCode(kind);	//武器コード取得
-
-		break;	//武器の場合ここまで
-
-	case (int)BELONGINGS_ARMOR:		//防具の場合
-
-		return this->Armor->GetCode(kind);	//防具コード取得
-
-		break;	//防具の場合ここまで
-
-	case (int)BELONGINGS_ITEM:		//アイテムの場合
-
-		return this->Item->GetCode(kind);	//アイテムコード取得
-
-		break;	//アイテムの場合ここまで
-
-	default:
-		break;
-	}
-
-	return -1;
-
-}
-
 //指定された持ち物の所持数を取得（すべて）
 std::vector<int> PLAYER::GetBelongingsPossession(int type)
 {
@@ -1116,38 +1084,6 @@ std::vector<int> PLAYER::GetBelongingsPossession(int type)
 		break;
 	}
 
-
-}
-
-//指定された持ち物の種類数を取得
-int PLAYER::GetBelongingsSize(int type)
-{
-	switch (type)
-	{
-
-	case (int)BELONGINGS_WEAPON:	//武器の場合
-
-		return this->Weapon->GetSize();	//武器のサイズ取得
-
-		break;	//武器の場合ここまで
-
-	case (int)BELONGINGS_ARMOR:		//防具の場合
-
-		return this->Armor->GetSize();	//防具のサイズ取得
-
-		break;	//防具の場合ここまで
-
-	case (int)BELONGINGS_ITEM:		//アイテムの場合
-
-		return this->Item->GetSize();	//アイテムのサイズ取得
-
-		break;	//アイテムの場合ここまで
-
-	default:
-		break;
-	}
-
-	return -1;
 
 }
 
