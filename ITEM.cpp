@@ -36,15 +36,6 @@ ITEM::~ITEM()
 	return;
 }
 
-//アイテムコード設定
-void ITEM::SetCode(int code)
-{
-	
-	this->Code.push_back(code);
-	this->IsDraw.push_back(true);	//描画してよいか設定（描画してよい）
-	return;
-}
-
 //所持数増加
 void ITEM::IncreasePossession(int kind)
 {
@@ -67,13 +58,6 @@ void ITEM::DecreasePossession(int kind)
 	return;
 }
 
-//所持数設定
-void ITEM::SetPossession(int possession)
-{
-	this->Possession.push_back(possession);
-	return;
-}
-
 //回復量設定
 void ITEM::SetRecovery(int recovery)
 {
@@ -87,13 +71,6 @@ void ITEM::SetChengeFlg(bool add_flg)
 	this->Chenge_flg = add_flg;
 	return;
 }
-
-//描画してよいか設定
-//void ITEM::SetIsDraw(int kind, bool Isdraw)
-//{
-//	this->IsDraw[kind] = Isdraw;
-//	return;
-//}
 
 //アイテムコード取得
 int ITEM::GetCode(int kind)

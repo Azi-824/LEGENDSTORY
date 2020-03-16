@@ -36,13 +36,6 @@ EQUIPMENT::~EQUIPMENT()
 
 }
 
-//‘•”õŠ”İ’è
-//void EQUIPMENT::SetPossessionNum(int kind, int possesionnum)
-//{
-//	this->PossessionNum[kind] = possesionnum;	//Š”İ’è
-//	return;
-//}
-
 //Š”‘‰Á
 void EQUIPMENT::IncreasePossession(int kind)
 {

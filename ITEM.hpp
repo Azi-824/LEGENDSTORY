@@ -31,10 +31,8 @@ public:
 	~ITEM();			//デストラクタ
 
 	//セッタ
-	void SetCode(int);				//アイテムコード設定
 	void IncreasePossession(int);	//所持数増加
 	void DecreasePossession(int);	//所持数減少
-	void SetPossession(int);		//所持数設定
 	void SetRecovery(int);			//回復量設定
 	void SetChengeFlg(bool);		//変更したか設定
 	void AddItem(int,int);			//アイテムを追加

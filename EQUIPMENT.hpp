@@ -28,7 +28,6 @@ public:
 	~EQUIPMENT();							//デストラクタ
 
 	//セッタ
-	//void SetPossessionNum(int,int);			//装備所持数設定
 	void IncreasePossession(int);			//所持数増加
 	void DecreasePossession(int);			//所持数減少
 	void SetEquipFlg(int, bool);			//装備しているかどうか設定
