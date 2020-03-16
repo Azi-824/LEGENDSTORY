@@ -81,3 +81,10 @@ int LIST_ARMOR::GetDefense(int kind)
 	return this->Defense[kind];	//–hŒä—Íæ“¾
 }
 
+//–hŒä—Íæ“¾(‘S‚Ä)
+std::vector<int> LIST_ARMOR::GetDefense()
+{
+	return this->Defense;	//–hŒä—Íæ“¾
+}
+
+

@@ -24,6 +24,7 @@ public:
 	~LIST_ITEM();							//デストラクタ
 
 	int GetRecovery(int);					//回復量取得
+	std::vector<int> GetRecovery();			//回復量取得(全て)
 	const char * GetDescription(int);		//説明文取得
 
 };

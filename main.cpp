@@ -1716,24 +1716,9 @@ void SetGameInit()
 
 	//後に変更
 
-	//武器の攻撃力取得処理
-	for (int i = 0; i < player->GetBelongingsSize((int)BELONGINGS_WEAPON); ++i)	//武器数分繰り返し
-	{
-		player->SetWeaponAtk(weapon_list->GetPower(player->GetBelongingsCode((int)BELONGINGS_WEAPON, i)));	//武器攻撃力設定
-	}
-
-	//防具の防御力取得処理
-	for (int i = 0; i < player->GetBelongingsSize((int)BELONGINGS_ARMOR); ++i)	//防具数分繰り返し
-	{
-		player->SetArmorDef(armor_list->GetDefense(player->GetBelongingsCode((int)BELONGINGS_ARMOR, i)));	//防具防御力設定
-	}
-
-	//アイテムの回復量取得処理
-	for (int i = 0; i < player->GetBelongingsSize((int)BELONGINGS_ITEM); ++i)	//アイテム数分繰り返し
-	{
-		player->SetItemRecovery(item_list->GetRecovery(player->GetBelongingsCode((int)BELONGINGS_ITEM, i)));	//回復量設定
-	}
-
+	player->SetWeaponAtk(weapon_list->GetPower());		//武器攻撃力設定
+	player->SetArmorDef(armor_list->GetDefense());		//防具防御力設定
+	player->SetItemRecovery(item_list->GetRecovery());	//回復量設定
 
 	ui->SelectUpdate(player->GetWeaponClass(), weapon_list);	//武器の選択肢更新
 	ui->SelectUpdate(player->GetArmorClass(), armor_list);		//防具の選択肢更新

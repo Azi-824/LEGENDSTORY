@@ -979,9 +979,14 @@ WEAPON * PLAYER::GetWeaponClass(void)
 }
 
 //•Ší‚ÌUŒ‚—Í‚ğİ’è
-void PLAYER::SetWeaponAtk(int atk)
+void PLAYER::SetWeaponAtk(std::vector<int> power)
 {
-	this->Weapon->SetAtk(atk);
+
+	for (int i = 0; i < this->Weapon->GetSize(); ++i)	//•Ší”•ªŒJ‚è•Ô‚µ
+	{
+		this->Weapon->SetAtk(power[this->Weapon->GetCode(i)]);	//•ŠíUŒ‚—Íİ’è
+	}
+
 	return;
 }
 
@@ -1006,47 +1011,50 @@ ARMOR * PLAYER::GetArmorClass(void)
 }
 
 //–h‹ï‚Ì–hŒä—Íİ’è
-void PLAYER::SetArmorDef(int def)
+void PLAYER::SetArmorDef(std::vector<int> def)
 {
-	this->Armor->SetDef(def);
+	for (int i = 0; i < this->Armor->GetSize(); ++i)	//–h‹ï”•ªŒJ‚è•Ô‚µ
+	{
+		this->Armor->SetDef(def[this->Weapon->GetCode(i)]);	//–h‹ï–hŒä—Íİ’è
+	}
 	return;
 }
 
 //w’è‚³‚ê‚½‚¿•¨‚ğ’Ç‰Á‚·‚é
-//void PLAYER::BelongingsAdd(int type, int code, int value)
-//{
-//
-//	switch (type)
-//	{
-//
-//	case (int)BELONGINGS_WEAPON:	//•Ší‚Ìê‡
-//
-//		this->Weapon->Add(code);		//•Ší“o˜^
-//		this->Weapon->SetAtk(value);	//UŒ‚—Í“o˜^
-//
-//		break;	//•Ší‚Ìê‡‚±‚±‚Ü‚Å
-//
-//	case (int)BELONGINGS_ARMOR:		//–h‹ï‚Ìê‡
-//
-//		this->Armor->Add(code);	//–h‹ï“o˜^
-//		this->Armor->SetDef(value);	//–hŒä—Íİ’è
-//
-//		break;	//–h‹ï‚Ìê‡‚±‚±‚Ü‚Å
-//
-//	case (int)BELONGINGS_ITEM:		//ƒAƒCƒeƒ€‚Ìê‡
-//
-//		this->Item->AddItem(code, value);	//ƒAƒCƒeƒ€’Ç‰Á
-//
-//		break;	//ƒAƒCƒeƒ€‚Ìê‡‚±‚±‚Ü‚Å
-//
-//	default:
-//		break;
-//	}
-//
-//	return;
-//
-//
-//}
+void PLAYER::BelongingsAdd(int type, int code, int value)
+{
+
+	switch (type)
+	{
+
+	case (int)BELONGINGS_WEAPON:	//•Ší‚Ìê‡
+
+		this->Weapon->Add(code);		//•Ší“o˜^
+		this->Weapon->SetAtk(value);	//UŒ‚—Í“o˜^
+
+		break;	//•Ší‚Ìê‡‚±‚±‚Ü‚Å
+
+	case (int)BELONGINGS_ARMOR:		//–h‹ï‚Ìê‡
+
+		this->Armor->Add(code);	//–h‹ï“o˜^
+		this->Armor->SetDef(value);	//–hŒä—Íİ’è
+
+		break;	//–h‹ï‚Ìê‡‚±‚±‚Ü‚Å
+
+	case (int)BELONGINGS_ITEM:		//ƒAƒCƒeƒ€‚Ìê‡
+
+		this->Item->AddItem(code, value);	//ƒAƒCƒeƒ€’Ç‰Á
+
+		break;	//ƒAƒCƒeƒ€‚Ìê‡‚±‚±‚Ü‚Å
+
+	default:
+		break;
+	}
+
+	return;
+
+
+}
 
 //w’è‚³‚ê‚½‚¿•¨‚ÌƒR[ƒh‚ğæ“¾‚·‚é
 int PLAYER::GetBelongingsCode(int type, int kind)
@@ -1166,7 +1174,10 @@ ITEM * PLAYER::GetItemClass(void)
 }
 
 //ƒAƒCƒeƒ€‚Ì‰ñ•œ—Ê‚ğİ’è
-void PLAYER::SetItemRecovery(int recovery)
+void PLAYER::SetItemRecovery(std::vector<int> recovery)
 {
-	this->Item->SetRecovery(recovery);
+	for (int i = 0; i < this->Item->GetSize(); ++i)	//ƒAƒCƒeƒ€”•ªŒJ‚è•Ô‚µ
+	{
+		this->Item->SetRecovery(recovery[this->Item->GetCode(i)]);	//ƒAƒCƒeƒ€‰ñ•œ—Êİ’è
+	}
 }

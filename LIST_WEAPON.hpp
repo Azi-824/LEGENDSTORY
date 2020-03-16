@@ -23,5 +23,6 @@ public:
 	~LIST_WEAPON();								//デストラクタ
 
 	int GetPower(int);			//攻撃力取得
+	std::vector<int> GetPower();//攻撃力取得(全て)
 
 };

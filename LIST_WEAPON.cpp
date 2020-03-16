@@ -79,3 +79,10 @@ int LIST_WEAPON::GetPower(int kind)
 {
 	return this->Power[kind];	//UŒ‚—Íæ“¾
 }
+
+//UŒ‚—Íæ“¾(‘S‚Ä)
+std::vector<int> LIST_WEAPON::GetPower()
+{
+	return this->Power;	//UŒ‚—Íæ“¾
+}
+

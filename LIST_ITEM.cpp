@@ -90,6 +90,12 @@ int LIST_ITEM::GetRecovery(int kind)
 	return this->Recovery[kind];
 }
 
+//‰ñ•œ—Êæ“¾(‘S‚Ä)
+std::vector<int> LIST_ITEM::GetRecovery()
+{
+	return this->Recovery;
+}
+
 //à–¾•¶æ“¾
 const char * LIST_ITEM::GetDescription(int kind)
 {
