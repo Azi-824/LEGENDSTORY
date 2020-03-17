@@ -122,15 +122,15 @@ public:
 
 	void SetChoiseSkil(int);//使用するスキル設定
 
-	void SetIsArive(bool);	//生きているかを設定
-	void SetIsKeyDown(bool);	//キー入力ありか設定
+	void SetIsArive(bool);			//生きているかを設定
+	void SetIsKeyDown(bool);		//キー入力ありか設定
 	void SetPosRelative(int, int);	//位置を設定(相対的)
 	void SetPosAbsolute(int, int);	//位置を設定(絶対的)
-	void SetIsMenu(bool);		//メニュー描画中か設定
-	void SetIsBattleWin(bool);	//戦闘に勝ったか設定
+	void SetIsMenu(bool);			//メニュー描画中か設定
+	void SetIsBattleWin(bool);		//戦闘に勝ったか設定
 	void SetLevUpMsgStartFlg(bool);	//レベルアップメッセージスタートのフラグを設定
-	void ResetChengeMapKind(void);		//切り替えるマップの種類をリセット
-	void SetChengePos(int);				//マップ切り替えをしたときにプレイヤーの位置を設定
+	void ResetChengeMapKind(void);	//切り替えるマップの種類をリセット
+	void SetChengePos(int);			//マップ切り替えをしたときにプレイヤーの位置を設定
 
 	//ステータス関係
 	const char *GetName();	//名前取得
@@ -150,12 +150,12 @@ public:
 	int GetEquipAtk();		//装備攻撃力取得
 	int GetEquipDef();		//装備防御力取得
 
-	int GetChoiseSkil();	//使用するスキル取得
-	std::vector<int> GetSkil();		//スキル一覧の先頭要素取得
+	int GetChoiseSkil();		//使用するスキル取得
+	std::vector<int> GetSkil();	//スキル一覧の先頭要素取得
 
-	int GetMoveSpeed();		//移動速度取得
-	bool GetIsArive();		//生きているか取得
-	bool GetIsDraw();		//描画できるか取得
+	int GetMoveSpeed();			//移動速度取得
+	bool GetIsArive();			//生きているか取得
+	bool GetIsDraw();			//描画できるか取得
 	bool GetKeyOperation();		//キーボードで操作できるか取得
 	COLLISION * GetCollision();	//当たり判定を取得
 	bool GetIsMenu();			//メニュー描画中か取得
@@ -177,9 +177,9 @@ public:
 	void MoveLeft();			//左へ移動
 	void MoveRight();			//右へ移動
 
-	void DamegeCalc(ENEMY *,int);			//ダメージ計算
+	void DamegeCalc(ENEMY *,int);	//ダメージ計算
 
-	void AddExp(int);			//経験値追加処理
+	void AddExp(int);	//経験値追加処理
 
 	void GetNowPos(int *, int *);	//現在の位置を取得
 	void SetNowPos(int, int);		//現在の位置を設定

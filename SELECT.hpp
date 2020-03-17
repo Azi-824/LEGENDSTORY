@@ -26,6 +26,8 @@
 
 #define SELECT_NONE		-1		//選択をしていない状態
 
+#define SELECT_CODE_NONE -1		//選択肢にコード番号が設定されていない
+
 //##################### 列挙型 #############################
 enum SELECT_IMAGE_TYPE
 {
@@ -115,7 +117,7 @@ public:
 	void DrawCenter(int, int,int = (int)SELECT_TRIANGLE_MINI, unsigned int color = GetColor(255, 255, 255));									//選択肢の内容を中央に描画する
 
 	void SetSize(void);						//画像サイズ設定
-	void AddSelect(const char *, int code = -1);//選択肢の内容を追加
+	void AddSelect(const char *, int code = SELECT_CODE_NONE);//選択肢の内容を追加
 
 	void SetIsKeyOpe(bool);					//キー操作可能か設定する
 	bool GetIsKeyOpe(void);					//キー操作可能か取得する
