@@ -36,21 +36,21 @@
 #define STA_MP_BAR_HEIGHT 15			//MPバーの描画高さ
 
 //メニュー一覧
-#define MENU_LIST_WINDOW_RELATIVE_X	100	//メニューウィンドウ(一覧)の相対位置(X)
-#define MENU_LIST_WINDOW_RELATIVE_Y	100	//メニューウィンドウ(一覧)の相対位置(Y)
-#define MENU_LIST_WINDOW_WIDTH	150		//メニューウィンド(一覧)の幅
-#define MENU_LIST_WINDOW_HEIGHT	180		//メニューウィンド(一覧)の高さ
-#define MENU_WINDOW_CHENGE_POSX	100		//メニューウィンドウ(一覧)を左右どちらに表示するか判断するときのX位置
-#define MENU_WINDOW_CHENGE_POSY	85		//メニューウィンドウ(一覧)を左右どちらに表示するか判断するときのY位置
+#define MENU_LIST_WIN_X			50		//メニューウィンドウ（一覧）の描画開始X位置
+#define MENU_LIST_WIN_Y			50		//メニューウィンドウ（一覧）の描画開始Y位置
+#define MENU_LIST_WIN_WIDTH		150		//メニューウィンドウ（一覧）の幅
+#define MENU_LIST_WIN_HEIGHT	180		//メニューウィンドウ（一覧）の高さ
+#define MENU_LIST_TEXT_X		MENU_LIST_WIN_X + 10	//メニューウィンドウ（一覧）のテキストの描画開始X位置
+#define MENU_LIST_TEXT_Y		MENU_LIST_WIN_Y	+ 5		//メニューウィンドウ（一覧）のテキストの描画開始Y位置
 
 //メニュー毎
-#define MENU_WINDOW_X	200				//選んだメニュー毎のウィンドウの描画開始X位置
-#define MENU_WINDOW_Y	50				//選んだメニュー毎のウィンドウの描画開始Y位置
-#define MENU_TEXT_X		220				//選んだメニュー毎の内容の描画開始X位置
-#define MENU_TEXT_Y		85				//選んだメニュー毎の内容の描画開始Y位置
-#define MENU_TEXT_TOP_Y	55				//選んだメニュー毎の先頭要素の描画開始Y位置
-#define MENU_WINDOW_WIDTH	600			//選んだメニュー毎のウィンドウの横幅
-#define MENU_WINDOW_HEIGHT	500			//選んだメニュー毎のウィンドウの高さ
+#define MENU_WINDOW_X	MENU_LIST_WIN_X	+ MENU_LIST_WIN_WIDTH	//選んだメニュー毎のウィンドウの描画開始X位置
+#define MENU_WINDOW_Y	MENU_LIST_WIN_Y							//選んだメニュー毎のウィンドウの描画開始Y位置
+#define MENU_TEXT_X		MENU_WINDOW_X + 10						//選んだメニュー毎の内容の描画開始X位置
+#define MENU_TEXT_Y		MENU_WINDOW_Y + 35						//選んだメニュー毎の内容の描画開始Y位置
+#define MENU_TEXT_TOP_Y	MENU_WINDOW_Y + 5						//選んだメニュー毎の先頭要素の描画開始Y位置
+#define MENU_WINDOW_WIDTH	600									//選んだメニュー毎のウィンドウの横幅
+#define MENU_WINDOW_HEIGHT	500									//選んだメニュー毎のウィンドウの高さ
 
 #define MENU_ITEM_NAME_SPACE	200		//アイテム画面の名前と所持数の表示間隔
 #define MENU_EQUIP_NAME_SPACE	200		//装備画面の名前と所持数の表示間隔
@@ -136,7 +136,7 @@ public:
 	~UI();					//デストラクタ
 
 	//メニューウィンドウ関連
-	void DrawMenu(int ,int);			//メニューウィンドウ描画
+	void DrawMenu();					//メニューウィンドウ描画
 	void ResetMenu();					//メニュー関係のメンバーをリセット
 	int GetMenuEquipDir(void);			//メニューの装備画面の選択肢の段階を取得
 	void DrawMenuCheck();				//メニューウィンドウでの確認の選択肢描画

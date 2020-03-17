@@ -1073,14 +1073,10 @@ void Play_Draw()
 
 	player->DrawWalk();		//プレイヤー描画
 
-	static int Player_X = 0, Player_Y = 0;	//プレイヤーのX位置とY位置
-
-	player->GetNowPos(&Player_X, &Player_Y);//プレイヤーの現在位置を取得
-
 	//▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼ メニュー描画処理ここから ▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼
 	if (player->GetIsMenu())	//メニュー描画中なら
 	{
-		ui->DrawMenu(Player_X,Player_Y);	//メニューウィンドウ描画
+		ui->DrawMenu();			//メニューウィンドウ描画
 
 		if (ui->MenuSelect->GetSelectFlg())	//選択したら
 		{

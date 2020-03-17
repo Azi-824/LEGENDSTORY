@@ -50,33 +50,11 @@ UI::~UI()
 }
 
 //メニューウィンドウ描画
-void UI::DrawMenu(int x,int y)
+void UI::DrawMenu()
 {
-	//プレイヤーの位置によって描画位置を変える
-	if (x <= MENU_WINDOW_CHENGE_POSX && y >= MENU_WINDOW_CHENGE_POSY)	//左上にいるときは
-	{
-		//プレイヤーの右上にメニューウィンドウを表示
-		this->DrawWindow(x + MENU_LIST_WINDOW_RELATIVE_X - TRIANGLE_MINI_SIZE, y + (-MENU_LIST_WINDOW_RELATIVE_Y), MENU_LIST_WINDOW_WIDTH, MENU_LIST_WINDOW_HEIGHT);	//ウィンドウ描画
-		this->MenuSelect->Draw(x + MENU_LIST_WINDOW_RELATIVE_X, y + (-MENU_LIST_WINDOW_RELATIVE_Y), 1);
-	}
-	else if (x <= MENU_WINDOW_CHENGE_POSX && y <= MENU_WINDOW_CHENGE_POSY)	//左側にいるときは
-	{
-		//プレイヤーの右下にメニューウィンドウを表示
-		this->DrawWindow((x + MENU_LIST_WINDOW_RELATIVE_X) - TRIANGLE_MINI_SIZE, y + MENU_LIST_WINDOW_RELATIVE_Y, MENU_LIST_WINDOW_WIDTH, MENU_LIST_WINDOW_HEIGHT);	//ウィンドウ描画
-		this->MenuSelect->Draw(x + MENU_LIST_WINDOW_RELATIVE_X, y + MENU_LIST_WINDOW_RELATIVE_Y, 1);
-	}
-	else if (x >= MENU_WINDOW_CHENGE_POSX && y <= MENU_WINDOW_CHENGE_POSY)	//上側にいるときは
-	{
-		//プレイヤーの左下にメニューウィンドウを表示
-		this->DrawWindow(x + (-MENU_LIST_WINDOW_RELATIVE_X) - TRIANGLE_MINI_SIZE, y + MENU_LIST_WINDOW_RELATIVE_Y, MENU_LIST_WINDOW_WIDTH, MENU_LIST_WINDOW_HEIGHT);	//ウィンドウ描画
-		this->MenuSelect->Draw(x + (-MENU_LIST_WINDOW_RELATIVE_X), y + MENU_LIST_WINDOW_RELATIVE_Y, 1);
-	}
-	else			//それ以外の時は
-	{
-		//プレイヤーの左上にメニューウィンドウを表示
-		this->DrawWindow(x + (-MENU_LIST_WINDOW_RELATIVE_X) - TRIANGLE_MINI_SIZE, y + (-MENU_LIST_WINDOW_RELATIVE_Y), MENU_LIST_WINDOW_WIDTH, MENU_LIST_WINDOW_HEIGHT);	//ウィンドウ描画
-		this->MenuSelect->Draw(x + (-MENU_LIST_WINDOW_RELATIVE_X), y + (-MENU_LIST_WINDOW_RELATIVE_Y), 1);
-	}
+
+	this->DrawWindow(MENU_LIST_WIN_X, MENU_LIST_WIN_Y, MENU_LIST_WIN_WIDTH, MENU_LIST_WIN_HEIGHT);	//ウィンドウ描画
+	this->MenuSelect->Draw(MENU_LIST_TEXT_X, MENU_LIST_TEXT_Y);										//メニュー画面の選択肢描画
 
 	return;
 }
