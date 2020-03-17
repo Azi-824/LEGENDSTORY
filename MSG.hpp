@@ -11,8 +11,8 @@
 #include "ENEMY.hpp"
 
 //################ マクロ定義 ####################
-#define BT_MSG_DRAW_X 15	//戦闘画面のメッセージの描画位置(X)
-#define BT_MSG_DRAW_Y 410	//戦闘画面のメッセージの描画位置(Y)
+#define BT_MSG_DRAW_X 20	//戦闘画面のメッセージの描画位置(X)
+#define BT_MSG_DRAW_Y 400	//戦闘画面のメッセージの描画位置(Y)
 
 #define BT_MSG_KIND	2	//メッセージの種類
 

@@ -57,6 +57,8 @@
 #define BOSS_MAP_X	418			//ボスのマップでの描画位置X
 #define BOSS_MAP_Y	10			//ボスのマップでの描画位置Y
 
+#define ENEMY_ENCOUNT_TYPE_NONE	-1	//敵と遭遇していないとき
+
 //############## 列挙型 ########################
 enum ENEMY_TYPE
 {

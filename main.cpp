@@ -78,7 +78,7 @@ bool IsChengeDrawMap = false;									//描画するマップの種類を切り替えるか
 
 int ChengeDrawCount = 0;	//フェードアウト処理に使用
 
-int EncounteEnemyType = 0;	//遭遇した敵の種類
+int EncounteEnemyType = ENEMY_ENCOUNT_TYPE_NONE;	//遭遇した敵の種類
 int Turn = (int)MY_TURN;	//ターン
 
 bool GameEnd_Flg = false;	//ゲーム終了フラグ
@@ -1002,7 +1002,7 @@ void Init()
 
 		bt_se->Reset();				//SEの再生状態をリセット
 
-		EncounteEnemyType = 0;		//遭遇した敵の種類をリセット
+		EncounteEnemyType = ENEMY_ENCOUNT_TYPE_NONE;	//遭遇した敵の種類をリセット
 
 		BattleStageNow = (int)WAIT_ACT;	//バトル状態を、行動待ち状態へ
 

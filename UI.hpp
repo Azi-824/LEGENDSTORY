@@ -17,21 +17,23 @@
 #define UI_WINDOW_NAME	R"(window.png)"		//ウィンドウの名前
 
 //ステータスウィンドウ関係
-#define STA_WIN_X		0			//ステータスウィンドウ描画開始X位置
-#define STA_WIN_Y		540			//ステータスウィンドウ描画開始Y位置
-#define STA_WIN_WIDTH	350			//ステータスウィンドウの横幅
-#define STA_WIN_HEIGHT	100			//ステータスウィンドウの高さ
-#define STA_TXT_X		10			//ステータスの文字の描画開始X位置
-#define STA_TXT_Y		540			//ステータスの文字の描画開始Y位置
-#define STA_SPACE		20			//ステータス文字の間隔
-#define STA_HP_BAR_X	90			//HPバーの描画開始X位置
-#define	STA_HP_BAR_Y	590			//HPバーの描画開始Y位置
-#define	STA_HP_BAR_WIDTH 100		//HPバーの描画幅
-#define STA_HP_BAR_HEIGHT 15		//HPバーの描画高さ
-#define STA_MP_BAR_X	90			//MPバーの描画開始X位置
-#define	STA_MP_BAR_Y	615			//MPバーの描画開始Y位置
-#define	STA_MP_BAR_WIDTH 100		//MPバーの描画幅
-#define STA_MP_BAR_HEIGHT 15		//MPバーの描画高さ
+#define STA_WIN_X		0				//ステータスウィンドウ描画開始X位置
+#define STA_WIN_Y		530				//ステータスウィンドウ描画開始Y位置
+#define STA_WIN_WIDTH	350				//ステータスウィンドウの横幅
+#define STA_WIN_HEIGHT	110				//ステータスウィンドウの高さ
+#define STA_TXT_X		STA_WIN_X + 10	//ステータスの文字の描画開始X位置
+#define STA_TXT_Y		STA_WIN_Y + 5	//ステータスの文字の描画開始Y位置
+#define STA_SPACE		20				//ステータス文字の間隔
+//HPバー
+#define STA_HP_BAR_X	90				//HPバーの描画開始X位置
+#define	STA_HP_BAR_Y	580				//HPバーの描画開始Y位置
+#define	STA_HP_BAR_WIDTH 100			//HPバーの描画幅
+#define STA_HP_BAR_HEIGHT 15			//HPバーの描画高さ
+//MPバー
+#define STA_MP_BAR_X	90				//MPバーの描画開始X位置
+#define	STA_MP_BAR_Y	605				//MPバーの描画開始Y位置
+#define	STA_MP_BAR_WIDTH 100			//MPバーの描画幅
+#define STA_MP_BAR_HEIGHT 15			//MPバーの描画高さ
 
 //メニュー一覧
 #define MENU_LIST_WINDOW_RELATIVE_X	100	//メニューウィンドウ(一覧)の相対位置(X)
@@ -54,24 +56,24 @@
 #define MENU_EQUIP_NAME_SPACE	200		//装備画面の名前と所持数の表示間隔
 
 //バトルコマンド関係
-#define CMD_WIN_X		350			//バトルコマンドのウィンドウの描画開始X位置
-#define	CMD_WIN_Y		540			//バトルコマンドのウィンドウの描画開始Y位置
-#define CMD_WIN_WIDTH	120			//バトルコマンドのウィンドウの横幅
-#define CMD_WIN_HEIGHT	100			//バトルコマンドのウィンドウの高さ
-#define CMD_TXT_X		370			//バトルコマンドの文字の描画開始X位置
-#define CMD_TXT_Y		540			//バトルコマンドの文字の描画開始Y位置
+#define CMD_WIN_X		350				//バトルコマンドのウィンドウの描画開始X位置
+#define	CMD_WIN_Y		530				//バトルコマンドのウィンドウの描画開始Y位置
+#define CMD_WIN_WIDTH	120				//バトルコマンドのウィンドウの横幅
+#define CMD_WIN_HEIGHT	110				//バトルコマンドのウィンドウの高さ
+#define CMD_TXT_X		CMD_WIN_X + 10	//バトルコマンドの文字の描画開始X位置
+#define CMD_TXT_Y		CMD_WIN_Y + 5	//バトルコマンドの文字の描画開始Y位置
 
-//一覧関係
-#define BT_LIST_WIN_X		470		//魔法一覧のウィンドウの描画開始X位置
-#define BT_LIST_WIN_Y		540		//魔法一覧のウィンドウの描画開始Y位置
-#define BT_LIST_WIN_WIDTH	100		//魔法一覧のウィンドウの横幅
-#define BT_LIST_WIN_HEIGHT	100		//魔法一覧のウィンドウの高さ
-#define BT_LIST_TXT_X		485		//魔法一覧の文字の描画開始X位置
-#define BT_LIST_TXT_Y		540		//魔法一覧の文字の描画開始Y位置
+//魔法一覧関係
+#define BT_LIST_WIN_X		470						//魔法一覧のウィンドウの描画開始X位置
+#define BT_LIST_WIN_Y		530						//魔法一覧のウィンドウの描画開始Y位置
+#define BT_LIST_WIN_WIDTH	100						//魔法一覧のウィンドウの横幅
+#define BT_LIST_WIN_HEIGHT	110						//魔法一覧のウィンドウの高さ
+#define BT_LIST_TXT_X		BT_LIST_WIN_X + 10		//魔法一覧の文字の描画開始X位置
+#define BT_LIST_TXT_Y		BT_LIST_WIN_Y + 5		//魔法一覧の文字の描画開始Y位置
 
 //ウィンドウ関係
 #define BT_WINDOW_X		0			//バトル画面のウィンドウの描画開始X位置
-#define BT_WINDOW_Y		390			//バトル画面のウィンドウの描画開始Y位置
+#define BT_WINDOW_Y		380			//バトル画面のウィンドウの描画開始Y位置
 #define PLAY_WIN_X		0			//プレイ画面のウィンドウの描画開始X位置
 #define PLAY_WIN_Y		490			//プレイ画面のウィンドウの描画開始Y位置
 
@@ -79,10 +81,10 @@
 #define PLAY_WIN_TEXT_Y	PLAY_WIN_Y + 20	//プレイ画面のウィンドウ内に描画するテキストの描画開始Y位置
 
 //テキストポーズ関係
-#define BT_TXT_POSE_Y	510			//バトル画面のテキストポーズの描画Y位置
+#define BT_TXT_POSE_Y	510		//バトル画面のテキストポーズの描画Y位置
 
-#define DEFAULT_TEXT_Y	490			//デフォルトのテキスト描画位置（Y座標）
-#define TXT_Y_3			450			//選択肢が3つの時のテキスト描画位置（Y座標）
+#define DEFAULT_TEXT_Y	490		//デフォルトのテキスト描画位置（Y座標）
+#define TXT_Y_3			450		//選択肢が3つの時のテキスト描画位置（Y座標）
 
 //######################### 列挙型 #################################
 enum UI_IMAGE_TYPE
