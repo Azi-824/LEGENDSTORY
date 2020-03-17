@@ -213,26 +213,27 @@ void SELECT::Draw(int x, int y,int kind,unsigned int color,int side_select)
 				{
 					if (kind == (int)SELECT_TRIANGLE)	//通常サイズの場合
 					{
-						this->image_ui->Draw((x + i * side_select) - this->image_ui->GetWidth(kind), y + IMAGE_SPACE, kind);		//横向き三角描画
+						this->image_ui->Draw((x + i * side_select), y + IMAGE_SPACE, kind);		//横向き三角描画
 					}
 					else							//ミニサイズの場合
 					{
-						this->image_ui->Draw((x + i * side_select) - this->image_ui->GetWidth(kind), y + IMAGE_MINI_SPACE, kind);	//横向き三角描画
+						this->image_ui->Draw((x + i * side_select), y + IMAGE_MINI_SPACE, kind);	//横向き三角描画
 					}
 
 				}
 
-				DrawFormatString(x + i * side_select, y, color, "%s", this->Str[i].c_str());	//選択肢描画
+				DrawFormatString((x + i * side_select) + this->image_ui->GetWidth(kind), y, color, "%s", this->Str[i].c_str());	//選択肢描画
 			}
 			else
 			{
-				DrawFormatString(x + i * side_select, y, color, "%s", this->Str[i].c_str());	//選択肢描画
+				DrawFormatString((x + i * side_select) + this->image_ui->GetWidth(kind), y, color, "%s", this->Str[i].c_str());	//選択肢描画
 			}
 		}
 
 	}
 	else						//立て向きに選択肢を並んでいる場合
 	{
+
 		for (int i = 0; i < this->Str.size(); ++i)
 		{
 			if (*this->Str_itr == this->Str[i])			//選択中の要素だったら
@@ -241,22 +242,23 @@ void SELECT::Draw(int x, int y,int kind,unsigned int color,int side_select)
 				{
 					if (kind == (int)SELECT_TRIANGLE)	//通常サイズの場合
 					{
-						this->image_ui->Draw(x - this->image_ui->GetWidth(kind), y + i * Height + IMAGE_SPACE, kind);		//横向き三角描画
+						this->image_ui->Draw(x, y + i * Height + IMAGE_SPACE, kind);		//横向き三角描画
 					}
 					else							//ミニサイズの場合
 					{
-						this->image_ui->Draw(x - this->image_ui->GetWidth(kind), y + i * Height + IMAGE_MINI_SPACE, kind);	//横向き三角描画
+						this->image_ui->Draw(x, y + i * Height + IMAGE_MINI_SPACE, kind);	//横向き三角描画
 					}
 				}
 
 
-				DrawFormatString(x, y + i * Height, color, "%s", this->Str[i].c_str());	//選択肢描画
+				DrawFormatString(x + this->image_ui->GetWidth(kind), y + i * Height, color, "%s", this->Str[i].c_str());	//選択肢描画
 			}
 			else
 			{
-				DrawFormatString(x, y + i * Height, color, "%s", this->Str[i].c_str());	//選択肢描画
+				DrawFormatString(x + this->image_ui->GetWidth(kind), y + i * Height, color, "%s", this->Str[i].c_str());	//選択肢描画
 			}
 		}
+
 
 	}
 

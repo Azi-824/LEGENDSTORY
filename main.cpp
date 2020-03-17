@@ -1129,7 +1129,13 @@ void Play_Draw()
 
 					if (ui->ItemSelect->GetSelectFlg())		//アイテムを選択したら
 					{
-						ui->Yes_No->DrawCenter(MENU_WINDOW_X + MENU_WINDOW_WIDTH / 2, MENU_WINDOW_Y + MENU_WINDOW_HEIGHT / 2);	//はい、いいえの選択肢描画
+						//ui->DrawUiImage(PLAY_WIN_X, PLAY_WIN_Y, (int)UI_WINDOW);	//テキストウィンドウ描画
+						//DrawFormatString(PLAY_WIN_TEXT_X, PLAY_WIN_TEXT_Y, GetColor(255, 255, 255), "%sを使いますか？", item_list->GetName(ui->ItemSelect->GetSelectCode()));	//確認メッセージ描画
+						//ui->Yes_No->DrawCenter(MENU_WINDOW_X + MENU_WINDOW_WIDTH / 2, MENU_WINDOW_Y + MENU_WINDOW_HEIGHT / 2);	//はい、いいえの選択肢描画
+						Work_Str = item_list->GetName(ui->ItemSelect->GetSelectCode());
+						Work_Str += "を使いますか？";
+						ui->DrawCheck(Work_Str.c_str());
+
 					}
 
 				}

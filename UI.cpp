@@ -552,3 +552,17 @@ void UI::SelectUpdate(ARMOR *armor, LIST_ARMOR *armor_list)
 
 }
 
+//確認の選択肢を描画する
+void UI::DrawCheck(const char *check_msg)
+{
+	this->UiImage->Draw(PLAY_WIN_X, PLAY_WIN_Y);	//ウィンドウ描画
+	
+	DrawFormatString(PLAY_WIN_TEXT_X, PLAY_WIN_TEXT_Y, GetColor(255, 255, 255), "%s", check_msg);	//確認メッセージ描画
+
+	int Height = GetFontSize();	//高さ取得
+
+	this->Yes_No->Draw(PLAY_WIN_TEXT_X, PLAY_WIN_TEXT_Y + Height);	//はい、いいえの選択肢描画
+
+	return;
+
+}

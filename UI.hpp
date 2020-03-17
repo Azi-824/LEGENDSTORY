@@ -72,6 +72,11 @@
 //ウィンドウ関係
 #define BT_WINDOW_X		0			//バトル画面のウィンドウの描画開始X位置
 #define BT_WINDOW_Y		390			//バトル画面のウィンドウの描画開始Y位置
+#define PLAY_WIN_X		0			//プレイ画面のウィンドウの描画開始X位置
+#define PLAY_WIN_Y		490			//プレイ画面のウィンドウの描画開始Y位置
+
+#define PLAY_WIN_TEXT_X	PLAY_WIN_X + 20	//プレイ画面のウィンドウ内に描画するテキストの描画開始X位置
+#define PLAY_WIN_TEXT_Y	PLAY_WIN_Y + 20	//プレイ画面のウィンドウ内に描画するテキストの描画開始Y位置
 
 //テキストポーズ関係
 #define BT_TXT_POSE_Y	510			//バトル画面のテキストポーズの描画Y位置
@@ -170,5 +175,7 @@ public:
 	void SelectUpdate(ITEM *, LIST_ITEM *);		//選択肢の内容を更新する処理(アイテム)
 	void SelectUpdate(WEAPON *, LIST_WEAPON *);	//武器
 	void SelectUpdate(ARMOR *, LIST_ARMOR *);	//防具
+
+	void DrawCheck(const char *);				//確認の選択肢を描画する
 
 };
