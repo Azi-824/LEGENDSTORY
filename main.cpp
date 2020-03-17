@@ -248,11 +248,15 @@ void Play()
 	}
 	//▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲ マップ切り替え処理ここまで ▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲
 
-	if (player->GetIsMenu() == true && keydown->IsKeyDownOne(KEY_INPUT_Q))		//メニュー描画中でQキーを押された瞬間
+	if (player->GetIsMenu())		//メニュー描画中で
 	{
-		sys_se->Play((int)SYS_SE_CANSEL);	//キャンセル音を鳴らす
-		sys_se->Reset();				//再生状態リセット
-		player->SetIsMenu(false);		//メニュー描画終了
+		if (keydown->IsKeyDownOne(KEY_INPUT_Q) ||	//Qキーを押された場合と
+			!ui->MenuSelect->GetSelectFlg() && keydown->IsKeyDownOne(KEY_INPUT_BACK))//メニューを選んでいない状態で、バックスペースキーを押されたら
+		{
+			sys_se->Play((int)SYS_SE_CANSEL);	//キャンセル音を鳴らす
+			sys_se->Reset();				//再生状態リセット
+			player->SetIsMenu(false);		//メニュー描画終了
+		}
 	}
 	else if (keydown->IsKeyDownOne(KEY_INPUT_Q))		//Qキーを押された瞬間
 	{

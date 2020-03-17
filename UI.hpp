@@ -81,7 +81,7 @@
 #define PLAY_WIN_TEXT_Y	PLAY_WIN_Y + 20	//プレイ画面のウィンドウ内に描画するテキストの描画開始Y位置
 
 //テキストポーズ関係
-#define BT_TXT_POSE_Y	510		//バトル画面のテキストポーズの描画Y位置
+#define BT_TXT_POSE_Y	500		//バトル画面のテキストポーズの描画Y位置
 
 #define DEFAULT_TEXT_Y	490		//デフォルトのテキスト描画位置（Y座標）
 #define TXT_Y_3			450		//選択肢が3つの時のテキスト描画位置（Y座標）

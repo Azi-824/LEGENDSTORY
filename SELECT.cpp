@@ -118,7 +118,7 @@ void SELECT::SelectOperation(KEYDOWN *keydown,MUSIC *se)
 		else if (keydown->IsKeyDownOne(KEY_INPUT_BACK))	//バックスペースキーを押されたら
 		{
 			//SEの再生
-			se->Play((int)SYS_SE_KETTEI);		//決定の効果音を鳴らす
+			se->Play((int)SYS_SE_CANSEL);		//キャンセルの効果音を鳴らす
 			keydown->KeyDownUpdate();			//キー入力の状態をリセット
 
 			this->BackFlg = true;				//戻る選択をした
