@@ -257,7 +257,7 @@ void Play()
 			sys_se->Reset();				//再生状態リセット
 			player->SetIsMenu(false);		//メニュー描画終了
 		}
-	}
+	}		//メニュー描画中じゃないとき
 	else if (keydown->IsKeyDownOne(KEY_INPUT_Q))		//Qキーを押された瞬間
 	{
 		sys_se->Play((int)SYS_SE_MENU);	//メニューを開く音を鳴らす
@@ -307,7 +307,7 @@ void Play()
 					//選択した武器の要素番号を取得し
 					//武器装備処理の引数として渡す
 					player->EquipWeapon(ui->WeaponSelect->GetSelectNum());	//武器を装備する
-					ui->WeaponSelect->Default();//武器の選択肢デフォルトへ
+					ui->WeaponSelect->Default();							//武器の選択肢デフォルトへ
 
 
 					break;	//武器を選択した場合ここまで
@@ -318,7 +318,7 @@ void Play()
 					//選択した防具の要素番号を取得し
 					//防具装備処理の引数として渡す
 					player->EquipArmor(ui->ArmorSelect->GetSelectNum());	//防具を装備する
-					ui->ArmorSelect->Default();	//防具の選択肢デフォルトへ
+					ui->ArmorSelect->Default();								//防具の選択肢デフォルトへ
 
 					break;	//防具を選択した場合ここまで
 
@@ -339,7 +339,7 @@ void Play()
 					player->Save(PLAYER_DATA_DIR, PLAYER_DATA_NAME);		//プレイヤー情報のセーブ
 					data->SaveMap(NowDrawMapKind, MapNowPos, MAPPOS_DATA_DIR, MAPPOS_DATA_NAME);	//マップ位置のセーブ
 					sys_se->Play((int)SYS_SE_SAVE);		//セーブ音を鳴らす
-					player->SetIsMenu(false);		//メニュー描画終了
+					player->SetIsMenu(false);			//メニュー描画終了
 				}
 
 				break;	//セーブを選んだときここまで
@@ -357,10 +357,7 @@ void Play()
 	}
 	else			//メニュー描画終了してたら
 	{
-	//****************************** リセット処理 *******************************
-
-	ui->ResetMenu();	//メニュー関係のリセット
-
+		ui->ResetMenu();	//メニュー関係のリセット
 	}
 
 
