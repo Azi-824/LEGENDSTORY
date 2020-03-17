@@ -16,12 +16,10 @@
 
 
 //############## マクロ定義：ファイル名、パス ###################
-#define PLAYER_DATA_DIR	R"(.\MY_DATA\Player\)"	//プレイヤーのデータのファイル名
 #define ENEMY_DATA_DIR	R"(.\MY_DATA\Enemy\)"	//敵のデータのファイル名
 #define MSG_DATA_DIR	R"(.\MY_DATA\Msg\)"		//メッセージのデータのファイル名
 #define MAPPOS_DATA_DIR R"(.\MY_DATA\MapPos\)"	//マップ位置のデータのファイル名
 
-#define PLAYER_DATA_NAME	R"(Player_Data.csv)"//プレイヤーのデータのcsvファイル
 #define PLATER_DATA_INIT_NAME R"(Player_Data_Init.csv)"//プレイヤーの初期データのcsvファイル
 #define ENEMY_DATA_NAME		R"(Enemy_Data.csv)"	//敵のデータの名前
 #define MSG_DATA_NAME		R"(Msg_Data.txt)"	//メッセージデータの名前
@@ -42,11 +40,9 @@ public:
 
 	~DATA();								//デストラクタ
 
-	bool LoadPlayer(PLAYER *,const char *, const char *);		//読み込み（味方データ）
 	bool LoadEnemy(ENEMY *[],const char *, const char *);		//読み込み（敵データ）
 	bool LoadMsg(MESSAGE *, const char *, const char *);		//読み込み（メッセージデータ）
 	bool LoadNowMap(int *, int *, const char *, const char *);	//読み込み（現在のマップ位置）
-	bool Save(PLAYER *,const char *,const char *);				//セーブ
 	bool SaveMap(int, int[],const char *,const char *);			//現在のマップ位置をセーブ
 
 };

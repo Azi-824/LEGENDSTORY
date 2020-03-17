@@ -1117,3 +1117,217 @@ void PLAYER::SetItemRecovery(std::vector<int> recovery)
 		this->Item->SetRecovery(recovery[this->Item->GetCode(i)]);	//アイテム回復量設定
 	}
 }
+
+//セーブデータ読み込み
+bool PLAYER::LoadData(const char *dir, const char *name)
+{
+	std::string LoadFile;
+	LoadFile += dir;
+	LoadFile += name;
+
+	std::ifstream ifs(LoadFile.c_str());	//ファイル読み取り
+
+	if (!ifs)		//ファイルオープン失敗時
+	{
+		std::string ErrorMsg(PLAYER_DATA_ERROR_MSG);	//エラーメッセージ作成
+		ErrorMsg += TEXT('\n');						//改行
+		ErrorMsg += LoadFile;					//画像のパス
+
+		MessageBox(
+			NULL,
+			ErrorMsg.c_str(),	//char * を返す
+			TEXT(PLAYER_DATA_ERROR_TTILE),
+			MB_OK);
+
+		return false;	//読み込み失敗
+
+	}
+
+
+	std::string buf;
+
+	std::getline(ifs, buf, ',');	//カンマまで読み込み
+	this->Name = buf.c_str();		//名前読み込み
+
+	std::getline(ifs, buf, ',');	//カンマまで読み込み
+	this->Level = atoi(buf.c_str());//レベル読み込み
+
+	std::getline(ifs, buf, ',');	//カンマまで読み込み
+	this->MaxEXP = atoi(buf.c_str());//経験値の最大値読み込み
+
+	std::getline(ifs, buf, ',');	//カンマまで読み込み
+	this->NowEXP = atoi(buf.c_str());//現在の経験値読み込み
+
+	std::getline(ifs, buf, ',');	//カンマまで読み込み
+	this->MaxHP = atoi(buf.c_str());//最大HP読み込み
+
+	std::getline(ifs, buf, ',');	//カンマまで読み込み
+	this->NowHP = atoi(buf.c_str());//現在のHP読み込み
+
+	std::getline(ifs, buf, ',');	//カンマまで読み込み
+	this->MaxMP = atoi(buf.c_str());//最大MP読み込み
+
+	std::getline(ifs, buf, ',');	//カンマまで読み込み
+	this->NowMP = atoi(buf.c_str());//現在のMP読み込み
+
+	std::getline(ifs, buf, ',');	//カンマまで読み込み
+	this->ATK = atoi(buf.c_str());	//ATK読み込み
+
+	std::getline(ifs, buf, ',');	//カンマまで読み込み
+	this->DEF = atoi(buf.c_str());	//DEF読み込み
+
+	std::getline(ifs, buf, ',');	//カンマまで読み込み
+	this->SPD = atoi(buf.c_str());	//SPD読み込み
+
+	int x = 0, y = 0;				//位置取得用
+	std::getline(ifs, buf, ',');	//カンマまで読み込み
+	x = atoi(buf.c_str());			//X位置格納
+	std::getline(ifs, buf, ',');	//カンマまで読み込み
+	y = atoi(buf.c_str());			//Y位置格納
+
+	this->SetNowPos(x, y);			//現在位置設定
+
+	int size = 0;					//要素数を入れる変数
+	std::getline(ifs, buf, ',');	//カンマまで読み込み
+	size = atoi(buf.c_str());		//スキルの数を取得
+
+	for (int i = 0; i < size; ++i)	//スキルの数だけ繰り返し
+	{
+		std::getline(ifs, buf, ',');				//カンマで読み込み
+		this->Skil.push_back(atoi(buf.c_str()));	//スキル読み込み
+	}
+
+
+	//******************* アイテムデータ読み込み ************************
+	std::getline(ifs, buf, ',');	//カンマまで読み込み
+	size = atoi(buf.c_str());		//アイテム数読み込み
+
+	int code = 0, posse = 0;		//コード番号と所持数
+
+	for (int i = 0; i < size; ++i)	//アイテム数だけ繰り返し
+	{
+		std::getline(ifs, buf, ',');	//カンマまで読み込み
+		code = (atoi(buf.c_str()));		//アイテムコード読み込み
+		std::getline(ifs, buf, ',');	//カンマまで読み込み
+		posse = (atoi(buf.c_str()));		//所持数設定
+
+		this->Item->LoadData(code, posse);	//読み込んだアイテムデータを設定
+	}
+
+	//************************ 武器データ読み込み ****************************
+	std::getline(ifs, buf, ',');		//カンマまで読み込み
+	size = atoi(buf.c_str());			//武器数読み込み
+
+	for (int i = 0; i < size; ++i)	//武器数分繰り返し
+	{
+		std::getline(ifs, buf, ',');		//カンマまで読み込み
+		code = atoi(buf.c_str());			//武器コード読み込み
+		std::getline(ifs, buf, ',');		//カンマまで読み込み
+		posse = atoi(buf.c_str());			//所持数読み込み
+
+		this->Weapon->LoadData(code, posse);	//読み込んだデータを設定
+
+	}
+
+	//*********************** 防具データ読み込み ****************************
+	std::getline(ifs, buf, ',');		//カンマまで読み込み
+	size = atoi(buf.c_str());			//防具数読み込み
+
+	for (int i = 0; i < size; ++i)	//防具数分繰り返し
+	{
+		std::getline(ifs, buf, ',');		//カンマまで読み込み
+		code = atoi(buf.c_str());			//防具コード読み込み
+		std::getline(ifs, buf, ',');		//カンマまで読み込み
+		posse = atoi(buf.c_str());			//所持数読み込み
+
+		this->Armor->LoadData(code, posse);	//読み込んだデータを設定
+
+	}
+
+
+	return true;	//読み込み成功
+
+}
+
+//セーブ
+bool PLAYER::Save(const char *dir, const char *name)
+{
+	std::string LoadFile;
+	LoadFile += dir;
+	LoadFile += name;
+
+	std::ofstream ofs(LoadFile.c_str(), std::ios_base::ate);	//ファイルオープン
+
+	if (!ofs)		//ファイルオープン失敗時
+	{
+		std::string ErrorMsg(PLAYER_DATA_ERROR_MSG);	//エラーメッセージ作成
+		ErrorMsg += TEXT('\n');						//改行
+		ErrorMsg += LoadFile;					//画像のパス
+
+		MessageBox(
+			NULL,
+			ErrorMsg.c_str(),	//char * を返す
+			TEXT(PLAYER_DATA_ERROR_TTILE),
+			MB_OK);
+
+		return false;		//セーブ失敗
+
+	}
+
+	//プレイヤー情報を書き出す
+	ofs << this->Name << ',';		//名前書き出し
+	ofs << this->Level << ',';		//レベル
+	ofs << this->MaxEXP << ',';		//経験値の最大値
+	ofs << this->NowEXP << ',';		//現在の経験値
+
+	ofs << this->MaxHP << ',';		//最大HP
+	ofs << this->NowHP << ',';		//現在のHP
+	ofs << this->MaxMP << ',';		//最大MP
+	ofs << this->NowMP << ',';		//現在のMP
+
+	ofs << this->ATK << ',';		//攻撃力
+	ofs << this->DEF << ',';		//防御力
+	ofs << this->SPD << ',';		//速さ
+
+	int x = 0, y = 0;				//現在の位置取得用
+	this->GetNowPos(&x, &y);		//現在位置取得
+	ofs << x << ',' << y << ',';	//現在位置セーブ
+
+	ofs << this->Skil.size() << ',';//スキル数書き込み
+
+	for (int i = 0; i < this->Skil.size(); ++i)		//スキルの数分書き込む
+	{
+		ofs << this->Skil[i] << ',';			//スキル書き込み
+	}
+
+	//************************* アイテムデータ書き込み *******************************
+	ofs << this->Item->GetSize() << ',';	//アイテム数書き込み
+
+	for (int i = 0; i < this->Item->GetSize(); ++i)	//登録してあるアイテムの数分繰り返す
+	{
+		ofs << this->Item->GetCode(i) << ',';		//アイテムコード書き出し
+		ofs << this->Item->GetPossession(i) << ',';	//所持数書き出し
+
+	}
+
+	//************************* 武器データ読み込み *********************************
+	ofs << this->Weapon->GetSize() << ',';	//武器数書き出し
+
+	for (int i = 0; i < this->Weapon->GetSize(); ++i)//武器の数分繰り返す
+	{
+		ofs << this->Weapon->GetCode(i) << ',';	//武器コード書き出し
+		ofs << this->Weapon->GetPossession(i) << ',';	//所持数書き出し
+	}
+
+	//**************************** 防具データ読み込み ******************************
+	ofs << this->Armor->GetSize() << ',';	//防具数書き出し
+
+	for (int i = 0; i < this->Armor->GetSize(); ++i)	//防具数分繰り返す
+	{
+		ofs << this->Armor->GetCode(i) << ',';			//防具コード書き出し
+		ofs << this->Armor->GetPossession(i) << ',';	//所持数書き出し
+	}
+
+	return true;		//セーブ成功
+
+}

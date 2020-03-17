@@ -12,6 +12,7 @@
 #include "WEAPON.hpp"
 #include "ARMOR.hpp"
 #include "ITEM.hpp"
+#include <fstream>
 
 //################# マクロ定義 #######################
 #define EXP_INCREASE_VALUE	5		//経験値の最大値の増え幅
@@ -28,6 +29,13 @@
 
 #define PLAYER_AF_CLEAR_POS_X		720	//クリア後のプレイヤーの位置
 #define PLAYRT_AF_CLEAR_POS_Y		300	//クリア後のプレイヤーの位置
+
+#define PLAYER_DATA_DIR	R"(.\MY_DATA\Player\)"	//プレイヤーのデータのファイル名
+#define PLAYER_DATA_NAME	R"(Player_Data.csv)"//プレイヤーのデータのcsvファイル
+
+//############## マクロ定義：エラーメッセージ ###################
+#define PLAYER_DATA_ERROR_TTILE	"PLAYER_DATA_ERROR"								//エラータイトル
+#define PLAYER_DATA_ERROR_MSG	"プレイヤーデータが読み込めませんでした"		//エラーメッセージ
 
 //################# 列挙型 ######################
 enum COMMANDTYPE
@@ -216,5 +224,9 @@ public:
 	void UseItem(int);						//アイテム使用処理
 	ITEM * GetItemClass();					//アイテムクラスを取得
 	void SetItemRecovery(std::vector<int>);	//アイテムの回復量設定
+
+	//セーブデータ関係
+	bool LoadData(const char *, const char *);	//セーブデータ読込
+	bool Save(const char *, const char *);		//セーブ
 
 };

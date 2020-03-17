@@ -334,7 +334,7 @@ void Play()
 
 				if (Wait())			//待ち時間が過ぎたら
 				{
-					data->Save(player, PLAYER_DATA_DIR, PLAYER_DATA_NAME);		//プレイヤー情報のセーブ
+					player->Save(PLAYER_DATA_DIR, PLAYER_DATA_NAME);		//プレイヤー情報のセーブ
 					data->SaveMap(NowDrawMapKind, MapNowPos, MAPPOS_DATA_DIR, MAPPOS_DATA_NAME);	//マップ位置のセーブ
 					sys_se->Play((int)SYS_SE_SAVE);		//セーブ音を鳴らす
 					player->SetIsMenu(false);		//メニュー描画終了
@@ -1483,9 +1483,9 @@ bool LoadGameData()
 	if (player->SetAnime(MY_ANIME_DIR_PLAYER, MY_ANIME_NAME_PLAYER, PLAYER_ALL_CNT, PLAYER_YOKO_CNT, PLAYER_TATE_CNT, PLAYER_WIDTH, PLAYER_HEIGHT, PLAYER_ANI_SPEED, true) == false) { return false; } //読み込み失敗
 
 	//プレイヤーのデータをcsvファイルから読み込み
-	if (data->LoadPlayer(player, PLAYER_DATA_DIR, PLAYER_DATA_NAME) == false) { return false; }	//読み込み失敗
+	if(player->LoadData(PLAYER_DATA_DIR, PLAYER_DATA_NAME) == false) { return false; }	//読み込み失敗
 	//プレイヤーの初期データver
-	//if (data->LoadPlayer(player, PLAYER_DATA_DIR, PLATER_DATA_INIT_NAME) == false) { return false; }	//読み込み失敗
+	//if (player->LoadData(PLAYER_DATA_DIR, PLATER_DATA_INIT_NAME) == false) { return false; }	//読み込み失敗
 
 	//UI関係
 	ui = new UI();		//UI作成
