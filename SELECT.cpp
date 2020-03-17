@@ -472,3 +472,9 @@ int SELECT::GetSelectCode(void)
 {
 	return this->Code[this->GetSelectNum()];	//選ばれた選択肢のコード番号を取得
 }
+
+//選択した内容を取得する
+const char * SELECT::GetSelectText(void)
+{
+	return this->Str_itr->c_str();
+}

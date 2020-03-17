@@ -102,6 +102,46 @@ int UI::GetMenuEquipDir(void)
 	return this->Menu_Equip_dir;
 }
 
+//メニューウィンドウでの確認の選択肢描画
+void UI::DrawMenuCheck(void)
+{
+
+	this->UiImage->Draw(PLAY_WIN_X, PLAY_WIN_Y);	//ウィンドウ描画
+
+	switch (this->MenuSelect->GetSelectNum())	//メニュー画面で選択した内容毎
+	{
+
+	case (int)MENU_ITEM:	//アイテムを選んだ場合
+
+		DrawFormatString(PLAY_WIN_TEXT_X, PLAY_WIN_TEXT_Y, GetColor(255, 255, 255), "%sを使いますか？", this->ItemSelect->GetSelectText());	//確認メッセージ描画
+
+		break;
+
+	case (int)MENU_EQUIPMENT:	//装備を選んだ場合
+
+		if (this->EquipSelect->GetSelectNum() == SELECT_EQUIP_WEAPON)	//武器だったら
+		{
+			DrawFormatString(PLAY_WIN_TEXT_X, PLAY_WIN_TEXT_Y, GetColor(255, 255, 255), "%sを装備しますか？", this->WeaponSelect->GetSelectText());	//確認メッセージ描画
+		}
+		else	//防具だったら
+		{
+			DrawFormatString(PLAY_WIN_TEXT_X, PLAY_WIN_TEXT_Y, GetColor(255, 255, 255), "%sを装備しますか？", this->ArmorSelect->GetSelectText());	//確認メッセージ描画
+		}
+
+		break;
+
+	default:
+		break;
+	}
+
+	int Height = GetFontSize();	//高さ取得
+
+	this->Yes_No->Draw(PLAY_WIN_TEXT_X, PLAY_WIN_TEXT_Y + Height);	//はい、いいえの選択肢描画
+
+	return;
+
+}
+
 //バトルコマンドで使用する要素を初期化する
 void UI::BattleInit()
 {

@@ -141,6 +141,7 @@ public:
 	int GetSelectKind(void);			//選択肢の数を取得
 	int GetSelectCode(void);			//選ばれた選択肢のコード番号を取得
 
+	const char * GetSelectText(void);	//選択した内容を取得
 
 	//選択肢の内容を変更する
 	//引数：Args：描画文字列

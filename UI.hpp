@@ -137,6 +137,7 @@ public:
 	void DrawMenu(int ,int);			//メニューウィンドウ描画
 	void ResetMenu();					//メニュー関係のメンバーをリセット
 	int GetMenuEquipDir(void);			//メニューの装備画面の選択肢の段階を取得
+	void DrawMenuCheck();				//メニューウィンドウでの確認の選択肢描画
 
 	//バトルコマンド関連
 	void DrawCommand();					//バトルコマンド描画
