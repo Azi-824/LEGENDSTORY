@@ -102,13 +102,6 @@ bool PLAYER::SetAnime(const char *dir, const char *name, int SplitNumALL, int Sp
 
 }
 
-//名前設定
-void PLAYER::SetName(const char *name)
-{
-	this->Name = name;
-	return;
-}
-
 //画像設定
 bool PLAYER::SetImage(const char *dir, const char *name)
 {
@@ -117,34 +110,6 @@ bool PLAYER::SetImage(const char *dir, const char *name)
 
 	return true;
 
-}
-
-//レベル設定
-void PLAYER::SetLevel(int level)
-{
-	this->Level = level;
-	return;
-}
-
-//経験値の最大値設定
-void PLAYER::SetMaxEXP(int maxexp)
-{
-	this->MaxEXP = maxexp;
-	return;
-}
-
-//現在の経験値設定
-void PLAYER::SetEXP(int exp)
-{
-	this->NowEXP = exp;
-	return;
-}
-
-//最大HP設定
-void PLAYER::SetMaxHP(int hp)
-{
-	this->MaxHP = hp;
-	return;
 }
 
 //現在のHP設定
@@ -158,45 +123,10 @@ void PLAYER::SetHP(int hp)
 	return;
 }
 
-//最大MP設定
-void PLAYER::SetMaxMP(int maxmp)
-{
-	this->MaxMP = maxmp;
-	return;
-}
-
 //現在のMP設定
 void PLAYER::SetMP(int mp)
 {
 	this->NowMP = mp;
-}
-
-//攻撃力設定
-void PLAYER::SetATK(int atk)
-{
-	this->ATK = atk;
-	return;
-}
-
-//防御力設定
-void PLAYER::SetDEF(int def)
-{
-	this->DEF = def;
-	return;
-}
-
-//速度設定
-void PLAYER::SetSPD(int spd)
-{
-	this->SPD = spd;
-	return;
-}
-
-//スキル一覧を設定
-void PLAYER::SetSkil(int skil)
-{
-	this->Skil.push_back(skil);
-	return;
 }
 
 //使用するスキル設定
