@@ -55,6 +55,7 @@ private:
 
 	std::vector<int> Code;		//装備やアイテムのコード番号
 
+	//static IMAGE *image_ui;	//UI画像
 	IMAGE *image_ui;	//UI画像
 
 	bool IsKeyOpe;		//キー操作可能か
