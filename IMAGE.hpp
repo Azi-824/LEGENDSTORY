@@ -96,13 +96,9 @@ public:
 
 	bool GetIsLoad(void);			//読み込めた？
 
-	void Draw(int,int);				//画像を描画
-
-	void Draw(int, int, int);		//指定された画像を描画
+	void Draw(int, int, int type=0);	//指定された画像を描画(指定しない場合、先頭の画像)
 
 	bool AddImage(const char *, const char *,int);	//画像を追加
-
-	void ChengeImage(int);				//描画する画像を変更
 
 };
 

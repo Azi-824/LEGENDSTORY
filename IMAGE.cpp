@@ -16,8 +16,6 @@ IMAGE::IMAGE(const char *dir,const char *name)
 	this->FilePath = "";	//パス
 	this->FileName = "";	//名前
 	
-	//*this->Handle_itr= -1;	//ハンドル
-
 	this->Handle.push_back(-1);		//ハンドル
 
 	this->Width.push_back(0);		//幅を初期化
@@ -132,22 +130,13 @@ int IMAGE::GetHeight()
 	return this->Height.front();
 }
 
-
 //読み込めた？
 bool IMAGE::GetIsLoad(void)
 {
 	return this->IsLoad;
 }
 
-//画像を描画
-void IMAGE::Draw(int X,int Y)
-{
-	DrawGraph(X, Y, *this->Handle_itr, TRUE);	//描画
-
-	return;
-}
-
-//画像を描画（指定された）
+//画像を描画（指定しない場合、先頭の画像）
 void IMAGE::Draw(int x, int y, int type)
 {
 	DrawGraph(x, y, this->Handle[type], TRUE);	//指定された画像を描画
@@ -212,13 +201,4 @@ bool IMAGE::AddImage(const char *dir, const char *name,int type)
 
 	return true;
 
-}
-
-//描画する画像を変更する
-void IMAGE::ChengeImage(int kind)
-{
-	this->Handle_itr = this->Handle.begin() + kind;	//指定された画像に変更
-	this->Width_itr = this->Width.begin() + kind;	//指定された画像に変更
-	this->Height_itr = this->Height.begin() + kind;//指定された画像に変更
-	return;
 }
