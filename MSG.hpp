@@ -40,8 +40,9 @@ public:
 
 	~MESSAGE();		//デストラクタ
 
-	void SetMsg(const char *);			//文字列を設定する
-	void AddMsg(const char *);			//文字列を追加する
+	void SetMsg(const char *);			//メッセージを設定する
+	void AddMsg(const char *);			//メッセージを追加する
+	void AddText(const char *);			//メッセージの内容を追加する
 	void NextMsg(void);					//次のメッセージへ移動する
 	void BackMsg(void);					//前のメッセージへ移動する
 

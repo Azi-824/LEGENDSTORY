@@ -44,6 +44,13 @@ void MESSAGE::AddMsg(const char *msg)
 	return;
 }
 
+//メッセージの内容を追加する
+void MESSAGE::AddText(const char *text)
+{
+	this->Msg.back() += text;
+	return;
+}
+
 //次のメッセージへ移動する
 void MESSAGE::NextMsg(void)
 {

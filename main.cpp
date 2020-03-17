@@ -87,8 +87,6 @@ bool Clear_flg = false;		//クリアフラグ
 
 bool IsLoad = false;		//読み込み完了フラグ
 
-std::string Work_Str;		//作業用文字列
-
 //########## プログラムで最初に実行される関数 ##########
 int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine, int nCmdShow)
 {
@@ -524,8 +522,7 @@ void Battle()
 
 				case (int)COMMANDE_ESCAPE:		//逃げるを選んだ時
 
-					Work_Str = "上手く逃げ切れた！";
-					bt_msg[(int)BT_MSG_ACT]->SetMsg(Work_Str.c_str());	//文字列設定
+					bt_msg[(int)BT_MSG_ACT]->SetMsg("上手く逃げ切れた！");	//文字列設定
 
 					BattleStageNow = (int)ACT_MSG;	//メッセージ描画状態
 
@@ -563,40 +560,35 @@ void Battle()
 			//味方
 			if (ui->BattleCommand->GetSelectNum() == (int)COMMANDE_DEFENSE)	//防御を選んだ時
 			{
-				Work_Str = player->GetName();					//味方の名前取得
-				Work_Str += "は防御している！";
-				bt_msg[(int)BT_MSG_ACT]->SetMsg(Work_Str.c_str());	//文字列設定
-				Work_Str = "防御に集中している！";
-				bt_msg[(int)BT_MSG_ACT]->AddMsg(Work_Str.c_str());	//文字列設定
+
+				bt_msg[(int)BT_MSG_ACT]->SetMsg(player->GetName());		//名前設定
+				bt_msg[(int)BT_MSG_ACT]->AddText("は防御している！");	//メッセージ内容追加
+				bt_msg[(int)BT_MSG_ACT]->AddMsg("防御に集中している");	//メッセージ追加
+
 			}
 			else if (ui->BattleCommand->GetSelectNum() == (int)COMMANDE_ITEM)	//アイテムを選んだ時
 			{
-				Work_Str = item_list->GetName(ui->ItemSelect->GetSelectCode());	//アイテム名取得
-				Work_Str += "を使用した";
-				bt_msg[(int)BT_MSG_ACT]->SetMsg(Work_Str.c_str());	//文字列設定
-				Work_Str = "HPが";
-				Work_Str += std::to_string(item_list->GetRecovery(ui->ItemSelect->GetSelectCode()));	//回復量取得
-				Work_Str += "回復した!";
-				bt_msg[(int)BT_MSG_ACT]->AddMsg(Work_Str.c_str());	//文字列設定
+
+				bt_msg[(int)BT_MSG_ACT]->SetMsg(item_list->GetName(ui->ItemSelect->GetSelectCode()));	//使用したアイテム名設定
+				bt_msg[(int)BT_MSG_ACT]->AddText("を使用した！");		//メッセージ内容追加
+				bt_msg[(int)BT_MSG_ACT]->AddMsg("HPが");				//メッセージ追加
+				bt_msg[(int)BT_MSG_ACT]->AddText(std::to_string(item_list->GetRecovery(ui->ItemSelect->GetSelectCode())).c_str());	//回復量設定
+				bt_msg[(int)BT_MSG_ACT]->AddText("回復した！");			//メッセージ内容追加
 
 			}
 			else					//それ以外の時
 			{
-				Work_Str = player->GetName();					//味方の名前取得
-				Work_Str += "の攻撃!";
-				bt_msg[(int)BT_MSG_ACT]->SetMsg(Work_Str.c_str());	//文字列設定
-				Work_Str = std::to_string(player->GetSendDamege());	//与えたダメージ取得
-				Work_Str += "のダメージを与えた";
-				bt_msg[(int)BT_MSG_ACT]->AddMsg(Work_Str.c_str());	//文字列設定
+				bt_msg[(int)BT_MSG_ACT]->SetMsg(player->GetName());	//名前設定
+				bt_msg[(int)BT_MSG_ACT]->AddText("の攻撃！");		//メッセージ内容追加
+				bt_msg[(int)BT_MSG_ACT]->AddMsg(std::to_string(player->GetSendDamege()).c_str());	//与えたダメージ設定
+				bt_msg[(int)BT_MSG_ACT]->AddText("のダメージを与えた！");	//メッセージ内容追加
 			}
 
 			//敵
-			Work_Str = enemy[EncounteEnemyType]->GetName();	//敵の名前取得
-			Work_Str += "の攻撃!";
-			bt_msg[(int)BT_MSG_ACT]->AddMsg(Work_Str.c_str());	//文字列設定
-			Work_Str = std::to_string(player->GetRecvDamege());	//受けたダメージ取得
-			Work_Str += "のダメージを受けた";
-			bt_msg[(int)BT_MSG_ACT]->AddMsg(Work_Str.c_str());	//文字列設定
+			bt_msg[(int)BT_MSG_ACT]->AddMsg(enemy[EncounteEnemyType]->GetName());	//敵の名前設定
+			bt_msg[(int)BT_MSG_ACT]->AddText("の攻撃！");		//メッセージ内容追加
+			bt_msg[(int)BT_MSG_ACT]->AddMsg(std::to_string(player->GetRecvDamege()).c_str());	//受けるダメージ設定
+			bt_msg[(int)BT_MSG_ACT]->AddText("のダメージを受けた！");	//メッセージ内容追加
 			//▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲ メッセージ設定処理ここまで ▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲
 
 			BattleStageNow = (int)ACT_MSG;	//行動メッセージ表示状態へ
@@ -783,8 +775,7 @@ void Battle()
 			else if (Turn == (int)ENEMY_TURN)			//敵のターンの時
 			{
 
-				Work_Str = "どうする？";
-				bt_msg[(int)BT_MSG_ACT]->SetMsg(Work_Str.c_str());	//文字列設定
+				bt_msg[(int)BT_MSG_ACT]->SetMsg("どうする？");	//文字列設定
 
 				Enemy_Atk_effect->ResetIsAnime(enemy[EncounteEnemyType]->GetChoiseSkil());		//エフェクトリセット
 				Boss_Atk_effect->ResetIsAnime(enemy[EncounteEnemyType]->GetChoiseSkil());		//エフェクトリセット（ボス）
@@ -797,8 +788,7 @@ void Battle()
 				player->SetIsBattleWin(false);	//戦闘に敗北
 
 				//▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼ リザルトメッセージ設定処理ここから ▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼
-				Work_Str = "全滅してしまった…";
-				bt_msg[(int)BT_MSG_RESULT]->SetMsg(Work_Str.c_str());	//文字列設定
+				bt_msg[(int)BT_MSG_RESULT]->SetMsg("全滅してしまった…");	//文字列設定
 				//▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲ リザルトメッセージ設定処理ここまで ▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲
 
 				BattleStageNow = (int)RESULT_MSG;		//リザルトメッセージ表示状態へ
@@ -811,19 +801,16 @@ void Battle()
 				player->AddExp(enemy[EncounteEnemyType]->GetEXP());	//経験値加算
 
 				//▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼ リザルトメッセージ設定処理ここから ▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼
-				Work_Str = enemy[EncounteEnemyType]->GetName();
-				Work_Str += "を倒した！";
-				bt_msg[(int)BT_MSG_RESULT]->SetMsg(Work_Str.c_str());	//文字列設定
-				Work_Str = std::to_string(enemy[EncounteEnemyType]->GetEXP());
-				Work_Str += "の経験値を手に入れた！";
-				bt_msg[(int)BT_MSG_RESULT]->AddMsg(Work_Str.c_str());	//文字列設定
+				bt_msg[(int)BT_MSG_RESULT]->SetMsg(enemy[EncounteEnemyType]->GetName());	//名前設定
+				bt_msg[(int)BT_MSG_RESULT]->AddText("を倒した！");							//メッセージ内容追加
+				bt_msg[(int)BT_MSG_RESULT]->AddMsg(std::to_string(enemy[EncounteEnemyType]->GetEXP()).c_str());	//経験値設定
+				bt_msg[(int)BT_MSG_RESULT]->AddText("の経験値を手に入れた！");				//メッセージ内容追加
 
 				if (player->GetLevUpMsgStartFlg())		//レベルアップしたときは
 				{
-					Work_Str = "レベル";
-					Work_Str += std::to_string(player->GetLevel());	//レベル取得
-					Work_Str += "になった！";
-					bt_msg[(int)BT_MSG_RESULT]->AddMsg(Work_Str.c_str());	//文字列設定
+					bt_msg[(int)BT_MSG_RESULT]->AddMsg("レベル");	//メッセージ内容追加
+					bt_msg[(int)BT_MSG_RESULT]->AddText(std::to_string(player->GetLevel()).c_str());	//レベル設定
+					bt_msg[(int)BT_MSG_RESULT]->AddText("になった！");	//メッセージ内容追加
 				}
 				//▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲ リザルトメッセージ設定処理ここまで ▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲
 
@@ -1244,14 +1231,14 @@ void Enconte()
 		if (enemy[i]->GetEmergenceMap() == MapKind[MAPPOS_Y][MAPPOS_X])		//敵の出現MAPが現在のMAPだったら
 		{
 			//ランダムで遭遇判定
-			int rand = GetRand(enemy[i]->GetEncounteRate());		//遭遇率の範囲内で乱数を生成
+			int rand = GetRand(enemy[i]->GetEncounteRate());	//遭遇率の範囲内で乱数を生成
 
 			if (rand%enemy[i]->GetEncounteRate() == 0)			//敵と遭遇した時
 			{
 
-				player->SetIsKeyDown(false);			//プレイヤーの動きを止める
+				player->SetIsKeyDown(false);	//プレイヤーの動きを止める
 
-				EncounteEnemyType = i;		//遭遇した敵を設定
+				EncounteEnemyType = i;			//遭遇した敵を設定
 
 				//描画文字設定
 				switch (GetRand(ENCOUNT_TXT_KIND-1))
@@ -1259,19 +1246,20 @@ void Enconte()
 
 				case (int)ENCOUNT_TXT_PATARN1:
 
-					Work_Str = "バイト帰りの";
+					bt_msg[(int)BT_MSG_ACT]->SetMsg("バイト帰りの");	//エンカウントテキスト設定
+
 
 					break;
 
 				case (int)ENCOUNT_TXT_PATARN2:
 
-					Work_Str = "肥満体の";
+					bt_msg[(int)BT_MSG_ACT]->SetMsg("肥満体の");		//エンカウントテキスト設定
 
 					break;
 
 				case (int)ENCOUNT_TXT_PATARN3:
 
-					Work_Str = "疲れ果てた";
+					bt_msg[(int)BT_MSG_ACT]->SetMsg("疲れ果てた");		//エンカウントテキスト設定
 
 					break;
 						
@@ -1279,13 +1267,9 @@ void Enconte()
 					break;
 				}
 
-				//Work_Str = "バイト帰りの";
-
-				Work_Str += enemy[EncounteEnemyType]->GetName();		//遭遇した敵の名前取得
-				Work_Str += "が現れた！";
-				bt_msg[(int)BT_MSG_ACT]->SetMsg(Work_Str.c_str());	//文字列設定
-				Work_Str = "どうする？";
-				bt_msg[(int)BT_MSG_ACT]->AddMsg(Work_Str.c_str());	//文字列設定
+				bt_msg[(int)BT_MSG_ACT]->AddText(enemy[EncounteEnemyType]->GetName());	//エンカウントした敵の名前取得
+				bt_msg[(int)BT_MSG_ACT]->AddText("が現れた！");		//メッセージ内容追加
+				bt_msg[(int)BT_MSG_ACT]->AddMsg("どうする？");		//メッセージ追加
 
 				sys_se->Play((int)SYS_SE_ENCOUNT);					//敵と遭遇した音を鳴らす
 				sys_se->Reset();									//再生状態リセット

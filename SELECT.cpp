@@ -309,18 +309,18 @@ void SELECT::DrawCenter(int x, int y,int kind, unsigned int color)
 
 			if (kind == (int)SELECT_TRIANGLE)	//’ÊíƒTƒCƒY‚Ìê‡
 			{
-				this->image_ui->Draw(x - this->image_ui->GetWidth(kind), y + i * Height + IMAGE_SPACE, kind);		//‰¡Œü‚«OŠp•`‰æ
+				this->image_ui->Draw(x , y + i * Height + IMAGE_SPACE, kind);		//‰¡Œü‚«OŠp•`‰æ
 			}
 			else							//ƒ~ƒjƒTƒCƒY‚Ìê‡
 			{
-				this->image_ui->Draw(x - this->image_ui->GetWidth(kind), y + i * Height + IMAGE_MINI_SPACE, kind);	//‰¡Œü‚«OŠp•`‰æ
+				this->image_ui->Draw(x, y + i * Height + IMAGE_MINI_SPACE, kind);	//‰¡Œü‚«OŠp•`‰æ
 			}
 
-			DrawFormatString(x, y + i * Height, color, "%s", this->Str[i].c_str());	//‘I‘ğˆ•`‰æ
+			DrawFormatString(x + this->image_ui->GetWidth(kind), y + i * Height, color, "%s", this->Str[i].c_str());	//‘I‘ğˆ•`‰æ
 		}
 		else
 		{
-			DrawFormatString(x, y + i * Height, color, "%s", this->Str[i].c_str());	//‘I‘ğˆ•`‰æ
+			DrawFormatString(x + this->image_ui->GetWidth(kind), y + i * Height, color, "%s", this->Str[i].c_str());	//‘I‘ğˆ•`‰æ
 		}
 	}
 
