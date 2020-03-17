@@ -55,8 +55,8 @@ private:
 
 	std::vector<int> Code;		//装備やアイテムのコード番号
 
-	//static IMAGE *image_ui;	//UI画像
-	IMAGE *image_ui;	//UI画像
+	static IMAGE *image_ui;		//UI画像 2020/03/17 Y.Suzuki UnComment 
+	//IMAGE *image_ui;			//UI画像 2020/03/17 Y.Suzuki Comment
 
 	bool IsKeyOpe;		//キー操作可能か
 	bool SelectFlg;		//選択したか
