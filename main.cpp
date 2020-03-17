@@ -1139,9 +1139,8 @@ void Play_Draw()
 			case (int)MENU_EQUIPMENT:	//装備を選んだ時の処理ここから
 
 				//装備描画処理
-				ui->EquipSelect->Draw(MENU_TEXT_X, MENU_TEXT_TOP_Y);				//装備選択描画
 
-				ui->DrawMenuEquip(MENU_TEXT_X, MENU_TEXT_Y, player->GetBelongingsPossession((int)BELONGINGS_WEAPON), player->GetBelongingsPossession((int)BELONGINGS_ARMOR));	//装備描画処理
+				ui->DrawMenuEquip(player->GetBelongingsPossession((int)BELONGINGS_WEAPON), player->GetBelongingsPossession((int)BELONGINGS_ARMOR));	//装備描画処理
 
 				if (ui->GetMenuEquipDir() == (int)MENU_EQUIP_SELECT_DECISION)		//選択肢の段階が、はい、いいえの段階だったら
 				{

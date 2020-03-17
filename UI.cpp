@@ -372,24 +372,32 @@ bool UI::MenuSelectItem(KEYDOWN *keydown,MUSIC *sys_se)
 }
 
 //ƒƒjƒ…[‰æ–Ê‚Ì‘•”õ•`‰æˆ—
-void UI::DrawMenuEquip(int x, int y, std::vector<int> wpn_possession, std::vector<int> amr_possession)
+void UI::DrawMenuEquip(std::vector<int> wpn_possession, std::vector<int> amr_possession)
 {
 
 	static int Height = 0;	//‚‚³
 	Height = GetFontSize();	//‚‚³æ“¾
 
-	this->WeaponSelect->Draw(x, y);								//•Ší‚Ì‘I‘ğˆ•`‰æ
+	this->EquipSelect->Draw(MENU_TEXT_X, MENU_TEXT_TOP_Y);		//‘•”õ‘I‘ğ•`‰æ
+
+	this->WeaponSelect->Draw(MENU_TEXT_X, MENU_TEXT_Y);			//•Ší‚Ì‘I‘ğˆ•`‰æ
 
 	for (int i = 0; i < wpn_possession.size(); ++i)	//•Ší‚Ìí—Ş•ªŒJ‚è•Ô‚·
 	{
-		DrawFormatString(x + MENU_EQUIP_NAME_SPACE, y + i * Height, GetColor(255, 255, 255), "%dŒÂ", wpn_possession[i]);	//Š‚µ‚Ä‚¢‚é•Ší‚Ì”‚ğ•`‰æ
+		DrawFormatString(MENU_TEXT_X + MENU_EQUIP_NAME_SPACE, 
+			MENU_TEXT_Y + i * Height,
+			GetColor(255, 255, 255),
+			"%dŒÂ", wpn_possession[i]);	//Š‚µ‚Ä‚¢‚é•Ší‚Ì”‚ğ•`‰æ
 	}
 
-	this->ArmorSelect->Draw(x + (MENU_WINDOW_WIDTH / 2), y);	//–h‹ï‚Ì‘I‘ğˆ•`‰æ
+	this->ArmorSelect->Draw(MENU_TEXT_X + (MENU_WINDOW_WIDTH / 2), MENU_TEXT_Y);	//–h‹ï‚Ì‘I‘ğˆ•`‰æ
 
 	for (int i = 0; i < amr_possession.size(); ++i)	//–h‹ï‚Ìí—Ş•ªŒJ‚è•Ô‚·
 	{
-		DrawFormatString((x + (MENU_WINDOW_WIDTH / 2)) + MENU_EQUIP_NAME_SPACE, y + i * Height, GetColor(255, 255, 255), "%dŒÂ", amr_possession[i]);	//Š‚µ‚Ä‚¢‚é–h‹ï‚Ì”‚ğ•`‰æ
+		DrawFormatString((MENU_TEXT_X + (MENU_WINDOW_WIDTH / 2)) + MENU_EQUIP_NAME_SPACE,
+			MENU_TEXT_Y + i * Height, 
+			GetColor(255, 255, 255), 
+			"%dŒÂ", amr_possession[i]);	//Š‚µ‚Ä‚¢‚é–h‹ï‚Ì”‚ğ•`‰æ
 	}
 
 	return;

@@ -169,8 +169,8 @@ public:
 
 
 	//装備関係
-	void DrawMenuEquip(int, int, std::vector<int>, std::vector<int>);	//メニュー画面の装備描画処理
-	int MenuSelectEquip(KEYDOWN *, MUSIC *);							//メニューの装備画面の処理
+	void DrawMenuEquip(std::vector<int>, std::vector<int>);	//メニュー画面の装備描画処理
+	int MenuSelectEquip(KEYDOWN *, MUSIC *);				//メニューの装備画面の処理
 
 	//選択肢関係
 	void SelectUpdate(ITEM *, LIST_ITEM *);		//選択肢の内容を更新する処理(アイテム)
