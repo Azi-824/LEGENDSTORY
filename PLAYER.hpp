@@ -122,10 +122,7 @@ public:
 
 	void SetChoiseSkil(int);//使用するスキル設定
 
-	void SetMoveSpeed(int);	//移動速度設定
 	void SetIsArive(bool);	//生きているかを設定
-	void SetIsDraw(bool);	//描画してよいかを設定
-	void SetKeyOperation(bool); //キーボードで操作できるか設定
 	void SetIsKeyDown(bool);	//キー入力ありか設定
 	void SetPosRelative(int, int);	//位置を設定(相対的)
 	void SetPosAbsolute(int, int);	//位置を設定(絶対的)

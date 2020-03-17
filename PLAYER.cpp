@@ -136,13 +136,6 @@ void PLAYER::SetChoiseSkil(int type)
 	return;
 }
 
-//移動速度設定
-void PLAYER::SetMoveSpeed(int movespeed)
-{
-	this->MoveSpeed = movespeed;
-	return;
-}
-
 //生きているか設定
 void PLAYER::SetIsArive(bool Isarive)
 {
@@ -150,24 +143,10 @@ void PLAYER::SetIsArive(bool Isarive)
 	return;
 }
 
-//キーボードで操作できるか設定
-void PLAYER::SetKeyOperation(bool Iskeyoperation)
-{
-	this->IsKeyOperation = IsKeyOperation;
-	return;
-}
-
 //キー入力ありか設定
 void PLAYER::SetIsKeyDown(bool Iskeydown)
 {
 	this->IsKeyDown = Iskeydown;
-}
-
-//描画できるか設定
-void PLAYER::SetIsDraw(bool Isdraw)
-{
-	this->IsDraw = IsDraw;
-	return;
 }
 
 //位置を設定
