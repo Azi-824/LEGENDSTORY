@@ -24,7 +24,6 @@ ENEMY::ENEMY(const char *dir,const char *name)
 	this->EmergenceMap = 0;	//出現MAP
 	this->EncounteRate = 0;	//遭遇率
 
-	this->EneType = 0;	//敵の種類
 	this->ChoiseSkil = -1;	//使用するスキル初期化
 
 	//画像設定

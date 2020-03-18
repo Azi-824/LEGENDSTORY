@@ -112,8 +112,6 @@ private:
 	std::vector<int> Skil;	//スキル
 	int ChoiseSkil;			//使用するスキル
 
-	int EneType;	//敵の種類
-
 	bool IsLoad;	//読み込めたか
 
 public:
