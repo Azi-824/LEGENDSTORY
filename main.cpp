@@ -1550,7 +1550,7 @@ void Bt_DamegeCalc()
 		{
 			bt_msg[(int)BT_MSG_ACT]->SetMsg(player->GetName());	//名前設定
 			bt_msg[(int)BT_MSG_ACT]->AddText("の攻撃！");		//メッセージ内容追加
-			bt_msg[(int)BT_MSG_ACT]->AddMsg(std::to_string(player->GetSendDamege()).c_str());	//与えたダメージ設定
+			bt_msg[(int)BT_MSG_ACT]->AddMsg(std::to_string(enemy[EncounteEnemyType]->GetRecvDamege()).c_str());	//与えたダメージ設定
 			bt_msg[(int)BT_MSG_ACT]->AddText("のダメージを与えた！");	//メッセージ内容追加
 		}
 
@@ -1650,7 +1650,7 @@ void Bt_DrawEffect()
 				ui->ItemSelect->SetSelectFlg(false);				//選択していない状態へ
 			}
 
-			enemy[EncounteEnemyType]->SetHP((enemy[EncounteEnemyType]->GetHP() - player->GetSendDamege()));	//ダメージを与える
+			enemy[EncounteEnemyType]->DamegeSend();	//ダメージを与える
 
 			BattleStageNow = (int)DRAW_DAMEGE;		//ダメージ描画状態へ
 
@@ -1664,7 +1664,7 @@ void Bt_DrawEffect()
 				player->SetMP(player->GetMP() - mgc_list->GetCost(player->GetChoiseSkil()));		//使った魔法に応じたMPを減らす
 			}
 
-			enemy[EncounteEnemyType]->SetHP((enemy[EncounteEnemyType]->GetHP() - player->GetSendDamege()));	//ダメージを与える
+			enemy[EncounteEnemyType]->DamegeSend();	//ダメージを与える
 
 			BattleStageNow = (int)DRAW_DAMEGE;		//ダメージ描画状態へ
 
@@ -1756,9 +1756,8 @@ void Bt_DrawDamege()
 			Turn = (int)MY_TURN;				//味方のターンへ
 		}
 
-		if (player->GetHP() <= 0)			//自分のHPが0になったら
+		if (player->GetIsArive()==false)	//自分が死亡していたら
 		{
-			player->SetIsArive(false);		//自分死亡
 			player->SetIsBattleWin(false);	//戦闘に敗北
 
 			//▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼ リザルトメッセージ設定処理ここから ▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼
@@ -1768,9 +1767,8 @@ void Bt_DrawDamege()
 			BattleStageNow = (int)RESULT_MSG;		//リザルトメッセージ表示状態へ
 
 		}
-		else if (enemy[EncounteEnemyType]->GetHP() <= 0)				//敵のHPが0になったら
+		else if (enemy[EncounteEnemyType]->GetIsArive()==false)	//敵のHPが0になったら
 		{
-			enemy[EncounteEnemyType]->SetIsArive(false);		//敵死亡
 			player->SetIsBattleWin(true);						//戦闘に勝利
 			player->AddExp(enemy[EncounteEnemyType]->GetEXP());	//経験値加算
 

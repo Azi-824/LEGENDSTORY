@@ -17,6 +17,7 @@ ENEMY::ENEMY(const char *dir,const char *name)
 	this->SPD = 0;
 	this->MaxHP = 0;
 	this->EXP = 0;
+	this->RecvDamege = 0;
 	this->IsLoad = false;	
 	this->SetIsArive(true);	//生きている
 
@@ -107,6 +108,13 @@ void ENEMY::SetEXP(int exp)
 	return;
 }
 
+//受けるダメージを設定
+void ENEMY::SetRecvDamege(int recvdamege)
+{
+	this->RecvDamege = recvdamege;
+	return;
+}
+
 //出現MAPの設定
 void ENEMY::SetEmergenceMap(int mapno)
 {
@@ -126,6 +134,7 @@ void ENEMY::StateSetInit()
 {
 
 	this->HP = this->MaxHP;	//HP再設定
+	this->RecvDamege = 0;	//受けるダメージ初期化
 
 	this->SetIsArive(true);	//生きている
 
@@ -170,6 +179,12 @@ int ENEMY::GetEXP(void)
 	return this->EXP;
 }
 
+//受けるダメージ取得
+int ENEMY::GetRecvDamege(void)
+{
+	return this->RecvDamege;
+}
+
 //出現MAPの取得
 int ENEMY::GetEmergenceMap(void)
 {
@@ -204,4 +219,18 @@ void ENEMY::ActDecision(void)
 
 	return;
 	
+}
+
+//ダメージを与える
+void ENEMY::DamegeSend(void)
+{
+	this->HP -= this->RecvDamege;	//ダメージを与える
+
+	if (this->HP <= 0)	//HPが0以下になったら
+	{
+		this->HP = 0;	//HPは0
+		this->SetIsArive(false);	//死亡
+	}
+
+	return;
 }

@@ -634,11 +634,13 @@ void PLAYER::DamegeCalc(ENEMY *enemy,int choiecommand)
 		//▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼ 味方の攻撃処理ここから ▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼
 		if ((this->ATK + this->EquipAtk) > enemy->GetDEF())	//自分の攻撃力が敵の防御力より上だったら
 		{
-			this->SendDamege = (this->ATK + this->EquipAtk) - enemy->GetDEF();		//ダメージ量を計算 自分攻撃力(攻撃+装備攻撃) - 敵防御力のダメージを与える
+			//this->SendDamege = (this->ATK + this->EquipAtk) - enemy->GetDEF();		//ダメージ量を計算 自分攻撃力(攻撃+装備攻撃) - 敵防御力のダメージを与える
+			enemy->SetRecvDamege((this->ATK + this->EquipAtk) - enemy->GetDEF());	//ダメージ量を計算 自分攻撃力(攻撃+装備攻撃) - 敵防御力のダメージを与える
 		}
 		else								//自分の攻撃力が敵の防御力より下だったら、
 		{
-			this->SendDamege = 0;			//与えるダメージは0
+			//this->SendDamege = 0;			//与えるダメージは0
+			enemy->SetRecvDamege(0);		//敵、受けるダメージ0
 		}
 		//▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲ 味方の攻撃処理ここまで ▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲
 
@@ -661,7 +663,8 @@ void PLAYER::DamegeCalc(ENEMY *enemy,int choiecommand)
 	case (int)COMMANDE_DEFENSE:			//防御を選んだ時の処理ここから
 
 		//▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼ 味方の攻撃処理ここから ▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼
-		this->SendDamege = 0;	//防御を選んだ時はダメージを与えない
+		//this->SendDamege = 0;	//防御を選んだ時はダメージを与えない
+		enemy->SetRecvDamege(0);		//敵、受けるダメージ0
 		//▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲ 味方の攻撃処理ここまで ▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲
 
 
@@ -690,11 +693,13 @@ void PLAYER::DamegeCalc(ENEMY *enemy,int choiecommand)
 		//魔法攻撃力を追加して、通常攻撃と分ける予定
 		if (((this->ATK + this->EquipAtk)* ATK_BOOST) > enemy->GetDEF())	//自分の攻撃力が敵の防御力より上だったら
 		{
-			this->SendDamege = ((this->ATK + this->EquipAtk) * ATK_BOOST) - enemy->GetDEF();		//ダメージ量を計算 自分攻撃力(攻撃+装備攻撃) - 敵防御力のダメージを与える
+			//this->SendDamege = ((this->ATK + this->EquipAtk) * ATK_BOOST) - enemy->GetDEF();		//ダメージ量を計算 自分攻撃力(攻撃+装備攻撃) - 敵防御力のダメージを与える
+			enemy->SetRecvDamege(((this->ATK + this->EquipAtk) * ATK_BOOST) - enemy->GetDEF());	//ダメージ量を計算 自分攻撃力(攻撃+装備攻撃) - 敵防御力のダメージを与える
 		}
 		else								//自分の攻撃力が敵の防御力より下だったら、
 		{
-			this->SendDamege = 0;			//与えるダメージは0
+			//this->SendDamege = 0;			//与えるダメージは0
+			enemy->SetRecvDamege(0);		//敵、受けるダメージ0
 		}
 		//▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲ 味方の攻撃処理ここまで ▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲
 
@@ -716,7 +721,8 @@ void PLAYER::DamegeCalc(ENEMY *enemy,int choiecommand)
 
 	case(int)COMMANDE_ITEM:				//アイテムを選んだ時の処理ここから
 
-		this->SendDamege = 0;		//与えるダメージ0
+		//this->SendDamege = 0;		//与えるダメージ0
+		enemy->SetRecvDamege(0);		//敵、受けるダメージ0
 
 		//▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼ 敵の攻撃処理ここから ▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼
 		if (enemy->GetATK() > (this->DEF + this->EquipDef))		//敵の攻撃力が自分の防御力より上だったら

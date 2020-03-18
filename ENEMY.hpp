@@ -104,6 +104,8 @@ private:
 	
 	int EXP;	//経験値
 
+	int RecvDamege;	//受けるダメージ
+
 	int EmergenceMap;	//出現するMAPのNo
 	int EncounteRate;	//遭遇率
 
@@ -128,6 +130,7 @@ public:
 	void SetSPD(int);		//速度設定
 	void SetSkil(int);		//スキル設定
 	void SetEXP(int);		//経験値設定
+	void SetRecvDamege(int);//受けるダメージを設定
 
 	void SetEmergenceMap(int);	//出現MAPNoの設定
 	void SetEncounteRate(int);	//遭遇率設定
@@ -141,6 +144,7 @@ public:
 	int GetSPD();			//速度取得
 	int GetChoiseSkil();	//使用するスキルの種類を取得
 	int GetEXP();			//経験値取得
+	int GetRecvDamege();	//受けるダメージ取得
 	
 	int GetEmergenceMap();	//出現MAPNoの所得
 	int GetEncounteRate();	//遭遇率の取得
@@ -148,5 +152,6 @@ public:
 	bool GetIsLoad();		//読み込めたかを取得
 
 	void ActDecision();		//行動決定処理
+	void DamegeSend();		//ダメージを与える
 
 };
