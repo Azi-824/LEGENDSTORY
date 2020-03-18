@@ -26,12 +26,12 @@
 #define STA_SPACE		20				//ステータス文字の間隔
 //HPバー
 #define STA_HP_BAR_X	90				//HPバーの描画開始X位置
-#define	STA_HP_BAR_Y	580				//HPバーの描画開始Y位置
+#define	STA_HP_BAR_Y	585				//HPバーの描画開始Y位置
 #define	STA_HP_BAR_WIDTH 100			//HPバーの描画幅
 #define STA_HP_BAR_HEIGHT 15			//HPバーの描画高さ
 //MPバー
 #define STA_MP_BAR_X	90				//MPバーの描画開始X位置
-#define	STA_MP_BAR_Y	605				//MPバーの描画開始Y位置
+#define	STA_MP_BAR_Y	610				//MPバーの描画開始Y位置
 #define	STA_MP_BAR_WIDTH 100			//MPバーの描画幅
 #define STA_MP_BAR_HEIGHT 15			//MPバーの描画高さ
 

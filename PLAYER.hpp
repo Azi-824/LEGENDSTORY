@@ -178,6 +178,7 @@ public:
 	void MoveRight();			//右へ移動
 
 	void DamegeCalc(ENEMY *,int);	//ダメージ計算
+	void DamegeSend();			//ダメージを与える
 
 	void AddExp(int);	//経験値追加処理
 

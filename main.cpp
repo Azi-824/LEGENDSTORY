@@ -446,7 +446,6 @@ void Battle()
 		break;				//戦闘終了後のメッセージを描画する状態の処理ここまで
 
 	default:
-
 		break;
 
 	}
@@ -1372,6 +1371,8 @@ bool GameMainLoop()
 
 }
 
+
+//************************ 戦闘画面の各処理 *****************************
 //戦闘画面行動待ち状態の処理
 void Bt_WaitAct()
 {
@@ -1706,12 +1707,7 @@ void Bt_DrawEffect()
 
 			}
 
-			player->SetHP((player->GetHP()) - (player->GetRecvDamege()));		//味方にダメージを与える
-
-			if (player->GetHP() <= 0)			//HPが0以下になったら
-			{
-				player->SetHP(0);				//HPを0にする
-			}
+			player->DamegeSend();	//プレイヤーにダメージを与える
 
 			BattleStageNow = (int)DRAW_DAMEGE;	//ダメージ描画状態へ
 

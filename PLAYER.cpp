@@ -739,6 +739,21 @@ void PLAYER::DamegeCalc(ENEMY *enemy,int choiecommand)
 	return;
 }
 
+//ダメージを与える
+void PLAYER::DamegeSend(void)
+{
+	this->NowHP -= this->RecvDamege;	//現在のHPから、受けるダメージを引く
+
+	if (this->NowHP <= 0)	//HPが0以下になったら
+	{
+		this->NowHP = 0;		//HPは0
+		this->IsArive = false;	//死亡
+	}
+
+	return;
+
+}
+
 //経験値追加処理
 void PLAYER::AddExp(int exp)
 {
