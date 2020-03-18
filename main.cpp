@@ -1761,14 +1761,24 @@ void Bt_DrawDamege()
 			player->SetIsBattleWin(true);						//戦闘に勝利
 			player->AddExp(enemy[EncounteEnemyType]->GetEXP());	//経験値加算
 
-			JudgeDrop();	//ドロップ処理
+			//ドロップ処理
+			//戻り値は、ドロップした物の名前
+			std::string drop_name = JudgeDrop();	
 
 			//▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼ リザルトメッセージ設定処理ここから ▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼
 			bt_msg[(int)BT_MSG_RESULT]->SetMsg(enemy[EncounteEnemyType]->GetName());	//名前設定
 			bt_msg[(int)BT_MSG_RESULT]->AddText("を倒した！");							//メッセージ内容追加
+
+			bt_msg[(int)BT_MSG_RESULT]->AddMsg(enemy[EncounteEnemyType]->GetName());	//敵の名前を設定
+			bt_msg[(int)BT_MSG_RESULT]->AddText("は、");								//メッセージ内容追加
+			bt_msg[(int)BT_MSG_RESULT]->AddText(drop_name.c_str());						//ドロップした物の名前を設定
+			bt_msg[(int)BT_MSG_RESULT]->AddText("を落としていった！");					//メッセージ内容追加
+
+			bt_msg[(int)BT_MSG_RESULT]->AddMsg(drop_name.c_str());	//ドロップした物の名前を設定
+			bt_msg[(int)BT_MSG_RESULT]->AddText("を手に入れた！");	//メッセージ内容追加
+
 			bt_msg[(int)BT_MSG_RESULT]->AddMsg(std::to_string(enemy[EncounteEnemyType]->GetEXP()).c_str());	//経験値設定
 			bt_msg[(int)BT_MSG_RESULT]->AddText("の経験値を手に入れた！");				//メッセージ内容追加
-			//bt_msg[(int)BT_MSG_RESULT]->AddMsg()
 
 			if (player->GetLevUpMsgStartFlg())		//レベルアップしたときは
 			{
@@ -1852,7 +1862,7 @@ void Bt_ResultMsg()
 }
 
 //ドロップした物の種類を判別する
-void JudgeDrop()
+const char * JudgeDrop()
 {
 	int drop_code = enemy[EncounteEnemyType]->Drop();	//ドロップ処理をし、ドロップしたもののコード番号を取得する
 
@@ -1871,11 +1881,15 @@ void JudgeDrop()
 
 		player->AddDrop(drop_code, item_list->GetRecovery(drop_code));	//アイテムを追加
 
+		return item_list->GetName(drop_code);	//ドロップしたアイテムの名前を返す
+
 		break;	//アイテムだった場合ここまで
 
 	case (int)DROP_TYPE_WEAPON:	//武器だった場合
 
 		player->AddDrop(drop_code, weapon_list->GetPower(drop_code));	//武器を追加
+
+		return weapon_list->GetName(drop_code);	//ドロップした武器の名前を返す
 
 		break;	//武器だった場合ここまで
 
@@ -1883,10 +1897,10 @@ void JudgeDrop()
 
 		player->AddDrop(drop_code, armor_list->GetDefense(drop_code));	//防具を追加
 
+		return armor_list->GetName(drop_code);	//ドロップした防具の名前を返す
+
 	default:
 		break;
 	}
-
-	return;
 
 }
