@@ -88,4 +88,12 @@ void SetGameInit();			//ゲームの初期設定を行う処理
 void SetSize();				//画像等のサイズ設定を行う処理
 bool GameMainLoop();		//無限ループ内のゲーム処理
 
+//戦闘画面の処理
+void Bt_WaitAct();			//戦闘画面行動待ち状態の処理
+void Bt_DamegeCalc();		//戦闘画面ダメージ計算状態の処理
+void Bt_ActMsg();			//戦闘画面行動メッセージ描画状態の処理
+void Bt_DrawEffect();		//戦闘画面エフェクト描画状態の処理
+void Bt_DrawDamege();		//戦闘画面ダメージ描画状態の処理
+void Bt_ResultMsg();		//戦闘画面リザルトメッセージ描画状態の処理
+
 //########## クラスの定義 ##########

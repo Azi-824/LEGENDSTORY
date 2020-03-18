@@ -411,477 +411,39 @@ void Battle()
 
 	case (int)WAIT_ACT:		//プレイヤーの行動選択待ち状態の時
 
-		if (Turn == (int)MY_TURN)		//味方のターンだったら
-		{
-			bt_msg[(int)BT_MSG_ACT]->DrawMsg(BT_MSG_DRAW_X, BT_MSG_DRAW_Y, GetColor(255, 255, 255));	//メッセージ描画
+		Bt_WaitAct();		//行動待ち状態の処理
 
-			if (bt_msg[(int)BT_MSG_ACT]->GetIsLastMsg())	//最後のメッセージだったら
-			{
+		break;				//行動選択待ち状態の処理ここまで
 
-				ui->SetIsDrawUIAnime(false);		//UIのアニメーション非表示
+	case (int)DAMEGE_CALC:	//ダメージ計算状態の時
 
-				if (!ui->BattleCommand->GetSelectFlg())	//コマンドを選択していないときは
-				{
-					ui->BattleCommand->SelectOperation(keydown, sys_se);	//バトルコマンドキー操作
-				}
+		Bt_DamegeCalc();	//ダメージ計算状態の処理
 
-			}
-			else				//メッセージが残っていれば
-			{
-				if (keydown->IsKeyDownOne(KEY_INPUT_RETURN))		//エンターキーを押されたら
-				{
-					sys_se->Play((int)SYS_SE_KETTEI);				//決定音を鳴らす
+		break;				//ダメージ計算状態の時ここまで
 
-					bt_msg[(int)BT_MSG_ACT]->NextMsg();				//次のメッセージへ
-				}
-			}
+	case (int)ACT_MSG:		//行動メッセージ表示状態
 
+		Bt_ActMsg();		//行動メッセージ表示状態の処理
 
-			if (ui->BattleCommand->GetSelectFlg())	//コマンドを選択したら
-			{
-				//▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼ バトルコマンド毎の処理ここから ▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼
-				switch (ui->BattleCommand->GetSelectNum())		//どのコマンドを選んだか
-				{
-				case (int)COMMANDE_ATACK:					//攻撃を選んだ時
+		break;				//行動メッセージ表示状態ここまで
 
-					BattleStageNow = (int)DAMEGE_CALC;	//バトル状態をダメージ計算状態へ
+	case (int)DRAW_EFFECT:	//エフェクト描画状態
 
-					break;
+		Bt_DrawEffect();	//エフェクト描画状態の処理
 
-				case (int)COMMANDE_DEFENSE:		//防御を選んだ時
+		break;				//エフェクト描画状態ここまで
 
-					BattleStageNow = (int)DAMEGE_CALC;	//バトル状態をダメージ計算状態へ
-
-					break;
-
-				case (int)COMMANDE_MAGIC:		//魔法を選んだ時
-
-					ui->DrawWindow(BT_LIST_WIN_X, BT_LIST_WIN_Y, GAME_WIDTH - BT_LIST_WIN_X, BT_LIST_WIN_HEIGHT);	//ウィンドウ描画
-					bt_magic_list->Draw(BT_LIST_TXT_X, BT_LIST_TXT_Y, (int)SELECT_TRIANGLE_MINI);			//魔法一覧を描画
-
-					bt_magic_list->SelectOperation(keydown, sys_se);	//魔法一覧のキー操作
-
-					if (bt_magic_list->GetBackFlg())		//戻る選択(バックスペースキーを押されたら)
-					{
-						ui->BattleCommand->SetSelectFlg(false);	//選択していない
-						bt_magic_list->SetBackFlg(false);		//戻る選択リセット
-						bt_magic_list->NowSelectReset();		//現在の選択リセット
-					}
-					else if (bt_magic_list->GetSelectFlg())		//選択された時は
-					{
-						//選んだ魔法の消費MPが残っているMPより多かったら(魔法が使えない処理)
-						if (player->GetMP() < mgc_list->GetCost(bt_magic_list->GetSelectNum()))
-						{
-							sys_se->Play((int)SYS_SE_BLIP);			//選択できない時の音を鳴らす
-						}
-						else		//選んだ魔法が使えた時は
-						{
-							player->SetChoiseSkil(bt_magic_list->GetSelectNum());	//選択した内容を使用する魔法として設定する
-							bt_magic_list->NowSelectReset();						//選択要素を先頭に戻す
-							bt_magic_list->SetSelectFlg(false);						//選択してない状態へ
-							BattleStageNow = (int)DAMEGE_CALC;	//バトル状態をダメージ計算状態へ
-						}
-					}
-
-					break;
-
-				case (int)COMMANDE_ITEM:			//アイテムを選んだ時
-
-					ui->SelectUpdate(player->GetItemClass(), item_list);	//選択肢更新
-
-					ui->DrawWindow(BT_LIST_WIN_X, BT_LIST_WIN_Y, GAME_WIDTH - BT_LIST_WIN_X, BT_LIST_WIN_HEIGHT);	//ウィンドウ描画
-
-					if (ui->ItemSelect->GetSelectKind() != 0)	//アイテムを持っていたら
-					{
-
-						ui->DrawItemSelect(BT_LIST_TXT_X, BT_LIST_TXT_Y, player->GetBelongingsPossession((int)BELONGINGS_ITEM));	//持っているアイテムを描画
-
-						ui->ItemSelect->SelectOperation(keydown, sys_se);	//アイテム選択肢キー操作
-
-						if (ui->ItemSelect->GetSelectFlg())	//アイテムを選択したら
-						{
-							BattleStageNow = (int)DAMEGE_CALC;	//バトル状態をダメージ計算状態へ
-						}
-
-						if (ui->ItemSelect->GetBackFlg())	//戻る選択をしたら
-						{
-							ui->BattleCommand->SetSelectFlg(false);	//選択していない
-							ui->ItemSelect->SetBackFlg(false);		//戻る選択リセット
-							ui->ItemSelect->NowSelectReset();		//現在の選択リセット
-						}
-
-					}
-					else		//アイテムを持っていなかったら
-					{
-						if (keydown->IsKeyDownOne(KEY_INPUT_BACK))	//バックスペースキーを押されたら
-						{
-							ui->BattleCommand->SetSelectFlg(false);	//コマンドを選択していない
-						}
-					}
-
-					break;
-
-				case (int)COMMANDE_ESCAPE:		//逃げるを選んだ時
-
-					bt_msg[(int)BT_MSG_ACT]->SetMsg("上手く逃げ切れた！");	//文字列設定
-
-					BattleStageNow = (int)ACT_MSG;	//メッセージ描画状態
-
-					break;
-
-				default:
-					break;
-				}
-				//▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲ バトルコマンド毎の処理ここまで ▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲
-
-			}
-
-		} 
-		else if (Turn = (int)ENEMY_TURN)	//敵のターンだったら
-		{
-			//敵の行動選択決定処理
-			enemy[EncounteEnemyType]->ActDecision();		//行動決定処理
-
-			BattleStageNow = (int)DAMEGE_CALC;	//ダメージ計算へ
-
-		}
-
-		break;						//行動選択待ち状態の処理ここまで
-
-	case (int)DAMEGE_CALC:			//ダメージ計算状態の時
-
-		if (Turn == (int)MY_TURN)		//味方のターンだったら
-		{
-			player->DamegeCalc(enemy[EncounteEnemyType],ui->BattleCommand->GetSelectNum());		//ダメージ計算
-
-			//▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼ メッセージ設定処理ここから ▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼
-
-			ui->SetIsDrawUIAnime(true);			//UIのアニメーション表示
-
-			//味方
-			if (ui->BattleCommand->GetSelectNum() == (int)COMMANDE_DEFENSE)	//防御を選んだ時
-			{
-
-				bt_msg[(int)BT_MSG_ACT]->SetMsg(player->GetName());		//名前設定
-				bt_msg[(int)BT_MSG_ACT]->AddText("は防御している！");	//メッセージ内容追加
-				bt_msg[(int)BT_MSG_ACT]->AddMsg("防御に集中している");	//メッセージ追加
-
-			}
-			else if (ui->BattleCommand->GetSelectNum() == (int)COMMANDE_ITEM)	//アイテムを選んだ時
-			{
-
-				bt_msg[(int)BT_MSG_ACT]->SetMsg(item_list->GetName(ui->ItemSelect->GetSelectCode()));	//使用したアイテム名設定
-				bt_msg[(int)BT_MSG_ACT]->AddText("を使用した！");		//メッセージ内容追加
-				bt_msg[(int)BT_MSG_ACT]->AddMsg("HPが");				//メッセージ追加
-				bt_msg[(int)BT_MSG_ACT]->AddText(std::to_string(item_list->GetRecovery(ui->ItemSelect->GetSelectCode())).c_str());	//回復量設定
-				bt_msg[(int)BT_MSG_ACT]->AddText("回復した！");			//メッセージ内容追加
-
-			}
-			else					//それ以外の時
-			{
-				bt_msg[(int)BT_MSG_ACT]->SetMsg(player->GetName());	//名前設定
-				bt_msg[(int)BT_MSG_ACT]->AddText("の攻撃！");		//メッセージ内容追加
-				bt_msg[(int)BT_MSG_ACT]->AddMsg(std::to_string(player->GetSendDamege()).c_str());	//与えたダメージ設定
-				bt_msg[(int)BT_MSG_ACT]->AddText("のダメージを与えた！");	//メッセージ内容追加
-			}
-
-			//敵
-			bt_msg[(int)BT_MSG_ACT]->AddMsg(enemy[EncounteEnemyType]->GetName());	//敵の名前設定
-			bt_msg[(int)BT_MSG_ACT]->AddText("の攻撃！");		//メッセージ内容追加
-			bt_msg[(int)BT_MSG_ACT]->AddMsg(std::to_string(player->GetRecvDamege()).c_str());	//受けるダメージ設定
-			bt_msg[(int)BT_MSG_ACT]->AddText("のダメージを受けた！");	//メッセージ内容追加
-			//▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲ メッセージ設定処理ここまで ▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲
-
-			BattleStageNow = (int)ACT_MSG;	//行動メッセージ表示状態へ
-
-		}
-		else if (Turn = (int)ENEMY_TURN)	//敵のターンだったら
-		{
-			//ダメージ計算
-			BattleStageNow = (int)ACT_MSG;	//行動メッセージ表示へ
-
-		}
-
-		break;						//ダメージ計算状態の時ここまで
-
-	case (int)ACT_MSG:				//行動メッセージ表示状態
-
-		bt_msg[(int)BT_MSG_ACT]->DrawMsg(BT_MSG_DRAW_X, BT_MSG_DRAW_Y, GetColor(255, 255, 255));	//メッセージ描画
-
-		if (keydown->IsKeyDownOne(KEY_INPUT_RETURN))		//エンターキーを押されたら
-		{
-
-			sys_se->Play((int)SYS_SE_KETTEI);	//決定音を鳴らす
-
-			if (Turn == (int)MY_TURN)		//味方のターンだったら
-			{
-				if (ui->BattleCommand->GetSelectNum() == (int)COMMANDE_ESCAPE)		//逃げるを選んだら
-				{
-					bt_se->Play((int)BT_SE_NIGERU);	//逃げるときの音を鳴らす
-					bt_se->Reset();					//再生状態リセット
-					SceneChenge(GameSceneNow, (int)GAME_SCENE_PLAY);	//次の画面はプレイ画面
-				}
-			}
-
-			bt_msg[(int)BT_MSG_ACT]->NextMsg();	//次のメッセージへ
-			BattleStageNow = (int)DRAW_EFFECT;	//エフェクト表示状態へ
-		}
-
-		break;						//行動メッセージ表示状態ここまで
-
-	case (int)DRAW_EFFECT:			//エフェクト描画状態
-
-		if (Turn == (int)MY_TURN)		//味方のターンだったら
-		{
-			if (ui->BattleCommand->GetSelectNum() == (int)COMMANDE_ATACK)	//攻撃を選んでいたら
-			{
-				//フェードアウトなしで描画
-				Atack_effect->DrawNormal(ATK_DRAW_X, ATK_DRAW_Y, (int)NOMAL_ATACK);	//攻撃エフェクト描画
-
-				if (bt_se->GetIsPlayed((int)BT_SE_SLASH) == false)		//再生済みでなければ
-				{
-					if (bt_se->GetIsPlay((int)BT_SE_SLASH) == false)		//再生中じゃなければ
-					{
-						bt_se->Play((int)BT_SE_SLASH);						//斬るときのSEを鳴らす
-						bt_se->SetIsPlayed((int)BT_SE_SLASH,true);			//再生済み
-					}
-
-				}
-
-			}
-			else if (ui->BattleCommand->GetSelectNum() == (int)COMMANDE_MAGIC)	//魔法を選んでいたら
-			{
-				//フェードアウトなしで描画
-				Magic_effect->DrawNormal((GAME_WIDTH / 2 - MAGIC_WIDTH / 2), (GAME_HEIGHT / 2 - MAGIC_HEIGHT / 2), player->GetChoiseSkil());	//魔法エフェクト描画
-			
-				if (bt_se->GetIsPlayed((int)BT_SE_THUNDER) == false)		//再生済みでなければ
-				{
-					if (bt_se->GetIsPlay((int)BT_SE_THUNDER) == false)		//再生中じゃなければ
-					{
-						bt_se->Play((int)BT_SE_THUNDER);						//雷のSEを鳴らす
-						bt_se->SetIsPlayed((int)BT_SE_THUNDER, true);			//再生済み
-					}
-
-				}
-
-
-			}
-			else				//それ以外だったら
-			{
-				if (ui->BattleCommand->GetSelectNum() == (int)COMMANDE_ITEM)		//アイテムを選んでいたら
-				{
-					player->UseItem(ui->ItemSelect->GetSelectCode());	//アイテム使用
-					ui->ItemSelect->NowSelectReset();					//アイテムの選択をリセット
-					ui->ItemSelect->SetSelectFlg(false);				//選択していない状態へ
-				}
-
-				enemy[EncounteEnemyType]->SetHP((enemy[EncounteEnemyType]->GetHP() - player->GetSendDamege()));	//ダメージを与える
-
-				BattleStageNow = (int)DRAW_DAMEGE;		//ダメージ描画状態へ
-
-			}
-
-			if (Magic_effect->GetIsDrawEnd()||Atack_effect->GetIsDrawEnd())		//エフェクト描画が終了したら
-			{
-
-				if (ui->BattleCommand->GetSelectNum() == (int)COMMANDE_MAGIC)	//魔法を選んでいたら
-				{
-					player->SetMP(player->GetMP() - mgc_list->GetCost(player->GetChoiseSkil()));		//使った魔法に応じたMPを減らす
-				}
-
-				enemy[EncounteEnemyType]->SetHP((enemy[EncounteEnemyType]->GetHP() - player->GetSendDamege()));	//ダメージを与える
-
-				BattleStageNow = (int)DRAW_DAMEGE;		//ダメージ描画状態へ
-
-			}
-
-		}
-		else if (Turn = (int)ENEMY_TURN)	//敵のターンだったら
-		{
-
-			if (Boss_flg)		//ボス戦だったら
-			{
-				//ボスのエフェクト描画
-				Boss_Atk_effect->DrawNormal((GAME_WIDTH / 2 - Boss_Atk_effect->GetWidth(enemy[EncounteEnemyType]->GetChoiseSkil()) / 2),
-					(GAME_HEIGHT / 2 - Boss_Atk_effect->GetHeight(enemy[EncounteEnemyType]->GetChoiseSkil()) / 2),
-					enemy[EncounteEnemyType]->GetChoiseSkil());
-
-			}
-			else				//ボス戦じゃなければ
-			{
-				//敵のエフェクト表示
-				Enemy_Atk_effect->Draw((GAME_WIDTH / 2 - Enemy_Atk_effect->GetWidth(enemy[EncounteEnemyType]->GetChoiseSkil()) / 2),
-					(GAME_HEIGHT / 2 - Enemy_Atk_effect->GetHeight(enemy[EncounteEnemyType]->GetChoiseSkil()) / 2),
-					enemy[EncounteEnemyType]->GetChoiseSkil());
-
-			}
-
-
-
-			if (Enemy_Atk_effect->GetIsDrawEnd()||Boss_Atk_effect->GetIsDrawEnd())		//エフェクト描画終了したら
-			{
-
-				//音の再生
-				if (bt_se->GetIsPlayed((int)BT_SE_DAMEGE) == false)		//再生済みでなければ
-				{
-					if (bt_se->GetIsPlay((int)BT_SE_DAMEGE) == false)		//再生中じゃなければ
-					{
-						bt_se->Play((int)BT_SE_DAMEGE);						//ダメージ野SEを鳴らす
-						bt_se->SetIsPlayed((int)BT_SE_DAMEGE, true);		//再生済み
-					}
-
-				}
-
-				player->SetHP((player->GetHP()) - (player->GetRecvDamege()));		//味方にダメージを与える
-
-				if (player->GetHP() <= 0)			//HPが0以下になったら
-				{
-					player->SetHP(0);				//HPを0にする
-				}
-
-				BattleStageNow = (int)DRAW_DAMEGE;	//ダメージ描画状態へ
-
-			}
-
-		}
-
-		break;
-
-	case (int)DRAW_DAMEGE:				//ダメージ描画状態
+	case (int)DRAW_DAMEGE:	//ダメージ描画状態
 		
-		//ダメージ描画
-		bt_msg[(int)BT_MSG_ACT]->DrawMsg(BT_MSG_DRAW_X, BT_MSG_DRAW_Y, GetColor(255, 255, 255));	//メッセージ描画
+		Bt_DrawDamege();	//ダメージ描画状態の処理
 
-		if (keydown->IsKeyDownOne(KEY_INPUT_RETURN))	//エンターキーを押されたら
-		{
+		break;				//ダメージ描画状態の処理ここまで
 
-			sys_se->Play((int)SYS_SE_KETTEI);	//決定音を鳴らす
+	case (int)RESULT_MSG:	//戦闘終了後のメッセージを描画する状態
 
-			bt_se->Reset();	//SEの再生状態をリセット
+		Bt_ResultMsg();		//リザルトメッセージ描画状態の処理
 
-			if (Turn == (int)MY_TURN)			//味方のターンの時
-			{
-				if (ui->BattleCommand->GetSelectNum() == (int)COMMANDE_ATACK)	//攻撃を選んだ時は
-				{
-					Atack_effect->ResetIsAnime((int)NOMAL_ATACK);		//攻撃エフェクトリセット
-				}
-				else							//攻撃以外を選んだ時は
-				{
-					Magic_effect->ResetIsAnime(player->GetChoiseSkil());//魔法エフェクトリセット
-				}
-
-				Turn = (int)ENEMY_TURN;				//敵のターンへ
-
-			}
-			else if (Turn == (int)ENEMY_TURN)			//敵のターンの時
-			{
-
-				bt_msg[(int)BT_MSG_ACT]->SetMsg("どうする？");	//文字列設定
-
-				Enemy_Atk_effect->ResetIsAnime(enemy[EncounteEnemyType]->GetChoiseSkil());		//エフェクトリセット
-				Boss_Atk_effect->ResetIsAnime(enemy[EncounteEnemyType]->GetChoiseSkil());		//エフェクトリセット（ボス）
-				Turn = (int)MY_TURN;				//味方のターンへ
-			}
-
-			if (player->GetHP() <= 0)			//自分のHPが0になったら
-			{
-				player->SetIsArive(false);		//自分死亡
-				player->SetIsBattleWin(false);	//戦闘に敗北
-
-				//▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼ リザルトメッセージ設定処理ここから ▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼
-				bt_msg[(int)BT_MSG_RESULT]->SetMsg("全滅してしまった…");	//文字列設定
-				//▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲ リザルトメッセージ設定処理ここまで ▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲
-
-				BattleStageNow = (int)RESULT_MSG;		//リザルトメッセージ表示状態へ
-
-			}
-			else if (enemy[EncounteEnemyType]->GetHP() <= 0)				//敵のHPが0になったら
-			{
-				enemy[EncounteEnemyType]->SetIsArive(false);		//敵死亡
-				player->SetIsBattleWin(true);						//戦闘に勝利
-				player->AddExp(enemy[EncounteEnemyType]->GetEXP());	//経験値加算
-
-				//▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼ リザルトメッセージ設定処理ここから ▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼
-				bt_msg[(int)BT_MSG_RESULT]->SetMsg(enemy[EncounteEnemyType]->GetName());	//名前設定
-				bt_msg[(int)BT_MSG_RESULT]->AddText("を倒した！");							//メッセージ内容追加
-				bt_msg[(int)BT_MSG_RESULT]->AddMsg(std::to_string(enemy[EncounteEnemyType]->GetEXP()).c_str());	//経験値設定
-				bt_msg[(int)BT_MSG_RESULT]->AddText("の経験値を手に入れた！");				//メッセージ内容追加
-
-				if (player->GetLevUpMsgStartFlg())		//レベルアップしたときは
-				{
-					bt_msg[(int)BT_MSG_RESULT]->AddMsg("レベル");	//メッセージ内容追加
-					bt_msg[(int)BT_MSG_RESULT]->AddText(std::to_string(player->GetLevel()).c_str());	//レベル設定
-					bt_msg[(int)BT_MSG_RESULT]->AddText("になった！");	//メッセージ内容追加
-				}
-				//▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲ リザルトメッセージ設定処理ここまで ▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲
-
-				BattleStageNow = (int)RESULT_MSG;		//リザルトメッセージ表示状態へ
-
-			}
-			else
-			{
-				BattleStageNow = (int)WAIT_ACT;		//行動選択状態へ
-			}
-
-			bt_msg[(int)BT_MSG_ACT]->NextMsg();	//次のメッセージへ
-
-			ui->BattleInit();				//バトルコマンドリセット
-
-		}
-
-		break;
-
-	case (int)RESULT_MSG:		//戦闘終了後のメッセージを描画する状態
-
-		bt_msg[(int)BT_MSG_RESULT]->DrawMsg(BT_MSG_DRAW_X, BT_MSG_DRAW_Y, GetColor(255, 255, 255));	//メッセージ描画
-
-		if (keydown->IsKeyDownOne(KEY_INPUT_RETURN))		//エンターキーを押されたとき
-		{
-
-			sys_se->Play((int)SYS_SE_KETTEI);	//決定音を鳴らす
-
-			bt_msg[(int)BT_MSG_RESULT]->NextMsg();	//次のメッセージへ
-
-			if (bt_msg[(int)BT_MSG_RESULT]->GetIsLastMsg())		//最後のメッセージだったら
-			{
-				if (player->GetLevUpMsgStartFlg())			//レベルアップしていたら
-				{
-					if (bt_se->GetIsPlay((int)BT_SE_LEVELUP) == false)		//再生中じゃなければ
-					{
-						bt_se->Play((int)BT_SE_LEVELUP);	//レベルアップのSEを鳴らす
-						bt_se->SetIsPlayed((int)BT_SE_SLASH,true);			//再生済み
-						player->SetLevUpMsgStartFlg(false);	//レベルアップ終了
-					}
-				}
-
-				if (bt_msg[(int)BT_MSG_RESULT]->GetIsMsgEnd())	//全てのメッセージ描画が終了したら
-				{
-					if (player->GetIsBattleWin())		//戦闘に勝利していたら
-					{
-						if (Boss_flg)					//倒したのがボスだったら
-						{
-							Clear_flg = true;			//クリアフラグを立てる
-							SceneChenge(GameSceneNow, (int)GAME_SCENE_END);	//次の画面はエンド画面
-						}
-						else							//倒したのがボス以外だったら
-						{
-							SceneChenge(GameSceneNow, (int)GAME_SCENE_PLAY);	//次の画面はプレイ画面
-						}
-					}
-					else if (player->GetIsBattleWin() == false)	//戦闘に敗北していたら
-					{
-						SceneChenge(GameSceneNow, (int)GAME_SCENE_END);	//次の画面はエンド画面
-					}
-
-					BattleStageNow = (int)WAIT_ACT;		//行動選択待ち状態へ
-
-				}
-
-			}
-
-		}
-
-		break;					//戦闘終了後のメッセージを描画する状態の処理ここまで
+		break;				//戦闘終了後のメッセージを描画する状態の処理ここまで
 
 	default:
 
@@ -1809,3 +1371,498 @@ bool GameMainLoop()
 	return true;				//正常
 
 }
+
+//戦闘画面行動待ち状態の処理
+void Bt_WaitAct()
+{
+	if (Turn == (int)MY_TURN)		//味方のターンだったら
+	{
+		bt_msg[(int)BT_MSG_ACT]->DrawMsg(BT_MSG_DRAW_X, BT_MSG_DRAW_Y, GetColor(255, 255, 255));	//メッセージ描画
+
+		if (bt_msg[(int)BT_MSG_ACT]->GetIsLastMsg())	//最後のメッセージだったら
+		{
+
+			ui->SetIsDrawUIAnime(false);		//UIのアニメーション非表示
+
+			if (!ui->BattleCommand->GetSelectFlg())	//コマンドを選択していないときは
+			{
+				ui->BattleCommand->SelectOperation(keydown, sys_se);	//バトルコマンドキー操作
+			}
+
+		}
+		else				//メッセージが残っていれば
+		{
+			if (keydown->IsKeyDownOne(KEY_INPUT_RETURN))		//エンターキーを押されたら
+			{
+				sys_se->Play((int)SYS_SE_KETTEI);				//決定音を鳴らす
+
+				bt_msg[(int)BT_MSG_ACT]->NextMsg();				//次のメッセージへ
+			}
+		}
+
+
+		if (ui->BattleCommand->GetSelectFlg())	//コマンドを選択したら
+		{
+			//▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼ バトルコマンド毎の処理ここから ▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼
+			switch (ui->BattleCommand->GetSelectNum())		//どのコマンドを選んだか
+			{
+			case (int)COMMANDE_ATACK:					//攻撃を選んだ時
+
+				BattleStageNow = (int)DAMEGE_CALC;	//バトル状態をダメージ計算状態へ
+
+				break;
+
+			case (int)COMMANDE_DEFENSE:		//防御を選んだ時
+
+				BattleStageNow = (int)DAMEGE_CALC;	//バトル状態をダメージ計算状態へ
+
+				break;
+
+			case (int)COMMANDE_MAGIC:		//魔法を選んだ時
+
+				ui->DrawWindow(BT_LIST_WIN_X, BT_LIST_WIN_Y, GAME_WIDTH - BT_LIST_WIN_X, BT_LIST_WIN_HEIGHT);	//ウィンドウ描画
+				bt_magic_list->Draw(BT_LIST_TXT_X, BT_LIST_TXT_Y, (int)SELECT_TRIANGLE_MINI);			//魔法一覧を描画
+
+				bt_magic_list->SelectOperation(keydown, sys_se);	//魔法一覧のキー操作
+
+				if (bt_magic_list->GetBackFlg())		//戻る選択(バックスペースキーを押されたら)
+				{
+					ui->BattleCommand->SetSelectFlg(false);	//選択していない
+					bt_magic_list->SetBackFlg(false);		//戻る選択リセット
+					bt_magic_list->NowSelectReset();		//現在の選択リセット
+				}
+				else if (bt_magic_list->GetSelectFlg())		//選択された時は
+				{
+					//選んだ魔法の消費MPが残っているMPより多かったら(魔法が使えない処理)
+					if (player->GetMP() < mgc_list->GetCost(bt_magic_list->GetSelectNum()))
+					{
+						sys_se->Play((int)SYS_SE_BLIP);			//選択できない時の音を鳴らす
+					}
+					else		//選んだ魔法が使えた時は
+					{
+						player->SetChoiseSkil(bt_magic_list->GetSelectNum());	//選択した内容を使用する魔法として設定する
+						bt_magic_list->NowSelectReset();						//選択要素を先頭に戻す
+						bt_magic_list->SetSelectFlg(false);						//選択してない状態へ
+						BattleStageNow = (int)DAMEGE_CALC;	//バトル状態をダメージ計算状態へ
+					}
+				}
+
+				break;
+
+			case (int)COMMANDE_ITEM:			//アイテムを選んだ時
+
+				ui->SelectUpdate(player->GetItemClass(), item_list);	//選択肢更新
+
+				ui->DrawWindow(BT_LIST_WIN_X, BT_LIST_WIN_Y, GAME_WIDTH - BT_LIST_WIN_X, BT_LIST_WIN_HEIGHT);	//ウィンドウ描画
+
+				if (ui->ItemSelect->GetSelectKind() != 0)	//アイテムを持っていたら
+				{
+
+					ui->DrawItemSelect(BT_LIST_TXT_X, BT_LIST_TXT_Y, player->GetBelongingsPossession((int)BELONGINGS_ITEM));	//持っているアイテムを描画
+
+					ui->ItemSelect->SelectOperation(keydown, sys_se);	//アイテム選択肢キー操作
+
+					if (ui->ItemSelect->GetSelectFlg())	//アイテムを選択したら
+					{
+						BattleStageNow = (int)DAMEGE_CALC;	//バトル状態をダメージ計算状態へ
+					}
+
+					if (ui->ItemSelect->GetBackFlg())	//戻る選択をしたら
+					{
+						ui->BattleCommand->SetSelectFlg(false);	//選択していない
+						ui->ItemSelect->SetBackFlg(false);		//戻る選択リセット
+						ui->ItemSelect->NowSelectReset();		//現在の選択リセット
+					}
+
+				}
+				else		//アイテムを持っていなかったら
+				{
+					if (keydown->IsKeyDownOne(KEY_INPUT_BACK))	//バックスペースキーを押されたら
+					{
+						ui->BattleCommand->SetSelectFlg(false);	//コマンドを選択していない
+					}
+				}
+
+				break;
+
+			case (int)COMMANDE_ESCAPE:		//逃げるを選んだ時
+
+				bt_msg[(int)BT_MSG_ACT]->SetMsg("上手く逃げ切れた！");	//文字列設定
+
+				BattleStageNow = (int)ACT_MSG;	//メッセージ描画状態
+
+				break;
+
+			default:
+				break;
+			}
+			//▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲ バトルコマンド毎の処理ここまで ▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲
+
+		}
+
+	}
+	else if (Turn = (int)ENEMY_TURN)	//敵のターンだったら
+	{
+		//敵の行動選択決定処理
+		enemy[EncounteEnemyType]->ActDecision();		//行動決定処理
+
+		BattleStageNow = (int)DAMEGE_CALC;	//ダメージ計算へ
+
+	}
+
+	return;
+
+
+}
+
+//戦闘画面ダメージ計算状態の処理
+void Bt_DamegeCalc()
+{
+	if (Turn == (int)MY_TURN)		//味方のターンだったら
+	{
+		player->DamegeCalc(enemy[EncounteEnemyType], ui->BattleCommand->GetSelectNum());		//ダメージ計算
+
+		//▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼ メッセージ設定処理ここから ▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼
+
+		ui->SetIsDrawUIAnime(true);			//UIのアニメーション表示
+
+		//味方
+		if (ui->BattleCommand->GetSelectNum() == (int)COMMANDE_DEFENSE)	//防御を選んだ時
+		{
+
+			bt_msg[(int)BT_MSG_ACT]->SetMsg(player->GetName());		//名前設定
+			bt_msg[(int)BT_MSG_ACT]->AddText("は防御している！");	//メッセージ内容追加
+			bt_msg[(int)BT_MSG_ACT]->AddMsg("防御に集中している");	//メッセージ追加
+
+		}
+		else if (ui->BattleCommand->GetSelectNum() == (int)COMMANDE_ITEM)	//アイテムを選んだ時
+		{
+
+			bt_msg[(int)BT_MSG_ACT]->SetMsg(item_list->GetName(ui->ItemSelect->GetSelectCode()));	//使用したアイテム名設定
+			bt_msg[(int)BT_MSG_ACT]->AddText("を使用した！");		//メッセージ内容追加
+			bt_msg[(int)BT_MSG_ACT]->AddMsg("HPが");				//メッセージ追加
+			bt_msg[(int)BT_MSG_ACT]->AddText(std::to_string(item_list->GetRecovery(ui->ItemSelect->GetSelectCode())).c_str());	//回復量設定
+			bt_msg[(int)BT_MSG_ACT]->AddText("回復した！");			//メッセージ内容追加
+
+		}
+		else					//それ以外の時
+		{
+			bt_msg[(int)BT_MSG_ACT]->SetMsg(player->GetName());	//名前設定
+			bt_msg[(int)BT_MSG_ACT]->AddText("の攻撃！");		//メッセージ内容追加
+			bt_msg[(int)BT_MSG_ACT]->AddMsg(std::to_string(player->GetSendDamege()).c_str());	//与えたダメージ設定
+			bt_msg[(int)BT_MSG_ACT]->AddText("のダメージを与えた！");	//メッセージ内容追加
+		}
+
+		//敵
+		bt_msg[(int)BT_MSG_ACT]->AddMsg(enemy[EncounteEnemyType]->GetName());	//敵の名前設定
+		bt_msg[(int)BT_MSG_ACT]->AddText("の攻撃！");		//メッセージ内容追加
+		bt_msg[(int)BT_MSG_ACT]->AddMsg(std::to_string(player->GetRecvDamege()).c_str());	//受けるダメージ設定
+		bt_msg[(int)BT_MSG_ACT]->AddText("のダメージを受けた！");	//メッセージ内容追加
+		//▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲ メッセージ設定処理ここまで ▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲
+
+		BattleStageNow = (int)ACT_MSG;	//行動メッセージ表示状態へ
+
+	}
+	else if (Turn = (int)ENEMY_TURN)	//敵のターンだったら
+	{
+		//ダメージ計算
+		BattleStageNow = (int)ACT_MSG;	//行動メッセージ表示へ
+
+	}
+
+	return;
+
+}
+
+//戦闘画面行動メッセージ描画状態の処理
+void Bt_ActMsg()
+{
+	bt_msg[(int)BT_MSG_ACT]->DrawMsg(BT_MSG_DRAW_X, BT_MSG_DRAW_Y, GetColor(255, 255, 255));	//メッセージ描画
+
+	if (keydown->IsKeyDownOne(KEY_INPUT_RETURN))		//エンターキーを押されたら
+	{
+
+		sys_se->Play((int)SYS_SE_KETTEI);	//決定音を鳴らす
+
+		if (Turn == (int)MY_TURN)		//味方のターンだったら
+		{
+			if (ui->BattleCommand->GetSelectNum() == (int)COMMANDE_ESCAPE)		//逃げるを選んだら
+			{
+				bt_se->Play((int)BT_SE_NIGERU);	//逃げるときの音を鳴らす
+				bt_se->Reset();					//再生状態リセット
+				SceneChenge(GameSceneNow, (int)GAME_SCENE_PLAY);	//次の画面はプレイ画面
+			}
+		}
+
+		bt_msg[(int)BT_MSG_ACT]->NextMsg();	//次のメッセージへ
+		BattleStageNow = (int)DRAW_EFFECT;	//エフェクト表示状態へ
+	}
+
+	return;
+
+}
+
+//戦闘画面エフェクト描画状態の処理
+void Bt_DrawEffect()
+{
+	if (Turn == (int)MY_TURN)		//味方のターンだったら
+	{
+		if (ui->BattleCommand->GetSelectNum() == (int)COMMANDE_ATACK)	//攻撃を選んでいたら
+		{
+			//フェードアウトなしで描画
+			Atack_effect->DrawNormal(ATK_DRAW_X, ATK_DRAW_Y, (int)NOMAL_ATACK);	//攻撃エフェクト描画
+
+			if (bt_se->GetIsPlayed((int)BT_SE_SLASH) == false)		//再生済みでなければ
+			{
+				if (bt_se->GetIsPlay((int)BT_SE_SLASH) == false)		//再生中じゃなければ
+				{
+					bt_se->Play((int)BT_SE_SLASH);						//斬るときのSEを鳴らす
+					bt_se->SetIsPlayed((int)BT_SE_SLASH, true);			//再生済み
+				}
+
+			}
+
+		}
+		else if (ui->BattleCommand->GetSelectNum() == (int)COMMANDE_MAGIC)	//魔法を選んでいたら
+		{
+			//フェードアウトなしで描画
+			Magic_effect->DrawNormal((GAME_WIDTH / 2 - MAGIC_WIDTH / 2), (GAME_HEIGHT / 2 - MAGIC_HEIGHT / 2), player->GetChoiseSkil());	//魔法エフェクト描画
+
+			if (bt_se->GetIsPlayed((int)BT_SE_THUNDER) == false)		//再生済みでなければ
+			{
+				if (bt_se->GetIsPlay((int)BT_SE_THUNDER) == false)		//再生中じゃなければ
+				{
+					bt_se->Play((int)BT_SE_THUNDER);						//雷のSEを鳴らす
+					bt_se->SetIsPlayed((int)BT_SE_THUNDER, true);			//再生済み
+				}
+
+			}
+
+
+		}
+		else				//それ以外だったら
+		{
+			if (ui->BattleCommand->GetSelectNum() == (int)COMMANDE_ITEM)		//アイテムを選んでいたら
+			{
+				player->UseItem(ui->ItemSelect->GetSelectCode());	//アイテム使用
+				ui->ItemSelect->NowSelectReset();					//アイテムの選択をリセット
+				ui->ItemSelect->SetSelectFlg(false);				//選択していない状態へ
+			}
+
+			enemy[EncounteEnemyType]->SetHP((enemy[EncounteEnemyType]->GetHP() - player->GetSendDamege()));	//ダメージを与える
+
+			BattleStageNow = (int)DRAW_DAMEGE;		//ダメージ描画状態へ
+
+		}
+
+		if (Magic_effect->GetIsDrawEnd() || Atack_effect->GetIsDrawEnd())		//エフェクト描画が終了したら
+		{
+
+			if (ui->BattleCommand->GetSelectNum() == (int)COMMANDE_MAGIC)	//魔法を選んでいたら
+			{
+				player->SetMP(player->GetMP() - mgc_list->GetCost(player->GetChoiseSkil()));		//使った魔法に応じたMPを減らす
+			}
+
+			enemy[EncounteEnemyType]->SetHP((enemy[EncounteEnemyType]->GetHP() - player->GetSendDamege()));	//ダメージを与える
+
+			BattleStageNow = (int)DRAW_DAMEGE;		//ダメージ描画状態へ
+
+		}
+
+	}
+	else if (Turn = (int)ENEMY_TURN)	//敵のターンだったら
+	{
+
+		if (Boss_flg)		//ボス戦だったら
+		{
+			//ボスのエフェクト描画
+			Boss_Atk_effect->DrawNormal((GAME_WIDTH / 2 - Boss_Atk_effect->GetWidth(enemy[EncounteEnemyType]->GetChoiseSkil()) / 2),
+				(GAME_HEIGHT / 2 - Boss_Atk_effect->GetHeight(enemy[EncounteEnemyType]->GetChoiseSkil()) / 2),
+				enemy[EncounteEnemyType]->GetChoiseSkil());
+
+		}
+		else				//ボス戦じゃなければ
+		{
+			//敵のエフェクト表示
+			Enemy_Atk_effect->Draw((GAME_WIDTH / 2 - Enemy_Atk_effect->GetWidth(enemy[EncounteEnemyType]->GetChoiseSkil()) / 2),
+				(GAME_HEIGHT / 2 - Enemy_Atk_effect->GetHeight(enemy[EncounteEnemyType]->GetChoiseSkil()) / 2),
+				enemy[EncounteEnemyType]->GetChoiseSkil());
+
+		}
+
+
+
+		if (Enemy_Atk_effect->GetIsDrawEnd() || Boss_Atk_effect->GetIsDrawEnd())		//エフェクト描画終了したら
+		{
+
+			//音の再生
+			if (bt_se->GetIsPlayed((int)BT_SE_DAMEGE) == false)		//再生済みでなければ
+			{
+				if (bt_se->GetIsPlay((int)BT_SE_DAMEGE) == false)		//再生中じゃなければ
+				{
+					bt_se->Play((int)BT_SE_DAMEGE);						//ダメージ野SEを鳴らす
+					bt_se->SetIsPlayed((int)BT_SE_DAMEGE, true);		//再生済み
+				}
+
+			}
+
+			player->SetHP((player->GetHP()) - (player->GetRecvDamege()));		//味方にダメージを与える
+
+			if (player->GetHP() <= 0)			//HPが0以下になったら
+			{
+				player->SetHP(0);				//HPを0にする
+			}
+
+			BattleStageNow = (int)DRAW_DAMEGE;	//ダメージ描画状態へ
+
+		}
+
+	}
+
+	return;
+
+}
+
+//戦闘画面ダメージ描画状態の処理
+void Bt_DrawDamege()
+{
+	//ダメージ描画
+	bt_msg[(int)BT_MSG_ACT]->DrawMsg(BT_MSG_DRAW_X, BT_MSG_DRAW_Y, GetColor(255, 255, 255));	//メッセージ描画
+
+	if (keydown->IsKeyDownOne(KEY_INPUT_RETURN))	//エンターキーを押されたら
+	{
+
+		sys_se->Play((int)SYS_SE_KETTEI);	//決定音を鳴らす
+
+		bt_se->Reset();	//SEの再生状態をリセット
+
+		if (Turn == (int)MY_TURN)			//味方のターンの時
+		{
+			if (ui->BattleCommand->GetSelectNum() == (int)COMMANDE_ATACK)	//攻撃を選んだ時は
+			{
+				Atack_effect->ResetIsAnime((int)NOMAL_ATACK);		//攻撃エフェクトリセット
+			}
+			else							//攻撃以外を選んだ時は
+			{
+				Magic_effect->ResetIsAnime(player->GetChoiseSkil());//魔法エフェクトリセット
+			}
+
+			Turn = (int)ENEMY_TURN;				//敵のターンへ
+
+		}
+		else if (Turn == (int)ENEMY_TURN)			//敵のターンの時
+		{
+
+			bt_msg[(int)BT_MSG_ACT]->SetMsg("どうする？");	//文字列設定
+
+			Enemy_Atk_effect->ResetIsAnime(enemy[EncounteEnemyType]->GetChoiseSkil());		//エフェクトリセット
+			Boss_Atk_effect->ResetIsAnime(enemy[EncounteEnemyType]->GetChoiseSkil());		//エフェクトリセット（ボス）
+			Turn = (int)MY_TURN;				//味方のターンへ
+		}
+
+		if (player->GetHP() <= 0)			//自分のHPが0になったら
+		{
+			player->SetIsArive(false);		//自分死亡
+			player->SetIsBattleWin(false);	//戦闘に敗北
+
+			//▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼ リザルトメッセージ設定処理ここから ▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼
+			bt_msg[(int)BT_MSG_RESULT]->SetMsg("全滅してしまった…");	//文字列設定
+			//▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲ リザルトメッセージ設定処理ここまで ▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲
+
+			BattleStageNow = (int)RESULT_MSG;		//リザルトメッセージ表示状態へ
+
+		}
+		else if (enemy[EncounteEnemyType]->GetHP() <= 0)				//敵のHPが0になったら
+		{
+			enemy[EncounteEnemyType]->SetIsArive(false);		//敵死亡
+			player->SetIsBattleWin(true);						//戦闘に勝利
+			player->AddExp(enemy[EncounteEnemyType]->GetEXP());	//経験値加算
+
+			//▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼ リザルトメッセージ設定処理ここから ▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼
+			bt_msg[(int)BT_MSG_RESULT]->SetMsg(enemy[EncounteEnemyType]->GetName());	//名前設定
+			bt_msg[(int)BT_MSG_RESULT]->AddText("を倒した！");							//メッセージ内容追加
+			bt_msg[(int)BT_MSG_RESULT]->AddMsg(std::to_string(enemy[EncounteEnemyType]->GetEXP()).c_str());	//経験値設定
+			bt_msg[(int)BT_MSG_RESULT]->AddText("の経験値を手に入れた！");				//メッセージ内容追加
+
+			if (player->GetLevUpMsgStartFlg())		//レベルアップしたときは
+			{
+				bt_msg[(int)BT_MSG_RESULT]->AddMsg("レベル");	//メッセージ内容追加
+				bt_msg[(int)BT_MSG_RESULT]->AddText(std::to_string(player->GetLevel()).c_str());	//レベル設定
+				bt_msg[(int)BT_MSG_RESULT]->AddText("になった！");	//メッセージ内容追加
+			}
+			//▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲ リザルトメッセージ設定処理ここまで ▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲
+
+			BattleStageNow = (int)RESULT_MSG;		//リザルトメッセージ表示状態へ
+
+		}
+		else
+		{
+			BattleStageNow = (int)WAIT_ACT;		//行動選択状態へ
+		}
+
+		bt_msg[(int)BT_MSG_ACT]->NextMsg();	//次のメッセージへ
+
+		ui->BattleInit();				//バトルコマンドリセット
+
+	}
+
+	return;
+
+}
+
+//戦闘画面リザルトメッセージ描画状態の処理
+void Bt_ResultMsg()
+{
+	bt_msg[(int)BT_MSG_RESULT]->DrawMsg(BT_MSG_DRAW_X, BT_MSG_DRAW_Y, GetColor(255, 255, 255));	//メッセージ描画
+
+	if (keydown->IsKeyDownOne(KEY_INPUT_RETURN))		//エンターキーを押されたとき
+	{
+
+		sys_se->Play((int)SYS_SE_KETTEI);	//決定音を鳴らす
+
+		bt_msg[(int)BT_MSG_RESULT]->NextMsg();	//次のメッセージへ
+
+		if (bt_msg[(int)BT_MSG_RESULT]->GetIsLastMsg())		//最後のメッセージだったら
+		{
+			if (player->GetLevUpMsgStartFlg())			//レベルアップしていたら
+			{
+				if (bt_se->GetIsPlay((int)BT_SE_LEVELUP) == false)		//再生中じゃなければ
+				{
+					bt_se->Play((int)BT_SE_LEVELUP);	//レベルアップのSEを鳴らす
+					bt_se->SetIsPlayed((int)BT_SE_SLASH, true);			//再生済み
+					player->SetLevUpMsgStartFlg(false);	//レベルアップ終了
+				}
+			}
+
+			if (bt_msg[(int)BT_MSG_RESULT]->GetIsMsgEnd())	//全てのメッセージ描画が終了したら
+			{
+				if (player->GetIsBattleWin())		//戦闘に勝利していたら
+				{
+					if (Boss_flg)					//倒したのがボスだったら
+					{
+						Clear_flg = true;			//クリアフラグを立てる
+						SceneChenge(GameSceneNow, (int)GAME_SCENE_END);	//次の画面はエンド画面
+					}
+					else							//倒したのがボス以外だったら
+					{
+						SceneChenge(GameSceneNow, (int)GAME_SCENE_PLAY);	//次の画面はプレイ画面
+					}
+				}
+				else if (player->GetIsBattleWin() == false)	//戦闘に敗北していたら
+				{
+					SceneChenge(GameSceneNow, (int)GAME_SCENE_END);	//次の画面はエンド画面
+				}
+
+				BattleStageNow = (int)WAIT_ACT;		//行動選択待ち状態へ
+
+			}
+
+		}
+
+	}
+
+	return;
+
+}
+
+
