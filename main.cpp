@@ -1623,6 +1623,12 @@ void Bt_DrawEffect()
 
 			}
 
+			if (Atack_effect->GetIsDrawEnd())	//攻撃エフェクトの描画が終わったら
+			{
+				enemy[EncounteEnemyType]->DamegeSend();	//ダメージを与える
+				BattleStageNow = (int)DRAW_DAMEGE;		//ダメージ描画状態へ
+			}
+
 		}
 		else if (ui->BattleCommand->GetSelectNum() == (int)COMMANDE_MAGIC)	//魔法を選んでいたら
 		{
@@ -1639,9 +1645,15 @@ void Bt_DrawEffect()
 
 			}
 
+			if (Magic_effect->GetIsDrawEnd())	//魔法エフェクトの描画が終わったら
+			{
+				player->SetMP(player->GetMP() - mgc_list->GetCost(player->GetChoiseSkil()));		//使った魔法に応じたMPを減らす
+				enemy[EncounteEnemyType]->DamegeSend();	//ダメージを与える
+				BattleStageNow = (int)DRAW_DAMEGE;		//ダメージ描画状態へ
+			}
 
 		}
-		else				//それ以外だったら
+		else		//エフェクト描画のないコマンドを選んでいたら(防御、アイテム)
 		{
 			if (ui->BattleCommand->GetSelectNum() == (int)COMMANDE_ITEM)		//アイテムを選んでいたら
 			{
@@ -1651,21 +1663,6 @@ void Bt_DrawEffect()
 			}
 
 			enemy[EncounteEnemyType]->DamegeSend();	//ダメージを与える
-
-			BattleStageNow = (int)DRAW_DAMEGE;		//ダメージ描画状態へ
-
-		}
-
-		if (Magic_effect->GetIsDrawEnd() || Atack_effect->GetIsDrawEnd())		//エフェクト描画が終了したら
-		{
-
-			if (ui->BattleCommand->GetSelectNum() == (int)COMMANDE_MAGIC)	//魔法を選んでいたら
-			{
-				player->SetMP(player->GetMP() - mgc_list->GetCost(player->GetChoiseSkil()));		//使った魔法に応じたMPを減らす
-			}
-
-			enemy[EncounteEnemyType]->DamegeSend();	//ダメージを与える
-
 			BattleStageNow = (int)DRAW_DAMEGE;		//ダメージ描画状態へ
 
 		}
@@ -1682,7 +1679,7 @@ void Bt_DrawEffect()
 				enemy[EncounteEnemyType]->GetChoiseSkil());
 
 		}
-		else				//ボス戦じゃなければ
+		else	//ボス戦じゃなければ
 		{
 			//敵のエフェクト表示
 			Enemy_Atk_effect->Draw((GAME_WIDTH / 2 - Enemy_Atk_effect->GetWidth(enemy[EncounteEnemyType]->GetChoiseSkil()) / 2),
@@ -1690,8 +1687,6 @@ void Bt_DrawEffect()
 				enemy[EncounteEnemyType]->GetChoiseSkil());
 
 		}
-
-
 
 		if (Enemy_Atk_effect->GetIsDrawEnd() || Boss_Atk_effect->GetIsDrawEnd())		//エフェクト描画終了したら
 		{
