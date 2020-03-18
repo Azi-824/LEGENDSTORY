@@ -24,7 +24,11 @@ ENEMY::ENEMY(const char *dir,const char *name)
 	this->EmergenceMap = 0;	//出現MAP
 	this->EncounteRate = 0;	//遭遇率
 
-	this->ChoiseSkil = -1;	//使用するスキル初期化
+	this->ChoiseSkil = ENEMY_NONE;	//使用するスキル初期化
+
+	this->ItemCode = ENEMY_NONE;	//アイテムコード初期化
+	this->WeaponCode = ENEMY_NONE;	//武器コード初期化
+	this->ArmorCode = ENEMY_NONE;	//防具コード初期化
 
 	//画像設定
 	if (this->SetImage(dir, name))	//画像が読み込めていたら
@@ -125,6 +129,27 @@ void ENEMY::SetEmergenceMap(int mapno)
 void ENEMY::SetEncounteRate(int encounterate)
 {
 	this->EncounteRate = encounterate;
+	return;
+}
+
+//アイテムコード設定
+void ENEMY::SetItemCode(int itemcode)
+{
+	this->ItemCode = itemcode;
+	return;
+}
+
+//武器コード設定
+void ENEMY::SetWeaponCode(int weaponcode)
+{
+	this->WeaponCode = weaponcode;
+	return;
+}
+
+//防具コード設定
+void ENEMY::SetArmorCode(int armorcode)
+{
+	this->ArmorCode = armorcode;
 	return;
 }
 

@@ -59,6 +59,8 @@
 
 #define ENEMY_ENCOUNT_TYPE_NONE	-1	//敵と遭遇していないとき
 
+#define ENEMY_NONE	-1			//初期値
+
 //############## 列挙型 ########################
 enum ENEMY_TYPE
 {
@@ -112,6 +114,10 @@ private:
 	std::vector<int> Skil;	//スキル
 	int ChoiseSkil;			//使用するスキル
 
+	int ItemCode;	//アイテムコード
+	int WeaponCode;	//武器コード
+	int ArmorCode;	//防具コード
+
 	bool IsLoad;	//読み込めたか
 
 public:
@@ -132,6 +138,10 @@ public:
 
 	void SetEmergenceMap(int);	//出現MAPNoの設定
 	void SetEncounteRate(int);	//遭遇率設定
+
+	void SetItemCode(int);		//アイテムコード設定
+	void SetWeaponCode(int);	//武器コード設定
+	void SetArmorCode(int);		//防具コード設定
 
 	void StateSetInit();	//敵ステータス初期設定
 

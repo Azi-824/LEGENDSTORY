@@ -78,8 +78,17 @@ bool DATA::LoadEnemy(ENEMY *enemy[],const char *dir,const char *name)
 			std::getline(ifs, buf, ',');	//カンマまで読み込み
 			enemy[i]->SetEncounteRate(atoi(buf.c_str()));	//遭遇率読み込み
 
-			std::getline(ifs, buf, '\n');	//最後は改行まで読み込み
+			std::getline(ifs, buf, ',');	//カンマまで読み込み
 			enemy[i]->SetEmergenceMap(atoi(buf.c_str()));	//出現MAP読み込み
+
+			std::getline(ifs, buf, ',');	//カンマまで読み込み
+			enemy[i]->SetItemCode(atoi(buf.c_str()));	//ドロップするアイテムコード読み込み
+
+			std::getline(ifs, buf, ',');	//カンマまで読み込み
+			enemy[i]->SetWeaponCode(atoi(buf.c_str()));	//ドロップする武器コード読み込み
+
+			std::getline(ifs, buf, '\n');	//最後は改行まで読み込み
+			enemy[i]->SetArmorCode(atoi(buf.c_str()));	//ドロップする防具コード読み込み
 
 		}
 
