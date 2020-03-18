@@ -91,7 +91,6 @@ private:
 	std::vector<int> Skil;	//スキル一覧
 	int ChoiseSkil;			//使用するスキル
 
-	int SendDamege;			//与えるダメージ
 	int RecvDamege;			//受けるダメージ
 
 	int MoveSpeed;			//移動速度
@@ -107,7 +106,7 @@ private:
 	bool IsBattleWin;		//戦闘に勝ったか
 	bool LevUpMsgStart_flg;	//レベルアップメッセージスタートフラグ
 
-	int ChengeMapKind;	//マップ切り替えの種類
+	int ChengeMapKind;		//マップ切り替えの種類
 
 public:
 	PLAYER();				//コンストラクタ
@@ -117,12 +116,10 @@ public:
 	bool SetAnime(const char *, const char *, int, int, int, int, int, double, bool);	//アニメーション画像の設定
 	bool SetImage(const char *, const char *);		//画像の設定
 	
-	void SetHP(int);		//現在の体力設定
 	void SetMP(int);		//MP設定
 
 	void SetChoiseSkil(int);//使用するスキル設定
 
-	void SetIsArive(bool);			//生きているかを設定
 	void SetIsKeyDown(bool);		//キー入力ありか設定
 	void SetPosRelative(int, int);	//位置を設定(相対的)
 	void SetPosAbsolute(int, int);	//位置を設定(絶対的)
@@ -151,7 +148,7 @@ public:
 	int GetEquipDef();		//装備防御力取得
 
 	int GetChoiseSkil();		//使用するスキル取得
-	std::vector<int> GetSkil();	//スキル一覧の先頭要素取得
+	std::vector<int> GetSkil();	//スキル一覧取得
 
 	int GetMoveSpeed();			//移動速度取得
 	bool GetIsArive();			//生きているか取得
@@ -159,7 +156,6 @@ public:
 	bool GetKeyOperation();		//キーボードで操作できるか取得
 	COLLISION * GetCollision();	//当たり判定を取得
 	bool GetIsMenu();			//メニュー描画中か取得
-	int GetSendDamege();		//与えたダメージを取得
 	int GetRecvDamege();		//受けたダメージを取得
 	bool GetIsActMsg();			//行動メッセージ表示中か取得
 	bool GetIsMove();			//移動中かどうか取得
@@ -178,7 +174,7 @@ public:
 	void MoveRight();			//右へ移動
 
 	void DamegeCalc(ENEMY *,int);	//ダメージ計算
-	void DamegeSend();			//ダメージを与える
+	void DamegeSend();				//ダメージを与える
 
 	void AddExp(int);	//経験値追加処理
 

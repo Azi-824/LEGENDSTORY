@@ -49,7 +49,6 @@ bool PLAYER::SetInit()
 
 	this->ChoiseSkil = this->Skil[0];	//最初は通常攻撃を使用するスキルとして設定する
 
-	this->SendDamege = 0;	//与えるダメージ0
 	this->RecvDamege = 0;	//受けるダメージ0
 
 	//装備関係
@@ -112,17 +111,6 @@ bool PLAYER::SetImage(const char *dir, const char *name)
 
 }
 
-//現在のHP設定
-void PLAYER::SetHP(int hp)
-{
-	this->NowHP = hp;
-	if (this->NowHP >= this->MaxHP)	//現在のHPが最大HPより多くなったら
-	{
-		this->NowHP = this->MaxHP;	//最大HPを超えないようにする
-	}
-	return;
-}
-
 //現在のMP設定
 void PLAYER::SetMP(int mp)
 {
@@ -133,13 +121,6 @@ void PLAYER::SetMP(int mp)
 void PLAYER::SetChoiseSkil(int type)
 {
 	this->ChoiseSkil = this->Skil[type];		//指定されたスキルを、使用するスキルとして設定
-	return;
-}
-
-//生きているか設定
-void PLAYER::SetIsArive(bool Isarive)
-{
-	this->IsArive = Isarive;
 	return;
 }
 
@@ -358,7 +339,7 @@ int PLAYER::GetChoiseSkil(void)
 	return this->ChoiseSkil;	
 }
 
-//スキル一覧の先頭要素取得
+//スキル一覧取得
 std::vector<int> PLAYER::GetSkil(void)
 {
 	return this->Skil;
@@ -398,12 +379,6 @@ COLLISION * PLAYER::GetCollision()
 bool PLAYER::GetIsMenu()
 {
 	return this->IsMenu;
-}
-
-//与えるダメージを取得
-int PLAYER::GetSendDamege()
-{
-	return this->SendDamege;
 }
 
 //受けるダメージを取得
