@@ -96,4 +96,6 @@ void Bt_DrawEffect();		//戦闘画面エフェクト描画状態の処理
 void Bt_DrawDamege();		//戦闘画面ダメージ描画状態の処理
 void Bt_ResultMsg();		//戦闘画面リザルトメッセージ描画状態の処理
 
+void JudgeDrop();			//ドロップした物の種類を判別する
+
 //########## クラスの定義 ##########

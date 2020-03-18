@@ -231,7 +231,6 @@ bool ENEMY::GetIsLoad()
 int ENEMY::GetChoiseSkil()
 {
 	return this->ChoiseSkil;
-	//return 2;
 }
 
 //行動決定処理
@@ -257,4 +256,34 @@ void ENEMY::DamegeSend(void)
 	}
 
 	return;
+}
+
+//ドロップ処理
+int ENEMY::Drop(void)
+{
+	int rand = GetRand(ENEMY_DROP_KIND - 1);	//ドロップする物の種類数の中からランダムで決定
+
+	switch (rand)	//ドロップする種類ごと
+	{
+
+	case (int)DROP_TYPE_ITEM:	//アイテムの場合
+
+		return this->ItemCode;	//アイテムコードを返す
+
+		break;	//アイテムの場合ここまで
+
+	case (int)DROP_TYPE_WEAPON:	//武器の場合
+
+		return this->WeaponCode;	//武器コードを返す
+
+		break;	//武器の場合ここまで
+
+	case (int)DROP_TYPE_ARMOR:		//防具の場合
+
+		return this->ArmorCode;		//防具コードを返す
+
+	default:
+		break;
+	}
+
 }

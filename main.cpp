@@ -670,7 +670,7 @@ void Play_Draw()
 				//アイテム描画処理
 				if (ui->ItemSelect->GetSelectKind() != 0)	//アイテムを一種類以上持っていたら
 				{
-					ui->DrawItemSelect(MENU_TEXT_X, MENU_TEXT_TOP_Y, player->GetBelongingsPossession((int)BELONGINGS_ITEM));	//アイテム描画
+					ui->DrawItemSelect(MENU_TEXT_X, MENU_TEXT_TOP_Y, player->GetBelongingsPossession((int)DROP_TYPE_ITEM));	//アイテム描画
 
 					if (ui->ItemSelect->GetSelectFlg())		//アイテムを選択したら
 					{
@@ -685,7 +685,7 @@ void Play_Draw()
 
 				//装備描画処理
 
-				ui->DrawMenuEquip(player->GetBelongingsPossession((int)BELONGINGS_WEAPON), player->GetBelongingsPossession((int)BELONGINGS_ARMOR));	//装備描画処理
+				ui->DrawMenuEquip(player->GetBelongingsPossession((int)DROP_TYPE_WEAPON), player->GetBelongingsPossession((int)DROP_TYPE_ARMOR));	//装備描画処理
 
 				if (ui->GetMenuEquipDir() == (int)MENU_EQUIP_SELECT_DECISION)		//選択肢の段階が、はい、いいえの段階だったら
 				{
@@ -1259,8 +1259,7 @@ void SetGameInit()
 
 	player->SetWeaponAtk(weapon_list);		//武器攻撃力設定
 	player->SetArmorDef(armor_list);		//防具防御力設定
-	player->SetItemRecovery(item_list);	//回復量設定
-
+	player->SetItemRecovery(item_list);		//回復量設定
 
 	ui->SelectUpdate(player->GetWeaponClass(), weapon_list);	//武器の選択肢更新
 	ui->SelectUpdate(player->GetArmorClass(), armor_list);		//防具の選択肢更新
@@ -1459,7 +1458,7 @@ void Bt_WaitAct()
 				if (ui->ItemSelect->GetSelectKind() != 0)	//アイテムを持っていたら
 				{
 
-					ui->DrawItemSelect(BT_LIST_TXT_X, BT_LIST_TXT_Y, player->GetBelongingsPossession((int)BELONGINGS_ITEM));	//持っているアイテムを描画
+					ui->DrawItemSelect(BT_LIST_TXT_X, BT_LIST_TXT_Y, player->GetBelongingsPossession((int)DROP_TYPE_ITEM));	//持っているアイテムを描画
 
 					ui->ItemSelect->SelectOperation(keydown, sys_se);	//アイテム選択肢キー操作
 
@@ -1762,11 +1761,14 @@ void Bt_DrawDamege()
 			player->SetIsBattleWin(true);						//戦闘に勝利
 			player->AddExp(enemy[EncounteEnemyType]->GetEXP());	//経験値加算
 
+			JudgeDrop();	//ドロップ処理
+
 			//▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼ リザルトメッセージ設定処理ここから ▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼
 			bt_msg[(int)BT_MSG_RESULT]->SetMsg(enemy[EncounteEnemyType]->GetName());	//名前設定
 			bt_msg[(int)BT_MSG_RESULT]->AddText("を倒した！");							//メッセージ内容追加
 			bt_msg[(int)BT_MSG_RESULT]->AddMsg(std::to_string(enemy[EncounteEnemyType]->GetEXP()).c_str());	//経験値設定
 			bt_msg[(int)BT_MSG_RESULT]->AddText("の経験値を手に入れた！");				//メッセージ内容追加
+			//bt_msg[(int)BT_MSG_RESULT]->AddMsg()
 
 			if (player->GetLevUpMsgStartFlg())		//レベルアップしたときは
 			{
@@ -1849,4 +1851,42 @@ void Bt_ResultMsg()
 
 }
 
+//ドロップした物の種類を判別する
+void JudgeDrop()
+{
+	int drop_code = enemy[EncounteEnemyType]->Drop();	//ドロップ処理をし、ドロップしたもののコード番号を取得する
 
+	/*
+	ドロップするものには、コード番号がついている
+	種類によってコード番号が異なる
+	0番台　(0～99)　　：アイテム
+	100番台(100～199) ：武器
+	200番台(200～299) ：防具
+	コード番号を、100(DROP_JUDGE_NUM)で割った結果によって種類を判別できる
+	*/
+	switch (drop_code / DROP_JUDGE_NUM)	//ドロップした物のコード番号から種類を判定
+	{
+
+	case (int)DROP_TYPE_ITEM:	//アイテムだった場合
+
+		player->AddDrop(drop_code, item_list->GetRecovery(drop_code));	//アイテムを追加
+
+		break;	//アイテムだった場合ここまで
+
+	case (int)DROP_TYPE_WEAPON:	//武器だった場合
+
+		player->AddDrop(drop_code, weapon_list->GetPower(drop_code));	//武器を追加
+
+		break;	//武器だった場合ここまで
+
+	case (int)DROP_TYPE_ARMOR:	//防具だった場合
+
+		player->AddDrop(drop_code, armor_list->GetDefense(drop_code));	//防具を追加
+
+	default:
+		break;
+	}
+
+	return;
+
+}

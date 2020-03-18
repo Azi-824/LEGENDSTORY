@@ -61,6 +61,9 @@
 
 #define ENEMY_NONE	-1			//初期値
 
+#define ENEMY_DROP_KIND 3		//ドロップする物の種類
+#define DROP_JUDGE_NUM	100		//ドロップした物の種類を判別するのに使用する
+
 //############## 列挙型 ########################
 enum ENEMY_TYPE
 {
@@ -89,6 +92,13 @@ enum ENEMY_TYPE
 	ENE_GARGOYLE,			//ガーゴイル
 	ENE_PROMINENCE,			//プロミネンス
 	ENE_BOSS				//魔王
+};
+
+enum DROP_TYPE
+{
+	DROP_TYPE_ITEM,		//アイテム
+	DROP_TYPE_WEAPON,	//武器
+	DROP_TYPE_ARMOR		//防具
 };
 
 //############## クラス定義 #####################
@@ -161,5 +171,6 @@ public:
 
 	void ActDecision();		//行動決定処理
 	void DamegeSend();		//ダメージを与える
+	int Drop();				//ドロップ処理
 
 };

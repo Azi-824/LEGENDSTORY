@@ -925,32 +925,32 @@ void PLAYER::SetArmorDef(LIST_ARMOR *list_armor)
 	return;
 }
 
-//指定された持ち物を追加する
-void PLAYER::BelongingsAdd(int type, int code, int value)
+//ドロップした持ち物を追加する
+void PLAYER::AddDrop(int code, int value)
 {
 
-	switch (type)
+	switch (code/DROP_JUDGE_NUM)	//ドロップした物のコード番号から種類を判定
 	{
 
-	case (int)BELONGINGS_WEAPON:	//武器の場合
+	case (int)DROP_TYPE_ITEM:		//アイテムの場合
+
+		this->Item->AddItem(code, value);	//アイテム追加
+
+		break;	//アイテムの場合ここまで
+
+	case (int)DROP_TYPE_WEAPON:	//武器の場合
 
 		this->Weapon->Add(code);		//武器登録
 		this->Weapon->SetAtk(value);	//攻撃力登録
 
 		break;	//武器の場合ここまで
 
-	case (int)BELONGINGS_ARMOR:		//防具の場合
+	case (int)DROP_TYPE_ARMOR:		//防具の場合
 
 		this->Armor->Add(code);	//防具登録
 		this->Armor->SetDef(value);	//防御力設定
 
 		break;	//防具の場合ここまで
-
-	case (int)BELONGINGS_ITEM:		//アイテムの場合
-
-		this->Item->AddItem(code, value);	//アイテム追加
-
-		break;	//アイテムの場合ここまで
 
 	default:
 		break;
@@ -967,23 +967,24 @@ std::vector<int> PLAYER::GetBelongingsPossession(int type)
 	switch (type)
 	{
 
-	case (int)BELONGINGS_WEAPON:	//武器の場合
+	case (int)DROP_TYPE_ITEM:		//アイテムの場合
+
+		return this->Item->GetPossession();			//アイテムの所持数取得（すべて）
+
+		break;	//アイテムの場合ここまで
+
+
+	case (int)DROP_TYPE_WEAPON:	//武器の場合
 
 		return this->Weapon->GetPossession();	//武器の所持数取得（すべて）
 
 		break;	//武器の場合ここまで
 
-	case (int)BELONGINGS_ARMOR:		//防具の場合
+	case (int)DROP_TYPE_ARMOR:		//防具の場合
 
 		return this->Armor->GetPossession();		//防具の所持数取得（すべて）
 
 		break;	//防具の場合ここまで
-
-	case (int)BELONGINGS_ITEM:		//アイテムの場合
-
-		return this->Item->GetPossession();			//アイテムの所持数取得（すべて）
-
-		break;	//アイテムの場合ここまで
 
 	default:
 		break;
