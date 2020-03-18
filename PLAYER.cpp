@@ -884,12 +884,12 @@ WEAPON * PLAYER::GetWeaponClass(void)
 }
 
 //•Ší‚ÌUŒ‚—Í‚ğİ’è
-void PLAYER::SetWeaponAtk(std::vector<int> power)
+void PLAYER::SetWeaponAtk(LIST_WEAPON *list_weapon)
 {
 
 	for (int i = 0; i < this->Weapon->GetSize(); ++i)	//•Ší”•ªŒJ‚è•Ô‚µ
 	{
-		this->Weapon->SetAtk(power[this->Weapon->GetCode(i)]);	//•ŠíUŒ‚—Íİ’è
+		this->Weapon->SetAtk(list_weapon->GetPower(this->Weapon->GetCode(i)));	//•ŠíUŒ‚—Íİ’è
 	}
 
 	return;
@@ -916,11 +916,11 @@ ARMOR * PLAYER::GetArmorClass(void)
 }
 
 //–h‹ï‚Ì–hŒä—Íİ’è
-void PLAYER::SetArmorDef(std::vector<int> def)
+void PLAYER::SetArmorDef(LIST_ARMOR *list_armor)
 {
 	for (int i = 0; i < this->Armor->GetSize(); ++i)	//–h‹ï”•ªŒJ‚è•Ô‚µ
 	{
-		this->Armor->SetDef(def[this->Weapon->GetCode(i)]);	//–h‹ï–hŒä—Íİ’è
+		this->Armor->SetDef(list_armor->GetDefense(this->Armor->GetCode(i)));	//–h‹ï–hŒä—Íİ’è
 	}
 	return;
 }
@@ -1015,11 +1015,11 @@ ITEM * PLAYER::GetItemClass(void)
 }
 
 //ƒAƒCƒeƒ€‚Ì‰ñ•œ—Ê‚ğİ’è
-void PLAYER::SetItemRecovery(std::vector<int> recovery)
+void PLAYER::SetItemRecovery(LIST_ITEM *list_item)
 {
 	for (int i = 0; i < this->Item->GetSize(); ++i)	//ƒAƒCƒeƒ€”•ªŒJ‚è•Ô‚µ
 	{
-		this->Item->SetRecovery(recovery[this->Item->GetCode(i)]);	//ƒAƒCƒeƒ€‰ñ•œ—Êİ’è
+		this->Item->SetRecovery(list_item->GetRecovery(this->Item->GetCode(i)));	//ƒAƒCƒeƒ€‰ñ•œ—Êİ’è
 	}
 }
 

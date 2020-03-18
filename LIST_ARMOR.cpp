@@ -76,15 +76,15 @@ LIST_ARMOR::~LIST_ARMOR()
 }
 
 //防御力取得
-int LIST_ARMOR::GetDefense(int kind)
+int LIST_ARMOR::GetDefense(int code)
 {
-	return this->Defense[kind];	//防御力取得
+
+	for (int i = 0; i < this->GetListSize(); ++i)	//リストのサイズ数分繰り返す
+	{
+		if (this->GetCode(i) == code)	//指定されたコードと一致したら
+		{
+			return this->Defense[i];	//防御力取得
+		}
+	}
+
 }
-
-//防御力取得(全て)
-std::vector<int> LIST_ARMOR::GetDefense()
-{
-	return this->Defense;	//防御力取得
-}
-
-

@@ -75,14 +75,13 @@ LIST_WEAPON::~LIST_WEAPON()
 }
 
 //攻撃力取得
-int LIST_WEAPON::GetPower(int kind)
+int LIST_WEAPON::GetPower(int code)
 {
-	return this->Power[kind];	//攻撃力取得
+	for (int i = 0; i < this->GetListSize(); ++i)	//リストのサイズ数分繰り返す
+	{
+		if (this->GetCode(i) == code)	//指定されたコードと一致したら
+		{
+			return this->Power[i];		//攻撃力取得
+		}
+	}
 }
-
-//攻撃力取得(全て)
-std::vector<int> LIST_WEAPON::GetPower()
-{
-	return this->Power;	//攻撃力取得
-}
-

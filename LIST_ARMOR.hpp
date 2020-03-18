@@ -23,6 +23,5 @@ public:
 	~LIST_ARMOR();									//デストラクタ
 
 	int GetDefense(int);							//防御力取得
-	std::vector<int> GetDefense();					//防御力取得(全て)
 
 };

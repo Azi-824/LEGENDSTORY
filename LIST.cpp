@@ -56,9 +56,18 @@ void LIST::SetIsLoad(bool Isload)
 }
 
 //名前取得
-const char * LIST::GetName(int kind)
+const char * LIST::GetName(int code)
 {
-	return this->Name[kind].c_str();
+
+	for (int i = 0; i < this->GetListSize(); ++i)	//リストのサイズ数分繰り返す
+	{
+		if (this->Code[i] == code)	//指定されたコードと一致したら
+		{
+			return this->Name[i].c_str();
+		}
+	}
+
+
 }
 
 //読み込めたか取得

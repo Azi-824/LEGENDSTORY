@@ -37,24 +37,40 @@ ITEM::~ITEM()
 }
 
 //所持数増加
-void ITEM::IncreasePossession(int kind)
+void ITEM::IncreasePossession(int code)
 {
-	this->Possession[kind]++;	//所持数を増やす
-	this->Chenge_flg = true;	//変更あり
+
+	for (int i = 0; i < this->GetSize(); ++i)	//リストのサイズ数分繰り返す
+	{
+		if (this->GetCode(i) == code)	//指定されたコードと一致したら
+		{
+			this->Possession[i]++;	//所持数を増やす
+			this->Chenge_flg = true;	//変更あり
+		}
+	}
+
+
 	return;
 }
 
 //所持数減少
-void ITEM::DecreasePossession(int kind)
+void ITEM::DecreasePossession(int code)
 {
-	this->Possession[kind]--;			//所持数を減らす
-	if (this->Possession[kind] <= 0)	//所持数が0以下になったら
-	{
-		this->IsDraw[kind] = false;		//描画してはいけない
-		this->Possession[kind] = 0;		//0個より少なくしない
-	}
 
-	this->Chenge_flg = true;			//変更あり
+	for (int i = 0; i < this->GetSize(); ++i)	//リストのサイズ数分繰り返す
+	{
+		if (this->GetCode(i) == code)	//指定されたコードと一致したら
+		{
+			this->Possession[i]--;		//所持数を減らす
+			if (this->Possession[i] <= 0)	//所持数が0以下になったら
+			{
+				this->IsDraw[i] = false;		//描画してはいけない
+				this->Possession[i] = 0;		//0個より少なくしない
+			}
+
+			this->Chenge_flg = true;	//変更あり
+		}
+	}
 	return;
 }
 
@@ -81,13 +97,29 @@ int ITEM::GetCode(int kind)
 //所持数取得
 int ITEM::GetPossession(int code)
 {
-	return this->Possession[code];
+
+	for (int i = 0; i < this->GetSize(); ++i)	//リストのサイズ数分繰り返す
+	{
+		if (this->GetCode(i) == code)	//指定されたコードと一致したら
+		{
+			return this->Possession[i];
+		}
+	}
+
 }
 
 //回復量取得
 int ITEM::GetRecovery(int code)
 {
-	return this->Recovery[code];
+
+	for (int i = 0; i < this->GetSize(); ++i)	//リストのサイズ数分繰り返す
+	{
+		if (this->GetCode(i) == code)	//指定されたコードと一致したら
+		{
+			return this->Recovery[i];
+		}
+	}
+
 }
 
 //要素数を取得
@@ -109,9 +141,16 @@ std::vector<int> ITEM::GetPossession(void)
 }
 
 //描画してよいか取得
-bool ITEM::GetIsDraw(int kind)
+bool ITEM::GetIsDraw(int code)
 {
-	return this->IsDraw[kind];
+	for (int i = 0; i < this->GetSize(); ++i)	//リストのサイズ数分繰り返す
+	{
+		if (this->GetCode(i) == code)	//指定されたコードと一致したら
+		{
+			return this->IsDraw[i];
+		}
+	}
+
 }
 
 //アイテムを追加

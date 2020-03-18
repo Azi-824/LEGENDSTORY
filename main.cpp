@@ -1257,9 +1257,10 @@ void SetGameInit()
 
 	//Œã‚É•ÏX
 
-	player->SetWeaponAtk(weapon_list->GetPower());		//•ŠíUŒ‚—Íİ’è
-	player->SetArmorDef(armor_list->GetDefense());		//–h‹ï–hŒä—Íİ’è
-	player->SetItemRecovery(item_list->GetRecovery());	//‰ñ•œ—Êİ’è
+	player->SetWeaponAtk(weapon_list);		//•ŠíUŒ‚—Íİ’è
+	player->SetArmorDef(armor_list);		//–h‹ï–hŒä—Íİ’è
+	player->SetItemRecovery(item_list);	//‰ñ•œ—Êİ’è
+
 
 	ui->SelectUpdate(player->GetWeaponClass(), weapon_list);	//•Ší‚Ì‘I‘ğˆXV
 	ui->SelectUpdate(player->GetArmorClass(), armor_list);		//–h‹ï‚Ì‘I‘ğˆXV

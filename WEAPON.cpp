@@ -30,7 +30,15 @@ void WEAPON::SetAtk(int atk)
 }
 
 //攻撃力取得
-int WEAPON::GetAtk(int kind)
+int WEAPON::GetAtk(int code)
 {
-	return this->Atk[kind];		//攻撃力取得
+
+	for (int i = 0; i < this->GetSize(); ++i)	//リストのサイズ数分繰り返す
+	{
+		if (this->GetCode(i) == code)	//指定されたコードと一致したら
+		{
+			return this->Atk[i];		//攻撃力取得
+		}
+	}
+
 }

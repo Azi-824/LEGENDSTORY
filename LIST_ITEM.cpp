@@ -85,19 +85,27 @@ LIST_ITEM::~LIST_ITEM()
 }
 
 //回復量取得
-int LIST_ITEM::GetRecovery(int kind)
+int LIST_ITEM::GetRecovery(int code)
 {
-	return this->Recovery[kind];
-}
-
-//回復量取得(全て)
-std::vector<int> LIST_ITEM::GetRecovery()
-{
-	return this->Recovery;
+	for (int i = 0; i < this->GetListSize(); ++i)	//リストのサイズ数分繰り返す
+	{
+		if (this->GetCode(i) == code)	//指定されたコードと一致したら
+		{
+			return this->Recovery[i];
+		}
+	}
 }
 
 //説明文取得
-const char * LIST_ITEM::GetDescription(int kind)
+const char * LIST_ITEM::GetDescription(int code)
 {
-	return this->Description[kind].c_str();
+
+	for (int i = 0; i < this->GetListSize(); ++i)	//リストのサイズ数分繰り返す
+	{
+		if (this->GetCode(i) == code)	//指定されたコードと一致したら
+		{
+			return this->Description[i].c_str();
+		}
+	}
+
 }

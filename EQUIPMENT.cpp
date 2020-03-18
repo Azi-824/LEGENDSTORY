@@ -37,27 +37,57 @@ EQUIPMENT::~EQUIPMENT()
 }
 
 //所持数増加
-void EQUIPMENT::IncreasePossession(int kind)
+void EQUIPMENT::IncreasePossession(int code)
 {
-	this->Possession[kind]++;
+
+	for (int i = 0; i < this->GetSize(); ++i)	//リストのサイズ数分繰り返す
+	{
+		if (this->GetCode(i) == code)	//指定されたコードと一致したら
+		{
+			this->Possession[i]++;
+			this->Chenge_flg = true;	//変更あり
+		}
+	}
+
+
 	return;
 }
 
 //所持数減少
-void EQUIPMENT::DecreasePossession(int kind)
+void EQUIPMENT::DecreasePossession(int code)
 {
-	this->Possession[kind]--;
-	if (this->Possession[kind] <= 0)	//所持数が0以下になったら
+	for (int i = 0; i < this->GetSize(); ++i)	//リストのサイズ数分繰り返す
 	{
-		this->IsDraw[kind] = false;		//描画してはいけない
+		if (this->GetCode(i) == code)	//指定されたコードと一致したら
+		{
+			this->Possession[i]--;
+
+			if (this->Possession[i] <= 0)	//所持数が0以下になったら
+			{
+				this->IsDraw[i] = false;	//描画してはいけない
+			}
+
+			this->Chenge_flg = true;		//変更あり
+
+		}
 	}
+
+
 	return;
 }
 
 //装備フラグ設定
-void EQUIPMENT::SetEquipFlg(int kind, bool equipflg)
+void EQUIPMENT::SetEquipFlg(int code, bool equipflg)
 {
-	this->EquipFlg[kind] = equipflg;	//装備フラグ設定
+
+	for (int i = 0; i < this->GetSize(); ++i)	//リストのサイズ数分繰り返す
+	{
+		if (this->GetCode(i) == code)	//指定されたコードと一致したら
+		{
+			this->EquipFlg[i] = equipflg;	//装備フラグ設定
+		}
+	}
+
 	return;
 }
 
@@ -82,9 +112,18 @@ int EQUIPMENT::GetCode(int kind)
 }
 
 //装備所持数取得
-int EQUIPMENT::GetPossession(int kind)
+int EQUIPMENT::GetPossession(int code)
 {
-	return this->Possession[kind];
+
+	for (int i = 0; i < this->GetSize(); ++i)	//リストのサイズ数分繰り返す
+	{
+		if (this->GetCode(i) == code)	//指定されたコードと一致したら
+		{
+			return this->Possession[i];
+		}
+	}
+
+
 }
 
 //装備所持数取得
@@ -94,9 +133,18 @@ std::vector<int> EQUIPMENT::GetPossession(void)
 }
 
 //装備フラグ取得
-bool EQUIPMENT::GetEquipFlg(int kind)
+bool EQUIPMENT::GetEquipFlg(int code)
 {
-	return this->EquipFlg[kind];
+
+	for (int i = 0; i < this->GetSize(); ++i)	//リストのサイズ数分繰り返す
+	{
+		if (this->GetCode(i) == code)	//指定されたコードと一致したら
+		{
+			return this->EquipFlg[i];
+		}
+	}
+
+
 }
 
 //要素数取得
@@ -161,7 +209,15 @@ void EQUIPMENT::LoadData(int code, int posse)
 }
 
 //描画してよいか取得
-bool EQUIPMENT::GetIsDraw(int kind)
+bool EQUIPMENT::GetIsDraw(int code)
 {
-	return this->IsDraw[kind];
+
+	for (int i = 0; i < this->GetSize(); ++i)	//リストのサイズ数分繰り返す
+	{
+		if (this->GetCode(i) == code)	//指定されたコードと一致したら
+		{
+			return this->IsDraw[i];
+		}
+	}
+
 }

@@ -31,7 +31,15 @@ void ARMOR::SetDef(int def)
 }
 
 //防御力を取得
-int ARMOR::GetDef(int kind)
+int ARMOR::GetDef(int code)
 {
-	return this->Def[kind];
+
+	for (int i = 0; i < this->GetSize(); ++i)	//リストのサイズ数分繰り返す
+	{
+		if (this->GetCode(i) == code)	//指定されたコードと一致したら
+		{
+			return this->Def[i];
+		}
+	}
+
 }

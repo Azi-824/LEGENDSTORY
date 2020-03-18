@@ -13,6 +13,9 @@
 #include "ARMOR.hpp"
 #include "ITEM.hpp"
 #include <fstream>
+#include "LIST_ITEM.hpp"
+#include "LIST_WEAPON.hpp"
+#include "LIST_ARMOR.hpp"
 
 //################# マクロ定義 #######################
 #define EXP_INCREASE_VALUE	5		//経験値の最大値の増え幅
@@ -191,12 +194,12 @@ public:
 	//武器関係
 	void EquipWeapon(int);					//武器を装備する
 	WEAPON * GetWeaponClass();				//武器クラスを取得
-	void SetWeaponAtk(std::vector<int>);	//武器の攻撃力設定
+	void SetWeaponAtk(LIST_WEAPON *);		//武器の攻撃力設定
 
 	////防具関係
 	void EquipArmor(int);					//防具を装備する
 	ARMOR * GetArmorClass();				//防具クラスを取得
-	void SetArmorDef(std::vector<int>);		//防具の防御力設定
+	void SetArmorDef(LIST_ARMOR *);		//防具の防御力設定
 
 	//メニュー画面で描画する持ち物関係
 	void BelongingsAdd(int, int, int);				//指定された持ち物を追加
@@ -205,7 +208,7 @@ public:
 	//アイテム関係
 	void UseItem(int);						//アイテム使用処理
 	ITEM * GetItemClass();					//アイテムクラスを取得
-	void SetItemRecovery(std::vector<int>);	//アイテムの回復量設定
+	void SetItemRecovery(LIST_ITEM *);	//アイテムの回復量設定
 
 	//セーブデータ関係
 	bool LoadData(const char *, const char *);	//セーブデータ読込
