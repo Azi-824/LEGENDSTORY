@@ -1371,7 +1371,6 @@ bool GameMainLoop()
 
 }
 
-
 //************************ 戦闘画面の各処理 *****************************
 //戦闘画面行動待ち状態の処理
 void Bt_WaitAct()
@@ -1729,14 +1728,9 @@ void Bt_DrawDamege()
 
 		if (Turn == (int)MY_TURN)			//味方のターンの時
 		{
-			if (ui->BattleCommand->GetSelectNum() == (int)COMMANDE_ATACK)	//攻撃を選んだ時は
-			{
-				Atack_effect->ResetIsAnime((int)NOMAL_ATACK);		//攻撃エフェクトリセット
-			}
-			else							//攻撃以外を選んだ時は
-			{
-				Magic_effect->ResetIsAnime(player->GetChoiseSkil());//魔法エフェクトリセット
-			}
+			//************ エフェクトリセット処理 ****************
+			Atack_effect->ResetIsAnime((int)NOMAL_ATACK);		//攻撃エフェクトリセット
+			Magic_effect->ResetIsAnime(player->GetChoiseSkil());//魔法エフェクトリセット
 
 			Turn = (int)ENEMY_TURN;				//敵のターンへ
 
@@ -1746,8 +1740,10 @@ void Bt_DrawDamege()
 
 			bt_msg[(int)BT_MSG_ACT]->SetMsg("どうする？");	//文字列設定
 
+			//*************** エフェクトリセット処理 **************
 			Enemy_Atk_effect->ResetIsAnime(enemy[EncounteEnemyType]->GetChoiseSkil());		//エフェクトリセット
 			Boss_Atk_effect->ResetIsAnime(enemy[EncounteEnemyType]->GetChoiseSkil());		//エフェクトリセット（ボス）
+
 			Turn = (int)MY_TURN;				//味方のターンへ
 		}
 
@@ -1755,9 +1751,7 @@ void Bt_DrawDamege()
 		{
 			player->SetIsBattleWin(false);	//戦闘に敗北
 
-			//▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼ リザルトメッセージ設定処理ここから ▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼
-			bt_msg[(int)BT_MSG_RESULT]->SetMsg("全滅してしまった…");	//文字列設定
-			//▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲ リザルトメッセージ設定処理ここまで ▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲
+			bt_msg[(int)BT_MSG_RESULT]->SetMsg("全滅してしまった…");	//リザルトメッセージ設定
 
 			BattleStageNow = (int)RESULT_MSG;		//リザルトメッセージ表示状態へ
 
@@ -1784,7 +1778,7 @@ void Bt_DrawDamege()
 			BattleStageNow = (int)RESULT_MSG;		//リザルトメッセージ表示状態へ
 
 		}
-		else
+		else	//敵、味方ともに死亡していなかったら
 		{
 			BattleStageNow = (int)WAIT_ACT;		//行動選択状態へ
 		}

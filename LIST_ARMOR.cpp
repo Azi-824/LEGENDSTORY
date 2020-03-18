@@ -48,7 +48,7 @@ LIST_ARMOR::LIST_ARMOR(const char *dir, const char *name)
 	{
 
 		std::getline(ifs, buf, ',');				//カンマまで読み込み
-		this->SetCodeNum(atoi(buf.c_str()));		//コード番号読み込み
+		this->SetCode(atoi(buf.c_str()));		//コード番号読み込み
 
 		std::getline(ifs, buf, ',');				//カンマまで読み込み
 		this->SetName(buf.c_str());					//名前読み込み

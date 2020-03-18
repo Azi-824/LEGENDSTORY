@@ -18,7 +18,7 @@ LIST::~LIST()
 
 	//vectorのメモリ解放を行う
 	std::vector<int> v;			//空のvectorを作成する
-	this->CodeNum.swap(v);			//空と中身を入れ替える
+	this->Code.swap(v);			//空と中身を入れ替える
 
 	//vectorのメモリ解放を行う
 	std::vector<std::string> v2;			//空のvectorを作成する
@@ -35,16 +35,16 @@ void LIST::SetName(std::string name)
 }
 
 //コード番号設定
-void LIST::SetCodeNum(int code)
+void LIST::SetCode(int code)
 {
-	this->CodeNum.push_back(code);	//コード番号設定
+	this->Code.push_back(code);	//コード番号設定
 	return;
 }
 
 //リストの要素数を設定
 void LIST::SetSize(void)
 {
-	this->Size = this->CodeNum.size();	//サイズ設定
+	this->Size = this->Code.size();	//サイズ設定
 	return;
 }
 
@@ -74,7 +74,7 @@ int LIST::GetListSize(void)
 }
 
 //コード番号取得
-int LIST::GetCodeNum(int kind)
+int LIST::GetCode(int kind)
 {
-	return this->CodeNum[kind];
+	return this->Code[kind];
 }

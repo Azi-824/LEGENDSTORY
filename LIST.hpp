@@ -23,7 +23,7 @@ private:
 
 	std::vector <std::string> Name;		//名前
 
-	std::vector<int> CodeNum;			//コード番号
+	std::vector<int> Code;				//コード番号
 
 	int Size;							//リストの要素数
 
@@ -36,7 +36,7 @@ public:
 
 	//セッタ
 	void SetName(std::string);			//名前設定
-	void SetCodeNum(int);				//コード番号設定
+	void SetCode(int);					//コード番号設定
 	void SetSize();						//リストの要素数設定
 	void SetIsLoad(bool);				//読み込めたか設定
 
@@ -44,6 +44,6 @@ public:
 	const char * GetName(int);			//技名取得
 	bool GetIsLoad(void);				//読み込めたか
 	int GetListSize(void);				//リストの要素数を取得
-	int GetCodeNum(int);				//コード番号取得
+	int GetCode(int);					//コード番号取得
 
 };
