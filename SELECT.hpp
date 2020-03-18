@@ -57,8 +57,9 @@ private:
 
 	std::vector<int> Code;		//装備やアイテムのコード番号
 
-	//static IMAGE *image_ui;	//UI画像
-	IMAGE *image_ui;	//UI画像
+	static IMAGE *image_ui;		//UI画像
+	static bool CreateImage;	//UI画像を生成したかどうか
+	//IMAGE *image_ui;	//UI画像
 
 	bool IsKeyOpe;		//キー操作可能か
 	bool SelectFlg;		//選択したか
@@ -80,8 +81,13 @@ public:
 	SELECT(Args...args)		
 	{
 
-		this->image_ui = new IMAGE(SELECT_DIR, SELECT_TRIANGLENAME);	//UI画像生成
-		this->image_ui->AddImage(SELECT_DIR, SELECT_TRIANGLE_MINI_NAME, 1);	//UI画像追加
+		//this->image_ui = new IMAGE(SELECT_DIR, SELECT_TRIANGLENAME);	//UI画像生成
+		if (this->CreateImage == false)	//UI画像を生成していなければ
+		{
+			this->image_ui->AddImage(SELECT_DIR, SELECT_TRIANGLENAME);	//UI画像追加
+			this->image_ui->AddImage(SELECT_DIR, SELECT_TRIANGLE_MINI_NAME);	//UI画像追加
+			this->CreateImage = true;	//UI画像生成済み
+		}
 
 		this->Str = { args... };			//展開
 		this->Str_itr = this->Str.begin();	//先頭要素

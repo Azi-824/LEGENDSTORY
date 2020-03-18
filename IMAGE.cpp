@@ -68,6 +68,12 @@ IMAGE::IMAGE(const char *dir,const char *name)
 	return;
 }
 
+//コンストラクタのオーバーロード
+IMAGE::IMAGE()
+{
+	return;
+}
+
 //デストラクタ
 IMAGE::~IMAGE()
 {
@@ -145,7 +151,7 @@ void IMAGE::Draw(int x, int y, int type)
 //画像を追加
 //引　数：const char *：画像のディレクトリ
 //引　数：const char *：画像の名前
-bool IMAGE::AddImage(const char *dir, const char *name,int type)
+bool IMAGE::AddImage(const char *dir, const char *name)
 {
 
 	this->IsLoad = false;	//読み込めていない

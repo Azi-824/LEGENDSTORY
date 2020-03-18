@@ -153,7 +153,7 @@ public:
 
 	//UI‰æ‘œŠÖŒW
 	void DrawUiImage(int, int,int);				//UI‚Ì‰æ‘œ‚ğ•`‰æ‚·‚é
-	bool AddUiImage(const char *, const char *,int);//ui‰æ‘œ‚ğ’Ç‰Á‚·‚é
+	bool AddUiImage(const char *, const char *);//ui‰æ‘œ‚ğ’Ç‰Á‚·‚é
 	int GetUiImageWidth(int);					//ui‰æ‘œ‚Ì‰¡•æ“¾
 	int GetUiImageHeight(int);					//ui‰æ‘œ‚Ì‚‚³æ“¾
 

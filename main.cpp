@@ -1367,26 +1367,26 @@ bool LoadGameData()
 
 	back = new IMAGE(MY_IMG_DIR_BACK, MY_IMG_NAME_BACK_TITLE);			//”wŒi‰æ‘œ‚ğ¶¬
 	if (back->GetIsLoad() == false) { return false; }					//“Ç‚İ‚İ¸”s
-	back->AddImage(MY_IMG_DIR_BACK, MY_IMG_NAME_BACK_END, (int)END_BACK);	//ƒGƒ“ƒh‰æ–Ê‚Ì”wŒi‰æ‘œ“Ç‚İ‚İ
+	back->AddImage(MY_IMG_DIR_BACK, MY_IMG_NAME_BACK_END);	//ƒGƒ“ƒh‰æ–Ê‚Ì”wŒi‰æ‘œ“Ç‚İ‚İ
 	if (back->GetIsLoad() == false) { return false; }							//“Ç‚İ‚İ¸”s
 
-	back_battle = new IMAGE(MY_IMG_DIR_BATTLE, IMG_NAME_BT_SOUGEN);	//í“¬‰æ–Ê(‘Œ´)‚Ì”wŒi‰æ‘œ“Ç‚İ‚İ
+	back_battle = new IMAGE(MY_IMG_DIR_BATTLE, IMG_NAME_BT_SOUGEN);		//í“¬‰æ–Ê(‘Œ´)‚Ì”wŒi‰æ‘œ“Ç‚İ‚İ
 	if (back_battle->GetIsLoad() == false) { return false; }					//“Ç‚İ‚İ¸”s
-	back_battle->AddImage(MY_IMG_DIR_BATTLE, IMG_NAME_BT_FOREST, (int)BT_BACK_FOREST);		//í“¬‰æ–ÊiXj‚Ì”wŒi‰æ‘œ‚Ì“Ç‚İ‚İ
+	back_battle->AddImage(MY_IMG_DIR_BATTLE, IMG_NAME_BT_FOREST);		//í“¬‰æ–ÊiXj‚Ì”wŒi‰æ‘œ‚Ì“Ç‚İ‚İ
 	if (back_battle->GetIsLoad() == false) { return false; }					//“Ç‚İ‚İ¸”s
-	back_battle->AddImage(MY_IMG_DIR_BATTLE, IMG_NAME_BT_OCEAN, (int)BT_BACK_OCEAN);		//í“¬‰æ–ÊiŠCj‚Ì”wŒi‰æ‘œ‚Ì“Ç‚İ‚İ
+	back_battle->AddImage(MY_IMG_DIR_BATTLE, IMG_NAME_BT_OCEAN);		//í“¬‰æ–ÊiŠCj‚Ì”wŒi‰æ‘œ‚Ì“Ç‚İ‚İ
 	if (back_battle->GetIsLoad() == false) { return false; }					//“Ç‚İ‚İ¸”s
-	back_battle->AddImage(MY_IMG_DIR_BATTLE, IMG_NAME_BT_AUTUMN, (int)BT_BACK_AUTUMN);		//í“¬‰æ–ÊiHj‚Ì”wŒi‰æ‘œ‚Ì“Ç‚İ‚İ
+	back_battle->AddImage(MY_IMG_DIR_BATTLE, IMG_NAME_BT_AUTUMN);		//í“¬‰æ–ÊiHj‚Ì”wŒi‰æ‘œ‚Ì“Ç‚İ‚İ
 	if (back_battle->GetIsLoad() == false) { return false; }					//“Ç‚İ‚İ¸”s
-	back_battle->AddImage(MY_IMG_DIR_BATTLE, IMG_NAME_BT_BOSS, (int)BT_BACK_BOSS);			//í“¬‰æ–Êiƒ{ƒXj‚Ì”wŒi‰æ‘œ‚Ì“Ç‚İ‚İ
+	back_battle->AddImage(MY_IMG_DIR_BATTLE, IMG_NAME_BT_BOSS);			//í“¬‰æ–Êiƒ{ƒXj‚Ì”wŒi‰æ‘œ‚Ì“Ç‚İ‚İ
 	if (back_battle->GetIsLoad() == false) { return false; }					//“Ç‚İ‚İ¸”s
-	back_battle->AddImage(MY_IMG_DIR_BATTLE, IMG_NAME_BT_SPRING, (int)BT_BACK_SPRING);		//í“¬‰æ–Êitj‚Ì”wŒi‰æ‘œ‚Ì“Ç‚İ‚İ
+	back_battle->AddImage(MY_IMG_DIR_BATTLE, IMG_NAME_BT_SPRING);		//í“¬‰æ–Êitj‚Ì”wŒi‰æ‘œ‚Ì“Ç‚İ‚İ
 	if (back_battle->GetIsLoad() == false) { return false; }					//“Ç‚İ‚İ¸”s
-	back_battle->AddImage(MY_IMG_DIR_BATTLE, IMG_NAME_BT_WINTER, (int)BT_BACK_WINTER);		//í“¬‰æ–Êi“~j‚Ì”wŒi‰æ‘œ‚Ì“Ç‚İ‚İ
+	back_battle->AddImage(MY_IMG_DIR_BATTLE, IMG_NAME_BT_WINTER);		//í“¬‰æ–Êi“~j‚Ì”wŒi‰æ‘œ‚Ì“Ç‚İ‚İ
 	if (back_battle->GetIsLoad() == false) { return false; }					//“Ç‚İ‚İ¸”s
-	back_battle->AddImage(MY_IMG_DIR_BATTLE, IMG_NAME_BT_REMAINS, (int)BT_BACK_REMAINS);	//í“¬‰æ–ÊiˆâÕj‚Ì”wŒi‰æ‘œ‚Ì“Ç‚İ‚İ
+	back_battle->AddImage(MY_IMG_DIR_BATTLE, IMG_NAME_BT_REMAINS);		//í“¬‰æ–ÊiˆâÕj‚Ì”wŒi‰æ‘œ‚Ì“Ç‚İ‚İ
 	if (back_battle->GetIsLoad() == false) { return false; }					//“Ç‚İ‚İ¸”s
-	back_battle->AddImage(MY_IMG_DIR_BATTLE, IMG_NAME_BT_CASTLE, (int)BT_BACK_CASTLE);		//í“¬‰æ–Êiéj‚Ì”wŒi‰æ‘œ‚Ì“Ç‚İ‚İ
+	back_battle->AddImage(MY_IMG_DIR_BATTLE, IMG_NAME_BT_CASTLE);		//í“¬‰æ–Êiéj‚Ì”wŒi‰æ‘œ‚Ì“Ç‚İ‚İ
 	if (back_battle->GetIsLoad() == false) { return false; }					//“Ç‚İ‚İ¸”s
 
 

@@ -82,6 +82,7 @@ private:
 
 public:
 	IMAGE(const char *,const char *);	//コンストラクタ
+	IMAGE();							//コンストラクタのオーバーロード
 	virtual ~IMAGE();					//デストラクタ
 
 	std::string GetFileName(void);	//名前を取得
@@ -98,7 +99,7 @@ public:
 
 	void Draw(int, int, int type=0);	//指定された画像を描画(指定しない場合、先頭の画像)
 
-	bool AddImage(const char *, const char *,int);	//画像を追加
+	bool AddImage(const char *, const char *);	//画像を追加
 
 };
 

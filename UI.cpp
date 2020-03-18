@@ -213,9 +213,9 @@ void UI::DrawUiImage(int x, int y,int type)
 }
 
 //ui‰æ‘œ‚ğ’Ç‰Á‚·‚é
-bool UI::AddUiImage(const char *dir, const char *name,int type)
+bool UI::AddUiImage(const char *dir, const char *name)
 {
-	if (this->UiImage->AddImage(dir, name,type))	//“Ç‚İ‚İ¬Œ÷‚µ‚½‚ç
+	if (this->UiImage->AddImage(dir, name))	//“Ç‚İ‚İ¬Œ÷‚µ‚½‚ç
 	{
 		return true;	//“Ç‚İ‚İ¬Œ÷
 	}

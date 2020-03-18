@@ -7,7 +7,8 @@
 
 //###################### クラス定義 ##########################
 
-//IMAGE* SELECT::image_ui = new IMAGE(SELECT_DIR, SELECT_TRIANGLENAME);	//UI画像生成
+IMAGE* SELECT::image_ui = new IMAGE();	//インストラクタ生成
+bool SELECT::CreateImage = false;		//UI画像を生成していない
 
 //コンストラクタのオーバーロード
 /*
@@ -15,8 +16,13 @@
 */
 SELECT::SELECT()
 {
-	this->image_ui = new IMAGE(SELECT_DIR, SELECT_TRIANGLENAME);	//UI画像生成
-	this->image_ui->AddImage(SELECT_DIR, SELECT_TRIANGLE_MINI_NAME, 1);	//UI画像追加
+	//this->image_ui = new IMAGE(SELECT_DIR, SELECT_TRIANGLENAME);	//UI画像生成
+	if (this->CreateImage == false)	//UI画像を生成していなければ
+	{
+		this->image_ui->AddImage(SELECT_DIR, SELECT_TRIANGLENAME);	//UI画像追加
+		this->image_ui->AddImage(SELECT_DIR, SELECT_TRIANGLE_MINI_NAME);	//UI画像追加
+		this->CreateImage = true;	//UI画像生成済み
+	}
 
 	this->IsKeyOpe = true;			//キー操作可能
 	this->SelectFlg = false;		//選択されていない
@@ -35,7 +41,7 @@ SELECT::SELECT()
 SELECT::~SELECT()
 {
 
-	delete this->image_ui;	//UI画像破棄
+	//delete this->image_ui;	//UI画像破棄
 
 	//vectorのメモリ解放を行う
 	std::vector<std::string> v;			//空のvectorを作成する
