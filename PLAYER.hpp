@@ -33,8 +33,10 @@
 #define PLAYER_AF_CLEAR_POS_X		720	//クリア後のプレイヤーの位置
 #define PLAYRT_AF_CLEAR_POS_Y		300	//クリア後のプレイヤーの位置
 
-#define PLAYER_DATA_DIR	R"(.\MY_DATA\Player\)"	//プレイヤーのデータのファイル名
-#define PLAYER_DATA_NAME	R"(Player_Data.csv)"//プレイヤーのデータのcsvファイル
+#define PLAYER_DATA_DIR			R"(.\MY_DATA\Player\)"		//プレイヤーのデータのファイル名
+#define PLAYER_DATA_NAME		R"(Player_Data.csv)"		//プレイヤーのデータのcsvファイル
+#define PLATER_DATA_INIT_NAME	R"(Player_Data_Init.csv)"	//プレイヤーの初期データのcsvファイル
+
 
 //############## マクロ定義：エラーメッセージ ###################
 #define PLAYER_DATA_ERROR_TTILE	"PLAYER_DATA_ERROR"								//エラータイトル

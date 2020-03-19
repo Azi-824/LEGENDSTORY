@@ -20,7 +20,6 @@
 #define MSG_DATA_DIR	R"(.\MY_DATA\Msg\)"		//メッセージのデータのファイル名
 #define MAPPOS_DATA_DIR R"(.\MY_DATA\MapPos\)"	//マップ位置のデータのファイル名
 
-#define PLATER_DATA_INIT_NAME R"(Player_Data_Init.csv)"//プレイヤーの初期データのcsvファイル
 #define ENEMY_DATA_NAME		R"(Enemy_Data.csv)"	//敵のデータの名前
 #define MSG_DATA_NAME		R"(Msg_Data.txt)"	//メッセージデータの名前
 #define MAPPOS_DATA_NAME	R"(MapPos_Data.csv)"//マップ位置のデータの名前

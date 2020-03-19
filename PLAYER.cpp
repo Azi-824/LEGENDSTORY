@@ -898,8 +898,11 @@ void PLAYER::SetWeaponAtk(LIST_WEAPON *list_weapon)
 //ドロップした武器の追加
 void PLAYER::AddDropWeapon(int code, int value)
 {
-	this->Weapon->Add(code);		//武器登録
-	this->Weapon->SetAtk(value);	//攻撃力登録
+	//武器登録
+	if (this->Weapon->Add(code))		//未登録だったら
+	{
+		this->Weapon->SetAtk(value);	//攻撃力登録
+	}
 	return;
 }
 
@@ -936,8 +939,11 @@ void PLAYER::SetArmorDef(LIST_ARMOR *list_armor)
 //ドロップした防具の追加
 void PLAYER::AddDropArmor(int code, int value)
 {
-	this->Armor->Add(code);		//防具登録
-	this->Armor->SetDef(value);	//防御力設定
+	//防具登録
+	if (this->Armor->Add(code))	//防具が未登録だったら
+	{
+		this->Armor->SetDef(value);	//防御力設定
+	}
 	return;
 }
 
@@ -1119,12 +1125,18 @@ bool PLAYER::LoadData(const char *dir, const char *name)
 	//*********************** 防具データ読み込み ****************************
 	std::getline(ifs, buf, ',');		//カンマまで読み込み
 	size = atoi(buf.c_str());			//防具数読み込み
-
+	int check = 0;						//改行が入っていないか確認するために使用
 	for (int i = 0; i < size; ++i)	//防具数分繰り返し
 	{
 		std::getline(ifs, buf, ',');		//カンマまで読み込み
 		code = atoi(buf.c_str());			//防具コード読み込み
 		std::getline(ifs, buf, ',');		//カンマまで読み込み
+
+		if (check = buf.find("\n"))	//読み込んだ文字列の中に改行文字が含まれていたら
+		{
+			buf[check] = '\0';	//改行を消す
+		}
+
 		posse = atoi(buf.c_str());			//所持数読み込み
 
 		this->Armor->LoadData(code, posse);	//読み込んだデータを設定
@@ -1212,7 +1224,14 @@ bool PLAYER::Save(const char *dir, const char *name)
 	for (int i = 0; i < this->Armor->GetSize(); ++i)	//防具数分繰り返す
 	{
 		ofs << this->Armor->GetCode(i) << ',';			//防具コード書き出し
-		ofs << this->Armor->GetPossession(i) << ',';	//所持数書き出し
+		if (i == this->Armor->GetSize()-1)	//最後の書き込みだったら
+		{
+			ofs << this->Armor->GetPossession(i) << '\n';	//所持数書き出し(最後は改行)
+		}
+		else	//最後じゃなかったら
+		{
+			ofs << this->Armor->GetPossession(i) << ',';	//所持数書き出し(カンマで区切る)
+		}
 	}
 
 	return true;		//セーブ成功

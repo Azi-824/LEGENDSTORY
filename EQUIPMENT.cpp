@@ -165,7 +165,11 @@ bool EQUIPMENT::GetChengeFlg(void)
 }
 
 //装備追加
-void EQUIPMENT::Add(int code)
+/*
+戻り値：true：装備が未登録だった場合
+戻り値：false：装備が登録済みだった場合
+*/
+bool EQUIPMENT::Add(int code)
 {
 	//指定されたコードが既に登録されているか判定
 	for (int i = 0; i < this->Code.size(); ++i)	//コード番号の数分繰り返す
@@ -175,7 +179,7 @@ void EQUIPMENT::Add(int code)
 			this->Possession[i]++;		//所持数を増加
 			this->IsDraw[i] = true;			//描画してよい
 			this->Chenge_flg = true;		//装備変更フラグ
-			return;							//追加処理終了
+			return false;					//追加処理終了(既に登録済み)
 		}
 	}
 
@@ -187,7 +191,7 @@ void EQUIPMENT::Add(int code)
 	this->IsDraw.push_back(true);		//描画してよい
 	this->Chenge_flg = true;			//装備変更フラグ
 
-	return;
+	return true;	//追加処理終了（未登録）
 }
 
 //装備情報を読み込み

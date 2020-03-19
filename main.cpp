@@ -1277,6 +1277,7 @@ void SetGameInit()
 	player->SetArmorDef(armor_list);		//防具防御力設定
 	player->SetItemRecovery(item_list);		//回復量設定
 
+
 	ui->SelectUpdate(player->GetWeaponClass(), weapon_list);	//武器の選択肢更新
 	ui->SelectUpdate(player->GetArmorClass(), armor_list);		//防具の選択肢更新
 	ui->SelectUpdate(player->GetItemClass(), item_list);		//アイテムの選択肢更新

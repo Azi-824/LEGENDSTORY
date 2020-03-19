@@ -42,7 +42,7 @@ public:
 	int GetSize();							//—v‘f”æ“¾
 	bool GetChengeFlg();					//‘•”õ‚ğ•ÏX‚µ‚½‚©æ“¾
 
-	void Add(int);							//‘•”õî•ñ’Ç‰Á
+	bool Add(int);							//‘•”õî•ñ’Ç‰Á
 	void LoadData(int, int);				//‘•”õî•ñ‚ğ“Ç‚İ‚İ
 
 	bool GetIsDraw(int);					//•`‰æ‚µ‚Ä‚æ‚¢‚©æ“¾
