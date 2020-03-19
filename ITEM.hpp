@@ -19,6 +19,7 @@ private:
 	std::vector<int> Code;			//アイテムコード
 	std::vector<int> Possession;	//所持数
 	std::vector<int> Recovery;		//回復量
+	std::vector<char> ItemType;		//アイテムのタイプ
 
 	std::vector<bool> IsDraw;		//描画してよいか
 
@@ -33,9 +34,9 @@ public:
 	//セッタ
 	void IncreasePossession(int);	//所持数増加
 	void DecreasePossession(int);	//所持数減少
-	void SetRecovery(int);			//回復量設定
+	void SetRecovery(int,char);		//回復量設定
 	void SetChengeFlg(bool);		//変更したか設定
-	void AddItem(int,int);			//アイテムを追加
+	void AddItem(int,int,char);		//アイテムを追加
 	void LoadData(int, int);		//セーブデータを読み込み
 
 	//ゲッタ

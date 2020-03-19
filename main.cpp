@@ -1879,7 +1879,7 @@ const char * JudgeDrop()
 
 	case (int)DROP_TYPE_ITEM:	//アイテムだった場合
 
-		player->AddDrop(drop_code, item_list->GetRecovery(drop_code));	//アイテムを追加
+		player->AddDropItem(drop_code, item_list->GetRecovery(drop_code), item_list->GetItemType(drop_code));	//アイテムを追加
 
 		return item_list->GetName(drop_code);	//ドロップしたアイテムの名前を返す
 
@@ -1887,7 +1887,7 @@ const char * JudgeDrop()
 
 	case (int)DROP_TYPE_WEAPON:	//武器だった場合
 
-		player->AddDrop(drop_code, weapon_list->GetPower(drop_code));	//武器を追加
+		player->AddDropWeapon(drop_code, weapon_list->GetPower(drop_code));	//武器を追加
 
 		return weapon_list->GetName(drop_code);	//ドロップした武器の名前を返す
 
@@ -1895,7 +1895,7 @@ const char * JudgeDrop()
 
 	case (int)DROP_TYPE_ARMOR:	//防具だった場合
 
-		player->AddDrop(drop_code, armor_list->GetDefense(drop_code));	//防具を追加
+		player->AddDropArmor(drop_code, armor_list->GetDefense(drop_code));	//防具を追加
 
 		return armor_list->GetName(drop_code);	//ドロップした防具の名前を返す
 

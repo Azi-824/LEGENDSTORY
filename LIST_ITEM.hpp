@@ -17,6 +17,7 @@ private:
 
 	std::vector<int> Recovery;				//回復量
 	std::vector<std::string> Description;	//説明文
+	std::vector<char> Type;					//アイテムのタイプ
 
 public:
 
@@ -25,5 +26,6 @@ public:
 
 	int GetRecovery(int);					//回復量取得
 	const char * GetDescription(int);		//説明文取得
+	char GetItemType(int);					//アイテムのタイプ取得
 
 };

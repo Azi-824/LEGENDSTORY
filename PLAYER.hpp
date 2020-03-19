@@ -51,13 +51,6 @@ enum COMMANDTYPE
 	COMMAND_NONE = -1		//コマンドを選んでいない
 };	//選択したコマンドの種類
 
-//enum BELONGINGS
-//{
-//	BELONGINGS_ITEM,		//アイテム
-//	BELONGINGS_WEAPON,		//武器
-//	BELONGINGS_ARMOR		//防具
-//};
-
 //################# クラス定義 ##################
 class PLAYER
 {
@@ -195,20 +188,22 @@ public:
 	void EquipWeapon(int);					//武器を装備する
 	WEAPON * GetWeaponClass();				//武器クラスを取得
 	void SetWeaponAtk(LIST_WEAPON *);		//武器の攻撃力設定
+	void AddDropWeapon(int, int);			//ドロップした武器の追加
 
 	////防具関係
 	void EquipArmor(int);					//防具を装備する
 	ARMOR * GetArmorClass();				//防具クラスを取得
 	void SetArmorDef(LIST_ARMOR *);			//防具の防御力設定
+	void AddDropArmor(int, int);			//ドロップした防具の追加
 
 	//メニュー画面で描画する持ち物関係
-	void AddDrop(int, int);				//ドロップした持ち物を追加
 	std::vector<int> GetBelongingsPossession(int);	//指定された持ち物の所持数を取得(全てのデータ)
 
 	//アイテム関係
 	void UseItem(int);						//アイテム使用処理
 	ITEM * GetItemClass();					//アイテムクラスを取得
-	void SetItemRecovery(LIST_ITEM *);	//アイテムの回復量設定
+	void SetItemRecovery(LIST_ITEM *);		//アイテムの回復量設定
+	void AddDropItem(int, int, char);		//アイテム追加処理
 
 	//セーブデータ関係
 	bool LoadData(const char *, const char *);	//セーブデータ読込

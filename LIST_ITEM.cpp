@@ -44,6 +44,9 @@ LIST_ITEM::LIST_ITEM(const char *dir, const char *name)
 	//1行目を読み込んで飛ばす
 	std::getline(ifs, buf);	//1行読み込み
 
+	int cnt = 0;	//ループ数カウント用
+	int type_key_pos = 0;	//アイテムタイプのキーとなる場所の位置を入れる変数
+
 	while (!ifs.eof())		//ファイル終端まで読み込み
 	{
 
@@ -58,6 +61,16 @@ LIST_ITEM::LIST_ITEM(const char *dir, const char *name)
 
 		std::getline(ifs, buf, '\n');				//改行まで読み込み
 		this->Description.push_back(buf.c_str());	//説明文読み込み
+
+		type_key_pos = this->Description[cnt].find("HP");	//HPという単語を探し、先頭の位置を取得する
+		if (type_key_pos == -1)	//HPという単語が見つからなかったら
+		{
+			type_key_pos = this->Description[cnt].find("MP");	//MPという単語を探し、先頭の位置を取得する
+		}
+
+		this->Type.push_back(this->Description[cnt][type_key_pos]);	//単語の先頭文字を、アイテムタイプとして格納する
+
+		++cnt;	//カウントアップ
 
 	}
 
@@ -105,6 +118,19 @@ const char * LIST_ITEM::GetDescription(int code)
 		if (this->GetCode(i) == code)	//指定されたコードと一致したら
 		{
 			return this->Description[i].c_str();
+		}
+	}
+
+}
+
+//アイテムのタイプを取得
+char LIST_ITEM::GetItemType(int code)
+{
+	for (int i = 0; i < this->GetListSize(); ++i)	//リストのサイズ数分繰り返す
+	{
+		if (this->GetCode(i) == code)	//指定されたコードと一致したら
+		{
+			return this->Type[i];
 		}
 	}
 

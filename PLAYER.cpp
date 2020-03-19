@@ -895,6 +895,14 @@ void PLAYER::SetWeaponAtk(LIST_WEAPON *list_weapon)
 	return;
 }
 
+//ドロップした武器の追加
+void PLAYER::AddDropWeapon(int code, int value)
+{
+	this->Weapon->Add(code);		//武器登録
+	this->Weapon->SetAtk(value);	//攻撃力登録
+	return;
+}
+
 //防具を装備する
 void PLAYER::EquipArmor(int element)
 {
@@ -925,40 +933,12 @@ void PLAYER::SetArmorDef(LIST_ARMOR *list_armor)
 	return;
 }
 
-//ドロップした持ち物を追加する
-void PLAYER::AddDrop(int code, int value)
+//ドロップした防具の追加
+void PLAYER::AddDropArmor(int code, int value)
 {
-
-	switch (code/DROP_JUDGE_NUM)	//ドロップした物のコード番号から種類を判定
-	{
-
-	case (int)DROP_TYPE_ITEM:		//アイテムの場合
-
-		this->Item->AddItem(code, value);	//アイテム追加
-
-		break;	//アイテムの場合ここまで
-
-	case (int)DROP_TYPE_WEAPON:	//武器の場合
-
-		this->Weapon->Add(code);		//武器登録
-		this->Weapon->SetAtk(value);	//攻撃力登録
-
-		break;	//武器の場合ここまで
-
-	case (int)DROP_TYPE_ARMOR:		//防具の場合
-
-		this->Armor->Add(code);	//防具登録
-		this->Armor->SetDef(value);	//防御力設定
-
-		break;	//防具の場合ここまで
-
-	default:
-		break;
-	}
-
+	this->Armor->Add(code);		//防具登録
+	this->Armor->SetDef(value);	//防御力設定
 	return;
-
-
 }
 
 //指定された持ち物の所持数を取得（すべて）
@@ -1020,8 +1000,17 @@ void PLAYER::SetItemRecovery(LIST_ITEM *list_item)
 {
 	for (int i = 0; i < this->Item->GetSize(); ++i)	//アイテム数分繰り返し
 	{
-		this->Item->SetRecovery(list_item->GetRecovery(this->Item->GetCode(i)));	//アイテム回復量設定
+		this->Item->SetRecovery(list_item->GetRecovery(this->Item->GetCode(i)),	//アイテム回復量設定
+			list_item->GetItemType(this->Item->GetCode(i)));					//アイテムタイプ設定	
 	}
+}
+
+//アイテムの追加処理
+void PLAYER::AddDropItem(int code, int value, char type)
+{
+	this->Item->AddItem(code, value, type);	//アイテム追加
+
+	return;
 }
 
 //セーブデータ読み込み

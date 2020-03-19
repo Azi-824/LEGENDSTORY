@@ -24,14 +24,17 @@ ITEM::~ITEM()
 	std::vector<int> v2;		//空のvectorを作成する
 	this->Possession.swap(v2);	//空と中身を入れ替える
 
-
 	//vectorのメモリ解放を行う
 	std::vector<int> v3;			//空のvectorを作成する
 	this->Recovery.swap(v3);		//空と中身を入れ替える
 
 	//vectorのメモリ解放を行う
-	std::vector<bool> v4;			//空のvectorを作成する
-	this->IsDraw.swap(v4);			//空と中身を入れ替える
+	std::vector<char> v4;			//空のvectorを作成する
+	this->ItemType.swap(v4);		//空と中身を入れ替える
+
+	//vectorのメモリ解放を行う
+	std::vector<bool> v5;			//空のvectorを作成する
+	this->IsDraw.swap(v5);			//空と中身を入れ替える
 
 	return;
 }
@@ -75,9 +78,10 @@ void ITEM::DecreasePossession(int code)
 }
 
 //回復量設定
-void ITEM::SetRecovery(int recovery)
+void ITEM::SetRecovery(int recovery,char type)
 {
-	this->Recovery.push_back(recovery);
+	this->Recovery.push_back(recovery);	//回復量
+	this->ItemType.push_back(type);		//アイテムタイプ
 	return;
 }
 
@@ -154,7 +158,7 @@ bool ITEM::GetIsDraw(int code)
 }
 
 //アイテムを追加
-void ITEM::AddItem(int code,int recovery)
+void ITEM::AddItem(int code,int recovery,char itemtype)
 {
 
 	//指定されたコードが既に登録されているか判定
@@ -173,6 +177,7 @@ void ITEM::AddItem(int code,int recovery)
 	this->Code.push_back(code);			//コード追加
 	this->Possession.push_back(1);		//所持数追加
 	this->Recovery.push_back(recovery);	//回復量追加
+	this->ItemType.push_back(itemtype);	//アイテムのタイプを追加
 	this->IsDraw.push_back(true);		//描画してよい
 	this->Chenge_flg = true;			//変更あり
 
