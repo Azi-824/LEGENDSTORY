@@ -682,7 +682,7 @@ void Play_Draw()
 				//アイテム描画処理
 				if (ui->ItemSelect->GetSelectKind() != 0)	//アイテムを一種類以上持っていたら
 				{
-					ui->DrawItemSelect(MENU_TEXT_X, MENU_TEXT_TOP_Y, player->GetBelongingsPossession((int)DROP_TYPE_ITEM));	//アイテム描画
+					ui->DrawItemSelect(MENU_TEXT_X,MENU_TEXT_TOP_Y, player->GetBelongingsPossession((int)DROP_TYPE_ITEM),item_list);	//アイテム描画
 
 					if (ui->ItemSelect->GetSelectFlg())		//アイテムを選択したら
 					{

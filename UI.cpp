@@ -286,7 +286,7 @@ void UI::SetSize(void)
 }
 
 //アイテムの選択肢を描画する
-void UI::DrawItemSelect(int x, int y, std::vector<int> item_possession)
+void UI::DrawItemSelect(int x,int y,std::vector<int> item_possession)
 {
 	this->ItemSelect->Draw(x, y);	//アイテムの選択肢描画
 
@@ -311,6 +311,37 @@ void UI::DrawItemSelect(int x, int y, std::vector<int> item_possession)
 	return;
 
 }
+
+//アイテムの選択肢を描画する(説明文付き)
+void UI::DrawItemSelect(int x, int y,std::vector<int> item_possession,LIST_ITEM *list_item)
+{
+	this->ItemSelect->Draw(x, y);	//アイテムの選択肢描画
+
+	static int Height = 0;	//高さ
+	int Cnt = 0;			//カウント用
+
+	
+	Height = GetFontSize();	//高さ取得
+
+	for (int i = 0; i < item_possession.size(); ++i)	//アイテムの種類数分繰り返す
+	{
+
+		if (item_possession[i] != 0)	//所持数が0個じゃなければ
+		{
+			DrawFormatString(x + MENU_ITEM_NAME_SPACE, y + Cnt * Height, GetColor(255, 255, 255), "%d個", item_possession[i]);	//所持しているアイテムの数を描画
+
+			DrawFormatString(x + MENU_ITEM_NAME_SPACE + MENU_ITEM_POSSESSION_SPACE, y + Cnt * Height, GetColor(255, 255, 255), "%s", list_item->GetDescription(i));	//説明文描画
+
+			++Cnt;	//カウントアップ
+
+		}
+
+	}
+
+	return;
+
+}
+
 
 //メニューのアイテム画面の処理
 bool UI::MenuSelectItem(KEYDOWN *keydown,MUSIC *sys_se)

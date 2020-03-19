@@ -52,8 +52,9 @@
 #define MENU_WINDOW_WIDTH	600									//選んだメニュー毎のウィンドウの横幅
 #define MENU_WINDOW_HEIGHT	500									//選んだメニュー毎のウィンドウの高さ
 
-#define MENU_ITEM_NAME_SPACE	200		//アイテム画面の名前と所持数の表示間隔
-#define MENU_EQUIP_NAME_SPACE	200		//装備画面の名前と所持数の表示間隔
+#define MENU_ITEM_NAME_SPACE		200		//アイテム画面の名前と所持数の表示間隔
+#define MENU_ITEM_POSSESSION_SPACE	70		//アイテム画面の所持数と説明文の表示間隔
+#define MENU_EQUIP_NAME_SPACE		200		//装備画面の名前と所持数の表示間隔
 
 //バトルコマンド関係
 #define CMD_WIN_X		350				//バトルコマンドのウィンドウの描画開始X位置
@@ -166,8 +167,9 @@ public:
 	void SetSize(void);					//画像サイズを設定する
 
 	//アイテム関係
-	void DrawItemSelect(int, int, std::vector<int>);	//アイテムの選択肢を描画する
-	bool MenuSelectItem(KEYDOWN *,MUSIC *);				//メニューのアイテム画面の処理
+	void DrawItemSelect(int ,int ,std::vector<int>);				//アイテムの選択肢を描画する
+	void DrawItemSelect(int ,int ,std::vector<int>,LIST_ITEM *);	//アイテムの選択肢を描画する(説明文付き)
+	bool MenuSelectItem(KEYDOWN *,MUSIC *);							//メニューのアイテム画面の処理
 
 
 	//装備関係
