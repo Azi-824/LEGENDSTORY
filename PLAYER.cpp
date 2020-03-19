@@ -978,6 +978,12 @@ void PLAYER::UseItem(int code)
 {
 	if (this->Item->GetItemType(code) == ITEM_TYPE_HP)	//アイテムタイプがHP回復の場合
 	{
+
+		//if (this->NowHP == this->MaxHP)	//現在のHPが満タンだったら
+		//{
+		//	return false;		//アイテムは使用できない
+		//}
+
 		this->NowHP += this->Item->GetRecovery(code);	//回復量を取得し、現在のHPに加える
 
 		if (this->NowHP > this->MaxHP)	//最大HPより多くなったら
@@ -988,6 +994,12 @@ void PLAYER::UseItem(int code)
 	}
 	else if (this->Item->GetItemType(code) == ITEM_TYPE_MP)	//アイテムタイプがMP回復の場合
 	{
+
+		//if (this->NowMP == this->MaxMP)		//現在のMPが満タンだったら
+		//{
+		//	return false;		//アイテムは使用できない
+		//}
+
 		this->NowMP += this->Item->GetRecovery(code);	//回復量を取得し、現在のMPに加える
 
 		if (this->NowMP > this->MaxMP)		//最大MPより多くなったら
@@ -998,7 +1010,7 @@ void PLAYER::UseItem(int code)
 
 	this->Item->DecreasePossession(code);	//アイテムの所持数を減らす
 
-	return;
+	return; 
 }
 
 //アイテムクラスを取得
