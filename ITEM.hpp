@@ -11,6 +11,9 @@
 //#################### マクロ定義 ############################
 #define ITME_YAKUSOU_RECOVERY_AMOUNT 30	//薬草の回復量
 
+#define ITEM_TYPE_HP	'H'		//アイテムタイプがHP回復の時
+#define ITEM_TYPE_MP	'M'		//アイテムタイプがMP回復の時
+
 //#################### クラス定義 ############################
 class ITEM
 {
@@ -47,5 +50,6 @@ public:
 	bool GetChengeFlg(void);		//変更したか取得
 	std::vector<int> GetPossession();	//所持数取得(全て)
 	bool GetIsDraw(int);			//描画してよいか取得
+	char GetItemType(int);			//アイテムタイプ取得
 
 };

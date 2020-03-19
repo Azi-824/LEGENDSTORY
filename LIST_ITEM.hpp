@@ -10,6 +10,9 @@
 //################### マクロ定義 ####################
 #define ITEM_LIST_NAME	R"(item_list.csv)"		//アイテム一覧のファイル名
 
+#define TYPE_HP_KEY	"HP"	//アイテムタイプ判別のキーワード（HP）
+#define TYPE_MP_KEY	"MP"	//アイテムタイプ判別のキーワード（MP）
+
 //################### クラス定義 ####################
 class LIST_ITEM :public LIST		//LISTクラスを継承
 {

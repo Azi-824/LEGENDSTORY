@@ -974,17 +974,29 @@ std::vector<int> PLAYER::GetBelongingsPossession(int type)
 }
 
 //アイテム使用処理
-void PLAYER::UseItem(int kind)
+void PLAYER::UseItem(int code)
 {
-
-	this->NowHP += this->Item->GetRecovery(kind);	//回復量を取得し、現在のHPに加える
-
-	if (this->NowHP > this->MaxHP)	//最大HPより多くなったら
+	if (this->Item->GetItemType(code) == ITEM_TYPE_HP)	//アイテムタイプがHP回復の場合
 	{
-		this->NowHP = this->MaxHP;	//現在のHPを最大HPと同じにする
+		this->NowHP += this->Item->GetRecovery(code);	//回復量を取得し、現在のHPに加える
+
+		if (this->NowHP > this->MaxHP)	//最大HPより多くなったら
+		{
+			this->NowHP = this->MaxHP;	//現在のHPを最大HPと同じにする
+		}
+
+	}
+	else if (this->Item->GetItemType(code) == ITEM_TYPE_MP)	//アイテムタイプがMP回復の場合
+	{
+		this->NowMP += this->Item->GetRecovery(code);	//回復量を取得し、現在のMPに加える
+
+		if (this->NowMP > this->MaxMP)		//最大MPより多くなったら
+		{
+			this->NowMP = this->MaxMP;		//現在のMPを最大MPと同じにする
+		}
 	}
 
-	this->Item->DecreasePossession(kind);	//アイテムの所持数を減らす
+	this->Item->DecreasePossession(code);	//アイテムの所持数を減らす
 
 	return;
 }

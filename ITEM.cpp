@@ -157,6 +157,19 @@ bool ITEM::GetIsDraw(int code)
 
 }
 
+//アイテムタイプ取得
+char ITEM::GetItemType(int code)
+{
+	for (int i = 0; i < this->GetSize(); ++i)	//リストのサイズ数分繰り返す
+	{
+		if (this->GetCode(i) == code)	//指定されたコードと一致したら
+		{
+			return this->ItemType[i];
+		}
+	}
+
+}
+
 //アイテムを追加
 void ITEM::AddItem(int code,int recovery,char itemtype)
 {

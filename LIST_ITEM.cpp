@@ -62,10 +62,10 @@ LIST_ITEM::LIST_ITEM(const char *dir, const char *name)
 		std::getline(ifs, buf, '\n');				//改行まで読み込み
 		this->Description.push_back(buf.c_str());	//説明文読み込み
 
-		type_key_pos = this->Description[cnt].find("HP");	//HPという単語を探し、先頭の位置を取得する
+		type_key_pos = this->Description[cnt].find(TYPE_HP_KEY);	//HPという単語を探し、先頭の位置を取得する
 		if (type_key_pos == -1)	//HPという単語が見つからなかったら
 		{
-			type_key_pos = this->Description[cnt].find("MP");	//MPという単語を探し、先頭の位置を取得する
+			type_key_pos = this->Description[cnt].find(TYPE_MP_KEY);	//MPという単語を探し、先頭の位置を取得する
 		}
 
 		this->Type.push_back(this->Description[cnt][type_key_pos]);	//単語の先頭文字を、アイテムタイプとして格納する
