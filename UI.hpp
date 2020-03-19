@@ -36,8 +36,8 @@
 #define STA_MP_BAR_HEIGHT 15			//MPバーの描画高さ
 
 //メニュー一覧
-#define MENU_LIST_WIN_X			50		//メニューウィンドウ（一覧）の描画開始X位置
-#define MENU_LIST_WIN_Y			50		//メニューウィンドウ（一覧）の描画開始Y位置
+#define MENU_LIST_WIN_X			20		//メニューウィンドウ（一覧）の描画開始X位置
+#define MENU_LIST_WIN_Y			20		//メニューウィンドウ（一覧）の描画開始Y位置
 #define MENU_LIST_WIN_WIDTH		150		//メニューウィンドウ（一覧）の幅
 #define MENU_LIST_WIN_HEIGHT	180		//メニューウィンドウ（一覧）の高さ
 #define MENU_LIST_TEXT_X		MENU_LIST_WIN_X + 10	//メニューウィンドウ（一覧）のテキストの描画開始X位置
@@ -49,12 +49,13 @@
 #define MENU_TEXT_X		MENU_WINDOW_X + 10						//選んだメニュー毎の内容の描画開始X位置
 #define MENU_TEXT_Y		MENU_WINDOW_Y + 35						//選んだメニュー毎の内容の描画開始Y位置
 #define MENU_TEXT_TOP_Y	MENU_WINDOW_Y + 5						//選んだメニュー毎の先頭要素の描画開始Y位置
-#define MENU_WINDOW_WIDTH	600									//選んだメニュー毎のウィンドウの横幅
+#define MENU_WINDOW_WIDTH	700									//選んだメニュー毎のウィンドウの横幅
 #define MENU_WINDOW_HEIGHT	500									//選んだメニュー毎のウィンドウの高さ
 
 #define MENU_ITEM_NAME_SPACE		200		//アイテム画面の名前と所持数の表示間隔
 #define MENU_ITEM_POSSESSION_SPACE	70		//アイテム画面の所持数と説明文の表示間隔
 #define MENU_EQUIP_NAME_SPACE		200		//装備画面の名前と所持数の表示間隔
+#define MENU_WQUIP_POSSESSION_SPACE	50		//装備画面の所持数と上昇値の表示間隔
 
 //バトルコマンド関係
 #define CMD_WIN_X		350				//バトルコマンドのウィンドウの描画開始X位置
@@ -167,14 +168,14 @@ public:
 	void SetSize(void);					//画像サイズを設定する
 
 	//アイテム関係
-	void DrawItemSelect(int ,int ,std::vector<int>);				//アイテムの選択肢を描画する
-	void DrawItemSelect(int ,int ,std::vector<int>,LIST_ITEM *);	//アイテムの選択肢を描画する(説明文付き)
-	bool MenuSelectItem(KEYDOWN *,MUSIC *);							//メニューのアイテム画面の処理
+	void DrawItemSelect(int ,int ,ITEM *);				//アイテムの選択肢を描画する
+	void DrawItemSelect(int ,int ,ITEM *,LIST_ITEM *);	//アイテムの選択肢を描画する(説明文付き)
+	bool MenuSelectItem(KEYDOWN *,MUSIC *);				//メニューのアイテム画面の処理
 
 
 	//装備関係
-	void DrawMenuEquip(std::vector<int>, std::vector<int>);	//メニュー画面の装備描画処理
-	int MenuSelectEquip(KEYDOWN *, MUSIC *);				//メニューの装備画面の処理
+	void DrawMenuEquip(WEAPON *,ARMOR *);		//メニュー画面の装備描画処理
+	int MenuSelectEquip(KEYDOWN *, MUSIC *);	//メニューの装備画面の処理
 
 	//選択肢関係
 	void SelectUpdate(ITEM *, LIST_ITEM *);		//選択肢の内容を更新する処理(アイテム)

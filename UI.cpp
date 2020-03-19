@@ -286,7 +286,7 @@ void UI::SetSize(void)
 }
 
 //アイテムの選択肢を描画する
-void UI::DrawItemSelect(int x,int y,std::vector<int> item_possession)
+void UI::DrawItemSelect(int x,int y,ITEM *item)
 {
 	this->ItemSelect->Draw(x, y);	//アイテムの選択肢描画
 
@@ -295,12 +295,12 @@ void UI::DrawItemSelect(int x,int y,std::vector<int> item_possession)
 
 	Height = GetFontSize();	//高さ取得
 
-	for (int i = 0; i < item_possession.size(); ++i)	//アイテムの種類数分繰り返す
+	for (int i = 0; i < item->GetSize(); ++i)	//アイテムの種類数分繰り返す
 	{
 
-		if (item_possession[i] != 0)	//所持数が0個じゃなければ
+		if (item->GetPossession(item->GetCode(i)) != 0)	//所持数が0個じゃなければ
 		{
-			DrawFormatString(x + MENU_ITEM_NAME_SPACE, y + Cnt * Height, GetColor(255, 255, 255), "%d個", item_possession[i]);	//所持しているアイテムの数を描画
+			DrawFormatString(x + MENU_ITEM_NAME_SPACE, y + Cnt * Height, GetColor(255, 255, 255), "%d個", item->GetPossession(item->GetCode(i)));	//所持しているアイテムの数を描画
 
 			++Cnt;	//カウントアップ
 
@@ -313,7 +313,7 @@ void UI::DrawItemSelect(int x,int y,std::vector<int> item_possession)
 }
 
 //アイテムの選択肢を描画する(説明文付き)
-void UI::DrawItemSelect(int x, int y,std::vector<int> item_possession,LIST_ITEM *list_item)
+void UI::DrawItemSelect(int x, int y,ITEM *item,LIST_ITEM *list_item)
 {
 	this->ItemSelect->Draw(x, y);	//アイテムの選択肢描画
 
@@ -323,14 +323,17 @@ void UI::DrawItemSelect(int x, int y,std::vector<int> item_possession,LIST_ITEM 
 	
 	Height = GetFontSize();	//高さ取得
 
-	for (int i = 0; i < item_possession.size(); ++i)	//アイテムの種類数分繰り返す
+	for (int i = 0; i < item->GetSize(); ++i)	//アイテムの種類数分繰り返す
 	{
 
-		if (item_possession[i] != 0)	//所持数が0個じゃなければ
+		if (item->GetPossession(item->GetCode(i)) != 0)	//所持数が0個じゃなければ
 		{
-			DrawFormatString(x + MENU_ITEM_NAME_SPACE, y + Cnt * Height, GetColor(255, 255, 255), "%d個", item_possession[i]);	//所持しているアイテムの数を描画
+			DrawFormatString(x + MENU_ITEM_NAME_SPACE, y + Cnt * Height, GetColor(255, 255, 255), "%d個", item->GetPossession(item->GetCode(i)));	//所持しているアイテムの数を描画
 
-			DrawFormatString(x + MENU_ITEM_NAME_SPACE + MENU_ITEM_POSSESSION_SPACE, y + Cnt * Height, GetColor(255, 255, 255), "%s", list_item->GetDescription(i));	//説明文描画
+			DrawFormatString(x + MENU_ITEM_NAME_SPACE + MENU_ITEM_POSSESSION_SPACE,
+				y + Cnt * Height,
+				GetColor(255, 255, 255),
+				"%s", list_item->GetDescription(item->GetCode(i)));	//説明文描画
 
 			++Cnt;	//カウントアップ
 
@@ -341,7 +344,6 @@ void UI::DrawItemSelect(int x, int y,std::vector<int> item_possession,LIST_ITEM 
 	return;
 
 }
-
 
 //メニューのアイテム画面の処理
 bool UI::MenuSelectItem(KEYDOWN *keydown,MUSIC *sys_se)
@@ -382,7 +384,7 @@ bool UI::MenuSelectItem(KEYDOWN *keydown,MUSIC *sys_se)
 }
 
 //メニュー画面の装備描画処理
-void UI::DrawMenuEquip(std::vector<int> wpn_possession, std::vector<int> amr_possession)
+void UI::DrawMenuEquip(WEAPON *weapon,ARMOR *armor)
 {
 
 	static int Height = 0;	//高さ
@@ -392,22 +394,34 @@ void UI::DrawMenuEquip(std::vector<int> wpn_possession, std::vector<int> amr_pos
 
 	this->WeaponSelect->Draw(MENU_TEXT_X, MENU_TEXT_Y);			//武器の選択肢描画
 
-	for (int i = 0; i < wpn_possession.size(); ++i)	//武器の種類分繰り返す
+	for (int i = 0; i < weapon->GetSize(); ++i)	//武器の種類分繰り返す
 	{
-		DrawFormatString(MENU_TEXT_X + MENU_EQUIP_NAME_SPACE, 
+		DrawFormatString(MENU_TEXT_X + MENU_EQUIP_NAME_SPACE, //X位置
+			MENU_TEXT_Y + i * Height,	//Y位置
+			GetColor(255, 255, 255),	//描画色
+			"%d個", weapon->GetPossession(weapon->GetCode(i)));	//所持している武器の数を描画
+
+		DrawFormatString(MENU_TEXT_X + MENU_EQUIP_NAME_SPACE + MENU_WQUIP_POSSESSION_SPACE,
 			MENU_TEXT_Y + i * Height,
 			GetColor(255, 255, 255),
-			"%d個", wpn_possession[i]);	//所持している武器の数を描画
+			"ATK+%d", weapon->GetAtk(weapon->GetCode(i)));	//攻撃力を描画
+
 	}
 
 	this->ArmorSelect->Draw(MENU_TEXT_X + (MENU_WINDOW_WIDTH / 2), MENU_TEXT_Y);	//防具の選択肢描画
 
-	for (int i = 0; i < amr_possession.size(); ++i)	//防具の種類分繰り返す
+	for (int i = 0; i < armor->GetSize(); ++i)	//防具の種類分繰り返す
 	{
 		DrawFormatString((MENU_TEXT_X + (MENU_WINDOW_WIDTH / 2)) + MENU_EQUIP_NAME_SPACE,
 			MENU_TEXT_Y + i * Height, 
 			GetColor(255, 255, 255), 
-			"%d個", amr_possession[i]);	//所持している防具の数を描画
+			"%d個", armor->GetPossession(armor->GetCode(i)));	//所持している防具の数を描画
+
+		DrawFormatString((MENU_TEXT_X + (MENU_WINDOW_WIDTH / 2)) + MENU_EQUIP_NAME_SPACE + MENU_WQUIP_POSSESSION_SPACE,
+			MENU_TEXT_Y + i * Height,
+			GetColor(255, 255, 255),
+			"DEF+%d", armor->GetDef(armor->GetCode(i)));	//防御力を描画
+
 	}
 
 	return;

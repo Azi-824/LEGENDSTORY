@@ -22,7 +22,7 @@
 
 #define TRIANGLE_MINI_SIZE	14	//横向き三角（ミニ）のサイズ
 
-#define SELECT_SIDE_SPACE	300	//選択肢を横向きに並べたときの間隔
+#define SELECT_SIDE_SPACE	350	//選択肢を横向きに並べたときの間隔
 
 #define SELECT_NONE		-1		//選択をしていない状態
 

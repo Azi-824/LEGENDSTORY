@@ -197,7 +197,7 @@ public:
 	void AddDropArmor(int, int);			//ドロップした防具の追加
 
 	//メニュー画面で描画する持ち物関係
-	std::vector<int> GetBelongingsPossession(int);	//指定された持ち物の所持数を取得(全てのデータ)
+	//std::vector<int> GetBelongingsPossession(int);	//指定された持ち物の所持数を取得(全てのデータ)
 
 	//アイテム関係
 	bool UseItem(int);						//アイテム使用処理

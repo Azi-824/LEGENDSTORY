@@ -682,7 +682,7 @@ void Play_Draw()
 				//アイテム描画処理
 				if (ui->ItemSelect->GetSelectKind() != 0)	//アイテムを一種類以上持っていたら
 				{
-					ui->DrawItemSelect(MENU_TEXT_X,MENU_TEXT_TOP_Y, player->GetBelongingsPossession((int)DROP_TYPE_ITEM),item_list);	//アイテム描画
+					ui->DrawItemSelect(MENU_TEXT_X,MENU_TEXT_TOP_Y, player->GetItemClass(),item_list);	//アイテム描画
 
 					if (ui->ItemSelect->GetSelectFlg())		//アイテムを選択したら
 					{
@@ -697,7 +697,7 @@ void Play_Draw()
 
 				//装備描画処理
 
-				ui->DrawMenuEquip(player->GetBelongingsPossession((int)DROP_TYPE_WEAPON), player->GetBelongingsPossession((int)DROP_TYPE_ARMOR));	//装備描画処理
+				ui->DrawMenuEquip(player->GetWeaponClass(), player->GetArmorClass());	//装備描画処理
 
 				if (ui->GetMenuEquipDir() == (int)MENU_EQUIP_SELECT_DECISION)		//選択肢の段階が、はい、いいえの段階だったら
 				{
@@ -1474,7 +1474,7 @@ void Bt_WaitAct()
 				if (ui->ItemSelect->GetSelectKind() != 0)	//アイテムを持っていたら
 				{
 
-					ui->DrawItemSelect(BT_LIST_TXT_X, BT_LIST_TXT_Y, player->GetBelongingsPossession((int)DROP_TYPE_ITEM));	//持っているアイテムを描画
+					ui->DrawItemSelect(BT_LIST_TXT_X, BT_LIST_TXT_Y, player->GetItemClass());	//持っているアイテムを描画
 
 					ui->ItemSelect->SelectOperation(keydown, sys_se);	//アイテム選択肢キー操作
 
