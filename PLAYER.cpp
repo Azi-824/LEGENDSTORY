@@ -941,38 +941,6 @@ void PLAYER::AddDropArmor(int code, int value)
 	return;
 }
 
-//指定された持ち物の所持数を取得（すべて）
-//std::vector<int> PLAYER::GetBelongingsPossession(int type)
-//{
-//	switch (type)
-//	{
-//
-//	case (int)DROP_TYPE_ITEM:		//アイテムの場合
-//
-//		return this->Item->GetPossession();			//アイテムの所持数取得（すべて）
-//
-//		break;	//アイテムの場合ここまで
-//
-//
-//	case (int)DROP_TYPE_WEAPON:	//武器の場合
-//
-//		return this->Weapon->GetPossession();	//武器の所持数取得（すべて）
-//
-//		break;	//武器の場合ここまで
-//
-//	case (int)DROP_TYPE_ARMOR:		//防具の場合
-//
-//		return this->Armor->GetPossession();		//防具の所持数取得（すべて）
-//
-//		break;	//防具の場合ここまで
-//
-//	default:
-//		break;
-//	}
-//
-//
-//}
-
 //アイテム使用処理
 bool PLAYER::UseItem(int code)
 {
