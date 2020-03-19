@@ -287,8 +287,9 @@ void Play()
 					{
 						if (player->UseItem(ui->ItemSelect->GetSelectCode()))	//アイテムを使用できたら
 						{
-							ui->Yes_No->Default();		//はい、いいえの選択肢デフォルトへ
-							ui->ItemSelect->Default();	//アイテムの選択肢デフォルトへ
+							sys_se->Play((int)SYS_SE_ITEM);	//アイテム使用の音を鳴らす
+							ui->Yes_No->Default();			//はい、いいえの選択肢デフォルトへ
+							ui->ItemSelect->Default();		//アイテムの選択肢デフォルトへ
 						}
 						else		//使用できなかったら
 						{
@@ -976,22 +977,25 @@ bool LoadGameData()
 	if (bt_se->GetIsLoad() == false) { return false; }						//読み込み失敗時
 	bt_se->ChengePlayType(DX_PLAYTYPE_BACK);								//再生方法変更
 	//音の追加処理
-	if (bt_se->Add(MY_MUSIC_DIR_BT_SE, MY_SE_NAME_SLASH) == false) { return false; }	//斬るときの音追加
-	if (bt_se->Add(MY_MUSIC_DIR_BT_SE, MY_SE_NAME_THUNDER) == false) { return false; }//雷の音追加
-	if (bt_se->Add(MY_MUSIC_DIR_BT_SE, MY_SE_NAME_NIGERU) == false) { return false; }//逃げるときの音追加
-	if (bt_se->Add(MY_MUSIC_DIR_BT_SE, MY_SE_NAME_DAMEGE) == false) { return false; }//ダメージ音追加
+	if (bt_se->Add(MY_MUSIC_DIR_BT_SE, MY_SE_NAME_SLASH) == false) { return false; }		//斬るときの音追加
+	if (bt_se->Add(MY_MUSIC_DIR_BT_SE, MY_SE_NAME_THUNDER) == false) { return false; }		//雷の音追加
+	if (bt_se->Add(MY_MUSIC_DIR_BT_SE, MY_SE_NAME_NIGERU) == false) { return false;	}		//逃げるときの音追加
+	if (bt_se->Add(MY_MUSIC_DIR_BT_SE, MY_SE_NAME_DAMEGE) == false) { return false; }		//ダメージ音追加
+	if (bt_se->Add(MY_MUSIC_DIR_BT_SE, MY_SE_NAME_RECOVERY) == false) { return false; }		//回復音追加
 
 	//システムで使用するSE
 	sys_se = new MUSIC(MY_MUSIC_DIR_SYS_SE, MY_SE_NAME_CURSOR);	//システム用SE生成
 	if (sys_se->GetIsLoad() == false) { return false; }							//読み込み失敗
 	sys_se->ChengePlayType(DX_PLAYTYPE_BACK);									//再生方法変更
 	//音の追加処理
-	if (sys_se->Add(MY_MUSIC_DIR_SYS_SE, MY_SE_NAME_CANSEL) == false) { return false; }	//キャンセル音追加
-	if (sys_se->Add(MY_MUSIC_DIR_SYS_SE, MY_SE_NAME_KETTEI) == false) { return false; }	//決定音追加
+	if (sys_se->Add(MY_MUSIC_DIR_SYS_SE, MY_SE_NAME_CANSEL) == false) { return false; }		//キャンセル音追加
+	if (sys_se->Add(MY_MUSIC_DIR_SYS_SE, MY_SE_NAME_KETTEI) == false) { return false; }		//決定音追加
 	if (sys_se->Add(MY_MUSIC_DIR_SYS_SE, MY_SE_NAME_MENU) == false) { return false; }		//メニューを開いた時の音追加
 	if (sys_se->Add(MY_MUSIC_DIR_SYS_SE, MY_SE_NAME_ENCOUNT) == false) { return false; }	//敵と遭遇した時の音追加
-	if (sys_se->Add(MY_MUSIC_DIR_SYS_SE, MY_SE_NAME_SAVE) == false) { return false; }	//セーブの音追加
-	if (sys_se->Add(MY_MUSIC_DIR_SYS_SE, MY_SE_NAME_BLIP) == false) { return false; }	//選択できないときの音追加
+	if (sys_se->Add(MY_MUSIC_DIR_SYS_SE, MY_SE_NAME_SAVE) == false) { return false; }		//セーブの音追加
+	if (sys_se->Add(MY_MUSIC_DIR_SYS_SE, MY_SE_NAME_BLIP) == false) { return false; }		//選択できないときの音追加
+	if (sys_se->Add(MY_MUSIC_DIR_SYS_SE, MY_SE_NAME_ITEM) == false) { return false; }		//アイテムを使用したときの音追加
+	if (sys_se->Add(MY_MUSIC_DIR_SYS_SE, MY_SE_NAME_EQUIP) == false) { return false; }		//装備したときの音追加
 
 
 	data = new DATA();		//データ
@@ -1476,6 +1480,7 @@ void Bt_WaitAct()
 
 						if (player->UseItem(ui->ItemSelect->GetSelectCode()))	//アイテムを使用出来たら
 						{
+							bt_se->Play((int)BT_SE_RECOVERY);					//回復音を鳴らす
 							ui->ItemSelect->NowSelectReset();					//アイテムの選択をリセット
 							ui->ItemSelect->SetSelectFlg(false);				//選択していない状態へ
 
@@ -1484,6 +1489,7 @@ void Bt_WaitAct()
 						}
 						else		//使用できなかったら
 						{
+							sys_se->Play((int)SYS_SE_BLIP);			//使用できない音を鳴らす
 							ui->ItemSelect->SetSelectFlg(false);	//選択していない状態へ
 						}
 					}

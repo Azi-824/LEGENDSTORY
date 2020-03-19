@@ -485,6 +485,7 @@ int UI::MenuSelectEquip(KEYDOWN *keydown, MUSIC *sys_se)
 			{
 				this->Menu_Equip_dir = (int)MENU_EQUIP_SELECT_EQUIP;	//選択肢の段階を一つ前へ
 				this->Yes_No->Default();								//はい、いいえの選択肢デフォルトへ
+				sys_se->Play((int)SYS_SE_EQUIP);						//装備した時の音を鳴らす
 
 				return this->EquipSelect->GetSelectNum();	//武器、防具のどちらを選択したかを返す
 			}

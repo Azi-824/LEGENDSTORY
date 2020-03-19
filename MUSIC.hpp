@@ -12,19 +12,20 @@
 #define MY_MUSIC_DIR_BGM	R"(.\MY_MUSIC\BGM)"		  //BGMのファイル名
 #define MY_MUSIC_DIR_BT_SE	R"(.\MY_MUSIC\SE\battle)" //戦闘のSEのファイル名
 #define MY_MUSIC_DIR_SYS_SE	R"(.\MY_MUSIC\SE\system)" //システムのSEのファイル名
-
+//BGM
 #define MY_BGM_NAME_TITLE	R"(\bgm_op.mp3)"		//BGMの名前
 #define MY_BGM_NAME_FIELD	R"(\field.mp3)"			//フィールドのBGMの名前
 #define MY_BGM_NAME_CITY	R"(\city.mp3)"			//街のBGMの名前
 #define MY_BGM_NAME_BATTLE	R"(\battle.mp3)"		//戦闘画面のBGMの名前
 #define MY_BGM_NAME_END		R"(\end.mp3)"			//エンド画面のBGMの名前
-
+//バトルSE
 #define MY_SE_NAME_LEVUP	R"(\levelup.mp3)"		//SE（レベルアップ）の名前
 #define MY_SE_NAME_SLASH	R"(\slash.mp3)"			//斬るときの音の名前
 #define MY_SE_NAME_THUNDER	R"(\thunder.mp3)"		//雷の音の名前
 #define MY_SE_NAME_NIGERU	R"(\nigeru.mp3)"		//逃げるときの音の名前
 #define MY_SE_NAME_DAMEGE	R"(\damege.wav)"		//ダメージの音の名前
-
+#define MY_SE_NAME_RECOVERY R"(\bt_recovery.wav)"	//バトルでの回復音の名前
+//システムSE
 #define MY_SE_NAME_CURSOR	R"(\select.mp3)"		//カーソルの移動音の名前
 #define MY_SE_NAME_CANSEL	R"(\cancel.wav)"		//キャンセル音の名前
 #define MY_SE_NAME_KETTEI	R"(\kettei.mp3)"		//決定の音の名前
@@ -32,15 +33,14 @@
 #define MY_SE_NAME_ENCOUNT	R"(\encount.mp3)"		//敵と遭遇した時の音
 #define MY_SE_NAME_SAVE		R"(\save.wav)"			//セーブ音
 #define MY_SE_NAME_BLIP		R"(\blip.mp3)"			//選択できないときの音
+#define MY_SE_NAME_ITEM		R"(\item.wav)"			//アイテムを使用した時の音
+#define MY_SE_NAME_EQUIP	R"(\equip.wav)"			//装備した時の音
 
 //##################### マクロ定義：エラーメッセージ ######################
 #define MUSIC_ERROR_TITLE "MUSIC_ERROR"					//エラータイトル
 #define MUSIC_ERROR_MSG	"音が読み込めませんでした"		//エラーメッセージ
 
 //##################### マクロ定義 ##########################
-//#define BGM_KIND	5	//BGMの種類
-//#define BT_SE_KIND	5	//バトルで使用するSEの種類
-//#define SYS_SE_KIND	7	//システムのSEの種類
 
 //##################### 列挙型 #########################
 enum BGM_TYPE
@@ -58,7 +58,8 @@ enum BT_SE_TYPE
 	BT_SE_SLASH,		//斬るときの音
 	BT_SE_THUNDER,		//雷の音
 	BT_SE_NIGERU,		//逃げる時の音
-	BT_SE_DAMEGE		//ダメージ音
+	BT_SE_DAMEGE,		//ダメージ音
+	BT_SE_RECOVERY		//バトルでの回復音
 };
 
 enum SYS_SE_TYPE
@@ -69,7 +70,9 @@ enum SYS_SE_TYPE
 	SYS_SE_MENU,		//メニューを開いた時の音
 	SYS_SE_ENCOUNT,		//敵と遭遇した時の音
 	SYS_SE_SAVE,		//セーブ音
-	SYS_SE_BLIP			//選択できない時の音
+	SYS_SE_BLIP,		//選択できない時の音
+	SYS_SE_ITEM,		//アイテムを使用した時の音
+	SYS_SE_EQUIP		//装備した時の音
 };
 
 //##################### クラス定義 ############################
