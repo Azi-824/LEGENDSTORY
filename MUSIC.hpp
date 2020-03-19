@@ -38,9 +38,9 @@
 #define MUSIC_ERROR_MSG	"音が読み込めませんでした"		//エラーメッセージ
 
 //##################### マクロ定義 ##########################
-#define BGM_KIND	5	//BGMの種類
-#define BT_SE_KIND	5	//バトルで使用するSEの種類
-#define SYS_SE_KIND	7	//システムのSEの種類
+//#define BGM_KIND	5	//BGMの種類
+//#define BT_SE_KIND	5	//バトルで使用するSEの種類
+//#define SYS_SE_KIND	7	//システムのSEの種類
 
 //##################### 列挙型 #########################
 enum BGM_TYPE
@@ -90,7 +90,7 @@ private:
 
 public:
 
-	MUSIC(const char *, const char *,int);		//コンストラクタ
+	MUSIC(const char *, const char *);		//コンストラクタ
 
 	~MUSIC();								//デストラクタ
 
@@ -106,7 +106,7 @@ public:
 	void Stop();							//音を止める(全て)
 	void Stop(int);							//音を止める(指定されたものだけ)
 
-	bool Add(const char*, const char*, int);//音を追加する
+	bool Add(const char*, const char*);//音を追加する
 
 	void SetIsPlayed(int,bool);				//再生済みか設定
 

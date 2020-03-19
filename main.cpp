@@ -964,34 +964,34 @@ bool LoadGameData()
 	if (setumei->GetIsLoad() == false) { return false; }		//読み込み失敗
 
 	//音関係
-	bgm = new MUSIC(MY_MUSIC_DIR_BGM, MY_BGM_NAME_TITLE, BGM_KIND);		//BGMを生成
+	bgm = new MUSIC(MY_MUSIC_DIR_BGM, MY_BGM_NAME_TITLE);		//BGMを生成
 	if (bgm->GetIsLoad() == false) { return false; }						//読み込み失敗時
-	if (bgm->Add(MY_MUSIC_DIR_BGM, MY_BGM_NAME_FIELD, (int)BGM_FIELD) == false) { return false; }	//フィールドのBGM追加
-	if (bgm->Add(MY_MUSIC_DIR_BGM, MY_BGM_NAME_CITY, (int)BGM_CITY) == false) { return false; }	//街のBGM追加
-	if (bgm->Add(MY_MUSIC_DIR_BGM, MY_BGM_NAME_BATTLE, (int)BGM_BATTLE) == false) { return false; }//戦闘画面のBGM追加
-	if (bgm->Add(MY_MUSIC_DIR_BGM, MY_BGM_NAME_END, (int)BGM_END) == false) { return false; }//エンド画面のBGM追加
+	if (bgm->Add(MY_MUSIC_DIR_BGM, MY_BGM_NAME_FIELD) == false) { return false; }	//フィールドのBGM追加
+	if (bgm->Add(MY_MUSIC_DIR_BGM, MY_BGM_NAME_CITY) == false) { return false; }	//街のBGM追加
+	if (bgm->Add(MY_MUSIC_DIR_BGM, MY_BGM_NAME_BATTLE) == false) { return false; }//戦闘画面のBGM追加
+	if (bgm->Add(MY_MUSIC_DIR_BGM, MY_BGM_NAME_END) == false) { return false; }//エンド画面のBGM追加
 
 	//戦闘で使用するSE
-	bt_se = new MUSIC(MY_MUSIC_DIR_BT_SE, MY_SE_NAME_LEVUP, BT_SE_KIND);	//SEを生成
+	bt_se = new MUSIC(MY_MUSIC_DIR_BT_SE, MY_SE_NAME_LEVUP);	//SEを生成
 	if (bt_se->GetIsLoad() == false) { return false; }						//読み込み失敗時
 	bt_se->ChengePlayType(DX_PLAYTYPE_BACK);								//再生方法変更
 	//音の追加処理
-	if (bt_se->Add(MY_MUSIC_DIR_BT_SE, MY_SE_NAME_SLASH, (int)BT_SE_SLASH) == false) { return false; }	//斬るときの音追加
-	if (bt_se->Add(MY_MUSIC_DIR_BT_SE, MY_SE_NAME_THUNDER, (int)BT_SE_THUNDER) == false) { return false; }//雷の音追加
-	if (bt_se->Add(MY_MUSIC_DIR_BT_SE, MY_SE_NAME_NIGERU, (int)BT_SE_NIGERU) == false) { return false; }//逃げるときの音追加
-	if (bt_se->Add(MY_MUSIC_DIR_BT_SE, MY_SE_NAME_DAMEGE, (int)BT_SE_DAMEGE) == false) { return false; }//ダメージ音追加
+	if (bt_se->Add(MY_MUSIC_DIR_BT_SE, MY_SE_NAME_SLASH) == false) { return false; }	//斬るときの音追加
+	if (bt_se->Add(MY_MUSIC_DIR_BT_SE, MY_SE_NAME_THUNDER) == false) { return false; }//雷の音追加
+	if (bt_se->Add(MY_MUSIC_DIR_BT_SE, MY_SE_NAME_NIGERU) == false) { return false; }//逃げるときの音追加
+	if (bt_se->Add(MY_MUSIC_DIR_BT_SE, MY_SE_NAME_DAMEGE) == false) { return false; }//ダメージ音追加
 
 	//システムで使用するSE
-	sys_se = new MUSIC(MY_MUSIC_DIR_SYS_SE, MY_SE_NAME_CURSOR, SYS_SE_KIND);	//システム用SE生成
+	sys_se = new MUSIC(MY_MUSIC_DIR_SYS_SE, MY_SE_NAME_CURSOR);	//システム用SE生成
 	if (sys_se->GetIsLoad() == false) { return false; }							//読み込み失敗
 	sys_se->ChengePlayType(DX_PLAYTYPE_BACK);									//再生方法変更
 	//音の追加処理
-	if (sys_se->Add(MY_MUSIC_DIR_SYS_SE, MY_SE_NAME_CANSEL, (int)SYS_SE_CANSEL) == false) { return false; }	//キャンセル音追加
-	if (sys_se->Add(MY_MUSIC_DIR_SYS_SE, MY_SE_NAME_KETTEI, (int)SYS_SE_KETTEI) == false) { return false; }	//決定音追加
-	if (sys_se->Add(MY_MUSIC_DIR_SYS_SE, MY_SE_NAME_MENU, (int)SYS_SE_MENU) == false) { return false; }		//メニューを開いた時の音追加
-	if (sys_se->Add(MY_MUSIC_DIR_SYS_SE, MY_SE_NAME_ENCOUNT, (int)SYS_SE_ENCOUNT) == false) { return false; }	//敵と遭遇した時の音追加
-	if (sys_se->Add(MY_MUSIC_DIR_SYS_SE, MY_SE_NAME_SAVE, (int)SYS_SE_SAVE) == false) { return false; }	//セーブの音追加
-	if (sys_se->Add(MY_MUSIC_DIR_SYS_SE, MY_SE_NAME_BLIP, (int)SYS_SE_BLIP) == false) { return false; }	//選択できないときの音追加
+	if (sys_se->Add(MY_MUSIC_DIR_SYS_SE, MY_SE_NAME_CANSEL) == false) { return false; }	//キャンセル音追加
+	if (sys_se->Add(MY_MUSIC_DIR_SYS_SE, MY_SE_NAME_KETTEI) == false) { return false; }	//決定音追加
+	if (sys_se->Add(MY_MUSIC_DIR_SYS_SE, MY_SE_NAME_MENU) == false) { return false; }		//メニューを開いた時の音追加
+	if (sys_se->Add(MY_MUSIC_DIR_SYS_SE, MY_SE_NAME_ENCOUNT) == false) { return false; }	//敵と遭遇した時の音追加
+	if (sys_se->Add(MY_MUSIC_DIR_SYS_SE, MY_SE_NAME_SAVE) == false) { return false; }	//セーブの音追加
+	if (sys_se->Add(MY_MUSIC_DIR_SYS_SE, MY_SE_NAME_BLIP) == false) { return false; }	//選択できないときの音追加
 
 
 	data = new DATA();		//データ

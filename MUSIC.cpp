@@ -10,15 +10,11 @@
 //引　数：const char *：画像のディレクトリ
 //引　数：const char *：画像の名前
 //引　数：int：音素材の種類数
-MUSIC::MUSIC(const char *dir, const char *name,int kind)
+MUSIC::MUSIC(const char *dir, const char *name)
 {
 	//メンバ変数を初期化
 	this->FilePath = "";	//パス
 	this->FileName = "";	//名前
-
-	this->Handle.resize(kind);		//サイズ変更
-	this->IsPlay.resize(kind);		//サイズ変更
-	this->IsPlayed.resize(kind);	//サイズ変更
 
 	this->IsLoad = false;	//読み込めたか？
 
@@ -27,9 +23,9 @@ MUSIC::MUSIC(const char *dir, const char *name,int kind)
 	LoadfilePath += dir;
 	LoadfilePath += name;
 
-	this->Handle[0] = LoadSoundMem(LoadfilePath.c_str());	//音の読み込み
+	this->Handle.push_back(LoadSoundMem(LoadfilePath.c_str()));	//音の読み込み
 
-	if (this->Handle[0] == -1)	//音が読み込めなかったとき
+	if (this->Handle.back() == -1)	//音が読み込めなかったとき
 	{
 		std::string ErroeMsg(MUSIC_ERROR_MSG);	//エラーメッセージ作成
 		ErroeMsg += TEXT('\n');					//改行
@@ -51,10 +47,8 @@ MUSIC::MUSIC(const char *dir, const char *name,int kind)
 
 	this->IsLoad = true;				//読み込み成功
 
-	for (int i = 0; i < this->IsPlayed.size(); ++i)
-	{
-		this->IsPlayed[i] = false;				//再生済みでない
-	}
+	this->IsPlay.push_back(false);		//再生中ではない
+	this->IsPlayed.push_back(false);	//再生済みではない
 
 	return;
 
@@ -147,7 +141,7 @@ void MUSIC::Stop(int kind)
 }
 
 //音を追加する
-bool MUSIC::Add(const char *dir, const char *name, int kind)
+bool MUSIC::Add(const char *dir, const char *name)
 {
 
 	//音を読み込み
@@ -155,9 +149,9 @@ bool MUSIC::Add(const char *dir, const char *name, int kind)
 	LoadfilePath += dir;
 	LoadfilePath += name;
 
-	this->Handle[kind] = LoadSoundMem(LoadfilePath.c_str());	//音の読み込み
+	this->Handle.push_back(LoadSoundMem(LoadfilePath.c_str()));	//音の読み込み
 
-	if (this->Handle[kind] == -1)	//音が読み込めなかったとき
+	if (this->Handle.back() == -1)	//音が読み込めなかったとき
 	{
 		std::string ErroeMsg(MUSIC_ERROR_MSG);	//エラーメッセージ作成
 		ErroeMsg += TEXT('\n');					//改行
@@ -171,6 +165,9 @@ bool MUSIC::Add(const char *dir, const char *name, int kind)
 
 		return false;	//読み込み失敗
 	}
+
+	this->IsPlay.push_back(false);		//再生中ではない
+	this->IsPlayed.push_back(false);	//再生済みではない
 
 	return true;		//読み込み成功
 
