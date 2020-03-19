@@ -80,6 +80,11 @@ void EQUIPMENT::DecreasePossession(int code)
 void EQUIPMENT::SetEquipFlg(int code, bool equipflg)
 {
 
+	for (int i = 0; i < this->EquipFlg.size(); ++i)	//装備数分繰り返す
+	{
+		this->EquipFlg[i] = false; //装備状態をすべてリセット
+	}
+
 	for (int i = 0; i < this->GetSize(); ++i)	//リストのサイズ数分繰り返す
 	{
 		if (this->GetCode(i) == code)	//指定されたコードと一致したら
