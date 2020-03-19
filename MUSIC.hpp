@@ -35,6 +35,7 @@
 #define MY_SE_NAME_BLIP		R"(\blip.mp3)"			//選択できないときの音
 #define MY_SE_NAME_ITEM		R"(\item.wav)"			//アイテムを使用した時の音
 #define MY_SE_NAME_EQUIP	R"(\equip.wav)"			//装備した時の音
+#define MY_SE_NAME_LOAD		R"(\load.wav)"			//ロードした時の音
 
 //##################### マクロ定義：エラーメッセージ ######################
 #define MUSIC_ERROR_TITLE "MUSIC_ERROR"					//エラータイトル
@@ -72,7 +73,8 @@ enum SYS_SE_TYPE
 	SYS_SE_SAVE,		//セーブ音
 	SYS_SE_BLIP,		//選択できない時の音
 	SYS_SE_ITEM,		//アイテムを使用した時の音
-	SYS_SE_EQUIP		//装備した時の音
+	SYS_SE_EQUIP,		//装備した時の音
+	SYS_SE_LOAD			//ロードした時の音
 };
 
 //##################### クラス定義 ############################

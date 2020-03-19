@@ -140,6 +140,8 @@ void Load()
 
 		SetGameInit();					//ゲームの初期設定
 
+		sys_se->Play((int)SYS_SE_LOAD);	//ロード音を鳴らす
+
 		IsLoad = true;					//読み込み完了
 	}
 
@@ -996,6 +998,7 @@ bool LoadGameData()
 	if (sys_se->Add(MY_MUSIC_DIR_SYS_SE, MY_SE_NAME_BLIP) == false) { return false; }		//選択できないときの音追加
 	if (sys_se->Add(MY_MUSIC_DIR_SYS_SE, MY_SE_NAME_ITEM) == false) { return false; }		//アイテムを使用したときの音追加
 	if (sys_se->Add(MY_MUSIC_DIR_SYS_SE, MY_SE_NAME_EQUIP) == false) { return false; }		//装備したときの音追加
+	if (sys_se->Add(MY_MUSIC_DIR_SYS_SE, MY_SE_NAME_LOAD) == false) { return false; }		//ロードしたときの音追加
 
 
 	data = new DATA();		//データ
