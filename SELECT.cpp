@@ -7,8 +7,7 @@
 
 //###################### クラス定義 ##########################
 
-IMAGE* SELECT::image_ui = new IMAGE();	//インストラクタ生成
-bool SELECT::CreateImage = false;		//UI画像を生成していない
+IMAGE* SELECT::image_ui;	//インストラクタ生成
 
 //コンストラクタのオーバーロード
 /*
@@ -16,13 +15,13 @@ bool SELECT::CreateImage = false;		//UI画像を生成していない
 */
 SELECT::SELECT()
 {
-	//this->image_ui = new IMAGE(SELECT_DIR, SELECT_TRIANGLENAME);	//UI画像生成
-	if (this->CreateImage == false)	//UI画像を生成していなければ
+
+	if (this->image_ui == NULL)	//UI画像を生成していなければ
 	{
-		this->image_ui->AddImage(SELECT_DIR, SELECT_TRIANGLENAME);	//UI画像追加
+		this->image_ui = new IMAGE(SELECT_DIR, SELECT_TRIANGLENAME);		//UI画像生成
 		this->image_ui->AddImage(SELECT_DIR, SELECT_TRIANGLE_MINI_NAME);	//UI画像追加
-		this->CreateImage = true;	//UI画像生成済み
 	}
+
 
 	this->IsKeyOpe = true;			//キー操作可能
 	this->SelectFlg = false;		//選択されていない

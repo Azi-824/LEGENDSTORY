@@ -68,12 +68,6 @@ IMAGE::IMAGE(const char *dir,const char *name)
 	return;
 }
 
-//コンストラクタのオーバーロード
-IMAGE::IMAGE()
-{
-	return;
-}
-
 //デストラクタ
 IMAGE::~IMAGE()
 {
