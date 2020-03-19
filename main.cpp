@@ -285,9 +285,18 @@ void Play()
 					//アイテム画面の処理
 					if (ui->MenuSelectItem(keydown, sys_se))	//アイテムを選択した場合
 					{
-						player->UseItem(ui->ItemSelect->GetSelectCode());	//アイテムを使用
-						ui->Yes_No->Default();		//はい、いいえの選択肢デフォルトへ
-						ui->ItemSelect->Default();	//アイテムの選択肢デフォルトへ
+						if (player->UseItem(ui->ItemSelect->GetSelectCode()))	//アイテムを使用できたら
+						{
+							ui->Yes_No->Default();		//はい、いいえの選択肢デフォルトへ
+							ui->ItemSelect->Default();	//アイテムの選択肢デフォルトへ
+						}
+						else		//使用できなかったら
+						{
+							//使用できない場合の処理を追加予定
+							sys_se->Play((int)SYS_SE_BLIP);
+							ui->Yes_No->Default();		//はい、いいえの選択肢デフォルトへ
+							ui->ItemSelect->Default();	//アイテムの選択肢デフォルトへ
+						}
 					}
 
 				break;	//アイテムを選んだときここまで
@@ -1464,7 +1473,19 @@ void Bt_WaitAct()
 
 					if (ui->ItemSelect->GetSelectFlg())	//アイテムを選択したら
 					{
-						BattleStageNow = (int)DAMEGE_CALC;	//バトル状態をダメージ計算状態へ
+
+						if (player->UseItem(ui->ItemSelect->GetSelectCode()))	//アイテムを使用出来たら
+						{
+							ui->ItemSelect->NowSelectReset();					//アイテムの選択をリセット
+							ui->ItemSelect->SetSelectFlg(false);				//選択していない状態へ
+
+							BattleStageNow = (int)DAMEGE_CALC;	//バトル状態をダメージ計算状態へ
+
+						}
+						else		//使用できなかったら
+						{
+							ui->ItemSelect->SetSelectFlg(false);	//選択していない状態へ
+						}
 					}
 
 					if (ui->ItemSelect->GetBackFlg())	//戻る選択をしたら
@@ -1654,12 +1675,12 @@ void Bt_DrawEffect()
 		}
 		else		//エフェクト描画のないコマンドを選んでいたら(防御、アイテム)
 		{
-			if (ui->BattleCommand->GetSelectNum() == (int)COMMANDE_ITEM)		//アイテムを選んでいたら
-			{
-				player->UseItem(ui->ItemSelect->GetSelectCode());	//アイテム使用
-				ui->ItemSelect->NowSelectReset();					//アイテムの選択をリセット
-				ui->ItemSelect->SetSelectFlg(false);				//選択していない状態へ
-			}
+			//if (ui->BattleCommand->GetSelectNum() == (int)COMMANDE_ITEM)		//アイテムを選んでいたら
+			//{
+			//	player->UseItem(ui->ItemSelect->GetSelectCode());	//アイテム使用
+			//	ui->ItemSelect->NowSelectReset();					//アイテムの選択をリセット
+			//	ui->ItemSelect->SetSelectFlg(false);				//選択していない状態へ
+			//}
 
 			enemy[EncounteEnemyType]->DamegeSend();	//ダメージを与える
 			BattleStageNow = (int)DRAW_DAMEGE;		//ダメージ描画状態へ

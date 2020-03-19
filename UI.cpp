@@ -331,6 +331,7 @@ bool UI::MenuSelectItem(KEYDOWN *keydown,MUSIC *sys_se)
 			this->Yes_No->SetIsKeyOpe(true);			//はい、いいえの選択肢キー操作可能
 
 			this->Yes_No->SelectOperation(keydown, sys_se);	//はい、いいえの選択肢キー操作
+
 			if (this->Yes_No->GetSelectFlg())		//はいかいいえを選択したら
 			{
 				if (this->Yes_No->GetSelectNum() == (int)SELECT_YES)	//はいを選んだとき

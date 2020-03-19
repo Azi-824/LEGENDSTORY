@@ -200,7 +200,7 @@ public:
 	std::vector<int> GetBelongingsPossession(int);	//指定された持ち物の所持数を取得(全てのデータ)
 
 	//アイテム関係
-	void UseItem(int);						//アイテム使用処理
+	bool UseItem(int);						//アイテム使用処理
 	ITEM * GetItemClass();					//アイテムクラスを取得
 	void SetItemRecovery(LIST_ITEM *);		//アイテムの回復量設定
 	void AddDropItem(int, int, char);		//アイテム追加処理
