@@ -394,9 +394,9 @@ int UI::MenuSelectEquip(KEYDOWN *keydown, MUSIC *sys_se)
 
 		this->EquipSelect->SelectOperation(keydown, sys_se);	//武器か防具かの選択肢のキー操作
 
-		if (this->EquipSelect->GetBackFlg())		//戻る選択をしたら
+		if (this->EquipSelect->GetBackFlg())	//戻る選択をしたら
 		{
-			this->ResetMenu();				//メニュー選択に戻る
+			this->ResetMenu();					//メニュー選択に戻る
 			this->EquipSelect->Default();		//武器防具の選択肢をデフォルトに
 		}
 
@@ -416,14 +416,14 @@ int UI::MenuSelectEquip(KEYDOWN *keydown, MUSIC *sys_se)
 
 		case (int)SELECT_EQUIP_WEAPON:		//武器を選んだとき
 
-			this->WeaponSelect->SetIsKeyOpe(true);					//武器の選択肢、キー操作可能
+			this->WeaponSelect->SetIsKeyOpe(true);						//武器の選択肢、キー操作可能
 			this->WeaponSelect->SetIsDrawImage(true);					//武器の選択UI表示
 			this->WeaponSelect->SelectOperation(keydown, sys_se);		//武器の選択キー操作
 
 			//************* 戻る選択をした時の処理 *****************
 			if (this->WeaponSelect->GetBackFlg())	//戻る選択をしたら
 			{
-				this->WeaponSelect->Default();		//武器の選択肢、デフォルト値へ
+				this->WeaponSelect->Default();			//武器の選択肢、デフォルト値へ
 				this->EquipSelect->Default();			//武器、防具の選択を可能へ
 				this->Menu_Equip_dir = (int)MENU_EQUIP_SELECT_KIND;	//選択肢の段階を前へ
 			}
