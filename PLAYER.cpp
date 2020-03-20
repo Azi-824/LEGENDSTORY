@@ -604,16 +604,20 @@ void PLAYER::MoveRight()
 //ダメージ計算
 void PLAYER::DamegeCalc(ENEMY *enemy,int choiecommand)
 {
+
+	double bp_value = this->GetBPBoostValue();	//BPによる強化倍率を取得
 	switch (choiecommand)		//選択したコマンド
 	{
 
 	case(int)COMMANDE_ATACK:				//攻撃を選んだ時の処理ここから
 
 		//与えるダメージ計算
-		enemy->SetRecvDamege((this->ATK + this->EquipAtk) - enemy->GetDEF());	//ダメージ量を計算 自分攻撃力(攻撃+装備攻撃) - 敵防御力のダメージを与える
+		//自分攻撃力(攻撃+装備攻撃) * BPの強化倍率 - 敵防御力
+		enemy->SetRecvDamege((this->ATK + this->EquipAtk) * bp_value - enemy->GetDEF());	
 
 		//受けるダメージ計算
-		this->RecvDamege = enemy->GetATK() - (this->DEF + this->EquipDef);	//敵攻撃力 - 自分防御力(防御+装備防御)のダメージを与える
+		//敵攻撃力 - 自分防御力(防御+装備防御) * BPの強化倍率
+		this->RecvDamege = enemy->GetATK() - (this->DEF + this->EquipDef) * bp_value;	
 
 		break;					//攻撃を選んだ時の処理ここまで
 
@@ -624,7 +628,8 @@ void PLAYER::DamegeCalc(ENEMY *enemy,int choiecommand)
 
 		//受けるダメージ計算
 		//防御力を強化してダメージ計算
-		this->RecvDamege = enemy->GetATK() - ((this->DEF + this->EquipDef) * DEF_BOOST);	//敵攻撃力 - 自分防御力(防御+装備防御)のダメージを与える
+		//敵攻撃力 - 自分防御力((防御+装備防御) * 防御強化値) * BPの強化倍率
+		this->RecvDamege = enemy->GetATK() - ((this->DEF + this->EquipDef) * DEF_BOOST) * bp_value;	
 
 		break;					//防御を選んだ時の処理ここまで
 
@@ -633,20 +638,24 @@ void PLAYER::DamegeCalc(ENEMY *enemy,int choiecommand)
 		//与えるダメージ計算
 		//自分の攻撃力を強化してダメージ計算
 		//魔法攻撃力を追加して、通常攻撃と分ける予定
-		enemy->SetRecvDamege(((this->ATK + this->EquipAtk) * ATK_BOOST) - enemy->GetDEF());	//ダメージ量を計算 自分攻撃力(攻撃+装備攻撃) - 敵防御力のダメージを与える
+		//自分攻撃力((攻撃+装備攻撃) * 魔法強化値) * BPの強化倍率 - 敵防御力
+		enemy->SetRecvDamege(((this->ATK + this->EquipAtk) * ATK_BOOST) * bp_value - enemy->GetDEF());	
 
 		//受けるダメージ計算
-		this->RecvDamege = enemy->GetATK() - (this->DEF + this->EquipDef);	//敵攻撃力 - 自分防御力(防御+装備防御)のダメージを与える
+		//敵攻撃力 - 自分防御力(防御+装備防御) * BPの強化倍率
+		this->RecvDamege = enemy->GetATK() - (this->DEF + this->EquipDef) * bp_value;	
 
 		break;					//魔法を選んだ時の処理ここまで
 
 	case(int)COMMANDE_ITEM:				//アイテムを選んだ時の処理ここから
 
 		//与えるダメージ計算
-		enemy->SetRecvDamege(0);		//敵、受けるダメージ0
+		//与えるダメージ0
+		enemy->SetRecvDamege(0);		
 		
 		//受けるダメージ計算
-		this->RecvDamege = enemy->GetATK() - (this->DEF + this->EquipDef);	//敵攻撃力 - 自分防御力(防御+装備防御)のダメージを与える
+		//敵攻撃力 - 自分防御力(防御+装備防御) * BPの強化倍率
+		this->RecvDamege = enemy->GetATK() - (this->DEF + this->EquipDef) * bp_value;	
 
 		break;					//アイテムを選んだ時の処理ここまで
 
@@ -1231,4 +1240,36 @@ bool PLAYER::MinusUseBP(void)
 		return true;		//減らせた
 	}
 	return false;	//減らせなかった
+}
+
+//BPによって強化される倍率を取得(ダメージ計算内で使用)
+double PLAYER::GetBPBoostValue(void)
+{
+	switch (this->UseBP)	//使用するBPの数によって、返す強化倍率を変える
+	{
+
+	case (int)USE_BP_1:	//使用するBPが1個の場合
+
+		return BP_BOOST_LEVEL1;
+
+		break;	//使用するBPが1個のときここまで
+
+	case (int)USE_BP_2:	//BP2個のとき
+
+		return BP_BOOST_LEVEL2;
+
+		break;	//BP2個のときここまで
+
+	case (int)USE_BP_3:	//BP3個のとき
+
+		return BP_BOOST_LEVEL3;
+
+		break;	//BP3個のときここまで
+
+	default:	//それ以外のとき(BP未使用の時など)
+
+		return BP_BOOST_LEVEL0;
+
+		break;
+	}
 }

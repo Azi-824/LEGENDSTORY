@@ -31,6 +31,10 @@
 #define MAX_BP		5				//BPの最大値
 #define START_BP	1				//BPの初期値
 #define MAX_USE_BP	3				//一回で使用することができるBPの最大値
+#define BP_BOOST_LEVEL0	1.0			//使用するBPが0個の場合の強化倍率
+#define BP_BOOST_LEVEL1	1.4			//使用するBPが1個の場合の強化倍率
+#define BP_BOOST_LEVEL2	1.8			//使用するBPが2個の場合の強化倍率
+#define BP_BOOST_LEVEL3	2.0			//使用するBPが3個の場合の強化倍率
 
 #define DIST_KIND	4				//移動方向の種類
 
@@ -56,6 +60,14 @@ enum COMMANDTYPE
 	COMMANDE_ESCAPE,	//逃げる
 	COMMAND_NONE = -1		//コマンドを選んでいない
 };	//選択したコマンドの種類
+
+enum USE_BP_NUM
+{
+	USE_BP_0,	//BP未使用
+	USE_BP_1,	//BP1個使用
+	USE_BP_2,	//BP2個使用
+	USE_BP_3	//BP3個使用
+};//使用するBPの数
 
 //################# クラス定義 ##################
 class PLAYER
@@ -216,10 +228,11 @@ public:
 	bool Save(const char *, const char *);		//セーブ
 
 	//BP関係
-	int GetBP(void);		//BP取得
-	bool AddBP(void);		//BP加算
-	int GetUseBP(void);		//使用するBPを取得
-	bool PlusUseBP(void);	//使用するBPを増やす
-	bool MinusUseBP(void);	//使用するBPを減らす
+	int GetBP(void);			//BP取得
+	bool AddBP(void);			//BP加算
+	int GetUseBP(void);			//使用するBPを取得
+	bool PlusUseBP(void);		//使用するBPを増やす
+	bool MinusUseBP(void);		//使用するBPを減らす
+	double GetBPBoostValue();	//BPによって強化される倍率を取得(ダメージ計算内で使用)
 
 };
