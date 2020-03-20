@@ -8,15 +8,6 @@
 //########## ヘッダーファイル読み込み ##########
 #include "DxLib.h"
 
-//########## 列挙型 ################
-enum IN_KEY_KIND
-{
-	KEY_UP,		//上
-	KEY_DOWN,	//下
-	KEY_LEFT,	//左
-	KEY_RIGHT	//右
-};
-
 //########## クラスの定義 ##########
 
 class KEYDOWN

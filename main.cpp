@@ -212,6 +212,11 @@ void Play()
 
 	Play_Draw();		//描画処理
 
+	if (!player->GetIsKeyOpe())	//プレイヤーのキー操作が不可能になっていた場合
+	{
+		player->SetIsKeyOpe(true);	//プレイヤーのキー操作を可能に
+	}
+
 	player->Operation(keydown, mapdata[NowDrawMapKind][MapKind[MAPPOS_Y][MAPPOS_X]]->GetRect((int)MAP_NG));	//プレイヤーキー操作
 
 	//▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼ マップ切り替え処理ここから ▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼
@@ -819,7 +824,7 @@ void Enconte()
 			{
 				BattleInit();		//戦闘関係初期化
 
-				player->SetIsKeyDown(false);	//プレイヤーの動きを止める
+				player->SetIsKeyOpe(false);	//プレイヤーの動きを止める
 
 				EncounteEnemyType = i;			//遭遇した敵を設定
 

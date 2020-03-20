@@ -44,7 +44,6 @@ bool PLAYER::SetInit()
 {
 	this->Dist = (int)FLONT;					//初期向き設定
 	this->MoveSpeed = PLAYE_DEFAULT_MOVESPEED;	//初期移動速度設定
-	this->InKeyKind = PLAYER_INIT_VALUE;		//押されていないときはー1
 
 	//装備関係
 	this->EquipAtk = 0;		//装備攻撃力0
@@ -55,6 +54,7 @@ bool PLAYER::SetInit()
 	this->Anime->SetSize();	//画像のサイズ設定
 
 	this->IsKeyDown = false;//キーボード押されていない
+	this->IsKeyOperation = true;	//キー操作可能
 	this->IsMenu = false;	//メニューウィンドウ描画されていない
 
 	this->ChengeMapKind = (int) MAP_CHENGE_NONE;	//マップ切り替えなし
@@ -109,11 +109,22 @@ void PLAYER::SetChoiseSkil(int type)
 	return;
 }
 
-//キー入力ありか設定
-void PLAYER::SetIsKeyDown(bool Iskeydown)
+//キー操作可能か設定
+void PLAYER::SetIsKeyOpe(bool iskeyope)
 {
-	this->IsKeyDown = Iskeydown;
+	this->IsKeyOperation = iskeyope;
+	if (!this->IsKeyOperation)	//キー操作不可のときは
+	{
+		this->IsKeyDown = false;	//キー操作不可のときは、キー入力なしに設定
+	}
+	return;
 }
+
+//キー入力ありか設定
+//void PLAYER::SetIsKeyDown(bool Iskeydown)
+//{
+//	this->IsKeyDown = Iskeydown;
+//}
 
 //位置を設定
 //引数：int：X位置を相対的に指定
@@ -337,7 +348,7 @@ bool PLAYER::GetIsDraw()
 }
 
 //キーボード操作できるか取得
-bool PLAYER::GetKeyOperation()
+bool PLAYER::GetIsKeyOpe()
 {
 	return this->IsKeyOperation;
 }
@@ -387,96 +398,92 @@ int PLAYER::GetChengeMapKind()
 //操作
 void PLAYER::Operation(KEYDOWN *keydown, COLLISION *map[][MAP_YOKO])
 {
-
-	static int x = 0, y = 0;	//当たった場所を取得
-
-	if (this->IsMenu ==false && keydown->IsKeyDown(KEY_INPUT_W))		//メニュー描画中でなく、Wキーを押しているとき
+	if (this->IsKeyOperation)	//キー操作可能なら
 	{
-		this->IsKeyDown = true;		//キー入力あり
-		this->Dist = BACK;			//移動方向を上にする
-		this->InKeyKind = (int)KEY_UP;	//キー入力の種類、上
-
-		//領域を少し上へずらす
-		this->Collision->Top -= RECT_STAGGER;
-		this->Collision->Bottom -= RECT_STAGGER;
-
-		//マップとの当たり判定
-		if (this->CheckDetectionMap(map, &x, &y) == false)	//通行できるなら
+		if (this->IsMenu == false && keydown->IsKeyDown(KEY_INPUT_W))		//メニュー描画中でなく、Wキーを押しているとき
 		{
-			this->MoveUp();				//上へ移動
+			this->IsKeyDown = true;		//キー入力あり
+			this->Dist = BACK;			//移動方向を上にする
+
+			//領域を少し上へずらす
+			this->Collision->Top -= RECT_STAGGER;
+			this->Collision->Bottom -= RECT_STAGGER;
+
+			//マップとの当たり判定
+			if (this->CheckDetectionMap(map) == false)	//通行できるなら
+			{
+				this->MoveUp();				//上へ移動
+			}
+
+		}
+		else if (this->IsMenu == false && keydown->IsKeyDown(KEY_INPUT_S))	//メニュー描画中でなく、Sキーを押しているとき
+		{
+			this->IsKeyDown = true;		//キー入力あり
+			this->Dist = FLONT;			//移動方向下
+
+			//領域を少し下へずらす
+			this->Collision->Top += RECT_STAGGER;
+			this->Collision->Bottom += RECT_STAGGER;
+
+			//マップとの当たり判定
+			if (this->CheckDetectionMap(map) == false)	//通行できるなら
+			{
+				this->MoveDown();				//下へ移動
+			}
+
+
+		}
+		else if (this->IsMenu == false && keydown->IsKeyDown(KEY_INPUT_A))	//メニュー描画中でなく、Aキーを押しているとき
+		{
+			this->IsKeyDown = true;		//キー入力あり
+			this->Dist = LEFT;			//移動方向左
+
+			//領域を少し左へずらす
+			this->Collision->Left -= RECT_STAGGER;
+			this->Collision->Right -= RECT_STAGGER;
+
+			//マップとの当たり判定
+			if (this->CheckDetectionMap(map) == false)	//通行できるなら
+			{
+				this->MoveLeft();				//左へ移動
+			}
+
+		}
+		else if (this->IsMenu == false && keydown->IsKeyDown(KEY_INPUT_D))	//メニュー描画中でなく、Dキーを押しているとき
+		{
+			this->IsKeyDown = true;		//キー入力あり
+			this->Dist = RIGHT;			//移動方向右
+
+			//領域を少し右へずらす
+			this->Collision->Left += RECT_STAGGER;
+			this->Collision->Right += RECT_STAGGER;
+
+			//マップとの当たり判定
+			if (this->CheckDetectionMap(map) == false)	//通行できるなら
+			{
+				this->MoveRight();				//右へ移動
+			}
+
+		}
+		else
+		{
+			this->IsKeyDown = false;	//キー入力なし
 		}
 
-	}
-	else if (this->IsMenu == false && keydown->IsKeyDown(KEY_INPUT_S))	//メニュー描画中でなく、Sキーを押しているとき
-	{
-		this->IsKeyDown = true;		//キー入力あり
-		this->Dist = FLONT;			//移動方向下
-		this->InKeyKind = (int)KEY_DOWN;	//キー入力の種類、下
+		//描画領域再設定
+		this->sikaku_draw->SetValue(
+			this->sikaku_draw->Left,
+			this->sikaku_draw->Top,
+			this->sikaku_draw->Width,
+			this->sikaku_draw->Height);
 
-		//領域を少し下へずらす
-		this->Collision->Top += RECT_STAGGER;
-		this->Collision->Bottom += RECT_STAGGER;
-
-		//マップとの当たり判定
-		if (this->CheckDetectionMap(map, &x, &y) == false)	//通行できるなら
-		{
-			this->MoveDown();				//下へ移動
-		}
-
+		//領域再設定
+		this->Collision->SetValue(this->sikaku_draw->Left + RECT_STAGGER,
+			this->sikaku_draw->Top,
+			this->Anime->GetWidth() - RECT_STAGGER * 2,
+			this->Anime->GetHeight());
 
 	}
-	else if (this->IsMenu == false && keydown->IsKeyDown(KEY_INPUT_A))	//メニュー描画中でなく、Aキーを押しているとき
-	{
-		this->IsKeyDown = true;		//キー入力あり
-		this->Dist = LEFT;			//移動方向左
-		this->InKeyKind = (int)KEY_LEFT;	//キー入力の種類、左
-
-		//領域を少し左へずらす
-		this->Collision->Left -= RECT_STAGGER;
-		this->Collision->Right -= RECT_STAGGER;
-
-		//マップとの当たり判定
-		if (this->CheckDetectionMap(map, &x, &y) == false)	//通行できるなら
-		{
-			this->MoveLeft();				//左へ移動
-		}
-
-	}
-	else if (this->IsMenu == false && keydown->IsKeyDown(KEY_INPUT_D))	//メニュー描画中でなく、Dキーを押しているとき
-	{
-		this->IsKeyDown = true;		//キー入力あり
-		this->Dist = RIGHT;			//移動方向右
-		this->InKeyKind = (int)KEY_RIGHT;	//キー入力の種類、右
-
-		//領域を少し右へずらす
-		this->Collision->Left += RECT_STAGGER;
-		this->Collision->Right += RECT_STAGGER;
-
-		//マップとの当たり判定
-		if (this->CheckDetectionMap(map, &x, &y) == false)	//通行できるなら
-		{
-			this->MoveRight();				//右へ移動
-		}
-
-	}
-	else
-	{
-		this->IsKeyDown = false;	//キー入力なし
-	}
-
-	//描画領域再設定
-	this->sikaku_draw->SetValue(
-		this->sikaku_draw->Left,
-		this->sikaku_draw->Top,
-		this->sikaku_draw->Width,
-		this->sikaku_draw->Height);
-
-	//領域再設定
-	this->Collision->SetValue(this->sikaku_draw->Left + RECT_STAGGER,
-		this->sikaku_draw->Top,
-		this->Anime->GetWidth() - RECT_STAGGER * 2,
-		this->Anime->GetHeight());
-
 
 	return;
 
@@ -719,34 +726,6 @@ void PLAYER::SetNowPos(int x, int y)
 		this->sikaku_draw->Height);
 
 
-}
-
-//現在のキー入力の種類を取得
-int PLAYER::GetInKeyKind(void)
-{
-	return this->InKeyKind;
-}
-
-//マップとの当たり判定(当たった場所を取得する)
-bool PLAYER::CheckDetectionMap(COLLISION * map[][MAP_YOKO], int *detectionX, int *detectionY)
-{
-
-	for (int tate = 0; tate < MAP_TATE; tate++)
-	{
-		for (int yoko = 0; yoko < MAP_YOKO; yoko++)
-		{
-			//キャラクターの当たっている場所を取得
-			if (map[tate][yoko]->DetectionCheck(this->Collision))
-			{
-				*detectionY = tate;	//atariYのアドレスが指し示す先の場所に、当たったモノの縦の位置を入れる
-				*detectionX = yoko;	//atariXのアドレスが指し示す先の場所に、当たったモノの横の位置を入れる
-
-				return true;
-			}
-		}
-	}
-
-	return false;
 }
 
 //マップとの当たり判定(当たった場所を取得しない)
