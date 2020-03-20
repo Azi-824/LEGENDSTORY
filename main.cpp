@@ -1415,6 +1415,12 @@ void Bt_WaitAct()
 			if (!ui->BattleCommand->GetSelectFlg())	//コマンドを選択していないときは
 			{
 				ui->BattleCommand->SelectOperation(keydown, sys_se);	//バトルコマンドキー操作
+
+				if (keydown->IsKeyDownOne(KEY_INPUT_SPACE))	//スペースキーを押されたら
+				{
+					player->PlusUseBP();	//使用するBPを増やす 
+				}
+
 			}
 
 		}

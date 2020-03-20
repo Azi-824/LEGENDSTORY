@@ -30,6 +30,7 @@
 
 #define MAX_BP		5				//BPの最大値
 #define START_BP	1				//BPの初期値
+#define MAX_USE_BP	3				//一回で使用することができるBPの最大値
 
 #define DIST_KIND	4				//移動方向の種類
 
@@ -85,6 +86,7 @@ private:
 	int SPD;				//速度
 
 	int BoostPoint;			//ブーストポイント(BP)
+	int UseBP;				//使用するBP
 
 	int EquipAtk;			//装備の攻撃力
 	int EquipDef;			//装備の防御力
@@ -216,5 +218,8 @@ public:
 	//BP関係
 	int GetBP(void);		//BP取得
 	void AddBP(void);		//BP加算
+	int GetUseBP(void);		//使用するBPを取得
+	void PlusUseBP(void);	//使用するBPを増やす
+	void MinusUseBP(void);	//使用するBPを減らす
 
 };

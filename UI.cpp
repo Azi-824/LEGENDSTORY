@@ -175,7 +175,12 @@ void UI::DrawStateWindow(PLAYER *player)
 	{
 		//BPの数だけ、塗りつぶして描画する
 		//BPがない場合は、枠線だけ描画する
-		if (i < player->GetBP())	//現在のBPより小さかったら
+		//使用するBPは色を変えて描画する
+		if (i < player->GetUseBP())	//使用するBPより少なかったら
+		{
+			DrawCircle(STA_BP_X + i * STA_BP_INTERVAL, STA_BP_Y, STA_BP_DRAW_SIZE, GetColor(0, 255, 0), TRUE);	//使用するBP描画(色を変えて描画)
+		}
+		else if (i < player->GetBP())	//現在のBPより小さかったら
 		{
 			DrawCircle(STA_BP_X + i * STA_BP_INTERVAL, STA_BP_Y, STA_BP_DRAW_SIZE, GetColor(255, 0, 0), TRUE);	//BP描画(円の中を塗りつぶして描画)
 		}

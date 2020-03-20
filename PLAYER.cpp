@@ -66,6 +66,7 @@ bool PLAYER::SetInit()
 	this->ChengeMapKind = (int) MAP_CHENGE_NONE;			//マップ切り替えなし
 
 	this->BoostPoint = START_BP;		//BPの初期値設定
+	this->UseBP = 0;					//使用するBP
 
 	this->Anime->SetSize();			//画像のサイズ設定
 
@@ -1252,6 +1253,35 @@ void PLAYER::AddBP(void)
 	if (this->BoostPoint < MAX_BP)	//現在のBPがBPの最大値より小さかったら
 	{
 		++this->BoostPoint;
+	}
+	return;
+}
+
+//使用するBPを取得
+int PLAYER::GetUseBP(void)
+{
+	return this->UseBP;
+}
+
+//使用するBPを増やす
+void PLAYER::PlusUseBP(void)
+{
+	if (this->UseBP < this->BoostPoint)	//使用するBPが現在持っているBPよりも少なかったら
+	{
+		if (this->UseBP < MAX_USE_BP)	//現在の使用BPが、一回で使用できるBPよりも少なかったら
+		{
+			++this->UseBP;	//使用するBPを増やす
+		}
+	}
+	return;
+}
+
+//使用するBPを減らす
+void PLAYER::MinusUseBP(void)
+{
+	if (this->UseBP > 0)	//使用するBPが0より多かったら
+	{
+		--this->UseBP;		//使用するBPを減らす
 	}
 	return;
 }
