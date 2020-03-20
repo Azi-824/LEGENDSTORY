@@ -1238,13 +1238,6 @@ bool LoadGameData()
 	Title_select = new SELECT("START", "END");			//タイトル画面の選択肢生成
 	End_select = new SELECT("TITLE", "PLAY", "END");	//エンド画面の選択肢生成
 
-	//武器の選択肢
-	ui->WeaponSelect->ChengeDefault(false, false);	//デフォルト値を変更（キー操作不可、UI非表示）
-	ui->WeaponSelect->Default();					//デフォルト値に設定
-	//防具の選択肢
-	ui->ArmorSelect->ChengeDefault(false, false);	//デフォルト値を変更（キー操作不可、UI非表示）
-	ui->ArmorSelect->Default();						//デフォルト値に設定
-
 	//*********************************** 魔法の選択肢を魔法一覧から設定、ここから *****************************************
 	std::vector<std::string> w;	//作業用
 	w.resize(mgc_list->GetListSize());	//作業用変数のサイズ変更
@@ -1284,6 +1277,8 @@ void SetGameInit()
 		enemy[i]->SetInit();					//初期設定
 		enemy[i]->StateSetInit();				//ステータス初期設定
 	}
+
+	ui->Init();		//UI関係初期化
 	//******************** 初期設定ここまで ***************************
 
 	//後に変更

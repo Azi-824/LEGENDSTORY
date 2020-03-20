@@ -142,51 +142,53 @@ public:
 
 	~UI();					//デストラクタ
 
-	//メニューウィンドウ関連
-	void DrawMenu();					//メニューウィンドウ描画
-	void ResetMenu();					//メニュー関係のメンバーをリセット
-	int GetMenuEquipDir(void);			//メニューの装備画面の選択肢の段階を取得
-	void DrawMenuCheck();				//メニューウィンドウでの確認の選択肢描画
+	//******************** メニュー関係 *************************
+	void DrawMenu();							//メニューウィンドウ描画
+	void ResetMenu();							//メニュー関係のメンバーをリセット
+	int GetMenuEquipDir(void);					//メニューの装備画面の選択肢の段階を取得
+	void DrawMenuCheck();						//メニューウィンドウでの確認の選択肢描画
 
-	//バトルコマンド関連
+	//アイテム
+	bool MenuSelectItem(KEYDOWN *, MUSIC *);	//メニューのアイテム画面の処理
+
+	//装備
+	int MenuSelectEquip(KEYDOWN *, MUSIC *);	//メニューの装備画面の処理
+	void DrawMenuEquip(WEAPON *, ARMOR *);		//メニューの装備描画処理
+
+	//********************** バトル関係 **************************
 	void DrawCommand();					//バトルコマンド描画
 	void BattleInit();					//バトルコマンドで使用する要素を初期化する
+	void DrawStateWindow(PLAYER *);		//ステータスウィンドウ描画
 
-	//ステータスウィンドウ関連
-	void DrawStateWindow(PLAYER *);				//ステータスウィンドウ描画
-	void DrawWindow(int, int, int, int);				//ウィンドウを描画する
-	void DrawWindow(int,int,int,int,unsigned int);		//ウィンドウを描画する(色指定)
-	void DrawWindowFrame(int, int, int, int);			//ウィンドウの枠を描画する
+	//************************ ウィンドウ関係 *************************
+	void DrawWindow(int, int, int, int);			//ウィンドウを描画する
+	void DrawWindow(int,int,int,int,unsigned int);	//ウィンドウを描画する(色指定)
+	void DrawWindowFrame(int, int, int, int);		//ウィンドウの枠を描画する
 
-	//UI画像関係
+	//************************** UI画像関係 ***************************
 	void DrawUiImage(int, int,int);				//UIの画像を描画する
 	bool AddUiImage(const char *, const char *);//ui画像を追加する
 	int GetUiImageWidth(int);					//ui画像の横幅取得
 	int GetUiImageHeight(int);					//ui画像の高さ取得
 
-	//アニメーション関係
+	//************************ UIアニメーション関係 ****************************
 	bool AddUiAnime(const char *, const char *, int, int, int, int, int, double, bool);	//アニメーション画像を追加する
 	void DrawUiAnime(int,int);			//アニメーション画像を描画する
 	void SetIsDrawUIAnime(bool);		//アニメーション画像を描画してよいか設定
 	bool GetIsDrawUIAnime(void);		//アニメーション画像を描画してよいか取得
 
-	void SetSize(void);					//画像サイズを設定する
+	//*********************** 設定関係 ***************************
+	void Init(void);		//初期化
+	void SetSize(void);		//画像サイズを設定する
 
-	//アイテム関係
+	//**************************** アイテム関係 ****************************
 	void DrawItemSelect(int ,int ,ITEM *);				//アイテムの選択肢を描画する
 	void DrawItemSelect(int ,int ,ITEM *,LIST_ITEM *);	//アイテムの選択肢を描画する(説明文付き)
-	bool MenuSelectItem(KEYDOWN *,MUSIC *);				//メニューのアイテム画面の処理
 
-
-	//装備関係
-	void DrawMenuEquip(WEAPON *,ARMOR *);		//メニュー画面の装備描画処理
-	int MenuSelectEquip(KEYDOWN *, MUSIC *);	//メニューの装備画面の処理
-
-	//選択肢関係
+	//***************************** 選択肢関係 *****************************
 	void SelectUpdate(ITEM *, LIST_ITEM *);		//選択肢の内容を更新する処理(アイテム)
 	void SelectUpdate(WEAPON *, LIST_WEAPON *);	//武器
 	void SelectUpdate(ARMOR *, LIST_ARMOR *);	//防具
-
 	void DrawCheck(const char *);				//確認の選択肢を描画する
 
 };
