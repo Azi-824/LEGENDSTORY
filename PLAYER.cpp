@@ -609,115 +609,59 @@ void PLAYER::DamegeCalc(ENEMY *enemy,int choiecommand)
 
 	case(int)COMMANDE_ATACK:				//UŒ‚‚ğ‘I‚ñ‚¾‚Ìˆ—‚±‚±‚©‚ç
 
-		//¥¥¥¥¥¥¥¥¥¥¥¥¥¥¥¥¥¥¥ –¡•û‚ÌUŒ‚ˆ—‚±‚±‚©‚ç ¥¥¥¥¥¥¥¥¥¥¥¥¥¥¥¥¥¥¥¥¥¥
-		if ((this->ATK + this->EquipAtk) > enemy->GetDEF())	//©•ª‚ÌUŒ‚—Í‚ª“G‚Ì–hŒä—Í‚æ‚èã‚¾‚Á‚½‚ç
-		{
-			//this->SendDamege = (this->ATK + this->EquipAtk) - enemy->GetDEF();		//ƒ_ƒ[ƒW—Ê‚ğŒvZ ©•ªUŒ‚—Í(UŒ‚+‘•”õUŒ‚) - “G–hŒä—Í‚Ìƒ_ƒ[ƒW‚ğ—^‚¦‚é
-			enemy->SetRecvDamege((this->ATK + this->EquipAtk) - enemy->GetDEF());	//ƒ_ƒ[ƒW—Ê‚ğŒvZ ©•ªUŒ‚—Í(UŒ‚+‘•”õUŒ‚) - “G–hŒä—Í‚Ìƒ_ƒ[ƒW‚ğ—^‚¦‚é
-		}
-		else								//©•ª‚ÌUŒ‚—Í‚ª“G‚Ì–hŒä—Í‚æ‚è‰º‚¾‚Á‚½‚çA
-		{
-			//this->SendDamege = 0;			//—^‚¦‚éƒ_ƒ[ƒW‚Í0
-			enemy->SetRecvDamege(0);		//“GAó‚¯‚éƒ_ƒ[ƒW0
-		}
-		//£££££££££££££££££££ –¡•û‚ÌUŒ‚ˆ—‚±‚±‚Ü‚Å ££££££££££££££££££££££
+		//—^‚¦‚éƒ_ƒ[ƒWŒvZ
+		enemy->SetRecvDamege((this->ATK + this->EquipAtk) - enemy->GetDEF());	//ƒ_ƒ[ƒW—Ê‚ğŒvZ ©•ªUŒ‚—Í(UŒ‚+‘•”õUŒ‚) - “G–hŒä—Í‚Ìƒ_ƒ[ƒW‚ğ—^‚¦‚é
 
-
-
-		//¥¥¥¥¥¥¥¥¥¥¥¥¥¥¥¥¥¥¥ “G‚ÌUŒ‚ˆ—‚±‚±‚©‚ç ¥¥¥¥¥¥¥¥¥¥¥¥¥¥¥¥¥¥¥¥¥¥
-		if (enemy->GetATK() > (this->DEF + this->EquipDef))		//“G‚ÌUŒ‚—Í‚ª©•ª‚Ì–hŒä—Í‚æ‚èã‚¾‚Á‚½‚ç
-		{
-			this->RecvDamege = enemy->GetATK() - (this->DEF + this->EquipDef);	//“GUŒ‚—Í - ©•ª–hŒä—Í(–hŒä+‘•”õ–hŒä)‚Ìƒ_ƒ[ƒW‚ğ—^‚¦‚é
-		}
-		else									//“G‚ÌUŒ‚—Í‚ª©•ª‚Ì–hŒä—Í‚æ‚è‰º‚¾‚Á‚½‚çA
-		{
-			this->RecvDamege = 0;				//ó‚¯‚éƒ_ƒ[ƒW0
-		}
-		//£££££££££££££££££££ “G‚ÌUŒ‚ˆ—‚±‚±‚Ü‚Å ££££££££££££££££££££££
-
+		//ó‚¯‚éƒ_ƒ[ƒWŒvZ
+		this->RecvDamege = enemy->GetATK() - (this->DEF + this->EquipDef);	//“GUŒ‚—Í - ©•ª–hŒä—Í(–hŒä+‘•”õ–hŒä)‚Ìƒ_ƒ[ƒW‚ğ—^‚¦‚é
 
 		break;					//UŒ‚‚ğ‘I‚ñ‚¾‚Ìˆ—‚±‚±‚Ü‚Å
 
 	case (int)COMMANDE_DEFENSE:			//–hŒä‚ğ‘I‚ñ‚¾‚Ìˆ—‚±‚±‚©‚ç
 
-		//¥¥¥¥¥¥¥¥¥¥¥¥¥¥¥¥¥¥¥ –¡•û‚ÌUŒ‚ˆ—‚±‚±‚©‚ç ¥¥¥¥¥¥¥¥¥¥¥¥¥¥¥¥¥¥¥¥¥¥
-		//this->SendDamege = 0;	//–hŒä‚ğ‘I‚ñ‚¾‚Íƒ_ƒ[ƒW‚ğ—^‚¦‚È‚¢
+		//—^‚¦‚éƒ_ƒ[ƒWŒvZ
 		enemy->SetRecvDamege(0);		//“GAó‚¯‚éƒ_ƒ[ƒW0
-		//£££££££££££££££££££ –¡•û‚ÌUŒ‚ˆ—‚±‚±‚Ü‚Å ££££££££££££££££££££££
 
-
-
-		//¥¥¥¥¥¥¥¥¥¥¥¥¥¥¥¥¥¥¥ “G‚ÌUŒ‚ˆ—‚±‚±‚©‚ç ¥¥¥¥¥¥¥¥¥¥¥¥¥¥¥¥¥¥¥¥¥¥
-
+		//ó‚¯‚éƒ_ƒ[ƒWŒvZ
 		//–hŒä—Í‚ğ‹­‰»‚µ‚Äƒ_ƒ[ƒWŒvZ
-		if (enemy->GetATK() > ((this->DEF + this->EquipDef) * DEF_BOOST))		//“G‚ÌUŒ‚—Í‚ª©•ª‚Ì–hŒä—Í‚æ‚èã‚¾‚Á‚½‚ç
-		{
-			this->RecvDamege = enemy->GetATK() - ((this->DEF + this->EquipDef) * DEF_BOOST);	//“GUŒ‚—Í - ©•ª–hŒä—Í(–hŒä+‘•”õ–hŒä)‚Ìƒ_ƒ[ƒW‚ğ—^‚¦‚é
-		}
-		else									//“G‚ÌUŒ‚—Í‚ª©•ª‚Ì–hŒä—Í‚æ‚è‰º‚¾‚Á‚½‚çA
-		{
-			this->RecvDamege = 0;				//ó‚¯‚éƒ_ƒ[ƒW0
-		}
-		//£££££££££££££££££££ “G‚ÌUŒ‚ˆ—‚±‚±‚Ü‚Å ££££££££££££££££££££££
-
+		this->RecvDamege = enemy->GetATK() - ((this->DEF + this->EquipDef) * DEF_BOOST);	//“GUŒ‚—Í - ©•ª–hŒä—Í(–hŒä+‘•”õ–hŒä)‚Ìƒ_ƒ[ƒW‚ğ—^‚¦‚é
 
 		break;					//–hŒä‚ğ‘I‚ñ‚¾‚Ìˆ—‚±‚±‚Ü‚Å
 
 	case (int)COMMANDE_MAGIC:			//–‚–@‚ğ‘I‚ñ‚¾‚Ìˆ—‚±‚±‚©‚ç
 
-		//¥¥¥¥¥¥¥¥¥¥¥¥¥¥¥¥¥¥¥ –¡•û‚ÌUŒ‚ˆ—‚±‚±‚©‚ç ¥¥¥¥¥¥¥¥¥¥¥¥¥¥¥¥¥¥¥¥¥¥
-
+		//—^‚¦‚éƒ_ƒ[ƒWŒvZ
 		//©•ª‚ÌUŒ‚—Í‚ğ‹­‰»‚µ‚Äƒ_ƒ[ƒWŒvZ
 		//–‚–@UŒ‚—Í‚ğ’Ç‰Á‚µ‚ÄA’ÊíUŒ‚‚Æ•ª‚¯‚é—\’è
-		if (((this->ATK + this->EquipAtk)* ATK_BOOST) > enemy->GetDEF())	//©•ª‚ÌUŒ‚—Í‚ª“G‚Ì–hŒä—Í‚æ‚èã‚¾‚Á‚½‚ç
-		{
-			//this->SendDamege = ((this->ATK + this->EquipAtk) * ATK_BOOST) - enemy->GetDEF();		//ƒ_ƒ[ƒW—Ê‚ğŒvZ ©•ªUŒ‚—Í(UŒ‚+‘•”õUŒ‚) - “G–hŒä—Í‚Ìƒ_ƒ[ƒW‚ğ—^‚¦‚é
-			enemy->SetRecvDamege(((this->ATK + this->EquipAtk) * ATK_BOOST) - enemy->GetDEF());	//ƒ_ƒ[ƒW—Ê‚ğŒvZ ©•ªUŒ‚—Í(UŒ‚+‘•”õUŒ‚) - “G–hŒä—Í‚Ìƒ_ƒ[ƒW‚ğ—^‚¦‚é
-		}
-		else								//©•ª‚ÌUŒ‚—Í‚ª“G‚Ì–hŒä—Í‚æ‚è‰º‚¾‚Á‚½‚çA
-		{
-			//this->SendDamege = 0;			//—^‚¦‚éƒ_ƒ[ƒW‚Í0
-			enemy->SetRecvDamege(0);		//“GAó‚¯‚éƒ_ƒ[ƒW0
-		}
-		//£££££££££££££££££££ –¡•û‚ÌUŒ‚ˆ—‚±‚±‚Ü‚Å ££££££££££££££££££££££
+		enemy->SetRecvDamege(((this->ATK + this->EquipAtk) * ATK_BOOST) - enemy->GetDEF());	//ƒ_ƒ[ƒW—Ê‚ğŒvZ ©•ªUŒ‚—Í(UŒ‚+‘•”õUŒ‚) - “G–hŒä—Í‚Ìƒ_ƒ[ƒW‚ğ—^‚¦‚é
 
-
-
-		//¥¥¥¥¥¥¥¥¥¥¥¥¥¥¥¥¥¥¥ “G‚ÌUŒ‚ˆ—‚±‚±‚©‚ç ¥¥¥¥¥¥¥¥¥¥¥¥¥¥¥¥¥¥¥¥¥¥
-		if (enemy->GetATK() > (this->DEF + this->EquipDef))		//“G‚ÌUŒ‚—Í‚ª©•ª‚Ì–hŒä—Í‚æ‚èã‚¾‚Á‚½‚ç
-		{
-			this->RecvDamege = enemy->GetATK() - (this->DEF + this->EquipDef);	//“GUŒ‚—Í - ©•ª–hŒä—Í(–hŒä+‘•”õ–hŒä)‚Ìƒ_ƒ[ƒW‚ğ—^‚¦‚é
-		}
-		else									//“G‚ÌUŒ‚—Í‚ª©•ª‚Ì–hŒä—Í‚æ‚è‰º‚¾‚Á‚½‚çA
-		{
-			this->RecvDamege = 0;				//ó‚¯‚éƒ_ƒ[ƒW0
-		}
-		//£££££££££££££££££££ “G‚ÌUŒ‚ˆ—‚±‚±‚Ü‚Å ££££££££££££££££££££££
-
+		//ó‚¯‚éƒ_ƒ[ƒWŒvZ
+		this->RecvDamege = enemy->GetATK() - (this->DEF + this->EquipDef);	//“GUŒ‚—Í - ©•ª–hŒä—Í(–hŒä+‘•”õ–hŒä)‚Ìƒ_ƒ[ƒW‚ğ—^‚¦‚é
 
 		break;					//–‚–@‚ğ‘I‚ñ‚¾‚Ìˆ—‚±‚±‚Ü‚Å
 
 	case(int)COMMANDE_ITEM:				//ƒAƒCƒeƒ€‚ğ‘I‚ñ‚¾‚Ìˆ—‚±‚±‚©‚ç
 
-		//this->SendDamege = 0;		//—^‚¦‚éƒ_ƒ[ƒW0
+		//—^‚¦‚éƒ_ƒ[ƒWŒvZ
 		enemy->SetRecvDamege(0);		//“GAó‚¯‚éƒ_ƒ[ƒW0
-
-		//¥¥¥¥¥¥¥¥¥¥¥¥¥¥¥¥¥¥¥ “G‚ÌUŒ‚ˆ—‚±‚±‚©‚ç ¥¥¥¥¥¥¥¥¥¥¥¥¥¥¥¥¥¥¥¥¥¥
-		if (enemy->GetATK() > (this->DEF + this->EquipDef))		//“G‚ÌUŒ‚—Í‚ª©•ª‚Ì–hŒä—Í‚æ‚èã‚¾‚Á‚½‚ç
-		{
-			this->RecvDamege = enemy->GetATK() - (this->DEF + this->EquipDef);	//“GUŒ‚—Í - ©•ª–hŒä—Í(–hŒä+‘•”õ–hŒä)‚Ìƒ_ƒ[ƒW‚ğ—^‚¦‚é
-		}
-		else									//“G‚ÌUŒ‚—Í‚ª©•ª‚Ì–hŒä—Í‚æ‚è‰º‚¾‚Á‚½‚çA
-		{
-			this->RecvDamege = 0;				//ó‚¯‚éƒ_ƒ[ƒW0
-		}
-		//£££££££££££££££££££ “G‚ÌUŒ‚ˆ—‚±‚±‚Ü‚Å ££££££££££££££££££££££
-
+		
+		//ó‚¯‚éƒ_ƒ[ƒWŒvZ
+		this->RecvDamege = enemy->GetATK() - (this->DEF + this->EquipDef);	//“GUŒ‚—Í - ©•ª–hŒä—Í(–hŒä+‘•”õ–hŒä)‚Ìƒ_ƒ[ƒW‚ğ—^‚¦‚é
 
 		break;					//ƒAƒCƒeƒ€‚ğ‘I‚ñ‚¾‚Ìˆ—‚±‚±‚Ü‚Å
 
 	default:
 		break;
+	}
+
+	if (this->RecvDamege < 0)	//ó‚¯‚éƒ_ƒ[ƒW‚ª0‚æ‚è­‚È‚¢‚Æ‚«‚Í
+	{
+		this->RecvDamege = 0;	//ó‚¯‚éƒ_ƒ[ƒW0
+	}
+
+	if (enemy->GetRecvDamege() < 0)	//“G‚É—^‚¦‚éƒ_ƒ[ƒW‚ª0‚æ‚è­‚È‚¢‚Æ‚«‚Í
+	{
+		enemy->SetRecvDamege(0);	//—^‚¦‚éƒ_ƒ[ƒW0
 	}
 
 	return;
