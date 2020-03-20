@@ -988,6 +988,8 @@ bool LoadGameData()
 	if (bt_se->Add(MY_MUSIC_DIR_BT_SE, MY_SE_NAME_NIGERU) == false) { return false;	}		//逃げるときの音追加
 	if (bt_se->Add(MY_MUSIC_DIR_BT_SE, MY_SE_NAME_DAMEGE) == false) { return false; }		//ダメージ音追加
 	if (bt_se->Add(MY_MUSIC_DIR_BT_SE, MY_SE_NAME_RECOVERY) == false) { return false; }		//回復音追加
+	if (bt_se->Add(MY_MUSIC_DIR_BT_SE, MY_SE_NAME_BPPLUS) == false) { return false; }		//使用するBPを増やす音追加
+	if (bt_se->Add(MY_MUSIC_DIR_BT_SE, MY_SE_NAME_BPMINUS) == false) { return false; }		//使用するBPを減らす音追加
 
 	//システムで使用するSE
 	sys_se = new MUSIC(MY_MUSIC_DIR_SYS_SE, MY_SE_NAME_CURSOR);	//システム用SE生成
@@ -1418,11 +1420,17 @@ void Bt_WaitAct()
 
 				if (keydown->IsKeyDownOne(KEY_INPUT_SPACE))	//スペースキーを押されたら
 				{
-					player->PlusUseBP();	//使用するBPを増やす 
+					if (player->PlusUseBP())	//使用するBPを増やせたら
+					{
+						bt_se->Play((int)BT_SE_BP_PLUS);	//使用するBP増加の音を鳴らす
+					}
 				}
 				else if (keydown->IsKeyDownOne(KEY_INPUT_LSHIFT))	//左シフトキーを押されたら
 				{
-					player->MinusUseBP();	//使用するBPを減らす
+					if (player->MinusUseBP())	//使用するBPを減らせたら
+					{
+						bt_se->Play((int)BT_SE_BP_MINUS);	//使用するBP減少の音を鳴らす
+					}
 				}
 
 			}

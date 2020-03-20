@@ -1264,24 +1264,26 @@ int PLAYER::GetUseBP(void)
 }
 
 //使用するBPを増やす
-void PLAYER::PlusUseBP(void)
+bool PLAYER::PlusUseBP(void)
 {
 	if (this->UseBP < this->BoostPoint)	//使用するBPが現在持っているBPよりも少なかったら
 	{
 		if (this->UseBP < MAX_USE_BP)	//現在の使用BPが、一回で使用できるBPよりも少なかったら
 		{
 			++this->UseBP;	//使用するBPを増やす
+			return true;	//増やせた
 		}
 	}
-	return;
+	return false;	//増やせなかった
 }
 
 //使用するBPを減らす
-void PLAYER::MinusUseBP(void)
+bool PLAYER::MinusUseBP(void)
 {
 	if (this->UseBP > 0)	//使用するBPが0より多かったら
 	{
 		--this->UseBP;		//使用するBPを減らす
+		return true;		//減らせた
 	}
-	return;
+	return false;	//減らせなかった
 }
