@@ -148,6 +148,9 @@ public:
 	int GetMenuEquipDir(void);					//メニューの装備画面の選択肢の段階を取得
 	void DrawMenuCheck();						//メニューウィンドウでの確認の選択肢描画
 
+	//ステータス
+	void DrawMenuState(PLAYER *);				//メニュー画面のステータス描画処理
+
 	//アイテム
 	bool MenuSelectItem(KEYDOWN *, MUSIC *);	//メニューのアイテム画面の処理
 

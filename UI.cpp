@@ -117,6 +117,28 @@ void UI::DrawMenuCheck(void)
 
 }
 
+//ステータス
+//メニュー画面のステータス描画処理
+void UI::DrawMenuState(PLAYER *player)
+{
+	//ステータス描画(仮)
+	DrawFormatString(MENU_TEXT_X, MENU_TEXT_TOP_Y, GetColor(255, 255, 255), "%s\n経験値：%d/%d\nHP %d/%d\nMP %d/%d\nATK %d\nDEF %d\nSPD %d",
+		player->GetName(),		//名前
+		player->GetEXP(),		//現在の経験値
+		player->GetMaxEXP(),	//最大経験値
+		player->GetHP(),		//HP
+		player->GetMaxHP(),		//最大HP
+		player->GetMP(),		//MP
+		player->GetMaxMP(),		//最大MP
+		player->GetATK(),		//攻撃力
+		player->GetDEF(),		//防御力
+		player->GetSPD());		//スピード
+
+
+	return;
+}
+
+//アイテム
 //メニューのアイテム画面の処理
 bool UI::MenuSelectItem(KEYDOWN *keydown, MUSIC *sys_se)
 {
@@ -155,6 +177,7 @@ bool UI::MenuSelectItem(KEYDOWN *keydown, MUSIC *sys_se)
 
 }
 
+//装備
 //メニュー画面の装備描画処理
 void UI::DrawMenuEquip(WEAPON *weapon, ARMOR *armor)
 {
