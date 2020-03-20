@@ -80,6 +80,8 @@ int ChengeDrawCount = 0;	//フェードアウト処理に使用
 
 int EncounteEnemyType = ENEMY_ENCOUNT_TYPE_NONE;	//遭遇した敵の種類
 int Turn = (int)MY_TURN;	//ターン
+int NowTurnCnt = 1;			//ターン数を格納する(1ターン目からスタート)
+int TotalTurnCnt = 0;		//総合のターン数を格納する(戦闘が開始されたら、ターンごとに加算される)
 
 bool GameEnd_Flg = false;	//ゲーム終了フラグ
 bool Boss_flg = false;		//ボスフラグ
@@ -580,6 +582,8 @@ void Init()
 
 		BattleStageNow = (int)WAIT_ACT;	//バトル状態を、行動待ち状態へ
 
+		NowTurnCnt = 1;				//次の戦闘に備えて、ターン数をリセット
+		TotalTurnCnt = 0;			//次の戦闘に備えて、ターン数をリセット
 		Turn = (int)MY_TURN;		//ターンを味方のターンに設定
 
 		for (int i = 0; i < BT_MSG_KIND; ++i)	//メッセージの種類分
@@ -1394,6 +1398,13 @@ void Bt_WaitAct()
 {
 	if (Turn == (int)MY_TURN)		//味方のターンだったら
 	{
+		//1ターンに1回だけ行う処理
+		if (TotalTurnCnt < NowTurnCnt)	//ターンが始まって最初の処理だったら
+		{
+			player->AddBP();	//BPを加算する
+			++TotalTurnCnt;		//総合のターン数を加算する
+		}
+
 		bt_msg[(int)BT_MSG_ACT]->DrawMsg(BT_MSG_DRAW_X, BT_MSG_DRAW_Y, GetColor(255, 255, 255));	//メッセージ描画
 
 		if (bt_msg[(int)BT_MSG_ACT]->GetIsLastMsg())	//最後のメッセージだったら
@@ -1775,7 +1786,8 @@ void Bt_DrawDamege()
 			Enemy_Atk_effect->ResetIsAnime(enemy[EncounteEnemyType]->GetChoiseSkil());		//エフェクトリセット
 			Boss_Atk_effect->ResetIsAnime(enemy[EncounteEnemyType]->GetChoiseSkil());		//エフェクトリセット（ボス）
 
-			Turn = (int)MY_TURN;				//味方のターンへ
+			++NowTurnCnt;			//ターンを加算する
+			Turn = (int)MY_TURN;	//味方のターンへ
 		}
 
 		if (player->GetIsArive()==false)	//自分が死亡していたら

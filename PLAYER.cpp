@@ -65,6 +65,8 @@ bool PLAYER::SetInit()
 	this->LevUpMsgStart_flg = false;	//レベルアップメッセージを表示していない
 	this->ChengeMapKind = (int) MAP_CHENGE_NONE;			//マップ切り替えなし
 
+	this->BoostPoint = START_BP;		//BPの初期値設定
+
 	this->Anime->SetSize();			//画像のサイズ設定
 
 	//描画領域作成
@@ -1236,4 +1238,17 @@ bool PLAYER::Save(const char *dir, const char *name)
 
 	return true;		//セーブ成功
 
+}
+
+//BP取得
+int PLAYER::GetBP(void)
+{
+	return this->BoostPoint;
+}
+
+//BP加算
+void PLAYER::AddBP(void)
+{
+	++this->BoostPoint;
+	return;
 }

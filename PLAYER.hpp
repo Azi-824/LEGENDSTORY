@@ -28,6 +28,9 @@
 #define	DEF_BOOST	1.7				//防御を選んだ時の防御力の強化倍率
 #define ATK_BOOST	2				//攻撃力の強化倍率
 
+#define MAX_BP		5				//BPの最大値
+#define START_BP	1				//BPの初期値
+
 #define DIST_KIND	4				//移動方向の種類
 
 #define PLAYER_AF_CLEAR_POS_X		720	//クリア後のプレイヤーの位置
@@ -80,6 +83,8 @@ private:
 	int ATK;				//攻撃力
 	int DEF;				//防御力
 	int SPD;				//速度
+
+	int BoostPoint;			//ブーストポイント(BP)
 
 	int EquipAtk;			//装備の攻撃力
 	int EquipDef;			//装備の防御力
@@ -207,5 +212,9 @@ public:
 	//セーブデータ関係
 	bool LoadData(const char *, const char *);	//セーブデータ読込
 	bool Save(const char *, const char *);		//セーブ
+
+	//BP関係
+	int GetBP(void);		//BP取得
+	void AddBP(void);		//BP加算
 
 };
