@@ -1420,6 +1420,10 @@ void Bt_WaitAct()
 				{
 					player->PlusUseBP();	//使用するBPを増やす 
 				}
+				else if (keydown->IsKeyDownOne(KEY_INPUT_LSHIFT))	//左シフトキーを押されたら
+				{
+					player->MinusUseBP();	//使用するBPを減らす
+				}
 
 			}
 
