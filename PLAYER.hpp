@@ -217,7 +217,7 @@ public:
 
 	//BP関係
 	int GetBP(void);		//BP取得
-	void AddBP(void);		//BP加算
+	bool AddBP(void);		//BP加算
 	int GetUseBP(void);		//使用するBPを取得
 	bool PlusUseBP(void);	//使用するBPを増やす
 	bool MinusUseBP(void);	//使用するBPを減らす

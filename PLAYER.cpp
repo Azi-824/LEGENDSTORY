@@ -1248,13 +1248,14 @@ int PLAYER::GetBP(void)
 }
 
 //BP‰ÁZ
-void PLAYER::AddBP(void)
+bool PLAYER::AddBP(void)
 {
 	if (this->BoostPoint < MAX_BP)	//Œ»İ‚ÌBP‚ªBP‚ÌÅ‘å’l‚æ‚è¬‚³‚©‚Á‚½‚ç
 	{
 		++this->BoostPoint;
+		return true;	//BP‚ğ‘‚â‚¹‚½
 	}
-	return;
+	return false;		//BP‚ğ‘‚â‚¹‚È‚©‚Á‚½
 }
 
 //g—p‚·‚éBP‚ğæ“¾

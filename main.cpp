@@ -990,6 +990,7 @@ bool LoadGameData()
 	if (bt_se->Add(MY_MUSIC_DIR_BT_SE, MY_SE_NAME_RECOVERY) == false) { return false; }		//回復音追加
 	if (bt_se->Add(MY_MUSIC_DIR_BT_SE, MY_SE_NAME_BPPLUS) == false) { return false; }		//使用するBPを増やす音追加
 	if (bt_se->Add(MY_MUSIC_DIR_BT_SE, MY_SE_NAME_BPMINUS) == false) { return false; }		//使用するBPを減らす音追加
+	if (bt_se->Add(MY_MUSIC_DIR_BT_SE, MY_SE_NAME_BPCHARGE) == false) { return false; }		//BPチャージ音追加
 
 	//システムで使用するSE
 	sys_se = new MUSIC(MY_MUSIC_DIR_SYS_SE, MY_SE_NAME_CURSOR);	//システム用SE生成
@@ -1403,7 +1404,10 @@ void Bt_WaitAct()
 		//1ターンに1回だけ行う処理
 		if (TotalTurnCnt < NowTurnCnt)	//ターンが始まって最初の処理だったら
 		{
-			player->AddBP();	//BPを加算する
+			if (player->AddBP())	//BPを増やせたら
+			{
+				bt_se->Play((int)BT_SE_BP_CHARGE);	//チャージ音を鳴らす
+			}
 			++TotalTurnCnt;		//総合のターン数を加算する
 		}
 

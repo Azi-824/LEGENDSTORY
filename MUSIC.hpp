@@ -27,6 +27,7 @@
 #define MY_SE_NAME_RECOVERY R"(\bt_recovery.wav)"	//バトルでの回復音の名前
 #define MY_SE_NAME_BPPLUS	R"(\bp_plus.mp3)"		//使用するBPを増やすときの音の名前
 #define MY_SE_NAME_BPMINUS	R"(\bp_minus.mp3)"		//使用するBPを減らすときの音の名前
+#define MY_SE_NAME_BPCHARGE	R"(\bp_charge.mp3)"		//BPのチャージ音
 //システムSE
 #define MY_SE_NAME_CURSOR	R"(\select.mp3)"		//カーソルの移動音の名前
 #define MY_SE_NAME_CANSEL	R"(\cancel.wav)"		//キャンセル音の名前
@@ -64,7 +65,8 @@ enum BT_SE_TYPE
 	BT_SE_DAMEGE,		//ダメージ音
 	BT_SE_RECOVERY,		//バトルでの回復音
 	BT_SE_BP_PLUS,		//使用するBPを増やす音
-	BT_SE_BP_MINUS		//使用するBPを減らす音
+	BT_SE_BP_MINUS,		//使用するBPを減らす音
+	BT_SE_BP_CHARGE		//BPのチャージ音
 };
 
 enum SYS_SE_TYPE
