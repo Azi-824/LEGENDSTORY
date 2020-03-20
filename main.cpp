@@ -576,6 +576,8 @@ void Init()
 
 		ui->BattleInit();			//バトルコマンド初期化
 
+		player->BattleInit();		//戦闘で使用する要素初期化
+
 		bt_se->Reset();				//SEの再生状態をリセット
 
 		EncounteEnemyType = ENEMY_ENCOUNT_TYPE_NONE;	//遭遇した敵の種類をリセット

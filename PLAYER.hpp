@@ -234,6 +234,8 @@ public:
 	bool PlusUseBP(void);		//使用するBPを増やす
 	bool MinusUseBP(void);		//使用するBPを減らす
 	double GetBPBoostValue();	//BPによって強化される倍率を取得(ダメージ計算内で使用)
-	void UseBP(void);			//BPを使用する
+	void BPUse(void);			//BPを使用する
+
+	void BattleInit(void);		//戦闘で使用するものを初期化する
 
 };

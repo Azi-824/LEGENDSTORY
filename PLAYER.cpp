@@ -673,7 +673,7 @@ void PLAYER::DamegeCalc(ENEMY *enemy,int choiecommand)
 		enemy->SetRecvDamege(0);	//与えるダメージ0
 	}
 
-	this->UseBP();	//BPを使用する
+	this->BPUse();	//BPを使用する
 
 	return;
 }
@@ -1277,9 +1277,18 @@ double PLAYER::GetBPBoostValue(void)
 }
 
 //BPを使用する
-void PLAYER::UseBP(void)
+void PLAYER::BPUse(void)
 {
 	this->BP -= this->UseBPNum;	//使用した分BPを減らす
 	this->UseBPNum = 0;			//使用するBPをリセット
+	return;
+}
+
+//戦闘で使用するものを初期化する
+void PLAYER::BattleInit(void)
+{
+	this->BP = START_BP;	//BPを初期化
+	this->UseBPNum = 0;		//使用するBPを初期化
+
 	return;
 }
