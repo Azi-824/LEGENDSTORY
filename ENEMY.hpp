@@ -153,7 +153,7 @@ public:
 	void SetWeaponCode(int);	//武器コード設定
 	void SetArmorCode(int);		//防具コード設定
 
-	void StateSetInit();	//敵ステータス初期設定
+	void StateSetInit();	//敵ステータス初期化
 
 	const char * GetName();			//名前取得
 	int GetHP();			//体力取得

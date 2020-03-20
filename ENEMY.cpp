@@ -153,7 +153,7 @@ void ENEMY::SetArmorCode(int armorcode)
 	return;
 }
 
-//敵ステータス初期設定
+//敵ステータス初期化
 void ENEMY::StateSetInit()
 {
 
@@ -162,7 +162,7 @@ void ENEMY::StateSetInit()
 
 	this->SetIsArive(true);	//生きている
 
-	this->ChoiseSkil = -1;	//使用するスキル初期化
+	this->ChoiseSkil = ENEMY_NONE;	//使用するスキル初期化
 
 	return;
 }
