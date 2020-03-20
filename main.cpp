@@ -557,7 +557,6 @@ void Chenge()
 	{
 		GameSceneNow = GameSceneNext;	//次の画面にする
 		Init();							//初期化
-		//ui->SelectClear();				//選択肢の内容をクリアする
 	}
 
 
@@ -570,11 +569,7 @@ void Init()
 {
 	ChengeDrawCount = 0;		//フェードイン用初期化
 
-	if (GameSceneBefor == (int)GAME_SCENE_BATTLE)	//戦闘画面から遷移した場合
-	{
-		BattleInit();	//戦闘画面関係初期化
-	}
-	else if (GameSceneBefor == (int)GAME_SCENE_END)	//エンド画面から遷移した場合
+	if (GameSceneBefor == (int)GAME_SCENE_END)	//エンド画面から遷移した場合
 	{
 		Clear_flg = false;				//クリアフラグリセット
 	}
@@ -583,7 +578,6 @@ void Init()
 //戦闘画面関係初期化
 void BattleInit(void)
 {
-	enemy[EncounteEnemyType]->StateSetInit();		//遭遇した敵初期化
 
 	ui->BattleInit();			//バトルコマンド初期化
 
@@ -591,7 +585,11 @@ void BattleInit(void)
 
 	bt_se->Reset();				//SEの再生状態をリセット
 
-	EncounteEnemyType = ENEMY_ENCOUNT_TYPE_NONE;	//遭遇した敵の種類をリセット
+	if (EncounteEnemyType != ENEMY_ENCOUNT_TYPE_NONE)	//遭遇した敵の種類が入っていたら
+	{
+		enemy[EncounteEnemyType]->StateSetInit();		//遭遇した敵初期化
+		EncounteEnemyType = ENEMY_ENCOUNT_TYPE_NONE;	//遭遇した敵の種類をリセット
+	}
 
 	BattleStageNow = (int)WAIT_ACT;	//バトル状態を、行動待ち状態へ
 
@@ -819,6 +817,7 @@ void Enconte()
 
 			if (rand%enemy[i]->GetEncounteRate() == 0)			//敵と遭遇した時
 			{
+				BattleInit();		//戦闘関係初期化
 
 				player->SetIsKeyDown(false);	//プレイヤーの動きを止める
 
@@ -1411,20 +1410,20 @@ void Bt_WaitAct()
 {
 	if (Turn == (int)MY_TURN)		//味方のターンだったら
 	{
-		//1ターンに1回だけ行う処理
-		if (TotalTurnCnt < NowTurnCnt)	//ターンが始まって最初の処理だったら
-		{
-			if (player->AddBP())	//BPを増やせたら
-			{
-				bt_se->Play((int)BT_SE_BP_CHARGE);	//チャージ音を鳴らす
-			}
-			++TotalTurnCnt;		//総合のターン数を加算する
-		}
-
 		bt_msg[(int)BT_MSG_ACT]->DrawMsg(BT_MSG_DRAW_X, BT_MSG_DRAW_Y, GetColor(255, 255, 255));	//メッセージ描画
 
 		if (bt_msg[(int)BT_MSG_ACT]->GetIsLastMsg())	//最後のメッセージだったら
 		{
+
+			//1ターンに1回だけ行う処理
+			if (TotalTurnCnt < NowTurnCnt)	//ターンが始まって最初の処理だったら
+			{
+				if (player->AddBP())	//BPを増やせたら
+				{
+					bt_se->Play((int)BT_SE_BP_CHARGE);	//チャージ音を鳴らす
+				}
+				++TotalTurnCnt;		//総合のターン数を加算する
+			}
 
 			ui->SetIsDrawUIAnime(false);		//UIのアニメーション非表示
 
