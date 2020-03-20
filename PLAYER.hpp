@@ -97,8 +97,8 @@ private:
 	int DEF;				//防御力
 	int SPD;				//速度
 
-	int BoostPoint;			//ブーストポイント(BP)
-	int UseBP;				//使用するBP
+	int BP;					//ブーストポイント(BP)
+	int UseBPNum;			//使用するBP
 
 	int EquipAtk;			//装備の攻撃力
 	int EquipDef;			//装備の防御力
@@ -234,5 +234,6 @@ public:
 	bool PlusUseBP(void);		//使用するBPを増やす
 	bool MinusUseBP(void);		//使用するBPを減らす
 	double GetBPBoostValue();	//BPによって強化される倍率を取得(ダメージ計算内で使用)
+	void UseBP(void);			//BPを使用する
 
 };

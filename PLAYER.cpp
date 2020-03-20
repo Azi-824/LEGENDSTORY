@@ -65,8 +65,8 @@ bool PLAYER::SetInit()
 	this->LevUpMsgStart_flg = false;	//レベルアップメッセージを表示していない
 	this->ChengeMapKind = (int) MAP_CHENGE_NONE;			//マップ切り替えなし
 
-	this->BoostPoint = START_BP;		//BPの初期値設定
-	this->UseBP = 0;					//使用するBP
+	this->BP = START_BP;		//BPの初期値設定
+	this->UseBPNum = 0;			//使用するBP
 
 	this->Anime->SetSize();			//画像のサイズ設定
 
@@ -673,6 +673,8 @@ void PLAYER::DamegeCalc(ENEMY *enemy,int choiecommand)
 		enemy->SetRecvDamege(0);	//与えるダメージ0
 	}
 
+	this->UseBP();	//BPを使用する
+
 	return;
 }
 
@@ -1197,15 +1199,15 @@ bool PLAYER::Save(const char *dir, const char *name)
 //BP取得
 int PLAYER::GetBP(void)
 {
-	return this->BoostPoint;
+	return this->BP;
 }
 
 //BP加算
 bool PLAYER::AddBP(void)
 {
-	if (this->BoostPoint < MAX_BP)	//現在のBPがBPの最大値より小さかったら
+	if (this->BP < MAX_BP)	//現在のBPがBPの最大値より小さかったら
 	{
-		++this->BoostPoint;
+		++this->BP;
 		return true;	//BPを増やせた
 	}
 	return false;		//BPを増やせなかった
@@ -1214,17 +1216,17 @@ bool PLAYER::AddBP(void)
 //使用するBPを取得
 int PLAYER::GetUseBP(void)
 {
-	return this->UseBP;
+	return this->UseBPNum;
 }
 
 //使用するBPを増やす
 bool PLAYER::PlusUseBP(void)
 {
-	if (this->UseBP < this->BoostPoint)	//使用するBPが現在持っているBPよりも少なかったら
+	if (this->UseBPNum < this->BP)	//使用するBPが現在持っているBPよりも少なかったら
 	{
-		if (this->UseBP < MAX_USE_BP)	//現在の使用BPが、一回で使用できるBPよりも少なかったら
+		if (this->UseBPNum < MAX_USE_BP)	//現在の使用BPが、一回で使用できるBPよりも少なかったら
 		{
-			++this->UseBP;	//使用するBPを増やす
+			++this->UseBPNum;	//使用するBPを増やす
 			return true;	//増やせた
 		}
 	}
@@ -1234,9 +1236,9 @@ bool PLAYER::PlusUseBP(void)
 //使用するBPを減らす
 bool PLAYER::MinusUseBP(void)
 {
-	if (this->UseBP > 0)	//使用するBPが0より多かったら
+	if (this->UseBPNum > 0)	//使用するBPが0より多かったら
 	{
-		--this->UseBP;		//使用するBPを減らす
+		--this->UseBPNum;		//使用するBPを減らす
 		return true;		//減らせた
 	}
 	return false;	//減らせなかった
@@ -1245,7 +1247,7 @@ bool PLAYER::MinusUseBP(void)
 //BPによって強化される倍率を取得(ダメージ計算内で使用)
 double PLAYER::GetBPBoostValue(void)
 {
-	switch (this->UseBP)	//使用するBPの数によって、返す強化倍率を変える
+	switch (this->UseBPNum)	//使用するBPの数によって、返す強化倍率を変える
 	{
 
 	case (int)USE_BP_1:	//使用するBPが1個の場合
@@ -1272,4 +1274,12 @@ double PLAYER::GetBPBoostValue(void)
 
 		break;
 	}
+}
+
+//BPを使用する
+void PLAYER::UseBP(void)
+{
+	this->BP -= this->UseBPNum;	//使用した分BPを減らす
+	this->UseBPNum = 0;			//使用するBPをリセット
+	return;
 }
