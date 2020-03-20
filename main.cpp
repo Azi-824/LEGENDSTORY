@@ -572,32 +572,40 @@ void Init()
 
 	if (GameSceneBefor == (int)GAME_SCENE_BATTLE)	//戦闘画面から遷移した場合
 	{
-		enemy[EncounteEnemyType]->StateSetInit();		//遭遇した敵初期化
-
-		ui->BattleInit();			//バトルコマンド初期化
-
-		player->BattleInit();		//戦闘で使用する要素初期化
-
-		bt_se->Reset();				//SEの再生状態をリセット
-
-		EncounteEnemyType = ENEMY_ENCOUNT_TYPE_NONE;	//遭遇した敵の種類をリセット
-
-		BattleStageNow = (int)WAIT_ACT;	//バトル状態を、行動待ち状態へ
-
-		NowTurnCnt = 1;				//次の戦闘に備えて、ターン数をリセット
-		TotalTurnCnt = 0;			//次の戦闘に備えて、ターン数をリセット
-		Turn = (int)MY_TURN;		//ターンを味方のターンに設定
-
-		for (int i = 0; i < BT_MSG_KIND; ++i)	//メッセージの種類分
-		{
-			bt_msg[i]->ResetFlg();		//フラグリセット
-		}
-
+		BattleInit();	//戦闘画面関係初期化
 	}
 	else if (GameSceneBefor == (int)GAME_SCENE_END)	//エンド画面から遷移した場合
 	{
 		Clear_flg = false;				//クリアフラグリセット
 	}
+}
+
+//戦闘画面関係初期化
+void BattleInit(void)
+{
+	enemy[EncounteEnemyType]->StateSetInit();		//遭遇した敵初期化
+
+	ui->BattleInit();			//バトルコマンド初期化
+
+	player->BattleInit();		//戦闘で使用する要素初期化
+
+	bt_se->Reset();				//SEの再生状態をリセット
+
+	EncounteEnemyType = ENEMY_ENCOUNT_TYPE_NONE;	//遭遇した敵の種類をリセット
+
+	BattleStageNow = (int)WAIT_ACT;	//バトル状態を、行動待ち状態へ
+
+	NowTurnCnt = 1;				//次の戦闘に備えて、ターン数をリセット
+	TotalTurnCnt = 0;			//次の戦闘に備えて、ターン数をリセット
+	Turn = (int)MY_TURN;		//ターンを味方のターンに設定
+
+	for (int i = 0; i < BT_MSG_KIND; ++i)	//メッセージの種類分
+	{
+		bt_msg[i]->ResetFlg();		//フラグリセット
+	}
+
+	return;
+
 }
 
 //シーンを変更する処理
@@ -1690,8 +1698,9 @@ void Bt_DrawEffect()
 
 			if (Atack_effect->GetIsDrawEnd())	//攻撃エフェクトの描画が終わったら
 			{
-				enemy[EncounteEnemyType]->DamegeSend();	//ダメージを与える
-				BattleStageNow = (int)DRAW_DAMEGE;		//ダメージ描画状態へ
+				enemy[EncounteEnemyType]->DamegeSend();			//ダメージを与える
+				Atack_effect->ResetIsAnime((int)NOMAL_ATACK);	//攻撃エフェクトリセット
+				BattleStageNow = (int)DRAW_DAMEGE;				//ダメージ描画状態へ
 			}
 
 		}
@@ -1712,7 +1721,9 @@ void Bt_DrawEffect()
 
 			if (Magic_effect->GetIsDrawEnd())	//魔法エフェクトの描画が終わったら
 			{
-				player->SetMP(player->GetMP() - mgc_list->GetCost(player->GetChoiseSkil()));		//使った魔法に応じたMPを減らす
+				player->SetMP(player->GetMP() - mgc_list->GetCost(player->GetChoiseSkil()));	//使った魔法に応じたMPを減らす
+				Magic_effect->ResetIsAnime(player->GetChoiseSkil());							//魔法エフェクトリセット
+
 				enemy[EncounteEnemyType]->DamegeSend();	//ダメージを与える
 				BattleStageNow = (int)DRAW_DAMEGE;		//ダメージ描画状態へ
 			}
@@ -1720,16 +1731,8 @@ void Bt_DrawEffect()
 		}
 		else		//エフェクト描画のないコマンドを選んでいたら(防御、アイテム)
 		{
-			//if (ui->BattleCommand->GetSelectNum() == (int)COMMANDE_ITEM)		//アイテムを選んでいたら
-			//{
-			//	player->UseItem(ui->ItemSelect->GetSelectCode());	//アイテム使用
-			//	ui->ItemSelect->NowSelectReset();					//アイテムの選択をリセット
-			//	ui->ItemSelect->SetSelectFlg(false);				//選択していない状態へ
-			//}
-
 			enemy[EncounteEnemyType]->DamegeSend();	//ダメージを与える
 			BattleStageNow = (int)DRAW_DAMEGE;		//ダメージ描画状態へ
-
 		}
 
 	}
@@ -1767,6 +1770,10 @@ void Bt_DrawEffect()
 
 			}
 
+			//*************** エフェクトリセット処理 **************
+			Enemy_Atk_effect->ResetIsAnime(enemy[EncounteEnemyType]->GetChoiseSkil());		//エフェクトリセット
+			Boss_Atk_effect->ResetIsAnime(enemy[EncounteEnemyType]->GetChoiseSkil());		//エフェクトリセット（ボス）
+
 			player->DamegeSend();	//プレイヤーにダメージを与える
 
 			BattleStageNow = (int)DRAW_DAMEGE;	//ダメージ描画状態へ
@@ -1794,21 +1801,12 @@ void Bt_DrawDamege()
 
 		if (Turn == (int)MY_TURN)			//味方のターンの時
 		{
-			//************ エフェクトリセット処理 ****************
-			Atack_effect->ResetIsAnime((int)NOMAL_ATACK);		//攻撃エフェクトリセット
-			Magic_effect->ResetIsAnime(player->GetChoiseSkil());//魔法エフェクトリセット
-
-			Turn = (int)ENEMY_TURN;				//敵のターンへ
-
+			Turn = (int)ENEMY_TURN;			//敵のターンへ
 		}
-		else if (Turn == (int)ENEMY_TURN)			//敵のターンの時
+		else if (Turn == (int)ENEMY_TURN)	//敵のターンの時
 		{
 
 			bt_msg[(int)BT_MSG_ACT]->SetMsg("どうする？");	//文字列設定
-
-			//*************** エフェクトリセット処理 **************
-			Enemy_Atk_effect->ResetIsAnime(enemy[EncounteEnemyType]->GetChoiseSkil());		//エフェクトリセット
-			Boss_Atk_effect->ResetIsAnime(enemy[EncounteEnemyType]->GetChoiseSkil());		//エフェクトリセット（ボス）
 
 			++NowTurnCnt;			//ターンを加算する
 			Turn = (int)MY_TURN;	//味方のターンへ

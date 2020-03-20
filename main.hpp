@@ -72,6 +72,7 @@ void End();					//エンド画面の処理
 void Chenge();				//シーン遷移画面の処理
 
 void Init();				//初期化処理
+void BattleInit();			//戦闘画面関係初期化
 void SceneChenge(int, int);	//シーンを変更する処理
 
 void Load_Draw();			//ロード画面の描画処理

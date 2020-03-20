@@ -1290,5 +1290,12 @@ void PLAYER::BattleInit(void)
 	this->BP = START_BP;	//BPを初期化
 	this->UseBPNum = 0;		//使用するBPを初期化
 
+	this->ChoiseSkil = -1;	//使用するスキルリセット
+	//this->RecvDamege = 0;	//受けるダメージリセット
+	//
+	//this->IsActMsg = false;		//行動メッセージ表示中かリセット
+	//this->IsBattleWin = false;	//戦闘に勝利したかリセット
+	//this->LevUpMsgStart_flg = false;//レベルアップメッセージフラグリセット
+
 	return;
 }
