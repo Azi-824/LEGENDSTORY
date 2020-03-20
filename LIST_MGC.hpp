@@ -22,9 +22,6 @@ public:
 	LIST_MGC(const char *,const char *);			//コンストラクタ
 	~LIST_MGC();									//デストラクタ
 
-	//セッタ
-
-
 	//ゲッタ
 	int GetCost(int);			//消費MP取得
 };

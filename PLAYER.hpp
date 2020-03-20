@@ -147,7 +147,6 @@ public:
 	bool SetInit();				//初期設定
 	void BattleInit(void);		//戦闘で使用するものを初期化する
 	bool SetAnime(const char *, const char *, int, int, int, int, int, double, bool);	//アニメーション画像の設定
-	
 
 	//**************** ステータス関係 ****************
 	//セッタ
