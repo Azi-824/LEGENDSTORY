@@ -37,9 +37,12 @@
 #define BP_BOOST_LEVEL3	2.0			//使用するBPが3個の場合の強化倍率
 
 #define DIST_KIND	4				//移動方向の種類
+#define PLAYE_DEFAULT_MOVESPEED 2	//プレイヤーのデフォルトの移動速度
 
 #define PLAYER_AF_CLEAR_POS_X		720	//クリア後のプレイヤーの位置
 #define PLAYRT_AF_CLEAR_POS_Y		300	//クリア後のプレイヤーの位置
+
+#define PLAYER_INIT_VALUE	-1			//プレイヤーの初期化に使う数字
 
 #define PLAYER_DATA_DIR			R"(.\MY_DATA\Player\)"		//プレイヤーのデータのファイル名
 #define PLAYER_DATA_NAME		R"(Player_Data.csv)"		//プレイヤーのデータのcsvファイル
@@ -77,7 +80,6 @@ private:
 	
 	COLLISION *Collision;	//当たり判定
 	SIKAKU *sikaku_draw;	//描画領域
-	CHARACTOR *Ilast;		//立ち絵
 
 	WEAPON *Weapon;			//武器
 	ARMOR *Armor;			//防具
@@ -121,7 +123,7 @@ private:
 	bool IsMenu;			//メニューウィンドウが描画されているか
 	bool IsActMsg;			//行動メッセージ表示中か
 	bool IsBattleWin;		//戦闘に勝ったか
-	bool LevUpMsgStart_flg;	//レベルアップメッセージスタートフラグ
+	bool LevelUp_flg;		//レベルアップしたか
 
 	int ChengeMapKind;		//マップ切り替えの種類
 
@@ -131,7 +133,6 @@ public:
 
 	bool SetInit();			//初期設定
 	bool SetAnime(const char *, const char *, int, int, int, int, int, double, bool);	//アニメーション画像の設定
-	bool SetImage(const char *, const char *);		//画像の設定
 	
 	void SetMP(int);		//MP設定
 
@@ -142,17 +143,15 @@ public:
 	void SetPosAbsolute(int, int);	//位置を設定(絶対的)
 	void SetIsMenu(bool);			//メニュー描画中か設定
 	void SetIsBattleWin(bool);		//戦闘に勝ったか設定
-	void SetLevUpMsgStartFlg(bool);	//レベルアップメッセージスタートのフラグを設定
+	void SetLevelUpFlg(bool);		//レベルアップメッセージスタートのフラグを設定
 	void ResetChengeMapKind(void);	//切り替えるマップの種類をリセット
 	void SetChengePos(int);			//マップ切り替えをしたときにプレイヤーの位置を設定
 
 	//ステータス関係
 	const char *GetName();	//名前取得
-
 	int GetLevel();			//レベル取得
 	int GetMaxEXP();		//経験値の最大値取得
 	int GetEXP();			//現在の経験値取得
-
 	int GetMaxHP();			//最大体力取得
 	int GetHP();			//現在の体力取得
 	int GetMaxMP();			//最大MP取得
@@ -165,19 +164,15 @@ public:
 	int GetEquipDef();		//装備防御力取得
 
 	int GetChoiseSkil();		//使用するスキル取得
-	std::vector<int> GetSkil();	//スキル一覧取得
 
-	int GetMoveSpeed();			//移動速度取得
 	bool GetIsArive();			//生きているか取得
 	bool GetIsDraw();			//描画できるか取得
 	bool GetKeyOperation();		//キーボードで操作できるか取得
-	COLLISION * GetCollision();	//当たり判定を取得
 	bool GetIsMenu();			//メニュー描画中か取得
 	int GetRecvDamege();		//受けたダメージを取得
 	bool GetIsActMsg();			//行動メッセージ表示中か取得
-	bool GetIsMove();			//移動中かどうか取得
 	bool GetIsBattleWin();		//戦闘に勝ったか取得
-	bool GetLevUpMsgStartFlg();	//レベルアップスタートメッセージフラグを取得
+	bool GetLevelUpFlg();		//レベルアップスタートメッセージフラグを取得
 	bool GetIsKeyDown();		//キー入力があるか取得
 	int GetChengeMapKind();		//切り替えるマップの種類を取得
 

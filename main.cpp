@@ -381,7 +381,7 @@ void Play()
 
 	//▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼ 画面遷移の処理 ▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼
 
-	if (player->GetIsMove())			//プレイヤーが移動中だったら
+	if (player->GetIsKeyDown())		//キー入力されてたら(プレイヤーが移動中だったら)
 	{
 
 			if (player->CheckDetectionMap(mapdata[NowDrawMapKind][MapKind[MAPPOS_Y][MAPPOS_X]]->GetRect((int)MAP_ENCOUNT)))	//敵と遭遇するマップだったら
@@ -1053,7 +1053,6 @@ bool LoadGameData()
 
 	//プレイヤー関係
 	player = new PLAYER();		//プレイヤー生成
-	if (player->SetImage(MY_IMG_DIR_CHARCTOR, MY_IMG_NAME_PLAYER) == false) { return false; }	//読み込み失敗
 	if (player->SetAnime(MY_ANIME_DIR_PLAYER, MY_ANIME_NAME_PLAYER, PLAYER_ALL_CNT, PLAYER_YOKO_CNT, PLAYER_TATE_CNT, PLAYER_WIDTH, PLAYER_HEIGHT, PLAYER_ANI_SPEED, true) == false) { return false; } //読み込み失敗
 
 	//プレイヤーのデータをcsvファイルから読み込み
@@ -1844,7 +1843,7 @@ void Bt_DrawDamege()
 			bt_msg[(int)BT_MSG_RESULT]->AddMsg(std::to_string(enemy[EncounteEnemyType]->GetEXP()).c_str());	//経験値設定
 			bt_msg[(int)BT_MSG_RESULT]->AddText("の経験値を手に入れた！");				//メッセージ内容追加
 
-			if (player->GetLevUpMsgStartFlg())		//レベルアップしたときは
+			if (player->GetLevelUpFlg())		//レベルアップしたときは
 			{
 				bt_msg[(int)BT_MSG_RESULT]->AddMsg("レベル");	//メッセージ内容追加
 				bt_msg[(int)BT_MSG_RESULT]->AddText(std::to_string(player->GetLevel()).c_str());	//レベル設定
@@ -1884,13 +1883,13 @@ void Bt_ResultMsg()
 
 		if (bt_msg[(int)BT_MSG_RESULT]->GetIsLastMsg())		//最後のメッセージだったら
 		{
-			if (player->GetLevUpMsgStartFlg())			//レベルアップしていたら
+			if (player->GetLevelUpFlg())			//レベルアップしていたら
 			{
 				if (bt_se->GetIsPlay((int)BT_SE_LEVELUP) == false)		//再生中じゃなければ
 				{
 					bt_se->Play((int)BT_SE_LEVELUP);	//レベルアップのSEを鳴らす
 					bt_se->SetIsPlayed((int)BT_SE_SLASH, true);			//再生済み
-					player->SetLevUpMsgStartFlg(false);	//レベルアップ終了
+					player->SetLevelUpFlg(false);	//レベルアップ終了
 				}
 			}
 

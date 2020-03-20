@@ -27,7 +27,6 @@ PLAYER::~PLAYER()
 {
 	delete this->Anime;				//Animeを破棄
 	delete this->Collision;			//Collisionを破棄
-	delete this->Ilast;				//Ilastを破棄
 	delete this->sikaku_draw;		//sikaku_drawを破棄
 	delete this->Weapon;			//Weaponを破棄
 	delete this->Armor;				//Armorを破棄
@@ -43,32 +42,25 @@ PLAYER::~PLAYER()
 //初期設定
 bool PLAYER::SetInit()
 {
-	this->Dist = (int)FLONT;	//初期向き設定
-	this->MoveSpeed = 2;//初期移動速度設定
-	this->InKeyKind = -1;	//押されていないときはー1
-
-	this->ChoiseSkil = this->Skil[0];	//最初は通常攻撃を使用するスキルとして設定する
-
-	this->RecvDamege = 0;	//受けるダメージ0
+	this->Dist = (int)FLONT;					//初期向き設定
+	this->MoveSpeed = PLAYE_DEFAULT_MOVESPEED;	//初期移動速度設定
+	this->InKeyKind = PLAYER_INIT_VALUE;		//押されていないときはー1
 
 	//装備関係
 	this->EquipAtk = 0;		//装備攻撃力0
 	this->EquipDef = 0;		//装備防御力0
-	this->Equip_WeaponCode = -1;	//装備している武器のコード番号
-	this->Equip_ArmorCode = -1;		//装備している防具のコード番号
+	this->Equip_WeaponCode = PLAYER_INIT_VALUE;	//装備している武器のコード番号
+	this->Equip_ArmorCode = PLAYER_INIT_VALUE;	//装備している防具のコード番号
 
-	this->Ilast->SetInit();	//画像初期設定
+	this->Anime->SetSize();	//画像のサイズ設定
+
 	this->IsKeyDown = false;//キーボード押されていない
 	this->IsMenu = false;	//メニューウィンドウ描画されていない
-	this->IsActMsg = false;		//行動メッセージ表示していない
-	this->IsBattleWin = false;	//戦闘に勝っていない
-	this->LevUpMsgStart_flg = false;	//レベルアップメッセージを表示していない
-	this->ChengeMapKind = (int) MAP_CHENGE_NONE;			//マップ切り替えなし
 
-	this->BP = START_BP;		//BPの初期値設定
-	this->UseBPNum = 0;			//使用するBP
+	this->ChengeMapKind = (int) MAP_CHENGE_NONE;	//マップ切り替えなし
 
-	this->Anime->SetSize();			//画像のサイズ設定
+	this->BattleInit();		//戦闘関係の要素初期化
+
 
 	//描画領域作成
 	this->sikaku_draw->SetValue(this->sikaku_draw->Left,
@@ -99,16 +91,6 @@ bool PLAYER::SetAnime(const char *dir, const char *name, int SplitNumALL, int Sp
 {
 	this->Anime = new ANIMATION(dir, name, SplitNumALL, SpritNumX, SplitNumY, SplitWidth, SplitHeight, changeSpeed, IsLoop);
 	if (this->Anime->GetIsLoad() == false) { return false; }		//読み込み失敗
-
-	return true;
-
-}
-
-//画像設定
-bool PLAYER::SetImage(const char *dir, const char *name)
-{
-	this->Ilast = new CHARACTOR();
-	if (this->Ilast->SetImage(dir, name) == false) { return false; }//読み込み失敗
 
 	return true;
 
@@ -206,9 +188,9 @@ void PLAYER::SetIsBattleWin(bool isbattlewin)
 }
 
 //レベルアップメッセージをスタートしたか取得
-void PLAYER::SetLevUpMsgStartFlg(bool start_flg)
+void PLAYER::SetLevelUpFlg(bool start_flg)
 {
-	this->LevUpMsgStart_flg = start_flg;
+	this->LevelUp_flg = start_flg;
 	return;
 }
 
@@ -342,18 +324,6 @@ int PLAYER::GetChoiseSkil(void)
 	return this->ChoiseSkil;	
 }
 
-//スキル一覧取得
-std::vector<int> PLAYER::GetSkil(void)
-{
-	return this->Skil;
-}
-
-//移動速度取得
-int PLAYER::GetMoveSpeed(void)
-{
-	return this->MoveSpeed;
-}
-
 //生きているか取得
 bool PLAYER::GetIsArive()
 {
@@ -370,12 +340,6 @@ bool PLAYER::GetIsDraw()
 bool PLAYER::GetKeyOperation()
 {
 	return this->IsKeyOperation;
-}
-
-//当たり判定を取得
-COLLISION * PLAYER::GetCollision()
-{
-	return this->Collision;
 }
 
 //メニュー描画中か取得
@@ -396,12 +360,6 @@ bool PLAYER::GetIsActMsg()
 	return this->IsActMsg;
 }
 
-//移動中かどうか取得
-bool PLAYER::GetIsMove()
-{
-	return this->IsKeyDown;
-}
-
 //戦闘に勝ったか取得
 bool PLAYER::GetIsBattleWin()
 {
@@ -409,9 +367,9 @@ bool PLAYER::GetIsBattleWin()
 }
 
 //レベルアップメッセージを表示しているか取得
-bool PLAYER::GetLevUpMsgStartFlg()
+bool PLAYER::GetLevelUpFlg()
 {
-	return this->LevUpMsgStart_flg;
+	return this->LevelUp_flg;
 }
 
 //キー入力があるか取得
@@ -719,7 +677,7 @@ void PLAYER::AddExp(int exp)
 		this->NowMP = this->MaxMP;
 
 		this->Level++;			//レベルを一つ上げる
-		this->LevUpMsgStart_flg = true;	//レベルアップメッセージの表示をスタートする
+		this->LevelUp_flg = true;	//レベルアップメッセージの表示をスタートする
 	}
 	return;
 }
@@ -1295,7 +1253,7 @@ void PLAYER::BattleInit(void)
 	
 	this->IsActMsg = false;		//行動メッセージ表示中かリセット
 	this->IsBattleWin = false;	//戦闘に勝利したかリセット
-	this->LevUpMsgStart_flg = false;//レベルアップメッセージフラグリセット
+	this->LevelUp_flg = false;//レベルアップメッセージフラグリセット
 
 	return;
 }
