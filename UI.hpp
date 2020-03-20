@@ -34,6 +34,11 @@
 #define	STA_MP_BAR_Y	610				//MPバーの描画開始Y位置
 #define	STA_MP_BAR_WIDTH 100			//MPバーの描画幅
 #define STA_MP_BAR_HEIGHT 15			//MPバーの描画高さ
+//BP
+#define STA_BP_X		STA_WIN_X + 150			//BPの描画開始X位置
+#define STA_BP_Y		STA_WIN_Y + 15			//BPの描画開始Y位置
+#define STA_BP_DRAW_SIZE 10						//BPの描画サイズ
+#define STA_BP_INTERVAL STA_BP_DRAW_SIZE * 3	//BPの描画間隔
 
 //メニュー一覧
 #define MENU_LIST_WIN_X			20		//メニューウィンドウ（一覧）の描画開始X位置

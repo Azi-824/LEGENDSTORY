@@ -1249,6 +1249,9 @@ int PLAYER::GetBP(void)
 //BP‰ÁŽZ
 void PLAYER::AddBP(void)
 {
-	++this->BoostPoint;
+	if (this->BoostPoint < MAX_BP)	//Œ»Ý‚ÌBP‚ªBP‚ÌÅ‘å’l‚æ‚è¬‚³‚©‚Á‚½‚ç
+	{
+		++this->BoostPoint;
+	}
 	return;
 }

@@ -147,6 +147,8 @@ void UI::DrawStateWindow(PLAYER *player)
 
 	//ステータス描画
 	DrawFormatString(STA_TXT_X, STA_TXT_Y, GetColor(255,255,255), "%s\nLv:%d\nHP:%d\nMP:%d\n",player->GetName(), player->GetLevel(), player->GetHP(), player->GetMP());
+
+	//HPバー描画処理
 	DrawBox(STA_HP_BAR_X, STA_HP_BAR_Y, STA_HP_BAR_X + STA_HP_BAR_WIDTH, STA_HP_BAR_Y + STA_HP_BAR_HEIGHT, GetColor(0, 255, 0), FALSE);	//HPバー枠線描画
 	static double hp_percent = 0.0;//HP割合
 	static double hp_now = 0.0, hp_max = 0.0;	//現在のHPと最大HP
@@ -157,6 +159,7 @@ void UI::DrawStateWindow(PLAYER *player)
 	draw_hp = STA_HP_BAR_WIDTH * hp_percent;		//描画するHP量計算
 	DrawBox(STA_HP_BAR_X, STA_HP_BAR_Y, STA_HP_BAR_X + draw_hp, STA_HP_BAR_Y + STA_HP_BAR_HEIGHT, GetColor(0, 255, 0), TRUE);	//HP描画
 
+	//MPバー描画処理
 	DrawBox(STA_MP_BAR_X, STA_MP_BAR_Y, STA_MP_BAR_X + STA_MP_BAR_WIDTH, STA_MP_BAR_Y + STA_MP_BAR_HEIGHT, GetColor(0, 0, 255), FALSE);	//HPバー枠線描画
 	static double mp_percent = 0.0;//MP割合
 	static double mp_now = 0.0, mp_max = 0.0;	//現在のMPと最大MP
@@ -167,6 +170,21 @@ void UI::DrawStateWindow(PLAYER *player)
 	draw_mp = STA_MP_BAR_WIDTH * mp_percent;		//描画するMP量計算
 	DrawBox(STA_MP_BAR_X, STA_MP_BAR_Y, STA_MP_BAR_X + draw_mp, STA_MP_BAR_Y + STA_MP_BAR_HEIGHT, GetColor(0, 0, 255), TRUE);	//HP描画
 
+	//BP描画処理
+	for (int i = 0; i < MAX_BP; ++i)	//BPの最大値分繰り返す
+	{
+		//BPの数だけ、塗りつぶして描画する
+		//BPがない場合は、枠線だけ描画する
+		if (i < player->GetBP())	//現在のBPより小さかったら
+		{
+			DrawCircle(STA_BP_X + i * STA_BP_INTERVAL, STA_BP_Y, STA_BP_DRAW_SIZE, GetColor(255, 0, 0), TRUE);	//BP描画(円の中を塗りつぶして描画)
+		}
+
+		DrawCircle(STA_BP_X + i * STA_BP_INTERVAL, STA_BP_Y, STA_BP_DRAW_SIZE, GetColor(255, 255, 255), FALSE);	//BP描画(枠線)
+
+	}
+
+	return;
 
 }
 
