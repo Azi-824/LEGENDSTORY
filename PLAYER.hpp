@@ -151,6 +151,10 @@ public:
 
 	//**************** ステータス関係 ****************
 	//セッタ
+	void SetMP(int);		//MP設定
+	void SetChoiseSkil(int);//使用するスキル設定
+
+	//ゲッタ
 	const char *GetName();	//名前取得
 	int GetLevel();			//レベル取得
 	int GetMaxEXP();		//経験値の最大値取得
@@ -163,10 +167,6 @@ public:
 	int GetDEF();			//防御力取得
 	int GetSPD();			//速度取得
 	int GetChoiseSkil();	//使用するスキル取得
-
-	//ゲッタ
-	void SetMP(int);		//MP設定
-	void SetChoiseSkil(int);//使用するスキル設定
 	bool GetIsArive();		//生きているか取得
 
 	//********************* キー関係 ********************
@@ -199,7 +199,7 @@ public:
 
 	//********************** 戦闘関係 ************************
 	void SetIsBattleWin(bool);	//戦闘に勝ったか設定
-	void SetLevelUpFlg(bool);	//レベルアップメッセージスタートのフラグを設定
+	void SetLevelUpFlg(bool);	//レベルアップフラグを設定
 	int GetRecvDamege();		//受けたダメージを取得
 	bool GetIsActMsg();			//行動メッセージ表示中か取得
 	bool GetIsBattleWin();		//戦闘に勝ったか取得

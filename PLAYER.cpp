@@ -39,6 +39,7 @@ PLAYER::~PLAYER()
 	return;
 }
 
+//***************************** 初期化、設定関係 **********************************
 //初期設定
 bool PLAYER::SetInit()
 {
@@ -78,15 +79,17 @@ bool PLAYER::SetInit()
 }
 
 //アニメーション画像設定
-//引　数：const char *：画像のディレクトリ
-//引　数：const char *：画像の名前
-//引　数：int：画像の総分割数
-//引　数：int：画像の横向きの分割数
-//引　数：int：画像の縦向きの分割数
-//引　数：int：画像の分割された横の大きさ
-//引　数：int：画像の分割された縦の大きさ
-//引　数：double：次の画像に変更する速さ
-//引　数：bool：アニメーションをループするかどうか
+/*
+引　数：const char *：画像のディレクトリ
+引　数：const char *：画像の名前
+引　数：int：画像の総分割数
+引　数：int：画像の横向きの分割数
+引　数：int：画像の縦向きの分割数
+引　数：int：画像の分割された横の大きさ
+引　数：int：画像の分割された縦の大きさ
+引　数：double：次の画像に変更する速さ
+引　数：bool：アニメーションをループするかどうか
+*/
 bool PLAYER::SetAnime(const char *dir, const char *name, int SplitNumALL, int SpritNumX, int SplitNumY, int SplitWidth, int SplitHeight, double changeSpeed, bool IsLoop)
 {
 	this->Anime = new ANIMATION(dir, name, SplitNumALL, SpritNumX, SplitNumY, SplitWidth, SplitHeight, changeSpeed, IsLoop);
@@ -95,6 +98,26 @@ bool PLAYER::SetAnime(const char *dir, const char *name, int SplitNumALL, int Sp
 	return true;
 
 }
+
+//戦闘で使用するものを初期化する
+void PLAYER::BattleInit(void)
+{
+	this->BP = START_BP;	//BPを初期化
+	this->UseBPNum = 0;		//使用するBPを初期化
+
+	this->ChoiseSkil = -1;	//使用するスキルリセット
+	this->RecvDamege = 0;	//受けるダメージリセット
+
+	this->IsActMsg = false;		//行動メッセージ表示中かリセット
+	this->IsBattleWin = false;	//戦闘に勝利したかリセット
+	this->LevelUp_flg = false;//レベルアップメッセージフラグリセット
+
+	return;
+}
+
+
+//*********************** ステータス関係 ******************************
+//セッタ
 
 //現在のMP設定
 void PLAYER::SetMP(int mp)
@@ -109,148 +132,7 @@ void PLAYER::SetChoiseSkil(int type)
 	return;
 }
 
-//キー操作可能か設定
-void PLAYER::SetIsKeyOpe(bool iskeyope)
-{
-	this->IsKeyOperation = iskeyope;
-	if (!this->IsKeyOperation)	//キー操作不可のときは
-	{
-		this->IsKeyDown = false;	//キー操作不可のときは、キー入力なしに設定
-	}
-	return;
-}
-
-//キー入力ありか設定
-//void PLAYER::SetIsKeyDown(bool Iskeydown)
-//{
-//	this->IsKeyDown = Iskeydown;
-//}
-
-//位置を設定
-//引数：int：X位置を相対的に指定
-//引数：int：Y位置を相対的に指定
-void PLAYER::SetPosRelative(int x, int y)
-{
-	this->Collision->Left += x;	//X位置を設定
-	this->Collision->Top += y;	//Y位置を設定
-
-	this->sikaku_draw->Left += x;
-	this->sikaku_draw->Top += y;
-
-	//描画領域再設定
-	this->sikaku_draw->SetValue(
-		this->sikaku_draw->Left,
-		this->sikaku_draw->Top,
-		this->sikaku_draw->Width,
-		this->sikaku_draw->Height);
-
-
-	//領域再設定
-	this->Collision->SetValue(
-		this->Collision->Left,
-		this->Collision->Top,
-		this->Collision->Width,
-		this->Collision->Height);
-
-	return;
-}
-
-//位置を設定
-//引数：int：X位置を絶対値で指定
-//引数：int：Y位置を絶対値で指定
-void PLAYER::SetPosAbsolute(int x, int y)
-{
-	this->Collision->Left = x;	//X位置を設定
-	this->Collision->Top = y;	//Y位置を設定
-
-	this->sikaku_draw->Left = x;
-	this->sikaku_draw->Top = y;
-
-	//描画領域再設定
-	this->sikaku_draw->SetValue(
-		this->sikaku_draw->Left,
-		this->sikaku_draw->Top,
-		this->sikaku_draw->Width,
-		this->sikaku_draw->Height);
-
-
-	//領域再設定
-	this->Collision->SetValue(
-		this->Collision->Left,
-		this->Collision->Top,
-		this->Collision->Width,
-		this->Collision->Height);
-
-	return;
-}
-
-//メニュー描画中か設定
-void PLAYER::SetIsMenu(bool ismenu)
-{
-	this->IsMenu = ismenu;
-	return;
-}
-
-//戦闘に勝ったか取得
-void PLAYER::SetIsBattleWin(bool isbattlewin)
-{
-	this->IsBattleWin = isbattlewin;
-	return;
-}
-
-//レベルアップメッセージをスタートしたか取得
-void PLAYER::SetLevelUpFlg(bool start_flg)
-{
-	this->LevelUp_flg = start_flg;
-	return;
-}
-
-//マップ切り替えの種類リセット
-void PLAYER::ResetChengeMapKind(void)
-{
-	this->ChengeMapKind = -1;
-	return;
-}
-
-//マップ切り替えをしたときにプレイヤーの位置を設定
-//引数：int：切り替えた方向
-void PLAYER::SetChengePos(int kind)
-{
-	switch (kind)	//切り替え方向毎に処理
-	{
-
-	case (int)MAP_CHENGE_UP:	//上へ切り替えるとき、ここから
-
-		this->SetPosRelative(0, GAME_HEIGHT - (this->Collision->Height + RECT_STAGGER));	//位置を修正
-
-		break;
-
-	case (int)MAP_CHENGE_DOWN:	//下へ切り替えるとき、ここから
-
-		this->SetPosRelative(0, -(this->Collision->Top - RECT_STAGGER));	//位置を修正
-
-		break;
-
-	case (int)MAP_CHENGE_LEFT:	//左へ切り替えるとき、ここから
-
-		this->SetPosRelative(GAME_WIDTH - (this->Collision->Width + RECT_STAGGER), 0);	//位置を修正
-
-		break;
-
-	case (int)MAP_CHENGE_RIGHT:	//右へ切り替えるとき、ここから
-
-		this->SetPosRelative(-(this->Collision->Left - RECT_STAGGER), 0);	//位置を修正
-
-		break;
-
-	default:
-		break;
-	}
-
-	return;
-
-}
-
+//ゲッタ
 //名前取得
 const char * PLAYER::GetName(void)
 {
@@ -317,22 +199,10 @@ int PLAYER::GetSPD(void)
 	return this->SPD;
 }
 
-//装備攻撃力取得
-int PLAYER::GetEquipAtk(void)
-{
-	return this->EquipAtk;	//装備攻撃力取得
-}
-
-//装備防御力取得
-int PLAYER::GetEquipDef(void)
-{
-	return this->EquipDef;	//装備防御力取得
-}
-
 //使用するスキルを取得
 int PLAYER::GetChoiseSkil(void)
 {
-	return this->ChoiseSkil;	
+	return this->ChoiseSkil;
 }
 
 //生きているか取得
@@ -341,10 +211,16 @@ bool PLAYER::GetIsArive()
 	return this->IsArive;
 }
 
-//描画できるか取得
-bool PLAYER::GetIsDraw()
+//*************************** キー関係 *****************************
+//キー操作可能か設定
+void PLAYER::SetIsKeyOpe(bool iskeyope)
 {
-	return this->IsDraw;
+	this->IsKeyOperation = iskeyope;
+	if (!this->IsKeyOperation)	//キー操作不可のときは
+	{
+		this->IsKeyDown = false;	//キー操作不可のときは、キー入力なしに設定
+	}
+	return;
 }
 
 //キーボード操作できるか取得
@@ -353,48 +229,13 @@ bool PLAYER::GetIsKeyOpe()
 	return this->IsKeyOperation;
 }
 
-//メニュー描画中か取得
-bool PLAYER::GetIsMenu()
-{
-	return this->IsMenu;
-}
-
-//受けるダメージを取得
-int PLAYER::GetRecvDamege()
-{
-	return this->RecvDamege;
-}
-
-//行動メッセージ表示中か取得
-bool PLAYER::GetIsActMsg()
-{
-	return this->IsActMsg;
-}
-
-//戦闘に勝ったか取得
-bool PLAYER::GetIsBattleWin()
-{
-	return this->IsBattleWin;
-}
-
-//レベルアップメッセージを表示しているか取得
-bool PLAYER::GetLevelUpFlg()
-{
-	return this->LevelUp_flg;
-}
-
 //キー入力があるか取得
 bool PLAYER::GetIsKeyDown()
 {
 	return this->IsKeyDown;
 }
 
-//切り替えるマップの種類を取得
-int PLAYER::GetChengeMapKind()
-{
-	return this->ChengeMapKind;
-}
-
+//キー処理関係
 //操作
 void PLAYER::Operation(KEYDOWN *keydown, COLLISION *map[][MAP_YOKO])
 {
@@ -489,26 +330,6 @@ void PLAYER::Operation(KEYDOWN *keydown, COLLISION *map[][MAP_YOKO])
 
 }
 
-//描画
-void PLAYER::DrawWalk()
-{
-	if (this->IsDraw)		//描画してよい時
-	{
-		if (this->IsArive)	//生きているとき
-		{
-			if (this->IsKeyDown)		//キーボードが押されているとき
-			{
-				this->Anime->Draw(this->sikaku_draw->Left, this->sikaku_draw->Top, this->Dist, true);	//アニメーションで描画
-
-			}
-			else						//キーボードが押されていないとき
-			{
-				this->Anime->Draw(this->sikaku_draw->Left, this->sikaku_draw->Top, this->Dist, false);	//通常描画
-			}
-		}
-	}
-}
-
 //上へ移動
 void PLAYER::MoveUp()
 {
@@ -566,126 +387,62 @@ void PLAYER::MoveRight()
 	return;
 }
 
-//ダメージ計算
-void PLAYER::DamegeCalc(ENEMY *enemy,int choiecommand)
+//********************** 位置関係 *****************************
+//位置を設定
+//引数：int：X位置を相対的に指定
+//引数：int：Y位置を相対的に指定
+void PLAYER::SetPosRelative(int x, int y)
 {
+	this->Collision->Left += x;	//X位置を設定
+	this->Collision->Top += y;	//Y位置を設定
 
-	double bp_value = this->GetBPBoostValue();	//BPによる強化倍率を取得
-	switch (choiecommand)		//選択したコマンド
-	{
+	this->sikaku_draw->Left += x;
+	this->sikaku_draw->Top += y;
 
-	case(int)COMMANDE_ATACK:				//攻撃を選んだ時の処理ここから
+	//描画領域再設定
+	this->sikaku_draw->SetValue(
+		this->sikaku_draw->Left,
+		this->sikaku_draw->Top,
+		this->sikaku_draw->Width,
+		this->sikaku_draw->Height);
 
-		//与えるダメージ計算
-		//自分攻撃力(攻撃+装備攻撃) * BPの強化倍率 - 敵防御力
-		enemy->SetRecvDamege((this->ATK + this->EquipAtk) * bp_value - enemy->GetDEF());	
 
-		//受けるダメージ計算
-		//敵攻撃力 - 自分防御力(防御+装備防御) * BPの強化倍率
-		this->RecvDamege = enemy->GetATK() - (this->DEF + this->EquipDef) * bp_value;	
-
-		break;					//攻撃を選んだ時の処理ここまで
-
-	case (int)COMMANDE_DEFENSE:			//防御を選んだ時の処理ここから
-
-		//与えるダメージ計算
-		enemy->SetRecvDamege(0);		//敵、受けるダメージ0
-
-		//受けるダメージ計算
-		//防御力を強化してダメージ計算
-		//敵攻撃力 - 自分防御力((防御+装備防御) * 防御強化値) * BPの強化倍率
-		this->RecvDamege = enemy->GetATK() - ((this->DEF + this->EquipDef) * DEF_BOOST) * bp_value;	
-
-		break;					//防御を選んだ時の処理ここまで
-
-	case (int)COMMANDE_MAGIC:			//魔法を選んだ時の処理ここから
-
-		//与えるダメージ計算
-		//自分の攻撃力を強化してダメージ計算
-		//魔法攻撃力を追加して、通常攻撃と分ける予定
-		//自分攻撃力((攻撃+装備攻撃) * 魔法強化値) * BPの強化倍率 - 敵防御力
-		enemy->SetRecvDamege(((this->ATK + this->EquipAtk) * ATK_BOOST) * bp_value - enemy->GetDEF());	
-
-		//受けるダメージ計算
-		//敵攻撃力 - 自分防御力(防御+装備防御) * BPの強化倍率
-		this->RecvDamege = enemy->GetATK() - (this->DEF + this->EquipDef) * bp_value;	
-
-		break;					//魔法を選んだ時の処理ここまで
-
-	case(int)COMMANDE_ITEM:				//アイテムを選んだ時の処理ここから
-
-		//与えるダメージ計算
-		//与えるダメージ0
-		enemy->SetRecvDamege(0);		
-		
-		//受けるダメージ計算
-		//敵攻撃力 - 自分防御力(防御+装備防御) * BPの強化倍率
-		this->RecvDamege = enemy->GetATK() - (this->DEF + this->EquipDef) * bp_value;	
-
-		break;					//アイテムを選んだ時の処理ここまで
-
-	default:
-		break;
-	}
-
-	if (this->RecvDamege < 0)	//受けるダメージが0より少ないときは
-	{
-		this->RecvDamege = 0;	//受けるダメージ0
-	}
-
-	if (enemy->GetRecvDamege() < 0)	//敵に与えるダメージが0より少ないときは
-	{
-		enemy->SetRecvDamege(0);	//与えるダメージ0
-	}
-
-	this->BPUse();	//BPを使用する
+	//領域再設定
+	this->Collision->SetValue(
+		this->Collision->Left,
+		this->Collision->Top,
+		this->Collision->Width,
+		this->Collision->Height);
 
 	return;
 }
 
-//ダメージを与える
-void PLAYER::DamegeSend(void)
+//位置を設定
+//引数：int：X位置を絶対値で指定
+//引数：int：Y位置を絶対値で指定
+void PLAYER::SetPosAbsolute(int x, int y)
 {
-	this->NowHP -= this->RecvDamege;	//現在のHPから、受けるダメージを引く
+	this->Collision->Left = x;	//X位置を設定
+	this->Collision->Top = y;	//Y位置を設定
 
-	if (this->NowHP <= 0)	//HPが0以下になったら
-	{
-		this->NowHP = 0;		//HPは0
-		this->IsArive = false;	//死亡
-	}
+	this->sikaku_draw->Left = x;
+	this->sikaku_draw->Top = y;
 
-	return;
+	//描画領域再設定
+	this->sikaku_draw->SetValue(
+		this->sikaku_draw->Left,
+		this->sikaku_draw->Top,
+		this->sikaku_draw->Width,
+		this->sikaku_draw->Height);
 
-}
 
-//経験値追加処理
-void PLAYER::AddExp(int exp)
-{
-	this->NowEXP += exp;	//現在の経験値に加算する
+	//領域再設定
+	this->Collision->SetValue(
+		this->Collision->Left,
+		this->Collision->Top,
+		this->Collision->Width,
+		this->Collision->Height);
 
-	if (this->NowEXP >= this->MaxEXP)		//現在の経験値が経験値の最大値以上になったら
-	{
-		int work = 0;	//退避用変数
-		work = this->NowEXP - this->MaxEXP;	//最大値を超過した分を保管
-
-		this->MaxEXP += EXP_INCREASE_VALUE * this->Level;	//経験値の最大値を増やす(経験値の増え幅 * 現在のレベル)
-		this->NowEXP = 0;		//現在の経験値を0に戻す
-		this->NowEXP += work;	//超過した分の経験値を加算する
-
-		//ステータスの増加処理
-		this->MaxHP += HP_INCREASE_VALUE;	//最大HPを増やす
-		this->MaxMP += MP_INCREASE_VALUE;	//最大MPを増やす
-		this->ATK += ATK_INCREASE_VALUE;	//攻撃力を増やす
-		this->DEF += DEF_INCREASE_VALUE;	//防御力を増やす
-		this->SPD += SPD_INCREASE_VALUE;	//速さを増やす
-
-		//HPとMPを全回復させる
-		this->NowHP = this->MaxHP;
-		this->NowMP = this->MaxMP;
-
-		this->Level++;			//レベルを一つ上げる
-		this->LevelUp_flg = true;	//レベルアップメッセージの表示をスタートする
-	}
 	return;
 }
 
@@ -728,6 +485,59 @@ void PLAYER::SetNowPos(int x, int y)
 
 }
 
+//********************************* マップ関係 ***********************************
+//マップ切り替えの種類リセット
+void PLAYER::ResetChengeMapKind(void)
+{
+	this->ChengeMapKind = PLAYER_INIT_VALUE;	//初期化
+	return;
+}
+
+//マップ切り替えをしたときにプレイヤーの位置を設定
+//引数：int：切り替えた方向
+void PLAYER::SetChengePos(int kind)
+{
+	switch (kind)	//切り替え方向毎に処理
+	{
+
+	case (int)MAP_CHENGE_UP:	//上へ切り替えるとき、ここから
+
+		this->SetPosRelative(0, GAME_HEIGHT - (this->Collision->Height + RECT_STAGGER));	//位置を修正
+
+		break;
+
+	case (int)MAP_CHENGE_DOWN:	//下へ切り替えるとき、ここから
+
+		this->SetPosRelative(0, -(this->Collision->Top - RECT_STAGGER));	//位置を修正
+
+		break;
+
+	case (int)MAP_CHENGE_LEFT:	//左へ切り替えるとき、ここから
+
+		this->SetPosRelative(GAME_WIDTH - (this->Collision->Width + RECT_STAGGER), 0);	//位置を修正
+
+		break;
+
+	case (int)MAP_CHENGE_RIGHT:	//右へ切り替えるとき、ここから
+
+		this->SetPosRelative(-(this->Collision->Left - RECT_STAGGER), 0);	//位置を修正
+
+		break;
+
+	default:
+		break;
+	}
+
+	return;
+
+}
+
+//切り替えるマップの種類を取得
+int PLAYER::GetChengeMapKind()
+{
+	return this->ChengeMapKind;
+}
+
 //マップとの当たり判定(当たった場所を取得しない)
 bool PLAYER::CheckDetectionMap(COLLISION * map[][MAP_YOKO])
 {
@@ -747,15 +557,65 @@ bool PLAYER::CheckDetectionMap(COLLISION * map[][MAP_YOKO])
 	return false;
 }
 
-//回復させる
-void PLAYER::Recovery(void)
+//*************************** メニュー関係 *******************************
+//メニュー描画中か設定
+void PLAYER::SetIsMenu(bool ismenu)
 {
-	this->NowHP = this->MaxHP;	//HP回復
-	this->NowMP = this->MaxMP;	//MP回復
-
-	this->IsArive = true;		//生きている
-
+	this->IsMenu = ismenu;
 	return;
+}
+
+//メニュー描画中か取得
+bool PLAYER::GetIsMenu()
+{
+	return this->IsMenu;
+}
+
+//************************* 戦闘関係 ****************************
+//戦闘に勝ったか取得
+void PLAYER::SetIsBattleWin(bool isbattlewin)
+{
+	this->IsBattleWin = isbattlewin;
+	return;
+}
+
+//レベルアップしたか取得
+void PLAYER::SetLevelUpFlg(bool start_flg)
+{
+	this->LevelUp_flg = start_flg;
+	return;
+}
+
+//受けるダメージを取得
+int PLAYER::GetRecvDamege()
+{
+	return this->RecvDamege;
+}
+
+//行動メッセージ表示中か取得
+bool PLAYER::GetIsActMsg()
+{
+	return this->IsActMsg;
+}
+
+//戦闘に勝ったか取得
+bool PLAYER::GetIsBattleWin()
+{
+	return this->IsBattleWin;
+}
+
+//レベルアップフラグ取得
+bool PLAYER::GetLevelUpFlg()
+{
+	return this->LevelUp_flg;
+}
+
+//************************** 装備関係 *********************************
+//武器関係
+//装備攻撃力取得
+int PLAYER::GetEquipAtk(void)
+{
+	return this->EquipAtk;	//装備攻撃力取得
 }
 
 //武器を装備する
@@ -801,6 +661,13 @@ void PLAYER::AddDropWeapon(int code, int value)
 	return;
 }
 
+//防具関係
+//装備防御力取得
+int PLAYER::GetEquipDef(void)
+{
+	return this->EquipDef;	//装備防御力取得
+}
+
 //防具を装備する
 void PLAYER::EquipArmor(int element)
 {
@@ -842,6 +709,7 @@ void PLAYER::AddDropArmor(int code, int value)
 	return;
 }
 
+//************************** アイテム関係 ***************************
 //アイテム使用処理
 bool PLAYER::UseItem(int code)
 {
@@ -906,6 +774,7 @@ void PLAYER::AddDropItem(int code, int value, char type)
 	return;
 }
 
+//************************ セーブデータ関係 ***************************
 //セーブデータ読み込み
 bool PLAYER::LoadData(const char *dir, const char *name)
 {
@@ -1119,7 +988,7 @@ bool PLAYER::Save(const char *dir, const char *name)
 	for (int i = 0; i < this->Armor->GetSize(); ++i)	//防具数分繰り返す
 	{
 		ofs << this->Armor->GetCode(i) << ',';			//防具コード書き出し
-		if (i == this->Armor->GetSize()-1)	//最後の書き込みだったら
+		if (i == this->Armor->GetSize() - 1)	//最後の書き込みだったら
 		{
 			ofs << this->Armor->GetPossession(i) << '\n';	//所持数書き出し(最後は改行)
 		}
@@ -1133,6 +1002,7 @@ bool PLAYER::Save(const char *dir, const char *name)
 
 }
 
+//************************* BP関係 ***************************
 //BP取得
 int PLAYER::GetBP(void)
 {
@@ -1221,18 +1091,165 @@ void PLAYER::BPUse(void)
 	return;
 }
 
-//戦闘で使用するものを初期化する
-void PLAYER::BattleInit(void)
+//************************** ダメージ関係 ************************
+//ダメージ計算
+void PLAYER::DamegeCalc(ENEMY *enemy, int choiecommand)
 {
-	this->BP = START_BP;	//BPを初期化
-	this->UseBPNum = 0;		//使用するBPを初期化
 
-	this->ChoiseSkil = -1;	//使用するスキルリセット
-	this->RecvDamege = 0;	//受けるダメージリセット
-	
-	this->IsActMsg = false;		//行動メッセージ表示中かリセット
-	this->IsBattleWin = false;	//戦闘に勝利したかリセット
-	this->LevelUp_flg = false;//レベルアップメッセージフラグリセット
+	double bp_value = this->GetBPBoostValue();	//BPによる強化倍率を取得
+	switch (choiecommand)		//選択したコマンド
+	{
+
+	case(int)COMMANDE_ATACK:				//攻撃を選んだ時の処理ここから
+
+		//与えるダメージ計算
+		//自分攻撃力(攻撃+装備攻撃) * BPの強化倍率 - 敵防御力
+		enemy->SetRecvDamege((this->ATK + this->EquipAtk) * bp_value - enemy->GetDEF());
+
+		//受けるダメージ計算
+		//敵攻撃力 - 自分防御力(防御+装備防御) * BPの強化倍率
+		this->RecvDamege = enemy->GetATK() - (this->DEF + this->EquipDef) * bp_value;
+
+		break;					//攻撃を選んだ時の処理ここまで
+
+	case (int)COMMANDE_DEFENSE:			//防御を選んだ時の処理ここから
+
+		//与えるダメージ計算
+		enemy->SetRecvDamege(0);		//敵、受けるダメージ0
+
+		//受けるダメージ計算
+		//防御力を強化してダメージ計算
+		//敵攻撃力 - 自分防御力((防御+装備防御) * 防御強化値) * BPの強化倍率
+		this->RecvDamege = enemy->GetATK() - ((this->DEF + this->EquipDef) * DEF_BOOST) * bp_value;
+
+		break;					//防御を選んだ時の処理ここまで
+
+	case (int)COMMANDE_MAGIC:			//魔法を選んだ時の処理ここから
+
+		//与えるダメージ計算
+		//自分の攻撃力を強化してダメージ計算
+		//魔法攻撃力を追加して、通常攻撃と分ける予定
+		//自分攻撃力((攻撃+装備攻撃) * 魔法強化値) * BPの強化倍率 - 敵防御力
+		enemy->SetRecvDamege(((this->ATK + this->EquipAtk) * ATK_BOOST) * bp_value - enemy->GetDEF());
+
+		//受けるダメージ計算
+		//敵攻撃力 - 自分防御力(防御+装備防御) * BPの強化倍率
+		this->RecvDamege = enemy->GetATK() - (this->DEF + this->EquipDef) * bp_value;
+
+		break;					//魔法を選んだ時の処理ここまで
+
+	case(int)COMMANDE_ITEM:				//アイテムを選んだ時の処理ここから
+
+		//与えるダメージ計算
+		//与えるダメージ0
+		enemy->SetRecvDamege(0);
+
+		//受けるダメージ計算
+		//敵攻撃力 - 自分防御力(防御+装備防御) * BPの強化倍率
+		this->RecvDamege = enemy->GetATK() - (this->DEF + this->EquipDef) * bp_value;
+
+		break;					//アイテムを選んだ時の処理ここまで
+
+	default:
+		break;
+	}
+
+	if (this->RecvDamege < 0)	//受けるダメージが0より少ないときは
+	{
+		this->RecvDamege = 0;	//受けるダメージ0
+	}
+
+	if (enemy->GetRecvDamege() < 0)	//敵に与えるダメージが0より少ないときは
+	{
+		enemy->SetRecvDamege(0);	//与えるダメージ0
+	}
+
+	this->BPUse();	//BPを使用する
+
+	return;
+}
+
+//ダメージを与える
+void PLAYER::DamegeSend(void)
+{
+	this->NowHP -= this->RecvDamege;	//現在のHPから、受けるダメージを引く
+
+	if (this->NowHP <= 0)	//HPが0以下になったら
+	{
+		this->NowHP = 0;		//HPは0
+		this->IsArive = false;	//死亡
+	}
+
+	return;
+
+}
+
+//************************* 描画関係 ******************************
+//描画できるか取得
+bool PLAYER::GetIsDraw()
+{
+	return this->IsDraw;
+}
+
+//描画
+void PLAYER::DrawWalk()
+{
+	if (this->IsDraw)		//描画してよい時
+	{
+		if (this->IsArive)	//生きているとき
+		{
+			if (this->IsKeyDown)		//キーボードが押されているとき
+			{
+				this->Anime->Draw(this->sikaku_draw->Left, this->sikaku_draw->Top, this->Dist, true);	//アニメーションで描画
+
+			}
+			else						//キーボードが押されていないとき
+			{
+				this->Anime->Draw(this->sikaku_draw->Left, this->sikaku_draw->Top, this->Dist, false);	//通常描画
+			}
+		}
+	}
+}
+
+//************************* その他処理関係 ************************
+//経験値追加処理
+void PLAYER::AddExp(int exp)
+{
+	this->NowEXP += exp;	//現在の経験値に加算する
+
+	if (this->NowEXP >= this->MaxEXP)		//現在の経験値が経験値の最大値以上になったら
+	{
+		int work = 0;	//退避用変数
+		work = this->NowEXP - this->MaxEXP;	//最大値を超過した分を保管
+
+		this->MaxEXP += EXP_INCREASE_VALUE * this->Level;	//経験値の最大値を増やす(経験値の増え幅 * 現在のレベル)
+		this->NowEXP = 0;		//現在の経験値を0に戻す
+		this->NowEXP += work;	//超過した分の経験値を加算する
+
+		//ステータスの増加処理
+		this->MaxHP += HP_INCREASE_VALUE;	//最大HPを増やす
+		this->MaxMP += MP_INCREASE_VALUE;	//最大MPを増やす
+		this->ATK += ATK_INCREASE_VALUE;	//攻撃力を増やす
+		this->DEF += DEF_INCREASE_VALUE;	//防御力を増やす
+		this->SPD += SPD_INCREASE_VALUE;	//速さを増やす
+
+		//HPとMPを全回復させる
+		this->NowHP = this->MaxHP;
+		this->NowMP = this->MaxMP;
+
+		this->Level++;			//レベルを一つ上げる
+		this->LevelUp_flg = true;	//レベルアップメッセージの表示をスタートする
+	}
+	return;
+}
+
+//回復させる
+void PLAYER::Recovery(void)
+{
+	this->NowHP = this->MaxHP;	//HP回復
+	this->NowMP = this->MaxMP;	//MP回復
+
+	this->IsArive = true;		//生きている
 
 	return;
 }
