@@ -120,9 +120,9 @@ class UI
 {
 private:
 
-	IMAGE *UiImage;					//uiの画像
+	IMAGE *TextWindow;				//テキストウィンドウの画像
 
-	ANIMATION *UiAnime;				//uiのアニメーション
+	ANIMATION *TextPose;			//テキストポーズのアニメーション
 
 	bool IsDrawUIAnime;				//UIのアニメーションを描画してよいか
 

@@ -10,7 +10,7 @@
 UI::UI()
 {
 
-	this->UiImage = new IMAGE(UI_DIR, UI_WINDOW_NAME);	//uiの画像作成
+	this->TextWindow = new IMAGE(UI_DIR, UI_WINDOW_NAME);	//uiの画像作成
 
 	this->MenuSelect = new SELECT("ステータス", "アイテム", "装備", "操作説明", "セーブ");	//メニューの選択肢生成
 	this->BattleCommand = new SELECT("こうげき", "ぼうぎょ", "まほう", "アイテム", "にげる");	//バトルコマンドの選択肢生成
@@ -24,7 +24,7 @@ UI::UI()
 	this->EquipSelect->SetSideMode(true);		//選択肢を横向きに並べる
 
 	//アニメーション画像を生成（テキストポーズ）
-	this->UiAnime = new ANIMATION(TXT_POSE_DIR, TXT_POSE_NAME, TXT_POSE_ALL_CNT, TXT_POSE_YOKO_CNT, TXT_POSE_TATE_CNT, TXT_POSE_WIDTH, TXT_POSE_HEIGHT, TXT_POSE_SPEED, true);
+	this->TextPose = new ANIMATION(TXT_POSE_DIR, TXT_POSE_NAME, TXT_POSE_ALL_CNT, TXT_POSE_YOKO_CNT, TXT_POSE_TATE_CNT, TXT_POSE_WIDTH, TXT_POSE_HEIGHT, TXT_POSE_SPEED, true);
 
 	return;
 }
@@ -32,8 +32,8 @@ UI::UI()
 //デストラクタ
 UI::~UI()
 {
-	delete this->UiImage;		//Ui破棄
-	delete this->UiAnime;		//uianime破棄
+	delete this->TextWindow;		//Ui破棄
+	delete this->TextPose;		//uianime破棄
 	delete this->MenuSelect;	//menuselect破棄
 	delete this->BattleCommand;	//battlecommand破棄
 	delete this->ItemSelect;	//ItemSelect破棄
@@ -81,7 +81,7 @@ int UI::GetMenuEquipDir(void)
 void UI::DrawMenuCheck(void)
 {
 
-	this->UiImage->Draw(PLAY_WIN_X, PLAY_WIN_Y);	//ウィンドウ描画
+	this->TextWindow->Draw(PLAY_WIN_X, PLAY_WIN_Y);	//ウィンドウ描画
 
 	switch (this->MenuSelect->GetSelectNum())	//メニュー画面で選択した内容毎
 	{
@@ -462,14 +462,14 @@ void UI::DrawWindowFrame(int x, int y, int width, int height)
 //ui画像を描画する
 void UI::DrawUiImage(int x, int y,int type)
 {
-	this->UiImage->Draw(x, y,type);
+	this->TextWindow->Draw(x, y,type);
 	return;
 }
 
 //ui画像を追加する
 bool UI::AddUiImage(const char *dir, const char *name)
 {
-	if (this->UiImage->AddImage(dir, name))	//読み込み成功したら
+	if (this->TextWindow->AddImage(dir, name))	//読み込み成功したら
 	{
 		return true;	//読み込み成功
 	}
@@ -483,13 +483,13 @@ bool UI::AddUiImage(const char *dir, const char *name)
 //ui画像の幅を取得
 int UI::GetUiImageWidth(int type)
 {
-	return this->UiImage->GetWidth(type);
+	return this->TextWindow->GetWidth(type);
 }
 
 //ui画像の高さ取得
 int UI::GetUiImageHeight(int type)
 {
-	return this->UiImage->GetHeight(type);
+	return this->TextWindow->GetHeight(type);
 }
 
 //**************************** UIアニメーション関係 *******************************
@@ -497,7 +497,7 @@ int UI::GetUiImageHeight(int type)
 bool UI::AddUiAnime(const char *dir, const char *name, int SplitNumALL, int SpritNumX, int SplitNumY, int SplitWidth, int SplitHeight, double changeSpeed, bool IsLoop)
 {
 	
-	return this->UiAnime->Add(dir, name, SplitNumALL,SpritNumX, SplitNumY, SplitWidth, SplitHeight, changeSpeed, IsLoop);
+	return this->TextPose->Add(dir, name, SplitNumALL,SpritNumX, SplitNumY, SplitWidth, SplitHeight, changeSpeed, IsLoop);
 }
 
 //UIアニメ描画
@@ -505,7 +505,7 @@ void UI::DrawUiAnime(int x,int y)
 {
 	if (this->IsDrawUIAnime)	//描画してよい時は
 	{
-		this->UiAnime->DrawAnime(x, y);	//アニメーション描画
+		this->TextPose->DrawAnime(x, y);	//アニメーション描画
 	}
 
 	return;
@@ -547,8 +547,8 @@ void UI::Init(void)
 //画像サイズを設定する
 void UI::SetSize(void)
 {
-	this->UiImage->SetSize();		//UI画像サイズ設定
-	this->UiAnime->SetSize();		//Uiアニメーション画像サイズ設定
+	this->TextWindow->SetSize();		//UI画像サイズ設定
+	this->TextPose->SetSize();		//Uiアニメーション画像サイズ設定
 	this->MenuSelect->SetSize();	//メニュー画面の選択肢のサイズ設定
 	this->BattleCommand->SetSize();	//戦闘画面の選択肢のサイズ設定
 	this->WeaponSelect->SetSize();	//武器の選択肢のサイズ設定
@@ -697,7 +697,7 @@ void UI::SelectUpdate(ARMOR *armor, LIST_ARMOR *armor_list)
 //確認の選択肢を描画する
 void UI::DrawCheck(const char *check_msg)
 {
-	this->UiImage->Draw(PLAY_WIN_X, PLAY_WIN_Y);	//ウィンドウ描画
+	this->TextWindow->Draw(PLAY_WIN_X, PLAY_WIN_Y);	//ウィンドウ描画
 	
 	DrawFormatString(PLAY_WIN_TEXT_X, PLAY_WIN_TEXT_Y, GetColor(255, 255, 255), "%s", check_msg);	//確認メッセージ描画
 
