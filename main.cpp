@@ -1510,8 +1510,6 @@ void Bt_WaitAct()
 						if (player->UseItem(ui->ItemSelect->GetSelectCode()))	//アイテムを使用出来たら
 						{
 							bt_se->Play((int)BT_SE_RECOVERY);					//回復音を鳴らす
-							ui->ItemSelect->NowSelectReset();					//アイテムの選択をリセット
-							ui->ItemSelect->SetSelectFlg(false);				//選択していない状態へ
 
 							BattleStageNow = (int)DAMEGE_CALC;	//バトル状態をダメージ計算状態へ
 
@@ -1593,12 +1591,21 @@ void Bt_DamegeCalc()
 		}
 		else if (ui->BattleCommand->GetSelectNum() == (int)COMMANDE_ITEM)	//アイテムを選んだ時
 		{
-			//修正箇所
 			bt_msg[(int)BT_MSG_ACT]->SetMsg(item_list->GetName(ui->ItemSelect->GetSelectCode()));	//使用したアイテム名設定
 			bt_msg[(int)BT_MSG_ACT]->AddText("を使用した！");		//メッセージ内容追加
-			bt_msg[(int)BT_MSG_ACT]->AddMsg("HPが");				//メッセージ追加
+			if (item_list->GetItemType(ui->ItemSelect->GetSelectCode()) == ITEM_TYPE_HP)	//HP回復アイテムだったら
+			{
+				bt_msg[(int)BT_MSG_ACT]->AddMsg("HPが");				//メッセージ追加
+			}
+			else if (item_list->GetItemType(ui->ItemSelect->GetSelectCode()) == ITEM_TYPE_MP)	//MP回復アイテムだったら
+			{
+				bt_msg[(int)BT_MSG_ACT]->AddMsg("MPが");				//メッセージ追加
+			}
 			bt_msg[(int)BT_MSG_ACT]->AddText(std::to_string(item_list->GetRecovery(ui->ItemSelect->GetSelectCode())).c_str());	//回復量設定
 			bt_msg[(int)BT_MSG_ACT]->AddText("回復した！");			//メッセージ内容追加
+
+			ui->ItemSelect->NowSelectReset();					//アイテムの選択をリセット
+			ui->ItemSelect->SetSelectFlg(false);				//選択していない状態へ
 
 		}
 		else					//それ以外の時
