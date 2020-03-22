@@ -144,8 +144,8 @@ void UI::DrawMenuState(PLAYER *player)
 	State_str.push_back(std::to_string(player->GetLevel()));	//ÉåÉxÉã
 	State_str.push_back(std::to_string(player->GetHP()) + "/" + std::to_string(player->GetMaxHP()));	//HP
 	State_str.push_back(std::to_string(player->GetMP()) + "/" + std::to_string(player->GetMaxMP()));	//MP
-	State_str.push_back(std::to_string(player->GetATK()));		//çUåÇóÕ
-	State_str.push_back(std::to_string(player->GetDEF()));		//ñhå‰óÕ
+	State_str.push_back(std::to_string(player->GetATK()) + "(+" + std::to_string(player->GetEquipAtk()) + ")");		//çUåÇóÕ
+	State_str.push_back(std::to_string(player->GetDEF()) + "(+" + std::to_string(player->GetEquipDef()) + ")");		//ñhå‰óÕ
 	State_str.push_back(std::to_string(player->GetSPD()));		//ëfëÅÇ≥
 	State_str.push_back(std::to_string(player->GetEXP()) + "/" + std::to_string(player->GetMaxEXP()));	//åoå±íl
 
