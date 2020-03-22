@@ -969,7 +969,7 @@ bool PLAYER::Save(const char *dir, const char *name)
 	for (int i = 0; i < this->Item->GetSize(); ++i)	//登録してあるアイテムの数分繰り返す
 	{
 		ofs << this->Item->GetCode(i) << ',';		//アイテムコード書き出し
-		ofs << this->Item->GetPossession(i) << ',';	//所持数書き出し
+		ofs << this->Item->GetPossession(this->Item->GetCode(i)) << ',';	//所持数書き出し
 
 	}
 
@@ -979,7 +979,7 @@ bool PLAYER::Save(const char *dir, const char *name)
 	for (int i = 0; i < this->Weapon->GetSize(); ++i)//武器の数分繰り返す
 	{
 		ofs << this->Weapon->GetCode(i) << ',';	//武器コード書き出し
-		ofs << this->Weapon->GetPossession(i) << ',';	//所持数書き出し
+		ofs << this->Weapon->GetPossession(this->Weapon->GetCode(i)) << ',';	//所持数書き出し
 	}
 
 	//**************************** 防具データ読み込み ******************************
@@ -990,11 +990,11 @@ bool PLAYER::Save(const char *dir, const char *name)
 		ofs << this->Armor->GetCode(i) << ',';			//防具コード書き出し
 		if (i == this->Armor->GetSize() - 1)	//最後の書き込みだったら
 		{
-			ofs << this->Armor->GetPossession(i) << '\n';	//所持数書き出し(最後は改行)
+			ofs << this->Armor->GetPossession(this->Armor->GetCode(i)) << '\n';	//所持数書き出し(最後は改行)
 		}
 		else	//最後じゃなかったら
 		{
-			ofs << this->Armor->GetPossession(i) << ',';	//所持数書き出し(カンマで区切る)
+			ofs << this->Armor->GetPossession(this->Armor->GetCode(i)) << ',';	//所持数書き出し(カンマで区切る)
 		}
 	}
 
