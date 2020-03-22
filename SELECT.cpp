@@ -468,7 +468,6 @@ void SELECT::DrawScroll(int x, int y, int rectheight, int kind, unsigned int col
 
 }
 
-
 //‰æ‘œƒTƒCƒY‚ğİ’è
 void SELECT::SetSize(void)
 {

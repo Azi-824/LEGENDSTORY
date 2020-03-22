@@ -23,6 +23,7 @@
 #define ENEMY_DATA_NAME		R"(Enemy_Data.csv)"	//敵のデータの名前
 #define MSG_DATA_NAME		R"(Msg_Data.txt)"	//メッセージデータの名前
 #define MAPPOS_DATA_NAME	R"(MapPos_Data.csv)"//マップ位置のデータの名前
+#define MAPPOS_INITDATA_NAME	R"(MapPos_DataInit.csv)"	//マップ位置のデータの名前（初期）
 
 //############## マクロ定義：エラーメッセージ ###################
 #define DATA_ERROR_TTILE	"DATA_ERROR"						//エラータイトル

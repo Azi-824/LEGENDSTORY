@@ -514,7 +514,7 @@ void End()
 //画面遷移の演出をする処理
 void Chenge()
 {
-	static const int ChengeDrawCountMax = 60;	//フェードイン処理に使用
+	const int ChengeDrawCountMax = 60;	//フェードイン処理に使用
 
 	switch (GameSceneBefor)		//どの画面からの遷移かで処理を分ける
 	{
@@ -622,9 +622,9 @@ void SceneChenge(int beforscene, int nextscene)
 //ロード画面の描画処理
 void Load_Draw()
 {
-	std::string LoadMessage = "Now Loading・・・";				//ロード画面に描画する文字
-	static int Width = 0;										//横幅
-	static int Strlen = 0;										//文字数
+	std::string LoadMessage = "Now Loading・・・";		//ロード画面に描画する文字
+	int Width = 0;										//横幅
+	int Strlen = 0;										//文字数
 
 	Strlen = strlen(LoadMessage.c_str());						//文字数取得
 	Width = GetDrawStringWidth(LoadMessage.c_str(), Strlen);	//横幅取得
@@ -1207,6 +1207,8 @@ bool LoadGameData()
 
 	//現在のマップ位置を読み込んで設定
 	if (data->LoadNowMap(&NowDrawMapKind, MapNowPos, MAPPOS_DATA_DIR, MAPPOS_DATA_NAME) == false) { return false; }	//読み込み失敗
+	//現在のマップ位置を読み込んで設定(初期ver)
+	//if (data->LoadNowMap(&NowDrawMapKind, MapNowPos, MAPPOS_DATA_DIR, MAPPOS_INITDATA_NAME) == false) { return false; }	//読み込み失敗
 	//▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲ マップデータ読み込みここまで ▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲
 
 	//一覧関係

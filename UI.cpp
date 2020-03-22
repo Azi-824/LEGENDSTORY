@@ -208,56 +208,127 @@ bool UI::MenuSelectItem(KEYDOWN *keydown, MUSIC *sys_se)
 void UI::DrawMenuEquip(WEAPON *weapon, ARMOR *armor)
 {
 
-	static int Height = 0;	//高さ
+	int Height = 0;	//高さ
 	Height = GetFontSize();	//高さ取得
 
 	this->EquipSelect->Draw(MENU_EQUIP_INDEX_X, MENU_EQUIP_INDEX_Y);	//装備選択描画
 
-	this->WeaponSelect->Draw(MENU_TEXT_X + MENU_EQUIPMARK_SIZE, MENU_TEXT_Y);			//武器の選択肢描画
+	this->WeaponSelect->DrawScroll(MENU_TEXT_X + MENU_EQUIPMARK_SIZE, MENU_TEXT_Y, MENU_WINDOW_HEIGHT);			//武器の選択肢描画
 
 	for (int i = 0; i < weapon->GetSize(); ++i)	//武器の種類分繰り返す
 	{
-		DrawFormatString(MENU_TEXT_X + MENU_EQUIP_NAME_SPACE, //X位置
-			MENU_TEXT_Y + i * Height,	//Y位置
-			GetColor(255, 255, 255),	//描画色
-			"%d個", weapon->GetPossession(weapon->GetCode(i)));	//所持している武器の数を描画
 
-		DrawFormatString(MENU_TEXT_X + MENU_EQUIP_NAME_SPACE + MENU_EQUIP_POSSESSION_SPACE,
-			MENU_TEXT_Y + i * Height,
-			GetColor(255, 255, 255),
-			"ATK+%d", weapon->GetAtk(weapon->GetCode(i)));	//攻撃力を描画
-
-		if (weapon->GetEquipFlg(weapon->GetCode(i)))	//装備していたら
+		if (this->WeaponSelect->GetIsScroll())	//スクロール開始しているときは
 		{
-			DrawString(MENU_TEXT_X ,
-				MENU_TEXT_Y + i * Height,
-				"E",
-				GetColor(255, 255, 0));	//装備マーク描画
+			if (MENU_TEXT_Y + ((i - this->WeaponSelect->GetScrollCnt()) * Height) <= MENU_TEXT_Y + this->WeaponSelect->GetDrawTotalHeight() &&
+				MENU_TEXT_Y + ((i - this->WeaponSelect->GetScrollCnt()) * Height) >= MENU_TEXT_Y)		//描画範囲内なら
+			{
+
+				DrawFormatString(MENU_TEXT_X + MENU_EQUIP_NAME_SPACE, //X位置
+					MENU_TEXT_Y + (i - this->WeaponSelect->GetScrollCnt()) * Height,	//Y位置
+					GetColor(255, 255, 255),	//描画色
+					"%d個", weapon->GetPossession(weapon->GetCode(i)));	//所持している武器の数を描画
+
+				DrawFormatString(MENU_TEXT_X + MENU_EQUIP_NAME_SPACE + MENU_EQUIP_POSSESSION_SPACE,
+					MENU_TEXT_Y + (i - this->WeaponSelect->GetScrollCnt()) * Height,
+					GetColor(255, 255, 255),
+					"ATK+%d", weapon->GetAtk(weapon->GetCode(i)));	//攻撃力を描画
+
+				if (weapon->GetEquipFlg(weapon->GetCode(i)))	//装備していたら
+				{
+					DrawString(MENU_TEXT_X,
+						MENU_TEXT_Y + (i - this->WeaponSelect->GetScrollCnt()) * Height,
+						"E",
+						GetColor(255, 255, 0));	//装備マーク描画
+				}
+
+			}
+		}
+		else		//スクロールしていない時は
+		{
+			if (MENU_TEXT_Y + i * Height <= MENU_TEXT_Y + this->WeaponSelect->GetDrawTotalHeight())	//描画範囲内なら
+			{
+
+				DrawFormatString(MENU_TEXT_X + MENU_EQUIP_NAME_SPACE, //X位置
+					MENU_TEXT_Y + i * Height,	//Y位置
+					GetColor(255, 255, 255),	//描画色
+					"%d個", weapon->GetPossession(weapon->GetCode(i)));	//所持している武器の数を描画
+
+				DrawFormatString(MENU_TEXT_X + MENU_EQUIP_NAME_SPACE + MENU_EQUIP_POSSESSION_SPACE,
+					MENU_TEXT_Y + i * Height,
+					GetColor(255, 255, 255),
+					"ATK+%d", weapon->GetAtk(weapon->GetCode(i)));	//攻撃力を描画
+
+				if (weapon->GetEquipFlg(weapon->GetCode(i)))	//装備していたら
+				{
+					DrawString(MENU_TEXT_X,
+						MENU_TEXT_Y + i * Height,
+						"E",
+						GetColor(255, 255, 0));	//装備マーク描画
+				}
+
+			}
 		}
 
 	}
 
-	this->ArmorSelect->Draw(MENU_TEXT_X + (MENU_WINDOW_WIDTH / 2) + MENU_EQUIPMARK_SIZE, MENU_TEXT_Y);	//防具の選択肢描画
+	this->ArmorSelect->DrawScroll(MENU_TEXT_X + (MENU_WINDOW_WIDTH / 2) + MENU_EQUIPMARK_SIZE, MENU_TEXT_Y,MENU_WINDOW_HEIGHT);	//防具の選択肢描画
 
 	for (int i = 0; i < armor->GetSize(); ++i)	//防具の種類分繰り返す
 	{
-		DrawFormatString((MENU_TEXT_X + (MENU_WINDOW_WIDTH / 2)) + MENU_EQUIP_NAME_SPACE,
-			MENU_TEXT_Y + i * Height,
-			GetColor(255, 255, 255),
-			"%d個", armor->GetPossession(armor->GetCode(i)));	//所持している防具の数を描画
 
-		DrawFormatString((MENU_TEXT_X + (MENU_WINDOW_WIDTH / 2)) + MENU_EQUIP_NAME_SPACE + MENU_EQUIP_POSSESSION_SPACE,
-			MENU_TEXT_Y + i * Height,
-			GetColor(255, 255, 255),
-			"DEF+%d", armor->GetDef(armor->GetCode(i)));	//防御力を描画
-
-		if (armor->GetEquipFlg(armor->GetCode(i)))	//装備していたら
+		if (this->ArmorSelect->GetIsScroll())	//スクロール開始しているときは
 		{
-			DrawString((MENU_TEXT_X + (MENU_WINDOW_WIDTH / 2)),
-				MENU_TEXT_Y + i * Height,
-				"E",
-				GetColor(255, 255, 0));	//装備マーク描画
+			if (MENU_TEXT_Y + ((i - this->ArmorSelect->GetScrollCnt()) * Height) <= MENU_TEXT_Y + this->ArmorSelect->GetDrawTotalHeight() &&
+				MENU_TEXT_Y + ((i - this->ArmorSelect->GetScrollCnt()) * Height) >= MENU_TEXT_Y)		//描画範囲内なら
+			{
+
+				DrawFormatString((MENU_TEXT_X + (MENU_WINDOW_WIDTH / 2)) + MENU_EQUIP_NAME_SPACE, //X位置
+					MENU_TEXT_Y + (i - this->ArmorSelect->GetScrollCnt()) * Height,	//Y位置
+					GetColor(255, 255, 255),	//描画色
+					"%d個", armor->GetPossession(armor->GetCode(i)));	//所持している防具の数を描画
+
+				DrawFormatString((MENU_TEXT_X + (MENU_WINDOW_WIDTH / 2)) + MENU_EQUIP_NAME_SPACE + MENU_EQUIP_POSSESSION_SPACE,
+					MENU_TEXT_Y + (i - this->ArmorSelect->GetScrollCnt()) * Height,
+					GetColor(255, 255, 255),
+					"DEF+%d", armor->GetDef(armor->GetCode(i)));	//防御力を描画
+
+				if (armor->GetEquipFlg(armor->GetCode(i)))	//装備していたら
+				{
+					DrawString((MENU_TEXT_X + (MENU_WINDOW_WIDTH / 2)),
+						MENU_TEXT_Y + (i - this->ArmorSelect->GetScrollCnt()) * Height,
+						"E",
+						GetColor(255, 255, 0));	//装備マーク描画
+				}
+
+			}
 		}
+		else		//スクロールしていない時は
+		{
+			if (MENU_TEXT_Y + i * Height <= MENU_TEXT_Y + this->ArmorSelect->GetDrawTotalHeight())	//描画範囲内なら
+			{
+
+				DrawFormatString((MENU_TEXT_X + (MENU_WINDOW_WIDTH / 2)) + MENU_EQUIP_NAME_SPACE, //X位置
+					MENU_TEXT_Y + i * Height,	//Y位置
+					GetColor(255, 255, 255),	//描画色
+					"%d個", armor->GetPossession(armor->GetCode(i)));	//所持している防具の数を描画
+
+				DrawFormatString((MENU_TEXT_X + (MENU_WINDOW_WIDTH / 2)) + MENU_EQUIP_NAME_SPACE + MENU_EQUIP_POSSESSION_SPACE,
+					MENU_TEXT_Y + i * Height,
+					GetColor(255, 255, 255),
+					"DEF+%d", armor->GetDef(armor->GetCode(i)));	//防御力を描画
+
+				if (armor->GetEquipFlg(armor->GetCode(i)))	//装備していたら
+				{
+					DrawString((MENU_TEXT_X + (MENU_WINDOW_WIDTH / 2)),
+						MENU_TEXT_Y + i * Height,
+						"E",
+						GetColor(255, 255, 0));	//装備マーク描画
+				}
+
+			}
+		}
+
 	}
 
 	return;
@@ -420,9 +491,9 @@ void UI::DrawStateWindow(PLAYER *player)
 
 	//HPバー描画処理
 	DrawBox(STA_HP_BAR_X, STA_HP_BAR_Y, STA_HP_BAR_X + STA_HP_BAR_WIDTH, STA_HP_BAR_Y + STA_HP_BAR_HEIGHT, GetColor(0, 255, 0), FALSE);	//HPバー枠線描画
-	static double hp_percent = 0.0;//HP割合
-	static double hp_now = 0.0, hp_max = 0.0;	//現在のHPと最大HP
-	static int draw_hp = 0;		//描画HP
+	double hp_percent = 0.0;//HP割合
+	double hp_now = 0.0, hp_max = 0.0;	//現在のHPと最大HP
+	int draw_hp = 0;		//描画HP
 	hp_now = player->GetHP();	//現在のHP
 	hp_max = player->GetMaxHP();//最大のHP
 	hp_percent = hp_now / hp_max;//HPの割合計算
@@ -431,9 +502,9 @@ void UI::DrawStateWindow(PLAYER *player)
 
 	//MPバー描画処理
 	DrawBox(STA_MP_BAR_X, STA_MP_BAR_Y, STA_MP_BAR_X + STA_MP_BAR_WIDTH, STA_MP_BAR_Y + STA_MP_BAR_HEIGHT, GetColor(0, 0, 255), FALSE);	//HPバー枠線描画
-	static double mp_percent = 0.0;//MP割合
-	static double mp_now = 0.0, mp_max = 0.0;	//現在のMPと最大MP
-	static int draw_mp = 0;		//描画HP
+	double mp_percent = 0.0;//MP割合
+	double mp_now = 0.0, mp_max = 0.0;	//現在のMPと最大MP
+	int draw_mp = 0;		//描画HP
 	mp_now = player->GetMP();	//現在のMP
 	mp_max = player->GetMaxMP();//最大のMP
 	mp_percent = mp_now / mp_max;//MPの割合計算
@@ -608,7 +679,7 @@ void UI::DrawItemSelect(int x,int y,ITEM *item)
 
 	this->ItemSelect->DrawScroll(x, y, CMD_WIN_HEIGHT);	//アイテムの選択肢描画
 
-	static int Height = 0;	//高さ
+	int Height = 0;	//高さ
 	int Cnt = 0;			//カウント用
 
 	Height = GetFontSize();	//高さ取得
@@ -649,9 +720,9 @@ void UI::DrawItemSelect(int x,int y,ITEM *item)
 //アイテムの選択肢を描画する(説明文付き)
 void UI::DrawItemSelect(int x, int y,ITEM *item,LIST_ITEM *list_item)
 {
-	this->ItemSelect->Draw(x, y);	//アイテムの選択肢描画
+	this->ItemSelect->DrawScroll(x, y, MENU_WINDOW_HEIGHT);	//アイテムの選択肢をスクロール描画
 
-	static int Height = 0;	//高さ
+	int Height = 0;	//高さ
 	int Cnt = 0;			//カウント用
 
 	
@@ -662,12 +733,40 @@ void UI::DrawItemSelect(int x, int y,ITEM *item,LIST_ITEM *list_item)
 
 		if (item->GetPossession(item->GetCode(i)) != 0)	//所持数が0個じゃなければ
 		{
-			DrawFormatString(x + MENU_ITEM_NAME_SPACE, y + Cnt * Height, GetColor(255, 255, 255), "%d個", item->GetPossession(item->GetCode(i)));	//所持しているアイテムの数を描画
 
-			DrawFormatString(x + MENU_ITEM_NAME_SPACE + MENU_ITEM_POSSESSION_SPACE,
-				y + Cnt * Height,
-				GetColor(255, 255, 255),
-				"%s", list_item->GetDescription(item->GetCode(i)));	//説明文描画
+			if (this->ItemSelect->GetIsScroll())	//スクロール開始しているときは
+			{
+				if (y + ((i - this->ItemSelect->GetScrollCnt()) * Height) <= y + this->ItemSelect->GetDrawTotalHeight() &&
+					y + ((i - this->ItemSelect->GetScrollCnt()) * Height) >= y)		//描画範囲内なら
+				{
+					DrawFormatString(x + MENU_ITEM_NAME_SPACE,
+						y + (Cnt - this->ItemSelect->GetScrollCnt()) * Height,
+						GetColor(255, 255, 255),
+						"%d個",
+						item->GetPossession(item->GetCode(i)));	//所持しているアイテムの数を描画
+
+					DrawFormatString(x + MENU_ITEM_NAME_SPACE + MENU_ITEM_POSSESSION_SPACE,
+						y + (Cnt - this->ItemSelect->GetScrollCnt()) * Height,
+						GetColor(255, 255, 255),
+						"%s", list_item->GetDescription(item->GetCode(i)));	//説明文描画
+
+
+				}
+			}
+			else		//スクロールしていない時は
+			{
+				if (y + i * Height <= y + this->ItemSelect->GetDrawTotalHeight())	//描画範囲内なら
+				{
+					DrawFormatString(x + MENU_ITEM_NAME_SPACE, y + Cnt * Height, GetColor(255, 255, 255), "%d個", item->GetPossession(item->GetCode(i)));	//所持しているアイテムの数を描画
+
+					DrawFormatString(x + MENU_ITEM_NAME_SPACE + MENU_ITEM_POSSESSION_SPACE,
+						y + Cnt * Height,
+						GetColor(255, 255, 255),
+						"%s", list_item->GetDescription(item->GetCode(i)));	//説明文描画
+
+				}
+			}
+
 
 			++Cnt;	//カウントアップ
 
