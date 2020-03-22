@@ -28,6 +28,8 @@ SELECT::SELECT()
 	this->IsDrawImage = true;		//UI画像を描画してよい
 	this->Side_Mode = false;		//横向きに選択肢を並べない
 	this->BackFlg = false;			//戻る選択はされていない
+	this->IsScroll = false;			//スクロールしていない
+	this->ScrollCnt = 0;			//スクロール量初期化
 
 	this->DefIsKeyOpe = true;		//デフォルトはキー操作可能
 	this->DefIsDrawImage = true;	//デフォルトはUI表示
@@ -366,17 +368,6 @@ void SELECT::DrawScroll(int x, int y, int rectheight, int kind, unsigned int col
 	//スクロールし始める位置を計算する
 	int scroll_start = 0;		//スクロールをスタートし始める場所
 	int total_height = 0;		//選択肢をすべて合わせたときの高さ
-	int nowselect_element = 0;	//現在選択中の選択肢の要素番号
-
-	//現在選択中の選択肢の要素番号取得処理
-	for (int i = 0; i < this->Str.size(); ++i)	//選択肢の数繰り返し
-	{
-		if (*this->Str_itr == this->Str[i])	//選択中だったら
-		{
-			nowselect_element = i;	//要素番号を設定
-			break;	//繰り返し終了
-		}
-	}
 
 	while (true)	//無限ループ
 	{
@@ -393,19 +384,28 @@ void SELECT::DrawScroll(int x, int y, int rectheight, int kind, unsigned int col
 		}
 	}
 
-	int scroll_cnt = nowselect_element - scroll_start;	//選択肢をスクロールした数
-	if (scroll_cnt < 0)	//スクロールしていない時は
+	if (this->GetSelectNum() < scroll_start)	//スクロール開始地点を超えていなければ
 	{
-		scroll_cnt = 0;	//スクロール量を0に設定
+		this->IsScroll = false;	//スクロールしていない
+	}
+	else		//選択中の要素がスクロール開始地点を超えたら
+	{
+		this->IsScroll = true;	//スクロール開始
+	}
+
+	this->ScrollCnt = this->GetSelectNum() - scroll_start;	//選択肢をスクロールした数
+	if (this->ScrollCnt < 0)	//スクロールしていない時は
+	{
+		this->ScrollCnt = 0;	//スクロール量を0に設定
 	}
 
 	//描画処理
 	for (int i = 0; i < this->Str.size(); ++i)
 	{
-		if (nowselect_element < scroll_start)	//選択中の要素がスクロール開始地点を超えていなければ
+		if (!this->IsScroll)	//スクロール開始していなければ
 		{
 			//スクロールせずに描画
-			if (i == nowselect_element)			//選択中の要素だったら
+			if (i == this->GetSelectNum())	//選択中の要素だったら
 			{
 				if (this->IsDrawImage)		//表示してよければ
 				{
@@ -427,7 +427,7 @@ void SELECT::DrawScroll(int x, int y, int rectheight, int kind, unsigned int col
 			}
 
 		}
-		else	//スクロール開始地点を超えたら
+		else	//スクロール開始していたら
 		{
 
 			//スクロール描画
@@ -443,12 +443,12 @@ void SELECT::DrawScroll(int x, int y, int rectheight, int kind, unsigned int col
 					this->image_ui->Draw(x, y + total_height + IMAGE_MINI_SPACE, kind);	//横向き三角描画
 				}
 
-				DrawFormatString(x + this->image_ui->GetWidth(kind), y + ((i - scroll_cnt) * Height), color, "%s", this->Str[i].c_str());	//選択肢描画
+				DrawFormatString(x + this->image_ui->GetWidth(kind), y + ((i - this->ScrollCnt) * Height), color, "%s", this->Str[i].c_str());	//選択肢描画
 
 			}
 			else
 			{
-				DrawFormatString(x + this->image_ui->GetWidth(kind), y + ((i - scroll_cnt) * Height), color, "%s", this->Str[i].c_str());	//選択肢描画
+				DrawFormatString(x + this->image_ui->GetWidth(kind), y + ((i - this->ScrollCnt) * Height), color, "%s", this->Str[i].c_str());	//選択肢描画
 			}
 
 		}
@@ -589,4 +589,16 @@ int SELECT::GetSelectCode(void)
 const char * SELECT::GetSelectText(void)
 {
 	return this->Str_itr->c_str();
+}
+
+//スクロールしているか取得
+int SELECT::GetIsScroll(void)
+{
+	return this->IsScroll;
+}
+
+//スクロールした量を取得
+int SELECT::GetScrollCnt(void)
+{
+	return this->ScrollCnt;
 }

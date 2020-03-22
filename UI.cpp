@@ -619,7 +619,16 @@ void UI::DrawItemSelect(int x,int y,ITEM *item)
 
 		if (item->GetPossession(item->GetCode(i)) != 0)	//所持数が0個じゃなければ
 		{
-			DrawFormatString(x + MENU_ITEM_NAME_SPACE, y + Cnt * Height, GetColor(255, 255, 255), "%d個", item->GetPossession(item->GetCode(i)));	//所持しているアイテムの数を描画
+
+			if (this->ItemSelect->GetIsScroll())	//スクロール開始しているときは
+			{
+
+			}
+			else		//スクロールしていない時は
+			{
+				DrawFormatString(x + MENU_ITEM_NAME_SPACE, y + Cnt * Height, GetColor(255, 255, 255), "%d個", item->GetPossession(item->GetCode(i)));	//所持しているアイテムの数を描画
+			}
+
 
 			++Cnt;	//カウントアップ
 

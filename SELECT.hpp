@@ -64,6 +64,8 @@ private:
 	bool IsDrawImage;	//UI画像を描画してよいか
 	bool Side_Mode;		//横向き描画か
 	bool BackFlg;		//戻るを選んだか
+	bool IsScroll;		//スクロールしているか
+	int ScrollCnt;		//スクロールした量
 
 	bool DefIsKeyOpe;		//キー操作可能か、デフォルト値
 	bool DefIsDrawImage;	//UI画像を描画してよいか、デフォルト値
@@ -145,6 +147,9 @@ public:
 	int GetSelectCode(void);			//選ばれた選択肢のコード番号を取得
 
 	const char * GetSelectText(void);	//選択した内容を取得
+
+	int GetIsScroll(void);				//スクロールしているか取得
+	int GetScrollCnt(void);				//スクロールした量を取得
 
 	//選択肢の内容を変更する
 	//引数：Args：描画文字列
