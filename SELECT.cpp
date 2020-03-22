@@ -331,6 +331,107 @@ void SELECT::DrawCenter(int x, int y,int kind, unsigned int color)
 
 }
 
+//選択肢の内容をスクロール描画する
+/*
+引数：int：描画X位置
+引数：int：描画Y位置
+引数：unsigned int：描画色:デフォルトは白色
+*/
+void SELECT::DrawScroll(int x, int y, RECT drawrect, int kind, unsigned int color, int side_select)
+{
+
+	//***************************** サイズ取得処理 *******************************
+	static int Height = 0;		//高さ取得
+	static int Strlen = 0;		//文字列の長さ取得用
+	static int MaxStrlen = 0;	//最も長い文字列の長さ
+	static int Width = 0;		//文字列の幅取得用
+
+	std::string MaxStr;	//最も長い文字列
+
+	MaxStr = this->Str[0].c_str();	//最も長い文字列に最初の文字列をセット
+
+	for (int i = 0; i < (int)this->Str.size(); i++)
+	{
+		Strlen = strlen(this->Str[i].c_str());	//文字列の長さ取得
+
+		if (MaxStrlen < Strlen)	//最大文字列よりも長ければ
+		{
+			MaxStrlen = Strlen;	//最大文字列を更新
+			MaxStr = this->Str[i].c_str();	//最大文字列を更
+
+		}
+
+	}
+
+	Width = GetDrawStringWidth(MaxStr.c_str(), MaxStrlen);	//横幅取得
+
+	Height = GetFontSize();		//高さ取得
+
+	if (this->Side_Mode)		//横向きに選択肢を並べている場合
+	{
+		//******************************** 描画処理 ***************************************
+		for (int i = 0; i < this->Str.size(); ++i)
+		{
+			if (*this->Str_itr == this->Str[i])			//選択中の要素だったら
+			{
+
+				if (this->IsDrawImage)	//表示してよければ
+				{
+					if (kind == (int)SELECT_TRIANGLE)	//通常サイズの場合
+					{
+						this->image_ui->Draw((x + i * side_select), y + IMAGE_SPACE, kind);		//横向き三角描画
+					}
+					else							//ミニサイズの場合
+					{
+						this->image_ui->Draw((x + i * side_select), y + IMAGE_MINI_SPACE, kind);	//横向き三角描画
+					}
+
+				}
+
+				DrawFormatString((x + i * side_select) + this->image_ui->GetWidth(kind), y, color, "%s", this->Str[i].c_str());	//選択肢描画
+			}
+			else
+			{
+				DrawFormatString((x + i * side_select) + this->image_ui->GetWidth(kind), y, color, "%s", this->Str[i].c_str());	//選択肢描画
+			}
+		}
+
+	}
+	else						//立て向きに選択肢を並んでいる場合
+	{
+
+		for (int i = 0; i < this->Str.size(); ++i)
+		{
+			if (*this->Str_itr == this->Str[i])			//選択中の要素だったら
+			{
+				if (this->IsDrawImage)		//表示してよければ
+				{
+					if (kind == (int)SELECT_TRIANGLE)	//通常サイズの場合
+					{
+						this->image_ui->Draw(x, y + i * Height + IMAGE_SPACE, kind);		//横向き三角描画
+					}
+					else							//ミニサイズの場合
+					{
+						this->image_ui->Draw(x, y + i * Height + IMAGE_MINI_SPACE, kind);	//横向き三角描画
+					}
+				}
+
+
+				DrawFormatString(x + this->image_ui->GetWidth(kind), y + i * Height, color, "%s", this->Str[i].c_str());	//選択肢描画
+			}
+			else
+			{
+				DrawFormatString(x + this->image_ui->GetWidth(kind), y + i * Height, color, "%s", this->Str[i].c_str());	//選択肢描画
+			}
+		}
+
+
+	}
+
+
+}
+
+
 //画像サイズを設定
 void SELECT::SetSize(void)
 {

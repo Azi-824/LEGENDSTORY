@@ -116,6 +116,7 @@ public:
 
 	void Draw(int, int,int = (int)SELECT_TRIANGLE_MINI,unsigned int color = GetColor(255, 255, 255),int side_space= SELECT_SIDE_SPACE);			//選択肢の内容を描画する
 	void DrawCenter(int, int,int = (int)SELECT_TRIANGLE_MINI, unsigned int color = GetColor(255, 255, 255));									//選択肢の内容を中央に描画する
+	void DrawScroll(int, int, RECT, int = (int)SELECT_TRIANGLE_MINI, unsigned int color = GetColor(255, 255, 255), int side_space = SELECT_SIDE_SPACE);	//スクロール描画
 
 	void SetSize(void);						//画像サイズ設定
 	void AddSelect(const char *, int code = SELECT_CODE_NONE);//選択肢の内容を追加
@@ -140,7 +141,6 @@ public:
 
 	void InsertSpace(int);				//空白を挿入する処理
 	void AddText(int,std::string);		//指定された要素の文字列に文字を加える
-	//void SetTextSpace(int, int);		//指定された要素の文字と文字の間に空白を入れ、揃える
 	int GetSelectKind(void);			//選択肢の数を取得
 	int GetSelectCode(void);			//選ばれた選択肢のコード番号を取得
 
