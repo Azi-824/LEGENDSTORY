@@ -185,9 +185,9 @@ void UI::DrawMenuEquip(WEAPON *weapon, ARMOR *armor)
 	static int Height = 0;	//高さ
 	Height = GetFontSize();	//高さ取得
 
-	this->EquipSelect->Draw(MENU_TEXT_X, MENU_TEXT_TOP_Y);		//装備選択描画
+	this->EquipSelect->Draw(MENU_EQUIP_INDEX_X, MENU_EQUIP_INDEX_Y);	//装備選択描画
 
-	this->WeaponSelect->Draw(MENU_TEXT_X, MENU_TEXT_Y);			//武器の選択肢描画
+	this->WeaponSelect->Draw(MENU_TEXT_X + MENU_EQUIPMARK_SIZE, MENU_TEXT_Y);			//武器の選択肢描画
 
 	for (int i = 0; i < weapon->GetSize(); ++i)	//武器の種類分繰り返す
 	{
@@ -196,14 +196,22 @@ void UI::DrawMenuEquip(WEAPON *weapon, ARMOR *armor)
 			GetColor(255, 255, 255),	//描画色
 			"%d個", weapon->GetPossession(weapon->GetCode(i)));	//所持している武器の数を描画
 
-		DrawFormatString(MENU_TEXT_X + MENU_EQUIP_NAME_SPACE + MENU_WQUIP_POSSESSION_SPACE,
+		DrawFormatString(MENU_TEXT_X + MENU_EQUIP_NAME_SPACE + MENU_EQUIP_POSSESSION_SPACE,
 			MENU_TEXT_Y + i * Height,
 			GetColor(255, 255, 255),
 			"ATK+%d", weapon->GetAtk(weapon->GetCode(i)));	//攻撃力を描画
 
+		if (weapon->GetEquipFlg(weapon->GetCode(i)))	//装備していたら
+		{
+			DrawString(MENU_TEXT_X ,
+				MENU_TEXT_Y + i * Height,
+				"E",
+				GetColor(255, 255, 0));	//装備マーク描画
+		}
+
 	}
 
-	this->ArmorSelect->Draw(MENU_TEXT_X + (MENU_WINDOW_WIDTH / 2), MENU_TEXT_Y);	//防具の選択肢描画
+	this->ArmorSelect->Draw(MENU_TEXT_X + (MENU_WINDOW_WIDTH / 2) + MENU_EQUIPMARK_SIZE, MENU_TEXT_Y);	//防具の選択肢描画
 
 	for (int i = 0; i < armor->GetSize(); ++i)	//防具の種類分繰り返す
 	{
@@ -212,11 +220,18 @@ void UI::DrawMenuEquip(WEAPON *weapon, ARMOR *armor)
 			GetColor(255, 255, 255),
 			"%d個", armor->GetPossession(armor->GetCode(i)));	//所持している防具の数を描画
 
-		DrawFormatString((MENU_TEXT_X + (MENU_WINDOW_WIDTH / 2)) + MENU_EQUIP_NAME_SPACE + MENU_WQUIP_POSSESSION_SPACE,
+		DrawFormatString((MENU_TEXT_X + (MENU_WINDOW_WIDTH / 2)) + MENU_EQUIP_NAME_SPACE + MENU_EQUIP_POSSESSION_SPACE,
 			MENU_TEXT_Y + i * Height,
 			GetColor(255, 255, 255),
 			"DEF+%d", armor->GetDef(armor->GetCode(i)));	//防御力を描画
 
+		if (armor->GetEquipFlg(armor->GetCode(i)))	//装備していたら
+		{
+			DrawString((MENU_TEXT_X + (MENU_WINDOW_WIDTH / 2)),
+				MENU_TEXT_Y + i * Height,
+				"E",
+				GetColor(255, 255, 0));	//装備マーク描画
+		}
 	}
 
 	return;

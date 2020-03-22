@@ -59,8 +59,12 @@
 
 #define MENU_ITEM_NAME_SPACE		200		//アイテム画面の名前と所持数の表示間隔
 #define MENU_ITEM_POSSESSION_SPACE	70		//アイテム画面の所持数と説明文の表示間隔
+
+#define MENU_EQUIP_INDEX_X	MENU_WINDOW_X + 125	//装備画面の武器防具選択肢の描画開始X位置
+#define MENU_EQUIP_INDEX_Y	MENU_WINDOW_Y + 5	//装備画面の武器防具選択肢の描画開始Y位置
+#define MENU_EQUIPMARK_SIZE			15		//装備マークの大きさ
 #define MENU_EQUIP_NAME_SPACE		200		//装備画面の名前と所持数の表示間隔
-#define MENU_WQUIP_POSSESSION_SPACE	50		//装備画面の所持数と上昇値の表示間隔
+#define MENU_EQUIP_POSSESSION_SPACE	50		//装備画面の所持数と上昇値の表示間隔
 
 //バトルコマンド関係
 #define CMD_WIN_X		350				//バトルコマンドのウィンドウの描画開始X位置
