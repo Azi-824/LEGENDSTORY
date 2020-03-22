@@ -605,7 +605,9 @@ void UI::SetSize(void)
 //アイテムの選択肢を描画する
 void UI::DrawItemSelect(int x,int y,ITEM *item)
 {
-	this->ItemSelect->Draw(x, y);	//アイテムの選択肢描画
+	//this->ItemSelect->Draw(x, y);	//アイテムの選択肢描画
+
+	this->ItemSelect->DrawScroll(x, y, CMD_WIN_HEIGHT);	//アイテムの選択肢描画
 
 	static int Height = 0;	//高さ
 	int Cnt = 0;			//カウント用

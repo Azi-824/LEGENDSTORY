@@ -116,7 +116,7 @@ public:
 
 	void Draw(int, int,int = (int)SELECT_TRIANGLE_MINI,unsigned int color = GetColor(255, 255, 255),int side_space= SELECT_SIDE_SPACE);			//選択肢の内容を描画する
 	void DrawCenter(int, int,int = (int)SELECT_TRIANGLE_MINI, unsigned int color = GetColor(255, 255, 255));									//選択肢の内容を中央に描画する
-	void DrawScroll(int, int, RECT, int = (int)SELECT_TRIANGLE_MINI, unsigned int color = GetColor(255, 255, 255), int side_space = SELECT_SIDE_SPACE);	//スクロール描画
+	void DrawScroll(int, int, int, int = (int)SELECT_TRIANGLE_MINI, unsigned int color = GetColor(255, 255, 255), int side_space = SELECT_SIDE_SPACE);	//スクロール描画
 
 	void SetSize(void);						//画像サイズ設定
 	void AddSelect(const char *, int code = SELECT_CODE_NONE);//選択肢の内容を追加

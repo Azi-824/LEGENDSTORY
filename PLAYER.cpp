@@ -894,8 +894,9 @@ bool PLAYER::LoadData(const char *dir, const char *name)
 		std::getline(ifs, buf, ',');		//カンマまで読み込み
 		code = atoi(buf.c_str());			//防具コード読み込み
 		std::getline(ifs, buf, ',');		//カンマまで読み込み
+		check = buf.find("\n");				//改行があるかチェック
 
-		if (check = buf.find("\n"))	//読み込んだ文字列の中に改行文字が含まれていたら
+		if (check != -1)	//読み込んだ文字列の中に改行文字が含まれていたら
 		{
 			buf[check] = '\0';	//改行を消す
 		}

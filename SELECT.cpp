@@ -179,11 +179,10 @@ void SELECT::Draw(int x, int y,int kind,unsigned int color,int side_select)
 {
 
 	//***************************** サイズ取得処理 *******************************
-	static int Height = 0;		//高さ取得
-	static int Strlen = 0;		//文字列の長さ取得用
-	static int MaxStrlen = 0;	//最も長い文字列の長さ
-	static int Width = 0;		//文字列の幅取得用
-
+	int Height = 0;		//高さ取得
+	int Strlen = 0;		//文字列の長さ取得用
+	int MaxStrlen = 0;	//最も長い文字列の長さ
+	int Width = 0;		//文字列の幅取得用
 	std::string MaxStr;	//最も長い文字列
 
 	MaxStr = this->Str[0].c_str();	//最も長い文字列に最初の文字列をセット
@@ -279,11 +278,10 @@ void SELECT::Draw(int x, int y,int kind,unsigned int color,int side_select)
 void SELECT::DrawCenter(int x, int y,int kind, unsigned int color)
 {
 
-	static int Height = 0;		//高さ取得
-	static int Strlen = 0;		//文字列の長さ取得用
-	static int MaxStrlen = 0;	//最も長い文字列の長さ
-	static int Width = 0;		//文字列の幅取得用
-
+	int Height = 0;		//高さ取得
+	int Strlen = 0;		//文字列の長さ取得用
+	int MaxStrlen = 0;	//最も長い文字列の長さ
+	int Width = 0;		//文字列の幅取得用
 	std::string MaxStr;	//最も長い文字列
 
 	MaxStr = this->Str[0].c_str();	//最も長い文字列に最初の文字列をセット
@@ -331,21 +329,20 @@ void SELECT::DrawCenter(int x, int y,int kind, unsigned int color)
 
 }
 
-//選択肢の内容をスクロール描画する
+//選択肢の内容をスクロール描画する(立て向きに並んでいる場合のみ使用可能)
 /*
 引数：int：描画X位置
 引数：int：描画Y位置
 引数：unsigned int：描画色:デフォルトは白色
 */
-void SELECT::DrawScroll(int x, int y, RECT drawrect, int kind, unsigned int color, int side_select)
+void SELECT::DrawScroll(int x, int y, int rectheight, int kind, unsigned int color, int side_select)
 {
 
 	//***************************** サイズ取得処理 *******************************
-	static int Height = 0;		//高さ取得
-	static int Strlen = 0;		//文字列の長さ取得用
-	static int MaxStrlen = 0;	//最も長い文字列の長さ
-	static int Width = 0;		//文字列の幅取得用
-
+	int Height = 0;		//高さ取得
+	int Strlen = 0;		//文字列の長さ取得用
+	int MaxStrlen = 0;	//最も長い文字列の長さ
+	int Width = 0;		//文字列の幅取得用
 	std::string MaxStr;	//最も長い文字列
 
 	MaxStr = this->Str[0].c_str();	//最も長い文字列に最初の文字列をセット
@@ -364,45 +361,51 @@ void SELECT::DrawScroll(int x, int y, RECT drawrect, int kind, unsigned int colo
 	}
 
 	Width = GetDrawStringWidth(MaxStr.c_str(), MaxStrlen);	//横幅取得
-
 	Height = GetFontSize();		//高さ取得
 
-	if (this->Side_Mode)		//横向きに選択肢を並べている場合
+	//スクロールし始める位置を計算する
+	int scroll_start = 0;		//スクロールをスタートし始める場所
+	int total_height = 0;		//選択肢をすべて合わせたときの高さ
+	int nowselect_element = 0;	//現在選択中の選択肢の要素番号
+
+	//現在選択中の選択肢の要素番号取得処理
+	for (int i = 0; i < this->Str.size(); ++i)	//選択肢の数繰り返し
 	{
-		//******************************** 描画処理 ***************************************
-		for (int i = 0; i < this->Str.size(); ++i)
+		if (*this->Str_itr == this->Str[i])	//選択中だったら
 		{
-			if (*this->Str_itr == this->Str[i])			//選択中の要素だったら
-			{
-
-				if (this->IsDrawImage)	//表示してよければ
-				{
-					if (kind == (int)SELECT_TRIANGLE)	//通常サイズの場合
-					{
-						this->image_ui->Draw((x + i * side_select), y + IMAGE_SPACE, kind);		//横向き三角描画
-					}
-					else							//ミニサイズの場合
-					{
-						this->image_ui->Draw((x + i * side_select), y + IMAGE_MINI_SPACE, kind);	//横向き三角描画
-					}
-
-				}
-
-				DrawFormatString((x + i * side_select) + this->image_ui->GetWidth(kind), y, color, "%s", this->Str[i].c_str());	//選択肢描画
-			}
-			else
-			{
-				DrawFormatString((x + i * side_select) + this->image_ui->GetWidth(kind), y, color, "%s", this->Str[i].c_str());	//選択肢描画
-			}
+			nowselect_element = i;	//要素番号を設定
+			break;	//繰り返し終了
 		}
-
 	}
-	else						//立て向きに選択肢を並んでいる場合
-	{
 
-		for (int i = 0; i < this->Str.size(); ++i)
+	while (true)	//無限ループ
+	{
+		if (total_height + Height < rectheight)	//スクロールせずに描画できる範囲内だったら
 		{
-			if (*this->Str_itr == this->Str[i])			//選択中の要素だったら
+			total_height += Height;	//高さを加算
+			++scroll_start;			//スクロール開始位置を加算
+		}
+		else	//スクロールせずに描画できる範囲を超えたら
+		{
+			total_height -= Height;	//スクロール開始位置は、描画範囲を超える前のため、超えてしまった分、高さを引く
+			--scroll_start;			//スクロール開始位置は、描画範囲を超える前のため、1個ぶんマイナスする
+			break;	//ループを抜ける
+		}
+	}
+
+	int scroll_cnt = nowselect_element - scroll_start;	//選択肢をスクロールした数
+	if (scroll_cnt < 0)	//スクロールしていない時は
+	{
+		scroll_cnt = 0;	//スクロール量を0に設定
+	}
+
+	//描画処理
+	for (int i = 0; i < this->Str.size(); ++i)
+	{
+		if (nowselect_element < scroll_start)	//選択中の要素がスクロール開始地点を超えていなければ
+		{
+			//スクロールせずに描画
+			if (i == nowselect_element)			//選択中の要素だったら
 			{
 				if (this->IsDrawImage)		//表示してよければ
 				{
@@ -416,18 +419,41 @@ void SELECT::DrawScroll(int x, int y, RECT drawrect, int kind, unsigned int colo
 					}
 				}
 
-
 				DrawFormatString(x + this->image_ui->GetWidth(kind), y + i * Height, color, "%s", this->Str[i].c_str());	//選択肢描画
 			}
 			else
 			{
 				DrawFormatString(x + this->image_ui->GetWidth(kind), y + i * Height, color, "%s", this->Str[i].c_str());	//選択肢描画
 			}
+
+		}
+		else	//スクロール開始地点を超えたら
+		{
+
+			//スクロール描画
+			//選択中の要素を指す、横向き三角の画像を固定して描画
+			if (this->IsDrawImage)		//表示してよければ
+			{
+				if (kind == (int)SELECT_TRIANGLE)	//通常サイズの場合
+				{
+					this->image_ui->Draw(x, y + total_height + IMAGE_SPACE, kind);		//横向き三角描画
+				}
+				else							//ミニサイズの場合
+				{
+					this->image_ui->Draw(x, y + total_height + IMAGE_MINI_SPACE, kind);	//横向き三角描画
+				}
+
+				DrawFormatString(x + this->image_ui->GetWidth(kind), y + ((i - scroll_cnt) * Height), color, "%s", this->Str[i].c_str());	//選択肢描画
+
+			}
+			else
+			{
+				DrawFormatString(x + this->image_ui->GetWidth(kind), y + ((i - scroll_cnt) * Height), color, "%s", this->Str[i].c_str());	//選択肢描画
+			}
+
 		}
 
-
 	}
-
 
 }
 
