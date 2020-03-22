@@ -367,23 +367,24 @@ void SELECT::DrawScroll(int x, int y, int rectheight, int kind, unsigned int col
 
 	//スクロールし始める位置を計算する
 	int scroll_start = 0;		//スクロールをスタートし始める場所
-	int total_height = 0;		//選択肢をすべて合わせたときの高さ
+	this->DrawTotalHeight = 0;	//描画範囲内の選択肢をすべて合わせたときの高さ初期化
 
 	while (true)	//無限ループ
 	{
-		if (total_height + Height < rectheight)	//スクロールせずに描画できる範囲内だったら
+		if (this->DrawTotalHeight + Height < rectheight)	//スクロールせずに描画できる範囲内だったら
 		{
-			total_height += Height;	//高さを加算
+			this->DrawTotalHeight += Height;	//高さを加算
 			++scroll_start;			//スクロール開始位置を加算
 		}
 		else	//スクロールせずに描画できる範囲を超えたら
 		{
-			total_height -= Height;	//スクロール開始位置は、描画範囲を超える前のため、超えてしまった分、高さを引く
+			this->DrawTotalHeight -= Height;	//スクロール開始位置は、描画範囲を超える前のため、超えてしまった分、高さを引く
 			--scroll_start;			//スクロール開始位置は、描画範囲を超える前のため、1個ぶんマイナスする
 			break;	//ループを抜ける
 		}
 	}
 
+	//スクロールするか設定
 	if (this->GetSelectNum() < scroll_start)	//スクロール開始地点を超えていなければ
 	{
 		this->IsScroll = false;	//スクロールしていない
@@ -393,6 +394,7 @@ void SELECT::DrawScroll(int x, int y, int rectheight, int kind, unsigned int col
 		this->IsScroll = true;	//スクロール開始
 	}
 
+	//スクロール量設定
 	this->ScrollCnt = this->GetSelectNum() - scroll_start;	//選択肢をスクロールした数
 	if (this->ScrollCnt < 0)	//スクロールしていない時は
 	{
@@ -402,53 +404,62 @@ void SELECT::DrawScroll(int x, int y, int rectheight, int kind, unsigned int col
 	//描画処理
 	for (int i = 0; i < this->Str.size(); ++i)
 	{
+
 		if (!this->IsScroll)	//スクロール開始していなければ
 		{
 			//スクロールせずに描画
-			if (i == this->GetSelectNum())	//選択中の要素だったら
+			if (y + i * Height <= y + this->DrawTotalHeight)	//描画範囲内なら
 			{
-				if (this->IsDrawImage)		//表示してよければ
+				if (i == this->GetSelectNum())	//選択中の要素だったら
 				{
-					if (kind == (int)SELECT_TRIANGLE)	//通常サイズの場合
+					if (this->IsDrawImage)		//表示してよければ
 					{
-						this->image_ui->Draw(x, y + i * Height + IMAGE_SPACE, kind);		//横向き三角描画
+						if (kind == (int)SELECT_TRIANGLE)	//通常サイズの場合
+						{
+							this->image_ui->Draw(x, y + i * Height + IMAGE_SPACE, kind);		//横向き三角描画
+						}
+						else							//ミニサイズの場合
+						{
+							this->image_ui->Draw(x, y + i * Height + IMAGE_MINI_SPACE, kind);	//横向き三角描画
+						}
 					}
-					else							//ミニサイズの場合
-					{
-						this->image_ui->Draw(x, y + i * Height + IMAGE_MINI_SPACE, kind);	//横向き三角描画
-					}
+
+					DrawFormatString(x + this->image_ui->GetWidth(kind), y + i * Height, color, "%s", this->Str[i].c_str());	//選択肢描画
+				}
+				else
+				{
+					DrawFormatString(x + this->image_ui->GetWidth(kind), y + i * Height, color, "%s", this->Str[i].c_str());	//選択肢描画
 				}
 
-				DrawFormatString(x + this->image_ui->GetWidth(kind), y + i * Height, color, "%s", this->Str[i].c_str());	//選択肢描画
 			}
-			else
-			{
-				DrawFormatString(x + this->image_ui->GetWidth(kind), y + i * Height, color, "%s", this->Str[i].c_str());	//選択肢描画
-			}
-
 		}
 		else	//スクロール開始していたら
 		{
 
 			//スクロール描画
-			//選択中の要素を指す、横向き三角の画像を固定して描画
-			if (this->IsDrawImage)		//表示してよければ
+			if (y + ((i - this->ScrollCnt) * Height) <= y + this->DrawTotalHeight &&
+				y + ((i - this->ScrollCnt) * Height) >= y)		//描画範囲内なら
 			{
-				if (kind == (int)SELECT_TRIANGLE)	//通常サイズの場合
+				//選択中の要素を指す、横向き三角の画像を固定して描画
+				if (this->IsDrawImage)		//表示してよければ
 				{
-					this->image_ui->Draw(x, y + total_height + IMAGE_SPACE, kind);		//横向き三角描画
+					if (kind == (int)SELECT_TRIANGLE)	//通常サイズの場合
+					{
+						this->image_ui->Draw(x, y + this->DrawTotalHeight + IMAGE_SPACE, kind);		//横向き三角描画
+					}
+					else							//ミニサイズの場合
+					{
+						this->image_ui->Draw(x, y + this->DrawTotalHeight + IMAGE_MINI_SPACE, kind);	//横向き三角描画
+					}
+
+					DrawFormatString(x + this->image_ui->GetWidth(kind), y + ((i - this->ScrollCnt) * Height), color, "%s", this->Str[i].c_str());	//選択肢描画
+
 				}
-				else							//ミニサイズの場合
+				else
 				{
-					this->image_ui->Draw(x, y + total_height + IMAGE_MINI_SPACE, kind);	//横向き三角描画
+					DrawFormatString(x + this->image_ui->GetWidth(kind), y + ((i - this->ScrollCnt) * Height), color, "%s", this->Str[i].c_str());	//選択肢描画
 				}
 
-				DrawFormatString(x + this->image_ui->GetWidth(kind), y + ((i - this->ScrollCnt) * Height), color, "%s", this->Str[i].c_str());	//選択肢描画
-
-			}
-			else
-			{
-				DrawFormatString(x + this->image_ui->GetWidth(kind), y + ((i - this->ScrollCnt) * Height), color, "%s", this->Str[i].c_str());	//選択肢描画
 			}
 
 		}
@@ -601,4 +612,10 @@ int SELECT::GetIsScroll(void)
 int SELECT::GetScrollCnt(void)
 {
 	return this->ScrollCnt;
+}
+
+//描画範囲内の総合の高さを取得
+int SELECT::GetDrawTotalHeight(void)
+{
+	return this->DrawTotalHeight;
 }

@@ -66,6 +66,7 @@ private:
 	bool BackFlg;		//戻るを選んだか
 	bool IsScroll;		//スクロールしているか
 	int ScrollCnt;		//スクロールした量
+	int DrawTotalHeight;//描画範囲内の合計の高さ
 
 	bool DefIsKeyOpe;		//キー操作可能か、デフォルト値
 	bool DefIsDrawImage;	//UI画像を描画してよいか、デフォルト値
@@ -150,6 +151,7 @@ public:
 
 	int GetIsScroll(void);				//スクロールしているか取得
 	int GetScrollCnt(void);				//スクロールした量を取得
+	int GetDrawTotalHeight(void);		//描画範囲内の総合の高さ取得
 
 	//選択肢の内容を変更する
 	//引数：Args：描画文字列

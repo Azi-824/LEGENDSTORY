@@ -605,7 +605,6 @@ void UI::SetSize(void)
 //アイテムの選択肢を描画する
 void UI::DrawItemSelect(int x,int y,ITEM *item)
 {
-	//this->ItemSelect->Draw(x, y);	//アイテムの選択肢描画
 
 	this->ItemSelect->DrawScroll(x, y, CMD_WIN_HEIGHT);	//アイテムの選択肢描画
 
@@ -622,11 +621,18 @@ void UI::DrawItemSelect(int x,int y,ITEM *item)
 
 			if (this->ItemSelect->GetIsScroll())	//スクロール開始しているときは
 			{
-				DrawFormatString(x + MENU_ITEM_NAME_SPACE, y + (Cnt - this->ItemSelect->GetScrollCnt()) * Height, GetColor(255, 255, 255), "%d個", item->GetPossession(item->GetCode(i)));	//所持しているアイテムの数を描画
+				if (y + ((i - this->ItemSelect->GetScrollCnt()) * Height) <= y + this->ItemSelect->GetDrawTotalHeight() &&
+					y + ((i - this->ItemSelect->GetScrollCnt()) * Height) >= y)		//描画範囲内なら
+				{
+					DrawFormatString(x + MENU_ITEM_NAME_SPACE, y + (Cnt - this->ItemSelect->GetScrollCnt()) * Height, GetColor(255, 255, 255), "%d個", item->GetPossession(item->GetCode(i)));	//所持しているアイテムの数を描画
+				}
 			}
 			else		//スクロールしていない時は
 			{
-				DrawFormatString(x + MENU_ITEM_NAME_SPACE, y + Cnt * Height, GetColor(255, 255, 255), "%d個", item->GetPossession(item->GetCode(i)));	//所持しているアイテムの数を描画
+				if (y + i * Height <= y + this->ItemSelect->GetDrawTotalHeight())	//描画範囲内なら
+				{
+					DrawFormatString(x + MENU_ITEM_NAME_SPACE, y + Cnt * Height, GetColor(255, 255, 255), "%d個", item->GetPossession(item->GetCode(i)));	//所持しているアイテムの数を描画
+				}
 			}
 
 
