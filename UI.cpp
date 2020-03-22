@@ -622,7 +622,7 @@ void UI::DrawItemSelect(int x,int y,ITEM *item)
 
 			if (this->ItemSelect->GetIsScroll())	//スクロール開始しているときは
 			{
-
+				DrawFormatString(x + MENU_ITEM_NAME_SPACE, y + (Cnt - this->ItemSelect->GetScrollCnt()) * Height, GetColor(255, 255, 255), "%d個", item->GetPossession(item->GetCode(i)));	//所持しているアイテムの数を描画
 			}
 			else		//スクロールしていない時は
 			{

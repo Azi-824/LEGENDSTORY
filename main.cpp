@@ -1593,7 +1593,7 @@ void Bt_DamegeCalc()
 		}
 		else if (ui->BattleCommand->GetSelectNum() == (int)COMMANDE_ITEM)	//アイテムを選んだ時
 		{
-
+			//修正箇所
 			bt_msg[(int)BT_MSG_ACT]->SetMsg(item_list->GetName(ui->ItemSelect->GetSelectCode()));	//使用したアイテム名設定
 			bt_msg[(int)BT_MSG_ACT]->AddText("を使用した！");		//メッセージ内容追加
 			bt_msg[(int)BT_MSG_ACT]->AddMsg("HPが");				//メッセージ追加
