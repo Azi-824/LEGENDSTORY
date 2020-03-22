@@ -56,10 +56,15 @@
 #define MENU_TEXT_TOP_Y	MENU_WINDOW_Y + 5						//選んだメニュー毎の先頭要素の描画開始Y位置
 #define MENU_WINDOW_WIDTH	700									//選んだメニュー毎のウィンドウの横幅
 #define MENU_WINDOW_HEIGHT	500									//選んだメニュー毎のウィンドウの高さ
-
+//ステータス系
+#define MENU_STATE_INDEX_X		MENU_WINDOW_X + 20			//ステータス画面の目次要素の描画開始X位置
+#define MENU_STATE_INDEX_Y		MENU_WINDOW_Y + 5			//ステータス画面の目次要素の描画開始Y位置
+#define MENU_STATE_X			MENU_STATE_INDEX_X + 150	//ステータス画面の各要素の描画開始X位置
+#define MENU_STATE_Y			MENU_STATE_INDEX_Y			//ステータス画面の各要素の描画開始Y位置
+//アイテム系
 #define MENU_ITEM_NAME_SPACE		200		//アイテム画面の名前と所持数の表示間隔
 #define MENU_ITEM_POSSESSION_SPACE	70		//アイテム画面の所持数と説明文の表示間隔
-
+//装備系
 #define MENU_EQUIP_INDEX_X	MENU_WINDOW_X + 125	//装備画面の武器防具選択肢の描画開始X位置
 #define MENU_EQUIP_INDEX_Y	MENU_WINDOW_Y + 5	//装備画面の武器防具選択肢の描画開始Y位置
 #define MENU_EQUIPMARK_SIZE			15		//装備マークの大きさ
@@ -123,6 +128,8 @@ enum MENU_EQUIP_DIR
 class UI
 {
 private:
+
+	std::vector<std::string> StateIndex;	//目次要素の文字列
 
 	IMAGE *TextWindow;				//テキストウィンドウの画像
 

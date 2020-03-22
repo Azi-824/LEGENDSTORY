@@ -20,8 +20,17 @@ UI::UI()
 	this->ArmorSelect = new SELECT();	//防具の選択肢を生成
 	this->Yes_No = new SELECT("はい", "いいえ");	//はい、いいえの選択肢を生成
 	this->EquipSelect = new SELECT("武器", "防具");	//武器、防具の選択肢を生成
-
 	this->EquipSelect->SetSideMode(true);		//選択肢を横向きに並べる
+
+	//ステータス画面の目次項目を作成
+	this->StateIndex.push_back("プレイヤー名");		//プレイヤー名
+	this->StateIndex.push_back("Lv");				//レベル
+	this->StateIndex.push_back("HP");				//HP
+	this->StateIndex.push_back("MP");				//MP
+	this->StateIndex.push_back("攻撃力");			//攻撃力
+	this->StateIndex.push_back("防御力");			//防御力
+	this->StateIndex.push_back("素早さ");			//素早さ
+	this->StateIndex.push_back("Exp");				//経験値
 
 	//アニメーション画像を生成（テキストポーズ）
 	this->TextPose = new ANIMATION(TXT_POSE_DIR, TXT_POSE_NAME, TXT_POSE_ALL_CNT, TXT_POSE_YOKO_CNT, TXT_POSE_TATE_CNT, TXT_POSE_WIDTH, TXT_POSE_HEIGHT, TXT_POSE_SPEED, true);
@@ -41,6 +50,10 @@ UI::~UI()
 	delete this->ArmorSelect;	//ArmorSelect破棄
 	delete this->Yes_No;		//Yes_No破棄
 	delete this->EquipSelect;	//EquipSelect破棄
+
+	//vectorのメモリ解放を行う
+	std::vector<std::string> v;		//空のvectorを作成する
+	this->StateIndex.swap(v);		//空と中身を入れ替える
 
 	return;
 }
@@ -121,19 +134,32 @@ void UI::DrawMenuCheck(void)
 //メニュー画面のステータス描画処理
 void UI::DrawMenuState(PLAYER *player)
 {
-	//ステータス描画(仮)
-	DrawFormatString(MENU_TEXT_X, MENU_TEXT_TOP_Y, GetColor(255, 255, 255), "%s\n経験値：%d/%d\nHP %d/%d\nMP %d/%d\nATK %d\nDEF %d\nSPD %d",
-		player->GetName(),		//名前
-		player->GetEXP(),		//現在の経験値
-		player->GetMaxEXP(),	//最大経験値
-		player->GetHP(),		//HP
-		player->GetMaxHP(),		//最大HP
-		player->GetMP(),		//MP
-		player->GetMaxMP(),		//最大MP
-		player->GetATK(),		//攻撃力
-		player->GetDEF(),		//防御力
-		player->GetSPD());		//スピード
 
+	int Height = GetFontSize();	//高さ取得
+
+	std::vector<std::string> State_str;		//各要素の文字列
+
+	//ステータス情報を更新
+	State_str.push_back(player->GetName());						//プレイヤー名
+	State_str.push_back(std::to_string(player->GetLevel()));	//レベル
+	State_str.push_back(std::to_string(player->GetHP()) + "/" + std::to_string(player->GetMaxHP()));	//HP
+	State_str.push_back(std::to_string(player->GetMP()) + "/" + std::to_string(player->GetMaxMP()));	//MP
+	State_str.push_back(std::to_string(player->GetATK()));		//攻撃力
+	State_str.push_back(std::to_string(player->GetDEF()));		//防御力
+	State_str.push_back(std::to_string(player->GetSPD()));		//素早さ
+	State_str.push_back(std::to_string(player->GetEXP()) + "/" + std::to_string(player->GetMaxEXP()));	//経験値
+
+
+	//ステータス描画
+	for (int i = 0; i < this->StateIndex.size(); ++i)		//描画項目の数分繰り返す
+	{
+		DrawFormatString(MENU_STATE_INDEX_X, MENU_STATE_INDEX_Y + i * Height, GetColor(255, 255, 255), "%s", this->StateIndex[i].c_str());	//目次項目描画
+
+		DrawFormatString(MENU_STATE_X, MENU_STATE_Y + i * Height, GetColor(255, 255, 255), "%s", State_str[i].c_str());	//各要素描画
+	}
+
+	std::vector<std::string> v;	//空のvectorを作成する
+	State_str.swap(v);			//空と中身を入れ替える
 
 	return;
 }
