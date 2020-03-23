@@ -1297,6 +1297,10 @@ void SetGameInit()
 
 	SetSize();		//ゲーム内で使用する画像などのサイズを設定
 
+	player->SetWeaponAtk(weapon_list);		//武器攻撃力設定
+	player->SetArmorDef(armor_list);		//防具防御力設定
+	player->SetItemRecovery(item_list);		//回復量設定
+
 	//******************** 初期設定ここから ***************************
 	player->SetInit();	//プレイヤーの初期設定
 
@@ -1309,10 +1313,6 @@ void SetGameInit()
 
 	ui->Init();		//UI関係初期化
 	//******************** 初期設定ここまで ***************************
-
-	player->SetWeaponAtk(weapon_list);		//武器攻撃力設定
-	player->SetArmorDef(armor_list);		//防具防御力設定
-	player->SetItemRecovery(item_list);		//回復量設定
 
 	ui->SelectUpdate(player->GetWeaponClass(), weapon_list);	//武器の選択肢更新
 	ui->SelectUpdate(player->GetArmorClass(), armor_list);		//防具の選択肢更新

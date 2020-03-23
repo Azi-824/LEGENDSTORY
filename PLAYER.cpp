@@ -47,10 +47,18 @@ bool PLAYER::SetInit()
 	this->MoveSpeed = PLAYE_DEFAULT_MOVESPEED;	//初期移動速度設定
 
 	//装備関係
-	this->EquipAtk = 0;		//装備攻撃力0
-	this->EquipDef = 0;		//装備防御力0
-	this->Equip_WeaponCode = PLAYER_INIT_VALUE;	//装備している武器のコード番号
-	this->Equip_ArmorCode = PLAYER_INIT_VALUE;	//装備している防具のコード番号
+	//読み込んだセーブデータから、武器、防具を装備しているか判定する
+	if (this->Equip_WeaponCode != PLAYER_INIT_VALUE)	//武器コードが初期値じゃなければ
+	{
+		this->EquipAtk = this->Weapon->GetAtk(this->Equip_WeaponCode);	//装備コードを基に、装備の攻撃力を取得
+		this->Weapon->SetEquipFlg(this->Equip_WeaponCode, true);		//武器を装備している
+	}
+
+	if (this->Equip_ArmorCode != PLAYER_INIT_VALUE)	//防具コードが初期値じゃなければ
+	{
+		this->EquipDef = this->Armor->GetDef(this->Equip_ArmorCode);	//装備コードを基に、装備の防御力を取得
+		this->Armor->SetEquipFlg(this->Equip_ArmorCode, true);			//防具を装備している
+	}
 
 	this->Anime->SetSize();	//画像のサイズ設定
 
@@ -936,6 +944,12 @@ bool PLAYER::LoadData(const char *dir, const char *name)
 
 	}
 
+	//装備している武器と防具のコード番号を読み込み
+	std::getline(ifs, buf, ',');				//カンマまで読み込み
+	this->Equip_WeaponCode = atoi(buf.c_str());	//武器コード設定
+
+	std::getline(ifs, buf, ',');				//カンマまで読み込み
+	this->Equip_ArmorCode = atoi(buf.c_str());	//防具コード設定
 
 	return true;	//読み込み成功
 
@@ -1017,7 +1031,7 @@ bool PLAYER::Save(const char *dir, const char *name)
 
 	}
 
-	//************************* 武器データ読み込み *********************************
+	//************************* 武器データ書き出し *********************************
 	ofs << this->Weapon->GetSize() << ',';	//武器数書き出し
 
 	for (int i = 0; i < this->Weapon->GetSize(); ++i)//武器の数分繰り返す
@@ -1033,7 +1047,7 @@ bool PLAYER::Save(const char *dir, const char *name)
 		}
 	}
 
-	//**************************** 防具データ読み込み ******************************
+	//**************************** 防具データ書き出し ******************************
 	ofs << this->Armor->GetSize() << ',';	//防具数書き出し
 
 	for (int i = 0; i < this->Armor->GetSize(); ++i)	//防具数分繰り返す
@@ -1048,6 +1062,10 @@ bool PLAYER::Save(const char *dir, const char *name)
 			ofs << this->Armor->GetPossession(this->Armor->GetCode(i)) << ',';	//所持数書き出し(カンマで区切る)
 		}
 	}
+
+	//装備している装備コード書き出し
+	ofs << this->Equip_WeaponCode << ',';	//装備している武器コード書き出し
+	ofs << this->Equip_ArmorCode << '\n';	//装備している防具コード書き出し
 
 	return true;		//セーブ成功
 
