@@ -55,7 +55,6 @@ MAP *mapdata[DRAW_MAP_KIND][MAP_DATA_KIND];		//マップデータ
 //選択肢関係
 SELECT *Title_select;	//タイトル画面の選択肢
 SELECT *End_select;		//エンド画面の選択肢
-SELECT *bt_magic_list;	//スキルの選択肢
 
 //一覧関係
 LIST_MGC *mgc_list;			//魔法一覧
@@ -1267,25 +1266,14 @@ bool LoadGameData()
 	Title_select = new SELECT("START", "END");			//タイトル画面の選択肢生成
 	End_select = new SELECT("TITLE", "PLAY", "END");	//エンド画面の選択肢生成
 
-	//*********************************** 魔法の選択肢を魔法一覧から設定、ここから *****************************************
-	std::vector<std::string> w;	//作業用
-	w.resize(mgc_list->GetListSize());	//作業用変数のサイズ変更
-
 	//魔法一覧から、戦闘画面で使用するための、魔法の選択肢を作成
 	for (int i = 0; i < mgc_list->GetListSize(); ++i)			//魔法の種類分ループさせる
 	{
-		w[i] = std::to_string(mgc_list->GetCost(i));	//消費MPを文字列に設定
-		w[i] += "MP:";									//文字設定
-		w[i] += mgc_list->GetName(i);					//魔法名設定
+		ui->MgcSelect->AddSelect(std::to_string(mgc_list->GetCost(i)).c_str());//消費MP設定
+		ui->MgcSelect->AddText(i, "MP:");				//文字列追加
+		ui->MgcSelect->AddText(i, mgc_list->GetName(i));//魔法名設定
 
 	}
-
-	bt_magic_list = new SELECT(w[(int)MAGIC_1], w[(int)MAGIC_2]);		//スキルの選択肢生成
-
-	//作業用の変数を開放する
-	std::vector<std::string> v;			//空のvectorを作成する
-	w.swap(v);							//空と中身を入れ替える
-	//*********************************** 魔法の選択肢を魔法一覧から設定、ここまで *****************************************
 
 	return true;		//全ての読み込みに成功
 
@@ -1500,30 +1488,31 @@ void Bt_WaitAct()
 			case (int)COMMANDE_MAGIC:		//魔法を選んだ時
 
 				ui->DrawWindow(BT_LIST_WIN_X, BT_LIST_WIN_Y, GAME_WIDTH - BT_LIST_WIN_X, BT_LIST_WIN_HEIGHT);	//ウィンドウ描画
-				bt_magic_list->Draw(BT_LIST_TXT_X, BT_LIST_TXT_Y, (int)SELECT_TRIANGLE_MINI);			//魔法一覧を描画
+				ui->MgcSelect->Draw(BT_LIST_TXT_X, BT_LIST_TXT_Y);	//魔法一覧を描画
 
-				bt_magic_list->SelectOperation(keydown, sys_se);	//魔法一覧のキー操作
+				ui->MgcSelect->SelectOperation(keydown, sys_se);	//魔法一覧のキー操作
 
-				if (bt_magic_list->GetBackFlg())		//戻る選択(バックスペースキーを押されたら)
+				if (ui->MgcSelect->GetBackFlg())	//戻る選択をしたら
 				{
-					ui->BattleCommand->SetSelectFlg(false);	//選択していない
-					bt_magic_list->SetBackFlg(false);		//戻る選択リセット
-					bt_magic_list->NowSelectReset();		//現在の選択リセット
+					ui->BattleCommand->SetSelectFlg(false);	//選択してない
+					ui->MgcSelect->SetBackFlg(false);		//戻る選択リセット
+					ui->MgcSelect->NowSelectReset();		//現在の選択リセット
 				}
-				else if (bt_magic_list->GetSelectFlg())		//選択された時は
+				else if (ui->MgcSelect->GetSelectFlg())	//選択された時は
 				{
 					//選んだ魔法の消費MPが残っているMPより多かったら(魔法が使えない処理)
-					if (player->GetMP() < mgc_list->GetCost(bt_magic_list->GetSelectNum()))
+					if (player->GetMP() < mgc_list->GetCost(ui->MgcSelect->GetSelectNum()))
 					{
 						sys_se->Play((int)SYS_SE_BLIP);			//選択できない時の音を鳴らす
 					}
 					else		//選んだ魔法が使えた時は
 					{
-						player->SetChoiseSkil(bt_magic_list->GetSelectNum());	//選択した内容を使用する魔法として設定する
-						bt_magic_list->NowSelectReset();						//選択要素を先頭に戻す
-						bt_magic_list->SetSelectFlg(false);						//選択してない状態へ
+						player->SetChoiseSkil(ui->MgcSelect->GetSelectNum());	//選択した内容を使用する魔法として設定する
+						ui->MgcSelect->NowSelectReset();						//選択要素を先頭に戻す
+						ui->MgcSelect->SetSelectFlg(false);						//選択してない状態へ
 						BattleStageNow = (int)DAMEGE_CALC;	//バトル状態をダメージ計算状態へ
 					}
+
 				}
 
 				break;
