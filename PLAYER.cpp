@@ -847,9 +847,17 @@ bool PLAYER::LoadData(const char *dir, const char *name)
 	std::getline(ifs, buf, ',');	//カンマまで読み込み
 	size = atoi(buf.c_str());		//スキルの数を取得
 
+	int check = 0;					//改行が入っていないか確認するために使用
 	for (int i = 0; i < size; ++i)	//スキルの数だけ繰り返し
 	{
 		std::getline(ifs, buf, ',');				//カンマで読み込み
+		check = buf.find("\n");						//改行があるかチェック
+
+		if (check != -1)	//読み込んだ文字列の中に改行文字が含まれていたら
+		{
+			buf[check] = '\0';	//改行を消す
+		}
+
 		this->Skil.push_back(atoi(buf.c_str()));	//スキル読み込み
 	}
 
@@ -865,6 +873,13 @@ bool PLAYER::LoadData(const char *dir, const char *name)
 		std::getline(ifs, buf, ',');	//カンマまで読み込み
 		code = (atoi(buf.c_str()));		//アイテムコード読み込み
 		std::getline(ifs, buf, ',');	//カンマまで読み込み
+		check = buf.find("\n");			//改行があるかチェック
+
+		if (check != -1)	//読み込んだ文字列の中に改行文字が含まれていたら
+		{
+			buf[check] = '\0';	//改行を消す
+		}
+
 		posse = (atoi(buf.c_str()));		//所持数設定
 
 		this->Item->LoadData(code, posse);	//読み込んだアイテムデータを設定
@@ -879,6 +894,13 @@ bool PLAYER::LoadData(const char *dir, const char *name)
 		std::getline(ifs, buf, ',');		//カンマまで読み込み
 		code = atoi(buf.c_str());			//武器コード読み込み
 		std::getline(ifs, buf, ',');		//カンマまで読み込み
+		check = buf.find("\n");				//改行があるかチェック
+
+		if (check != -1)	//読み込んだ文字列の中に改行文字が含まれていたら
+		{
+			buf[check] = '\0';	//改行を消す
+		}
+
 		posse = atoi(buf.c_str());			//所持数読み込み
 
 		this->Weapon->LoadData(code, posse);	//読み込んだデータを設定
@@ -888,7 +910,6 @@ bool PLAYER::LoadData(const char *dir, const char *name)
 	//*********************** 防具データ読み込み ****************************
 	std::getline(ifs, buf, ',');		//カンマまで読み込み
 	size = atoi(buf.c_str());			//防具数読み込み
-	int check = 0;						//改行が入っていないか確認するために使用
 	for (int i = 0; i < size; ++i)	//防具数分繰り返し
 	{
 		std::getline(ifs, buf, ',');		//カンマまで読み込み
@@ -960,7 +981,15 @@ bool PLAYER::Save(const char *dir, const char *name)
 
 	for (int i = 0; i < this->Skil.size(); ++i)		//スキルの数分書き込む
 	{
-		ofs << this->Skil[i] << ',';			//スキル書き込み
+		if (i == this->Skil.size() - 1)			//最後スキルの書き込みだったら
+		{
+			ofs << this->Skil[i] << '\n';			//スキル書き込み(最後は改行)
+		}
+		else	//最後じゃなかったら
+		{
+			ofs << this->Skil[i] << ',';			//スキル書き込み(カンマで区切る)
+		}
+
 	}
 
 	//************************* アイテムデータ書き込み *******************************
@@ -969,7 +998,14 @@ bool PLAYER::Save(const char *dir, const char *name)
 	for (int i = 0; i < this->Item->GetSize(); ++i)	//登録してあるアイテムの数分繰り返す
 	{
 		ofs << this->Item->GetCode(i) << ',';		//アイテムコード書き出し
-		ofs << this->Item->GetPossession(this->Item->GetCode(i)) << ',';	//所持数書き出し
+		if (i == this->Item->GetSize() - 1)	//最後の書き込みだったら
+		{
+			ofs << this->Item->GetPossession(this->Item->GetCode(i)) << '\n';	//所持数書き出し(最後は改行)
+		}
+		else	//最後じゃなかったら
+		{
+			ofs << this->Item->GetPossession(this->Item->GetCode(i)) << ',';	//所持数書き出し(カンマで区切る)
+		}
 
 	}
 
@@ -979,7 +1015,14 @@ bool PLAYER::Save(const char *dir, const char *name)
 	for (int i = 0; i < this->Weapon->GetSize(); ++i)//武器の数分繰り返す
 	{
 		ofs << this->Weapon->GetCode(i) << ',';	//武器コード書き出し
-		ofs << this->Weapon->GetPossession(this->Weapon->GetCode(i)) << ',';	//所持数書き出し
+		if (i == this->Weapon->GetSize() - 1)	//最後の書き込みだったら
+		{
+			ofs << this->Weapon->GetPossession(this->Weapon->GetCode(i)) << '\n';	//所持数書き出し(最後は改行)
+		}
+		else	//最後じゃなかったら
+		{
+			ofs << this->Weapon->GetPossession(this->Weapon->GetCode(i)) << ',';	//所持数書き出し(カンマで区切る)
+		}
 	}
 
 	//**************************** 防具データ読み込み ******************************
