@@ -1336,9 +1336,7 @@ void SetSize()
 	ui->SetSize();				//UI画像のサイズ設定
 
 	//選択肢関係
-	Title_select->SetSize();	//タイトル画面の選択肢の画像サイズ設定
-	End_select->SetSize();		//エンド画面の選択肢の画像サイズ設定
-	bt_magic_list->SetSize();	//戦闘画面の魔法一覧の画像サイズ設定
+	Title_select->SetSize();	//選択肢の画像サイズ設定
 	
 	//エフェクト関係
 	Magic_effect->SetSize();	//魔法エフェクトのサイズ設定

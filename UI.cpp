@@ -682,14 +682,6 @@ void UI::SetSize(void)
 {
 	this->TextWindow->SetSize();		//UI画像サイズ設定
 	this->TextPose->SetSize();		//Uiアニメーション画像サイズ設定
-	this->MenuSelect->SetSize();	//メニュー画面の選択肢のサイズ設定
-	this->BattleCommand->SetSize();	//戦闘画面の選択肢のサイズ設定
-	this->WeaponSelect->SetSize();	//武器の選択肢のサイズ設定
-	this->ArmorSelect->SetSize();	//防具の選択肢のサイズ設定
-	this->ItemSelect->SetSize();	//アイテムの選択肢のサイズ設定
-	this->Yes_No->SetSize();		//はい、いいえの選択肢のサイズ設定
-	this->EquipSelect->SetSize();	//武器防具の選択肢のサイズ設定
-	
 	return;
 }
 
