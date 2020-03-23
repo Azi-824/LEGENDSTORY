@@ -30,6 +30,15 @@
 
 #define ENCOUNT_TXT_KIND	3
 
+//テキスト関係
+#define SAVE_TEXT			"セーブ中です。"	//セーブ時のテキスト
+#define GAME_CLEAR_TEXT		"ゲームクリア！"	//ゲームクリア時のテキスト
+#define GAME_OVER_TEXT		"ゲームオーバー…"	//ゲームオーバー時のテキスト
+#define ENCOUNT_TEXT_1		"バイト帰りの"		//敵に遭遇した時のテキスト1個め
+#define ENCOUNT_TEXT_2		"肥満体の"			//敵に遭遇した時のテキスト2個め
+#define ENCOUNT_TEXT_3		"疲れ果てた"		//敵に遭遇した時のテキスト3個め
+
+
 //############### 列挙型 ###############
 enum GAME_SCENE {
 	GAME_SCENE_TITLE,	//タイトル画面

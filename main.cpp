@@ -754,7 +754,7 @@ void Play_Draw()
 			case (int)MENU_SAVE:	//セーブを選んだ時の処理ここから
 
 				//セーブ時の描画処理
-				DrawString(MENU_TEXT_X, MENU_TEXT_Y, "セーブ中です。", GetColor(255, 255, 255));	//文字描画
+				DrawString(MENU_TEXT_X, MENU_TEXT_TOP_Y, SAVE_TEXT, GetColor(255, 255, 255));	//文字描画
 
 				break;				//セーブを選んだ時の処理ここまで
 
@@ -798,10 +798,10 @@ void End_Draw()
 
 	if (Clear_flg)		//クリアしていたら
 	{
-		int Strlen = strlen("ゲームクリア！！！");
-		int Width = GetDrawStringWidth("ゲームクリア！！！", Strlen);	//横幅取得
+		int Strlen = strlen(GAME_CLEAR_TEXT);
+		int Width = GetDrawStringWidth(GAME_CLEAR_TEXT, Strlen);	//横幅取得
 
-		DrawString((GAME_WIDTH / 2) - (Width / 2), GAME_HEIGHT / 2, "ゲームクリア！！！", GetColor(255, 0, 0));		//クリア文字描画
+		DrawString((GAME_WIDTH / 2) - (Width / 2), GAME_HEIGHT / 2, GAME_CLEAR_TEXT, GetColor(255, 0, 0));		//クリア文字描画
 
 		MAPPOS_Y = AF_CLEAR_MAP_NUM_Y;	//現在のマップ位置をボスマップの前へ切り替え（X）
 		MAPPOS_X = AF_CLEAR_MAP_NUM_X;	//現在のマップ位置をボスマップの前へ切り替え（Y)
@@ -812,10 +812,10 @@ void End_Draw()
 	}
 	else				//クリアしていなかったら
 	{
-		int Strlen = strlen("ゲームオーバー…");
-		int Width = GetDrawStringWidth("ゲームオーバー…", Strlen);	//横幅取得
+		int Strlen = strlen(GAME_OVER_TEXT);
+		int Width = GetDrawStringWidth(GAME_OVER_TEXT, Strlen);	//横幅取得
 
-		DrawString((GAME_WIDTH / 2) - (Width / 2), GAME_HEIGHT / 2, "ゲームオーバー…", GetColor(255, 0, 0));		//ゲームオーバー文字描画
+		DrawString((GAME_WIDTH / 2) - (Width / 2), GAME_HEIGHT / 2, GAME_OVER_TEXT, GetColor(255, 0, 0));		//ゲームオーバー文字描画
 	}
 
 	font->SetSize(BIG_FONTSIZE);	//フォントサイズを大きくする
@@ -851,20 +851,20 @@ void Enconte()
 
 				case (int)ENCOUNT_TXT_PATARN1:
 
-					bt_msg[(int)BT_MSG_ACT]->SetMsg("バイト帰りの");	//エンカウントテキスト設定
+					bt_msg[(int)BT_MSG_ACT]->SetMsg(ENCOUNT_TEXT_1);	//エンカウントテキスト設定
 
 
 					break;
 
 				case (int)ENCOUNT_TXT_PATARN2:
 
-					bt_msg[(int)BT_MSG_ACT]->SetMsg("肥満体の");		//エンカウントテキスト設定
+					bt_msg[(int)BT_MSG_ACT]->SetMsg(ENCOUNT_TEXT_2);		//エンカウントテキスト設定
 
 					break;
 
 				case (int)ENCOUNT_TXT_PATARN3:
 
-					bt_msg[(int)BT_MSG_ACT]->SetMsg("疲れ果てた");		//エンカウントテキスト設定
+					bt_msg[(int)BT_MSG_ACT]->SetMsg(ENCOUNT_TEXT_3);		//エンカウントテキスト設定
 
 					break;
 						
