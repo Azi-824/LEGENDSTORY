@@ -1308,8 +1308,6 @@ void SetGameInit()
 	ui->Init();		//UI関係初期化
 	//******************** 初期設定ここまで ***************************
 
-	//後に変更
-
 	player->SetWeaponAtk(weapon_list);		//武器攻撃力設定
 	player->SetArmorDef(armor_list);		//防具防御力設定
 	player->SetItemRecovery(item_list);		//回復量設定
@@ -1318,7 +1316,7 @@ void SetGameInit()
 	ui->SelectUpdate(player->GetArmorClass(), armor_list);		//防具の選択肢更新
 	ui->SelectUpdate(player->GetItemClass(), item_list);		//アイテムの選択肢更新
 
-	//後から変更
+	return;
 
 }
 
