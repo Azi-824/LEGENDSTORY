@@ -13,6 +13,7 @@
 #define MY_IMG_DIR_TITLE	R"(.\MY_IMG\TITLE)"				//タイトルの画像のファイルの場所
 #define MY_IMG_DIR_BACK		R"(.\MY_IMG\BACK)"				//背景画像のファイルの場所
 #define MY_IMG_DIR_BATTLE	R"(.\MY_IMG\BATTLE)"			//戦闘画面の背景画像
+#define MY_IMG_DIR_DISCRIPTION	R"(.\MY_IMG\Description\)"	//説明画像のファイル名
 
 #define MY_ING_NAME_TITLE	R"(\Title_Logo.png)"			//タイトル画像の名前
 
@@ -31,7 +32,12 @@
 #define IMG_NAME_BT_REMAINS	R"(\battle_remains.jpg)"		//戦闘画面（遺跡）の背景画像の名前
 #define IMG_NAME_BT_CASTLE	R"(\battle_castle.jpg)"			//戦闘画面（城）の背景画像の名前
 
+//説明画像
 #define SETUMEI_NAME			R"(\setumei_dumy.jpg)"		  //説明画像の名前
+#define DISCRIPTION_PLAY_NAME	R"(Description_Play.jpg)"		//プレイ画面の説明画像の名前
+#define DISCRIPTION_BATTLE_NAME	R"(Description_Battle.jpg)"		//戦闘画面の説明画像の名前
+#define DISCRIPTION_BP_NAME		R"(Description_BP.jpg)"			//BPの説明画像の名前
+
 
 //########## マクロ定義：エラーメッセージ##########
 #define IMAGE_ERROR_TITLE "IMAGE_ERROR"					//エラータイトル
@@ -71,8 +77,6 @@ private:
 	std::vector<int> Height;				//高さ
 
 	std::vector<int>::iterator Handle_itr;	//ハンドルのイテレータ
-	std::vector<int>::iterator Width_itr;	//幅のイテレータ
-	std::vector<int>::iterator Height_itr;	//高さのイテレータ
 
 	int ImageKind;			//読み込んだ画像の種類
 
@@ -95,8 +99,13 @@ public:
 	bool GetIsLoad(void);			//読み込めた？
 
 	void Draw(int, int, int type=0);	//指定された画像を描画(指定しない場合、先頭の画像)
+	void DrawNow(int, int);				//現在の画像を描画
 
 	bool AddImage(const char *, const char *);	//画像を追加
+
+	void NextImage();	//描画する画像を次の画像へ切り替える
+	void ResetNowImage();//描画する画像を最初の画像にリセットする
+	bool GetIsLast();	//最後の画像かどうか取得
 
 };
 

@@ -29,7 +29,7 @@ KEYDOWN *keydown = new KEYDOWN();							//KEYDOWNクラスのオブジェクトを生成
 IMAGE *title;						//タイトル画像
 IMAGE *back;						//背景画像
 IMAGE *back_battle;					//戦闘画面の背景画像
-IMAGE *setumei;						//説明画像
+IMAGE *description;						//説明画像
 IMAGE *boss_mapimage;				//マップに描画するボスの画像
 
 MUSIC *bgm;							//BGM
@@ -347,6 +347,19 @@ void Play()
 				break;	//装備を選んだときここまで
 
 			case (int)MENU_SETUMEI:		//説明を選んだとき
+
+				if (keydown->IsKeyDownOne(KEY_INPUT_RETURN))	//エンターキーを押されたら
+				{
+					if (description->GetIsLast())	//最後の画像だったら
+					{
+						ui->ResetMenu();	//メニューリセット
+						description->ResetNowImage();	//描画する画像を最初に戻す
+					}
+					else	//最後じゃなければ
+					{
+						description->NextImage();	//次の説明へ
+					}
+				}
 
 				break;	//説明を選んだときここまで
 
@@ -713,12 +726,7 @@ void Play_Draw()
 
 			case (int)MENU_SETUMEI:	//操作説明を選んだ時の処理ここから
 
-				//操作説明描画処理
-				setumei->Draw(GAME_LEFT, GAME_TOP);	//説明画像の描画
-				if (keydown->IsKeyDownOne(KEY_INPUT_E))	//Eキーを押されたら
-				{
-					ui->ResetMenu();	//メニューリセット
-				}
+				description->DrawNow(GAME_LEFT, GAME_TOP);	//説明画像の描画
 
 				break;				//操作説明を選んだ時の処理ここまで
 
@@ -886,7 +894,7 @@ bool Wait()
 void Delete_Class()
 {
 	delete title;			//titleを破棄
-	delete setumei;			//setumeiを破棄
+	delete description;			//setumeiを破棄
 	delete fps;				//FPSを破棄
 	delete keydown;			//keydownを破棄
 	delete font;			//fontを破棄
@@ -967,8 +975,12 @@ bool LoadGameData()
 	if (back_battle->GetIsLoad() == false) { return false; }					//読み込み失敗
 
 
-	setumei = new IMAGE(MY_IMG_DIR_BACK, SETUMEI_NAME);		//説明画像の読み込み
-	if (setumei->GetIsLoad() == false) { return false; }		//読み込み失敗
+	description = new IMAGE(MY_IMG_DIR_DISCRIPTION, DISCRIPTION_PLAY_NAME);		//説明画像の読み込み
+	if (description->GetIsLoad() == false) { return false; }					//読み込み失敗
+	description->AddImage(MY_IMG_DIR_DISCRIPTION, DISCRIPTION_BATTLE_NAME);		//説明画像追加
+	if (description->GetIsLoad() == false) { return false; }					//読み込み失敗
+	description->AddImage(MY_IMG_DIR_DISCRIPTION, DISCRIPTION_BP_NAME);			//説明画像追加
+	if (description->GetIsLoad() == false) { return false; }					//読み込み失敗
 
 	//音関係
 	bgm = new MUSIC(MY_MUSIC_DIR_BGM, MY_BGM_NAME_TITLE);		//BGMを生成
@@ -1294,7 +1306,7 @@ void SetSize()
 	title->SetSize();			//タイトル画像のサイズ設定
 	back->SetSize();			//背景画像のサイズ設定
 	back_battle->SetSize();		//戦闘画面の画像サイズ設定
-	setumei->SetSize();			//説明画像のサイズ設定
+	description->SetSize();			//説明画像のサイズ設定
 	boss_mapimage->SetSize();	//ボスのマップでの画像サイズ設定
 
 	//UI関係

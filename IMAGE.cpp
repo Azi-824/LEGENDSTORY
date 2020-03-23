@@ -16,13 +16,6 @@ IMAGE::IMAGE(const char *dir,const char *name)
 	this->FilePath = "";	//パス
 	this->FileName = "";	//名前
 	
-	this->Handle.push_back(-1);		//ハンドル
-
-	this->Width.push_back(0);		//幅を初期化
-	this->Height.push_back(0);		//高さを初期化
-
-	this->Handle_itr = this->Handle.begin();	//ハンドルの先頭アドレス
-
 	this->ImageKind = 0;	//読み込んだ画像の種類
 
 	this->IsLoad = false;	//読み込めたか？
@@ -32,9 +25,9 @@ IMAGE::IMAGE(const char *dir,const char *name)
 	LoadfilePath += dir;
 	LoadfilePath += name;
 
-	*this->Handle_itr = LoadGraph(LoadfilePath.c_str());	//画像を読み込み
+	this->Handle.push_back(LoadGraph(LoadfilePath.c_str()));//画像を読み込み
 	
-	if (*this->Handle_itr == -1)	//画像が読み込めなかったとき
+	if (this->Handle.back() == -1)	//画像が読み込めなかったとき
 	{
 		std::string ErroeMsg(IMAGE_ERROR_MSG);	//エラーメッセージ作成
 		ErroeMsg += TEXT('\n');					//改行
@@ -51,15 +44,6 @@ IMAGE::IMAGE(const char *dir,const char *name)
 
 	this->FilePath = LoadfilePath;		//画像のパスを設定
 	this->FileName = name;				//画像の名前を設定
-
-	//GetGraphSize(
-	//	*this->Handle_itr,	//このハンドルの画像の大きさを取得
-	//	this->Width.data(),		//Widthのアドレスを渡す
-	//	this->Height.data()		//Heightのアドレスを渡す
-	//);
-
-	this->Width_itr = this->Width.begin();		//横幅の先頭アドレス
-	this->Height_itr = this->Height.begin();	//高さの先頭アドレス
 
 	this->IsLoad = true;		//読み込めた
 
@@ -98,6 +82,8 @@ std::string IMAGE::GetFileName(void)
 //サイズを設定する
 void IMAGE::SetSize(void)
 {
+	this->Width.resize(this->Handle.size());	//サイズ変更
+	this->Height.resize(this->Handle.size());	//サイズ変更
 	//画像の数だけループする
 	for (int i = 0; i < this->Handle.size(); ++i)
 	{
@@ -142,6 +128,12 @@ void IMAGE::Draw(int x, int y, int type)
 	DrawGraph(x, y, this->Handle[type], TRUE);	//指定された画像を描画
 }
 
+//現在の画像を描画
+void IMAGE::DrawNow(int x, int y)
+{
+	DrawGraph(x, y, *this->Handle_itr, TRUE);	//現在の画像を描画
+}
+
 //画像を追加
 //引　数：const char *：画像のディレクトリ
 //引　数：const char *：画像の名前
@@ -155,16 +147,10 @@ bool IMAGE::AddImage(const char *dir, const char *name)
 	LoadfilePath += dir;
 	LoadfilePath += name;
 
-	//新しい画像を入れる場所を初期化
-	this->Handle.push_back(-1);	
-	this->Width.push_back(0);
-	this->Height.push_back(0);
+	this->Handle.push_back(LoadGraph(LoadfilePath.c_str()));	//画像を読み込み
 
-	this->Handle_itr = this->Handle.end() -1;	//最後の要素
 
-	*this->Handle_itr= LoadGraph(LoadfilePath.c_str());	//画像を読み込み
-
-	if (*this->Handle_itr == -1)	//画像が読み込めなかったとき
+	if (this->Handle.back() == -1)	//画像が読み込めなかったとき
 	{
 		std::string ErroeMsg(IMAGE_ERROR_MSG);	//エラーメッセージ作成
 		ErroeMsg += TEXT('\n');					//改行
@@ -179,26 +165,41 @@ bool IMAGE::AddImage(const char *dir, const char *name)
 		return false;
 	}
 
-	//GetGraphSize(
-	//	*this->Handle_itr,	//このハンドルの画像の大きさを取得
-	//	this->Width.data(),		//Widthのアドレスを渡す
-	//	this->Height.data()		//Heightのアドレスを渡す
-	//);
-
-	//GetGraphSize(
-	//	*this->Handle_itr,	//このハンドルの画像の大きさを取得
-	//	&this->Width[type],		//Widthのアドレスを渡す
-	//	&this->Height[type]		//Heightのアドレスを渡す
-	//);
-
 	this->IsLoad = true;		//読み込めた
 
 	this->ImageKind = this->Handle.size();	//読み込んだ数を取得
 
 	this->Handle_itr = this->Handle.begin();	//ハンドルを最初に戻す
-	this->Width_itr = this->Width.begin();		//横幅の先頭アドレス
-	this->Height_itr = this->Height.begin();	//高さの先頭アドレス
 
 	return true;
 
+}
+
+//描画する画像を次の画像へ切り替える
+void IMAGE::NextImage(void)
+{
+	if (this->Handle_itr != this->Handle.end() - 1)	//最後の画像じゃなければ
+	{
+		++this->Handle_itr;	//次の画像へ
+	}
+}
+
+//描画する画像を最初の画像へリセットする
+void IMAGE::ResetNowImage(void)
+{
+	this->Handle_itr = this->Handle.begin();	//最初の画像へ
+	return;
+}
+
+//最後の画像かどうか取得
+bool IMAGE::GetIsLast(void)
+{
+	if (this->Handle_itr == this->Handle.end() - 1) //最後の画像だったら
+	{
+		return true;
+	}
+	else	//最後じゃなければ
+	{
+		return false;
+	}
 }
