@@ -141,9 +141,29 @@ void Load()
 
 		SetGameInit();					//ゲームの初期設定
 
-		sys_se->Play((int)SYS_SE_LOAD);	//ロード音を鳴らす
+		if (!sys_se->GetIsPlayed((int)SYS_SE_LOAD))	//ロード音を鳴らしていなければ
+		{
+			sys_se->Play((int)SYS_SE_LOAD);	//ロード音を鳴らす
+			sys_se->SetIsPlayed((int)SYS_SE_LOAD, true);	//再生済み
+		}
 
-		IsLoad = true;					//読み込み完了
+		description->DrawNow(GAME_LEFT, GAME_TOP);	//説明画像描画
+
+		if (keydown->IsKeyDownOne(KEY_INPUT_RETURN))	//エンターキーを押されたら
+		{
+			sys_se->Play((int)SYS_SE_KETTEI);	//決定音再生
+
+			if (description->GetIsLast())	//最後の画像だったら
+			{
+				description->ResetNowImage();//説明画像をリセット
+				IsLoad = true;					//読み込み完了
+			}
+			else	//最後の画像じゃなければ
+			{
+				description->NextImage();	//次の画像へ
+			}
+		}
+
 	}
 
 	return;
@@ -1290,7 +1310,6 @@ void SetGameInit()
 	player->SetArmorDef(armor_list);		//防具防御力設定
 	player->SetItemRecovery(item_list);		//回復量設定
 
-
 	ui->SelectUpdate(player->GetWeaponClass(), weapon_list);	//武器の選択肢更新
 	ui->SelectUpdate(player->GetArmorClass(), armor_list);		//防具の選択肢更新
 	ui->SelectUpdate(player->GetItemClass(), item_list);		//アイテムの選択肢更新
@@ -1390,8 +1409,6 @@ bool GameMainLoop()
 		return false;				//ループを抜け、ゲーム終了
 	}
 
-
-	//fps->Draw(0, 0);			//FPSの処理[描画]
 
 	ScreenFlip();				//モニタのリフレッシュレートの速さで裏画面を再描画
 
