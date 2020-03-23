@@ -99,6 +99,9 @@ void FONT::SetSize(int size)
 }
 
 //フォント追加
+//引　数：const char *：フォントのディレクトリ
+//引　数：const char *：フォントの名前
+//引　数：const char *：フォントの正式名称
 void FONT::AddFont(const char *dir, const char *filename, const char *name)
 {
 

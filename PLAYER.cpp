@@ -850,12 +850,14 @@ bool PLAYER::LoadData(const char *dir, const char *name)
 	int check = 0;					//改行が入っていないか確認するために使用
 	for (int i = 0; i < size; ++i)	//スキルの数だけ繰り返し
 	{
-		std::getline(ifs, buf, ',');				//カンマで読み込み
-		check = buf.find("\n");						//改行があるかチェック
 
-		if (check != -1)	//読み込んだ文字列の中に改行文字が含まれていたら
+		if (i == size - 1)	//最後の要素だったら
 		{
-			buf[check] = '\0';	//改行を消す
+			std::getline(ifs, buf, '\n');	//改行まで読み込み
+		}
+		else	//最後じゃなければ
+		{
+			std::getline(ifs, buf, ',');	//カンマまで読み込み
 		}
 
 		this->Skil.push_back(atoi(buf.c_str()));	//スキル読み込み
@@ -872,12 +874,14 @@ bool PLAYER::LoadData(const char *dir, const char *name)
 	{
 		std::getline(ifs, buf, ',');	//カンマまで読み込み
 		code = (atoi(buf.c_str()));		//アイテムコード読み込み
-		std::getline(ifs, buf, ',');	//カンマまで読み込み
-		check = buf.find("\n");			//改行があるかチェック
 
-		if (check != -1)	//読み込んだ文字列の中に改行文字が含まれていたら
+		if (i == size - 1)	//最後の要素だったら
 		{
-			buf[check] = '\0';	//改行を消す
+			std::getline(ifs, buf, '\n');	//改行まで読み込み
+		}
+		else	//最後じゃなければ
+		{
+			std::getline(ifs, buf, ',');	//カンマまで読み込み
 		}
 
 		posse = (atoi(buf.c_str()));		//所持数設定
@@ -893,12 +897,14 @@ bool PLAYER::LoadData(const char *dir, const char *name)
 	{
 		std::getline(ifs, buf, ',');		//カンマまで読み込み
 		code = atoi(buf.c_str());			//武器コード読み込み
-		std::getline(ifs, buf, ',');		//カンマまで読み込み
-		check = buf.find("\n");				//改行があるかチェック
 
-		if (check != -1)	//読み込んだ文字列の中に改行文字が含まれていたら
+		if (i == size - 1)	//最後の要素だったら
 		{
-			buf[check] = '\0';	//改行を消す
+			std::getline(ifs, buf, '\n');	//改行まで読み込み
+		}
+		else	//最後じゃなければ
+		{
+			std::getline(ifs, buf, ',');		//カンマまで読み込み
 		}
 
 		posse = atoi(buf.c_str());			//所持数読み込み
@@ -914,12 +920,14 @@ bool PLAYER::LoadData(const char *dir, const char *name)
 	{
 		std::getline(ifs, buf, ',');		//カンマまで読み込み
 		code = atoi(buf.c_str());			//防具コード読み込み
-		std::getline(ifs, buf, ',');		//カンマまで読み込み
-		check = buf.find("\n");				//改行があるかチェック
 
-		if (check != -1)	//読み込んだ文字列の中に改行文字が含まれていたら
+		if (i == size - 1)	//最後の要素だったら
 		{
-			buf[check] = '\0';	//改行を消す
+			std::getline(ifs, buf, '\n');	//改行まで読み込み
+		}
+		else	//最後じゃなければ
+		{
+			std::getline(ifs, buf, ',');		//カンマまで読み込み
 		}
 
 		posse = atoi(buf.c_str());			//所持数読み込み
