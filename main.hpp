@@ -31,12 +31,47 @@
 #define ENCOUNT_TXT_KIND	3
 
 //テキスト関係
-#define SAVE_TEXT			"セーブ中です。"	//セーブ時のテキスト
-#define GAME_CLEAR_TEXT		"ゲームクリア！"	//ゲームクリア時のテキスト
-#define GAME_OVER_TEXT		"ゲームオーバー…"	//ゲームオーバー時のテキスト
-#define ENCOUNT_TEXT_1		"バイト帰りの"		//敵に遭遇した時のテキスト1個め
-#define ENCOUNT_TEXT_2		"肥満体の"			//敵に遭遇した時のテキスト2個め
-#define ENCOUNT_TEXT_3		"疲れ果てた"		//敵に遭遇した時のテキスト3個め
+#define SAVE_TEXT				"セーブ中です。"		//セーブ時のテキスト
+#define GAME_CLEAR_TEXT			"ゲームクリア！"		//ゲームクリア時のテキスト
+#define GAME_OVER_TEXT			"ゲームオーバー…"		//ゲームオーバー時のテキスト
+
+#define ENCOUNT_TEXT_1			"バイト帰りの"			//敵に遭遇した時のテキスト1個め
+#define ENCOUNT_TEXT_2			"肥満体の"				//敵に遭遇した時のテキスト2個め
+#define ENCOUNT_TEXT_3			"疲れ果てた"			//敵に遭遇した時のテキスト3個め
+#define ENCOUNT_AF_TEXT			"が現れた！"			//敵に遭遇した時の敵の名前の後ろにつけるテキスト
+
+#define BT_WAIT_ACT_TEXT		"どうする？"			//戦闘画面でプレイヤー行動待ち状態に表示されるテキスト
+
+#define TITLE_SELECT_START_TEXT	"スタート"				//タイトルの選択肢（ゲームスタート）のテキスト
+#define TITLE_SELECT_END_TEXT	"おわる"				//タイトルの選択肢（ゲーム終了）のテキスト
+
+#define END_SELECT_TITLE_TEXT	"タイトル"				//エンド画面の選択肢（タイトルへ戻る）のテキスト
+#define END_SELECT_PLAY_TEXT	"プレイ"				//エンド画面の選択肢（プレイ画面へ戻る）のテキスト
+#define END_SELECT_END_TEXT		"おわる"				//エンド画面の選択肢（ゲーム終了）のテキスト
+
+#define MGC_SELECT_MP_TEXT		"MP:"					//魔法一覧の選択肢のMP表示のテキスト
+
+#define BT_ESCAPE_TEXT			"上手く逃げ切れた！"	//戦闘時に逃げるを選んだときのテキスト
+#define BT_DEF_TEXT_1			"は防御している！"		//戦闘時に防御を選んだときのテキスト1個め
+#define BT_DEF_TEXT_2			"防御に集中している！"	//戦闘時に防御を選んだときのテキスト2個め
+#define BT_ITEM_TEXT_1			"を使用した！"			//戦闘時にアイテムを選んだときのテキスト1個目
+#define BT_ITEM_TEXT_HP			"HPが"					//戦闘時に使用したアイテムがHP回復のものだった時のテキスト
+#define BT_ITEM_TEXT_MP			"MPが"					//戦闘時に使用したアイテムがMP回復のものだった時のテキスト
+#define BT_ITEM_TEXT_2			"回復した！"			//戦闘時にアイテムを選んだときのテキスト2個目
+#define BT_ATK_TEXT				"の攻撃！"				//戦闘時の攻撃テキスト
+#define BT_ATK_RECV_TEXT		"のダメージを受けた！"	//戦闘時にダメージを受けたときのテキスト
+#define BT_ATK_SEND_TEXT		"のダメージを与えた！"	//戦闘時にダメージを与えたときのテキスト
+#define BT_LOSE_TEXT			"全滅してしまった…"	//戦闘時に全滅した時のテキスト
+
+#define BT_RESULT_TEXT			"を倒した！"			//戦闘に勝った時のテキスト
+#define BT_DROP_MIDLE_TEXT		"は、"					//ドロップメッセージの真ん中に入れるテキスト
+#define BT_DROP_AF_TEXT			"を落としていった！"	//ドロップメッセージの後ろに入れるテキスト
+#define BT_DROP_GET_TEXT		"を手に入れた！"		//ドロップメッセージ
+#define BT_RESULT_GET_EXP_TEXT	"の経験値を手に入れた！"//手に入れた経験値を表示するときのテキスト
+#define BT_LEVELUP_BF_TEXT		"レベル"				//レベルアップメッセージの前に入れるテキスト
+#define BT_LEVELUP_AF_TEXT		"になった！"			//レベルアップメッセージの後ろに入れるテキスト
+
+
 
 
 //############### 列挙型 ###############

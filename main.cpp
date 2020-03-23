@@ -873,8 +873,8 @@ void Enconte()
 				}
 
 				bt_msg[(int)BT_MSG_ACT]->AddText(enemy[EncounteEnemyType]->GetName());	//エンカウントした敵の名前取得
-				bt_msg[(int)BT_MSG_ACT]->AddText("が現れた！");		//メッセージ内容追加
-				bt_msg[(int)BT_MSG_ACT]->AddMsg("どうする？");		//メッセージ追加
+				bt_msg[(int)BT_MSG_ACT]->AddText(ENCOUNT_AF_TEXT);		//メッセージ内容追加
+				bt_msg[(int)BT_MSG_ACT]->AddMsg(BT_WAIT_ACT_TEXT);		//メッセージ追加
 
 				sys_se->Play((int)SYS_SE_ENCOUNT);					//敵と遭遇した音を鳴らす
 				sys_se->Reset();									//再生状態リセット
@@ -1263,16 +1263,15 @@ bool LoadGameData()
 
 
 	//選択肢関係
-	Title_select = new SELECT("START", "END");			//タイトル画面の選択肢生成
-	End_select = new SELECT("TITLE", "PLAY", "END");	//エンド画面の選択肢生成
+	Title_select = new SELECT(TITLE_SELECT_START_TEXT, TITLE_SELECT_END_TEXT);					//タイトル画面の選択肢生成
+	End_select = new SELECT(END_SELECT_TITLE_TEXT, END_SELECT_PLAY_TEXT, END_SELECT_END_TEXT);	//エンド画面の選択肢生成
 
 	//魔法一覧から、戦闘画面で使用するための、魔法の選択肢を作成
 	for (int i = 0; i < mgc_list->GetListSize(); ++i)			//魔法の種類分ループさせる
 	{
 		ui->MgcSelect->AddSelect(std::to_string(mgc_list->GetCost(i)).c_str());//消費MP設定
-		ui->MgcSelect->AddText(i, "MP:");				//文字列追加
-		ui->MgcSelect->AddText(i, mgc_list->GetName(i));//魔法名設定
-
+		ui->MgcSelect->AddText(i, MGC_SELECT_MP_TEXT);							//文字列追加
+		ui->MgcSelect->AddText(i, mgc_list->GetName(i));						//魔法名設定
 	}
 
 	return true;		//全ての読み込みに成功
@@ -1567,7 +1566,7 @@ void Bt_WaitAct()
 
 			case (int)COMMANDE_ESCAPE:		//逃げるを選んだ時
 
-				bt_msg[(int)BT_MSG_ACT]->SetMsg("上手く逃げ切れた！");	//文字列設定
+				bt_msg[(int)BT_MSG_ACT]->SetMsg(BT_ESCAPE_TEXT);	//文字列設定
 
 				BattleStageNow = (int)ACT_MSG;	//メッセージ描画状態
 
@@ -1610,25 +1609,25 @@ void Bt_DamegeCalc()
 		if (ui->BattleCommand->GetSelectNum() == (int)COMMANDE_DEFENSE)	//防御を選んだ時
 		{
 
-			bt_msg[(int)BT_MSG_ACT]->SetMsg(player->GetName());		//名前設定
-			bt_msg[(int)BT_MSG_ACT]->AddText("は防御している！");	//メッセージ内容追加
-			bt_msg[(int)BT_MSG_ACT]->AddMsg("防御に集中している");	//メッセージ追加
+			bt_msg[(int)BT_MSG_ACT]->SetMsg(player->GetName());	//名前設定
+			bt_msg[(int)BT_MSG_ACT]->AddText(BT_DEF_TEXT_1);	//メッセージ内容追加
+			bt_msg[(int)BT_MSG_ACT]->AddMsg(BT_DEF_TEXT_2);		//メッセージ追加
 
 		}
 		else if (ui->BattleCommand->GetSelectNum() == (int)COMMANDE_ITEM)	//アイテムを選んだ時
 		{
 			bt_msg[(int)BT_MSG_ACT]->SetMsg(item_list->GetName(ui->ItemSelect->GetSelectCode()));	//使用したアイテム名設定
-			bt_msg[(int)BT_MSG_ACT]->AddText("を使用した！");		//メッセージ内容追加
+			bt_msg[(int)BT_MSG_ACT]->AddText(BT_ITEM_TEXT_1);		//メッセージ内容追加
 			if (item_list->GetItemType(ui->ItemSelect->GetSelectCode()) == ITEM_TYPE_HP)	//HP回復アイテムだったら
 			{
-				bt_msg[(int)BT_MSG_ACT]->AddMsg("HPが");				//メッセージ追加
+				bt_msg[(int)BT_MSG_ACT]->AddMsg(BT_ITEM_TEXT_HP);				//メッセージ追加
 			}
 			else if (item_list->GetItemType(ui->ItemSelect->GetSelectCode()) == ITEM_TYPE_MP)	//MP回復アイテムだったら
 			{
-				bt_msg[(int)BT_MSG_ACT]->AddMsg("MPが");				//メッセージ追加
+				bt_msg[(int)BT_MSG_ACT]->AddMsg(BT_ITEM_TEXT_MP);				//メッセージ追加
 			}
 			bt_msg[(int)BT_MSG_ACT]->AddText(std::to_string(item_list->GetRecovery(ui->ItemSelect->GetSelectCode())).c_str());	//回復量設定
-			bt_msg[(int)BT_MSG_ACT]->AddText("回復した！");			//メッセージ内容追加
+			bt_msg[(int)BT_MSG_ACT]->AddText(BT_ITEM_TEXT_2);	//メッセージ内容追加
 
 			ui->ItemSelect->NowSelectReset();					//アイテムの選択をリセット
 			ui->ItemSelect->SetSelectFlg(false);				//選択していない状態へ
@@ -1637,16 +1636,16 @@ void Bt_DamegeCalc()
 		else					//それ以外の時
 		{
 			bt_msg[(int)BT_MSG_ACT]->SetMsg(player->GetName());	//名前設定
-			bt_msg[(int)BT_MSG_ACT]->AddText("の攻撃！");		//メッセージ内容追加
+			bt_msg[(int)BT_MSG_ACT]->AddText(BT_ATK_TEXT);		//メッセージ内容追加
 			bt_msg[(int)BT_MSG_ACT]->AddMsg(std::to_string(enemy[EncounteEnemyType]->GetRecvDamege()).c_str());	//与えたダメージ設定
-			bt_msg[(int)BT_MSG_ACT]->AddText("のダメージを与えた！");	//メッセージ内容追加
+			bt_msg[(int)BT_MSG_ACT]->AddText(BT_ATK_SEND_TEXT);	//メッセージ内容追加
 		}
 
 		//敵
 		bt_msg[(int)BT_MSG_ACT]->AddMsg(enemy[EncounteEnemyType]->GetName());	//敵の名前設定
-		bt_msg[(int)BT_MSG_ACT]->AddText("の攻撃！");		//メッセージ内容追加
+		bt_msg[(int)BT_MSG_ACT]->AddText(BT_ATK_TEXT);		//メッセージ内容追加
 		bt_msg[(int)BT_MSG_ACT]->AddMsg(std::to_string(player->GetRecvDamege()).c_str());	//受けるダメージ設定
-		bt_msg[(int)BT_MSG_ACT]->AddText("のダメージを受けた！");	//メッセージ内容追加
+		bt_msg[(int)BT_MSG_ACT]->AddText(BT_ATK_RECV_TEXT);	//メッセージ内容追加
 		//▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲ メッセージ設定処理ここまで ▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲
 
 		BattleStageNow = (int)ACT_MSG;	//行動メッセージ表示状態へ
@@ -1821,7 +1820,7 @@ void Bt_DrawDamege()
 		else if (Turn == (int)ENEMY_TURN)	//敵のターンの時
 		{
 
-			bt_msg[(int)BT_MSG_ACT]->SetMsg("どうする？");	//文字列設定
+			bt_msg[(int)BT_MSG_ACT]->SetMsg(BT_WAIT_ACT_TEXT);	//文字列設定
 
 			++NowTurnCnt;			//ターンを加算する
 			Turn = (int)MY_TURN;	//味方のターンへ
@@ -1831,7 +1830,7 @@ void Bt_DrawDamege()
 		{
 			player->SetIsBattleWin(false);	//戦闘に敗北
 
-			bt_msg[(int)BT_MSG_RESULT]->SetMsg("全滅してしまった…");	//リザルトメッセージ設定
+			bt_msg[(int)BT_MSG_RESULT]->SetMsg(BT_LOSE_TEXT);	//リザルトメッセージ設定
 
 			BattleStageNow = (int)RESULT_MSG;		//リザルトメッセージ表示状態へ
 
@@ -1847,24 +1846,24 @@ void Bt_DrawDamege()
 
 			//▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼ リザルトメッセージ設定処理ここから ▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼
 			bt_msg[(int)BT_MSG_RESULT]->SetMsg(enemy[EncounteEnemyType]->GetName());	//名前設定
-			bt_msg[(int)BT_MSG_RESULT]->AddText("を倒した！");							//メッセージ内容追加
+			bt_msg[(int)BT_MSG_RESULT]->AddText(BT_RESULT_TEXT);						//メッセージ内容追加
 
 			bt_msg[(int)BT_MSG_RESULT]->AddMsg(enemy[EncounteEnemyType]->GetName());	//敵の名前を設定
-			bt_msg[(int)BT_MSG_RESULT]->AddText("は、");								//メッセージ内容追加
+			bt_msg[(int)BT_MSG_RESULT]->AddText(BT_DROP_MIDLE_TEXT);					//メッセージ内容追加
 			bt_msg[(int)BT_MSG_RESULT]->AddText(drop_name.c_str());						//ドロップした物の名前を設定
-			bt_msg[(int)BT_MSG_RESULT]->AddText("を落としていった！");					//メッセージ内容追加
+			bt_msg[(int)BT_MSG_RESULT]->AddText(BT_DROP_AF_TEXT);						//メッセージ内容追加
 
 			bt_msg[(int)BT_MSG_RESULT]->AddMsg(drop_name.c_str());	//ドロップした物の名前を設定
-			bt_msg[(int)BT_MSG_RESULT]->AddText("を手に入れた！");	//メッセージ内容追加
+			bt_msg[(int)BT_MSG_RESULT]->AddText(BT_DROP_GET_TEXT);	//メッセージ内容追加
 
 			bt_msg[(int)BT_MSG_RESULT]->AddMsg(std::to_string(enemy[EncounteEnemyType]->GetEXP()).c_str());	//経験値設定
-			bt_msg[(int)BT_MSG_RESULT]->AddText("の経験値を手に入れた！");				//メッセージ内容追加
+			bt_msg[(int)BT_MSG_RESULT]->AddText(BT_RESULT_GET_EXP_TEXT);				//メッセージ内容追加
 
 			if (player->GetLevelUpFlg())		//レベルアップしたときは
 			{
-				bt_msg[(int)BT_MSG_RESULT]->AddMsg("レベル");	//メッセージ内容追加
+				bt_msg[(int)BT_MSG_RESULT]->AddMsg(BT_LEVELUP_BF_TEXT);		//メッセージ内容追加
 				bt_msg[(int)BT_MSG_RESULT]->AddText(std::to_string(player->GetLevel()).c_str());	//レベル設定
-				bt_msg[(int)BT_MSG_RESULT]->AddText("になった！");	//メッセージ内容追加
+				bt_msg[(int)BT_MSG_RESULT]->AddText(BT_LEVELUP_AF_TEXT);	//メッセージ内容追加
 			}
 			//▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲ リザルトメッセージ設定処理ここまで ▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲
 
