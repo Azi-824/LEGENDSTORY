@@ -519,7 +519,7 @@ void UI::DrawStateWindow(PLAYER *player)
 		//使用するBPは色を変えて描画する
 		if (i < player->GetUseBP())	//使用するBPより少なかったら
 		{
-			DrawCircle(STA_BP_X + i * STA_BP_INTERVAL, STA_BP_Y, STA_BP_DRAW_SIZE, GetColor(0, 255, 0), TRUE);	//使用するBP描画(色を変えて描画)
+			DrawCircle(STA_BP_X + i * STA_BP_INTERVAL, STA_BP_Y, STA_BP_DRAW_SIZE, GetColor(255, 255, 0), TRUE);	//使用するBP描画(色を変えて描画)
 		}
 		else if (i < player->GetBP())	//現在のBPより小さかったら
 		{
