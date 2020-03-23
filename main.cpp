@@ -370,6 +370,8 @@ void Play()
 
 				if (keydown->IsKeyDownOne(KEY_INPUT_RETURN))	//エンターキーを押されたら
 				{
+					sys_se->Play((int)SYS_SE_KETTEI);	//音の再生
+
 					if (description->GetIsLast())	//最後の画像だったら
 					{
 						ui->ResetMenu();	//メニューリセット
