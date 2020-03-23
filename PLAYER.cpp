@@ -53,11 +53,19 @@ bool PLAYER::SetInit()
 		this->EquipAtk = this->Weapon->GetAtk(this->Equip_WeaponCode);	//装備コードを基に、装備の攻撃力を取得
 		this->Weapon->SetEquipFlg(this->Equip_WeaponCode, true);		//武器を装備している
 	}
+	else		//初期値だった場合
+	{
+		this->EquipAtk = 0;	//初期化
+	}
 
 	if (this->Equip_ArmorCode != PLAYER_INIT_VALUE)	//防具コードが初期値じゃなければ
 	{
 		this->EquipDef = this->Armor->GetDef(this->Equip_ArmorCode);	//装備コードを基に、装備の防御力を取得
 		this->Armor->SetEquipFlg(this->Equip_ArmorCode, true);			//防具を装備している
+	}
+	else	//初期値だった場合
+	{
+		this->EquipDef = 0;	//初期化
 	}
 
 	this->Anime->SetSize();	//画像のサイズ設定
