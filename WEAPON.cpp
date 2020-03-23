@@ -30,6 +30,7 @@ void WEAPON::SetAtk(int atk)
 }
 
 //攻撃力取得
+//引数：int：武器コード
 int WEAPON::GetAtk(int code)
 {
 

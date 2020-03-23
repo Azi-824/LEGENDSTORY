@@ -188,11 +188,11 @@ void Title()
 
 	if (Title_select->GetSelectFlg())		//選択されたら
 	{
-		if (*Title_select->GetNowSelect() == "START")		//選択している文字列が"START"だったら
+		if (Title_select->GetSelectNum()==(int)TITLE_SELECT_START)		//スタートを選択したら
 		{
 			SceneChenge(GameSceneNow, (int)GAME_SCENE_PLAY);	//次の画面はプレイ画面
 		}
-		else
+		else	//終了を選択したら
 		{
 			GameEnd_Flg = true;	//ゲーム終了
 		}
@@ -522,15 +522,15 @@ void End()
 
 	if (End_select->GetSelectFlg())						//選択されたら
 	{
-		if (*End_select->GetNowSelect() == "TITLE")		//選択している文字列が"TITLE"だったら
+		if (End_select->GetSelectNum()==(int)END_SELECT_TITLE)		//タイトルを選択したら
 		{
 			SceneChenge(GameSceneNow, (int)GAME_SCENE_TITLE);	//次の画面はタイトル画面
 		}
-		else if (*End_select->GetNowSelect() == "PLAY")	//プレイを選択したら
+		else if (End_select->GetSelectNum() == (int)END_SELECT_PLAY)	//プレイを選択したら
 		{
 			SceneChenge(GameSceneNow, (int)GAME_SCENE_PLAY);	//次の画面はプレイ画面
 		}
-		else
+		else	//終了を選択したら
 		{
 			GameEnd_Flg = true;	//ゲーム終了
 		}

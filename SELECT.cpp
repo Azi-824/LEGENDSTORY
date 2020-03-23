@@ -57,6 +57,10 @@ SELECT::~SELECT()
 }
 
 //選択肢のキー操作
+/*
+引数：KEYDOWN *：キー操作
+引数：MUSIC *  ：SE再生用
+*/
 void SELECT::SelectOperation(KEYDOWN *keydown,MUSIC *se)
 {
 
@@ -135,12 +139,6 @@ void SELECT::SelectOperation(KEYDOWN *keydown,MUSIC *se)
 
 	return;
 
-}
-
-//現在選択中の要素を取得
-std::vector<std::string>::iterator SELECT::GetNowSelect()
-{
-	return this->Str_itr;
 }
 
 //選択した要素の要素番号を取得する

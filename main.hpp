@@ -62,6 +62,19 @@ enum ENCOUNT_TXT_TYPE
 	ENCOUNT_TXT_PATARN3		//遭遇した時のテキスト種類3個め
 };
 
+enum TITLE_SELECT
+{
+	TITLE_SELECT_START,	//スタート
+	TITLE_SELECT_END	//終了
+};
+
+enum END_SELECT
+{
+	END_SELECT_TITLE,	//タイトルへ
+	END_SELECT_PLAY,	//プレイ画面へ
+	END_SELECT_END,		//終了
+};
+
 //############## プロトタイプ宣言 #############
 
 void Load();				//ロード画面の処理
