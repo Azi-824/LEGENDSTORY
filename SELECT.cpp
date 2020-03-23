@@ -173,7 +173,10 @@ void SELECT::NowSelectReset(void)
 /*
 引数：int：描画X位置
 引数：int：描画Y位置
+引数：int：描画するUI画像の種類
 引数：unsigned int：描画色:デフォルトは白色
+引数：int：横向きに選択肢を並べるときの描画間隔
+
 */
 void SELECT::Draw(int x, int y,int kind,unsigned int color,int side_select)
 {
@@ -273,6 +276,7 @@ void SELECT::Draw(int x, int y,int kind,unsigned int color,int side_select)
 /*
 引数：int：描画X位置
 引数：int：描画Y位置
+引数：int：描画するUI画像の種類
 引数：unsigned int：描画色:デフォルトは白色
 */
 void SELECT::DrawCenter(int x, int y,int kind, unsigned int color)
@@ -333,7 +337,10 @@ void SELECT::DrawCenter(int x, int y,int kind, unsigned int color)
 /*
 引数：int：描画X位置
 引数：int：描画Y位置
+引数：int：Y位置から描画する高さ
+引数：int：描画するUI画像の種類
 引数：unsigned int：描画色:デフォルトは白色
+引数：int：横向きに選択肢を並べるときの描画間隔
 */
 void SELECT::DrawScroll(int x, int y, int rectheight, int kind, unsigned int color, int side_select)
 {
@@ -475,6 +482,10 @@ void SELECT::SetSize(void)
 }
 
 //選択肢の内容を追加
+/*
+引数：const char *：追加する文字列
+引数：int	:コード番号がある場合はコード番号を設定する
+*/
 void SELECT::AddSelect(const char *str,int code)
 {
 	this->Str.push_back(str);	//選択肢追加

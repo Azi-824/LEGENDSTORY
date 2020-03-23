@@ -191,10 +191,6 @@ void MAP::Draw()
 }
 
 //当たり判定の領域を作成
-/*
-引数：int *：通行できるマップのナンバー
-引数：int *：通行できないマップのナンバー
-*/
 void MAP::CreateRect()
 {
 	for (int tate = 0; tate < MAP_TATE; ++tate)

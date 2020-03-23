@@ -82,6 +82,11 @@ void MESSAGE::BackMsg(void)
 }
 
 //メッセージ描画
+/*
+引数：int：描画X位置
+引数：int：描画Y位置
+引数：unsigned int：描画色:デフォルトは白色
+*/
 void MESSAGE::DrawMsg(int x, int y,unsigned int color)
 {
 	DrawFormatString(x, y, color, "%s", this->Msg_itr->c_str());	//メッセージ描画

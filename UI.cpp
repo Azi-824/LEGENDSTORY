@@ -536,6 +536,12 @@ void UI::DrawStateWindow(PLAYER *player)
 
 //*************************** ウィンドウ関係 *******************************
 //ウィンドウを描画する
+/*
+引数：int：描画X位置
+引数：int：描画Y位置
+引数：int：描画する横幅
+引数：int：描画する高さ
+*/
 void UI::DrawWindow(int x, int y, int width, int height)
 {
 	SetDrawBlendMode(DX_BLENDMODE_ALPHA, 255 * 80 / 100);	//描画モードを透過ありに変更、透過率80％に設定
@@ -550,6 +556,13 @@ void UI::DrawWindow(int x, int y, int width, int height)
 }
 
 //ウィンドウを描画する(色指定)
+/*
+引数：int：描画X位置
+引数：int：描画Y位置
+引数：int：描画する横幅
+引数：int：描画する高さ
+引数：unsigned int：描画色
+*/
 void UI::DrawWindow(int x,int y,int width,int height,unsigned int color)
 {
 	SetDrawBlendMode(DX_BLENDMODE_ALPHA, 255 * 80 / 100);	//描画モードを透過ありに変更、透過率80％に設定
@@ -564,6 +577,12 @@ void UI::DrawWindow(int x,int y,int width,int height,unsigned int color)
 }
 
 //ウィンドウの枠を描画する
+/*
+引数：int：描画X位置
+引数：int：描画Y位置
+引数：int：描画する横幅
+引数：int：描画する高さ
+*/
 void UI::DrawWindowFrame(int x, int y, int width, int height)
 {
 	DrawBox(x, y, x + width, y + height, GetColor(255, 255, 255), FALSE);	//塗りつぶしなしで四角形を描画
