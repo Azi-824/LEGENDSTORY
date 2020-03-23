@@ -102,6 +102,34 @@
 #define DEFAULT_TEXT_Y	490		//デフォルトのテキスト描画位置（Y座標）
 #define TXT_Y_3			450		//選択肢が3つの時のテキスト描画位置（Y座標）
 
+//テキスト関係
+#define MENU_SELECT_STATE_TEXT			"ステータス"		//メニュー画面の選択肢（ステータス）
+#define MENU_SELECT_ITEM_TEXT			"アイテム"			//メニュー画面の選択肢（アイテム）
+#define MENU_SELECT_EQUIP_TEXT			"装備"				//メニュー画面の選択肢（装備）
+#define MENU_SELECT_DESCRIPITON_TEXT	"操作説明"			//メニュー画面の選択肢（操作説明）
+#define MENU_SELECT_SAVE_TEXT			"セーブ"			//メニュー画面の選択肢（セーブ）
+
+#define BT_CMD_ATK_TEXT					"こうげき"			//バトルコマンド（攻撃）
+#define BT_CMD_DEF_TEXT					"ぼうぎょ"			//バトルコマンド（防御）
+#define BT_CMD_MGC_TEXT					"まほう"			//バトルコマンド（魔法）
+#define BT_CMD_ITEM_TEXT				"アイテム"			//バトルコマンド（アイテム）
+#define BT_CMD_ESC_TEXT					"にげる"			//バトルコマンド（逃げる）
+
+#define SELECT_YES_TEXT					"はい"				//はい、の選択肢
+#define SELECT_NO_TEXT					"いいえ"			//いいえの選択肢
+
+#define SELECT_EQUIP_WEAPON_TEXT		"武器"				//武器防具の選択肢の武器のテキスト
+#define SELECT_EQUIP_ARMOR_TEXT			"防具"				//武器防具の選択肢の防具のテキスト
+
+#define STATE_INDEX_PLAYERNAME_TEXT		"プレイヤー名"		//ステータス目次（プレイヤー名）
+#define STATE_INDEX_LEVEL_TEXT			"Lv"				//ステータス目次（レベル）
+#define STATE_INDEX_HP_TEXT				"HP"				//ステータス目次（HP）
+#define STATE_INDEX_MP_TEXT				"MP"				//ステータス目次（MP）
+#define STATE_INDEX_ATK_TEXT			"攻撃力"			//ステータス目次（攻撃力）
+#define STATE_INDEX_DEF_TEXT			"防御力"			//ステータス目次（防御力）
+#define STATE_INDEX_SPD_TEXT			"素早さ"			//ステータス目次（素早さ）
+#define STATE_INDEX_EXP_TEXT			"Exp"				//ステータス目次（経験値）
+
 //######################### 列挙型 #################################
 enum UI_IMAGE_TYPE
 {

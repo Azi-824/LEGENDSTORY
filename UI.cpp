@@ -12,26 +12,26 @@ UI::UI()
 
 	this->TextWindow = new IMAGE(UI_DIR, UI_WINDOW_NAME);	//uiの画像作成
 
-	this->MenuSelect = new SELECT("ステータス", "アイテム", "装備", "操作説明", "セーブ");	//メニューの選択肢生成
-	this->BattleCommand = new SELECT("こうげき", "ぼうぎょ", "まほう", "アイテム", "にげる");	//バトルコマンドの選択肢生成
+	this->MenuSelect = new SELECT(MENU_SELECT_STATE_TEXT, MENU_SELECT_ITEM_TEXT, MENU_SELECT_EQUIP_TEXT, MENU_SELECT_DESCRIPITON_TEXT, MENU_SELECT_SAVE_TEXT);	//メニューの選択肢生成
+	this->BattleCommand = new SELECT(BT_CMD_ATK_TEXT, BT_CMD_DEF_TEXT, BT_CMD_MGC_TEXT, BT_CMD_ITEM_TEXT, BT_CMD_ESC_TEXT);	//バトルコマンドの選択肢生成
 
 	this->ItemSelect = new SELECT();	//アイテムの選択肢を生成
 	this->WeaponSelect = new SELECT();	//武器の選択肢を生成
 	this->ArmorSelect = new SELECT();	//防具の選択肢を生成
-	this->Yes_No = new SELECT("はい", "いいえ");	//はい、いいえの選択肢を生成
-	this->EquipSelect = new SELECT("武器", "防具");	//武器、防具の選択肢を生成
+	this->Yes_No = new SELECT(SELECT_YES_TEXT, SELECT_NO_TEXT);	//はい、いいえの選択肢を生成
+	this->EquipSelect = new SELECT(SELECT_EQUIP_WEAPON_TEXT, SELECT_EQUIP_ARMOR_TEXT);	//武器、防具の選択肢を生成
 	this->EquipSelect->SetSideMode(true);			//選択肢を横向きに並べる
 	this->MgcSelect = new SELECT();					//魔法の選択肢w生成
 
 	//ステータス画面の目次項目を作成
-	this->StateIndex.push_back("プレイヤー名");		//プレイヤー名
-	this->StateIndex.push_back("Lv");				//レベル
-	this->StateIndex.push_back("HP");				//HP
-	this->StateIndex.push_back("MP");				//MP
-	this->StateIndex.push_back("攻撃力");			//攻撃力
-	this->StateIndex.push_back("防御力");			//防御力
-	this->StateIndex.push_back("素早さ");			//素早さ
-	this->StateIndex.push_back("Exp");				//経験値
+	this->StateIndex.push_back(STATE_INDEX_PLAYERNAME_TEXT);		//プレイヤー名
+	this->StateIndex.push_back(STATE_INDEX_LEVEL_TEXT);				//レベル
+	this->StateIndex.push_back(STATE_INDEX_HP_TEXT);				//HP
+	this->StateIndex.push_back(STATE_INDEX_MP_TEXT);				//MP
+	this->StateIndex.push_back(STATE_INDEX_ATK_TEXT);				//攻撃力
+	this->StateIndex.push_back(STATE_INDEX_DEF_TEXT);				//防御力
+	this->StateIndex.push_back(STATE_INDEX_SPD_TEXT);				//素早さ
+	this->StateIndex.push_back(STATE_INDEX_EXP_TEXT);				//経験値
 
 	//アニメーション画像を生成（テキストポーズ）
 	this->TextPose = new ANIMATION(TXT_POSE_DIR, TXT_POSE_NAME, TXT_POSE_ALL_CNT, TXT_POSE_YOKO_CNT, TXT_POSE_TATE_CNT, TXT_POSE_WIDTH, TXT_POSE_HEIGHT, TXT_POSE_SPEED, true);
@@ -189,7 +189,7 @@ bool UI::MenuSelectItem(KEYDOWN *keydown, MUSIC *sys_se)
 
 			if (this->Yes_No->GetSelectFlg())		//はいかいいえを選択したら
 			{
-				if (this->Yes_No->GetSelectNum() == (int)SELECT_YES)	//はいを選んだとき
+				if (this->Yes_No->GetSelectNum() == (int)SELECT_YES_TEXT)	//はいを選んだとき
 				{
 					return true;	//アイテムを選択した
 				}
@@ -435,7 +435,7 @@ int UI::MenuSelectEquip(KEYDOWN *keydown, MUSIC *sys_se)
 
 		if (this->Yes_No->GetSelectFlg())					//装備するか選択したら
 		{
-			if (this->Yes_No->GetSelectNum() == (int)SELECT_YES)		//はい、を選択したら
+			if (this->Yes_No->GetSelectNum() == (int)SELECT_YES_TEXT)		//はい、を選択したら
 			{
 				this->Menu_Equip_dir = (int)MENU_EQUIP_SELECT_EQUIP;	//選択肢の段階を一つ前へ
 				this->Yes_No->Default();								//はい、いいえの選択肢デフォルトへ
