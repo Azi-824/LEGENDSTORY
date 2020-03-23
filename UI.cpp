@@ -20,7 +20,8 @@ UI::UI()
 	this->ArmorSelect = new SELECT();	//防具の選択肢を生成
 	this->Yes_No = new SELECT("はい", "いいえ");	//はい、いいえの選択肢を生成
 	this->EquipSelect = new SELECT("武器", "防具");	//武器、防具の選択肢を生成
-	this->EquipSelect->SetSideMode(true);		//選択肢を横向きに並べる
+	this->EquipSelect->SetSideMode(true);			//選択肢を横向きに並べる
+	this->MgcSelect = new SELECT();					//魔法の選択肢w生成
 
 	//ステータス画面の目次項目を作成
 	this->StateIndex.push_back("プレイヤー名");		//プレイヤー名
@@ -41,15 +42,16 @@ UI::UI()
 //デストラクタ
 UI::~UI()
 {
-	delete this->TextWindow;		//Ui破棄
-	delete this->TextPose;		//uianime破棄
-	delete this->MenuSelect;	//menuselect破棄
-	delete this->BattleCommand;	//battlecommand破棄
+	delete this->TextWindow;	//TextWindow破棄
+	delete this->TextPose;		//TextPose破棄
+	delete this->MenuSelect;	//MenuSelect破棄
+	delete this->BattleCommand;	//BattleCommand破棄
 	delete this->ItemSelect;	//ItemSelect破棄
 	delete this->WeaponSelect;	//WeaponSelect破棄
 	delete this->ArmorSelect;	//ArmorSelect破棄
 	delete this->Yes_No;		//Yes_No破棄
 	delete this->EquipSelect;	//EquipSelect破棄
+	delete this->MgcSelect;		//MgcSelect破棄
 
 	//vectorのメモリ解放を行う
 	std::vector<std::string> v;		//空のvectorを作成する
