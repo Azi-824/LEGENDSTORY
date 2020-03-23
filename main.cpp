@@ -959,6 +959,10 @@ void Delete_Class()
 }
 
 //ゲーム内で使用するデータ等を読み込む処理
+/*
+戻り値：true：読み込み成功
+戻り値：false：読み込み失敗
+*/
 bool LoadGameData()
 {
 
@@ -1347,6 +1351,10 @@ void SetSize()
 }
 
 //無限ループ内のゲーム処理
+/*
+戻り値：true：正常
+戻り値：false：エラー、強制終了
+*/
 bool GameMainLoop()
 {
 	if (ProcessMessage() != 0) { return false; }	//メッセージ処理の結果がエラーのとき、強制終了
@@ -1947,6 +1955,7 @@ void Bt_ResultMsg()
 }
 
 //ドロップした物の種類を判別する
+//戻り値：ドロップした物の名前
 const char * JudgeDrop()
 {
 	int drop_code = enemy[EncounteEnemyType]->Drop();	//ドロップ処理をし、ドロップしたもののコード番号を取得する
