@@ -6,7 +6,6 @@
 //################### ヘッダファイル読み込み ####################
 #include "DxLib.h"
 #include "IMAGE.hpp"
-//#include "MSG.hpp"
 #include <vector>
 #include <string>
 #include <fstream>
@@ -29,7 +28,6 @@ class NPC
 private :
 
 	IMAGE *Image;							//NPCの画像
-	//MESSAGE *Text;							//NPCの会話テキスト
 
 	std::vector<std::string> Name;			//NPCの名前
 
@@ -48,7 +46,6 @@ public:
 	bool GetImageIsLoad();					//画像を読み込めたか取得
 
 	void DrawNPC(int,int);					//NPCを描画する
-	//void DrawNPCText(int);					//指定されたNPCの会話テキストを描画する
 
 	bool Load(const char *, const char *);	//NPCデータを読み込む
 
