@@ -38,19 +38,15 @@ NPC::~NPC()
 
 	//vectorのメモリ解放を行う
 	std::vector<int> v3;			//空のvectorを作成する
-	this->DrawMap_X.swap(v3);		//空と中身を入れ替える
+	this->Draw_X.swap(v3);			//空と中身を入れ替える
 
 	//vectorのメモリ解放を行う
 	std::vector<int> v4;			//空のvectorを作成する
-	this->DrawMap_Y.swap(v4);		//空と中身を入れ替える
+	this->Draw_X.swap(v4);			//空と中身を入れ替える
 
 	//vectorのメモリ解放を行う
 	std::vector<int> v5;			//空のvectorを作成する
-	this->Draw_X.swap(v5);			//空と中身を入れ替える
-
-	//vectorのメモリ解放を行う
-	std::vector<int> v6;			//空のvectorを作成する
-	this->Draw_Y.swap(v6);			//空と中身を入れ替える
+	this->Draw_Y.swap(v5);			//空と中身を入れ替える
 
 	return;
 
@@ -116,10 +112,7 @@ bool NPC::Load(const char *dir, const char *name)
 		this->DrawMapKind.push_back(atoi(buf.c_str()));		//描画マップの種類を設定
 
 		std::getline(ifs, buf, ',');						//カンマまで読み込み
-		this->DrawMap_X.push_back(atoi(buf.c_str()));		//描画マップX位置を設定
-
-		std::getline(ifs, buf, ',');						//カンマまで読み込み
-		this->DrawMap_Y.push_back(atoi(buf.c_str()));		//描画マップY位置を設定
+		this->DrawMap_Num.push_back(atoi(buf.c_str()));		//描画マップ番号を設定
 
 		std::getline(ifs, buf, ',');						//カンマまで読み込み
 		this->Draw_X.push_back(atoi(buf.c_str()));			//描画X位置を設定

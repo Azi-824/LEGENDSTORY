@@ -34,8 +34,7 @@ private :
 	std::vector<std::string> Name;			//NPCの名前
 
 	std::vector<int>	DrawMapKind;		//NPCを描画するマップの種類
-	std::vector<int>	DrawMap_X;			//NPCの描画マップX位置
-	std::vector<int>	DrawMap_Y;			//NPCの描画マップY位置
+	std::vector<int>	DrawMap_Num;		//NPCの描画マップ番号
 	std::vector<int>	Draw_X;				//NPCの描画X位置
 	std::vector<int>	Draw_Y;				//NPCの描画Y位置
 

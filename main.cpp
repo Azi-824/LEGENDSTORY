@@ -698,6 +698,8 @@ void Play_Draw()
 		boss_mapimage->Draw(BOSS_MAP_X, BOSS_MAP_Y);			//ボスキャラ描画
 	}
 
+	//NPC描画処理
+
 	player->DrawWalk();		//プレイヤー描画
 
 	//▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼ メニュー描画処理ここから ▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼
@@ -1278,6 +1280,7 @@ bool LoadGameData()
 		ui->MgcSelect->AddText(i, mgc_list->GetName(i));						//魔法名設定
 	}
 
+	//NPC関係
 	npc = new NPC(NPC_IMAGE_DIR, NPC_IMAGE_DATA_NAME);						//NPCを生成
 	if (npc->GetImageIsLoad() == false) { return false; }					//読み込み失敗
 	if (npc->Load(NPC_DATA_DIR, NPC_DATA_NAME) == false) { return false; }	//NPCデータ読み込み
