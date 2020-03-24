@@ -16,8 +16,6 @@ NPC::NPC(const char *dir, const char *name)
 	this->Image = new IMAGE(dir, name);				//NPC画像の生成（読み込み）
 	this->ImageIsLoad = this->Image->GetIsLoad();	//読み込めたか設定
 
-	//this->Text = new MESSAGE();						//テキスト生成(文字列の設定は、NPCデータ読み込みで行う)
-
 	return;
 
 }
@@ -25,8 +23,7 @@ NPC::NPC(const char *dir, const char *name)
 //デストラクタ
 NPC::~NPC()
 {
-	delete this->Image;	//Image破棄
-	//delete this->Text;	//Text破棄
+	delete this->Image;		//Image破棄
 
 	//vectorのメモリ解放を行う
 	std::vector<std::string> v;		//空のvectorを作成する
