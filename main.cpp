@@ -21,6 +21,7 @@
 #include "LIST_WEAPON.hpp"
 #include "LIST_ARMOR.hpp"
 #include "LIST_ITEM.hpp"
+#include "NPC.hpp"
 
 //########## グローバルオブジェクト ##########
 FPS *fps = new FPS(GAME_FPS_SPEED);							//FPSクラスのオブジェクトを生成
@@ -49,6 +50,8 @@ MESSAGE *bt_msg[BT_MSG_KIND];		//戦闘画面のメッセージ
 PLAYER *player;						//主人公
 
 ENEMY *enemy[ENEMY_KIND];			//敵
+
+NPC *npc;							//NPC
 
 MAP *mapdata[DRAW_MAP_KIND][MAP_DATA_KIND];		//マップデータ
 
@@ -933,6 +936,7 @@ void Delete_Class()
 	delete mgc_list;		//mgc_listを破棄
 	delete weapon_list;		//weapon_listを破棄
 	delete armor_list;		//armor_listを破棄
+	delete npc;				//npcを破棄
 
 	//メッセージの削除
 	for (int i = 0; i < BT_MSG_KIND; ++i)
@@ -1273,6 +1277,10 @@ bool LoadGameData()
 		ui->MgcSelect->AddText(i, MGC_SELECT_MP_TEXT);							//文字列追加
 		ui->MgcSelect->AddText(i, mgc_list->GetName(i));						//魔法名設定
 	}
+
+	npc = new NPC(NPC_IMAGE_DIR, NPC_IMAGE_DATA_NAME);						//NPCを生成
+	if (npc->GetImageIsLoad() == false) { return false; }					//読み込み失敗
+	if (npc->Load(NPC_DATA_DIR, NPC_DATA_NAME) == false) { return false; }	//NPCデータ読み込み
 
 	return true;		//全ての読み込みに成功
 

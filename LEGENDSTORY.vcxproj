@@ -173,6 +173,7 @@
     <ClCompile Include="LIST_MGC.cpp" />
     <ClCompile Include="MSG.cpp" />
     <ClCompile Include="MUSIC.cpp" />
+    <ClCompile Include="NPC.cpp" />
     <ClCompile Include="PLAYER.cpp" />
     <ClCompile Include="SELECT.cpp" />
     <ClCompile Include="SIKAKU.cpp" />
@@ -200,6 +201,7 @@
     <ClInclude Include="LIST_MGC.hpp" />
     <ClInclude Include="MSG.hpp" />
     <ClInclude Include="MUSIC.hpp" />
+    <ClInclude Include="NPC.hpp" />
     <ClInclude Include="PLAYER.hpp" />
     <ClInclude Include="SELECT.hpp" />
     <ClInclude Include="SIKAKU.hpp" />
