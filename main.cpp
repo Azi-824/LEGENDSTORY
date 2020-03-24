@@ -138,8 +138,6 @@ void Load()
 
 		SetUseASyncLoadFlag(FALSE);		//同期読み込みに設定
 
-		SetGameInit();					//ゲームの初期設定
-
 		if (!sys_se->GetIsPlayed((int)SYS_SE_LOAD))	//ロード音を鳴らしていなければ
 		{
 			sys_se->Play((int)SYS_SE_LOAD);	//ロード音を鳴らす
@@ -155,6 +153,8 @@ void Load()
 			if (description->GetIsLast())	//最後の画像だったら
 			{
 				description->ResetNowImage();//説明画像をリセット
+
+				SetGameInit();					//ゲームの初期設定
 				IsLoad = true;					//読み込み完了
 			}
 			else	//最後の画像じゃなければ
