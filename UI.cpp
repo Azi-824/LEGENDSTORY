@@ -401,7 +401,6 @@ int UI::MenuSelectEquip(KEYDOWN *keydown, MUSIC *sys_se)
 			this->ArmorSelect->SelectOperation(keydown, sys_se);	//防具の選択キー操作
 
 			//************* 戻る選択をした時の処理 *****************
-			//修正点あり
 			if (this->ArmorSelect->GetBackFlg())	//戻る選択をしたら
 			{
 				this->ArmorSelect->Default();		//防具の選択肢、デフォルト値へ
@@ -435,7 +434,7 @@ int UI::MenuSelectEquip(KEYDOWN *keydown, MUSIC *sys_se)
 
 		if (this->Yes_No->GetSelectFlg())					//装備するか選択したら
 		{
-			if (this->Yes_No->GetSelectNum() == (int)SELECT_YES_TEXT)		//はい、を選択したら
+			if (this->Yes_No->GetSelectNum() == (int)SELECT_YES)		//はい、を選択したら
 			{
 				this->Menu_Equip_dir = (int)MENU_EQUIP_SELECT_EQUIP;	//選択肢の段階を一つ前へ
 				this->Yes_No->Default();								//はい、いいえの選択肢デフォルトへ
