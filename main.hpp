@@ -46,7 +46,6 @@
 #define TITLE_SELECT_END_TEXT	"おわる"				//タイトルの選択肢（ゲーム終了）のテキスト
 
 #define END_SELECT_TITLE_TEXT	"タイトル"				//エンド画面の選択肢（タイトルへ戻る）のテキスト
-#define END_SELECT_PLAY_TEXT	"プレイ"				//エンド画面の選択肢（プレイ画面へ戻る）のテキスト
 #define END_SELECT_END_TEXT		"おわる"				//エンド画面の選択肢（ゲーム終了）のテキスト
 
 #define MGC_SELECT_MP_TEXT		"MP:"					//魔法一覧の選択肢のMP表示のテキスト
@@ -115,8 +114,7 @@ enum TITLE_SELECT
 enum END_SELECT
 {
 	END_SELECT_TITLE,	//タイトルへ
-	END_SELECT_PLAY,	//プレイ画面へ
-	END_SELECT_END,		//終了
+	END_SELECT_END		//終了
 };
 
 //############## プロトタイプ宣言 #############

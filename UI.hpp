@@ -100,7 +100,7 @@
 #define BT_TXT_POSE_Y	500		//バトル画面のテキストポーズの描画Y位置
 
 #define DEFAULT_TEXT_Y	490		//デフォルトのテキスト描画位置（Y座標）
-#define TXT_Y_3			450		//選択肢が3つの時のテキスト描画位置（Y座標）
+//#define TXT_Y_3			450		//選択肢が3つの時のテキスト描画位置（Y座標）
 
 //テキスト関係
 #define MENU_SELECT_STATE_TEXT			"ステータス"		//メニュー画面の選択肢（ステータス）

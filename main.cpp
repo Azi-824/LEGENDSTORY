@@ -172,6 +172,9 @@ void Load()
 //タイトル画面の処理
 void Title()
 {
+
+	Init();	//初期化処理
+
 	//▼▼▼▼▼▼▼▼▼▼▼▼▼▼ 音の再生処理ここから ▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼
 	if (bgm->GetIsPlay((int)BGM_TITLE) == false)	//再生中じゃないとき
 	{
@@ -527,20 +530,18 @@ void End()
 		{
 			SceneChenge(GameSceneNow, (int)GAME_SCENE_TITLE);	//次の画面はタイトル画面
 		}
-		else if (End_select->GetSelectNum() == (int)END_SELECT_PLAY)	//プレイを選択したら
-		{
-			SceneChenge(GameSceneNow, (int)GAME_SCENE_PLAY);	//次の画面はプレイ画面
-		}
 		else	//終了を選択したら
 		{
 			GameEnd_Flg = true;	//ゲーム終了
 		}
 
+
+		player->Recovery();	//回復
+
 		End_select->NowSelectReset();	//選択状態リセット
 
 	}
 
-	player->Recovery();		//回復
 
 	return;
 }
@@ -593,8 +594,8 @@ void Chenge()
 	}
 	else
 	{
+		ChengeDrawCount = 0;			//フェードイン用初期化
 		GameSceneNow = GameSceneNext;	//次の画面にする
-		Init();							//初期化
 	}
 
 
@@ -605,12 +606,7 @@ void Chenge()
 //初期化処理
 void Init()
 {
-	ChengeDrawCount = 0;		//フェードイン用初期化
-
-	if (GameSceneBefor == (int)GAME_SCENE_END)	//エンド画面から遷移した場合
-	{
-		Clear_flg = false;				//クリアフラグリセット
-	}
+	Clear_flg = false;	//クリアフラグリセット
 }
 
 //戦闘画面関係初期化
@@ -820,7 +816,7 @@ void End_Draw()
 
 	font->SetSize(BIG_FONTSIZE);	//フォントサイズを大きくする
 
-	End_select->DrawCenter(GAME_WIDTH / 2, TXT_Y_3, 0,GetColor(0,0,0));		//選択肢描画
+	End_select->DrawCenter(GAME_WIDTH / 2, DEFAULT_TEXT_Y, (int)SELECT_TRIANGLE,GetColor(0,0,0));		//選択肢描画
 
 	return;
 
@@ -1263,8 +1259,8 @@ bool LoadGameData()
 
 
 	//選択肢関係
-	Title_select = new SELECT(TITLE_SELECT_START_TEXT, TITLE_SELECT_END_TEXT);					//タイトル画面の選択肢生成
-	End_select = new SELECT(END_SELECT_TITLE_TEXT, END_SELECT_PLAY_TEXT, END_SELECT_END_TEXT);	//エンド画面の選択肢生成
+	Title_select = new SELECT(TITLE_SELECT_START_TEXT, TITLE_SELECT_END_TEXT);	//タイトル画面の選択肢生成
+	End_select = new SELECT(END_SELECT_TITLE_TEXT, END_SELECT_END_TEXT);		//エンド画面の選択肢生成
 
 	//魔法一覧から、戦闘画面で使用するための、魔法の選択肢を作成
 	for (int i = 0; i < mgc_list->GetListSize(); ++i)			//魔法の種類分ループさせる
