@@ -28,9 +28,10 @@
 
 #define GAME_ICON_ID					   333	//アイコンのID
 
-#define ENCOUNT_TXT_KIND	3
+#define ENCOUNT_TXT_KIND	3	//エンカウント時のテキストの種類
 
 //テキスト関係
+#define LOAD_TEXT				"Now Loading・・・"		//ロード時のテキスト
 #define SAVE_TEXT				"セーブ中です。"		//セーブ時のテキスト
 #define GAME_CLEAR_TEXT			"ゲームクリア！"		//ゲームクリア時のテキスト
 #define GAME_OVER_TEXT			"ゲームオーバー…"		//ゲームオーバー時のテキスト

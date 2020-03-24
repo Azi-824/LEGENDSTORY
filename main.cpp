@@ -659,9 +659,9 @@ void SceneChenge(int beforscene, int nextscene)
 //ロード画面の描画処理
 void Load_Draw()
 {
-	std::string LoadMessage = "Now Loading・・・";		//ロード画面に描画する文字
-	int Width = 0;										//横幅
-	int Strlen = 0;										//文字数
+	std::string LoadMessage = LOAD_TEXT;		//ロード画面に描画する文字
+	int Width = 0;								//横幅
+	int Strlen = 0;								//文字数
 
 	Strlen = strlen(LoadMessage.c_str());						//文字数取得
 	Width = GetDrawStringWidth(LoadMessage.c_str(), Strlen);	//横幅取得
