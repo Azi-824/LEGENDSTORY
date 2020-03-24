@@ -15,7 +15,11 @@
 #define NPC_IMAGE_DIR			R"(.\MY_IMG\NPC\)"		//NPCの画像データのファイル名
 
 #define NPC_DATA_NAME			R"(NPC_Data.csv)"		//NPCデータの名前
-#define NPC_IMAGE_DATA_NAME		R"(NPC1.png)"			//NPCの画像の名前
+#define NPC_IMAGE_DATA1_NAME	R"(NPC1.png)"			//NPC1の画像の名前
+#define NPC_IMAGE_DATA2_NAME	R"(NPC2.png)"			//NPC2の画像の名前
+#define NPC_IMAGE_DATA3_NAME	R"(NPC3.png)"			//NPC3の画像の名前
+#define NPC_IMAGE_DATA4_NAME	R"(NPC4.png)"			//NPC4の画像の名前
+#define NPC_IMAGE_DATA5_NAME	R"(NPC5.png)"			//NPC5の画像の名前
 
 //############## マクロ定義：エラーメッセージ ###################
 #define NPC_DATA_ERROR_TTILE	"NPC_DATA_ERROR"						//エラータイトル
@@ -48,5 +52,7 @@ public:
 	void DrawNPC(int,int);					//NPCを描画する
 
 	bool Load(const char *, const char *);	//NPCデータを読み込む
+
+	bool AddImage(const char *, const char *);	//NPCの画像を追加する
 
 };

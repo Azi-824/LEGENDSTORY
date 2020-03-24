@@ -75,8 +75,8 @@ void NPC::DrawNPC(int drawmap_kind,int drawmap_num)
 }
 
 //NPCデータを読み込む
-//引　数：const char *：画像のディレクトリ
-//引　数：const char *：画像の名前
+//引　数：const char *：データのディレクトリ
+//引　数：const char *：データの名前
 bool NPC::Load(const char *dir, const char *name)
 {
 	std::string LoadFile;
@@ -133,4 +133,12 @@ bool NPC::Load(const char *dir, const char *name)
 
 	return true;
 
+}
+
+//NPCの画像を追加する
+//引　数：const char *：画像のディレクトリ
+//引　数：const char *：画像の名前
+bool NPC::AddImage(const char *dir, const char*name)
+{
+	return this->Image->AddImage(dir, name);	//画像を追加
 }

@@ -1282,8 +1282,13 @@ bool LoadGameData()
 	}
 
 	//NPC関係
-	npc = new NPC(NPC_IMAGE_DIR, NPC_IMAGE_DATA_NAME);						//NPCを生成
+	npc = new NPC(NPC_IMAGE_DIR, NPC_IMAGE_DATA1_NAME);						//NPCを生成
 	if (npc->GetImageIsLoad() == false) { return false; }					//読み込み失敗
+	//NPC追加処理
+	if (npc->AddImage(NPC_IMAGE_DIR, NPC_IMAGE_DATA2_NAME) == false) { return false; }	//NPC画像を追加
+	if (npc->AddImage(NPC_IMAGE_DIR, NPC_IMAGE_DATA3_NAME) == false) { return false; }	//NPC画像を追加
+	if (npc->AddImage(NPC_IMAGE_DIR, NPC_IMAGE_DATA4_NAME) == false) { return false; }	//NPC画像を追加
+	if (npc->AddImage(NPC_IMAGE_DIR, NPC_IMAGE_DATA5_NAME) == false) { return false; }	//NPC画像を追加
 	if (npc->Load(NPC_DATA_DIR, NPC_DATA_NAME) == false) { return false; }	//NPCデータ読み込み
 
 	return true;		//全ての読み込みに成功
