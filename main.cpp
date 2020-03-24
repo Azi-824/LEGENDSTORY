@@ -1536,6 +1536,9 @@ void Bt_WaitAct()
 						{
 							bt_se->Play((int)BT_SE_RECOVERY);					//回復音を鳴らす
 
+							//アイテムにはBPを使用できないため、使うBPをリセットする
+							player->ResetUseBP();
+
 							BattleStageNow = (int)DAMEGE_CALC;	//バトル状態をダメージ計算状態へ
 
 						}

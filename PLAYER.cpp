@@ -1128,6 +1128,13 @@ bool PLAYER::MinusUseBP(void)
 	return false;	//減らせなかった
 }
 
+//使用するBPをリセットする
+void PLAYER::ResetUseBP(void)
+{
+	this->UseBPNum = 0;	//使用するBPをリセット
+	return;
+}
+
 //BPによって強化される倍率を取得(ダメージ計算内で使用)
 double PLAYER::GetBPBoostValue(void)
 {

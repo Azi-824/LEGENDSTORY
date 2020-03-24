@@ -235,6 +235,7 @@ public:
 	int GetUseBP(void);			//使用するBPを取得
 	bool PlusUseBP(void);		//使用するBPを増やす
 	bool MinusUseBP(void);		//使用するBPを減らす
+	void ResetUseBP(void);		//使用するBPをリセットする
 	double GetBPBoostValue();	//BPによって強化される倍率を取得(ダメージ計算内で使用)
 	void BPUse(void);			//BPを使用する
 
