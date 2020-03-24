@@ -199,6 +199,9 @@ void Title()
 			GameEnd_Flg = true;	//ゲーム終了
 		}
 
+		Title_select->NowSelectReset();		//現在選択している要素を先頭に戻す
+		Title_select->SetSelectFlg(false);	//選択していない状態へ
+
 	}
 
 	return;
@@ -539,6 +542,7 @@ void End()
 		player->Recovery();	//回復
 
 		End_select->NowSelectReset();	//選択状態リセット
+		End_select->SetSelectFlg(false);//選択していない状態へ
 
 	}
 
