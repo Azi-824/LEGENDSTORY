@@ -89,6 +89,7 @@ bool Boss_flg = false;		//ボスフラグ
 bool Clear_flg = false;		//クリアフラグ
 
 bool IsLoad = false;		//読み込み完了フラグ
+bool IsSetInit = false;		//ゲーム開始時の初期設定フラグ
 
 //########## プログラムで最初に実行される関数 ##########
 int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine, int nCmdShow)
@@ -141,6 +142,12 @@ void Load()
 
 		SetUseASyncLoadFlag(FALSE);		//同期読み込みに設定
 
+		if (IsSetInit == false)	//初期設定をしていなければ
+		{
+			SetGameInit();				//ゲームの初期設定
+			IsSetInit = true;			//初期設定完了
+		}
+
 		if (!sys_se->GetIsPlayed((int)SYS_SE_LOAD))	//ロード音を鳴らしていなければ
 		{
 			sys_se->Play((int)SYS_SE_LOAD);	//ロード音を鳴らす
@@ -157,7 +164,6 @@ void Load()
 			{
 				description->ResetNowImage();//説明画像をリセット
 
-				SetGameInit();					//ゲームの初期設定
 				IsLoad = true;					//読み込み完了
 			}
 			else	//最後の画像じゃなければ
@@ -312,6 +318,12 @@ void Play()
 
 			case (int)MENU_STATUS:		//ステータスを選んだとき
 
+				if (keydown->IsKeyDownOne(KEY_INPUT_BACK))	//バックスぺースキーを押されたら
+				{
+					sys_se->Play((int)SYS_SE_CANSEL);	//キャンセル音を鳴らす
+					ui->ResetMenu();					//メニューリセット
+				}
+
 				break;	//ステータスを選んだときここまで
 
 			case (int)MENU_ITEM:		//アイテムを選んだとき
@@ -329,7 +341,6 @@ void Play()
 						}
 						else		//使用できなかったら
 						{
-							//使用できない場合の処理を追加予定
 							sys_se->Play((int)SYS_SE_BLIP);
 							ui->Yes_No->Default();		//はい、いいえの選択肢デフォルトへ
 							ui->ItemSelect->Default();	//アイテムの選択肢デフォルトへ
@@ -390,6 +401,13 @@ void Play()
 						description->NextImage();	//次の説明へ
 					}
 				}
+				else if (keydown->IsKeyDownOne(KEY_INPUT_BACK))	//バックスぺースキーを押されたら
+				{
+					sys_se->Play((int)SYS_SE_CANSEL);	//キャンセル音を鳴らす
+					description->ResetNowImage();		//描画する画像を最初に戻す
+					ui->ResetMenu();					//メニューリセット
+				}
+
 
 				break;	//説明を選んだときここまで
 
@@ -1089,9 +1107,9 @@ bool LoadGameData()
 	if (player->SetAnime(MY_ANIME_DIR_PLAYER, MY_ANIME_NAME_PLAYER, PLAYER_ALL_CNT, PLAYER_YOKO_CNT, PLAYER_TATE_CNT, PLAYER_WIDTH, PLAYER_HEIGHT, PLAYER_ANI_SPEED, true) == false) { return false; } //読み込み失敗
 
 	//プレイヤーのデータをcsvファイルから読み込み
-	if(player->LoadData(PLAYER_DATA_DIR, PLAYER_DATA_NAME) == false) { return false; }	//読み込み失敗
+	//if(player->LoadData(PLAYER_DATA_DIR, PLAYER_DATA_NAME) == false) { return false; }	//読み込み失敗
 	//プレイヤーの初期データver
-	//if (player->LoadData(PLAYER_DATA_DIR, PLATER_DATA_INIT_NAME) == false) { return false; }	//読み込み失敗
+	if (player->LoadData(PLAYER_DATA_DIR, PLATER_DATA_INIT_NAME) == false) { return false; }	//読み込み失敗
 
 	//UI関係
 	ui = new UI();		//UI作成
@@ -1250,9 +1268,9 @@ bool LoadGameData()
 	}
 
 	//現在のマップ位置を読み込んで設定
-	if (data->LoadNowMap(&NowDrawMapKind, MapNowPos, MAPPOS_DATA_DIR, MAPPOS_DATA_NAME) == false) { return false; }	//読み込み失敗
+	//if (data->LoadNowMap(&NowDrawMapKind, MapNowPos, MAPPOS_DATA_DIR, MAPPOS_DATA_NAME) == false) { return false; }	//読み込み失敗
 	//現在のマップ位置を読み込んで設定(初期ver)
-	//if (data->LoadNowMap(&NowDrawMapKind, MapNowPos, MAPPOS_DATA_DIR, MAPPOS_INITDATA_NAME) == false) { return false; }	//読み込み失敗
+	if (data->LoadNowMap(&NowDrawMapKind, MapNowPos, MAPPOS_DATA_DIR, MAPPOS_INITDATA_NAME) == false) { return false; }	//読み込み失敗
 	//▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲ マップデータ読み込みここまで ▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲
 
 	//一覧関係

@@ -189,7 +189,7 @@ bool UI::MenuSelectItem(KEYDOWN *keydown, MUSIC *sys_se)
 
 			if (this->Yes_No->GetSelectFlg())		//はいかいいえを選択したら
 			{
-				if (this->Yes_No->GetSelectNum() == (int)SELECT_YES_TEXT)	//はいを選んだとき
+				if (this->Yes_No->GetSelectNum() == (int)SELECT_YES)	//はいを選んだとき
 				{
 					return true;	//アイテムを選択した
 				}
