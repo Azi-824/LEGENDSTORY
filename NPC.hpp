@@ -47,7 +47,7 @@ public:
 
 	bool GetImageIsLoad();					//画像を読み込めたか取得
 
-	void DrawNPC(int);						//指定されたNPCを描画する
+	void DrawNPC(int,int);					//NPCを描画する
 	//void DrawNPCText(int);					//指定されたNPCの会話テキストを描画する
 
 	bool Load(const char *, const char *);	//NPCデータを読み込む

@@ -58,10 +58,19 @@ bool NPC::GetImageIsLoad(void)
 	return this->ImageIsLoad;
 }
 
-//Žw’è‚³‚ê‚½NPC‚ð•`‰æ‚·‚é
-void NPC::DrawNPC(int kind)
+//NPC‚ð•`‰æ‚·‚é
+void NPC::DrawNPC(int drawmap_kind,int drawmap_num)
 {
-	this->Image->Draw(this->Draw_X[kind], this->Draw_Y[kind], kind);	//NPC•`‰æ
+
+	for (int i = 0; i < this->DrawMapKind.size(); ++i)	//NPC‚Ì”•ª
+	{
+		if (drawmap_kind == this->DrawMapKind[i] &&		//•`‰æ‚·‚éƒ}ƒbƒv‚ÌŽí—Þ‚ªˆê‚ÅA
+			drawmap_num == this->DrawMap_Num[i])		//•`‰æ‚·‚éƒ}ƒbƒv”Ô†‚ªˆê‚¾‚Á‚½ê‡
+		{
+			this->Image->Draw(this->Draw_X[i], this->Draw_Y[i], i);	//NPC•`‰æ
+		}
+	}
+
 	return;
 }
 

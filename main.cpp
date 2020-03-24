@@ -699,6 +699,7 @@ void Play_Draw()
 	}
 
 	//NPC•`‰æˆ—
+	npc->DrawNPC(NowDrawMapKind, MapKind[MAPPOS_Y][MAPPOS_X]);	//NPC•`‰æ
 
 	player->DrawWalk();		//ƒvƒŒƒCƒ„[•`‰æ
 
