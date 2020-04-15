@@ -57,8 +57,6 @@ private:
 
 	std::vector<int> Code;		//装備やアイテムのコード番号
 
-	std::vector<bool> IsDraw;	//選択肢の内容を描画してよいか
-
 	static IMAGE *image_ui;		//UI画像
 
 	bool IsKeyOpe;		//キー操作可能か
@@ -91,12 +89,6 @@ public:
 
 		this->Str = { args... };			//展開
 		this->Str_itr = this->Str.begin();	//先頭要素
-
-		//選択肢を描画してよいか設定する
-		for (int i = 0; i < this->Str.size(); ++i)	//選択肢の数分ループ
-		{
-			this->IsDraw.push_back(true);		//描画してよいか設定（最初は描画可能）
-		}
 
 		this->IsKeyOpe = true;				//キー操作可能
 		this->SelectFlg = false;			//選択されていない
@@ -168,12 +160,6 @@ public:
 		this->SelectClear();	//現在の選択肢をクリア
 		this->Str = { args... };	//展開
 		this->Str_itr = this->Str.begin();	//先頭要素
-
-		//選択肢を描画してよいか設定する
-		for (int i = 0; i < this->Str.size(); ++i)	//選択肢の数分ループ
-		{
-			this->IsDraw.push_back(true);		//描画してよいか設定（最初は描画可能）
-		}
 
 		return;
 	}

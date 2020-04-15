@@ -52,10 +52,6 @@ SELECT::~SELECT()
 	std::vector<int> v2;			//空のvectorを作成する
 	this->Code.swap(v2);			//空と中身を入れ替える
 
-	//vectorのメモリ解放を行う
-	std::vector<bool> v3;			//空のvectorを作成する
-	this->IsDraw.swap(v3);			//空と中身を入れ替える
-
 	return;
 
 }
@@ -495,7 +491,6 @@ void SELECT::AddSelect(const char *str,int code)
 	this->Str.push_back(str);	//選択肢追加
 	this->Str_itr = this->Str.begin();	//最初の要素を選択状態へ
 	this->Code.push_back(code);			//コード番号追加
-	this->IsDraw.push_back(true);		//描画可能
 	return;
 }
 
