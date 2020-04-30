@@ -424,8 +424,8 @@ void Play()
 						_mkdir(SAVE_DATA_DIR);	//セーブデータを格納するフォルダを作成
 					}
 
-					player->Save(SAVE_DATA_DIR, PLAYER_SAVEDATA_NAME);								//プレイヤー情報のセーブ
-					data->SaveMap(NowDrawMapKind, MapNowPos, SAVE_DATA_DIR, MAPPOS_SAVEDATA_NAME);	//マップ位置のセーブ
+					player->Save(SAVE_DATA_DIR, PLAYER_DATA_NAME);								//プレイヤー情報のセーブ
+					data->SaveMap(NowDrawMapKind, MapNowPos, SAVE_DATA_DIR, MAPPOS_DATA_NAME);	//マップ位置のセーブ
 
 					sys_se->Play((int)SYS_SE_SAVE);		//セーブ音を鳴らす
 					player->SetIsMenu(false);			//メニュー描画終了
@@ -1116,11 +1116,6 @@ bool LoadGameData()
 	player = new PLAYER();		//プレイヤー生成
 	if (player->SetAnime(MY_ANIME_DIR_PLAYER, MY_ANIME_NAME_PLAYER, PLAYER_ALL_CNT, PLAYER_YOKO_CNT, PLAYER_TATE_CNT, PLAYER_WIDTH, PLAYER_HEIGHT, PLAYER_ANI_SPEED, true) == false) { return false; } //読み込み失敗
 
-	//プレイヤーのデータをcsvファイルから読み込み
-	//if(player->LoadData(PLAYER_DATA_DIR, PLAYER_DATA_NAME) == false) { return false; }	//読み込み失敗
-	//プレイヤーの初期データver
-	if (player->LoadData(PLAYER_DATA_DIR, PLATER_DATA_INIT_NAME) == false) { return false; }	//読み込み失敗
-
 	//UI関係
 	ui = new UI();		//UI作成
 
@@ -1277,11 +1272,39 @@ bool LoadGameData()
 		}
 	}
 
-	//現在のマップ位置を読み込んで設定
-	//if (data->LoadNowMap(&NowDrawMapKind, MapNowPos, MAPPOS_DATA_DIR, MAPPOS_DATA_NAME) == false) { return false; }	//読み込み失敗
-	//現在のマップ位置を読み込んで設定(初期ver)
-	if (data->LoadNowMap(&NowDrawMapKind, MapNowPos, MAPPOS_DATA_DIR, MAPPOS_INITDATA_NAME) == false) { return false; }	//読み込み失敗
 	//▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲ マップデータ読み込みここまで ▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲
+
+	//*************** セーブデータ読み込み *******************
+
+	struct stat statbuf;	//セーブデータのディレクトリの存在確認に使用
+
+	if (stat(SAVE_DATA_DIR, &statbuf) == 0)	//セーブデータが存在したら
+	{
+		//セーブデータから読み込み
+
+		//プレイヤーのデータをcsvファイルから読み込み
+		if (player->LoadData(SAVE_DATA_DIR, PLAYER_DATA_NAME) == false) { return false; }	//読み込み失敗
+
+		//現在のマップ位置を読み込んで設定
+		if (data->LoadNowMap(&NowDrawMapKind, MapNowPos, SAVE_DATA_DIR, MAPPOS_DATA_NAME) == false) { return false; }	//読み込み失敗
+
+	}
+	else		//セーブデータが存在しなかったら
+	{
+		//初期データから読み込み
+		//プレイヤーのデータをcsvファイルから読み込み
+		//if(player->LoadData(PLAYER_DATA_DIR, PLAYER_DATA_NAME) == false) { return false; }	//読み込み失敗
+		//プレイヤーの初期データver
+		if (player->LoadData(PLAYER_DATA_DIR, PLATER_DATA_INIT_NAME) == false) { return false; }	//読み込み失敗
+
+		//現在のマップ位置を読み込んで設定
+		//if (data->LoadNowMap(&NowDrawMapKind, MapNowPos, MAPPOS_DATA_DIR, MAPPOS_DATA_NAME) == false) { return false; }	//読み込み失敗
+		//現在のマップ位置を読み込んで設定(初期ver)
+		if (data->LoadNowMap(&NowDrawMapKind, MapNowPos, MAPPOS_DATA_DIR, MAPPOS_INITDATA_NAME) == false) { return false; }	//読み込み失敗
+
+	}
+
+	//*************** セーブデータ読み込み *******************
 
 	//一覧関係
 	mgc_list = new LIST_MGC(LIST_DIR, MGC_LIST_NAME);		//魔法一覧を生成
