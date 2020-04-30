@@ -22,6 +22,8 @@
 #include "LIST_ARMOR.hpp"
 #include "LIST_ITEM.hpp"
 #include "NPC.hpp"
+#include <direct.h>
+#include <sys/stat.h>
 
 //########## グローバルオブジェクト ##########
 FPS *fps = new FPS(GAME_FPS_SPEED);							//FPSクラスのオブジェクトを生成
@@ -415,8 +417,16 @@ void Play()
 
 				if (Wait())			//待ち時間が過ぎたら
 				{
-					player->Save(PLAYER_DATA_DIR, PLAYER_DATA_NAME);		//プレイヤー情報のセーブ
-					data->SaveMap(NowDrawMapKind, MapNowPos, MAPPOS_DATA_DIR, MAPPOS_DATA_NAME);	//マップ位置のセーブ
+					struct stat statbuf;	//ディレクトリの存在確認に使用
+					
+					if (stat(SAVE_DATA_DIR, &statbuf) != 0)//セーブデータ用のフォルダが作成されていない場合（初めてのセーブの場合）
+					{
+						_mkdir(SAVE_DATA_DIR);	//セーブデータを格納するフォルダを作成
+					}
+
+					player->Save(SAVE_DATA_DIR, PLAYER_SAVEDATA_NAME);								//プレイヤー情報のセーブ
+					data->SaveMap(NowDrawMapKind, MapNowPos, SAVE_DATA_DIR, MAPPOS_SAVEDATA_NAME);	//マップ位置のセーブ
+
 					sys_se->Play((int)SYS_SE_SAVE);		//セーブ音を鳴らす
 					player->SetIsMenu(false);			//メニュー描画終了
 				}

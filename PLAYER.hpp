@@ -47,6 +47,7 @@
 #define PLAYER_DATA_DIR			R"(.\MY_DATA\Player\)"		//プレイヤーのデータのファイル名
 #define PLAYER_DATA_NAME		R"(Player_Data.csv)"		//プレイヤーのデータのcsvファイル
 #define PLATER_DATA_INIT_NAME	R"(Player_Data_Init.csv)"	//プレイヤーの初期データのcsvファイル
+#define PLAYER_SAVEDATA_NAME	R"(\Player_Data.csv)"		//プレイヤーのセーブデータのファイル名
 
 
 //############## マクロ定義：エラーメッセージ ###################
